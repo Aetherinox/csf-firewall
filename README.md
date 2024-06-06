@@ -22,6 +22,7 @@
 <br />
 
 - [Download](#download)
+- [References](#references)
 - [Features](#features)
 - [Installation](#installation)
   - [Step 1: Prerequisites](#step-1-prerequisites)
@@ -56,6 +57,17 @@
 ## Download
 The latest version of csf can be downloaded here:
 - https://download.configserver.com/csf.tgz
+
+<br />
+
+---
+
+<br />
+
+## References
+Use the following pages for installation help:
+- Chapter 1: [How to Install and Configure CSF Firewall on Linux](https://tecadmin.net/install-csf-firewall-on-linux/)
+- Chapter 2: [How to Enable CSF Firewall Web UI](https://tecadmin.net/how-to-enable-csf-firewall-web-ui/)
 
 <br />
 
