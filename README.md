@@ -21,6 +21,38 @@
 
 <br />
 
+- [Download](#download)
+- [Features](#features)
+- [Installation](#installation)
+  - [Step 1: Prerequisites](#step-1-prerequisites)
+  - [Step 2: Download and Install CSF](#step-2-download-and-install-csf)
+  - [Step 3: Testing the Firewall](#step-3-testing-the-firewall)
+  - [Step 4: Configuring CSF](#step-4-configuring-csf)
+  - [Step 5: Enabling CSF Firewall](#step-5-enabling-csf-firewall)
+  - [Step 6: Managing the Firewall](#step-6-managing-the-firewall)
+    - [Start Firewall](#start-firewall)
+    - [Stop Firewall](#stop-firewall)
+    - [Restart Firewall](#restart-firewall)
+    - [List Firewall Rules](#list-firewall-rules)
+    - [Add IP to Allow List](#add-ip-to-allow-list)
+    - [Remove IP to Allow List](#remove-ip-to-allow-list)
+    - [Add IP to Deny List](#add-ip-to-deny-list)
+    - [Remove IP from Deny List](#remove-ip-from-deny-list)
+    - [Add Temp Block IP](#add-temp-block-ip)
+    - [Remove Temp Block IP](#remove-temp-block-ip)
+  - [Step 7: Uninstalling CSF (Optional)](#step-7-uninstalling-csf-optional)
+- [Enable CSF Firewall Web UI](#enable-csf-firewall-web-ui)
+  - [Step 1 – Install Required Perl Modules:](#step-1--install-required-perl-modules)
+- [Step 2 – Enable CSF Firewall Web UI:](#step-2--enable-csf-firewall-web-ui)
+- [Step 3 – Access and Use Web UI:](#step-3--access-and-use-web-ui)
+
+
+<br />
+
+---
+
+<br />
+
 ## Download
 The latest version of csf can be downloaded here:
 - https://download.configserver.com/csf.tgz
