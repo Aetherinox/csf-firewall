@@ -278,6 +278,8 @@ The script will remove CSF and its associated files from your server.
 ## Enable CSF Firewall Web UI
 ConfigServer Security & Firewall (CSS) is an iptables based firewall for Linux systems. In our previous tutorial read installation tutorial of CSF on Linux system. CSF also provides in-built web UI for the managing firewall from the web interface. In this tutorial, you will find how to enable CSF Firewall Web UI on your system.
 
+<br />
+
 ### Step 1 – Install Required Perl Modules:
 CSF UI required some of Perl modules to be installed on your system. Use the following commands to install required modules as per your operating system.
 
@@ -292,6 +294,8 @@ sudo apt-get install libio-socket-ssl-perl libcrypt-ssleay-perl \
 sudo yum install perl-IO-Socket-SSL.noarch perl-Net-SSLeay perl-Net-LibIDN \
                perl-IO-Socket-INET6 perl-Socket6
 ```
+
+<br />
 
 ## Step 2 – Enable CSF Firewall Web UI:
 To enable CSF web UI edit /etc/csf/csf.conf file in your favorite text editor and update the following values.
@@ -320,7 +324,14 @@ UI_USER = "admin"
 UI_PASS = "admin"
 ```
 
-After making changes, edit /etc/csf/ui/ui.allow configuration file and add your public IP to allow access to CSF UI. Change OUR_PUBLIC_IP_ADDRESS with your public IP address.
+<br />
+
+Change the following values to your own:
+- `UI_PORT`
+- `UI_USER`
+- `UI_PASS`
+
+After making changes, edit `/etc/csf/ui/ui.allow` configuration file and add your public IP to allow access to CSF UI. Change `YOUR_PUBLIC_IP_ADDRESS` with your public IP address.
 
 ```shell
 sudo echo "YOUR_PUBLIC_IP_ADDRESS" >>  /etc/csf/ui/ui.allow
@@ -331,6 +342,8 @@ Web UI works under lfd daemon. So restart the lfd daemon on your system using th
 ```shell
 sudo service lfd restart
 ```
+
+<br />
 
 ## Step 3 – Access and Use Web UI:
 Now, access CSF UI on your browser with the specified port. For this tutorial, I have used 1025 port. This will prompt for user authentication first. After successful login, you will find the screen like below.
