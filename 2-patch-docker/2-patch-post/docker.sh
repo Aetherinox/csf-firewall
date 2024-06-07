@@ -1,19 +1,45 @@
 #!/bin/bash
 
-# ############################################################################
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 #   CSF Docker Script
 #
 #   execute using
 #       - ./install.sh instead of 'sh install.sh'
-# ############################################################################
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 export PATH="$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+# # #
+# Variables
+# # #
 
 DOCKER_INT="docker0"
 DOCKER_NETWORK="172.17.0.0/16"
 NETWORK_MANUAL_MODE=true
 NETWORK_ADAPT_NAME="traefik"
-DEBUG_ENABLED=false
+DEBUG_ENABLED=true
+CSF_FILE_ALLOW='/etc/csf/csf.allow'
+CSF_COMMENT='Docker container whitelist'
+
+# # #
+# Colors
+# # #
+
+BLACK=`tput setaf 0`
+RED=`tput setaf 1`
+GREEN=`tput setaf 2`
+YELLOW=`tput setaf 3`
+BLUE=`tput setaf 4`
+MAGENTA=`tput setaf 5`
+CYAN=`tput setaf 6`
+WHITE=`tput setaf 7`
+
+BOLD=`tput bold`
+RESET=`tput sgr0`
+
+# # #
+# Chain Exists
+# # #
 
 chain_exists() {
     [ $# -lt 1 -o $# -gt 2 ] && {
@@ -61,6 +87,9 @@ chain_exists DOCKER nat && /usr/sbin/iptables -t nat -X DOCKER
 /usr/sbin/iptables -N DOCKER-USER
 
 /usr/sbin/iptables -t nat -N DOCKER
+
+/usr/sbin/iptables -t nat -A POSTROUTING ! -o ${DOCKER_INT} -s ${DOCKER_NETWORK} -j MASQUERADE
+/usr/sbin/iptables -A INPUT -i ${DOCKER_INT} -j ACCEPT
 
 /usr/sbin/iptables -A FORWARD -j DOCKER-USER
 /usr/sbin/iptables -A FORWARD -j DOCKER-ISOLATION-STAGE-1
@@ -116,17 +145,20 @@ if [ `echo ${containers} | wc -c` -gt "1" ]; then
 
         #   docker inspect -f "{{.HostConfig.NetworkMode}}" 5b251b810e7d
         #       returns 63599565ed58b275d60087e218e2875aec3c3258976433d061721f0cb666e0b8
+
         netmode=`docker inspect -f "{{.HostConfig.NetworkMode}}" ${container}`
+        name=`docker inspect -f "{{.Name}}" ${container}`
 
         if [ "$DEBUG_ENABLED" = true ] ; then
             printf '\n\n :::::::: CONTAINERS > LIST ::::::: \n\n'
+            printf '   NAME .................... : %s\n' "$name"
             printf '   CONTAINER ............... : %s\n' "$container"
             printf '   NETMODE ................. : %s\n\n' "$netmode"
         fi
 
-        #
+        # # #
         #   Netmode > Default
-        #
+        # # #
 
         if [ $netmode == "default" ]; then
             DOCKER_NET_INT=${DOCKER_INT}
@@ -136,26 +168,28 @@ if [ `echo ${containers} | wc -c` -gt "1" ]; then
 
             ipaddr=`docker inspect -f "{{.NetworkSettings.IPAddress}}" ${container}`
 
-        #
+        # # #
         #   Netmode > Other
-        #
+        # # #
 
         else
 
-            #
+            # # #
             #   Network > Manual Mode
             #   This is for users who have manually defined an IP address for each docker container
             #   Must set
             #       - NETWORK_MANUAL_MODE=true
             #       - NETWORK_ADAPT_NAME='network_adapter_name'
-            #
+            # # #
 
             if [ "$NETWORK_MANUAL_MODE" = true ]; then
 
+                # # #
                 #   docker inspect -f "{{with index .NetworkSettings.Networks \"traefik\"}}{{.NetworkID}}{{end}}" 162a8aada1fd | cut -c -12
                 #
                 #   returns IP
                 #   docker inspect -f "{{with index .NetworkSettings.Networks \"traefik\"}}{{.IPAddress}}{{end}}" 162a8aada1fd | cut -c -12
+                # # #
 
                 bridge=$(docker inspect -f "{{with index .NetworkSettings.Networks \"${NETWORK_ADAPT_NAME}\"}}{{.NetworkID}}{{end}}" ${container} | cut -c -12)
 
@@ -169,6 +203,30 @@ if [ `echo ${containers} | wc -c` -gt "1" ]; then
                     printf '   BRIDGE .................. : %s\n' "$bridge"
                     printf '   DOCKER_NET_INT_2 ........ : %s\n' "$DOCKER_NET_INT"
                     printf '   IPPADDR ................. : %s\n\n' "$ipaddr"
+                fi
+
+                # # #
+                #   CHeck if containers IP is currently in CSF allow list /etc/csf/csf.allow
+                # # #
+
+                if grep -q "\b${ipaddr}\b" ${CSF_FILE_ALLOW}; then
+                    echo -e "${GREEN}[ OK ]: ${ipaddr} already found in${RESET} ${CSF_FILE_ALLOW}"
+                else
+
+                    # # #
+                    #   Find CSF path on system
+                    # # #
+
+                    csf_path=$(command -v csf)
+
+                    # # #
+                    #   Found CSF binary, add container IP to allow list /etc/csf/csf.allow
+                    # # #
+
+                    if [[ $csf_path ]]; then
+                        echo -e "${YELLOW}[ OK ]: Adding ${ipaddr} to allow list${RESET} ${CSF_FILE_ALLOW}"
+                        $csf_path -a ${ipaddr} ${CSF_COMMENT}
+                    fi
                 fi
 
             else
@@ -190,6 +248,8 @@ if [ `echo ${containers} | wc -c` -gt "1" ]; then
 
                 dst_port=`echo ${dst} | awk -F'/' '{ print $1 }'`
                 dst_proto=`echo ${dst} | awk -F'/' '{ print $2 }'`
+
+                printf '   ADD .................. : -A DOCKER -d %s/32 ! -i %s -o %s -p %s -m %s --dport %s -j ACCEPT\n' $ipaddr $DOCKER_NET_INT $DOCKER_NET_INT $dst_proto $dst_proto $dst_port
 
                 /usr/sbin/iptables -A DOCKER -d ${ipaddr}/32 ! -i ${DOCKER_NET_INT} -o ${DOCKER_NET_INT} -p ${dst_proto} -m ${dst_proto} --dport ${dst_port} -j ACCEPT
                 /usr/sbin/iptables -t nat -A POSTROUTING -s ${ipaddr}/32 -d ${ipaddr}/32 -p ${dst_proto} -m ${dst_proto} --dport ${dst_port} -j MASQUERADE
