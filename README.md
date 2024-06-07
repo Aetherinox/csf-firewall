@@ -428,14 +428,12 @@ Now, access CSF UI on your browser with the specified port. For this tutorial, I
 
 <br />
 
-<br />
-
----
-
-<br />
-
 ## Install Docker Patch
 After you have installed CSF and enabled the WebUI, you need to now install the docker patch if you run docker on your machine. This patch allows for docker to bypass CSF and not block traffic.
+
+<br />
+
+The docker patch allows for you to restart CSF without having to restart your docker containers.
 
 <br />
 
