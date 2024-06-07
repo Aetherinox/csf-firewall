@@ -21,10 +21,11 @@
 
 <br />
 
+- [Summary](#summary)
 - [Download](#download)
 - [References](#references)
 - [Features](#features)
-- [Installation](#installation)
+- [Install CSF](#install-csf)
   - [Step 1: Prerequisites](#step-1-prerequisites)
   - [Step 2: Download and Install CSF](#step-2-download-and-install-csf)
   - [Step 3: Testing the Firewall](#step-3-testing-the-firewall)
@@ -43,10 +44,25 @@
     - [Remove Temp Block IP](#remove-temp-block-ip)
   - [Step 7: Uninstalling CSF (Optional)](#step-7-uninstalling-csf-optional)
 - [Enable CSF Firewall Web UI](#enable-csf-firewall-web-ui)
-  - [Step 1 – Install Required Perl Modules:](#step-1--install-required-perl-modules)
-- [Step 2 – Enable CSF Firewall Web UI:](#step-2--enable-csf-firewall-web-ui)
-- [Step 3 – Access and Use Web UI:](#step-3--access-and-use-web-ui)
+  - [Step 1: Install Required Perl Modules:](#step-1-install-required-perl-modules)
+  - [Step 2: Enable CSF Firewall Web UI:](#step-2-enable-csf-firewall-web-ui)
+  - [Step 3: Access and Use Web UI:](#step-3-access-and-use-web-ui)
+- [Install Docker Patch](#install-docker-patch)
+  - [Clone](#clone)
+  - [Run Pre Script](#run-pre-script)
+  - [Run Post Script](#run-post-script)
 
+
+<br />
+
+---
+
+<br />
+
+## Summary
+- Install CSF (ConfigServer Firewall)
+- Install docker patch (pre and post)
+  - docker.sh script will be placed in `/usr/local/include/csf/post.d/docker.sh`
 
 <br />
 
@@ -145,7 +161,7 @@ Use the following pages for installation help:
 
 <br />
 
-## Installation
+## Install CSF
 
 <br />
 
@@ -324,7 +340,7 @@ ConfigServer Security & Firewall (CSS) is an iptables based firewall for Linux s
 
 <br />
 
-### Step 1 – Install Required Perl Modules:
+### Step 1: Install Required Perl Modules:
 CSF UI required some of Perl modules to be installed on your system. Use the following commands to install required modules as per your operating system.
 
 **Debian based systems:**
@@ -341,7 +357,7 @@ sudo yum install perl-IO-Socket-SSL.noarch perl-Net-SSLeay perl-Net-LibIDN \
 
 <br />
 
-## Step 2 – Enable CSF Firewall Web UI:
+### Step 2: Enable CSF Firewall Web UI:
 To enable CSF web UI edit /etc/csf/csf.conf file in your favorite text editor and update the following values.
 
 ```shell
@@ -389,7 +405,7 @@ sudo service lfd restart
 
 <br />
 
-## Step 3 – Access and Use Web UI:
+### Step 3: Access and Use Web UI:
 Now, access CSF UI on your browser with the specified port. For this tutorial, I have used 1025 port. This will prompt for user authentication first. After successful login, you will find the screen like below.
 
 <p align="center"><img style="width: 100%;text-align: center;" src="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/Docs/images/csf-ui.png"></p>
@@ -406,3 +422,91 @@ Now, access CSF UI on your browser with the specified port. For this tutorial, I
 
 <p align="center"><img style="width: 100%;text-align: center;" src="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/Docs/images/csf-unblock-ip.png"></p>
 
+<br />
+
+---
+
+<br />
+
+<br />
+
+---
+
+<br />
+
+## Install Docker Patch
+After you have installed CSF and enabled the WebUI, you need to now install the docker patch if you run docker on your machine. This patch allows for docker to bypass CSF and not block traffic.
+
+<br />
+
+### Clone
+Within your server, change to whatever directory where you want to download everything (including patch):
+
+```shell
+cd /home/$USER/Documents
+```
+
+Clone the repo
+
+```shell
+git clone https://github.com/Aetherinox/csf-firewall.git
+```
+
+<br />
+
+### Run Pre Script
+Set the permissions (if needed)
+
+```shell
+sudo chmod +x /2-patch-docker/1-patch-pre/install.sh
+```
+
+Run the **Pre Script** first:
+
+```shell
+cd /2-patch-docker/1-patch-pre/
+./install.sh
+```
+
+You can also try:
+```shell
+sh install.sh
+```
+
+<br />
+
+### Run Post Script
+The post script has a few settings you may need to adjust. Open `docker.sh` and check the following:
+
+- `NETWORK_MANUAL_MODE`: If you have manually set a static local IP address for each container, set this to `true`.
+- `NETWORK_ADAPT_NAME`: If `NETWORK_MANUAL_MODE = true`, specify the network name you added to your `docker-compose.yml` file. Your container's **docker-compose.yml** would need to have the following:
+    ```
+    networks:
+    traefik:
+        name: traefik
+        external: true
+    ```
+
+<br />
+
+Set the permissions (if needed)
+
+```shell
+sudo chmod +x /2-patch-docker/2-patch-post/install.sh
+```
+
+Run the **Post Script** first:
+
+```shell
+cd /2-patch-docker/2-patch-post/
+./install.sh
+```
+
+You can also try:
+```shell
+sh install.sh
+```
+
+<br />
+
+The `docker.sh` file will be installed to `/usr/local/include/csf/post.d`
