@@ -60,9 +60,12 @@
 <br />
 
 ## Summary
+This guide will take you through the following steps:
+
 - Install CSF (ConfigServer Firewall)
+- Install CSF WebUI interface
 - Install docker patch (pre and post)
-  - docker.sh script will be placed in `/usr/local/include/csf/post.d/docker.sh`
+  - docker.sh script will be placed in `/usr/local/include/csf/post.d/docker.sh` and runs each time you restart CSF.
 
 <br />
 
