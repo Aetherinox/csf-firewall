@@ -1,9 +1,17 @@
 #!/bin/bash
 
+# ############################################################################
+#   CSF Docker Script
+#
+#   execute using
+#       - ./install.sh instead of 'sh install.sh'
+# ############################################################################
+
 export PATH="$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 DOCKER_INT="docker0"
 DOCKER_NETWORK="172.17.0.0/16"
+NETWORK_MANUAL_MODE=true
 NETWORK_ADAPT_NAME="traefik"
 DEBUG_ENABLED=false
 
@@ -134,23 +142,39 @@ if [ `echo ${containers} | wc -c` -gt "1" ]; then
 
         else
 
-            #   docker inspect -f "{{with index .NetworkSettings.Networks \"traefik\"}}{{.NetworkID}}{{end}}" 162a8aada1fd | cut -c -12
+            #
+            #   Network > Manual Mode
+            #   This is for users who have manually defined an IP address for each docker container
+            #   Must set
+            #       - NETWORK_MANUAL_MODE=true
+            #       - NETWORK_ADAPT_NAME='network_adapter_name'
+            #
 
-            #   returns IP
-            #   docker inspect -f "{{with index .NetworkSettings.Networks \"traefik\"}}{{.IPAddress}}{{end}}" 162a8aada1fd | cut -c -12
+            if [ "$NETWORK_MANUAL_MODE" = true ]; then
 
-            bridge=$(docker inspect -f "{{with index .NetworkSettings.Networks \"${NETWORK_ADAPT_NAME}\"}}{{.NetworkID}}{{end}}" ${container} | cut -c -12)
+                #   docker inspect -f "{{with index .NetworkSettings.Networks \"traefik\"}}{{.NetworkID}}{{end}}" 162a8aada1fd | cut -c -12
+                #
+                #   returns IP
+                #   docker inspect -f "{{with index .NetworkSettings.Networks \"traefik\"}}{{.IPAddress}}{{end}}" 162a8aada1fd | cut -c -12
 
-            #   docker network inspect -f '{{"'br-63599565ed58'" | or (index .Options "com.docker.network.bridge.name")}}' 63599565ed58
-            DOCKER_NET_INT=`docker network inspect -f '{{"'br-$bridge'" | or (index .Options "com.docker.network.bridge.name")}}' $bridge`
+                bridge=$(docker inspect -f "{{with index .NetworkSettings.Networks \"${NETWORK_ADAPT_NAME}\"}}{{.NetworkID}}{{end}}" ${container} | cut -c -12)
 
-            #   docker inspect -f "{{with index .NetworkSettings.Networks \"traefik\"}}{{.IPAddress}}{{end}}" 162a8aada1fd
-            ipaddr=`docker inspect -f "{{with index .NetworkSettings.Networks \"${NETWORK_ADAPT_NAME}\"}}{{.IPAddress}}{{end}}" ${container}`
-            
-            if [ "$DEBUG_ENABLED" = true ] ; then
-                printf '   BRIDGE .................. : %s\n' "$bridge"
-                printf '   DOCKER_NET_INT_2 ........ : %s\n' "$DOCKER_NET_INT"
-                printf '   IPPADDR ................. : %s\n\n' "$ipaddr"
+                #   docker network inspect -f '{{"'br-63599565ed58'" | or (index .Options "com.docker.network.bridge.name")}}' 63599565ed58
+                DOCKER_NET_INT=`docker network inspect -f '{{"'br-$bridge'" | or (index .Options "com.docker.network.bridge.name")}}' $bridge`
+
+                #   docker inspect -f "{{with index .NetworkSettings.Networks \"traefik\"}}{{.IPAddress}}{{end}}" 162a8aada1fd
+                ipaddr=`docker inspect -f "{{with index .NetworkSettings.Networks \"${NETWORK_ADAPT_NAME}\"}}{{.IPAddress}}{{end}}" ${container}`
+                
+                if [ "$DEBUG_ENABLED" = true ] ; then
+                    printf '   BRIDGE .................. : %s\n' "$bridge"
+                    printf '   DOCKER_NET_INT_2 ........ : %s\n' "$DOCKER_NET_INT"
+                    printf '   IPPADDR ................. : %s\n\n' "$ipaddr"
+                fi
+
+            else
+                bridge=$(docker inspect -f "{{with index .NetworkSettings.Networks \"${netmode}\"}}{{.NetworkID}}{{end}}" ${container} | cut -c -12)
+                DOCKER_NET_INT=`docker network inspect -f '{{"'br-$bridge'" | or (index .Options "com.docker.network.bridge.name")}}' $bridge`
+                ipaddr=`docker inspect -f "{{with index .NetworkSettings.Networks \"${netmode}\"}}{{.IPAddress}}{{end}}" ${container}`
             fi
         fi
 
@@ -168,7 +192,6 @@ if [ `echo ${containers} | wc -c` -gt "1" ]; then
                 dst_proto=`echo ${dst} | awk -F'/' '{ print $2 }'`
 
                 /usr/sbin/iptables -A DOCKER -d ${ipaddr}/32 ! -i ${DOCKER_NET_INT} -o ${DOCKER_NET_INT} -p ${dst_proto} -m ${dst_proto} --dport ${dst_port} -j ACCEPT
-
                 /usr/sbin/iptables -t nat -A POSTROUTING -s ${ipaddr}/32 -d ${ipaddr}/32 -p ${dst_proto} -m ${dst_proto} --dport ${dst_port} -j MASQUERADE
 
                 iptables_opt_src=""
@@ -176,7 +199,7 @@ if [ `echo ${containers} | wc -c` -gt "1" ]; then
                     iptables_opt_src="-d ${src_ip}/32 "
                 fi
 
-                # If this is an IPv4 address
+                #   Support for IPv4
                 if [[ ${src_ip} =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
                     /usr/sbin/iptables -t nat -A DOCKER ${iptables_opt_src}! -i ${DOCKER_NET_INT} -p ${dst_proto} -m ${dst_proto} --dport ${src_port} -j DNAT --to-destination ${ipaddr}:${dst_port}
                 fi
