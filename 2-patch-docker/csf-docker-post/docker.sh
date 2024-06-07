@@ -161,7 +161,7 @@ if [ `echo ${containers} | wc -c` -gt "1" ]; then
                 src=`echo ${rule} | awk -F'->' '{ print $2 }'`
                 dst=`echo ${rule} | awk -F'->' '{ print $1 }'`
 
-                src_ip=`echo ${src} | awk -F':' '{ print $1 }'`
+                src_ip=`echo ${src} | sed 's|^\(.*\):.*$|\1|'`
                 src_port=`echo ${src} | awk -F':' '{ print $2 }'`
 
                 dst_port=`echo ${dst} | awk -F'/' '{ print $1 }'`
@@ -175,7 +175,11 @@ if [ `echo ${containers} | wc -c` -gt "1" ]; then
                 if [ ${src_ip} != "0.0.0.0" ]; then
                     iptables_opt_src="-d ${src_ip}/32 "
                 fi
-                /usr/sbin/iptables -t nat -A DOCKER ${iptables_opt_src}! -i ${DOCKER_NET_INT} -p ${dst_proto} -m ${dst_proto} --dport ${src_port} -j DNAT --to-destination ${ipaddr}:${dst_port}
+
+                # If this is an IPv4 address
+                if [[ ${src_ip} =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+                    /usr/sbin/iptables -t nat -A DOCKER ${iptables_opt_src}! -i ${DOCKER_NET_INT} -p ${dst_proto} -m ${dst_proto} --dport ${src_port} -j DNAT --to-destination ${ipaddr}:${dst_port}
+                fi
             done
         fi
     done
