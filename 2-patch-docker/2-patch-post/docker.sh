@@ -1,29 +1,48 @@
 #!/bin/bash
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# #
 #   CSF Docker Script
 #
 #   execute using
 #       - ./install.sh instead of 'sh install.sh'
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# #
 
 export PATH="$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
-# # #
-# Variables
-# # #
+# #
+#   Configs
+#
+#   DOCKER_INT                  : main docker network interface
+#   NETWORK_MANUAL_MODE         : set true if you are manually assigning the ip address for each docker container
+#   NETWORK_ADAPT_NAME          : the adapter name for Traefik
+#                                 can be created using the command:
+#                                   - `sudo docker network create --driver=bridge --subnet=172.18.0.0/16 --gateway=172.18.0.1 traefik``
+#   CSF_FILE_ALLOW              : the defined allow list file
+#   CSF_COMMENT                 : comment added to each whitelisted ip within iptables
+#   DEBUG_ENABLED               : debugging mode; throws prints during various steps
+# #
 
 DOCKER_INT="docker0"
-DOCKER_NETWORK="172.17.0.0/16"
-NETWORK_MANUAL_MODE=true
+NETWORK_MANUAL_MODE=false
 NETWORK_ADAPT_NAME="traefik"
-DEBUG_ENABLED=true
 CSF_FILE_ALLOW='/etc/csf/csf.allow'
 CSF_COMMENT='Docker container whitelist'
+DEBUG_ENABLED=true
 
-# # #
-# Colors
-# # #
+# #
+#   list > network ips
+#
+#   this is the list of IP addresses you will use with docker that must be
+#   whitelisted.
+# #
+
+lst_ips=(
+    '172.17.0.0/16'
+)
+
+# #
+#   Colors
+# #
 
 BLACK=`tput setaf 0`
 RED=`tput setaf 1`
@@ -33,13 +52,12 @@ BLUE=`tput setaf 4`
 MAGENTA=`tput setaf 5`
 CYAN=`tput setaf 6`
 WHITE=`tput setaf 7`
-
 BOLD=`tput bold`
 RESET=`tput sgr0`
 
-# # #
-# Chain Exists
-# # #
+# #
+#   Chain Exists
+# #
 
 chain_exists() {
     [ $# -lt 1 -o $# -gt 2 ] && {
@@ -50,6 +68,10 @@ chain_exists() {
     [ $# -eq 1 ] && local table="--table $1"
     /usr/sbin/iptables $table -n --list "$chain_name" >/dev/null 2>&1
 }
+
+# #
+#   Forward > Add
+# #
 
 add_to_forward() {
     local docker_int=$1
@@ -62,6 +84,10 @@ add_to_forward() {
     fi
 }
 
+# #
+#   NAT > Add
+# #
+
 add_to_nat() {
     local docker_int=$1
     local subnet=$2
@@ -70,12 +96,20 @@ add_to_nat() {
     /usr/sbin/iptables -t nat -A DOCKER -i ${docker_int} -j RETURN
 }
 
+# #
+#   Docker Isolation > Add
+# #
+
 add_to_docker_isolation() {
     local docker_int=$1
 
     /usr/sbin/iptables -A DOCKER-ISOLATION-STAGE-1 -i ${docker_int} ! -o ${docker_int} -j DOCKER-ISOLATION-STAGE-2
     /usr/sbin/iptables -A DOCKER-ISOLATION-STAGE-2 -o ${docker_int} -j DROP
 }
+
+# #
+#   Add Rules
+# #
 
 /usr/sbin/iptables-save | grep -v -- '-j DOCKER' | /usr/sbin/iptables-restore
 chain_exists DOCKER && /usr/sbin/iptables -X DOCKER
@@ -87,8 +121,6 @@ chain_exists DOCKER nat && /usr/sbin/iptables -t nat -X DOCKER
 /usr/sbin/iptables -N DOCKER-USER
 
 /usr/sbin/iptables -t nat -N DOCKER
-
-/usr/sbin/iptables -t nat -A POSTROUTING ! -o ${DOCKER_INT} -s ${DOCKER_NETWORK} -j MASQUERADE
 /usr/sbin/iptables -A INPUT -i ${DOCKER_INT} -j ACCEPT
 
 /usr/sbin/iptables -A FORWARD -j DOCKER-USER
@@ -97,7 +129,27 @@ add_to_forward ${DOCKER_INT}
 
 /usr/sbin/iptables -t nat -A PREROUTING -m addrtype --dst-type LOCAL -j DOCKER
 /usr/sbin/iptables -t nat -A OUTPUT ! -d 127.0.0.0/8 -m addrtype --dst-type LOCAL -j DOCKER
-/usr/sbin/iptables -t nat -A POSTROUTING -s ${DOCKER_NETWORK} ! -o ${DOCKER_INT} -j MASQUERADE
+
+# #
+#   whitelist ip addresses associated with docker
+# #
+
+for j in "${!lst_ips[@]}"; do
+
+    # #
+    #   get ip addresses
+    # #
+
+    ip_block=${lst_ips[$j]}
+
+    /usr/sbin/iptables -t nat -A POSTROUTING ! -o ${DOCKER_INT} -s ${ip_block} -j MASQUERADE
+    /usr/sbin/iptables -t nat -A POSTROUTING -s ${ip_block} ! -o ${DOCKER_INT} -j MASQUERADE
+
+done
+
+# #
+#   Get bridges
+# #
 
 bridges=`docker network ls -q --filter='Driver=bridge'`
 
@@ -135,7 +187,15 @@ if [ "$DEBUG_ENABLED" = true ] ; then
     printf '\n\n :::::::: CONTAINERS ::::::: \n\n'
 fi
 
+# #
+#   List containers
+# #
+
 containers=`docker ps -q`
+
+# #
+#   Loop containers
+# #
 
 if [ `echo ${containers} | wc -c` -gt "1" ]; then
     for container in ${containers}; do
@@ -156,9 +216,9 @@ if [ `echo ${containers} | wc -c` -gt "1" ]; then
             printf '   NETMODE ................. : %s\n\n' "$netmode"
         fi
 
-        # # #
+        # #
         #   Netmode > Default
-        # # #
+        # #
 
         if [ $netmode == "default" ]; then
             DOCKER_NET_INT=${DOCKER_INT}
@@ -168,28 +228,28 @@ if [ `echo ${containers} | wc -c` -gt "1" ]; then
 
             ipaddr=`docker inspect -f "{{.NetworkSettings.IPAddress}}" ${container}`
 
-        # # #
+        # #
         #   Netmode > Other
-        # # #
+        # #
 
         else
 
-            # # #
+            # #
             #   Network > Manual Mode
             #   This is for users who have manually defined an IP address for each docker container
             #   Must set
             #       - NETWORK_MANUAL_MODE=true
             #       - NETWORK_ADAPT_NAME='network_adapter_name'
-            # # #
+            # #
 
             if [ "$NETWORK_MANUAL_MODE" = true ]; then
 
-                # # #
+                # #
                 #   docker inspect -f "{{with index .NetworkSettings.Networks \"traefik\"}}{{.NetworkID}}{{end}}" 162a8aada1fd | cut -c -12
                 #
                 #   returns IP
                 #   docker inspect -f "{{with index .NetworkSettings.Networks \"traefik\"}}{{.IPAddress}}{{end}}" 162a8aada1fd | cut -c -12
-                # # #
+                # #
 
                 bridge=$(docker inspect -f "{{with index .NetworkSettings.Networks \"${NETWORK_ADAPT_NAME}\"}}{{.NetworkID}}{{end}}" ${container} | cut -c -12)
 
@@ -205,23 +265,23 @@ if [ `echo ${containers} | wc -c` -gt "1" ]; then
                     printf '   IPPADDR ................. : %s\n\n' "$ipaddr"
                 fi
 
-                # # #
+                # #
                 #   CHeck if containers IP is currently in CSF allow list /etc/csf/csf.allow
-                # # #
+                # #
 
                 if grep -q "\b${ipaddr}\b" ${CSF_FILE_ALLOW}; then
                     echo -e "${GREEN}[ OK ]: ${ipaddr} already found in${RESET} ${CSF_FILE_ALLOW}"
                 else
 
-                    # # #
+                    # #
                     #   Find CSF path on system
-                    # # #
+                    # #
 
                     csf_path=$(command -v csf)
 
-                    # # #
+                    # #
                     #   Found CSF binary, add container IP to allow list /etc/csf/csf.allow
-                    # # #
+                    # #
 
                     if [[ $csf_path ]]; then
                         echo -e "${YELLOW}[ OK ]: Adding ${ipaddr} to allow list${RESET} ${CSF_FILE_ALLOW}"
