@@ -408,9 +408,73 @@ Web UI works under lfd daemon. So restart the lfd daemon on your system using th
 sudo service lfd restart
 ```
 
+<br />
+
 In order to gain access to the online admin panel; you must ensure lfd and csf are running. You can check by running the commands:
 ```shell ignore
 sudo service lfd status
+```
+
+<br />
+
+You should see the `lfd` service running:
+```
+● lfd.service - ConfigServer Firewall & Security - lfd
+     Loaded: loaded (/lib/systemd/system/lfd.service; enabled; preset: enabled)
+     Active: active (running) since Mon 2024-08-05 11:59:38 MST; 1s ago
+    Process: 46393 ExecStart=/usr/sbin/lfd (code=exited, status=0/SUCCESS)
+   Main PID: 46407 (lfd - sleeping)
+      Tasks: 8 (limit: 4613)
+     Memory: 121.7M
+        CPU: 2.180s
+     CGroup: /system.slice/lfd.service
+```
+
+<br />
+
+Next, confirm `csf` service is also running:
+```shell ignore
+sudo service csf status
+```
+
+<br />
+
+Check the output for errors on service `csf`. You should see no errors:
+```
+● csf.service - ConfigServer Firewall & Security - csf
+     Loaded: loaded (/lib/systemd/system/csf.service; enabled; preset: enabled)
+     Active: active (exited) since Mon 2024-08-05 12:04:09 MST; 1s ago
+    Process: 46916 ExecStart=/usr/sbin/csf --initup (code=exited, status=0/SUCCESS)
+   Main PID: 46916 (code=exited, status=0/SUCCESS)
+        CPU: 12.692s
+```
+
+<br />
+
+If you see an error such as the following when running `csf status`:
+```
+× csf.service - ConfigServer Firewall & Security - csf
+     Loaded: loaded (/lib/systemd/system/csf.service; enabled; preset: enabled)
+     Active: failed (Result: exit-code) since Mon 2024-08-05 11:58:24 MST; 5min ago
+    Process: 46313 ExecStart=/usr/sbin/csf --initup (code=exited, status=2)
+   Main PID: 46313 (code=exited, status=2)
+        CPU: 519ms
+
+csf[46313]: Flushing chain `OUTPUT'
+csf[46313]: Flushing chain `PREROUTING'
+csf[46313]: Flushing chain `INPUT'
+csf[46313]: Flushing chain `FORWARD'
+csf[46313]: Flushing chain `OUTPUT'
+csf[46313]: Flushing chain `POSTROUTING'
+csf[46313]: open3: exec of /sbin/ipset flush failed: No such file or directory at /usr/sbin/csf line 5650.
+```
+
+<br />
+
+You must ensure that you install `ipset` with the command:
+```shell ignore
+sudo apt-get update 
+sudo apt-get install ipset
 ```
 
 <br />
