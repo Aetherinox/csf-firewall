@@ -174,14 +174,14 @@ Use the following pages for installation help:
 - Perl installed on your server. If Perl is not installed, you can install it by running the following commands:
   - For CentOS/RHEL:
     ```shell
-    sudo yum install perl 
+    sudo yum install perl ipset
     ```
 
   - For Debian/Ubuntu:
 
     ```shell
     sudo apt-get update 
-    sudo apt-get install perl 
+    sudo apt-get install perl ipset
     ```
 
 <br />
@@ -400,10 +400,17 @@ After making changes, edit `/etc/csf/ui/ui.allow` configuration file and add you
 sudo echo "YOUR_PUBLIC_IP_ADDRESS" >>  /etc/csf/ui/ui.allow
 ```
 
+<br />
+
 Web UI works under lfd daemon. So restart the lfd daemon on your system using the following command.
 
 ```shell
 sudo service lfd restart
+```
+
+In order to gain access to the online admin panel; you must ensure lfd and csf are running. You can check by running the commands:
+```shell ignore
+sudo service lfd status
 ```
 
 <br />
