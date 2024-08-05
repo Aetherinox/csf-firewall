@@ -260,11 +260,15 @@ CSF provides several commands to manage the firewall, such as:
 sudo csf -s
 ```
 
+<br />
+
 #### Stop Firewall
 
 ```shell
 sudo csf -f
 ```
+
+<br />
 
 #### Restart Firewall
 
@@ -272,11 +276,15 @@ sudo csf -f
 sudo csf -r
 ```
 
+<br />
+
 #### List Firewall Rules
 
 ```shell
 sudo csf -l
 ```
+
+<br />
 
 #### Add IP to Allow List
 
@@ -284,11 +292,15 @@ sudo csf -l
 sudo csf -a IP_ADDRESS
 ```
 
+<br />
+
 #### Remove IP to Allow List
 
 ```shell
 sudo csf -ar IP_ADDRESS
 ```
+
+<br />
 
 #### Add IP to Deny List
 
@@ -296,11 +308,15 @@ sudo csf -ar IP_ADDRESS
 sudo csf -d IP_ADDRESS
 ```
 
+<br />
+
 #### Remove IP from Deny List
 
 ```shell
 sudo csf -dr IP_ADDRESS
 ```
+
+<br />
 
 #### Add Temp Block IP
 
@@ -308,11 +324,15 @@ sudo csf -dr IP_ADDRESS
 sudo csf -td IP_ADDRESS
 ```
 
+<br />
+
 #### Remove Temp Block IP
 
 ```shell
 sudo csf -tr IP_ADDRESS
 ```
+
+<br />
 
 These commands can help you manage your server’s security and monitor incoming and outgoing traffic.
 
@@ -330,6 +350,8 @@ If you decide to uninstall CSF for any reason, follow these steps:
     sudo sh uninstall.sh
     ```
 
+<br />
+
 The script will remove CSF and its associated files from your server.
 
 <br />
@@ -346,11 +368,15 @@ ConfigServer Security & Firewall (CSS) is an iptables based firewall for Linux s
 ### Step 1: Install Required Perl Modules:
 CSF UI required some of Perl modules to be installed on your system. Use the following commands to install required modules as per your operating system.
 
+<br />
+
 **Debian based systems:**
 ```shell
 sudo apt-get install libio-socket-ssl-perl libcrypt-ssleay-perl \
                     libnet-libidn-perl libio-socket-inet6-perl libsocket6-perl
 ```
+
+<br />
 
 **Redhat based systems:**
 ```shell
@@ -393,6 +419,8 @@ Change the following values to your own:
 - `UI_PORT`
 - `UI_USER`
 - `UI_PASS`
+
+<br />
 
 After making changes, edit `/etc/csf/ui/ui.allow` configuration file and add your public IP to allow access to CSF UI. Change `YOUR_PUBLIC_IP_ADDRESS` with your public IP address.
 
@@ -451,27 +479,14 @@ Check the output for errors on service `csf`. You should see no errors:
 
 <br />
 
-If you see an error such as the following when running `csf status`:
+If you see the following error when running `csf status`:
 ```
-× csf.service - ConfigServer Firewall & Security - csf
-     Loaded: loaded (/lib/systemd/system/csf.service; enabled; preset: enabled)
-     Active: failed (Result: exit-code) since Mon 2024-08-05 11:58:24 MST; 5min ago
-    Process: 46313 ExecStart=/usr/sbin/csf --initup (code=exited, status=2)
-   Main PID: 46313 (code=exited, status=2)
-        CPU: 519ms
-
-csf[46313]: Flushing chain `OUTPUT'
-csf[46313]: Flushing chain `PREROUTING'
-csf[46313]: Flushing chain `INPUT'
-csf[46313]: Flushing chain `FORWARD'
-csf[46313]: Flushing chain `OUTPUT'
-csf[46313]: Flushing chain `POSTROUTING'
 csf[46313]: open3: exec of /sbin/ipset flush failed: No such file or directory at /usr/sbin/csf line 5650.
 ```
 
 <br />
 
-You must ensure that you install `ipset` with the command:
+You must install `ipset`:
 ```shell ignore
 sudo apt-get update 
 sudo apt-get install ipset
@@ -503,7 +518,7 @@ Now, access CSF UI on your browser with the specified port. For this tutorial, I
 <br />
 
 ## Install Docker Patch
-After you have installed CSF and enabled the WebUI, you need to now install the docker patch if you run docker on your machine. This patch allows for docker to bypass CSF and not block traffic.
+After you have installed CSF, the WebUI, and enabled both `lfd` and `csf` services; it's now time to run the docker patcher. The docker patch will check your docker configuration, and add a series of iptable rules so that docker can communicate with the outside world and users can access your containers.
 
 <br />
 
@@ -515,11 +530,12 @@ The docker patch allows for you to restart CSF without having to restart your do
 Within your server, change to whatever directory where you want to download everything (including patch):
 
 ```shell
-cd /home/$USER/Documents
+cd $HOME/Documents
 ```
 
-Clone the repo
+<br />
 
+Clone the repo
 ```shell
 git clone https://github.com/Aetherinox/csf-firewall.git
 ```
@@ -533,12 +549,16 @@ Set the permissions (if needed)
 sudo chmod +x /2-patch-docker/1-patch-pre/install.sh
 ```
 
+<br />
+
 Run the **Pre Script** first:
 
 ```shell
 cd /2-patch-docker/1-patch-pre/
 ./install.sh
 ```
+
+<br />
 
 You can also try:
 ```shell
@@ -567,12 +587,16 @@ Set the permissions (if needed)
 sudo chmod +x /2-patch-docker/2-patch-post/install.sh
 ```
 
+<br />
+
 Run the **Post Script** first:
 
 ```shell
 cd /2-patch-docker/2-patch-post/
 ./install.sh
 ```
+
+<br />
 
 You can also try:
 ```shell
