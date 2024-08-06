@@ -214,10 +214,10 @@ fi
 # #
 
 if ! [ -x "$(command -v ipset)" ]; then
-    echo -e "  ${WHITE}Installing package ${MAGENTA}ipset${WHITE}"
+	echo -e "  ${WHITE}Installing package ${MAGENTA}ipset${WHITE}"
 
-    sudo apt-get update -y -q >/dev/null 2>&1
-    sudo apt-get install ipset -y -qq >/dev/null 2>&1
+	sudo apt-get update -y -q >/dev/null 2>&1
+	sudo apt-get install ipset -y -qq >/dev/null 2>&1
 fi
 
 # #
@@ -225,14 +225,14 @@ fi
 # #
 
 if ! [ -x "$(command -v csf)" ]; then
-    echo -e "  ${WHITE}Installing package ${MAGENTA}ConfigServer Firewall${WHITE}"
+	echo -e "  ${WHITE}Installing package ${MAGENTA}ConfigServer Firewall${WHITE}"
 
 	# #
 	#   csf > install prerequisites
 	# #
 
-    sudo apt-get update -y -q >/dev/null 2>&1
-    sudo apt-get install perl ipset -y -qq >/dev/null 2>&1
+	sudo apt-get update -y -q >/dev/null 2>&1
+	sudo apt-get install perl ipset -y -qq >/dev/null 2>&1
 
 	# #
 	#   csf > download, extract, install
@@ -250,7 +250,7 @@ if ! [ -x "$(command -v csf)" ]; then
 	cd ${app_dir}
 	sudo rm csf.tgz >> /dev/null 2>&1
 	sudo rm -rf csf/ >> /dev/null 2>&1
-	
+
 	echo -e
 	echo -e "  ${WHITE}Docker patch will now start ...${NORMAL}"
 	echo -e
