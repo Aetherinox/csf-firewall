@@ -22,27 +22,27 @@
 <br />
 
 - [Summary](#summary)
-- [Download](#download)
-- [References](#references)
-- [Features](#features)
-- [Install CSF](#install-csf)
-  - [Step 1: Prerequisites](#step-1-prerequisites)
-  - [Step 2: Download and Install CSF](#step-2-download-and-install-csf)
-  - [Step 3: Testing the Firewall](#step-3-testing-the-firewall)
-  - [Step 4: Configuring CSF](#step-4-configuring-csf)
-  - [Step 5: Enabling CSF Firewall](#step-5-enabling-csf-firewall)
-  - [Step 6: Managing the Firewall](#step-6-managing-the-firewall)
-    - [Start Firewall](#start-firewall)
-    - [Stop Firewall](#stop-firewall)
-    - [Restart Firewall](#restart-firewall)
-    - [List Firewall Rules](#list-firewall-rules)
-    - [Add IP to Allow List](#add-ip-to-allow-list)
-    - [Remove IP to Allow List](#remove-ip-to-allow-list)
-    - [Add IP to Deny List](#add-ip-to-deny-list)
-    - [Remove IP from Deny List](#remove-ip-from-deny-list)
-    - [Add Temp Block IP](#add-temp-block-ip)
-    - [Remove Temp Block IP](#remove-temp-block-ip)
-  - [Step 7: Uninstalling CSF (Optional)](#step-7-uninstalling-csf-optional)
+- [ConfigServer Firewall Features](#configserver-firewall-features)
+- [Install ConfigServer Firewall](#install-configserver-firewall)
+  - [Install Using Patcher](#install-using-patcher)
+  - [Install Manually](#install-manually)
+    - [Step 1: Prerequisites](#step-1-prerequisites)
+    - [Step 2: Download and Install CSF](#step-2-download-and-install-csf)
+- [Testing the Firewall](#testing-the-firewall)
+- [Configuring CSF](#configuring-csf)
+- [Enabling CSF Firewall](#enabling-csf-firewall)
+- [Managing the Firewall](#managing-the-firewall)
+  - [Start Firewall](#start-firewall)
+  - [Stop Firewall](#stop-firewall)
+  - [Restart Firewall](#restart-firewall)
+  - [List Firewall Rules](#list-firewall-rules)
+  - [Add IP to Allow List](#add-ip-to-allow-list)
+  - [Remove IP to Allow List](#remove-ip-to-allow-list)
+  - [Add IP to Deny List](#add-ip-to-deny-list)
+  - [Remove IP from Deny List](#remove-ip-from-deny-list)
+  - [Add Temp Block IP](#add-temp-block-ip)
+  - [Remove Temp Block IP](#remove-temp-block-ip)
+- [Uninstalling CSF (Optional)](#uninstalling-csf-optional)
 - [Enable CSF Firewall Web UI](#enable-csf-firewall-web-ui)
   - [Step 1: Install Required Perl Modules:](#step-1-install-required-perl-modules)
   - [Step 2: Enable CSF Firewall Web UI:](#step-2-enable-csf-firewall-web-ui)
@@ -53,6 +53,8 @@
   - [Run Patch](#run-patch)
   - [Manual Run](#manual-run)
   - [Advanced Logs](#advanced-logs)
+- [Download ConfigServer Firewall](#download-configserver-firewall)
+- [References for More Help](#references-for-more-help)
 
 
 <br />
@@ -62,12 +64,34 @@
 <br />
 
 ## Summary
-This guide will take you through the following steps:
+This repository contains several things:
+- The latest version of ConfigServer Firewall
+  - Located in the `csf_install` folder.
+  - Can also be downloaded from https://download.configserver.com/csf
+- The official ConfigServer Firewall config.conf file
+  - Located in the `csf_config` folder.
+- A patch which allows you to configure CSF to work along-side of your Docker containers.
+  - Located in the `patch` folder.
+
+<br />
+<br />
+
+This guide will help you with the following steps:
 
 - Install CSF (ConfigServer Firewall)
 - Install CSF WebUI interface
-- Install docker patch (pre and post)
-  - docker.sh script will be placed in `/usr/local/include/csf/post.d/docker.sh` and runs each time you restart CSF.
+- Install docker patch
+  - A file named `docker.sh` will be placed in `/usr/local/include/csf/post.d/docker.sh` and runs each time you start ConfigServer Firewall.
+
+<br />
+<br />
+
+This repo contains the following folders; with an explaination of each one below:
+| Folder | Description |
+| --- | --- | 
+| `csf_install` | <br>Latest version of ConfigServer Firewall. Can also be downloaded from [https://download.configserver.com/csf.tgz](https://download.configserver.com/csf.tgz).<br><br>You do not need this folder if you are downloading it from the link provided above.<br><br> |
+| `csf_config` | <br>ConfigServer Firewall config file; should be placed within `/etc/csf/config.conf` <br><br> |
+| `patch` | <br>The docker patch to allow docker, traefik, and ConfigServer Firewall to work together. <br><br> |
 
 <br />
 
@@ -75,28 +99,7 @@ This guide will take you through the following steps:
 
 <br />
 
-## Download
-The latest version of csf can be downloaded here:
-- https://download.configserver.com/csf.tgz
-
-<br />
-
----
-
-<br />
-
-## References
-Use the following pages for installation help:
-- Chapter 1: [How to Install and Configure CSF Firewall on Linux](https://tecadmin.net/install-csf-firewall-on-linux/)
-- Chapter 2: [How to Enable CSF Firewall Web UI](https://tecadmin.net/how-to-enable-csf-firewall-web-ui/)
-
-<br />
-
----
-
-<br />
-
-## Features
+## ConfigServer Firewall Features
 
 - Straight-forward SPI iptables firewall script
 - Daemon process that checks for login authentication failures for:
@@ -166,11 +169,52 @@ Use the following pages for installation help:
 
 <br />
 
-## Install CSF
+## Install ConfigServer Firewall
+You can install ConfigServer Firewall one of two ways:
+1. Using the patcher `install.sh` script in the repo folder `/patch/install.sh`; which will install ConfigServer Firewall and all prerequisites automatically.
+2. Manually
 
 <br />
 
-### Step 1: Prerequisites
+### Install Using Patcher
+
+If you've like to use this repo's patcher to install ConfigServer Firewall, download the patch:
+```shell ignore
+git clone https://github.com/Aetherinox/csf-firewall.git
+```
+
+<br />
+
+Set the permissions for the `install.sh` file:
+```shell ignore
+sudo chmod +x /csf-firewall/patch/install.sh
+```
+
+<br />
+
+Run the script:
+```shell ignore
+/csf-firewall/patch/install.sh
+```
+
+<br />
+
+If ConfigServer Firewall is not already installed on your system; you should see:
+```
+  Installing package iptables
+  Installing package ipset
+  Installing package ConfigServer Firewall
+
+  Docker patch will now start ...
+```
+<br />
+
+### Install Manually
+These steps explain how to install ConfigServer Firewall manually.
+
+<br />
+
+#### Step 1: Prerequisites
 - A Linux server running CentOS, Debian, Ubuntu, or any other compatible Linux distribution. 
 - Root access or a user account with sudo privileges.
 - Perl installed on your server. If Perl is not installed, you can install it by running the following commands:
@@ -188,7 +232,7 @@ Use the following pages for installation help:
 
 <br />
 
-### Step 2: Download and Install CSF
+#### Step 2: Download and Install CSF
 To download and install CSF, follow these steps:
 
 - Log in to your server via SSH. 
@@ -213,7 +257,11 @@ CSF will now be installed on your server, along with its Web UI (ConfigServer Fi
 
 <br />
 
-### Step 3: Testing the Firewall
+---
+
+<br />
+
+## Testing the Firewall
 Before enabling and configuring CSF, it is crucial to test whether it is compatible with your server. Run the following command to initiate the test:
 
 ```shell
@@ -224,7 +272,11 @@ The test will check for any potential issues or conflicts. If the test completes
 
 <br />
 
-### Step 4: Configuring CSF
+---
+
+<br />
+
+## Configuring CSF
 Now that CSF is installed, you can start configuring it to suit your server’s requirements. The main configuration file for CSF is located at /etc/csf/csf.conf. You can use your preferred text editor to modify the file, such as nano or vim:
 
 ```shell
@@ -242,7 +294,11 @@ These are just a few of the numerous configuration options available in CSF. Mak
 
 <br />
 
-### Step 5: Enabling CSF Firewall
+---
+
+<br />
+
+## Enabling CSF Firewall
 Once you have configured the CSF firewall, it is time to enable it. To do so, run the following command:
 
 ```shell
@@ -253,10 +309,14 @@ This command will restart the CSF and LFD (Login Failure Daemon) services, apply
 
 <br />
 
-### Step 6: Managing the Firewall
+---
+
+<br />
+
+## Managing the Firewall
 CSF provides several commands to manage the firewall, such as:
 
-#### Start Firewall
+### Start Firewall
 
 ```shell
 sudo csf -s
@@ -264,7 +324,7 @@ sudo csf -s
 
 <br />
 
-#### Stop Firewall
+### Stop Firewall
 
 ```shell
 sudo csf -f
@@ -272,7 +332,7 @@ sudo csf -f
 
 <br />
 
-#### Restart Firewall
+### Restart Firewall
 
 ```shell
 sudo csf -r
@@ -280,7 +340,7 @@ sudo csf -r
 
 <br />
 
-#### List Firewall Rules
+### List Firewall Rules
 
 ```shell
 sudo csf -l
@@ -288,7 +348,7 @@ sudo csf -l
 
 <br />
 
-#### Add IP to Allow List
+### Add IP to Allow List
 
 ```shell
 sudo csf -a IP_ADDRESS
@@ -296,7 +356,7 @@ sudo csf -a IP_ADDRESS
 
 <br />
 
-#### Remove IP to Allow List
+### Remove IP to Allow List
 
 ```shell
 sudo csf -ar IP_ADDRESS
@@ -304,7 +364,7 @@ sudo csf -ar IP_ADDRESS
 
 <br />
 
-#### Add IP to Deny List
+### Add IP to Deny List
 
 ```shell
 sudo csf -d IP_ADDRESS
@@ -312,7 +372,7 @@ sudo csf -d IP_ADDRESS
 
 <br />
 
-#### Remove IP from Deny List
+### Remove IP from Deny List
 
 ```shell
 sudo csf -dr IP_ADDRESS
@@ -320,7 +380,7 @@ sudo csf -dr IP_ADDRESS
 
 <br />
 
-#### Add Temp Block IP
+### Add Temp Block IP
 
 ```shell
 sudo csf -td IP_ADDRESS
@@ -328,7 +388,7 @@ sudo csf -td IP_ADDRESS
 
 <br />
 
-#### Remove Temp Block IP
+### Remove Temp Block IP
 
 ```shell
 sudo csf -tr IP_ADDRESS
@@ -340,7 +400,11 @@ These commands can help you manage your server’s security and monitor incoming
 
 <br />
 
-### Step 7: Uninstalling CSF (Optional)
+---
+
+<br />
+
+## Uninstalling CSF (Optional)
 If you decide to uninstall CSF for any reason, follow these steps:
 
 1. Navigate to the CSF directory:
@@ -363,7 +427,7 @@ The script will remove CSF and its associated files from your server.
 <br />
 
 ## Enable CSF Firewall Web UI
-ConfigServer Security & Firewall (CSS) is an iptables based firewall for Linux systems. In our previous tutorial read installation tutorial of CSF on Linux system. CSF also provides in-built web UI for the managing firewall from the web interface. In this tutorial, you will find how to enable CSF Firewall Web UI on your system.
+ConfigServer Firewall offers a WebUI for the managing firewall from the web interface. This section explains how to install the WebUI.
 
 <br />
 
@@ -526,7 +590,7 @@ After you have installed CSF, the WebUI, and enabled both `lfd` and `csf` servic
 
 The docker patch does several things:
 - Allows for you to restart CSF without having to restart your docker containers.
-- Scans every container you have set up in docker and adds a white-list firewall rule
+- Scans every container you have set up in docker and adds a whitelist firewall rule
 
 <br />
 
@@ -547,7 +611,7 @@ git clone https://github.com/Aetherinox/csf-firewall.git
 <br />
 
 ### Configure
-The `/2-patch/docker.sh` file has a few configs you can adjust. Open it in a text editor and change the values to your preference.
+The `/patch/docker.sh` file has a few configs you can adjust. Open it in a text editor and change the values to your preference.
 
 ```bash ignore
 DOCKER_INT="docker0"
@@ -582,7 +646,7 @@ Each setting is defined below:
 Set the permissions (if needed)
 
 ```shell
-sudo chmod +x /2-patch/install.sh
+sudo chmod +x /patch/install.sh
 ```
 
 <br />
@@ -590,7 +654,7 @@ sudo chmod +x /2-patch/install.sh
 Run the script:
 
 ```shell
-cd /2-patch/
+cd /patch/
 ./install.sh
 ```
 
@@ -622,3 +686,25 @@ This script includes debugging prints / logs. To view these, restart `csf.servic
 ```shell ignore
 sudo csf -r
 ```
+
+
+<br />
+
+---
+
+<br />
+
+## Download ConfigServer Firewall
+The latest version of csf can be downloaded from:
+- https://download.configserver.com/csf.tgz
+
+<br />
+
+---
+
+<br />
+
+## References for More Help
+If you need additional help apart from this guide to configure CSF; use the following pages for more help:
+- Chapter 1: [How to Install and Configure CSF Firewall on Linux](https://tecadmin.net/install-csf-firewall-on-linux/)
+- Chapter 2: [How to Enable CSF Firewall Web UI](https://tecadmin.net/how-to-enable-csf-firewall-web-ui/)
