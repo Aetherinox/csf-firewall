@@ -547,7 +547,7 @@ git clone https://github.com/Aetherinox/csf-firewall.git
 <br />
 
 ### Configure
-The `docker.sh` file has a few configs you can just:
+The `2-patch/docker.sh` file has a few configs you can adjust. Open it in a text editor and change the values to your preference.
 
 ```bash ignore
 DOCKER_INT="docker0"
