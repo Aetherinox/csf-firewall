@@ -296,6 +296,11 @@ add_to_forward()
         ${PATH_IPTABLES} -A FORWARD -o ${docker_int} -j DOCKER
         ${PATH_IPTABLES} -A FORWARD -i ${docker_int} ! -o ${docker_int} -j ACCEPT
         ${PATH_IPTABLES} -A FORWARD -i ${docker_int} -o ${docker_int} -j ACCEPT
+
+        echo -e "                  ${DEVGREY}+ RULE:                  ${FUCHSIA}-A FORWARD -o ${docker_int} -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT${NORMAL}"
+        echo -e "                  ${DEVGREY}+ RULE:                  ${FUCHSIA}-A FORWARD -o ${docker_int} -j DOCKER${NORMAL}"
+        echo -e "                  ${DEVGREY}+ RULE:                  ${FUCHSIA}-A FORWARD -i ${docker_int} ! -o ${docker_int} -j ACCEPT${NORMAL}"
+        echo -e "                  ${DEVGREY}+ RULE:                  ${FUCHSIA}-A FORWARD -i ${docker_int} -o ${docker_int} -j ACCEPT${NORMAL}"
     fi
 }
 
@@ -310,6 +315,9 @@ add_to_nat()
 
     ${PATH_IPTABLES} -t nat -A POSTROUTING -s ${subnet} ! -o ${docker_int} -j MASQUERADE
     ${PATH_IPTABLES} -t nat -A DOCKER -i ${docker_int} -j RETURN
+
+    echo -e "                  ${DEVGREY}+ RULE:                  ${FUCHSIA}-t nat -A POSTROUTING -s ${subnet} ! -o ${docker_int} -j MASQUERADE${NORMAL}"
+    echo -e "                  ${DEVGREY}+ RULE:                  ${FUCHSIA}-t nat -A DOCKER -i ${docker_int} -j RETURN${NORMAL}"
 }
 
 # #
@@ -322,6 +330,9 @@ add_to_docker_isolation()
 
     ${PATH_IPTABLES} -A DOCKER-ISOLATION-STAGE-1 -i ${docker_int} ! -o ${docker_int} -j DOCKER-ISOLATION-STAGE-2
     ${PATH_IPTABLES} -A DOCKER-ISOLATION-STAGE-2 -o ${docker_int} -j DROP
+
+    echo -e "                  ${DEVGREY}+ RULE:                  ${FUCHSIA}-A DOCKER-ISOLATION-STAGE-1 -i ${docker_int} ! -o ${docker_int} -j DOCKER-ISOLATION-STAGE-2${NORMAL}"
+    echo -e "                  ${DEVGREY}+ RULE:                  ${FUCHSIA}-A DOCKER-ISOLATION-STAGE-2 -o ${docker_int} -j DROP${NORMAL}"
 }
 
 # #
@@ -366,10 +377,13 @@ for j in "${!lst_ips[@]}"; do
 
     ip_block=${lst_ips[$j]}
 
-    echo -e "  ${BOLD}${WHITE}                +  ${WHITE}${ip_block}${NORMAL}"
+    echo -e "  ${BOLD}${WHITE}                + ${YELLOW}${ip_block}${NORMAL}"
 
     ${PATH_IPTABLES} -t nat -A POSTROUTING ! -o ${DOCKER_INT} -s ${ip_block} -j MASQUERADE
     ${PATH_IPTABLES} -t nat -A POSTROUTING -s ${ip_block} ! -o ${DOCKER_INT} -j MASQUERADE
+
+    echo -e "                  ${DEVGREY}+ RULE:                  ${FUCHSIA}-t nat -A POSTROUTING ! -o ${DOCKER_INT} -s ${ip_block} -j MASQUERADE${NORMAL}"
+    echo -e "                  ${DEVGREY}+ RULE:                  ${FUCHSIA}-t nat -A POSTROUTING -s ${ip_block} ! -o ${DOCKER_INT} -j MASQUERADE${NORMAL}"
 done
 
 # #
@@ -428,7 +442,7 @@ containers=`docker ps -q`
 #   Loop containers
 # #
 
-echo -e "  ${BOLD}${DEVGREY}+ COTAINERS     ${WHITE}Configure containers${NORMAL}"
+echo -e "  ${BOLD}${DEVGREY}+ CONTAINERS    ${WHITE}Configure containers${NORMAL}"
 
 if [ `echo ${containers} | wc -c` -gt "1" ]; then
     for container in ${containers}; do
@@ -643,6 +657,9 @@ if [ `echo ${containers} | wc -c` -gt "1" ]; then
                 ${PATH_IPTABLES} -A DOCKER -d ${ipaddr}/32 ! -i ${DOCKER_NET_INT} -o ${DOCKER_NET_INT} -p ${dst_proto} -m ${dst_proto} --dport ${dst_port} -j ACCEPT
                 ${PATH_IPTABLES} -t nat -A POSTROUTING -s ${ipaddr}/32 -d ${ipaddr}/32 -p ${dst_proto} -m ${dst_proto} --dport ${dst_port} -j MASQUERADE
 
+                echo -e "                  ${DEVGREY}+ RULE:                  ${FUCHSIA}-A DOCKER -d ${ipaddr}/32 ! -i ${DOCKER_NET_INT} -o ${DOCKER_NET_INT} -p ${dst_proto} -m ${dst_proto} --dport ${dst_port} -j ACCEPT${NORMAL}"
+                echo -e "                  ${DEVGREY}+ RULE:                  ${FUCHSIA}-t nat -A POSTROUTING -s ${ipaddr}/32 -d ${ipaddr}/32 -p ${dst_proto} -m ${dst_proto} --dport ${dst_port} -j MASQUERADE${NORMAL}"
+
                 # #
                 #   Support for IPv4
                 # #
@@ -654,6 +671,7 @@ if [ `echo ${containers} | wc -c` -gt "1" ]; then
 
                 if [[ ${src_ip} =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
                     ${PATH_IPTABLES} -t nat -A DOCKER ${iptables_opt_src}! -i ${DOCKER_NET_INT} -p ${dst_proto} -m ${dst_proto} --dport ${src_port} -j DNAT --to-destination ${ipaddr}:${dst_port}
+                    echo -e "                  ${DEVGREY}+ RULE:                  ${FUCHSIA}-t nat -A DOCKER ${iptables_opt_src}! -i ${DOCKER_NET_INT} -p ${dst_proto} -m ${dst_proto} --dport ${src_port} -j DNAT --to-destination ${ipaddr}:${dst_port}${NORMAL}"
                 fi
             done
         fi
@@ -663,10 +681,24 @@ if [ `echo ${containers} | wc -c` -gt "1" ]; then
     done
 fi
 
+# #
+#   Loop containers
+# #
+
+echo -e "  ${BOLD}${DEVGREY}+ RULES         ${WHITE}Add DOCKER-ISOLATION-STAGE rules${NORMAL}"
+
 ${PATH_IPTABLES} -A DOCKER-ISOLATION-STAGE-1 -j RETURN
 ${PATH_IPTABLES} -A DOCKER-ISOLATION-STAGE-2 -j RETURN
 ${PATH_IPTABLES} -A DOCKER-USER -j RETURN
 
+printf '\n%-17s %-35s %-55s' " " "${DEVGREY}+ RULE" "${FUCHSIA}-A DOCKER-ISOLATION-STAGE-1 -j RETURN${NORMAL}"
+printf '\n%-17s %-35s %-55s' " " "${DEVGREY}+ RULE" "${FUCHSIA}-A DOCKER-ISOLATION-STAGE-2 -j RETURN${NORMAL}"
+printf '\n%-17s %-35s %-55s' " " "${DEVGREY}+ RULE" "${FUCHSIA}-A DOCKER-USER -j RETURN${NORMAL}"
+
 if [ `${PATH_IPTABLES} -t nat -nvL DOCKER | grep ${DOCKER_INT} | wc -l` -eq 0 ]; then
     ${PATH_IPTABLES} -t nat -I DOCKER -i ${DOCKER_INT} -j RETURN
+    printf '\n%-17s %-35s %-55s' " " "${DEVGREY}+ RULE" "${FUCHSIA}-t nat -I DOCKER -i ${DOCKER_INT} -j RETURN${NORMAL}"
 fi
+
+echo -e
+echo -e
