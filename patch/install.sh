@@ -99,13 +99,16 @@ FILE_CSF_POST="${PATH_CSF_BIN}/csfpost.sh"
 # 	require the user to run as sudo
 # #
 
-if [ "$EUID" -ne 0 ]; then
-	echo -e
-    echo -e "  ${BOLD}${ORANGE}WARNING  ${WHITE}Must run script with sudo:${NORMAL}"
-    echo -e "  ${BOLD}${WHITE}    ${DEVGREY}sudo ./${app_file_this}${NORMAL}"
-	echo -e
-  	exit 1
-fi
+check_sudo()
+{
+	if [ "$EUID" -ne 0 ]; then
+		echo -e
+		echo -e "  ${BOLD}${ORANGE}WARNING  ${WHITE}Must run script with sudo:${NORMAL}"
+		echo -e "  ${BOLD}${WHITE}    ${DEVGREY}sudo ./${app_file_this}${NORMAL}"
+		echo -e
+		exit 1
+	fi
+}
 
 # #
 #   distro
@@ -203,6 +206,8 @@ service_exists()
 # #
 
 if ! [ -x "$(command -v iptables)" ]; then
+	check_sudo
+
     echo -e "  ${GREYL}Installing package ${MAGENTA}iptables${WHITE}"
     sudo apt-get update -y -q >/dev/null 2>&1
     sudo apt-get install iptables -y -qq >/dev/null 2>&1
@@ -232,6 +237,8 @@ fi
 # #
 
 if ! [ -x "$(command -v ipset)" ]; then
+	check_sudo
+
 	echo -e "  ${WHITE}Installing package ${MAGENTA}ipset${WHITE}"
 
 	sudo apt-get update -y -q >/dev/null 2>&1
@@ -243,6 +250,8 @@ fi
 # #
 
 if ! [ -x "$(command -v csf)" ]; then
+	check_sudo
+
 	echo -e "  ${WHITE}Installing package ${MAGENTA}ConfigServer Firewall${WHITE}"
 
 	# #
@@ -301,6 +310,8 @@ opt_usage()
     printf '  %-5s %-40s\n' "Options:" "" 1>&2
     printf '  %-5s %-18s %-40s\n' "    " "-d, --dev" "developer mode" 1>&2
     printf '  %-5s %-18s %-40s\n' "    " "" "displays advanced logs" 1>&2
+    printf '  %-5s %-18s %-40s\n' "    " "-f, --flush" "completely wipe all iptable rules" 1>&2
+    printf '  %-5s %-18s %-40s\n' "    " "" "this includes v4 and v6 rules -- cannot be undone" 1>&2
     printf '  %-5s %-18s %-40s\n' "    " "-v, --version" "current version of csf script" 1>&2
     printf '  %-5s %-18s %-40s\n' "    " "-h, --help" "show help menu" 1>&2
     echo -e 
@@ -315,6 +326,7 @@ opt_usage()
 #   this point. Bash sucks like that.
 #
 #   --dev           show advanced printing
+#   --flush         completely remove all iptable rules, including v6
 #   --help          show help and usage information
 #   --version       display version information
 # #
@@ -369,6 +381,12 @@ done
 # #
 
 clear
+
+# #
+#   check sudo
+# #
+
+check_sudo
 
 # #
 #   STEP 1 > Copy Script
