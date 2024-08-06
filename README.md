@@ -39,6 +39,7 @@ ConfigServer Security & Firewall (CSF) is a popular and powerful firewall soluti
 
 - [Summary](#summary)
 - [ConfigServer Firewall Features](#configserver-firewall-features)
+- [How The Patcher Works](#how-the-patcher-works)
 - [Install ConfigServer Firewall](#install-configserver-firewall)
   - [Install Using Patcher](#install-using-patcher)
   - [Install Manually](#install-manually)
@@ -89,8 +90,11 @@ This repository contains several things:
   - Can also be downloaded from https://download.configserver.com/csf
 - The official ConfigServer Firewall config.conf file
   - Located in the `csf_config` folder.
-- A patch which allows you to configure CSF to work along-side of your Docker containers.
-  - Located in the `patch` folder.
+- Custom Patches:
+  - Easily integrate:
+    - Docker
+    - OpenVPN Server
+  - Located in the `patches` folder.
 
 <br />
 <br />
@@ -99,8 +103,9 @@ This guide will help you with the following steps:
 
 - Install CSF (ConfigServer Firewall)
 - Install CSF WebUI interface
-- Install docker patch
-  - A file named `docker.sh` will be placed in `/usr/local/include/csf/post.d/docker.sh` and runs each time you start ConfigServer Firewall.
+- Install patches
+  - Docker Integration
+  - OpenVPN Integration
 
 <br />
 <br />
@@ -110,7 +115,7 @@ This repo contains the following folders; with an explaination of each one below
 | --- | --- | 
 | `csf_install` | <br>Latest version of ConfigServer Firewall. Can also be downloaded from [https://download.configserver.com/csf.tgz](https://download.configserver.com/csf.tgz).<br><br>You do not need this folder if you are downloading it from the link provided above.<br><br> |
 | `csf_config` | <br>ConfigServer Firewall config file; should be placed within `/etc/csf/config.conf` <br><br> |
-| `patch` | <br>The docker patch to allow docker, traefik, and ConfigServer Firewall to work together. <br><br> |
+| `patch` | <br>Docker and OpenVPN patches to allow docker, traefik, OpenVPN server, and ConfigServer Firewall to work together. <br><br> |
 
 <br />
 
@@ -181,6 +186,33 @@ This repo contains the following folders; with an explaination of each one below
 - ipset support for large IP lists
 - Integrated with the CloudFlare Firewall
 - …lots more!
+
+<br />
+
+---
+
+<br />
+
+## How The Patcher Works
+You can read this if you want, or skip it. It outlines exactly how the patches work:
+  - Download all the files in the `/patch` folder to your system.
+  - Set the `install.sh` file to be executable.
+    - `sudo chmod +x install.sh`
+  - Run the `install.sh` script
+    - Two new files will be added to your system:
+      - `/usr/local/csf/bin/csfpre.sh`
+      - `/usr/local/csf/bin/csfpost.sh`
+    - The patches will then be moved onto your system:
+      - `/usr/local/include/csf/post.d/docker.sh`
+      - `/usr/local/include/csf/post.d/openvpn.sh`
+
+<br />
+
+When you start up the CSF service, the `csfpost.sh` file will loop through every patch / file added to the `post.d` folder, and run the code inside of those files. The code inside each patch contains iptable / firewall rules which allow that app to communicate between your system and the outside world.
+
+<br />
+
+Even if you were to completely wipe your iptable rules, as soon as you restart the CSF service; those rules will be added right back.
 
 <br />
 
