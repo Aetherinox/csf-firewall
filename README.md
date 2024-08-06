@@ -66,13 +66,18 @@ ConfigServer Security & Firewall (CSF) is a popular and powerful firewall soluti
   - [Step 3: Access and Use Web UI:](#step-3-access-and-use-web-ui)
 - [Install Docker Patch](#install-docker-patch)
   - [Clone](#clone)
+  - [Install](#install)
   - [Configure](#configure)
   - [Run Patch](#run-patch)
   - [Manual Run](#manual-run)
   - [Advanced Logs](#advanced-logs)
 - [Install OpenVPN Patch](#install-openvpn-patch)
-  - [Install](#install)
+  - [Clone](#clone-1)
+  - [Install](#install-1)
   - [Configure](#configure-1)
+  - [Run Patch](#run-patch-1)
+  - [Manual Run](#manual-run-1)
+  - [Advanced Logs](#advanced-logs-1)
 - [Download ConfigServer Firewall](#download-configserver-firewall)
 - [References for More Help](#references-for-more-help)
 - [Contributors ✨](#contributors-)
@@ -692,6 +697,20 @@ git clone https://github.com/Aetherinox/csf-firewall.git
 
 <br />
 
+### Install
+The Docker patch will automatically be installed if you run the `/patch/install.sh` script. It is the 2nd step in the process, right after it sets up the `pre` and `post` scripts.
+
+<br />
+
+If you wish to manually install it, you may run the following commands:
+```shell ignore
+sudo chmod +x /patch/docker.sh
+
+./patch/docker.sh
+```
+
+<br />
+
 ### Configure
 The `/patch/docker.sh` file has a few configs you can adjust. Open it in a text editor and change the values to your preference.
 
@@ -838,6 +857,22 @@ This repo includes an OpenVPN patch which automatically sets up ConfigServer Fir
 
 <br />
 
+### Clone
+Within your server, change to whatever directory where you want to download everything (including patch):
+
+```shell
+cd $HOME/Documents
+```
+
+<br />
+
+Clone the repo
+```shell
+git clone https://github.com/Aetherinox/csf-firewall.git
+```
+
+<br />
+
 ### Install
 The OpenVPN patch will automatically be installed if you run the `/patch/install.sh` script. It is the 3rd step in the process, right after the [Docker Patch](#install-docker-patch).
 
@@ -851,7 +886,6 @@ sudo chmod +x /patch/openvpn.sh
 ```
 
 <br />
-
 
 ### Configure
 The `/patch/openvpn.sh` file has a few configs you can adjust. Open it in a text editor and change the values to your preference.
@@ -897,6 +931,105 @@ IP_PUBLIC="216.55.100.5"
 <br />
 
 After changing the values re-run `install.sh`
+
+<br />
+
+### Run Patch
+Set the permissions (if needed)
+
+```shell
+sudo chmod +x /patch/install.sh
+```
+
+<br />
+
+Run the script:
+
+```shell
+cd /patch/
+./install.sh
+```
+
+<br />
+
+You can also try:
+```shell
+sh install.sh
+```
+
+<br />
+
+The `openvpn.sh` file will be installed to `/usr/local/include/csf/post.d`
+
+
+<br />
+
+### Manual Run
+You can manually run the `openvpn.sh` script. It will also allow you to specify arguments such as `--dev` to get more detailed logging as the firewall is set up. This should only be done if you know what you're doing.
+
+```shell ignore
+sudo chmod +x /usr/local/include/csf/post.d/openvpn.sh
+sudo /usr/local/include/csf/post.d/openvpn.sh
+```
+
+<br />
+
+You can call arguments by running the file using:
+```shell ignore
+sudo /usr/local/include/csf/post.d/openvpn.sh --dev
+```
+
+<br />
+
+You can also find out what version you are running by appending `--version` to either the `install.sh` or `openvpn.sh` file:
+
+```shell ignore
+./patch/install.sh --version
+```
+
+<br />
+
+```shell ignore
+ConfigServer Firewall Configuration - v2.0.0.0
+https://github.com/Aetherinox/csf-firewall
+Ubuntu | 24.04
+```
+
+<br />
+
+```shell ignore
+sudo /usr/local/include/csf/post.d/openvpn.sh --version
+```
+
+<br />
+
+```shell ignore
+ConfigServer Firewall OpenVPN Patch - v2.0.0.0
+https://github.com/Aetherinox/csf-firewall
+Ubuntu | 24.04
+```
+
+<br />
+
+### Advanced Logs
+This script includes debugging prints / logs. To view these, restart `csf.service` by running the following command in terminal:
+```shell ignore
+sudo csf -r
+```
+
+<br />
+
+All steps performed by the script will be displayed in terminal:
+```shell ignore
+  + OPENVPN       Adding OpenVPN Rules
+
+                  + RULE                   -A INPUT -i tun+ -j ACCEPT            
+                  + RULE                   -A FORWARD -i tun+ -j ACCEPT          
+                  + RULE                   -A FORWARD -o tun0 -j ACCEPT
+                  + RULE                   -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
+                  + RULE                   -A FORWARD -i tun+ -o enp0s3 -m state --state RELATED,ESTABLISHED -j ACCEPT
+                  + RULE                   -A FORWARD -i enp0s3 -o tun+ -m state --state RELATED,ESTABLISHED -j ACCEPT
+```
 
 <br />
 
