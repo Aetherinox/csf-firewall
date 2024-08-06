@@ -1,9 +1,11 @@
 <div align="center">
 <h1>⭕ CSF Firewall ⭕</h1>
 <br />
-<p>ConfigServer Security & Firewall (CSF) is a popular and powerful firewall solution for Linux servers. It provides a user-friendly interface and a wide range of security features to protect your server from various threats. In this article, we will guide you through the process of installing and configuring CSF on your Linux server.</p>
+<p>
 
-<br />
+ConfigServer Security & Firewall (CSF) is a popular and powerful firewall solution for Linux servers. This repo contains complete installation guides, and also numerous patches for `Docker` and `OpenVPN` firewall support so that you can allow traffic between these services without interruption.
+
+</p>
 
 </div>
 
