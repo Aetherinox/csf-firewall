@@ -69,6 +69,15 @@ app_file_this=$(basename "$0")
 app_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 # #
+#   vars > app repo
+# #
+
+app_repo_name="csf-firewall"
+app_repo_author="Aetherinox"
+app_repo_branch="main"
+app_repo_url="https://github.com/${app_repo_author}/${app_repo_name}"
+
+# #
 #   STEP 1 > vars
 # #
 
@@ -78,6 +87,55 @@ CSFPOSTD_PATH="/usr/local/include/csf/post.d"
 
 CSFPRESH_SCRIPT="${CSF_BIN_PATH}/csfpre.sh"
 CSFPOSTSH_SCRIPT="${CSF_BIN_PATH}/csfpost.sh"
+
+# #
+#   distro
+#
+#   returns distro information.
+# #
+
+    # #
+    #   freedesktop.org and systemd
+    # #
+
+        if [ -f /etc/os-release ]; then
+            . /etc/os-release
+            OS=$NAME
+            OS_VER=$VERSION_ID
+
+    # #
+    #   linuxbase.org
+    # #
+
+        elif type lsb_release >/dev/null 2>&1; then
+            OS=$(lsb_release -si)
+            OS_VER=$(lsb_release -sr)
+
+    # #
+    #   versions of Debian/Ubuntu without lsb_release cmd
+    # #
+
+        elif [ -f /etc/lsb-release ]; then
+            . /etc/lsb-release
+            OS=$DISTRIB_ID
+            OS_VER=$DISTRIB_RELEASE
+
+    # #
+    #   older Debian/Ubuntu/etc distros
+    # #
+
+        elif [ -f /etc/debian_version ]; then
+            OS=Debian
+            OS_VER=$(cat /etc/debian_version)
+
+    # #
+    #   fallback: uname, e.g. "Linux <version>", also works for BSD
+    # #
+
+        else
+            OS=$(uname -s)
+            OS_VER=$(uname -r)
+        fi
 
 # #
 #   func > get version
@@ -531,7 +589,6 @@ if [ -f ${CSFPOSTD_PATH}/${SCRIPT_NAME_FINAL} ]; then
 		echo -e
 
 		STEP2_SKIP="true"
-
 	else
 		ok=0
 		while [ ${ok} -eq 0 ]; do
