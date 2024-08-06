@@ -284,7 +284,35 @@ echo -e
 echo -e " ${BLUE}---------------------------------------------------------------------------------------------------${NORMAL}"
 echo -e
 
+# #
+#   Check OpenVPN
+# #
+
+if ! [ -x "$(command -v openvpn)" ]; then
+    echo -e "  ${BOLD}${ORANGE}WARNING         ${WHITE}Could not locate ${GREEN}OpenVPN${WHITE}.${NORMAL}"
+    printf '%-17s %-55s %-55s' " " "${DEVGREY}Skipping OpenVPN patch ...${NORMAL}"
+    echo -e
+
+    exit
+fi
+
 echo -e "  ${BOLD}${DEVGREY}+ OPENVPN       ${WHITE}Adding OpenVPN Rules${NORMAL}"
+
+# #
+#   Check > Must have valid OpenVPN tunnel
+# #
+
+if [ -z "${TUN_ADAPTER}" ]; then
+    echo -e "  ${BOLD}${ORANGE}WARNING         ${WHITE}Could not locate a valid ${GREEN}tun${WHITE} adapter. Check your OpenVPN install.${NORMAL}"
+    printf '%-17s %-55s %-55s' " " "${DEVGREY}Skipping OpenVPN patch ...${NORMAL}"
+    echo -e
+
+    exit 1
+fi
+
+# #
+#   Add rules > tunnel
+# #
 
 ${PATH_IPTABLES} -A INPUT -i tun+ -j ACCEPT
 ${PATH_IPTABLES} -A FORWARD -i tun+ -j ACCEPT
