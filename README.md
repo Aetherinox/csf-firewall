@@ -72,6 +72,7 @@ ConfigServer Security & Firewall (CSF) is a popular and powerful firewall soluti
   - [Advanced Logs](#advanced-logs)
 - [Install OpenVPN Patch](#install-openvpn-patch)
   - [Install](#install)
+  - [Configure](#configure-1)
 - [Download ConfigServer Firewall](#download-configserver-firewall)
 - [References for More Help](#references-for-more-help)
 - [Contributors ✨](#contributors-)
@@ -696,13 +697,12 @@ The `/patch/docker.sh` file has a few configs you can adjust. Open it in a text 
 
 ```bash ignore
 DOCKER_INT="docker0"
-NETWORK_MANUAL_MODE=false
+NETWORK_MANUAL_MODE="false"
 NETWORK_ADAPT_NAME="traefik"
-CSF_FILE_ALLOW='/etc/csf/csf.allow'
-CSF_COMMENT='Docker container whitelist'
-DEBUG_ENABLED=true
-
-lst_ips=(
+CSF_FILE_ALLOW="/etc/csf/csf.allow"
+CSF_COMMENT="Docker container whitelist"
+DEBUG_ENABLED="false"
+IP_CONTAINERS=(
     '172.17.0.0/16'
 )
 ```
@@ -719,7 +719,7 @@ Each setting is defined below:
 | `CSF_FILE_ALLOW` | <br>Path to your `csf.allow` file <br><br> |
 | `CSF_COMMENT` | <br>comment added to each new whitelisted docker ip <br><br> |
 | `DEBUG_ENABLED` | <br>debugging / better logs <br><br> |
-| `lst_ips` | <br>list of ip address blocks you will be using for your docker setup. these blocks will be whitelisted through ConfigServer Firewall <br><br> |
+| `IP_CONTAINERS` | <br>list of ip address blocks you will be using for your docker setup. these blocks will be whitelisted through ConfigServer Firewall <br><br> |
 
 <br />
 
@@ -777,10 +777,10 @@ You can also find out what version you are running by appending `--version` to e
 
 <br />
 
-```
-  ConfigServer Firewall Configuration - v2.0.0.0
-  https://github.com/Aetherinox/csf-firewall
-  Ubuntu | 24.04
+```shell ignore
+ConfigServer Firewall Configuration - v2.0.0.0
+https://github.com/Aetherinox/csf-firewall
+Ubuntu | 24.04
 ```
 
 <br />
@@ -791,10 +791,10 @@ sudo /usr/local/include/csf/post.d/docker.sh --version
 
 <br />
 
-```
-  ConfigServer Firewall Docker Patch - v2.0.0.0
-  https://github.com/Aetherinox/csf-firewall
-  Ubuntu | 24.04
+```shell ignore
+ConfigServer Firewall Docker Patch - v2.0.0.0
+https://github.com/Aetherinox/csf-firewall
+Ubuntu | 24.04
 ```
 
 <br />
@@ -808,7 +808,7 @@ sudo csf -r
 <br />
 
 All steps performed by the script will be displayed in terminal:
-```
+```shell ignore
   + POSTROUTING   Adding IPs from primary IP list
                   + 172.17.0.0/16
                   + RULE:                  -t nat -A POSTROUTING ! -o docker0 -s 172.17.0.0/16 -j MASQUERADE
@@ -849,6 +849,54 @@ sudo chmod +x /patch/openvpn.sh
 
 ./patch/openvpn.sh
 ```
+
+<br />
+
+
+### Configure
+The `/patch/openvpn.sh` file has a few configs you can adjust. Open it in a text editor and change the values to your preference.
+
+```bash ignore
+ETH_ADAPTER=$(ip route | grep default | sed -e "s/^.*dev.//" -e "s/.proto.*//")
+TUN_ADAPTER=$(ip -br l | awk '$1 ~ "^tun[0-9]" { print $1}')
+IP_PUBLIC=$(curl ipinfo.io/ip)
+DEBUG_ENABLED="false"
+```
+
+<br />
+
+Each setting is defined below:
+
+| Setting | Description |
+| --- | --- |
+| `ETH_ADAPTER` | <br>primary network adapter <br><br> |
+| `TUN_ADAPTER` | <br>openvpn tunnel adapter <br><br> |
+| `IP_PUBLIC` | <br>server's public ip address <br><br> |
+| `DEBUG_ENABLED` | <br>debugging / better logs <br><br> |
+
+<br />
+
+The script tries to automatically detect the values specified above, however, you can manually specify your own values. 
+
+<br />
+
+As an example, instead of automatically detecting your server's public IP address or ethernet adapters, you can specify your own by changing the following:
+
+```bash ignore
+# old code
+ETH_ADAPTER=$(ip route | grep default | sed -e "s/^.*dev.//" -e "s/.proto.*//")
+TUN_ADAPTER=$(ip -br l | awk '$1 ~ "^tun[0-9]" { print $1}')
+IP_PUBLIC=$(curl ipinfo.io/ip)
+
+# manually specified ip
+ETH_ADAPTER="eth0"
+TUN_ADAPTER="tun0"
+IP_PUBLIC="216.55.100.5"
+```
+
+<br />
+
+After changing the values re-run `install.sh`
 
 <br />
 
