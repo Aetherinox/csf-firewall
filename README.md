@@ -199,12 +199,18 @@ You can read this if you want, or skip it. It outlines exactly how the patches w
   - Set the `install.sh` file to be executable.
     - `sudo chmod +x install.sh`
   - Run the `install.sh` script
+    - The script will first check to see if you have ConfigServer Firewall and all of its prerequisites installed. It will install them if they are not on your system.
     - Two new files will be added to your system:
       - `/usr/local/csf/bin/csfpre.sh`
       - `/usr/local/csf/bin/csfpost.sh`
     - The patches will then be moved onto your system:
       - `/usr/local/include/csf/post.d/docker.sh`
       - `/usr/local/include/csf/post.d/openvpn.sh`
+    - The OpenVPN patch will first check to ensure you have the following on your system:
+      - Must have OpenVPN installed on your system
+      - Must have a valid network tunnel named `tun*` (tun0, tun1, etc)
+      - Must have an outside network adapter named either `eth*` or `enp*`
+      - If any of the checks above are not true, OpenVPN patcher will skip
 
 <br />
 
