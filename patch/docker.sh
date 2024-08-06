@@ -74,6 +74,109 @@ lst_ips=(
 )
 
 # #
+#   vars > system
+# #
+
+sys_arch=$(dpkg --print-architecture)
+sys_code=$(lsb_release -cs)
+
+# #
+#   vars > app
+# #
+
+app_title="CSF Docker Patch"
+app_about="Configures ConfigServer Firewall to work with Docker and Traefik"
+app_ver=("2" "0" "0" "0")
+app_file_this=$(basename "$0")
+app_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
+# #
+#   vars > app repo
+# #
+
+app_repo_name="csf-firewall"
+app_repo_author="Aetherinox"
+app_repo_branch="main"
+app_repo_url="https://github.com/${app_repo_author}/${app_repo_name}"
+
+# #
+#   distro
+#
+#   returns distro information.
+# #
+
+    # #
+    #   freedesktop.org and systemd
+    # #
+
+        if [ -f /etc/os-release ]; then
+            . /etc/os-release
+            OS=$NAME
+            OS_VER=$VERSION_ID
+
+    # #
+    #   linuxbase.org
+    # #
+
+        elif type lsb_release >/dev/null 2>&1; then
+            OS=$(lsb_release -si)
+            OS_VER=$(lsb_release -sr)
+
+    # #
+    #   versions of Debian/Ubuntu without lsb_release cmd
+    # #
+
+        elif [ -f /etc/lsb-release ]; then
+            . /etc/lsb-release
+            OS=$DISTRIB_ID
+            OS_VER=$DISTRIB_RELEASE
+
+    # #
+    #   older Debian/Ubuntu/etc distros
+    # #
+
+        elif [ -f /etc/debian_version ]; then
+            OS=Debian
+            OS_VER=$(cat /etc/debian_version)
+
+    # #
+    #   fallback: uname, e.g. "Linux <version>", also works for BSD
+    # #
+
+        else
+            OS=$(uname -s)
+            OS_VER=$(uname -r)
+        fi
+
+# #
+#   func > get version
+#
+#   returns current version of app
+#   converts to human string.
+#       e.g.    "1" "2" "4" "0"
+#               1.2.4.0
+# #
+
+get_version()
+{
+    ver_join=${app_ver[@]}
+    ver_str=${ver_join// /.}
+    echo ${ver_str}
+}
+
+# #
+#   func > version > compare greater than
+#
+#   this function compares two versions and determines if an update may
+#   be available. or the user is running a lesser version of a program.
+# #
+
+get_version_compare_gt()
+{
+    test "$(printf '%s\n' "$@" | sort -V | head -n 1)" != "$1";
+}
+
+# #
 #   Display Usage Help
 #
 #   activate using ./install.sh --help or -h

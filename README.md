@@ -672,11 +672,18 @@ The `docker.sh` file will be installed to `/usr/local/include/csf/post.d`
 <br />
 
 ### Manual Run
-You can manually run the `docker.sh` script. It will also allow you tp specify arguments such as `--dev` to get more detailed logging as the firewall is set up:
+You can manually run the `docker.sh` script. It will also allow you to specify arguments such as `--dev` to get more detailed logging as the firewall is set up. This should only be done if you know what you're doing.
 
 ```shell ignore
 sudo chmod +x /usr/local/include/csf/post.d/docker.sh
 sudo /usr/local/include/csf/post.d/docker.sh
+```
+
+<br />
+
+You can call arguments by running the file using:
+```shell ignore
+sudo /usr/local/include/csf/post.d/docker.sh --dev
 ```
 
 <br />
