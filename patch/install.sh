@@ -3,6 +3,7 @@
 # #
 #
 #	this script copies the following files to the below paths:
+#		/usr/local/include/csf/post.d/openvpn.sh
 #		/usr/local/include/csf/post.d/docker.sh
 #		/usr/local/csf/bin/csfpre.sh
 #		/usr/local/csf/bin/csfpost.sh
@@ -81,12 +82,30 @@ app_repo_url="https://github.com/${app_repo_author}/${app_repo_name}"
 #   STEP 1 > vars
 # #
 
-CSF_BIN_PATH="/usr/local/csf/bin"
-CSFPRED_PATH="/usr/local/include/csf/pre.d"
-CSFPOSTD_PATH="/usr/local/include/csf/post.d"
+PATH_INCLUDE="/usr/local/include"
+PATH_INCLUDE_CSF="${PATH_INCLUDE}/csf"
 
-CSFPRESH_SCRIPT="${CSF_BIN_PATH}/csfpre.sh"
-CSFPOSTSH_SCRIPT="${CSF_BIN_PATH}/csfpost.sh"
+PATH_CSF_PRE="${PATH_INCLUDE}/csf/pre.d"
+PATH_CSF_POST="${PATH_INCLUDE}/csf/post.d"
+PATH_CSF_BIN="/usr/local/csf/bin"
+
+FILE_CSF_PRE="${PATH_CSF_BIN}/csfpre.sh"
+FILE_CSF_POST="${PATH_CSF_BIN}/csfpost.sh"
+
+# #
+#   Require Sudo
+#
+#	this script requires permissions to copy, etc.
+# 	require the user to run as sudo
+# #
+
+if [ "$EUID" -ne 0 ]; then
+	echo -e
+    echo -e "  ${BOLD}${ORANGE}WARNING  ${WHITE}Must run script with sudo:${NORMAL}"
+    echo -e "  ${BOLD}${WHITE}    ${DEVGREY}sudo ./${app_file_this}${NORMAL}"
+	echo -e
+  	exit 1
+fi
 
 # #
 #   distro
@@ -180,91 +199,32 @@ service_exists()
 }
 
 # #
-#   Display Usage Help
-#
-#   activate using ./install.sh --help or -h
-# #
-
-opt_usage()
-{
-    echo -e 
-    printf "  ${BLUE}${app_title}${NORMAL}\n" 1>&2
-    printf "  ${GREYL}${app_about}${NORMAL}\n" 1>&2
-    echo -e 
-    printf '  %-5s %-40s\n' "Usage:" "" 1>&2
-    printf '  %-5s %-40s\n' "    " "${0} [${GREYL}options${NORMAL}]" 1>&2
-    printf '  %-5s %-40s\n\n' "    " "${0} [${GREYL}-h${NORMAL}] [${GREYL}-v${NORMAL}] [${GREYL}-d${NORMAL}]" 1>&2
-    printf '  %-5s %-40s\n' "Options:" "" 1>&2
-    printf '  %-5s %-18s %-40s\n' "    " "-d, --dev" "developer mode" 1>&2
-    printf '  %-5s %-18s %-40s\n' "    " "" "displays advanced logs" 1>&2
-    printf '  %-5s %-18s %-40s\n' "    " "-v, --version" "current version of csf script" 1>&2
-    printf '  %-5s %-18s %-40s\n' "    " "-h, --help" "show help menu" 1>&2
-    echo -e 
-    echo -e 
-    exit 1
-}
-
-# #
-#   command-line options
-#
-#   reminder that any functions which need executed must be defined BEFORE
-#   this point. Bash sucks like that.
-#
-#   --dev           show advanced printing
-#   --help          show help and usage information
-#   --version       display version information
-# #
-
-while [ $# -gt 0 ]; do
-  case "$1" in
-    -d|--dev)
-            OPT_DEV_ENABLE=true
-            echo -e "  ${FUCHSIA}${BLINK}Devmode Enabled${NORMAL}"
-            ;;
-
-    -h*|--help*)
-            opt_usage
-            ;;
-
-    -v|--version)
-            echo
-            echo -e "  ${GREEN}${BOLD}${app_title}${NORMAL} - v$(get_version)${NORMAL}"
-            echo -e "  ${GREYL}${BOLD}${app_repo_url}${NORMAL}"
-            echo -e "  ${GREYL}${BOLD}${OS} | ${OS_VER}${NORMAL}"
-            echo
-            exit 1
-            ;;
-    *)
-            opt_usage
-            ;;
-  esac
-  shift
-done
-
-# #
-#   Require Sudo
-#
-#	this script requires permissions to copy, etc.
-# 	require the user to run as sudo
-# #
-
-if [ "$EUID" -ne 0 ]; then
-	echo -e
-    echo -e "  ${BOLD}${ORANGE}WARNING  ${WHITE}Must run script with sudo:${NORMAL}"
-    echo -e "  ${BOLD}${WHITE}    ${DEVGREY}sudo ./${app_file_this}${NORMAL}"
-	echo -e
-  	exit 1
-fi
-
-# #
-#   Install > Iptables
+#   iptables > find
 # #
 
 if ! [ -x "$(command -v iptables)" ]; then
-    echo -e "  ${WHITE}Installing package ${MAGENTA}iptables${WHITE}"
-
+    echo -e "  ${GREYL}Installing package ${MAGENTA}iptables${WHITE}"
     sudo apt-get update -y -q >/dev/null 2>&1
     sudo apt-get install iptables -y -qq >/dev/null 2>&1
+fi
+
+# #
+#   iptables > assign path to var
+# #
+
+PATH_IPTABLES=$(which iptables)
+PATH_IP6TABLES=$(which ip6tables)
+
+# #
+#   iptables > doesnt exist
+# #
+
+if [ -z "${PATH_IPTABLES}" ]; then
+    echo -e "  ${BOLD}${ORANGE}WARNING         ${WHITE}Could not locate the package ${YELLOW}iptables${NORMAL}"
+    printf '%-17s %-55s %-55s' " " "${DEVGREY}Must install iptables before continuing${NORMAL}"
+    echo -e
+
+    exit 0
 fi
 
 # #
@@ -313,8 +273,96 @@ if ! [ -x "$(command -v csf)" ]; then
 	echo -e "  ${WHITE}Docker patch will now start ...${NORMAL}"
 	echo -e
 
+	# #
+	#   iptables > assign path to var
+	# #
+
+	PATH_IPTABLES=$(which iptables)
+	PATH_IP6TABLES=$(which ip6tables)
+
 	sleep 5
 fi
+
+# #
+#   Display Usage Help
+#
+#   activate using ./install.sh --help or -h
+# #
+
+opt_usage()
+{
+    echo -e 
+    printf "  ${BLUE}${app_title}${NORMAL}\n" 1>&2
+    printf "  ${GREYL}${app_about}${NORMAL}\n" 1>&2
+    echo -e 
+    printf '  %-5s %-40s\n' "Usage:" "" 1>&2
+    printf '  %-5s %-40s\n' "    " "${0} [${GREYL}options${NORMAL}]" 1>&2
+    printf '  %-5s %-40s\n\n' "    " "${0} [${GREYL}-h${NORMAL}] [${GREYL}-v${NORMAL}] [${GREYL}-d${NORMAL}]" 1>&2
+    printf '  %-5s %-40s\n' "Options:" "" 1>&2
+    printf '  %-5s %-18s %-40s\n' "    " "-d, --dev" "developer mode" 1>&2
+    printf '  %-5s %-18s %-40s\n' "    " "" "displays advanced logs" 1>&2
+    printf '  %-5s %-18s %-40s\n' "    " "-v, --version" "current version of csf script" 1>&2
+    printf '  %-5s %-18s %-40s\n' "    " "-h, --help" "show help menu" 1>&2
+    echo -e 
+    echo -e 
+    exit 1
+}
+
+# #
+#   command-line options
+#
+#   reminder that any functions which need executed must be defined BEFORE
+#   this point. Bash sucks like that.
+#
+#   --dev           show advanced printing
+#   --help          show help and usage information
+#   --version       display version information
+# #
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -d|--dev)
+            OPT_DEV_ENABLE=true
+            echo -e "  ${FUCHSIA}${BLINK}Devmode Enabled${NORMAL}"
+            ;;
+
+    -f|--flush)
+            echo -e "  ${FUCHSIA}${BLINK}Flushing Iptables${NORMAL}"
+			${PATH_IPTABLES} -P INPUT ACCEPT
+			${PATH_IPTABLES} -P FORWARD ACCEPT
+			${PATH_IPTABLES} -P OUTPUT ACCEPT
+			${PATH_IPTABLES} -t nat -F
+			${PATH_IPTABLES} -t mangle -F
+			${PATH_IPTABLES} -F
+			${PATH_IPTABLES} -X
+
+			${PATH_IP6TABLES} -P INPUT ACCEPT
+			${PATH_IP6TABLES} -P FORWARD ACCEPT
+			${PATH_IP6TABLES} -P OUTPUT ACCEPT
+			${PATH_IP6TABLES} -t nat -F
+			${PATH_IP6TABLES} -t mangle -F
+			${PATH_IP6TABLES} -F
+			${PATH_IP6TABLES} -X
+            ;;
+
+    -h*|--help*)
+            opt_usage
+            ;;
+
+    -v|--version)
+            echo
+            echo -e "  ${GREEN}${BOLD}${app_title}${NORMAL} - v$(get_version)${NORMAL}"
+            echo -e "  ${GREYL}${BOLD}${app_repo_url}${NORMAL}"
+            echo -e "  ${GREYL}${BOLD}${OS} | ${OS_VER}${NORMAL}"
+            echo
+            exit 1
+            ;;
+    *)
+            opt_usage
+            ;;
+  esac
+  shift
+done
 
 # #
 #   clear screen before starting step 1
@@ -342,7 +390,7 @@ function copy_script
 	echo -e "  ${GREEN}${BOLD}Step 1 - Pre & Post Script${NORMAL}"
 	echo -e
 	echo -e "  ${MAGENTA}This installer will now copy the CSF pre and post scripts to:"
-	echo -e "  ${BOLD}${WHITE}    ${DEVGREY}${CSF_BIN_PATH}${NORMAL}"
+	echo -e "  ${BOLD}${WHITE}    ${DEVGREY}${PATH_CSF_BIN}${NORMAL}"
 	echo -e
 	echo -e "  These scripts will be ran by CSF each time you start or restart the csf / lfd services."
 	echo -e " ${BLUE}---------------------------------------------------------------------------------------------------${NORMAL}"
@@ -469,26 +517,26 @@ function copy_script
 # #
 
 # Create directories needed for custom csf{pre,post}
-if [ ! -d ${CSFPRED_PATH} ]; then
+if [ ! -d ${PATH_CSF_PRE} ]; then
 	if [ "${OPT_DEV_ENABLE}" = true ]; then
-		echo -e "  ${WHITE}                Mkdir           ${FUCHSIA}${CSFPRED_PATH}${NORMAL}"
+		echo -e "  ${WHITE}                Mkdir           ${FUCHSIA}${PATH_CSF_PRE}${NORMAL}"
 	fi
-	mkdir -p ${CSFPRED_PATH}
+	mkdir -p ${PATH_CSF_PRE}
 fi
 
-if [ ! -d ${CSFPOSTD_PATH} ]; then
+if [ ! -d ${PATH_CSF_POST} ]; then
 	if [ "${OPT_DEV_ENABLE}" = true ]; then
-		echo -e "  ${WHITE}                Mkdir           ${FUCHSIA}${CSFPOSTD_PATH}${NORMAL}"
+		echo -e "  ${WHITE}                Mkdir           ${FUCHSIA}${PATH_CSF_POST}${NORMAL}"
 	fi
-	mkdir -p ${CSFPOSTD_PATH}
+	mkdir -p ${PATH_CSF_POST}
 fi
 
 # #
 #   STEP 1 > Copy Scripts
 # #
 
-copy_script "csfpre.sh" ${CSFPRESH_SCRIPT}
-copy_script "csfpost.sh" ${CSFPOSTSH_SCRIPT}
+copy_script "csfpre.sh" ${FILE_CSF_PRE}
+copy_script "csfpost.sh" ${FILE_CSF_POST}
 
 # #
 #   STEP 1 > Clear Console
@@ -497,12 +545,10 @@ copy_script "csfpost.sh" ${CSFPOSTSH_SCRIPT}
 clear
 
 # #
-#   STEP 2 > vars
+#   STEP 2 > SCRIPT > DOCKER
 # #
 
-SCRIPT_NAME="docker.sh"
-CSF_CUSTOM_PATH="/usr/local/include/csf"
-CSFPOSTD_PATH="${CSF_CUSTOM_PATH}/post.d"
+SCRIPT_DOCKER="docker.sh"
 
 # #
 #   STEP 2 > Header
@@ -514,7 +560,7 @@ echo -e
 echo -e "  ${GREEN}${BOLD}Step 2 - Install Docker Script${NORMAL}"
 echo -e
 echo -e "  ${MAGENTA}This installer will now copy the docker.sh script to:"
-echo -e "  ${BOLD}${WHITE}    ${DEVGREY}${CSF_BIN_PATH}${NORMAL}"
+echo -e "  ${BOLD}${WHITE}    ${DEVGREY}${PATH_CSF_POST}${NORMAL}"
 echo -e
 echo -e "  Every time the services csf and lfd are started / restarted; firewall rules will be added so"
 echo -e "  that your containers have access to the network and can be accessed."
@@ -525,14 +571,14 @@ sleep 1
 # #
 #	STEP 2:
 #   	check if script has been ran before:
-#		- csf-firewall\2-patch-docker\1-patch-pre\install.sh
+#		- csf-firewall\patch\install.sh
 # #
 
-if [ ! -d ${CSF_CUSTOM_PATH} ]; then
+if [ ! -d ${PATH_INCLUDE_CSF} ]; then
 	echo -e "** 1-patch-pre has not been ran **"
 	echo -e
 	echo -e "You must first run the script"
-	echo -e "    csf-firewall\2-patch-docker\1-patch-pre\install.sh"
+	echo -e "    csf-firewall\patch\install.sh"
 	echo -e
 	echo -e "Download from https://github.com/Aetherinox/csf-firewall"
 
@@ -545,9 +591,9 @@ if [ "$1" == "-p" ] || [ "$1" == "--prefix" ]; then
 	shift 2
 fi
 
-SCRIPT_NAME_FINAL="${SCRIPT_NAME}"
+SCRIPT_DOCKER_FILE="${SCRIPT_DOCKER}"
 if [ ${PREFIX} != "None" ]; then
-	SCRIPT_NAME_FINAL="${PREFIX}_${SCRIPT_NAME}"
+	SCRIPT_DOCKER_FILE="${PREFIX}_${SCRIPT_DOCKER}"
 fi
 
 # #
@@ -556,15 +602,15 @@ fi
 #		- /usr/local/include/csf/post.d/docker.sh
 # #
 
-if [ -f ${CSFPOSTD_PATH}/${SCRIPT_NAME_FINAL} ]; then
+if [ -f ${PATH_CSF_POST}/${SCRIPT_DOCKER_FILE} ]; then
 	md5_0=`md5sum docker.sh | awk '{ print $1 }'`
-	md5_1=`md5sum ${CSFPOSTD_PATH}/${SCRIPT_NAME_FINAL} | awk '{ print $1 }'`
+	md5_1=`md5sum ${PATH_CSF_POST}/${SCRIPT_DOCKER_FILE} | awk '{ print $1 }'`
 
 	echo -e
-	echo -e "  ${BOLD}${DEVGREY}MD5             ${WHITE}Compare local ${DEVGREY}${app_dir}/docker.sh${WHITE} with ${FUCHSIA}${CSFPOSTD_PATH}/${SCRIPT_NAME_FINAL}${NORMAL}"
+	echo -e "  ${BOLD}${DEVGREY}MD5             ${WHITE}Compare local ${DEVGREY}${app_dir}/docker.sh${WHITE} with ${FUCHSIA}${PATH_CSF_POST}/${SCRIPT_DOCKER_FILE}${NORMAL}"
 	printf '%-17s %-55s %-55s' " " "${DEVGREY}${app_dir}/docker.sh" "${FUCHSIA}${md5_0}${NORMAL}"
 	echo -e
-	printf '%-17s %-55s %-55s' " " "${DEVGREY}${CSFPOSTD_PATH}/${SCRIPT_NAME_FINAL}" "${FUCHSIA}${md5_1}${NORMAL}"
+	printf '%-17s %-55s %-55s' " " "${DEVGREY}${PATH_CSF_POST}/${SCRIPT_DOCKER_FILE}" "${FUCHSIA}${md5_1}${NORMAL}"
 	echo -e
 
 	if [ ${md5_0} == ${md5_1} ]; then
@@ -584,7 +630,7 @@ if [ -f ${CSFPOSTD_PATH}/${SCRIPT_NAME_FINAL} ]; then
 	sleep 1
 
 	if [ ${md5_0} == ${md5_1} ]; then
-		echo -e "  ${BOLD}${YELLOW}NOTICE          ${WHITE}Script ${GREEN}${CSFPOSTD_PATH}/${SCRIPT_NAME_FINAL}${WHITE} is already up to date${NORMAL}"
+		echo -e "  ${BOLD}${YELLOW}NOTICE          ${WHITE}Script ${GREEN}${PATH_CSF_POST}/${SCRIPT_DOCKER_FILE}${WHITE} is already up to date${NORMAL}"
 		printf '%-17s %-55s %-55s' " " "${DEVGREY}skipping step ....${NORMAL}"
 		echo -e
 
@@ -592,7 +638,7 @@ if [ -f ${CSFPOSTD_PATH}/${SCRIPT_NAME_FINAL} ]; then
 	else
 		ok=0
 		while [ ${ok} -eq 0 ]; do
-			echo -e "  ${BOLD}${ORANGE}WARNING         ${WHITE}A different version of the script ${GREEN}${CSFPOSTD_PATH}/${SCRIPT_NAME_FINAL}${WHITE} is already present${NORMAL}"
+			echo -e "  ${BOLD}${ORANGE}WARNING         ${WHITE}A different version of the script ${GREEN}${PATH_CSF_POST}/${SCRIPT_DOCKER_FILE}${WHITE} is already present${NORMAL}"
 			printf '%-17s %-55s %-55s' " " "${DEVGREY}Do you want to replace it (y/n)?${NORMAL}"
 			echo -e
 
@@ -615,14 +661,14 @@ fi
 # #
 
 if [ -z ${STEP2_SKIP} ] || [ ${STEP2_SKIP} == "false" ]; then
-	echo -e "  ${WHITE}                Copy            ${FUCHSIA}${SCRIPT_NAME}${WHITE} > ${FUCHSIA}${CSFPOSTD_PATH}/${SCRIPT_NAME_FINAL}${NORMAL}"
-	cp -f ${SCRIPT_NAME} ${CSFPOSTD_PATH}/${SCRIPT_NAME_FINAL}
+	echo -e "  ${WHITE}                Copy            ${FUCHSIA}${SCRIPT_DOCKER}${WHITE} > ${FUCHSIA}${PATH_CSF_POST}/${SCRIPT_DOCKER_FILE}${NORMAL}"
+	cp -f ${SCRIPT_DOCKER} ${PATH_CSF_POST}/${SCRIPT_DOCKER_FILE}
 
-	echo -e "  ${WHITE}                Chown           ${FUCHSIA}root:root${WHITE} > ${FUCHSIA}${CSFPOSTD_PATH}/${SCRIPT_NAME_FINAL}${NORMAL}"
-	chown root:root ${CSFPOSTD_PATH}/${SCRIPT_NAME_FINAL}
+	echo -e "  ${WHITE}                Chown           ${FUCHSIA}root:root${WHITE} > ${FUCHSIA}${PATH_CSF_POST}/${SCRIPT_DOCKER_FILE}${NORMAL}"
+	chown root:root ${PATH_CSF_POST}/${SCRIPT_DOCKER_FILE}
 
-	echo -e "  ${WHITE}                Chmod           ${FUCHSIA}700${WHITE} > ${FUCHSIA}${CSFPOSTD_PATH}/${SCRIPT_NAME_FINAL}${NORMAL}"
-	chmod 700 ${CSFPOSTD_PATH}/${SCRIPT_NAME_FINAL}
+	echo -e "  ${WHITE}                Chmod           ${FUCHSIA}700${WHITE} > ${FUCHSIA}${PATH_CSF_POST}/${SCRIPT_DOCKER_FILE}${NORMAL}"
+	chmod 700 ${PATH_CSF_POST}/${SCRIPT_DOCKER_FILE}
 fi
 
 # #
@@ -639,6 +685,178 @@ fi
 
 # #
 #	STEP 2:
+#   	Services
+#		After applying all the changes, restart the services csf and lfd
+# #
+
+echo -e
+echo -e "  ${BOLD}${DEVGREY}SERVICES        ${WHITE}Checking for ${DEVGREY}lfd.service${WHITE} and ${DEVGREY}csf.service${WHITE}${NORMAL}"
+
+if service_exists lfd; then
+	printf '%-17s %-55s %-55s' " " "lfd.service" "${GREEN}Restarting${NORMAL}"
+	echo -e
+	systemctl restart lfd.service
+else
+	printf '%-17s %-55s %-55s' " " "lfd.service" "${ORANGE}Not Found${NORMAL}"
+	echo -e
+fi
+
+if service_exists csf; then
+	printf '%-17s %-55s %-55s' " " "csf.service" "${GREEN}Restarting${NORMAL}"
+	echo -e
+	systemctl restart csf.service
+else
+	printf '%-17s %-55s %-55s' " " "csf.service" "${ORANGE}Not Found${NORMAL}"
+	echo -e
+fi
+
+# #
+#   STEP 2 > CLEAR CONSOLE
+# #
+
+clear
+
+# #
+#   STEP 3 > SCRIPT > OPENVPN
+# #
+
+SCRIPT_OPENVPN="openvpn.sh"
+
+# #
+#   STEP 3 > Header
+# #
+
+echo -e " ${BLUE}---------------------------------------------------------------------------------------------------${NORMAL}"
+echo -e "  ${DEVGREY}${BOLD}${app_title} - v$(get_version)${NORMAL}${MAGENTA}"
+echo -e
+echo -e "  ${GREEN}${BOLD}Step 3 - Install OpenVPN Script${NORMAL}"
+echo -e
+echo -e "  ${MAGENTA}This installer will now copy the openvpn.sh script to:"
+echo -e "  ${BOLD}${WHITE}    ${DEVGREY}${PATH_CSF_POST}${NORMAL}"
+echo -e
+echo -e "  Every time the services csf and lfd are started / restarted; firewall rules will be added so"
+echo -e "  that OpenVPN can communicate through CSF"
+echo -e " ${BLUE}---------------------------------------------------------------------------------------------------${NORMAL}"
+
+sleep 1
+
+# #
+#	STEP 3:
+#   	check if script has been ran before:
+#		- csf-firewall\patch\install.sh
+# #
+
+if [ ! -d ${PATH_INCLUDE_CSF} ]; then
+	echo -e "** 1-patch-pre has not been ran **"
+	echo -e
+	echo -e "You must first run the script"
+	echo -e "    csf-firewall\patch\install.sh"
+	echo -e
+	echo -e "Download from https://github.com/Aetherinox/csf-firewall"
+
+	exit 1
+fi
+
+PREFIX="None"
+if [ "$1" == "-p" ] || [ "$1" == "--prefix" ]; then
+	PREFIX=$2
+	shift 2
+fi
+
+SCRIPT_OPENVPN_FILE="${SCRIPT_OPENVPN}"
+if [ ${PREFIX} != "None" ]; then
+	SCRIPT_OPENVPN_FILE="${PREFIX}_${SCRIPT_OPENVPN}"
+fi
+
+# #
+#	STEP 3:
+#   	check if file exists:
+#		- /usr/local/include/csf/post.d/openvpn.sh
+# #
+
+if [ -f ${PATH_CSF_POST}/${SCRIPT_OPENVPN_FILE} ]; then
+	md5_0=`md5sum openvpn.sh | awk '{ print $1 }'`
+	md5_1=`md5sum ${PATH_CSF_POST}/${SCRIPT_OPENVPN_FILE} | awk '{ print $1 }'`
+
+	echo -e
+	echo -e "  ${BOLD}${DEVGREY}MD5             ${WHITE}Compare local ${DEVGREY}${app_dir}/openvpn.sh${WHITE} with ${FUCHSIA}${PATH_CSF_POST}/${SCRIPT_OPENVPN_FILE}${NORMAL}"
+	printf '%-17s %-55s %-55s' " " "${DEVGREY}${app_dir}/openvpn.sh" "${FUCHSIA}${md5_0}${NORMAL}"
+	echo -e
+	printf '%-17s %-55s %-55s' " " "${DEVGREY}${PATH_CSF_POST}/${SCRIPT_OPENVPN_FILE}" "${FUCHSIA}${md5_1}${NORMAL}"
+	echo -e
+
+	if [ ${md5_0} == ${md5_1} ]; then
+		echo -e
+		echo -e "  ${BOLD}${WHITE}                ✔️  ${WHITE}MD5 matches: ${ORANGE}Aborting update${NORMAL}"
+	else
+		echo -e
+		echo -e "  ${BOLD}${WHITE}                ❌  ${WHITE}MD5 mismatch: ${GREEN}Copying new version of file${NORMAL}"
+	fi
+
+	sleep 1
+
+	echo -e
+	echo -e " ${BLUE}---------------------------------------------------------------------------------------------------${NORMAL}"
+	echo -e
+
+	sleep 1
+
+	if [ ${md5_0} == ${md5_1} ]; then
+		echo -e "  ${BOLD}${YELLOW}NOTICE          ${WHITE}Script ${GREEN}${PATH_CSF_POST}/${SCRIPT_OPENVPN_FILE}${WHITE} is already up to date${NORMAL}"
+		printf '%-17s %-55s %-55s' " " "${DEVGREY}skipping step ....${NORMAL}"
+		echo -e
+
+		STEP2_SKIP="true"
+	else
+		ok=0
+		while [ ${ok} -eq 0 ]; do
+			echo -e "  ${BOLD}${ORANGE}WARNING         ${WHITE}A different version of the script ${GREEN}${PATH_CSF_POST}/${SCRIPT_OPENVPN_FILE}${WHITE} is already present${NORMAL}"
+			printf '%-17s %-55s %-55s' " " "${DEVGREY}Do you want to replace it (y/n)?${NORMAL}"
+			echo -e
+
+			read answer
+
+			if [ ${answer} == "y" -o ${answer} == "n" ]; then
+				ok=1
+			fi
+		done
+
+		if [ ${answer} == "n" ]; then
+			exit 1
+		fi
+	fi
+fi
+
+# #
+#	STEP 3:
+#   	Determine if step 3 should be skipped
+# #
+
+if [ -z ${STEP2_SKIP} ] || [ ${STEP2_SKIP} == "false" ]; then
+	echo -e "  ${WHITE}                Copy            ${FUCHSIA}${SCRIPT_OPENVPN}${WHITE} > ${FUCHSIA}${PATH_CSF_POST}/${SCRIPT_OPENVPN_FILE}${NORMAL}"
+	cp -f ${SCRIPT_OPENVPN} ${PATH_CSF_POST}/${SCRIPT_OPENVPN_FILE}
+
+	echo -e "  ${WHITE}                Chown           ${FUCHSIA}root:root${WHITE} > ${FUCHSIA}${PATH_CSF_POST}/${SCRIPT_OPENVPN_FILE}${NORMAL}"
+	chown root:root ${PATH_CSF_POST}/${SCRIPT_OPENVPN_FILE}
+
+	echo -e "  ${WHITE}                Chmod           ${FUCHSIA}700${WHITE} > ${FUCHSIA}${PATH_CSF_POST}/${SCRIPT_OPENVPN_FILE}${NORMAL}"
+	chmod 700 ${PATH_CSF_POST}/${SCRIPT_OPENVPN_FILE}
+fi
+
+# #
+#	STEP 3:
+#   	All steps skipped, no changes made
+# #
+
+if [ ${STEP1_SKIP} == "true" ] && [ ${STEP2_SKIP} == "true" ]; then
+	echo -e
+	echo -e "  ${BOLD}${GREEN}FINISH          ${WHITE}All of your configs were already up to date${NORMAL}"
+	printf '%-17s %-55s %-55s' " " "${DEVGREY}No changes were made to CSF and OpenVPN${NORMAL}"
+	echo -e
+fi
+
+# #
+#	STEP 3:
 #   	Services
 #		After applying all the changes, restart the services csf and lfd
 # #
