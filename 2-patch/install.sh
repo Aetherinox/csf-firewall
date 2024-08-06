@@ -199,6 +199,66 @@ if [ "$EUID" -ne 0 ]; then
 fi
 
 # #
+#   Install > Iptables
+# #
+
+if ! [ -x "$(command -v iptables)" ]; then
+    echo -e "  ${WHITE}Installing package ${MAGENTA}iptables${WHITE}"
+
+    sudo apt-get update -y -q >/dev/null 2>&1
+    sudo apt-get install iptables -y -qq >/dev/null 2>&1
+fi
+
+# #
+#   Install > Ipset
+# #
+
+if ! [ -x "$(command -v ipset)" ]; then
+    echo -e "  ${WHITE}Installing package ${MAGENTA}ipset${WHITE}"
+
+    sudo apt-get update -y -q >/dev/null 2>&1
+    sudo apt-get install ipset -y -qq >/dev/null 2>&1
+fi
+
+# #
+#   Install > ConfigServer Firewall
+# #
+
+if ! [ -x "$(command -v csf)" ]; then
+    echo -e "  ${WHITE}Installing package ${MAGENTA}ConfigServer Firewall${WHITE}"
+
+	# #
+	#   csf > install prerequisites
+	# #
+
+    sudo apt-get update -y -q >/dev/null 2>&1
+    sudo apt-get install perl ipset -y -qq >/dev/null 2>&1
+
+	# #
+	#   csf > download, extract, install
+	# #
+
+	wget https://download.configserver.com/csf.tgz >> /dev/null 2>&1
+	tar -xzf csf.tgz >> /dev/null 2>&1
+	cd ${app_dir}/csf
+	sudo sh install.sh >> /dev/null 2>&1
+
+	# #
+	#   csf > cleanup
+	# #
+
+	cd ${app_dir}
+	sudo rm csf.tgz >> /dev/null 2>&1
+	sudo rm -rf csf/ >> /dev/null 2>&1
+	
+	echo -e
+	echo -e "  ${WHITE}Docker patch will now start ...${NORMAL}"
+	echo -e
+
+	sleep 5
+fi
+
+# #
 #   clear screen before starting step 1
 # #
 
