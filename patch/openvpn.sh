@@ -40,6 +40,16 @@ IP_PUBLIC=$(curl ipinfo.io/ip)
 DEBUG_ENABLED="false"
 
 # #
+#   list > vpn ips
+#
+#   this is the IP pool assigned to a user who connects to your vpn server
+# #
+
+IP_POOL=(
+    '10.8.0.0/24'
+)
+
+# #
 #   vars > colors
 #
 #   tput setab  [1-7]       : Set a background color using ANSI escape
@@ -337,10 +347,28 @@ fi
 
 if [ ! -z "${ETH_ADAPTER}" ]; then
     ${PATH_IPTABLES} -t nat -A POSTROUTING -o ${ETH_ADAPTER} -j MASQUERADE
+    printf '\n%-17s %-35s %-55s' " " "${DEVGREY}+ RULE" "${FUCHSIA}-t nat -A POSTROUTING -o ${ETH_ADAPTER} -j MASQUERADE${NORMAL}"
+
+    # #
+    #   get vpn ip pool and add firewall rule for each ip in the pool
+    # #
+
+    for j in "${!IP_POOL[@]}"; do
+
+        # #
+        #   get vpn pool
+        # #
+
+        vpn_ip_pool=${IP_POOL[$j]}
+
+        ${PATH_IPTABLES} -t nat -A POSTROUTING -s ${vpn_ip_pool} -o ${ETH_ADAPTER} -j MASQUERADE
+        printf '\n%-17s %-35s %-55s' " " "${DEVGREY}+ RULE" "${FUCHSIA}-t nat -A POSTROUTING -s ${vpn_ip_pool} -o ${ETH_ADAPTER} -j MASQUERADE${NORMAL}"
+
+    done
+
     ${PATH_IPTABLES} -A FORWARD -i tun+ -o ${ETH_ADAPTER} -m state --state RELATED,ESTABLISHED -j ACCEPT
     ${PATH_IPTABLES} -A FORWARD -i ${ETH_ADAPTER} -o tun+ -m state --state RELATED,ESTABLISHED -j ACCEPT
 
-    printf '\n%-17s %-35s %-55s' " " "${DEVGREY}+ RULE" "${FUCHSIA}-t nat -A POSTROUTING -o ${ETH_ADAPTER} -j MASQUERADE${NORMAL}"
     printf '\n%-17s %-35s %-55s' " " "${DEVGREY}+ RULE" "${FUCHSIA}-A FORWARD -i tun+ -o ${ETH_ADAPTER} -m state --state RELATED,ESTABLISHED -j ACCEPT${NORMAL}"
     printf '\n%-17s %-35s %-55s' " " "${DEVGREY}+ RULE" "${FUCHSIA}-A FORWARD -i ${ETH_ADAPTER} -o tun+ -m state --state RELATED,ESTABLISHED -j ACCEPT${NORMAL}"
 else

@@ -895,6 +895,9 @@ ETH_ADAPTER=$(ip route | grep default | sed -e "s/^.*dev.//" -e "s/.proto.*//")
 TUN_ADAPTER=$(ip -br l | awk '$1 ~ "^tun[0-9]" { print $1}')
 IP_PUBLIC=$(curl ipinfo.io/ip)
 DEBUG_ENABLED="false"
+IP_POOL=(
+    '10.8.0.0/24'
+)
 ```
 
 <br />
@@ -907,6 +910,7 @@ Each setting is defined below:
 | `TUN_ADAPTER` | <br>openvpn tunnel adapter <br><br> |
 | `IP_PUBLIC` | <br>server's public ip address <br><br> |
 | `DEBUG_ENABLED` | <br>debugging / better logs <br><br> |
+| `IP_POOL` | <br>openvpn ip pool <br><br> |
 
 <br />
 
@@ -1029,6 +1033,8 @@ All steps performed by the script will be displayed in terminal:
                   + RULE                   -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
                   + RULE                   -A FORWARD -i tun+ -o enp0s3 -m state --state RELATED,ESTABLISHED -j ACCEPT
                   + RULE                   -A FORWARD -i enp0s3 -o tun+ -m state --state RELATED,ESTABLISHED -j ACCEPT
+                  + RULE                   -t nat -A POSTROUTING -j SNAT --to-source XX.XXX.XXX.XXX
+                  + RULE                   -t nat -A POSTROUTING -s 10.8.0.0/24 -o enp0s3 -j MASQUERADE
 ```
 
 <br />
