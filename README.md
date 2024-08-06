@@ -58,7 +58,7 @@ ConfigServer Security & Firewall (CSF) is a popular and powerful firewall soluti
   - [Remove IP from Deny List](#remove-ip-from-deny-list)
   - [Add Temp Block IP](#add-temp-block-ip)
   - [Remove Temp Block IP](#remove-temp-block-ip)
-- [Uninstalling CSF (Optional)](#uninstalling-csf-optional)
+- [Uninstalling CSF](#uninstalling-csf)
 - [Enable CSF Firewall Web UI](#enable-csf-firewall-web-ui)
   - [Step 1: Install Required Perl Modules:](#step-1-install-required-perl-modules)
   - [Step 2: Enable CSF Firewall Web UI:](#step-2-enable-csf-firewall-web-ui)
@@ -187,9 +187,9 @@ This repo contains the following folders; with an explaination of each one below
 <br />
 
 ## Install ConfigServer Firewall
-You can install ConfigServer Firewall one of two ways:
-1. Using the patcher `install.sh` script in the repo folder `/patch/install.sh`; which will install ConfigServer Firewall and all prerequisites automatically.
-2. Manually
+You can install ConfigServer Firewall and all prerequisites one of two ways:
+1. [Install Using Patcher](#install-using-patcher)
+2. [Install Manually](#install-manually)
 
 <br />
 
@@ -211,7 +211,7 @@ sudo chmod +x /csf-firewall/patch/install.sh
 
 Run the script:
 ```shell ignore
-/csf-firewall/patch/install.sh
+./csf-firewall/patch/install.sh
 ```
 
 <br />
@@ -421,7 +421,7 @@ These commands can help you manage your server’s security and monitor incoming
 
 <br />
 
-## Uninstalling CSF (Optional)
+## Uninstalling CSF
 If you decide to uninstall CSF for any reason, follow these steps:
 
 1. Navigate to the CSF directory:
@@ -705,12 +705,63 @@ sudo /usr/local/include/csf/post.d/docker.sh --dev
 
 <br />
 
+You can also find out what version you are running by appending `--version` to either the `install.sh` or `docker.sh` file:
+
+```shell ignore
+./patch/install.sh --version
+```
+
+<br />
+
+```
+  ConfigServer Firewall Configuration - v2.0.0.0
+  https://github.com/Aetherinox/csf-firewall
+  Ubuntu | 24.04
+```
+
+<br />
+
+```shell ignore
+sudo /usr/local/include/csf/post.d/docker.sh --version
+```
+
+<br />
+
+```
+  ConfigServer Firewall Docker Patch - v2.0.0.0
+  https://github.com/Aetherinox/csf-firewall
+  Ubuntu | 24.04
+```
+
+<br />
+
 ### Advanced Logs
 This script includes debugging prints / logs. To view these, restart `csf.service` by running the following command in terminal:
 ```shell ignore
 sudo csf -r
 ```
 
+<br />
+
+All steps performed by the script will be displayed in terminal:
+```
+  + POSTROUTING   Adding IPs from primary IP list
+                  + 172.17.0.0/16
+                  + RULE:                  -t nat -A POSTROUTING ! -o docker0 -s 172.17.0.0/16 -j MASQUERADE
+                  + RULE:                  -t nat -A POSTROUTING -s 172.17.0.0/16 ! -o docker0 -j MASQUERADE
+
+ ---------------------------------------------------------------------------------------------------
+
+  + BRIDGES       Configuring network bridges
+
+                  BRIDGE                   e8a57188323a                          
+                  DOCKER INTERFACE         docker0                               
+                  SUBNET                   172.17.0.0/16                         
+                  + RULE:                  -t nat -A POSTROUTING -s 172.17.0.0/16 ! -o docker0 -j MASQUERADE
+                  + RULE:                  -t nat -A DOCKER -i docker0 -j RETURN
+                  + RULE:                  -A DOCKER-ISOLATION-STAGE-1 -i docker0 ! -o docker0 -j DOCKER-ISOLATION-STAGE-2
+                  + RULE:                  -A DOCKER-ISOLATION-STAGE-2 -o docker0 -j DROP
+```
 
 <br />
 
