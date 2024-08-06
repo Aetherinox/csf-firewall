@@ -84,7 +84,7 @@ sys_code=$(lsb_release -cs)
 #   vars > app
 # #
 
-app_title="CSF Docker Patch"
+app_title="ConfigServer Firewall Docker Patch"
 app_about="Configures ConfigServer Firewall to work with Docker and Traefik"
 app_ver=("2" "0" "0" "0")
 app_file_this=$(basename "$0")
