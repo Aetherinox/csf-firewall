@@ -69,6 +69,8 @@ ConfigServer Security & Firewall (CSF) is a popular and powerful firewall soluti
   - [Run Patch](#run-patch)
   - [Manual Run](#manual-run)
   - [Advanced Logs](#advanced-logs)
+- [Install OpenVPN Patch](#install-openvpn-patch)
+  - [Install](#install)
 - [Download ConfigServer Firewall](#download-configserver-firewall)
 - [References for More Help](#references-for-more-help)
 - [Contributors ✨](#contributors-)
@@ -761,6 +763,29 @@ All steps performed by the script will be displayed in terminal:
                   + RULE:                  -t nat -A DOCKER -i docker0 -j RETURN
                   + RULE:                  -A DOCKER-ISOLATION-STAGE-1 -i docker0 ! -o docker0 -j DOCKER-ISOLATION-STAGE-2
                   + RULE:                  -A DOCKER-ISOLATION-STAGE-2 -o docker0 -j DROP
+```
+
+<br />
+
+---
+
+<br />
+
+## Install OpenVPN Patch
+This repo includes an OpenVPN patch which automatically sets up ConfigServer Firewall to accept connections from your OpenVPN server; while still restricting other incoming and outgoing connections you may not want going through.
+
+<br />
+
+### Install
+The OpenVPN patch will automatically be installed if you run the `/patch/install.sh` script. It is the 3rd step in the process, right after the [Docker Patch](#install-docker-patch).
+
+<br />
+
+If you wish to manually install it, you may run the following commands:
+```shell ignore
+sudo chmod +x /patch/openvpn.sh
+
+./patch/openvpn.sh
 ```
 
 <br />
