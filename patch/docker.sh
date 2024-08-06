@@ -56,7 +56,7 @@ END="\e[0m"
 # #
 
 DOCKER_INT="docker0"
-NETWORK_MANUAL_MODE="true"
+NETWORK_MANUAL_MODE="false"
 NETWORK_ADAPT_NAME="traefik"
 CSF_FILE_ALLOW='/etc/csf/csf.allow'
 CSF_COMMENT='Docker container whitelist'
@@ -543,9 +543,50 @@ if [ `echo ${containers} | wc -c` -gt "1" ]; then
                 fi
 
             else
-                bridge=$(docker inspect -f "{{with index .NetworkSettings.Networks \"${netmode}\"}}{{.NetworkID}}{{end}}" ${container} | cut -c -12)
+
+                # #
+                #   return all container info
+                #       sudo docker inspect -f '' badaaca1d5da
+                # #
+
+                # #
+                #   network_adapter=$(docker container inspect -f '{{range $net,$v := .NetworkSettings.Networks}}{{printf "%s\n" $net}}{{end}}' ${container})
+                #
+                #   RETURNS:
+                #       'traefik'
+                # #
+
+                # #
+                #   should return:
+                #       2e0fde4b0664
+                # #
+
+                bridge=$(docker inspect -f "{{with index .NetworkSettings.Networks \"${network}\"}}{{.NetworkID}}{{end}}" ${container} | cut -c -12)
+
+                # #
+                #   should return:
+                #       br-2e0fde4b0664
+                # #
+
                 DOCKER_NET_INT=`docker network inspect -f '{{"'br-$bridge'" | or (index .Options "com.docker.network.bridge.name")}}' $bridge`
-                ipaddr=`docker inspect -f "{{with index .NetworkSettings.Networks \"${netmode}\"}}{{.IPAddress}}{{end}}" ${container}`
+
+                # #
+                #   should return:
+                #       172.18.0.7 (or any other IP)
+                # #
+
+                ipaddr=`docker inspect -f "{{with index .NetworkSettings.Networks \"${network}\"}}{{.IPAddress}}{{end}}" ${container}`
+
+                printf '\n%-17s %-35s %-55s' " " "${DEVGREY}BRIDGE" "${FUCHSIA}${bridge}${NORMAL}"
+                printf '\n%-17s %-35s %-55s' " " "${DEVGREY}DOCKER_NET" "${FUCHSIA}${DOCKER_NET_INT}${NORMAL}"
+                printf '\n%-17s %-35s %-55s' " " "${DEVGREY}IP" "${FUCHSIA}${ipaddr}${NORMAL}"
+                echo -e
+
+                if [ "${OPT_DEV_ENABLE}" == "true" ]; then
+                    echo -e "                  ${DEVGREY}docker inspect -f '{{with index .NetworkSettings.Networks \"${netmode}\"}}{{.NetworkID}}{{end}}' ${container} | cut -c -12${NORMAL}"
+                    echo -e "                  ${DEVGREY}docker network inspect -f '{{\"'br-$bridge'\" | or (index .Options \"com.docker.network.bridge.name\")}}' ${bridge}${NORMAL}"
+                    echo -e "                  ${DEVGREY}docker inspect -f '{{with index .NetworkSettings.Networks \"${netmode}\"}}{{.IPAddress}}{{end}}' ${container}${NORMAL}"
+                fi
             fi
         fi
 
