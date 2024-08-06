@@ -1,10 +1,14 @@
 #!/bin/bash
 
 # #
-#	/usr/local/include/csf/post.d/docker.sh
-#	/usr/local/csf/bin/csfpre.sh
-#	/usr/local/csf/bin/csfpost.sh
-#	/etc/csf/csf.conf
+#
+#	this script copies the following files to the below paths:
+#		/usr/local/include/csf/post.d/docker.sh
+#		/usr/local/csf/bin/csfpre.sh
+#		/usr/local/csf/bin/csfpost.sh
+#
+#	you can find the ConfigServer Firewall config at:
+#		/etc/csf/csf.conf
 # #
 
 # #
@@ -41,6 +45,13 @@ STRIKE="\e[9m"
 END="\e[0m"
 
 # #
+#   vars > internal
+# #
+
+STEP1_SKIP="false"
+STEP2_SKIP="false"
+
+# #
 #   vars > system
 # #
 
@@ -51,7 +62,7 @@ sys_code=$(lsb_release -cs)
 #   vars > generic
 # #
 
-app_title="CSF Firewall Configuration"
+app_title="ConfigServer Firewall Configuration"
 app_about="Configures ConfigServer Firewall to work with Docker and Traefik"
 app_ver=("2" "0" "0" "0")
 app_file_this=$(basename "$0")
@@ -68,8 +79,33 @@ CSFPOSTD_PATH="/usr/local/include/csf/post.d"
 CSFPRESH_SCRIPT="${CSF_BIN_PATH}/csfpre.sh"
 CSFPOSTSH_SCRIPT="${CSF_BIN_PATH}/csfpost.sh"
 
-STEP1_SKIP="false"
-STEP2_SKIP="false"
+# #
+#   func > get version
+#
+#   returns current version of app
+#   converts to human string.
+#       e.g.    "1" "2" "4" "0"
+#               1.2.4.0
+# #
+
+get_version()
+{
+    ver_join=${app_ver[@]}
+    ver_str=${ver_join// /.}
+    echo ${ver_str}
+}
+
+# #
+#   func > version > compare greater than
+#
+#   this function compares two versions and determines if an update may
+#   be available. or the user is running a lesser version of a program.
+# #
+
+get_version_compare_gt()
+{
+    test "$(printf '%s\n' "$@" | sort -V | head -n 1)" != "$1";
+}
 
 # #
 #   Service Exists
@@ -183,9 +219,11 @@ function copy_script
 	# #
 
 	echo -e " ${BLUE}---------------------------------------------------------------------------------------------------${NORMAL}"
-	echo -e " ${GREEN}${BOLD} Step 1 - Pre & Post Script${NORMAL}${MAGENTA}"
-	echo
-	echo -e "  This installer will now copy the CSF pre and post scripts to:"
+	echo -e "  ${DEVGREY}${BOLD}${app_title} - v$(get_version)${NORMAL}${MAGENTA}"
+	echo -e
+	echo -e "  ${GREEN}${BOLD}Step 1 - Pre & Post Script${NORMAL}"
+	echo -e
+	echo -e "  ${MAGENTA}This installer will now copy the CSF pre and post scripts to:"
 	echo -e "  ${BOLD}${WHITE}    ${DEVGREY}${CSF_BIN_PATH}${NORMAL}"
 	echo -e
 	echo -e "  These scripts will be ran by CSF each time you start or restart the csf / lfd services."
@@ -353,10 +391,12 @@ CSFPOSTD_PATH="${CSF_CUSTOM_PATH}/post.d"
 # #
 
 echo -e " ${BLUE}---------------------------------------------------------------------------------------------------${NORMAL}"
-echo -e " ${GREEN}${BOLD} Step 2 - Install Docker Script${NORMAL}${MAGENTA}"
-echo
-echo -e "  This installer will now copy the docker.sh script to:"
-echo -e "  ${BOLD}${WHITE}    ${DEVGREY}${CSFPOSTD_PATH}/${SCRIPT_NAME}${NORMAL}"
+echo -e "  ${DEVGREY}${BOLD}${app_title} - v$(get_version)${NORMAL}${MAGENTA}"
+echo -e
+echo -e "  ${GREEN}${BOLD}Step 2 - Install Docker Script${NORMAL}"
+echo -e
+echo -e "  ${MAGENTA}This installer will now copy the docker.sh script to:"
+echo -e "  ${BOLD}${WHITE}    ${DEVGREY}${CSF_BIN_PATH}${NORMAL}"
 echo -e
 echo -e "  Every time the services csf and lfd are started / restarted; firewall rules will be added so"
 echo -e "  that your containers have access to the network and can be accessed."

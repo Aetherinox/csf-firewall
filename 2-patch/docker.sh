@@ -56,7 +56,7 @@ END="\e[0m"
 # #
 
 DOCKER_INT="docker0"
-NETWORK_MANUAL_MODE=true
+NETWORK_MANUAL_MODE="true"
 NETWORK_ADAPT_NAME="traefik"
 CSF_FILE_ALLOW='/etc/csf/csf.allow'
 CSF_COMMENT='Docker container whitelist'
@@ -72,7 +72,6 @@ DEBUG_ENABLED=true
 lst_ips=(
     '172.17.0.0/16'
 )
-
 
 # #
 #   Display Usage Help
