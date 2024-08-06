@@ -49,8 +49,10 @@
   - [Step 3: Access and Use Web UI:](#step-3-access-and-use-web-ui)
 - [Install Docker Patch](#install-docker-patch)
   - [Clone](#clone)
-  - [Run Pre Script](#run-pre-script)
-  - [Run Post Script](#run-post-script)
+  - [Configure](#configure)
+  - [Run Patch](#run-patch)
+  - [Manual Run](#manual-run)
+  - [Advanced Logs](#advanced-logs)
 
 
 <br />
@@ -522,7 +524,9 @@ After you have installed CSF, the WebUI, and enabled both `lfd` and `csf` servic
 
 <br />
 
-The docker patch allows for you to restart CSF without having to restart your docker containers.
+The docker patch does several things:
+- Allows for you to restart CSF without having to restart your docker containers.
+- Scans every container you have set up in docker and adds a white-list firewall rule
 
 <br />
 
@@ -542,57 +546,51 @@ git clone https://github.com/Aetherinox/csf-firewall.git
 
 <br />
 
-### Run Pre Script
+### Configure
+The `docker.sh` file has a few configs you can just:
+
+```bash ignore
+DOCKER_INT="docker0"
+NETWORK_MANUAL_MODE=false
+NETWORK_ADAPT_NAME="traefik"
+CSF_FILE_ALLOW='/etc/csf/csf.allow'
+CSF_COMMENT='Docker container whitelist'
+DEBUG_ENABLED=true
+
+lst_ips=(
+    '172.17.0.0/16'
+)
+```
+
+<br />
+
+Each setting is defined below:
+
+| Setting | Description |
+| --- | --- |
+| `DOCKER_INT` | <br>main docker network interface <br><br> |
+| `NETWORK_MANUAL_MODE` | <br>set `true` if you are manually assigning the ip address for each docker container <br><br> |
+| `NETWORK_ADAPT_NAME` | <br>requires `NETWORK_MANUAL_MODE="true"` <br>name of the adapter you are specifying <br><br> |
+| `CSF_FILE_ALLOW` | <br>Path to your `csf.allow` file <br><br> |
+| `CSF_COMMENT` | <br>comment added to each new whitelisted docker ip <br><br> |
+| `DEBUG_ENABLED` | <br>debugging / better logs <br><br> |
+| `lst_ips` | <br>list of ip address blocks you will be using for your docker setup. these blocks will be whitelisted through ConfigServer Firewall <br><br> |
+
+<br />
+
+### Run Patch
 Set the permissions (if needed)
 
 ```shell
-sudo chmod +x /2-patch-docker/1-patch-pre/install.sh
+sudo chmod +x /2-patch/install.sh
 ```
 
 <br />
 
-Run the **Pre Script** first:
+Run the script:
 
 ```shell
-cd /2-patch-docker/1-patch-pre/
-./install.sh
-```
-
-<br />
-
-You can also try:
-```shell
-sh install.sh
-```
-
-<br />
-
-### Run Post Script
-The post script has a few settings you may need to adjust. Open `docker.sh` and check the following:
-
-- `NETWORK_MANUAL_MODE`: If you have manually set a static local IP address for each container, set this to `true`.
-- `NETWORK_ADAPT_NAME`: If `NETWORK_MANUAL_MODE = true`, specify the network name you added to your `docker-compose.yml` file. Your container's **docker-compose.yml** would need to have the following:
-    ```
-    networks:
-    traefik:
-        name: traefik
-        external: true
-    ```
-
-<br />
-
-Set the permissions (if needed)
-
-```shell
-sudo chmod +x /2-patch-docker/2-patch-post/install.sh
-```
-
-<br />
-
-Run the **Post Script** first:
-
-```shell
-cd /2-patch-docker/2-patch-post/
+cd /2-patch/install.sh
 ./install.sh
 ```
 
@@ -606,3 +604,21 @@ sh install.sh
 <br />
 
 The `docker.sh` file will be installed to `/usr/local/include/csf/post.d`
+
+<br />
+
+### Manual Run
+You can manually run the `docker.sh` script. It will also allow you tp specify arguments such as `--dev` to get more detailed logging as the firewall is set up:
+
+```shell ignore
+sudo chmod +x /usr/local/include/csf/post.d/docker.sh
+sudo /usr/local/include/csf/post.d/docker.sh
+```
+
+<br />
+
+### Advanced Logs
+This script includes debugging prints / logs. To view these, restart `csf.service` by running the following command in terminal:
+```shell ignore
+sudo csf -r
+```
