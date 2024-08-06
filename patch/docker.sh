@@ -53,14 +53,15 @@ END="\e[0m"
 #   CSF_FILE_ALLOW              : the defined allow list file
 #   CSF_COMMENT                 : comment added to each whitelisted ip within iptables
 #   DEBUG_ENABLED               : debugging mode; throws prints during various steps
+#   IP_CONTAINERS               : list of ip address blocks you will be using for your docker setup. these blocks will be whitelisted through ConfigServer Firewall
 # #
 
 DOCKER_INT="docker0"
 NETWORK_MANUAL_MODE="false"
 NETWORK_ADAPT_NAME="traefik"
-CSF_FILE_ALLOW='/etc/csf/csf.allow'
-CSF_COMMENT='Docker container whitelist'
-DEBUG_ENABLED=true
+CSF_FILE_ALLOW="/etc/csf/csf.allow"
+CSF_COMMENT="Docker container whitelist"
+DEBUG_ENABLED="true"
 
 # #
 #   list > network ips
@@ -69,7 +70,7 @@ DEBUG_ENABLED=true
 #   whitelisted.
 # #
 
-lst_ips=(
+IP_CONTAINERS=(
     '172.17.0.0/16'
 )
 
@@ -369,13 +370,13 @@ echo -e
 
 echo -e "  ${BOLD}${DEVGREY}+ POSTROUTING   ${WHITE}Adding IPs from primary IP list${NORMAL}"
 
-for j in "${!lst_ips[@]}"; do
+for j in "${!IP_CONTAINERS[@]}"; do
 
     # #
     #   get ip addresses
     # #
 
-    ip_block=${lst_ips[$j]}
+    ip_block=${IP_CONTAINERS[$j]}
 
     echo -e "  ${BOLD}${WHITE}                + ${YELLOW}${ip_block}${NORMAL}"
 

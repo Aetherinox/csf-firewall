@@ -37,7 +37,7 @@ export PATH="$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 ETH_ADAPTER=$(ip route | grep default | sed -e "s/^.*dev.//" -e "s/.proto.*//")
 TUN_ADAPTER=$(ip -br l | awk '$1 ~ "^tun[0-9]" { print $1}')
 IP_PUBLIC=$(curl ipinfo.io/ip)
-DEBUG_ENABLED=true
+DEBUG_ENABLED="false"
 
 # #
 #   vars > colors
