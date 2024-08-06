@@ -178,7 +178,7 @@ You can install ConfigServer Firewall one of two ways:
 
 ### Install Using Patcher
 
-If you've like to use this repo's patcher to install ConfigServer Firewall, download the patch:
+If you would like to install ConfigServer Firewall using this repo's patcher; download the patch:
 ```shell ignore
 git clone https://github.com/Aetherinox/csf-firewall.git
 ```
