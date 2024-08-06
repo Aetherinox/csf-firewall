@@ -177,6 +177,34 @@ get_version_compare_gt()
 }
 
 # #
+#   iptables > find
+# #
+
+if ! [ -x "$(command -v iptables)" ]; then
+    echo -e "  ${GREYL}Installing package ${MAGENTA}iptables${WHITE}"
+    sudo apt-get update -y -q >/dev/null 2>&1
+    sudo apt-get install iptables -y -qq >/dev/null 2>&1
+fi
+
+# #
+#   iptables > assign path to var
+# #
+
+PATH_IPTABLES=$(which iptables)
+
+# #
+#   iptables > doesnt exist
+# #
+
+if [ -z "${PATH_IPTABLES}" ]; then
+    echo -e "  ${BOLD}${ORANGE}WARNING         ${WHITE}Could not locate the package ${YELLOW}iptables${NORMAL}"
+    printf '%-17s %-55s %-55s' " " "${DEVGREY}Must install iptables before continuing${NORMAL}"
+    echo -e
+
+    exit 0
+fi
+
+# #
 #   Display Usage Help
 #
 #   activate using ./install.sh --help or -h
@@ -237,34 +265,6 @@ while [ $# -gt 0 ]; do
   esac
   shift
 done
-
-# #
-#   iptables > find
-# #
-
-if ! [ -x "$(command -v iptables)" ]; then
-    echo -e "  ${GREYL}Installing package ${MAGENTA}iptables${WHITE}"
-    sudo apt-get update -y -q >/dev/null 2>&1
-    sudo apt-get install iptables -y -qq >/dev/null 2>&1
-fi
-
-# #
-#   iptables > assign path to var
-# #
-
-PATH_IPTABLES=$(which iptables)
-
-# #
-#   iptables > doesnt exist
-# #
-
-if [ -z "${PATH_IPTABLES}" ]; then
-    echo -e "  ${BOLD}${ORANGE}WARNING         ${WHITE}Could not locate the package ${YELLOW}iptables${NORMAL}"
-    printf '%-17s %-55s %-55s' " " "${DEVGREY}Must install iptables before continuing${NORMAL}"
-    echo -e
-
-    exit 0
-fi
 
 # #
 #   Chain Exists
