@@ -1,18 +1,32 @@
 <div align="center">
-<h1>⭕ CSF Firewall ⭕</h1>
+<h6>Adds support for Docker, Traefik, and OpenVPN servers</h6>
+<h1>♾️ ConfigServer Firewall ♾️</h1>
+
 <br />
+
 <p>
 
 ConfigServer Security & Firewall (CSF) is a popular and powerful firewall solution for Linux servers. This repo contains complete installation guides, and also numerous patches for `Docker` and `OpenVPN` firewall support so that you can allow traffic between these services without interruption.
 
 </p>
 
+<br />
+
+<img src="https://malware.expert/wp-content/uploads/2018/09/csf_firewall.png" height="230">
+
+<br />
+<br />
+
 </div>
 
 <div align="center">
 
 <!-- prettier-ignore-start -->
-
+[![Version][github-version-img]][github-version-uri]
+[![Downloads][github-downloads-img]][github-downloads-uri]
+[![Size][github-size-img]][github-size-img]
+[![Last Commit][github-commit-img]][github-commit-img]
+[![Contributors][contribs-all-img]](#contributors-)
 <!-- prettier-ignore-end -->
 
 </div>
@@ -57,6 +71,7 @@ ConfigServer Security & Firewall (CSF) is a popular and powerful firewall soluti
   - [Advanced Logs](#advanced-logs)
 - [Download ConfigServer Firewall](#download-configserver-firewall)
 - [References for More Help](#references-for-more-help)
+- [Contributors ✨](#contributors-)
 
 
 <br />
@@ -717,3 +732,117 @@ The latest version of csf can be downloaded from:
 If you need additional help apart from this guide to configure CSF; use the following pages for more help:
 - Chapter 1: [How to Install and Configure CSF Firewall on Linux](https://tecadmin.net/install-csf-firewall-on-linux/)
 - Chapter 2: [How to Enable CSF Firewall Web UI](https://tecadmin.net/how-to-enable-csf-firewall-web-ui/)
+
+<br />
+
+---
+
+<br />
+
+## Contributors ✨
+We are always looking for contributors. If you feel that you can provide something useful to Gistr, then we'd love to review your suggestion. Before submitting your contribution, please review the following resources:
+
+- [Pull Request Procedure](.github/PULL_REQUEST_TEMPLATE.md)
+- [Contributor Policy](CONTRIBUTING.md)
+
+<br />
+
+Want to help but can't write code?
+- Review [active questions by our community](https://github.com/Aetherinox/csf-firewall/labels/help%20wanted) and answer the ones you know.
+
+<br />
+
+The following people have helped get this project going:
+
+<br />
+
+<div align="center">
+
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![Contributors][contribs-all-img]](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top"><a href="https://gitlab.com/Aetherinox"><img src="https://avatars.githubusercontent.com/u/118329232?v=4?s=40" width="80px;" alt="Aetherinox"/><br /><sub><b>Aetherinox</b></sub></a><br /><a href="https://github.com/Aetherinox/csf-firewall/commits?author=Aetherinox" title="Code">💻</a> <a href="#projectManagement-Aetherinox" title="Project Management">📆</a> <a href="#fundingFinding-Aetherinox" title="Funding Finding">🔍</a></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+<br />
+<br />
+
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<!-- BADGE > GENERAL -->
+  [general-npmjs-uri]: https://npmjs.com
+  [general-nodejs-uri]: https://nodejs.org
+  [general-npmtrends-uri]: http://npmtrends.com/csf-firewall
+
+<!-- BADGE > VERSION > GITHUB -->
+  [github-version-img]: https://img.shields.io/github/v/tag/Aetherinox/csf-firewall?logo=GitHub&label=Version&color=ba5225
+  [github-version-uri]: https://github.com/Aetherinox/csf-firewall/releases
+
+<!-- BADGE > VERSION > NPMJS -->
+  [npm-version-img]: https://img.shields.io/npm/v/csf-firewall?logo=npm&label=Version&color=ba5225
+  [npm-version-uri]: https://npmjs.com/package/csf-firewall
+
+<!-- BADGE > VERSION > PYPI -->
+  [pypi-version-img]: https://img.shields.io/pypi/v/csf-firewall-plugin
+  [pypi-version-uri]: https://pypi.org/project/csf-firewall-plugin/
+
+<!-- BADGE > LICENSE > MIT -->
+  [license-mit-img]: https://img.shields.io/badge/MIT-FFF?logo=creativecommons&logoColor=FFFFFF&label=License&color=9d29a0
+  [license-mit-uri]: https://github.com/Aetherinox/csf-firewall/blob/main/LICENSE
+
+<!-- BADGE > GITHUB > DOWNLOAD COUNT -->
+  [github-downloads-img]: https://img.shields.io/github/downloads/Aetherinox/csf-firewall/total?logo=github&logoColor=FFFFFF&label=Downloads&color=376892
+  [github-downloads-uri]: https://github.com/Aetherinox/csf-firewall/releases
+
+<!-- BADGE > NPMJS > DOWNLOAD COUNT -->
+  [npmjs-downloads-img]: https://img.shields.io/npm/dw/%40aetherinox%2Fmkdocs-link-embeds?logo=npm&&label=Downloads&color=376892
+  [npmjs-downloads-uri]: https://npmjs.com/package/csf-firewall
+
+<!-- BADGE > GITHUB > DOWNLOAD SIZE -->
+  [github-size-img]: https://img.shields.io/github/repo-size/Aetherinox/csf-firewall?logo=github&label=Size&color=59702a
+  [github-size-uri]: https://github.com/Aetherinox/csf-firewall/releases
+
+<!-- BADGE > NPMJS > DOWNLOAD SIZE -->
+  [npmjs-size-img]: https://img.shields.io/npm/unpacked-size/csf-firewall/latest?logo=npm&label=Size&color=59702a
+  [npmjs-size-uri]: https://npmjs.com/package/csf-firewall
+
+<!-- BADGE > CODECOV > COVERAGE -->
+  [codecov-coverage-img]: https://img.shields.io/codecov/c/github/Aetherinox/csf-firewall?token=MPAVASGIOG&logo=codecov&logoColor=FFFFFF&label=Coverage&color=354b9e
+  [codecov-coverage-uri]: https://codecov.io/github/Aetherinox/csf-firewall
+
+<!-- BADGE > ALL CONTRIBUTORS -->
+  [contribs-all-img]: https://img.shields.io/github/all-contributors/Aetherinox/csf-firewall?logo=contributorcovenant&color=de1f6f&label=contributors
+  [contribs-all-uri]: https://github.com/all-contributors/all-contributors
+
+<!-- BADGE > GITHUB > BUILD > NPM -->
+  [github-build-img]: https://img.shields.io/github/actions/workflow/status/Aetherinox/csf-firewall/npm-release.yml?logo=github&logoColor=FFFFFF&label=Build&color=%23278b30
+  [github-build-uri]: https://github.com/Aetherinox/csf-firewall/actions/workflows/npm-release.yml
+
+<!-- BADGE > GITHUB > BUILD > Pypi -->
+  [github-build-pypi-img]: https://img.shields.io/github/actions/workflow/status/Aetherinox/csf-firewall/release-pypi.yml?logo=github&logoColor=FFFFFF&label=Build&color=%23278b30
+  [github-build-pypi-uri]: https://github.com/Aetherinox/csf-firewall/actions/workflows/pypi-release.yml
+
+<!-- BADGE > GITHUB > TESTS -->
+  [github-tests-img]: https://img.shields.io/github/actions/workflow/status/Aetherinox/csf-firewall/npm-tests.yml?logo=github&label=Tests&color=2c6488
+  [github-tests-uri]: https://github.com/Aetherinox/csf-firewall/actions/workflows/npm-tests.yml
+
+<!-- BADGE > GITHUB > COMMIT -->
+  [github-commit-img]: https://img.shields.io/github/last-commit/Aetherinox/csf-firewall?logo=conventionalcommits&logoColor=FFFFFF&label=Last%20Commit&color=313131
+  [github-commit-uri]: https://github.com/Aetherinox/csf-firewall/commits/main/
+
+<!-- prettier-ignore-end -->
+<!-- markdownlint-restore -->
