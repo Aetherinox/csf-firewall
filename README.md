@@ -210,19 +210,31 @@ You can read this if you want, or skip it. It outlines exactly how the patches w
     - The patches will then be moved onto your system in the locations:
       - `/usr/local/include/csf/post.d/docker.sh`
       - `/usr/local/include/csf/post.d/openvpn.sh`
-    - The OpenVPN patch will first check to ensure you have the following:
-      - Must have OpenVPN Server installed
-      - Must have a valid network tunnel named `tun*` (tun0, tun1, etc)
-      - Must have an outside network adapter named either `eth*` or `enp*`
+    - The `Docker` patch will first check to ensure you have the following:
+      - **Must** have Docker installed
+        - This script will **NOT** install docker. You must do that.
+      - **Must** have a valid docker network adapter named `docker*` or `br-*`
+    - The `OpenVPN` patch will first check to ensure you have the following:
+      - **Must** have OpenVPN Server installed
+      - **Must** have a valid network tunnel named `tun*` (tun0, tun1, etc)
+      - **Must** have an outside network adapter named either `eth*` or `enp*`
       - If any of the checks above are not true, OpenVPN patcher will skip
+        - You can check your list of network adapters using any of the commands below:
+          - `ip link show`
+          - `ifconfig`
+        - You can check if OpenVPN server is installed by using the commmand:
+          - `openvpn --version`
+  
+<br />
+
   - If you attempt to run the `install.sh` any time after the initial setup:
     - The script will check if ConfigServer Firewall and all prerequisites are installed.
-      - If they are not installed; they will be installed.
-      - If they are already installed; nothing will happen. The script does **NOT** update your packages. It installs the latest from the time that you run the script and do not already have ConfigServer Firewall installed.
+      - **If they are not installed**; they will be installed.
+      - **If they are already installed**; nothing will happen. The script does **NOT** update your packages. It installs the latest version of each package from the time that you run the script and do not already have ConfigServer Firewall installed.
     - The script will look at all of the files it added the first time and check the MD5 hash.
       - If the `csfpre`, `csfpost`, or patch files do not exist; they will be re-added to your system.
       - **If the patch files are different** from the one the patcher comes with, you will be prompted / asked if you wish to overwrite your already installed copy
-      - **If the patch files are the same** as the one which comes with the patcher; nothing will be done and it will skip that step.
+      - **If the patch files are the same** as the ones which comes with the patcher; nothing will be done and it will skip that step.
 
 <br />
 
