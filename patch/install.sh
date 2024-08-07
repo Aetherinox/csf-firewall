@@ -65,7 +65,7 @@ sys_code=$(lsb_release -cs)
 
 app_title="ConfigServer Firewall Configuration"
 app_about="Configures ConfigServer Firewall to work with Docker and Traefik"
-app_ver=("2" "0" "0" "0")
+app_ver=("2" "0" "0")
 app_file_this=$(basename "$0")
 app_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
@@ -88,6 +88,7 @@ PATH_INCLUDE_CSF="${PATH_INCLUDE}/csf"
 PATH_CSF_PRE="${PATH_INCLUDE}/csf/pre.d"
 PATH_CSF_POST="${PATH_INCLUDE}/csf/post.d"
 PATH_CSF_BIN="/usr/local/csf/bin"
+PATH_CSF_CONF="/etc/csf/csf.conf"
 
 FILE_CSF_PRE="${PATH_CSF_BIN}/csfpre.sh"
 FILE_CSF_POST="${PATH_CSF_BIN}/csfpost.sh"
@@ -212,6 +213,18 @@ csf_edit_conf() {
 }
 
 # #
+#   iptables > curl
+# #
+
+if ! [ -x "$(command -v curl)" ]; then
+	check_sudo
+
+    echo -e "  ${GREYL}Installing package ${MAGENTA}curl${WHITE}"
+    sudo apt-get update -y -q >/dev/null 2>&1
+    sudo apt-get install curl -y -qq >/dev/null 2>&1
+fi
+
+# #
 #   iptables > find
 # #
 
@@ -317,16 +330,130 @@ opt_usage()
     echo -e 
     printf '  %-5s %-40s\n' "Usage:" "" 1>&2
     printf '  %-5s %-40s\n' "    " "${0} [${GREYL}options${NORMAL}]" 1>&2
-    printf '  %-5s %-40s\n\n' "    " "${0} [${GREYL}-h${NORMAL}] [${GREYL}-v${NORMAL}] [${GREYL}-d${NORMAL}] [${GREYL}-f${NORMAL}]" 1>&2
+    printf '  %-5s %-40s\n\n' "    " "${0} [${GREYL}-h${NORMAL}] [${GREYL}-v${NORMAL}] [${GREYL}-d${NORMAL}] [${GREYL}-r${NORMAL}] [${GREYL}-f${NORMAL}]" 1>&2
     printf '  %-5s %-40s\n' "Options:" "" 1>&2
     printf '  %-5s %-18s %-40s\n' "    " "-d, --dev" "developer mode" 1>&2
     printf '  %-5s %-18s %-40s\n' "    " "" "displays advanced logs" 1>&2
     printf '  %-5s %-18s %-40s\n' "    " "-f, --flush" "completely wipe all iptable rules" 1>&2
     printf '  %-5s %-18s %-40s\n' "    " "" "this includes v4 and v6 rules -- cannot be undone" 1>&2
+    printf '  %-5s %-18s %-40s\n' "    " "-r, --report" "show info about ${app_file_this}" 1>&2
+    printf '  %-5s %-18s %-40s\n' "    " "" "current paths, installed dependencies, etc." 1>&2
     printf '  %-5s %-18s %-40s\n' "    " "-v, --version" "current version of csf script" 1>&2
     printf '  %-5s %-18s %-40s\n' "    " "-h, --help" "show help menu" 1>&2
     echo -e 
     echo -e 
+    exit 1
+}
+
+# #
+#   Display Report
+# #
+
+opt_report()
+{
+
+    clear
+
+    sleep 0.3
+
+    # #
+    #  Section > Manifest
+    # #
+
+	manifest_bUpdateAvail="false"
+	manifest_version=$(curl -s https://api.github.com/repos/${app_repo_author}/${app_repo_name}/releases/latest | jq -r '.tag_name')
+	manifest_published=$(curl -s https://api.github.com/repos/${app_repo_author}/${app_repo_name}/releases/latest | jq -r '.published_at')
+
+    # #
+    #  Check update
+    # #
+
+	version_now=$(get_version)
+	version_new=${manifest_version}
+
+	if get_version_compare_gt $version_new $version_now; then
+		manifest_bUpdateAvail="true"
+	else
+		manifest_bUpdateAvail="false"
+	fi
+
+    # #
+    #  Section > Header
+    # #
+
+    echo -e " ${BLUE}---------------------------------------------------------------------------------------------------${NORMAL}"
+    echo -e " ${GREEN}${BOLD} ${app_title} - v$(get_version)${NORMAL}${MAGENTA}"
+    echo -e " ${GREYL} ${app_about}${NORMAL}${MAGENTA}"
+    echo -e " ${BLUE}---------------------------------------------------------------------------------------------------${NORMAL}"
+
+    # #
+    #  Section > General
+    # #
+
+    echo -e
+    echo -e "  ${LIME_YELLOW}${BOLD}[ General ]${NORMAL}"
+
+    printf "%-5s %-40s %-40s %-40s\n" "" "${POWDER_BLUE}⚙️  Script" "${WHITE}${app_file_this}" "${NORMAL}"
+    printf "%-5s %-40s %-40s %-40s\n" "" "${POWDER_BLUE}⚙️  Path" "${WHITE}${app_dir}" "${NORMAL}"
+    printf "%-5s %-40s %-40s %-40s\n" "" "${POWDER_BLUE}⚙️  Version" "${WHITE}v$(get_version)" "${NORMAL}"
+	if [ "${manifest_bUpdateAvail}" == "true" ]; then
+    	printf "%-5s %-35s %-40s %-40s\n" "" "${POWDER_BLUE}           " "${YELLOW}Update Available( v${version_new} )" "${NORMAL}"
+	fi
+    printf "%-5s %-40s %-40s %-40s\n" "" "${POWDER_BLUE}⚙️  Released" "${WHITE}${manifest_published}" "${NORMAL}"
+    printf "%-5s %-40s %-40s %-40s\n" "" "${POWDER_BLUE}⚙️  Repository" "${WHITE}${app_repo_url}" "${NORMAL}"
+    printf "%-5s %-40s %-40s %-40s\n" "" "${POWDER_BLUE}⚙️  OS" "${WHITE}${OS} - ${OS_VER}" "${NORMAL}"
+
+    # #
+    #  Section > Dependencies 
+    # #
+
+    echo -e
+    echo -e "  ${LIME_YELLOW}${BOLD}[ Dependencies ]${NORMAL}"
+
+    bInstalled_CSF=$([ ! "$(! command -v -- "csf")" ] && echo "Missing" || echo 'Installed')
+    bInstalled_Ipset=$([ ! -x "$(command -v ipset)" ] && echo "Missing" || echo $(dpkg-query -W -f='${Version}\n' ipset))
+    bInstalled_Iptables=$([ ! -x "$(command -v iptables)" ] && echo "Missing" || echo $(dpkg-query -W -f='${Version}\n' iptables))
+    bInstalled_Perl=$([ ! -x "$(command -v perl)" ] && echo "Missing" || echo $(dpkg-query -W -f='${Version}\n' perl))
+
+    printf "%-5s %-38s %-40s\n" "" "${POWDER_BLUE}🗔  ConfgServer" "${WHITE}${bInstalled_CSF}${NORMAL}"
+    printf "%-5s %-38s %-40s\n" "" "${POWDER_BLUE}🗔  Ipset" "${WHITE}${bInstalled_Ipset}${NORMAL}"
+    printf "%-5s %-38s %-40s\n" "" "${POWDER_BLUE}🗔  Iptables" "${WHITE}${bInstalled_Iptables}${NORMAL}"
+    printf "%-5s %-38s %-40s\n" "" "${POWDER_BLUE}🗔  Perl" "${WHITE}${bInstalled_Perl}${NORMAL}"
+
+    # #
+    #  Section > Structure
+    # #
+
+    echo -e
+    echo -e "  ${LIME_YELLOW}${BOLD}[ Structure ]${NORMAL}"
+
+    bFound_DirIncludeCSF=$(sudo [ ! -d ${PATH_INCLUDE_CSF} ] && echo "Missing" || echo 'Found')
+    bFound_DirPred=$(sudo [ ! -d ${PATH_CSF_PRE} ] && echo "Missing" || echo 'Found')
+    bFound_DirPostd=$(sudo [ ! -d ${PATH_CSF_POST} ] && echo "Missing" || echo 'Found')
+    bFound_DirBin=$(sudo [ ! -d ${PATH_CSF_BIN} ] && echo "Missing" || echo 'Found')
+    bFound_FileCSFPreSh=$(sudo [ ! -f ${FILE_CSF_PRE} ] && echo "Missing" || echo 'Found')
+    bFound_FileCSFPostSh=$(sudo [ ! -f ${FILE_CSF_POST} ] && echo "Missing" || echo 'Found')
+    bFound_FileCSFConf=$(sudo [ ! -f ${PATH_CSF_CONF} ] && echo "Missing" || echo 'Found')
+
+    printf "%-5s %-55s %-40s\n" "" "${POWDER_BLUE}📁  ${PATH_INCLUDE_CSF}" "${WHITE}${bFound_DirIncludeCSF}${NORMAL}"
+    printf "%-5s %-55s %-40s\n" "" "${POWDER_BLUE}📁  ${PATH_CSF_PRE}" "${WHITE}${bFound_DirPred}${NORMAL}"
+    printf "%-5s %-55s %-40s\n" "" "${POWDER_BLUE}📁  ${PATH_CSF_POST}" "${WHITE}${bFound_DirPostd}${NORMAL}"
+    printf "%-5s %-55s %-40s\n" "" "${POWDER_BLUE}📁  ${PATH_CSF_BIN}" "${WHITE}${bFound_DirBin}${NORMAL}"
+    printf "%-5s %-55s %-40s\n" "" "${POWDER_BLUE}📄  ${FILE_CSF_PRE}" "${WHITE}${bFound_FileCSFPreSh}${NORMAL}"
+    printf "%-5s %-55s %-40s\n" "" "${POWDER_BLUE}📄  ${FILE_CSF_POST}" "${WHITE}${bFound_FileCSFPostSh}${NORMAL}"
+    printf "%-5s %-55s %-40s\n" "" "${POWDER_BLUE}📄  ${PATH_CSF_CONF}" "${WHITE}${bFound_FileCSFConf}${NORMAL}"
+
+    # #
+    #  Section > Footer
+    # #
+
+    echo -e 
+    echo -e " ${BLUE}---------------------------------------------------------------------------------------------------${NORMAL}"
+    echo -e
+    echo -e
+
+    sleep 0.3
+
     exit 1
 }
 
@@ -346,11 +473,14 @@ while [ $# -gt 0 ]; do
   case "$1" in
     -d|--dev)
             OPT_DEV_ENABLE=true
+			echo -e
             echo -e "  ${FUCHSIA}${BLINK}Devmode Enabled${NORMAL}"
+			echo -e
             ;;
 
     -f|--flush)
-            echo -e "  ${FUCHSIA}${BLINK}Flushing Iptables${NORMAL}"
+			echo -e "  ${BOLD}${DEVGREY}IPTABLES        ${WHITE}Flushing ${DEVGREY}Started${NORMAL}"
+
 			${PATH_IPTABLES} -P INPUT ACCEPT
 			${PATH_IPTABLES} -P FORWARD ACCEPT
 			${PATH_IPTABLES} -P OUTPUT ACCEPT
@@ -367,7 +497,13 @@ while [ $# -gt 0 ]; do
 			${PATH_IP6TABLES} -F
 			${PATH_IP6TABLES} -X
 
+			echo -e "  ${BOLD}${DEVGREY}IPTABLES        ${WHITE}Flushing ${DEVGREY}Finished${NORMAL}"
+			echo -e
             exit 1
+            ;;
+
+    -r*|--report*)
+            opt_report
             ;;
 
     -h*|--help*)
@@ -375,11 +511,11 @@ while [ $# -gt 0 ]; do
             ;;
 
     -v|--version)
-            echo
+			echo -e
             echo -e "  ${GREEN}${BOLD}${app_title}${NORMAL} - v$(get_version)${NORMAL}"
             echo -e "  ${GREYL}${BOLD}${app_repo_url}${NORMAL}"
             echo -e "  ${GREYL}${BOLD}${OS} | ${OS_VER}${NORMAL}"
-            echo
+			echo -e
             exit 1
             ;;
     *)
