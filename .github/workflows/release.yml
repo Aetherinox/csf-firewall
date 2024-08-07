@@ -455,7 +455,7 @@ jobs:
                 generate_release_notes: false
                 files: |
                   ${{ inputs.PLUGIN_NAME }}-${{ env.VERSION_CSF }}.zip
-                  release/${{ inputs.PLUGIN_NAME }}-v${{ steps.task_build_download_csf.outputs.VERSION_CSF }}.tgz
+                  ${{ inputs.PLUGIN_NAME }}-v${{ steps.task_build_download_csf.outputs.VERSION_CSF }}.tgz
                 prerelease: false
                 body: |
                   ${{ steps.task_release_changelog_categorized.outputs.changelog }}
@@ -478,7 +478,7 @@ jobs:
                 generate_release_notes: false
                 files: |
                   ${{ inputs.PLUGIN_NAME }}-${{ env.VERSION_CSF }}-rc.${{ inputs.VERSION_RC }}.zip
-                  release/${{ inputs.PLUGIN_NAME }}-v${{ steps.task_build_download_csf.outputs.VERSION_CSF }}.tgz
+                  ${{ inputs.PLUGIN_NAME }}-v${{ steps.task_build_download_csf.outputs.VERSION_CSF }}.tgz
                 prerelease: false
                 body: |
                   > [!WARNING]
