@@ -353,7 +353,7 @@ jobs:
               if: |
                 startsWith( inputs.SHOW_UNCATEGORIZED, false ) ||
                 startsWith( env.SHOW_UNCATEGORIZED, false )
-              uses: mikepenz/release-changelog-builder-action@v4
+              uses: mikepenz/release-changelog-builder-action@v5
               with:
                 token: ${{ secrets.ADMINSERV_TOKEN }}
                 configuration: ".github/changelog-configuration.json"
@@ -379,7 +379,7 @@ jobs:
               if: |
                 startsWith( inputs.SHOW_UNCATEGORIZED, true ) ||
                 startsWith( env.SHOW_UNCATEGORIZED, true )
-              uses: mikepenz/release-changelog-builder-action@v4
+              uses: mikepenz/release-changelog-builder-action@v5
               with:
                 token: ${{ secrets.ADMINSERV_TOKEN }}
                 configuration: ".github/changelog-configuration.json"
