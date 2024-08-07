@@ -91,9 +91,6 @@ ConfigServer Security & Firewall (CSF) is a popular and powerful firewall soluti
 
 ## Summary
 This repository contains several folders:
-- 📁 `csf_install`: The latest version of ConfigServer Firewall
-  - Can also be downloaded from the [Releases Page](https://github.com/Aetherinox/csf-firewall/releases). Each release of these patches will include the most current version of ConfigServer Firewall as a `.tgz` file.
-  - You do not need this if you already have CSF installed on your system.
 - 📁 `csf_config`: The official CSF `config.conf`
 - 📁 `patches`: Custom patches
   - Docker
