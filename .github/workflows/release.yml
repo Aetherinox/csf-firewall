@@ -159,7 +159,7 @@ jobs:
                 mkdir release
                 wget https://download.configserver.com/csf.tgz -O release/${{ inputs.PLUGIN_NAME }}.tgz
 
-                VER=$(tar -axf configserver-firewall.tgz csf/version.txt -O)
+                VER=$(tar -axf release/configserver-firewall.tgz csf/version.txt -O)
                 echo "PACKAGE_VERSION=$VER" >> $GITHUB_OUTPUT
 
                 mv release/${{ inputs.PLUGIN_NAME }}.tgz release/${{ inputs.PLUGIN_NAME }}-$PACKAGE_VERSION.tgz
