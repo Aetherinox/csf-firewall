@@ -279,7 +279,7 @@ jobs:
               if: ${{ startsWith( inputs.PRERELEASE, false ) }}
               uses: actions/upload-artifact@v4
               with:
-                name: ${{ inputs.PLUGIN_NAME }}-${{ env.VERSION_CSF }}.zip
+                name: ${{ inputs.PLUGIN_NAME }}-${{ env.VERSION_CSF }}
                 path: ${{ inputs.PLUGIN_NAME }}-${{ env.VERSION_CSF }}.zip
                 retention-days: 30
 
@@ -289,6 +289,6 @@ jobs:
               if: ${{ startsWith( inputs.PRERELEASE, true ) }}
               uses: actions/upload-artifact@v4
               with:
-                name: ${{ inputs.PLUGIN_NAME }}-${{ env.VERSION_CSF }}-rc.${{ inputs.VERSION_RC }}.zip
+                name: ${{ inputs.PLUGIN_NAME }}-${{ env.VERSION_CSF }}-rc.${{ inputs.VERSION_RC }}
                 path: ${{ inputs.PLUGIN_NAME }}-${{ env.VERSION_CSF }}-rc.${{ inputs.VERSION_RC }}.zip
                 retention-days: 30
