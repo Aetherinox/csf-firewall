@@ -672,15 +672,17 @@ After successful login, you will find the screen like below.
 
 <p align="center"><img style="width: 80%;text-align: center;" src="https://github.com/user-attachments/assets/2b1a0c5b-d21d-456b-a07d-69c2acdf3888"></p>
 
-**Allow IP Address** – You can use below option to allow any IP quickly. This add the entry in /etc/csf/csf.allow file.
+<br />
+
+**Allow IP Address**: You can use below option to allow any IP quickly. This action adds the entry to the `/etc/csf/csf.allow` file.
 
 <p align="center"><img style="width: 80%;text-align: center;" src="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/Docs/images/csf-quick-allow.png"></p>
 
-**Deny IP Address** – You can use below option to deny any IP quickly. This add the entry in /etc/csf/csf.deny file.
+**Deny IP Address**: You can use below option to deny any IP quickly. This action adds the entry to the `/etc/csf/csf.deny` file.
 
 <p align="center"><img style="width: 80%;text-align: center;" src="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/Docs/images/csf-quick-deny.png"></p>
 
-**Unblock IP Address** – You can use below option to quickly unblocked any IP which is already blocked by CSF.
+**Unblock IP Address**: You can use below option to quickly unblocked any IP which is already blocked by CSF.
 
 <p align="center"><img style="width: 80%;text-align: center;" src="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/Docs/images/csf-unblock-ip.png"></p>
 
