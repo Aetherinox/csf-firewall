@@ -202,6 +202,16 @@ service_exists()
 }
 
 # #
+#   func > disable ConfigServer Firewall testing
+# #
+
+csf_edit_conf() {
+    sed -i 's/TESTING = "1"/TESTING = "0"/' /etc/csf/csf.conf
+    sed -i 's/ETH_DEVICE_SKIP = ""/ETH_DEVICE_SKIP = "docker0"/' /etc/csf/csf.conf
+    sed -i 's/DOCKER = "0"/DOCKER = "1"/' /etc/csf/csf.conf
+}
+
+# #
 #   iptables > find
 # #
 
@@ -890,10 +900,21 @@ check_sudo
 		printf '%-17s %-55s %-55s' " " "csf.service" "${GREEN}Restarting${NORMAL}"
 		echo -e
 		systemctl restart csf.service
+
+		csf -r
 	else
 		printf '%-17s %-55s %-55s' " " "csf.service" "${ORANGE}Not Found${NORMAL}"
 		echo -e
 	fi
+
+# #
+#   Modify CSF config to disable TESTING mode
+# #
+
+	echo -e
+	echo -e "  ${BOLD}${DEVGREY}CSF             ${WHITE}Disabling ${DEVGREY}TESTING MODE${WHITE} in ${DEVGREY}/etc/csf/csf.conf${WHITE}${NORMAL}"
+
+csf_edit_conf
 
 echo -e
 exit 0
