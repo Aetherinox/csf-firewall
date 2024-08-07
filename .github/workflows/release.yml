@@ -162,7 +162,11 @@ jobs:
                 VER=$(tar -axf release/${{ inputs.PLUGIN_NAME }}.tgz csf/version.txt -O)
                 echo "PACKAGE_VERSION=$VER" >> $GITHUB_OUTPUT
 
+                echo -e "Found ConfigServer Firewall v${PACKAGE_VERSION}"
+
                 mv release/${{ inputs.PLUGIN_NAME }}.tgz release/${{ inputs.PLUGIN_NAME }}-$PACKAGE_VERSION.tgz
+
+                echo -e "Creating release/${{ inputs.PLUGIN_NAME }}-${PACKAGE_VERSION}.tgz"
 
             # ---------------------------------------------------------------------------------------
             #   Upload artifacts > windows-updates-pause.reg
@@ -174,6 +178,6 @@ jobs:
               uses: actions/upload-artifact@v4
               if: always()
               with:
-                name: ${{ inputs.PLUGIN_NAME }}.tgz
-                path: release/${{ inputs.PLUGIN_NAME }}.tgz
+                name: ${{ inputs.PLUGIN_NAME }}-${{ steps.task_build_download_csf.outputs.PACKAGE_VERSION }}.tgz
+                path: release/${{ inputs.PLUGIN_NAME }}-${{ steps.task_build_download_csf.outputs.PACKAGE_VERSION }}.tgz
                 retention-days: 30
