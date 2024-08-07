@@ -1008,7 +1008,6 @@ sudo sh install.sh
 
 The `openvpn.sh` file will be installed to `/usr/local/include/csf/post.d`
 
-
 <br />
 
 ### Manual Run
