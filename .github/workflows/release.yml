@@ -103,6 +103,8 @@ jobs:
         permissions:
             contents: write
             packages: write
+        outputs:
+          package_version: ${{ steps.task_build_download_csf.outputs.PACKAGE_VERSION }}
         steps:
 
             # ---------------------------------------------------------------------------------------
@@ -155,18 +157,23 @@ jobs:
               id: task_build_download_csf
               run: |
                 mkdir release
-                wget https://download.configserver.com/csf.tgz -O release/${{ inputs.PLUGIN_VERSION }}.tgz
+                wget https://download.configserver.com/csf.tgz -O release/${{ inputs.PLUGIN_NAME }}.tgz
+
+                VER=$(tar -axf configserver-firewall.tgz csf/version.txt -O)
+                echo "PACKAGE_VERSION=$VER" >> $GITHUB_OUTPUT
+
+                mv release/${{ inputs.PLUGIN_NAME }}.tgz release/${{ inputs.PLUGIN_NAME }}-$PACKAGE_VERSION.tgz
 
             # ---------------------------------------------------------------------------------------
             #   Upload artifacts > windows-updates-pause.reg
             # ---------------------------------------------------------------------------------------
 
             - name: >-
-                📋 Upload Artifacts › ${{ inputs.PLUGIN_VERSION }}.tgz
+                📋 Upload Artifacts › ${{ inputs.PLUGIN_NAME }}.tgz
               id: task_build_artifact_csf
               uses: actions/upload-artifact@v4
               if: always()
               with:
-                name: ${{ inputs.PLUGIN_VERSION }}.tgz
-                path: release/${{ inputs.PLUGIN_VERSION }}.tgz
+                name: ${{ inputs.PLUGIN_NAME }}.tgz
+                path: release/${{ inputs.PLUGIN_NAME }}.tgz
                 retention-days: 30
