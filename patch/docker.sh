@@ -268,6 +268,30 @@ while [ $# -gt 0 ]; do
 done
 
 # #
+#   {bridge} 	= docker0
+#   {subnet} 	= 172.17.0.0/16
+#
+#   + MASQUERADE rule: 172.17.0.0/16 on docker0
+#   + FORWARD rule: accept established connections for docker0
+#   + FORWARD rule: allow communication for docker0
+#   + MASQUERADE rule: 172.18.0.0/16 on br-2e0fde4b0664
+#   + FORWARD rule: accept established connections for br-2e0fde4b0664
+#   + FORWARD rule: allow communication for br-2e0fde4b0664
+# #
+
+# #
+#   check if DOCKER chain exists; flush if true, create if false
+# #
+
+if ${PATH_IPTABLES} -L DOCKER &> /dev/null; then
+    echo -e "  ${BOLD}${DEVGREY}+ DOCKER        ${WHITE}Flushing existing chain DOCKER${NORMAL}"
+    ${PATH_IPTABLES} -F DOCKER
+else
+    echo -e "  ${BOLD}${DEVGREY}+ DOCKER        ${WHITE}Creating chain DOCKER${NORMAL}"
+    ${PATH_IPTABLES} -N DOCKER
+fi
+
+# #
 #   Chain Exists
 # #
 
@@ -286,6 +310,8 @@ chain_exists()
 
 # #
 #   Forward > Add
+#
+#   Allow containers to communicate with themselves & outside world
 # #
 
 add_to_forward()
@@ -293,12 +319,13 @@ add_to_forward()
     local docker_int=$1
 
     if [ `${PATH_IPTABLES} -nvL FORWARD | grep ${docker_int} | wc -l` -eq 0 ]; then
-        ${PATH_IPTABLES} -A FORWARD -o ${docker_int} -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+        # Accept established connections to docker containers
+        ${PATH_IPTABLES} -A FORWARD -o ${docker_int} -m conntrack --ctstate NEW,RELATED,ESTABLISHED -j ACCEPT
         ${PATH_IPTABLES} -A FORWARD -o ${docker_int} -j DOCKER
         ${PATH_IPTABLES} -A FORWARD -i ${docker_int} ! -o ${docker_int} -j ACCEPT
         ${PATH_IPTABLES} -A FORWARD -i ${docker_int} -o ${docker_int} -j ACCEPT
 
-        echo -e "                  ${DEVGREY}+ RULE:                  ${FUCHSIA}-A FORWARD -o ${docker_int} -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT${NORMAL}"
+        echo -e "                  ${DEVGREY}+ RULE:                  ${FUCHSIA}-A FORWARD -o ${docker_int} -m conntrack --ctstate NEW,RELATED,ESTABLISHED -j ACCEPT${NORMAL}"
         echo -e "                  ${DEVGREY}+ RULE:                  ${FUCHSIA}-A FORWARD -o ${docker_int} -j DOCKER${NORMAL}"
         echo -e "                  ${DEVGREY}+ RULE:                  ${FUCHSIA}-A FORWARD -i ${docker_int} ! -o ${docker_int} -j ACCEPT${NORMAL}"
         echo -e "                  ${DEVGREY}+ RULE:                  ${FUCHSIA}-A FORWARD -i ${docker_int} -o ${docker_int} -j ACCEPT${NORMAL}"
@@ -377,8 +404,11 @@ for j in "${!IP_CONTAINERS[@]}"; do
     # #
 
     ip_block=${IP_CONTAINERS[$j]}
-
     echo -e "  ${BOLD}${WHITE}                + ${YELLOW}${ip_block}${NORMAL}"
+
+    # #
+    #   Masquerade outbound connections from containers
+    # #
 
     ${PATH_IPTABLES} -t nat -A POSTROUTING ! -o ${DOCKER_INT} -s ${ip_block} -j MASQUERADE
     ${PATH_IPTABLES} -t nat -A POSTROUTING -s ${ip_block} ! -o ${DOCKER_INT} -j MASQUERADE
@@ -397,11 +427,16 @@ echo -e
 
 # #
 #   Get bridges
+#
+#   Output:
+#       7018d23c9bb4
+#       2e0fde4b0664
 # #
 
 echo -e "  ${BOLD}${DEVGREY}+ BRIDGES       ${WHITE}Configuring network bridges${NORMAL}"
 
 bridges=`docker network ls -q --filter='Driver=bridge'`
+bridge_ids=`docker network ls -q --filter driver=bridge --format "{{.ID}}"`
 
 for bridge in $bridges; do
 
