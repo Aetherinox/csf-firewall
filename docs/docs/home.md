@@ -16,7 +16,7 @@ tags:
 
 </p>
 
-This documentation is related to the github repository for <a href="https://github.com/Aetherinox/csf-firewall">ConfigServer Firewall</a>, which is a popular and powerful firewall solution for Linux servers. On top of documentation for the software itself; this repository includes added patches which allow you to seamlessly integrate Docker and OpenVPN server with ConfigServer Firewall so that all of the services can communicate between each other without interruption.
+This documentation is related to the github repository for <a href="https://github.com/Aetherinox/csf-firewall">ConfigServer Firewall</a>; a popular and powerful firewall solution for Linux servers. On top of documentation for the software itself; this repository includes added patches which allow you to seamlessly integrate Docker and OpenVPN server with ConfigServer Firewall so that all of the services can communicate between each other without interruption.
 
 This documentation covers the following:
 
