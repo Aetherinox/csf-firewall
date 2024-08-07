@@ -201,7 +201,6 @@ jobs:
             packages: write
         env:
           PACKAGE_VERSION: ${{ needs.job-upload.outputs.package_version }}
-        env:
           RELEASE_PREVIOUS_VERSION: ${{ needs.job-upload.outputs.release_previous_version }}
         steps:
 
