@@ -162,11 +162,11 @@ jobs:
                 VER=$(tar -axf release/${{ inputs.PLUGIN_NAME }}.tgz csf/version.txt -O)
                 echo "PACKAGE_VERSION=$VER" >> $GITHUB_OUTPUT
 
-                echo -e "Found ConfigServer Firewall v${PACKAGE_VERSION}"
+                echo -e "Found ConfigServer Firewall v${VER}"
 
-                mv release/${{ inputs.PLUGIN_NAME }}.tgz release/${{ inputs.PLUGIN_NAME }}-$PACKAGE_VERSION.tgz
+                mv release/${{ inputs.PLUGIN_NAME }}.tgz release/${{ inputs.PLUGIN_NAME }}-$VER.tgz
 
-                echo -e "Creating release/${{ inputs.PLUGIN_NAME }}-${PACKAGE_VERSION}.tgz"
+                echo -e "Creating release/${{ inputs.PLUGIN_NAME }}-${VER}.tgz"
 
             # ---------------------------------------------------------------------------------------
             #   Upload artifacts > windows-updates-pause.reg
