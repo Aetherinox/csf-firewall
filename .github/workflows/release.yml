@@ -279,7 +279,7 @@ jobs:
               if: ${{ startsWith( inputs.PRERELEASE, false ) }}
               uses: actions/upload-artifact@v4
               with:
-                name: ${{ inputs.PLUGIN_NAME }}-${{ env.VERSION_CSF }}
+                name: ${{ inputs.PLUGIN_NAME }}-${{ env.VERSION_CSF }}.zip
                 path: ${{ inputs.PLUGIN_NAME }}-${{ env.VERSION_CSF }}.zip
                 retention-days: 30
 
@@ -289,6 +289,224 @@ jobs:
               if: ${{ startsWith( inputs.PRERELEASE, true ) }}
               uses: actions/upload-artifact@v4
               with:
-                name: ${{ inputs.PLUGIN_NAME }}-${{ env.VERSION_CSF }}-rc.${{ inputs.VERSION_RC }}
+                name: ${{ inputs.PLUGIN_NAME }}-${{ env.VERSION_CSF }}-rc.${{ inputs.VERSION_RC }}.zip
                 path: ${{ inputs.PLUGIN_NAME }}-${{ env.VERSION_CSF }}-rc.${{ inputs.VERSION_RC }}.zip
                 retention-days: 30
+
+            # ---------------------------------------------------------------------------------------
+            #   [ Tag ]: Pre Create
+            #
+            #   in order to use the changelog github action, you must pre-create the tag otherwise
+            #   the changelog action will have no idea what tag you are going to be creating and
+            #   the list of commits will not be for the correct release.
+            # ---------------------------------------------------------------------------------------
+
+            - name: "🔖 Tag › Pre Create ${{ inputs.PLUGIN_VERSION }}"
+              uses: rickstaa/action-create-tag@v1
+              id: task_release_tag
+              with:
+                tag: ${{ inputs.PLUGIN_VERSION }}
+                tag_exists_error: false
+                message: "Latest release"
+                gpg_private_key: ${{ secrets.ADMINSERV_GPG_KEY_ASC }}
+                gpg_passphrase: ${{ secrets.ADMINSERV_GPG_PASSPHRASE }}
+
+            # ---------------------------------------------------------------------------------------
+            #   [ Tag ]: Confirm
+            # ---------------------------------------------------------------------------------------
+
+            - name: "🔖 Tag › Confirm ${{ inputs.PLUGIN_VERSION }}"
+              run: |
+                echo "Tag already present: ${{ env.TAG_EXISTS }}"
+                echo "Tag already present: ${{ steps.task_release_tag.outputs.tag_exists }}"
+
+            # ---------------------------------------------------------------------------------------
+            #   Contributor Images
+            # ---------------------------------------------------------------------------------------
+
+            - name: "🥸 Contributors › Generate"
+              id: task_release_contribs_generate
+              uses: jaywcjlove/github-action-contributors@main
+              with:
+                filter-author: (renovate\[bot\]|renovate-bot|dependabot\[bot\])
+                output: CONTRIBUTORS.svg
+                avatarSize: 42
+
+            # ---------------------------------------------------------------------------------------
+            #   Generate Changelog
+            #
+            #   generates a changelog from the github api. requires a PREVIOUS_TAG in order to figure
+            #   out the changes made between the two versions.
+            #
+            #   outputs:
+            #     ${{ steps.changelog.outputs.changelog }}
+            # ---------------------------------------------------------------------------------------
+
+            - name: "📝 Changelog › Pre Setup (Categorized Commits)"
+              id: task_release_changelog_commits_tags_print
+              run: |
+                echo "TAG_LAST=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
+                echo "COMMIT_LAST=$(git rev-parse HEAD)" >> $GITHUB_ENV
+
+            - name: "📝 Changelog › Build (Categorized)"
+              id: task_release_changelog_categorized
+              if: |
+                startsWith( inputs.SHOW_UNCATEGORIZED, false ) ||
+                startsWith( env.SHOW_UNCATEGORIZED, false )
+              uses: mikepenz/release-changelog-builder-action@v4
+              with:
+                token: ${{ secrets.ADMINSERV_TOKEN }}
+                configuration: ".github/changelog-configuration.json"
+                ignorePreReleases: false
+                commitMode: ${{ inputs.CHANGELOG_MODE_COMMIT || env.CHANGELOG_MODE_COMMIT }}
+                fetchReleaseInformation: true
+                fetchViaCommits: true
+                configurationJson: |
+                  {
+                    "template": "## Release Info \n| Item | Value |\n| --- | --- |\n|<sub>Stamp</sub>|<sub>`#{{FROM_TAG}}-#{{FROM_TAG_DATE}} 🔺 #{{TO_TAG}}-#{{TO_TAG_DATE}}`</sub>|\n|<sub>Last Release</sub>|<sub>`#{{DAYS_SINCE}} days ago`</sub>|\n\n<br>\n\n---\n\n<br>\n\n### What's New\nThis release contains the following changes:\n\n<br>\n\n---\n\n<br>\n\n### Statistics\nHow the files have changed:\n<ul><li><a href='#{{RELEASE_DIFF}}'>Changed files</a>  : <b>#{{CHANGED_FILES}}</b> </li><li>Changes  : <b>#{{CHANGES}}</b> </li><li>Commits : <b>#{{COMMITS}}</b> </li><li>Additions : <b>#{{ADDITIONS}}</b></li><li>Deletions : <b>#{{DELETIONS}}</b></li><li>PRs (categorized) : <b>#{{CATEGORIZED_COUNT}}</b></li><li>PRs (uncategorized) : <b>#{{UNCATEGORIZED_COUNT}}</b></li><li>PRs (open) : <b>#{{OPEN_COUNT}}</b></li>\n<br />\n</ul>\n\n<br>\n\n---\n\n<br>\n\n### Pull Requests\nThis release is associated with the following pull requests:\n#{{CHANGELOG}}\n\n<br>\n\n---\n\n<br>\n\n"
+                  }
+              env:
+                GITHUB_TOKEN: ${{ secrets.ADMINSERV_TOKEN }}
+
+            # ---------------------------------------------------------------------------------------
+            #   shows only categorized commits using the commit standards
+            #                type(scope): description
+            #                type: description
+            # ---------------------------------------------------------------------------------------
+
+            - name: "📝 Changelog › Build (Uncategorized)"
+              id: task_release_changelog_uncategorized
+              if: |
+                startsWith( inputs.SHOW_UNCATEGORIZED, true ) ||
+                startsWith( env.SHOW_UNCATEGORIZED, true )
+              uses: mikepenz/release-changelog-builder-action@v4
+              with:
+                token: ${{ secrets.ADMINSERV_TOKEN }}
+                configuration: ".github/changelog-configuration.json"
+                ignorePreReleases: false
+                commitMode: ${{ inputs.CHANGELOG_MODE_COMMIT || env.CHANGELOG_MODE_COMMIT }}
+                fetchReleaseInformation: true
+                fetchViaCommits: true
+                configurationJson: |
+                  {
+                    "template": "## Release Info \n| Item | Value |\n| --- | --- |\n|<sub>Stamp</sub>|<sub>`#{{FROM_TAG}}-#{{FROM_TAG_DATE}} 🔺 #{{TO_TAG}}-#{{TO_TAG_DATE}}`</sub>|\n|<sub>Last Release</sub>|<sub>`#{{DAYS_SINCE}} days ago`</sub>|\n\n<br>\n\n---\n\n<br>\n\n### What's New\nThis release contains the following changes:\n\n<br>\n\n---\n\n<br>\n\n### Statistics\nHow the files have changed:\n<ul><li><a href='#{{RELEASE_DIFF}}'>Changed files</a>  : <b>#{{CHANGED_FILES}}</b> </li><li>Changes  : <b>#{{CHANGES}}</b> </li><li>Commits : <b>#{{COMMITS}}</b> </li><li>Additions : <b>#{{ADDITIONS}}</b></li><li>Deletions : <b>#{{DELETIONS}}</b></li><li>PRs (categorized) : <b>#{{CATEGORIZED_COUNT}}</b></li><li>PRs (uncategorized) : <b>#{{UNCATEGORIZED_COUNT}}</b></li><li>PRs (open) : <b>#{{OPEN_COUNT}}</b></li>\n<br />\n</ul>\n\n<br>\n\n---\n\n<br>\n\n### Pull Requests\nThis release is associated with the following pull requests:\n#{{CHANGELOG}}\n\n<br>\n\n"
+                  }
+              env:
+                GITHUB_TOKEN: ${{ secrets.ADMINSERV_TOKEN }}
+
+            # ---------------------------------------------------------------------------------------
+            #   Fetch Changelog
+            # ---------------------------------------------------------------------------------------
+
+            - name: "📝 Changelog › Print (Categorized)"
+              id: task_release_changelog_print_categorized
+              if: |
+                startsWith( inputs.SHOW_UNCATEGORIZED, false ) ||
+                startsWith( env.SHOW_UNCATEGORIZED, false )
+              run: |
+                echo "${{ steps.task_release_changelog_categorized.outputs.changelog }}"
+
+            - name: "📝 Changelog › Print (Uncategorized)"
+              id: task_release_changelog_print_uncategorized
+              if: |
+                startsWith( inputs.SHOW_UNCATEGORIZED, true ) ||
+                startsWith( env.SHOW_UNCATEGORIZED, true )
+              run: |
+                echo "${{ steps.task_release_changelog_uncategorized.outputs.changelog }}"
+
+            # ---------------------------------------------------------------------------------------
+            #   artifacts > download
+            # ---------------------------------------------------------------------------------------
+
+            - name: "📁 Download › Saved Artifacts"
+              uses: actions/download-artifact@v4
+
+            # ---------------------------------------------------------------------------------------
+            #   Clean dist folder since we're getting the files from artifacts
+            # ---------------------------------------------------------------------------------------
+
+            - name: "⚙️ Debug › Clean Dist Folder"
+              run: |
+                tree
+
+            # ---------------------------------------------------------------------------------------
+            #   [ Release ]: Post Release
+            #
+            #   outputs:
+            #     [RELEASE ID]:
+            #       ${{ steps.task_release_bundle_rc.outputs.id
+            #       ${{ steps.task_release_bundle_st.outputs.id
+            # ---------------------------------------------------------------------------------------
+
+            - name: "🏳️ Post › Stable"
+              id: task_release_bundle_st
+              if: |
+                startsWith( inputs.PRERELEASE, false ) ||
+                startsWith( env.PRERELEASE, false )
+              uses: softprops/action-gh-release@v2
+              env:
+                GITHUB_TOKEN: ${{ secrets.ADMINSERV_TOKEN_CL }}
+              with:
+                token: ${{ secrets.ADMINSERV_TOKEN_CL }}
+                name: v${{ env.PACKAGE_VERSION }}
+                tag_name: ${{ env.PACKAGE_VERSION }}
+                target_commitish: ${{ github.event.inputs.branch }}
+                draft: false
+                generate_release_notes: false
+                files: |
+                  ${{ inputs.PLUGIN_NAME }}-${{ env.VERSION_CSF }}.zip
+                  release/${{ inputs.PLUGIN_NAME }}-v${{ steps.task_build_download_csf.outputs.VERSION_CSF }}.tgz
+                prerelease: false
+                body: |
+                  ${{ steps.task_release_changelog_categorized.outputs.changelog }}
+                  ${{ steps.task_release_changelog_uncategorized.outputs.changelog }}
+
+            - name: "🏳️ Post › Release Candidate"
+              id: task_release_bundle_rc
+              if: |
+                startsWith( inputs.PRERELEASE, true ) ||
+                startsWith( env.PRERELEASE, true )
+              uses: softprops/action-gh-release@v2
+              env:
+                GITHUB_TOKEN: ${{ secrets.ADMINSERV_TOKEN }}
+              with:
+                token: ${{ secrets.ADMINSERV_TOKEN }}
+                name: v${{ env.PACKAGE_VERSION }}
+                tag_name: ${{ env.PACKAGE_VERSION }}
+                target_commitish: ${{ github.event.inputs.branch }}
+                draft: false
+                generate_release_notes: false
+                files: |
+                  ${{ inputs.PLUGIN_NAME }}-${{ env.VERSION_CSF }}-rc.${{ inputs.VERSION_RC }}.zip
+                  release/${{ inputs.PLUGIN_NAME }}-v${{ steps.task_build_download_csf.outputs.VERSION_CSF }}.tgz
+                prerelease: false
+                body: |
+                  > [!WARNING]
+                  > This is a **release candidate**, which means it is not a stable release and could contain bugs. You should download it at your own risk.
+
+                  ${{ steps.task_release_changelog_categorized.outputs.changelog }}
+                  ${{ steps.task_release_changelog_uncategorized.outputs.changelog }}
+
+            # ---------------------------------------------------------------------------------------
+            #   Print Status
+            # ---------------------------------------------------------------------------------------
+
+            - name: "🎛️ Status › Print"
+              id: task_release_status_print
+              run: |
+                echo "Printing Variables"
+                echo
+                echo "---- CHANGELOG ---------------------------------------------------------------"
+                echo "${{ steps.task_release_changelog_categorized.outputs.changelog }}"
+                echo "${{ steps.task_release_changelog_uncategorized.outputs.changelog }}"
+                echo "---- CHANGELOG ---------------------------------------------------------------"
+                echo ""
+                echo ""
+                echo "---- VARIABLES ---------------------------------------------------------------"
+                echo "Package Version ............ ${{ env.PACKAGE_VERSION }}"
+                echo "Tag: Previous .............. ${{ env.TAG_LAST }}"
+                echo "Tag: Now.... ............... ${{ github.ref }}"
+                echo "Last Commit ................ ${{ env.COMMIT_LAST }}"
+                echo "ST Output ID ............... ${{ steps.task_release_bundle_st.outputs.id }}"
+                echo "RC Output ID ............... ${{ steps.task_release_bundle_rc.outputs.id }}"
+                echo "---- CHANGELOG ---------------------------------------------------------------"
