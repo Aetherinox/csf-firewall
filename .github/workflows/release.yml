@@ -428,8 +428,8 @@ jobs:
                 GITHUB_TOKEN: ${{ secrets.ADMINSERV_TOKEN_CL }}
               with:
                 token: ${{ secrets.ADMINSERV_TOKEN_CL }}
-                name: v${{ env.PLUGIN_VERSION }}
-                tag_name: ${{ env.PLUGIN_VERSION }}
+                name: v${{ inputs.PLUGIN_VERSION }}
+                tag_name: ${{ inputs.PLUGIN_VERSION }}
                 target_commitish: ${{ github.event.inputs.branch }}
                 draft: false
                 generate_release_notes: false
@@ -451,8 +451,8 @@ jobs:
                 GITHUB_TOKEN: ${{ secrets.ADMINSERV_TOKEN }}
               with:
                 token: ${{ secrets.ADMINSERV_TOKEN }}
-                name: v${{ env.PLUGIN_VERSION }}
-                tag_name: ${{ env.PLUGIN_VERSION }}
+                name: v${{ inputs.PLUGIN_VERSION }}
+                tag_name: ${{ inputs.PLUGIN_VERSION }}
                 target_commitish: ${{ github.event.inputs.branch }}
                 draft: false
                 generate_release_notes: false
@@ -483,7 +483,7 @@ jobs:
                 echo ""
                 echo ""
                 echo "---- VARIABLES ---------------------------------------------------------------"
-                echo "Package Version ............ ${{ env.PLUGIN_VERSION }}"
+                echo "Package Version ............ ${{ inputs.PLUGIN_VERSION }}"
                 echo "Tag: Previous .............. ${{ env.TAG_LAST }}"
                 echo "Tag: Now.... ............... ${{ github.ref }}"
                 echo "Last Commit ................ ${{ env.COMMIT_LAST }}"
