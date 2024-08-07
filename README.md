@@ -27,6 +27,8 @@ ConfigServer Security & Firewall (CSF) is a popular and powerful firewall soluti
 [![Size][github-size-img]][github-size-img]
 [![Last Commit][github-commit-img]][github-commit-img]
 [![Contributors][contribs-all-img]](#contributors-)
+
+[![Built with Material for MkDocs](https://img.shields.io/badge/Powered_by_Material_for_MkDocs-526CFE?style=for-the-badge&logo=MaterialForMkDocs&logoColor=white)](https://aetherinox.github.io/csf-firewall/)
 <!-- prettier-ignore-end -->
 
 </div>
