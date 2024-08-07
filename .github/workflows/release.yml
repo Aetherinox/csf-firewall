@@ -17,6 +17,17 @@ on:
         type:         string
 
       # ---------------------------------------------------------------------------------------
+      #   Version to release
+      #     e.g: v1.0.0
+      # ---------------------------------------------------------------------------------------
+
+      PLUGIN_VERSION:
+        description:  "📦 Version"
+        required:     true
+        default:      '1.x.x'
+        type:         string
+
+      # ---------------------------------------------------------------------------------------
       #   ENABLE:   the changelog generated in releases tab will only display single commits.
       #   DISABLE:  the changelog shows pull requests completed based on their labels
       # ---------------------------------------------------------------------------------------
@@ -170,14 +181,14 @@ jobs:
 
                 ver_csf=$(tar -axf release/${{ inputs.PLUGIN_NAME }}.tgz csf/version.txt -O)
                 echo "VERSION_CSF=$ver_csf" >> $GITHUB_OUTPUT
-                echo -e "Found ConfigServer Firewall v${ver_csf}-${ver_build}"
+                echo -e "Found ConfigServer Firewall v${ver_csf}"
 
                 # #
                 #   rename .tgz
                 # #
 
-                mv release/${{ inputs.PLUGIN_NAME }}.tgz release/${{ inputs.PLUGIN_NAME }}-v${ver_csf}-${ver_build}.tgz
-                echo -e "Creating release/${{ inputs.PLUGIN_NAME }}-v${ver_csf}-${ver_build}.tgz"
+                mv release/${{ inputs.PLUGIN_NAME }}.tgz release/${{ inputs.PLUGIN_NAME }}-v${ver_csf}.tgz
+                echo -e "Creating release/${{ inputs.PLUGIN_NAME }}-v${ver_csf}.tgz"
 
             # ---------------------------------------------------------------------------------------
             #   Upload artifacts > release/csf-firewall-v14.20.tgz
@@ -189,8 +200,8 @@ jobs:
               uses: actions/upload-artifact@v4
               if: always()
               with:
-                name: ${{ inputs.PLUGIN_NAME }}-v${{ steps.task_build_download_csf.outputs.VERSION_CSF }}-${{ steps.task_build_download_csf.outputs.VERSION_BUILD }}.tgz
-                path: release/${{ inputs.PLUGIN_NAME }}-v${{ steps.task_build_download_csf.outputs.VERSION_CSF }}-${{ steps.task_build_download_csf.outputs.VERSION_BUILD }}.tgz
+                name: ${{ inputs.PLUGIN_NAME }}-v${{ steps.task_build_download_csf.outputs.VERSION_CSF }}.tgz
+                path: release/${{ inputs.PLUGIN_NAME }}-v${{ steps.task_build_download_csf.outputs.VERSION_CSF }}.tgz
                 retention-days: 30
 
     # ---------------------------------------------------------------------------------------
@@ -229,6 +240,55 @@ jobs:
               id: task_release_debug_print_vals_1
               run: |
                 echo "TAG VERSION (Previous) ........... ${{ env.VERSION_TAG_PREV }}"
-                echo "TAG VERSION (Next) ............... v${{ env.VERSION_CSF }}-${{ env.VERSION_BUILD }}"
+                echo "TAG VERSION (Next) ............... ${{ inputs.PLUGIN_VERSION }}"
                 echo "CSF VERSION ...................... ${{ env.VERSION_CSF }}"
                 echo "RELEASE BUILD .................... ${{ env.VERSION_BUILD }}"
+
+            # ---------------------------------------------------------------------------------------
+            #   Build Project & Create Zip
+            # ---------------------------------------------------------------------------------------
+
+            - name: "🔨 Build › Stable ( ${{ inputs.PLUGIN_NAME }}-${{ env.VERSION_CSF }}.zip )"
+              id: task_release_build_st
+              if: ${{ startsWith( inputs.PRERELEASE, false ) }}
+              run: |
+                  echo Building STABLE Package .zip ${{ inputs.PLUGIN_NAME }}-${{ env.VERSION_CSF }}.zip
+                  mv patch/* .
+                  zip -r ${{ inputs.PLUGIN_NAME }}-${{ env.VERSION_CSF }}.zip README.md LICENSE *.sh
+                  ls
+              env:
+                NODE_AUTH_TOKEN: ${{ secrets.ADMINSERV_TOKEN_CL }}
+
+            - name: "🔨 Build › Release Candidate ( ${{ inputs.PLUGIN_NAME }}-${{ env.VERSION_CSF }}-rc.${{ inputs.VERSION_RC }}.zip )"
+              id: task_release_build_rc
+              if: ${{ startsWith( inputs.PRERELEASE, true ) }}
+              run: |
+                  echo Building PRE-RELEASE Package .zip ${{ inputs.PLUGIN_NAME }}-${{ env.VERSION_CSF }}-rc.${{ inputs.VERSION_RC }}.zip
+                  zip -r ${{ inputs.PLUGIN_NAME }}-${{ env.VERSION_CSF }}-rc.${{ inputs.VERSION_RC }}.zip README.md LICENSE *.sh
+                  ls
+              env:
+                NODE_AUTH_TOKEN: ${{ secrets.ADMINSERV_TOKEN_CL }}
+
+            # ---------------------------------------------------------------------------------------
+            #   Upload artifacts > csf-firewall-v14.20*.zip
+            # ---------------------------------------------------------------------------------------
+
+            - name: >-
+                📋 Upload Artifacts › ${{ inputs.PLUGIN_NAME }}-${{ env.VERSION_CSF }}.zip
+              id: task_release_artifact_st
+              if: ${{ startsWith( inputs.PRERELEASE, false ) }}
+              uses: actions/upload-artifact@v4
+              with:
+                name: ${{ inputs.PLUGIN_NAME }}-${{ env.VERSION_CSF }}.zip
+                path: ${{ inputs.PLUGIN_NAME }}-${{ env.VERSION_CSF }}.zip
+                retention-days: 30
+
+            - name: >-
+                📋 Upload Artifacts › ${{ inputs.PLUGIN_NAME }}-${{ env.VERSION_CSF }}-rc.${{ inputs.VERSION_RC }}.zip
+              id: task_release_artifact_rc
+              if: ${{ startsWith( inputs.PRERELEASE, true ) }}
+              uses: actions/upload-artifact@v4
+              with:
+                name: ${{ inputs.PLUGIN_NAME }}-${{ env.VERSION_CSF }}-rc.${{ inputs.VERSION_RC }}.zip
+                path: ${{ inputs.PLUGIN_NAME }}-${{ env.VERSION_CSF }}-rc.${{ inputs.VERSION_RC }}.zip
+                retention-days: 30
