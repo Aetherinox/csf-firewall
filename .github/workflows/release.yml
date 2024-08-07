@@ -155,18 +155,18 @@ jobs:
               id: task_build_download_csf
               run: |
                 mkdir release
-                wget https://download.configserver.com/csf.tgz -O release/configserver-firewall.tgz
+                wget https://download.configserver.com/csf.tgz -O release/${{ inputs.PLUGIN_VERSION }}.tgz
 
             # ---------------------------------------------------------------------------------------
             #   Upload artifacts > windows-updates-pause.reg
             # ---------------------------------------------------------------------------------------
 
             - name: >-
-                📋 Upload Artifacts › configserver-firewall.tgz
+                📋 Upload Artifacts › ${{ inputs.PLUGIN_VERSION }}.tgz
               id: task_build_artifact_csf
               uses: actions/upload-artifact@v4
               if: always()
               with:
-                name: configserver-firewall.tgz
-                path: /release/configserver-firewall.tgz
+                name: ${{ inputs.PLUGIN_VERSION }}.tgz
+                path: release/${{ inputs.PLUGIN_VERSION }}.tgz
                 retention-days: 30
