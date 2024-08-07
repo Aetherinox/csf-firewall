@@ -648,21 +648,41 @@ sudo apt-get install ipset
 <br />
 
 ### Step 3: Access and Use Web UI:
-Now, access CSF UI on your browser with the specified port. For this tutorial, I have used 1025 port. This will prompt for user authentication first. After successful login, you will find the screen like below.
+Now, access CSF UI on your browser with the specified port. For this tutorial; we used 1025 port and accessed the CSF admin panel by opening our browser and going to:
+```
+https://127.0.0.1:1025
+```
 
-<p align="center"><img style="width: 100%;text-align: center;" src="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/Docs/images/csf-ui.png"></p>
+<br />
+
+When prompted for the username and password; the default is:
+
+| Field | Value |
+| --- | --- |
+| Username | `admin` |
+| Password | `admin` |
+
+<br />
+
+<p align="center"><img style="width: 80%;text-align: center;" src="https://github.com/user-attachments/assets/c23e9de8-69a9-4a92-810b-791c72f5793a"></p>
+
+<br />
+
+After successful login, you will find the screen like below.
+
+<p align="center"><img style="width: 80%;text-align: center;" src="https://github.com/user-attachments/assets/2b1a0c5b-d21d-456b-a07d-69c2acdf3888"></p>
 
 **Allow IP Address** – You can use below option to allow any IP quickly. This add the entry in /etc/csf/csf.allow file.
 
-<p align="center"><img style="width: 100%;text-align: center;" src="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/Docs/images/csf-quick-allow.png"></p>
+<p align="center"><img style="width: 80%;text-align: center;" src="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/Docs/images/csf-quick-allow.png"></p>
 
 **Deny IP Address** – You can use below option to deny any IP quickly. This add the entry in /etc/csf/csf.deny file.
 
-<p align="center"><img style="width: 100%;text-align: center;" src="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/Docs/images/csf-quick-deny.png"></p>
+<p align="center"><img style="width: 80%;text-align: center;" src="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/Docs/images/csf-quick-deny.png"></p>
 
 **Unblock IP Address** – You can use below option to quickly unblocked any IP which is already blocked by CSF.
 
-<p align="center"><img style="width: 100%;text-align: center;" src="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/Docs/images/csf-unblock-ip.png"></p>
+<p align="center"><img style="width: 80%;text-align: center;" src="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/Docs/images/csf-unblock-ip.png"></p>
 
 <br />
 
