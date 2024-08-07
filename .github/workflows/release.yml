@@ -155,7 +155,7 @@ jobs:
               id: task_build_download_csf
               run: |
                 mkdir release
-                wget https://download.configserver.com/csf.tgz -O /release/configserver-firewall.tgz
+                wget https://download.configserver.com/csf.tgz -O release/configserver-firewall.tgz
 
             # ---------------------------------------------------------------------------------------
             #   Upload artifacts > windows-updates-pause.reg
