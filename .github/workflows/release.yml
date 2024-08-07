@@ -17,17 +17,6 @@ on:
         type:         string
 
       # ---------------------------------------------------------------------------------------
-      #   Version to release
-      #     e.g: v1.0.0
-      # ---------------------------------------------------------------------------------------
-
-      PLUGIN_VERSION:
-        description:  "📦 Version"
-        required:     true
-        default:      '1.x.x'
-        type:         string
-
-      # ---------------------------------------------------------------------------------------
       #   ENABLE:   the changelog generated in releases tab will only display single commits.
       #   DISABLE:  the changelog shows pull requests completed based on their labels
       # ---------------------------------------------------------------------------------------
