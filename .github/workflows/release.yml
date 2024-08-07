@@ -1,0 +1,172 @@
+name: "📦 Release"
+run-name: "📦 Release"
+
+on:
+  workflow_dispatch:
+    inputs:
+
+      # ---------------------------------------------------------------------------------------
+      #   Name of the plugin to use when creating the release zip filename
+      #     e.g: csf-firewall-v1.0.0.zip
+      # ---------------------------------------------------------------------------------------
+
+      PLUGIN_NAME:
+        description:  "📦 Name of Plugin"
+        required:     true
+        default:      'csf-firewall'
+        type:         string
+
+      # ---------------------------------------------------------------------------------------
+      #   Version to release
+      #     e.g: v1.0.0
+      # ---------------------------------------------------------------------------------------
+
+      PLUGIN_VERSION:
+        description:  "📦 Version"
+        required:     true
+        default:      '1.x.x'
+        type:         string
+
+      # ---------------------------------------------------------------------------------------
+      #   ENABLE:   the changelog generated in releases tab will only display single commits.
+      #   DISABLE:  the changelog shows pull requests completed based on their labels
+      # ---------------------------------------------------------------------------------------
+
+      CHANGELOG_MODE_COMMIT:
+        description:  "📑 Use Commits Instead of PRs"
+        required:     true
+        default:      true
+        type:         boolean
+
+      # ---------------------------------------------------------------------------------------
+      #   ENABLE:   Will show all types of commits, including uncategorized
+      #   DISABLE:  WIll only show actions that have been categorized using the format
+      #                type(scope): description
+      #                type: description
+      # ---------------------------------------------------------------------------------------
+
+      SHOW_UNCATEGORIZED:
+        description:  "🗂️ Show Uncategorized Commits"
+        required:     true
+        default:      false
+        type:         boolean
+
+      # ---------------------------------------------------------------------------------------
+      #   ENABLE:   released version will be marked as pre-release
+      #   DISABLE:  release version will be marked as stable / normal release
+      # ---------------------------------------------------------------------------------------
+
+      PRERELEASE:
+        description:  "🧪 Build RC (Pre-release)"
+        required:     true
+        default:      false
+        type:         boolean
+
+      # ---------------------------------------------------------------------------------------
+      #   Release Candidate version number
+      #   this will be added to the end of your released app in the releases page.
+      #     e.g: csf-firewall-v1.0.0-rc.1
+      # ---------------------------------------------------------------------------------------
+
+      VERSION_RC:
+        description:  "🧪 RC (Pre-release) Ver (csf-firewall-rc.v1)"
+        required:     false
+        type:         string
+        default:      "1"
+
+# ---------------------------------------------------------------------------------------
+#   environment variables
+# ---------------------------------------------------------------------------------------
+
+env:
+    PLUGIN_NAME:            csf-firewall
+    ASSIGN_USER:            Aetherinox
+    BOT_NAME_1:             AdminServ
+    BOT_NAME_2:             AdminServX
+    BOT_NAME_3:             EuropaServ
+    BOT_NAME_DEPENDABOT:    dependabot[bot]
+
+# ---------------------------------------------------------------------------------------
+#   jobs
+# ---------------------------------------------------------------------------------------
+
+jobs:
+
+    # ---------------------------------------------------------------------------------------
+    #   JOB > INITIALIZE
+    # ---------------------------------------------------------------------------------------
+
+    job-upload:
+        name: >-
+          📦 Package › Upload
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+            packages: write
+        steps:
+
+            # ---------------------------------------------------------------------------------------
+            #   Job > Start
+            # ---------------------------------------------------------------------------------------
+
+            - name: "✅ Start"
+              id: task_build_start
+              run: |
+                echo "Starting build"
+
+            # ---------------------------------------------------------------------------------------
+            #   Job > Checkout
+            # ---------------------------------------------------------------------------------------
+
+            - name: "☑️ Checkout"
+              id: task_build_checkout
+              uses: actions/checkout@v4
+              with:
+                fetch-depth: 0
+
+            # ---------------------------------------------------------------------------------------
+            #   Job > Get Previous Tag
+            #
+            #   this is for no particular reason except to just report the last version released
+            # ---------------------------------------------------------------------------------------
+
+            - name: "🏷️ Get Previous tag"
+              id: task_tag_previous
+              uses: "WyriHaximus/github-action-get-previous-tag@v1"
+              with:
+                fallback: 1.0.0
+
+            # ---------------------------------------------------------------------------------------
+            #   Job > Print Current Version
+            #
+            #   this is for no particular reason except to just report the last version released
+            # ---------------------------------------------------------------------------------------
+
+            - name: "🔨 Debug: Previous Github Tag"
+              id: task_build_getver
+              run: |
+                echo -e ${{ steps.task_tag_previous.outputs.tag }}
+
+            # ---------------------------------------------------------------------------------------
+            #   Job > Download latest version of ConfigServer Firewall
+            # ---------------------------------------------------------------------------------------
+
+            - name: "⬇️ Download: ConfigServer Firewall"
+              id: task_build_download_csf
+              run: |
+                mkdir release
+                wget https://download.configserver.com/csf.tgz -O /release/configserver-firewall.tgz
+
+            # ---------------------------------------------------------------------------------------
+            #   Upload artifacts > windows-updates-pause.reg
+            # ---------------------------------------------------------------------------------------
+
+            - name: >-
+                📋 Upload Artifacts › configserver-firewall.tgz
+              id: task_build_artifact_csf
+              uses: actions/upload-artifact@v4
+              if: always()
+              with:
+                name: configserver-firewall.tgz
+                path: /release/configserver-firewall.tgz
+                retention-days: 30
