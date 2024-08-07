@@ -104,8 +104,9 @@ jobs:
             contents: write
             packages: write
         outputs:
-          package_version: ${{ steps.task_build_download_csf.outputs.PACKAGE_VERSION }}
-          release_previous_version: ${{ steps.task_build_getver.outputs.RELEASE_PREVIOUS_VERSION }}
+          version_csf: ${{ steps.task_build_download_csf.outputs.VERSION_CSF }}
+          version_build: ${{ steps.task_build_download_csf.outputs.VERSION_BUILD }}
+          version_tag_previous: ${{ steps.task_build_getver.outputs.VERSION_TAG_PREV }}
         steps:
 
             # ---------------------------------------------------------------------------------------
@@ -149,7 +150,7 @@ jobs:
               id: task_build_getver
               run: |
                 echo -e ${{ steps.task_tag_previous.outputs.tag }}
-                echo "RELEASE_PREVIOUS_VERSION=${{ steps.task_tag_previous.outputs.tag }}" >> $GITHUB_OUTPUT
+                echo "VERSION_TAG_PREV=${{ steps.task_tag_previous.outputs.tag }}" >> $GITHUB_OUTPUT
 
             # ---------------------------------------------------------------------------------------
             #   Job > Download latest version of ConfigServer Firewall
@@ -166,12 +167,28 @@ jobs:
                 mkdir release
                 wget https://download.configserver.com/csf.tgz -O release/${{ inputs.PLUGIN_NAME }}.tgz
 
-                VER=$(tar -axf release/${{ inputs.PLUGIN_NAME }}.tgz csf/version.txt -O)
-                echo "PACKAGE_VERSION=$VER" >> $GITHUB_OUTPUT
+                # #
+                #   generate build number
+                #     2408.07 (YYMM.DD)
+                # #
 
-                echo -e "Found ConfigServer Firewall v${VER}"
-                mv release/${{ inputs.PLUGIN_NAME }}.tgz release/${{ inputs.PLUGIN_NAME }}-v$VER.tgz
-                echo -e "Creating release/${{ inputs.PLUGIN_NAME }}-v${VER}.tgz"
+                ver_build=$(date -u '+%y%m-%d')
+                echo "VERSION_BUILD=$ver_build" >> $GITHUB_OUTPUT
+
+                # #
+                #   get csf version from version.txt in .tgz
+                # #
+
+                ver_csf=$(tar -axf release/${{ inputs.PLUGIN_NAME }}.tgz csf/version.txt -O)
+                echo "VERSION_CSF=$ver_csf" >> $GITHUB_OUTPUT
+                echo -e "Found ConfigServer Firewall v${ver_csf}-${ver_build}"
+
+                # #
+                #   rename .tgz
+                # #
+
+                mv release/${{ inputs.PLUGIN_NAME }}.tgz release/${{ inputs.PLUGIN_NAME }}-v${ver_csf}-${ver_build}.tgz
+                echo -e "Creating release/${{ inputs.PLUGIN_NAME }}-v${ver_csf}-${ver_build}.tgz"
 
             # ---------------------------------------------------------------------------------------
             #   Upload artifacts > release/csf-firewall-v14.20.tgz
@@ -183,8 +200,8 @@ jobs:
               uses: actions/upload-artifact@v4
               if: always()
               with:
-                name: ${{ inputs.PLUGIN_NAME }}-v${{ steps.task_build_download_csf.outputs.PACKAGE_VERSION }}.tgz
-                path: release/${{ inputs.PLUGIN_NAME }}-v${{ steps.task_build_download_csf.outputs.PACKAGE_VERSION }}.tgz
+                name: ${{ inputs.PLUGIN_NAME }}-v${{ steps.task_build_download_csf.outputs.VERSION_CSF }}-${{ steps.task_build_download_csf.outputs.VERSION_BUILD }}.tgz
+                path: release/${{ inputs.PLUGIN_NAME }}-v${{ steps.task_build_download_csf.outputs.VERSION_CSF }}-${{ steps.task_build_download_csf.outputs.VERSION_BUILD }}.tgz
                 retention-days: 30
 
     # ---------------------------------------------------------------------------------------
@@ -200,8 +217,9 @@ jobs:
             contents: write
             packages: write
         env:
-          PACKAGE_VERSION: ${{ needs.job-upload.outputs.package_version }}
-          RELEASE_PREVIOUS_VERSION: ${{ needs.job-upload.outputs.release_previous_version }}
+          VERSION_CSF: ${{ needs.job-upload.outputs.version_csf }}
+          VERSION_BUILD: ${{ needs.job-upload.outputs.version_build }}
+          VERSION_TAG_PREV: ${{ needs.job-upload.outputs.version_tag_previous }}
         steps:
 
             # ---------------------------------------------------------------------------------------
@@ -221,8 +239,7 @@ jobs:
             - name: "⚙️ Debug › Passed Values"
               id: task_release_debug_print_vals_1
               run: |
-                echo "REPO RELEASE VERSION ............. ${{ inputs.PLUGIN_VERSION }}"
-                echo "REPO PREVIOUS VERSION ............ ${{ env.RELEASE_PREVIOUS_VERSION }}"
-                echo "CSF VERSION ...................... ${{ env.PACKAGE_VERSION }}"
-
-                
+                echo "TAG VERSION (Previous) ........... ${{ env.VERSION_TAG_PREV }}"
+                echo "TAG VERSION (Next) ............... v${{ env.VERSION_CSF }}-${{ env.VERSION_BUILD }}"
+                echo "CSF VERSION ...................... ${{ env.VERSION_CSF }}"
+                echo "RELEASE BUILD .................... ${{ env.VERSION_BUILD }}"
