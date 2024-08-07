@@ -697,15 +697,15 @@ After successful login, you will find the screen like below.
 
 **Allow IP Address**: You can use below option to allow any IP quickly. This action adds the entry to the `/etc/csf/csf.allow` file.
 
-<p align="center"><img style="width: 80%;text-align: center;" src="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/Docs/images/csf-quick-allow.png"></p>
+<p align="center"><img style="width: 80%;text-align: center;" src="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/docs/images/csf-quick-allow.png"></p>
 
 **Deny IP Address**: You can use below option to deny any IP quickly. This action adds the entry to the `/etc/csf/csf.deny` file.
 
-<p align="center"><img style="width: 80%;text-align: center;" src="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/Docs/images/csf-quick-deny.png"></p>
+<p align="center"><img style="width: 80%;text-align: center;" src="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/docs/images/csf-quick-deny.png"></p>
 
 **Unblock IP Address**: You can use below option to quickly unblocked any IP which is already blocked by CSF.
 
-<p align="center"><img style="width: 80%;text-align: center;" src="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/Docs/images/csf-unblock-ip.png"></p>
+<p align="center"><img style="width: 80%;text-align: center;" src="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/docs/images/csf-unblock-ip.png"></p>
 
 <br />
 
@@ -1176,7 +1176,7 @@ The following people have helped get this project going:
   [github-downloads-uri]: https://github.com/Aetherinox/csf-firewall/releases
 
 <!-- BADGE > NPMJS > DOWNLOAD COUNT -->
-  [npmjs-downloads-img]: https://img.shields.io/npm/dw/%40aetherinox%2Fmkdocs-link-embeds?logo=npm&&label=Downloads&color=376892
+  [npmjs-downloads-img]: https://img.shields.io/npm/dw/%40aetherinox%2Fcsf-firewall?logo=npm&&label=Downloads&color=376892
   [npmjs-downloads-uri]: https://npmjs.com/package/csf-firewall
 
 <!-- BADGE > GITHUB > DOWNLOAD SIZE -->
