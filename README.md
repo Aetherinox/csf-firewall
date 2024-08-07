@@ -90,38 +90,41 @@ ConfigServer Security & Firewall (CSF) is a popular and powerful firewall soluti
 <br />
 
 ## Summary
-This repository contains several things:
-- The latest version of ConfigServer Firewall
-  - Located in the `csf_install` folder.
-  - Can also be downloaded from https://download.configserver.com/csf
-- The official ConfigServer Firewall config.conf file
-  - Located in the `csf_config` folder.
-- Custom Patches:
-  - Easily integrate:
-    - Docker
-    - OpenVPN Server
-  - Located in the `patches` folder.
+This repository contains several folders:
+- 📁 `csf_install`: The latest version of ConfigServer Firewall
+  - Can also be downloaded from the [Releases Page](https://github.com/Aetherinox/csf-firewall/releases). Each release of these patches will include the most current version of ConfigServer Firewall as a `.tgz` file.
+  - You do not need this if you already have CSF installed on your system.
+- 📁 `csf_config`: The official CSF `config.conf`
+- 📁 `patches`: Custom patches
+  - Docker
+  - OpenVPN Server
 
 <br />
 <br />
 
-This guide will help you with the following steps:
+Each release posted on the [Releases Page](https://github.com/Aetherinox/csf-firewall/releases) contains two files:
+- `csf-firewall-vxx.xx.tgz`
+  - This is the latest version of ConfigServer Firewall. You do not need this if you already have CSF installed on your system.
+- `csf-firewall-vx.x.x-patches.zip`
+  - The patches contained in this repository, which include the files:
+    - 📄 csfpost.sh
+    - 📄 csfpre.sh
+    - 📄 docker.sh
+    - 📄 install.sh
+    - 📄 openvpn.sh
+    - 📄 README.md
+    - 📄 LICENSE
+
+<br />
+<br />
+
+This guide will help you with the following:
 
 - Install CSF (ConfigServer Firewall)
 - Install CSF WebUI interface
 - Install patches
   - Docker Integration
   - OpenVPN Integration
-
-<br />
-<br />
-
-This repo contains the following folders; with an explaination of each one below:
-| Folder | Description |
-| --- | --- | 
-| `csf_install` | <br>Latest version of ConfigServer Firewall. Can also be downloaded from [https://download.configserver.com/csf.tgz](https://download.configserver.com/csf.tgz).<br><br>You do not need this folder if you are downloading it from the link provided above.<br><br> |
-| `csf_config` | <br>ConfigServer Firewall config file; should be placed within `/etc/csf/config.conf` <br><br> |
-| `patch` | <br>Docker and OpenVPN patches to allow docker, traefik, OpenVPN server, and ConfigServer Firewall to work together. <br><br> |
 
 <br />
 
@@ -266,22 +269,22 @@ You can install ConfigServer Firewall and all prerequisites one of two ways:
 ### Install Using Patcher
 
 If you would like to install ConfigServer Firewall using this repo's patcher; download the patch:
-```shell ignore
+```shell
 git clone https://github.com/Aetherinox/csf-firewall.git
 ```
 
 <br />
 
 Set the permissions for the `install.sh` file:
-```shell ignore
+```shell
 sudo chmod +x /csf-firewall/patch/install.sh
 ```
 
 <br />
 
 Run the script:
-```shell ignore
-./csf-firewall/patch/install.sh
+```shell
+sudo ./csf-firewall/patch/install.sh
 ```
 
 <br />
@@ -322,6 +325,8 @@ These steps explain how to install ConfigServer Firewall manually.
 #### Step 2: Download and Install CSF
 To download and install CSF, follow these steps:
 
+<br />
+
 - Log in to your server via SSH. 
 - Download the latest version of CSF using the wget command:
     ```shell
@@ -339,6 +344,8 @@ To download and install CSF, follow these steps:
     ```shell
     sudo sh install.sh
     ```
+
+<br />
 
 CSF will now be installed on your server, along with its Web UI (ConfigServer Firewall & Security) if you have a control panel like cPanel or DirectAdmin installed.
 
@@ -370,12 +377,22 @@ Now that CSF is installed, you can start configuring it to suit your server’s 
 sudo nano /etc/csf/csf.conf
 ```
 
+<br />
+
 Some essential settings you may want to modify include:
+
+> [!NOTE]
+> When you run the patcher `install.sh`; **TESTING MODE** will automatically be disabled after everything as successfully completed.
+
+<br />
+
 - `TESTING`: Set this value to 0 to disable testing mode and activate the firewall.
 - `TCP_IN` and `TCP_OUT`: These settings define the allowed incoming and outgoing TCP ports, respectively. Add or remove ports as required, separated by commas.
 - `UDP_IN` and `UDP_OUT`: These settings define the allowed incoming and outgoing UDP ports, respectively. Add or remove ports as required, separated by commas.
 - `DENY_IP_LIMIT`: This setting defines the maximum number of IP addresses that can be listed in the /etc/csf/csf.deny file. Adjust this limit as needed.
 - `CT_LIMIT`: This setting controls the number of connections from a single IP address that are allowed before the IP is temporarily blocked. Adjust this value according to your server’s requirements.
+
+<br />
 
 These are just a few of the numerous configuration options available in CSF. Make sure to review the configuration file and adjust the settings to suit your server’s needs. After making changes to the configuration file, save and exit the text editor.
 
@@ -402,6 +419,8 @@ This command will restart the CSF and LFD (Login Failure Daemon) services, apply
 
 ## Managing the Firewall
 CSF provides several commands to manage the firewall, such as:
+
+<br />
 
 ### Start Firewall
 
@@ -493,6 +512,8 @@ These commands can help you manage your server’s security and monitor incoming
 
 ## Uninstalling CSF
 If you decide to uninstall CSF for any reason, follow these steps:
+
+<br />
 
 1. Navigate to the CSF directory:
     ```shell
@@ -728,7 +749,7 @@ If you wish to manually install it, you may run the following commands:
 ```shell ignore
 sudo chmod +x /patch/docker.sh
 
-./patch/docker.sh
+sudo ./patch/docker.sh
 ```
 
 <br />
@@ -777,14 +798,14 @@ Run the script:
 
 ```shell
 cd /patch/
-./install.sh
+sudo ./install.sh
 ```
 
 <br />
 
 You can also try:
 ```shell
-sh install.sh
+sudo sh install.sh
 ```
 
 <br />
@@ -904,7 +925,7 @@ If you wish to manually install it, you may run the following commands:
 ```shell ignore
 sudo chmod +x /patch/openvpn.sh
 
-./patch/openvpn.sh
+sudo ./patch/openvpn.sh
 ```
 
 <br />
@@ -973,14 +994,14 @@ Run the script:
 
 ```shell
 cd /patch/
-./install.sh
+sudo ./install.sh
 ```
 
 <br />
 
 You can also try:
 ```shell
-sh install.sh
+sudo sh install.sh
 ```
 
 <br />
