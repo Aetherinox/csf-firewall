@@ -270,30 +270,6 @@ jobs:
                 NODE_AUTH_TOKEN: ${{ secrets.ADMINSERV_TOKEN_CL }}
 
             # ---------------------------------------------------------------------------------------
-            #   Upload artifacts > csf-firewall-v14.20*.zip
-            # ---------------------------------------------------------------------------------------
-
-            - name: >-
-                📋 Upload Artifacts › ${{ inputs.PLUGIN_NAME }}-${{ env.VERSION_CSF }}.zip
-              id: task_release_artifact_st
-              if: ${{ startsWith( inputs.PRERELEASE, false ) }}
-              uses: actions/upload-artifact@v4
-              with:
-                name: ${{ inputs.PLUGIN_NAME }}-${{ env.VERSION_CSF }}.zip
-                path: ${{ inputs.PLUGIN_NAME }}-${{ env.VERSION_CSF }}.zip
-                retention-days: 30
-
-            - name: >-
-                📋 Upload Artifacts › ${{ inputs.PLUGIN_NAME }}-${{ env.VERSION_CSF }}-rc.${{ inputs.VERSION_RC }}.zip
-              id: task_release_artifact_rc
-              if: ${{ startsWith( inputs.PRERELEASE, true ) }}
-              uses: actions/upload-artifact@v4
-              with:
-                name: ${{ inputs.PLUGIN_NAME }}-${{ env.VERSION_CSF }}-rc.${{ inputs.VERSION_RC }}.zip
-                path: ${{ inputs.PLUGIN_NAME }}-${{ env.VERSION_CSF }}-rc.${{ inputs.VERSION_RC }}.zip
-                retention-days: 30
-
-            # ---------------------------------------------------------------------------------------
             #   [ Tag ]: Pre Create
             #
             #   in order to use the changelog github action, you must pre-create the tag otherwise
@@ -417,6 +393,10 @@ jobs:
             # ---------------------------------------------------------------------------------------
             #   artifacts > download
             # ---------------------------------------------------------------------------------------
+
+            - name: "⚙️ Debug › Clean Dist Folder"
+              run: |
+                tree
 
             - name: "📁 Download › Saved Artifacts"
               uses: actions/download-artifact@v4
