@@ -248,23 +248,23 @@ jobs:
             #   Build Project & Create Zip
             # ---------------------------------------------------------------------------------------
 
-            - name: "🔨 Build › Stable ( ${{ inputs.PLUGIN_NAME }}-${{ inputs.PLUGIN_VERSION }}.zip )"
+            - name: "🔨 Build › Stable ( ${{ inputs.PLUGIN_NAME }}-v${{ inputs.PLUGIN_VERSION }}.zip )"
               id: task_release_build_st
               if: ${{ startsWith( inputs.PRERELEASE, false ) }}
               run: |
-                  echo Building STABLE Package .zip ${{ inputs.PLUGIN_NAME }}-${{ inputs.PLUGIN_VERSION }}.zip
+                  echo Building STABLE Package .zip ${{ inputs.PLUGIN_NAME }}-v${{ inputs.PLUGIN_VERSION }}.zip
                   mv patch/* .
-                  zip -r ${{ inputs.PLUGIN_NAME }}-${{ inputs.PLUGIN_VERSION }}.zip README.md LICENSE *.sh
+                  zip -r ${{ inputs.PLUGIN_NAME }}-v${{ inputs.PLUGIN_VERSION }}.zip README.md LICENSE *.sh
                   ls
               env:
                 NODE_AUTH_TOKEN: ${{ secrets.ADMINSERV_TOKEN_CL }}
 
-            - name: "🔨 Build › Release Candidate ( ${{ inputs.PLUGIN_NAME }}-${{ inputs.PLUGIN_VERSION }}-rc.${{ inputs.VERSION_RC }}.zip )"
+            - name: "🔨 Build › Release Candidate ( ${{ inputs.PLUGIN_NAME }}-v${{ inputs.PLUGIN_VERSION }}-rc.${{ inputs.VERSION_RC }}.zip )"
               id: task_release_build_rc
               if: ${{ startsWith( inputs.PRERELEASE, true ) }}
               run: |
-                  echo Building PRE-RELEASE Package .zip ${{ inputs.PLUGIN_NAME }}-${{ inputs.PLUGIN_VERSION }}-rc.${{ inputs.VERSION_RC }}.zip
-                  zip -r ${{ inputs.PLUGIN_NAME }}-${{ inputs.PLUGIN_VERSION }}-rc.${{ inputs.VERSION_RC }}.zip README.md LICENSE *.sh
+                  echo Building PRE-RELEASE Package .zip ${{ inputs.PLUGIN_NAME }}-v${{ inputs.PLUGIN_VERSION }}-rc.${{ inputs.VERSION_RC }}.zip
+                  zip -r ${{ inputs.PLUGIN_NAME }}-v${{ inputs.PLUGIN_VERSION }}-rc.${{ inputs.VERSION_RC }}.zip README.md LICENSE *.sh
                   ls
               env:
                 NODE_AUTH_TOKEN: ${{ secrets.ADMINSERV_TOKEN_CL }}
@@ -434,8 +434,8 @@ jobs:
                 draft: false
                 generate_release_notes: false
                 files: |
-                  ${{ inputs.PLUGIN_NAME }}-${{ inputs.PLUGIN_VERSION }}.zip
-                  ${{ inputs.PLUGIN_NAME }}-v${{ env.VERSION_CSF }}.tgz
+                  ${{ inputs.PLUGIN_NAME }}-v${{ inputs.PLUGIN_VERSION }}.zip
+                  ${{ inputs.PLUGIN_NAME }}-v${{ env.VERSION_CSF }}.tgz/${{ inputs.PLUGIN_NAME }}-v${{ env.VERSION_CSF }}.tgz
                 prerelease: false
                 body: |
                   ${{ steps.task_release_changelog_categorized.outputs.changelog }}
@@ -457,8 +457,8 @@ jobs:
                 draft: false
                 generate_release_notes: false
                 files: |
-                  ${{ inputs.PLUGIN_NAME }}-${{ inputs.PLUGIN_VERSION }}-rc.${{ inputs.VERSION_RC }}.zip
-                  ${{ inputs.PLUGIN_NAME }}-v${{ env.VERSION_CSF }}.tgz
+                  ${{ inputs.PLUGIN_NAME }}-v${{ inputs.PLUGIN_VERSION }}-rc.${{ inputs.VERSION_RC }}.zip
+                  ${{ inputs.PLUGIN_NAME }}-v${{ env.VERSION_CSF }}.tgz/${{ inputs.PLUGIN_NAME }}-v${{ env.VERSION_CSF }}.tgz
                 prerelease: false
                 body: |
                   > [!WARNING]
