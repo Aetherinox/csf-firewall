@@ -151,8 +151,8 @@ extra_javascript:
   - javascripts/tablesort.js
 nav:
   - Home: 'home.md'
-  - About CSF: 'csf_about.md'
-  - How Patcher Works: 'how_patcher_works.md'
+  - About CSF: 'about_csf.md'
+  - About Patcher: 'about_patcher.md'
   - Install CSF:
     - With Patcher: 'csf_install/patcher.md'
     - Manually: 'csf_install/manually.md'
