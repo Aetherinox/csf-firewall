@@ -30,6 +30,7 @@ These steps explain how to install ConfigServer Firewall manually using a direct
 
 #### Step 2: Download and Install CSF
 To download and install CSF, follow these steps:
+
 - Log in to your server via SSH. 
 - Download the latest version of CSF using the wget command:
     ```shell
