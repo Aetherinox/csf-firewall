@@ -63,6 +63,7 @@ markdown_extensions:
   - pymdownx.snippets:
       auto_append:
         - includes/abbreviations.md
+      url_download: true
   - pymdownx.arithmatex:
       generic: true
 
@@ -153,9 +154,13 @@ nav:
   - Home: 'home.md'
   - About CSF: 'about_csf.md'
   - About Patcher: 'about_patcher.md'
-  - Install CSF:
+  - CSF - Install:
     - Using Patch: 'csf_install/using_patch.md'
     - Using Manual Mode: 'csf_install/using_manual.md'
+    - Test Install: 'csf_install/testing.md'
+  - CSF - Configure:
+    - Basics: 'configure/basics.md'
+    - csf.conf: 'configure/conf.md'
   - About:
     - License: 'about/license.md'
     - Conventions: 'about/conventions.md'
