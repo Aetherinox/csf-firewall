@@ -154,13 +154,13 @@ nav:
   - About CSF: 'about_csf.md'
   - About Patcher: 'about_patcher.md'
   - Install CSF:
-    - With Patcher: 'csf_install/patcher.md'
-    - Manually: 'csf_install/manually.md'
+    - Using Patch: 'csf_install/using_patch.md'
+    - Using Manual Mode: 'csf_install/using_manual.md'
   - About:
     - License: 'about/license.md'
     - Conventions: 'about/conventions.md'
     - Tags: 'about/tags.md'
-  - Changelog: 'changelog.md'
+    - Changelog: 'about/changelog.md'
 
 plugins:
   - search:
