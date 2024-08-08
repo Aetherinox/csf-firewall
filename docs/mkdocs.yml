@@ -161,6 +161,8 @@ nav:
   - CSF - Configure:
     - Basics: 'configure/basics.md'
     - csf.conf: 'configure/conf.md'
+  - CSF - Manage:
+    - Enable & Start: 'manage/start.md'
   - About:
     - License: 'about/license.md'
     - Conventions: 'about/conventions.md'
