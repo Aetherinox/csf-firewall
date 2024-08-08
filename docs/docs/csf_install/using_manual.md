@@ -14,12 +14,12 @@ These steps explain how to install ConfigServer Firewall manually using a direct
 - A Linux server running CentOS, Debian, Ubuntu, or any other compatible Linux distribution. 
 - Root access or a user account with sudo privileges.
 - Perl installed on your server. If Perl is not installed, you can install it by running the following commands:
-  - For CentOS/RHEL:
+  - For **CentOS/RHEL**:
     ```shell
     sudo yum install perl ipset
     ```
 
-  - For Debian/Ubuntu:
+  - For **Debian/Ubuntu**:
 
     ```shell
     sudo apt-get update 
@@ -30,9 +30,6 @@ These steps explain how to install ConfigServer Firewall manually using a direct
 
 #### Step 2: Download and Install CSF
 To download and install CSF, follow these steps:
-
-<br />
-
 - Log in to your server via SSH. 
 - Download the latest version of CSF using the wget command:
     ```shell
