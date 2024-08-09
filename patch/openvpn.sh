@@ -377,10 +377,15 @@ fi
 
 # #
 #   Public IP Address
+#
+#   LIST
+#       sudo csf -l
+#   DROP RULE
+#       sudo iptables -t nat -D POSTROUTING <NUMBER>
 # #
 
 if [ ! -z "${IP_PUBLIC}" ]; then
-    ${PATH_IPTABLES} -t nat -A POSTROUTING -j SNAT --to-source ${IP_PUBLIC}
+    ${PATH_IPTABLES} -t nat -A POSTROUTING -j SNAT --to-source 10.0.2.15
     printf '\n%-17s %-35s %-55s' " " "${DEVGREY}+ RULE" "${FUCHSIA}-t nat -A POSTROUTING -j SNAT --to-source ${IP_PUBLIC}${NORMAL}"
 else
     printf '\n%-17s %-35s %-55s' " " "${RED}X${DEVGREY} RULE" "     ${RED}couldn't find public ip${NORMAL}"
