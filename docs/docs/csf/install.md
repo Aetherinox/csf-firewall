@@ -9,7 +9,6 @@ These steps explain how to install ConfigServer Firewall on your system. There a
 
 - [Install: Using Patch](#install-using-patch)
 - [Install: Manually](#install-manually)
-- [Next Steps](#next-steps)
 
 <br />
 
@@ -118,7 +117,7 @@ CSF will now be installed on your server, along with its Web UI (ConfigServer Fi
 
 <br />
 
-## Next Steps
+## Next Steps <!-- omit from toc -->
 
 ```embed
 url:            ../configure
