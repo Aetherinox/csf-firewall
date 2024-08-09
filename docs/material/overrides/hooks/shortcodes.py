@@ -41,13 +41,49 @@
 
 from __future__ import annotations
 
+# #
+#   Import
+# #
+
 import posixpath
 import re
+import inspect
+
+# #
+#   From
+# #
 
 from mkdocs.config.defaults import MkDocsConfig
 from mkdocs.structure.files import File, Files
 from mkdocs.structure.pages import Page
 from re import Match
+
+# #
+#   ASCII Colors
+# #
+
+class clr():
+    BLACK = '\033[30m'
+    RED = '\033[31m'
+    GREEN = '\033[32m'
+    YELLOW = '\033[33m'
+    BLUE = '\033[34m'
+    MAGENTA = '\033[35m'
+    CYAN = '\033[36m'
+    WHITE = '\033[37m'
+    UNDERLINE = '\033[4m'
+    RESET = '\033[0m'
+    GREY = '\033[90m'
+
+# #
+#   Pages
+#
+#   these must be configured to a valid page path; otherwise the script will error
+# #
+
+PAGE_CHANGELOG ="about/changelog.md"
+PAGE_BACKERS = "about/backers.md"
+PAGE_CONVENTIONS = "about/conventions.md"
 
 # #
 #   Hooks > on_page_markdown
@@ -56,6 +92,8 @@ from re import Match
 def on_page_markdown(
     markdown: str, *, page: Page, config: MkDocsConfig, files: Files
 ):
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Loading Page: ' + clr.YELLOW + str(page) + clr.WHITE )
 
     # Replace callback
     def replace(match: Match):
@@ -142,22 +180,24 @@ def Create_Setting(type: str):
     _, *_, name = re.split(r"[.*]", type)
     return f"`{name}` {{ #{type} }}\n\n[{type}]: #{type}\n\n"
 
-# -----------------------------------------------------------------------------
+# #
+#   Resolve path of file relative to given page - the posixpath always includes
+#   one additional level of `..` which we need to remove
+# #
 
-# Resolve path of file relative to given page - the posixpath always includes
-# one additional level of `..` which we need to remove
 def _resolve_path(path: str, page: Page, files: Files):
     path, anchor, *_ = f"{path}#".split("#")
     path = _resolve(files.get_file_from_path(path), page)
     return "#".join([path, anchor]) if anchor else path
 
-# Resolve path of file relative to given page - the posixpath always includes
-# one additional level of `..` which we need to remove
+# #
+#   Resolve path of file relative to given page - the posixpath always includes
+#   one additional level of `..` which we need to remove
+# #
+
 def _resolve(file: File, page: Page):
     path = posixpath.relpath(file.src_uri, page.file.src_uri)
     return posixpath.sep.join(path.split(posixpath.sep)[1:])
-
-# -----------------------------------------------------------------------------
 
 # #
 #   Create > Badge
@@ -215,7 +255,7 @@ def Badge_ColorPalette(icon: str, text: str = "", type: str = ""):
 
 def Badge_Backers(page: Page, files: Files):
     icon = "material-heart"
-    href = _resolve_path("about/backers.md", page, files)
+    href = _resolve_path(PAGE_BACKERS, page, files)
     return Create_Badge(
         icon = f"[:{icon}:]({href} 'Backers only')",
         type = "heart"
@@ -233,13 +273,16 @@ def Badge_Backers(page: Page, files: Files):
 
 def Version( text: str, page: Page, files: Files ):
     spec = text
-    path = f"changelog.md#{spec}"
+    path = f"{PAGE_CHANGELOG}#{spec}"
 
     # Return badge
     icon = "aetherx-axs-box"
-    href = _resolve_path("about/conventions.md#version", page, files)
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#version", page, files)
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+
     return Create_Badge(
-        icon = f"[:{icon}:]({href} 'Proteus Release')",
+        icon = f"[:{icon}:]({href} 'Mkdocs Release')",
         text = f"[{text}]({_resolve_path(path, page, files)})" if spec else ""
     )
 
@@ -249,12 +292,14 @@ def Version( text: str, page: Page, files: Files ):
 
 def Version_Stable( text: str, page: Page, files: Files ):
     spec = text.replace( "stable-", "" )
-    path = f"changelog.md#{spec}"
+    path = f"{PAGE_CHANGELOG}#{spec}"
 
     # Return badge
     icon = "aetherx-axs-tag"
-    href = _resolve_path( "about/conventions.md#version-beta", page, files )
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#version-beta", page, files )
     output  = ""
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     # spec not empty
     if spec:
@@ -273,12 +318,14 @@ def Version_Stable( text: str, page: Page, files: Files ):
 
 def Version_Beta( text: str, page: Page, files: Files ):
     spec = text.replace( "beta-", "" )
-    path = f"changelog.md#{spec}"
+    path = f"{PAGE_CHANGELOG}#{spec}"
 
     # Return badge
     icon    = "aetherx-axs-b"
-    href    = _resolve_path( "about/conventions.md#version-beta", page, files )
+    href    = _resolve_path( f"{PAGE_CONVENTIONS}#version-beta", page, files )
     output  = ""
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     # spec not empty
     if spec:
@@ -300,7 +347,10 @@ def Version_Beta( text: str, page: Page, files: Files ):
 
 def Badge_Feature(text: str, page: Page, files: Files):
     icon = "material-toggle-switch"
-    href = _resolve_path("about/conventions.md#feature", page, files)
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#feature", page, files)
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+
     return Create_Badge(
         icon = f"[:{icon}:]({href} 'Optional feature')",
         text = text
@@ -317,7 +367,10 @@ def Badge_Feature(text: str, page: Page, files: Files):
 
 def Badge_Plugin(text: str, page: Page, files: Files):
     icon = "material-floppy"
-    href = _resolve_path("about/conventions.md#plugin", page, files)
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#plugin", page, files)
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+
     return Create_Badge(
         icon = f"[:{icon}:]({href} 'Plugin')",
         text = text
@@ -332,7 +385,10 @@ def Badge_Plugin(text: str, page: Page, files: Files):
 
 def Badge_Extension(text: str, page: Page, files: Files):
     icon = "material-language-markdown"
-    href = _resolve_path("about/conventions.md#extension", page, files)
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#extension", page, files)
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+
     return Create_Badge(
         icon = f"[:{icon}:]({href} 'Markdown extension')",
         text = text
@@ -350,7 +406,10 @@ def Badge_Extension(text: str, page: Page, files: Files):
 
 def Badge_3rdparty(text: str, page: Page, files: Files):
     icon = "material-package-variant"
-    href = _resolve_path("about/conventions.md#3rdparty", page, files)
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#3rdparty", page, files)
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+
     return Create_Badge(
         icon = f"[:{icon}:]({href} 'Third-party utility')",
         text = text
@@ -384,6 +443,9 @@ def Badge_Example(text: str, page: Page, files: Files):
 def Badge_Example_View(text: str, page: Page, files: Files):
     icon = "material-folder-eye"
     href = f"https://github.com/Aetherinox/csf-firewall/{text}/"
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+
     return Create_Badge(
         icon = f"[:{icon}:]({href} 'View example')",
         type = "right"
@@ -392,6 +454,9 @@ def Badge_Example_View(text: str, page: Page, files: Files):
 def Badge_Example_Download_Zip(text: str, page: Page, files: Files):
     icon = "material-folder-download"
     href = f"https://github.com/Aetherinox/csf-firewall/{text}.zip"
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+
     return Create_Badge(
         icon = f"[:{icon}:]({href} 'Download example')",
         text = f"[`.zip`]({href})",
@@ -409,7 +474,10 @@ def Badge_Example_Download_Zip(text: str, page: Page, files: Files):
 
 def Badge_Command(text: str, page: Page, files: Files):
     icon = "material-console-line"
-    href = _resolve_path("about/conventions.md#command", page, files)
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#command", page, files)
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+
     return Create_Badge(
         icon = f"[:{icon}:]({href} 'Terminal / Console Command')",
         text = text
@@ -429,7 +497,10 @@ def Badge_Command(text: str, page: Page, files: Files):
 
 def Badge_DefaultValue_Custom(text: str, page: Page, files: Files):
     icon = "material-water"
-    href = _resolve_path("about/conventions.md#default", page, files)
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#default", page, files)
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+
     return Create_Badge(
         icon = f"[:{icon}:]({href} 'Default value')",
         text = text
@@ -449,7 +520,10 @@ def Badge_DefaultValue_Custom(text: str, page: Page, files: Files):
 
 def Badge_DefaultValue_None(page: Page, files: Files):
     icon = "material-water-outline"
-    href = _resolve_path("about/conventions.md#default", page, files)
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#default", page, files)
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+
     return Create_Badge(
         icon = f"[:{icon}:]({href} 'Default value is empty')"
     )
@@ -468,7 +542,10 @@ def Badge_DefaultValue_None(page: Page, files: Files):
 
 def Badge_DefaultValue_Computed(page: Page, files: Files):
     icon = "material-water-check"
-    href = _resolve_path("about/conventions.md#default", page, files)
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#default", page, files)
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+
     return Create_Badge(
         icon = f"[:{icon}:]({href} 'Default value is computed')"
     )
@@ -485,7 +562,10 @@ def Badge_DefaultValue_Computed(page: Page, files: Files):
 
 def Badge_Flag_Metadata(page: Page, files: Files):
     icon = "material-list-box-outline"
-    href = _resolve_path("about/conventions.md#metadata", page, files)
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#metadata", page, files)
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+
     return Create_Badge(
         icon = f"[:{icon}:]({href} 'Metadata property')"
     )
@@ -502,7 +582,10 @@ def Badge_Flag_Metadata(page: Page, files: Files):
 
 def Badge_Flag_Required(page: Page, files: Files):
     icon = "material-alert"
-    href = _resolve_path("about/conventions.md#required", page, files)
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#required", page, files)
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+
     return Create_Badge(
         icon = f"[:{icon}:]({href} 'Required value')"
     )
@@ -518,7 +601,10 @@ def Badge_Flag_Required(page: Page, files: Files):
 
 def Badge_Flag_Customization(page: Page, files: Files):
     icon = "material-brush-variant"
-    href = _resolve_path("about/conventions.md#customization", page, files)
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#customization", page, files)
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+
     return Create_Badge(
         icon = f"[:{icon}:]({href} 'Customization')"
     )
@@ -536,7 +622,10 @@ def Badge_Flag_Customization(page: Page, files: Files):
 
 def Badge_Flag_Experimental(page: Page, files: Files):
     icon = "material-flask-outline"
-    href = _resolve_path("about/conventions.md#experimental", page, files)
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#experimental", page, files)
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+
     return Create_Badge(
         icon = f"[:{icon}:]({href} 'Experimental')"
     )
@@ -555,7 +644,10 @@ def Badge_Flag_Experimental(page: Page, files: Files):
 
 def Badge_Multiple_Instances(page: Page, files: Files):
     icon = "material-inbox-multiple"
-    href = _resolve_path("about/conventions.md#multiple-instances", page, files)
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#multiple-instances", page, files)
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+
     return Create_Badge(
         icon = f"[:{icon}:]({href} 'Multiple instances')"
     )
@@ -571,7 +663,10 @@ def Badge_Multiple_Instances(page: Page, files: Files):
 
 def icon_control_default( page: Page, files: Files ):
     icon = "aetherx-axs-hand-pointer"
-    href = _resolve_path( "about/conventions.md#control", page, files )
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files )
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+
     return Create_Badge(
         icon = f"[:{icon}:]({href} 'Type: Textbox')"
     )
@@ -585,7 +680,10 @@ def icon_control_default( page: Page, files: Files ):
 
 def icon_control_textbox( page: Page, files: Files ):
     icon = "aetherx-axs-input-text"
-    href = _resolve_path( "about/conventions.md#control", page, files )
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files )
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+
     return Create_Badge(
         icon = f"[:{icon}:]({href} 'Type: Textbox')"
     )
@@ -601,21 +699,30 @@ def icon_control_textbox( page: Page, files: Files ):
 
 def icon_control_toggle( page: Page, files: Files ):
     icon = "aetherx-axs-toggle-large-on"
-    href = _resolve_path("about/conventions.md#control", page, files)
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files)
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+
     return Create_Badge(
         icon = f"[:{icon}:]({href} 'Type: Toggle Switch')"
     )
 
 def icon_control_toggle_on( page: Page, files: Files ):
     icon = "aetherx-axd-toggle-on"
-    href = _resolve_path("about/conventions.md#control", page, files)
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files)
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+    
     return Create_Badge(
         icon = f"[:{icon}:]({href} 'Toggle: Enabled')"
     )
 
 def icon_control_toggle_off( page: Page, files: Files ):
     icon = "aetherx-axd-toggle-off"
-    href = _resolve_path("about/conventions.md#control", page, files)
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files)
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+
     return Create_Badge(
         icon = f"[:{icon}:]({href} 'Toggle: Disabled')"
     )
@@ -629,7 +736,10 @@ def icon_control_toggle_off( page: Page, files: Files ):
 
 def icon_control_dropdown( page: Page, files: Files ):
     icon = "aetherx-axs-square-caret-down"
-    href = _resolve_path("about/conventions.md#control", page, files)
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files)
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+
     return Create_Badge(
         icon = f"[:{icon}:]({href} 'Type: Dropdown')"
     )
@@ -643,7 +753,10 @@ def icon_control_dropdown( page: Page, files: Files ):
 
 def icon_control_button( page: Page, files: Files ):
     icon = "material-button-pointer"
-    href = _resolve_path( "about/conventions.md#control", page, files )
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files )
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+
     return Create_Badge(
         icon = f"[:{icon}:]({href} 'Type: Button')"
     )
@@ -657,7 +770,10 @@ def icon_control_button( page: Page, files: Files ):
 
 def icon_control_slider( page: Page, files: Files ):
     icon = "aetherx-axd-sliders-simple"
-    href = _resolve_path( "about/conventions.md#control", page, files )
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files )
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+
     return Create_Badge(
         icon = f"[:{icon}:]({href} 'Type: Slider')"
     )
@@ -671,7 +787,10 @@ def icon_control_slider( page: Page, files: Files ):
 
 def icon_control_color( text: str, page: Page, files: Files ):
     icon = "aetherx-axs-palette"
-    href = _resolve_path( "about/conventions.md#control", page, files )
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files )
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+
     return Badge_ColorPalette(
         icon = f"[:{icon}:]({href} 'Type: Color Wheel')",
         type = text
