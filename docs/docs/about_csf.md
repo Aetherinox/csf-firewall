@@ -12,16 +12,14 @@ ConfigServer Firewall also comes with a service called **Login Failure Daemon**,
 
 <br />
 
-```embed
-url:            https://configserver.com/configserver-security-and-firewall/
-name:           ConfigServer Firewall Official Website
-desc:           A firewall configuration script created to provide better security for your server
-image:          https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjXOa4WN-mW3gXnIo_hEY6uAwoi2v_e02eG3TCHxSwIY70Y_OzErdaeaepXFoRa2sYx8M&usqp=CAU
-favicon:        https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjXOa4WN-mW3gXnIo_hEY6uAwoi2v_e02eG3TCHxSwIY70Y_OzErdaeaepXFoRa2sYx8M&usqp=CAU
-favicon_size:   25
-target:         new
-accent:         4C59BFE0
-```
+When installing CSF; you will be provided with two services:
+
+| Service | Description |
+| --- | --- |
+| `csf` | **ConfigServer Firewall** (csf): SPI iptables firewall which allows you to restrict what is allowed to communicate with your server. |
+| `lfd` |  **Login Failure Daemon** (lfd): Process that runs all the time and periodically (every X seconds) scans the latest log file entries for login attempts against your server that continually fail within a short period of time. |
+
+<br />
 
 <br />
 
