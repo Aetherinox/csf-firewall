@@ -4,7 +4,6 @@ tags:
   - configure
 ---
 
-markdown
 # Configure: csf.conf <!-- omit from toc -->
 Two versions of the config file have been provided below. A **full version** which contains comments, and a **clean version** which contains no comments and only the config settings. 
 

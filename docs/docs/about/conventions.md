@@ -33,6 +33,15 @@ This defines what the default value for a setting is.
 
 :   <!-- md:default --> Specified setting has a default value
 :   <!-- md:default none --> Specified setting has no default value and is empty
+:   <!-- md:default computed --> Specified setting is automatically computed by the app
+
+<br />
+
+## <!-- md:command --> Command { #command data-toc-label="Command" }
+
+This defines a command
+
+:   <!-- md:command --> Specified setting has a default value
 
 <br />
 
@@ -50,15 +59,42 @@ Items listed with this symbol indicate that they are required to be set.
 
 ## <!-- md:flag customization --> Customization { #customization data-toc-label="Customization" }
 
-This symbol denotes that the item described is a customization which affects the overall look of the plugin.
+This symbol denotes that the item described is a customization which affects the overall look of the app.
 
 <br />
 
-## <!-- md:utility --> Utility { data-toc-label="Utility" }
+## <!-- md:3rdparty --> 3rd Party { data-toc-label="3rd Party" }
 
 This symbol denotes that the item described is classified as something that changes the overall functionality of the plugin.
 
-  [Insiders]: insiders/index.md
+<br />
+
+### <!-- md:flag metadata --> – Metadata property { #metadata data-toc-label="Metadata property" }
+
+This symbol denotes that the item described is a metadata property, which can
+be used in Markdown documents as part of the front matter definition.
+
+<br />
+
+### <!-- md:flag multiple --> – Multiple instances { #multiple-instances data-toc-label="Multiple instances" }
+
+This symbol denotes that the plugin supports multiple instances, i.e, that it
+can be used multiple times in the `plugins` setting in `mkdocs.yml`.
+
+<br />
+
+### <!-- md:feature --> – Optional feature { #feature data-toc-label="Optional feature" }
+
+Most of the features are hidden behind feature flags, which means they must
+be explicitly enabled via `mkdocs.yml`. This allows for the existence of
+potentially orthogonal features.
+
+<br />
+
+### <!-- md:backers --> – Backers only { data-toc-label="Backers only" }
+
+The pumping heart symbol denotes that a specific feature or behavior is only
+available to backers. Normal users will not have access to this particular item.
 
 <br />
 
