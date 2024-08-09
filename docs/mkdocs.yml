@@ -165,6 +165,8 @@ nav:
     - Install WebUI: 'csf/webui.md'
     - Test Install: 'csf/testing.md'
     - Uninstall: 'csf/uninstall.md'
+    - Tutorials:
+      - Geo Blocking: 'csf/tutorials/geographical.md'
   - About:
     - License: 'about/license.md'
     - Conventions: 'about/conventions.md'
