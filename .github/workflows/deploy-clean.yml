@@ -98,7 +98,7 @@ jobs:
         steps:
             - name: >-
                 ⚙️ Deployments › Clean
-              uses: Aetherinox/delete-deploy-env-action@v3
+              uses: Aetherinox/delete-deploy-env-action@v3.0.0
               with:
                   token: ${{ secrets.SELF_TOKEN_CL }}
                   environment: orion
