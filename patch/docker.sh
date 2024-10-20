@@ -188,6 +188,7 @@ fi
 # #
 
 PATH_IPTABLES=$(which iptables)
+PATH_IPTABLES6=$(which ip6tables)
 
 # #
 #   iptables > doesnt exist
@@ -337,11 +338,25 @@ add_to_nat()
     local docker_int=$1
     local subnet=$2
 
-    ${PATH_IPTABLES} -t nat -A POSTROUTING -s ${subnet} ! -o ${docker_int} -j MASQUERADE
-    ${PATH_IPTABLES} -t nat -A DOCKER -i ${docker_int} -j RETURN
+    # ipv4
+    if [ "$subnet" != "${subnet#*[0-9].[0-9]}" ]; then
+        ${PATH_IPTABLES} -t nat -A POSTROUTING -s ${subnet} ! -o ${docker_int} -j MASQUERADE
+        ${PATH_IPTABLES} -t nat -A DOCKER -i ${docker_int} -j RETURN
 
-    echo -e "                  ${DEVGREY}+ RULE:                  ${FUCHSIA}-t nat -A POSTROUTING -s ${subnet} ! -o ${docker_int} -j MASQUERADE${NORMAL}"
-    echo -e "                  ${DEVGREY}+ RULE:                  ${FUCHSIA}-t nat -A DOCKER -i ${docker_int} -j RETURN${NORMAL}"
+        echo -e "                  ${DEVGREY}+ RULE v4:               ${FUCHSIA}-t nat -A POSTROUTING -s ${subnet} ! -o ${docker_int} -j MASQUERADE${NORMAL}"
+        echo -e "                  ${DEVGREY}+ RULE v4:               ${FUCHSIA}-t nat -A DOCKER -i ${docker_int} -j RETURN${NORMAL}"
+
+    # ipv6
+    elif [ "$subnet" != "${subnet#*:[0-9a-fA-F]}" ]; then
+        ${PATH_IPTABLES6} -t nat -A POSTROUTING -s ${subnet} ! -o ${docker_int} -j MASQUERADE
+        ${PATH_IPTABLES6} -A DOCKER -i ${docker_int} -j RETURN
+
+        echo -e "                  ${DEVGREY}+ RULE v6:               ${FUCHSIA}-t nat -A POSTROUTING -s ${subnet} ! -o ${docker_int} -j MASQUERADE${NORMAL}"
+        echo -e "                  ${DEVGREY}+ RULE v6:               ${FUCHSIA}-t nat -A DOCKER -i ${docker_int} -j RETURN${NORMAL}"
+    else
+        echo "Unrecognized subnet format '$subnet'"
+    fi
+
 }
 
 # #
