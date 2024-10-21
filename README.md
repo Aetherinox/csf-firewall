@@ -102,6 +102,7 @@ We also host a `csf.deny` blocklist which is updated daily and contains a list o
 - [Install Dark Theme](#install-dark-theme)
 - [Traefik Integration with CSF WebUI](#traefik-integration-with-csf-webui)
   - [Adding Authentik Provider](#adding-authentik-provider)
+- [IP Rulesets / Blocklist](#ip-rulesets--blocklist)
 - [Download ConfigServer Firewall](#download-configserver-firewall)
 - [References for More Help](#references-for-more-help)
 - [Contributors ✨](#contributors-)
@@ -129,7 +130,7 @@ This repository contains several folders:
   - List of IP addresses which have been reported for ssh brute-force attempts, port scanning, etc.
   - 100% Confidence, powered by services such as [AbuseIPDB](https://abuseipdb.com/)
   - IPs are no older than 90 days old _(updated daily)_, and also contain blocks to protect your privacy from certain online services
-  - Place in `/etc/csf/csf.deny` and restart csf with `sudo csf -ra`
+  - Add to `csf.blocklists`
 
 <br />
 <br />
@@ -1310,6 +1311,25 @@ Move `CSF (ConfigServer Firewall)` to the right side **Selected Applications** b
 <br />
 
 You should be able to access `csf.domain.com` and be prompted now to authenticate with Authentik.
+
+<br />
+
+---
+
+<br />
+
+## IP Rulesets / Blocklist
+This repository contains a set of ipsets which are automatically updated every `6 hours`. You may add these sets to your ConfigServer Firewall `/etc/csf/csf.blocklists` with the following new line:
+
+```
+csf|86400|0|https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/blocklists/01_master.ipset
+```
+
+<br />
+
+| Set | Description |
+| --- | --- |
+| `01_master.ipset` | Contains a list of abusive IP addresses which have been reported for port scanning and SSH bruteforcing. This list is highly recommended. |
 
 <br />
 
