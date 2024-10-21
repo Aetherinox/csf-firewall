@@ -35,9 +35,7 @@ on:
 # #
 
 env:
-    BOT_NAME_1:           AdminServ
-    BOT_NAME_2:           AdminServX
-    BOT_NAME_3:           EuropaServ
+    BOT_NAME_1:           EuropaServ
     BOT_NAME_DEPENDABOT:  dependabot[bot]
 
 # #
@@ -57,7 +55,7 @@ jobs:
             - name: "✅ Start"
               id: task_build_start
               run: |
-                echo "Starting build"
+                echo "Starting blocklist build script"
 
             # #
             #   Job > Checkout
@@ -70,41 +68,42 @@ jobs:
                 fetch-depth: 0
 
             # #
-            #   Add Label to accepted PR
-            #
-            #   port 465
-            #       server_port: 465
-            #       secure: true
-            #       ignore_cert: false
-            #
-            #   port 587
-            #       server_port: 587
-            #       secure: false
+            #   Generate > Master
             # #
 
-            - name: "🧱 Generate"
+            - name: "🧱 Generate › Master"
               id: task_build_generate
               run: |
-                # set permissions and run
-                echo ${GITHUB_WORKSPACE}
-                chmod +x ".github/scripts/db-blocklist-download.sh"
-                command=".github/scripts/db-blocklist-download.sh ${{ secrets.BLOCKLIST_URL1 }} ${{ secrets.BLOCKLIST_FILE }}"
-                eval "./$command"
+                # #
+                #   set permissions and run generator
+                # #
 
-                # cat csf.deny
+                chmod +x ".github/scripts/bl-download.sh"
+                run_master=".github/scripts/bl-download.sh ${{ secrets.API_01_ENDPOINT }} ${{ secrets.API_01_FILE }}"
+                eval "./$run_master"
 
-                # assign vars
+                # #
+                #   move blocklist
+                # #
+
+                mkdir -p blocklists/
+                mv ${{ secrets.API_01_FILE }} blocklists/
+
+            # #
+            #   Generate > Precommit
+            # #
+
+            - name: "📦 Pre-commit"
+              id: task_build_precommit
+              run: |
                 now=$(date '+%m/%d/%Y %H:%M')
                 commit_label="Sync" >> $GITHUB_ENV
                 commit_message="\`️️⚡️ $commit_label ⚡️\` \`$now\`" >> $GITHUB_ENV
                 echo "COMMIT_MESSAGE=$(echo $commit_message)" >> $GITHUB_ENV
                 echo "NOW=$(echo $now)" >> $GITHUB_ENV
 
-                mkdir -p blocklists/etc/csf/
-                mv csf.deny blocklists/etc/csf/
-
             # #
-            #   commit changes
+            #   Generate > Commit
             # #
 
             - name: "📦 Commit"
