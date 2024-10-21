@@ -1,6 +1,15 @@
 # #
 #   Downloads a list of ip addresses that should be added to block lists.
 #   This is used in combination with a Github workflow / action.
+#   
+#   local test requires the same structure as the github workflow
+#       📁 .github
+#           📁 blocks
+#               📄 1.txt
+#           📁 scripts
+#               📄 lists-download.sh
+#           📁 workflows
+#               📄 lists-download.yml
 # #
 
 #!/bin/bash
@@ -9,38 +18,7 @@ s100_90d_url="https://raw.githubusercontent.com/borestad/blocklist-abuseipdb/ref
 s100_90d_file="csf.deny"
 NOW=`date -u`
 
-# #
-#   vars > colors
-#
-#   tput setab  [1-7]       : Set a background color using ANSI escape
-#   tput setb   [1-7]       : Set a background color
-#   tput setaf  [1-7]       : Set a foreground color using ANSI escape
-#   tput setf   [1-7]       : Set a foreground color
-# #
-
-BLACK=$(tput setaf 0)
-RED=$(tput setaf 1)
-ORANGE=$(tput setaf 208)
-GREEN=$(tput setaf 2)
-YELLOW=$(tput setaf 156)
-LIME_YELLOW=$(tput setaf 190)
-POWDER_BLUE=$(tput setaf 153)
-BLUE=$(tput setaf 4)
-MAGENTA=$(tput setaf 5)
-CYAN=$(tput setaf 6)
-WHITE=$(tput setaf 7)
-GREYL=$(tput setaf 242)
-DEV=$(tput setaf 157)
-DEVGREY=$(tput setaf 243)
-FUCHSIA=$(tput setaf 198)
-PINK=$(tput setaf 200)
-BOLD=$(tput bold)
-NORMAL=$(tput sgr0)
-BLINK=$(tput blink)
-REVERSE=$(tput smso)
-UNDERLINE=$(tput smul)
-STRIKE="\e[9m"
-END="\e[0m"
+echo -e "⭐ Starting"
 
 # #
 #   Func > Download List
@@ -55,14 +33,14 @@ download_list()
     sed -i '/^#/d' ${file}
     sed -i 's/$/\t\t\#\ do\ not\ delete/' ${file}
 
-ed -s 1.txt <<EOT
+ed -s ${file} <<EOT
 1i
 # #
-#    ConfigServer Firewall (Deny List)
+#    🧱 ConfigServer Firewall (Deny List)
 #
-#    @url	        Aetherinox/csf-firewall
-#    @desc	        list of ip addresses actively trying to scan servers
-#    @last          ${NOW}
+#    @url          Aetherinox/csf-firewall
+#    @desc         list of ip addresses actively trying to scan servers
+#    @last         ${NOW}
 # #
 
 .
@@ -77,3 +55,17 @@ EOT
 # #
 
 download_list ${s100_90d_url} ${s100_90d_file}
+
+# #
+#   Static Block Lists:
+#
+#   Merge custom block list
+#   these are blocks that will stay static and only be added to static
+# #
+
+if [ -d .github/blocks/ ]; then
+	for file in .github/blocks/*.txt; do
+		echo -e "🗄️ Adding static file ${file}"
+		cat ${file} >> ${s100_90d_file}
+	done
+fi

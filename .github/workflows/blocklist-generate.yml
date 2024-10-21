@@ -1,0 +1,99 @@
+# #
+#   @type               github workflow
+#   @desc               download AbuseIPDB ip list
+#   @author             Aetherinox
+#   @url                https://github.com/Aetherinox
+# #
+
+name: "🧱 Blocklist › Generate"
+run-name: "🧱 Blocklist › Generate"
+
+# #
+#   triggers
+# #
+
+on:
+    workflow_dispatch:
+
+# #
+#   environment variables
+# #
+
+env:
+    BOT_NAME_1:           AdminServ
+    BOT_NAME_2:           AdminServX
+    BOT_NAME_3:           EuropaServ
+    BOT_NAME_DEPENDABOT:  dependabot[bot]
+
+# #
+#   jobs
+# #
+
+jobs:
+    build:
+        runs-on: ubuntu-22.04
+        timeout-minutes: 3
+        steps:
+
+            # #
+            #   Job > Start
+            # #
+
+            - name: "✅ Start"
+              id: task_build_start
+              run: |
+                echo "Starting build"
+
+            # #
+            #   Job > Checkout
+            # #
+
+            - name: "☑️ Checkout"
+              id: task_build_checkout
+              uses: actions/checkout@v4
+              with:
+                fetch-depth: 0
+
+            # #
+            #   Add Label to accepted PR
+            #
+            #   port 465
+            #       server_port: 465
+            #       secure: true
+            #       ignore_cert: false
+            #
+            #   port 587
+            #       server_port: 587
+            #       secure: false
+            # #
+
+            - name: "🧱 Generate"
+              id: task_build_generate
+              run: |
+                # set permissions and run
+                echo ${GITHUB_WORKSPACE}
+                chmod +x ".github/scripts/lists-download.sh"
+                command=".github/scripts/lists-download.sh"
+                eval "./$command"
+
+                # cat csf.deny
+
+                # assign vars
+                now=$(date '+%m/%d/%Y %H:%M')
+                commit_label="CRON" >> $GITHUB_ENV
+                commit_message="\`️️⚡️ $commit_label ⚡️\` \`$now\`" >> $GITHUB_ENV
+                echo "COMMIT_MESSAGE=$(echo $commit_message)" >> $GITHUB_ENV
+                echo "NOW=$(echo $now)" >> $GITHUB_ENV
+
+                mkdir -p blocklists/etc/csf/
+                mv csf.deny blocklists/etc/csf/
+
+            # ---------------------------------------------------------------------------------------
+            #   commit changes
+            # ---------------------------------------------------------------------------------------
+
+            - name: "📦 Commit"
+              id: task_build_commit
+              uses: stefanzweifel/git-auto-commit-action@v5
+              with:
+                commit_message: ${{ env.COMMIT_MESSAGE }}
