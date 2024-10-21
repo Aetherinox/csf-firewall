@@ -23,6 +23,12 @@
 # #
 
 # #
+#   Settings
+# #
+
+APPEND_DND=false
+
+# #
 #    Define > Parameters
 # #
 
@@ -70,7 +76,9 @@ download_list()
 
     curl ${url} -o ${file} >/dev/null 2>&1
     sed -i '/^#/d' ${file}                              # remove lines starting with `#`
-    sed -i 's/$/\t\t\t\#\ do\ not\ delete/' ${file}     # add csf `# do not delete` to end of each line
+    if [ "$APPEND_DND" = true ] ; then
+        sed -i 's/$/\t\t\t\#\ do\ not\ delete/' ${file} # add csf `# do not delete` to end of each line
+    fi
     lines_dynamic=$(wc -l < ${file})                    # count ip lines
 
 # #
@@ -107,10 +115,13 @@ download_list ${s100_90d_url} ${s100_90d_file}
 # #
 
 curl ${ipt_url} -o ${ipt_file} >/dev/null 2>&1
-sed -i 's/\ #.*//' ${ipt_file}                          # remove comments at end
-sed -i 's/\-.*//' ${ipt_file}                           # remove hyphens for ip ranges
-sed -i '/^#/d' ${ipt_file}                              # remove lines starting with `#`
-sed -i 's/$/\t\t\t\#\ do\ not\ delete/' ${ipt_file}     # add csf `# do not delete` to end of each line
+sed -i 's/\ #.*//' ${ipt_file}                              # remove comments at end
+sed -i 's/\-.*//' ${ipt_file}                               # remove hyphens for ip ranges
+sed -i '/^#/d' ${ipt_file}                                  # remove lines starting with `#`
+
+if [ "$APPEND_DND" = true ] ; then
+    sed -i 's/$/\t\t\t\#\ do\ not\ delete/' ${ipt_file}     # add csf `# do not delete` to end of each line
+fi
 
 lines_ipt=$(wc -l < ${ipt_file})                        # count ip lines
 
@@ -191,8 +202,8 @@ sed -i -e "s/{COUNT_STATIC}/$lines_static/g" ${s100_90d_file}
 # #
 
 echo -e
-echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
 printf "%-25s | %-30s\n" "  #️⃣  Dynamic" "${lines_dynamic}"
 printf "%-25s | %-30s\n" "  #️⃣  IPThreat" "${lines_ipt}"
 printf "%-25s | %-30s\n" "  #️⃣  Static" "${lines_static}"
+echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
 echo -e
