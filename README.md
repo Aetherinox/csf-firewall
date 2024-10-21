@@ -1,5 +1,5 @@
 <div align="center">
-<h6>New dark theme, and support for Docker, Traefik, and OpenVPN servers</h6>
+<h6>New dark theme, support for Docker, Traefik, and OpenVPN servers. Includes a "bad actor" blocklist.</h6>
 <h1>♾️ ConfigServer Firewall ♾️</h1>
 
 <br />
@@ -7,6 +7,10 @@
 <p>
 
 ConfigServer Security & Firewall (CSF) is a popular and powerful firewall solution for Linux servers. This repo contains complete installation guides, a new dark theme, and also numerous patches for `Docker` and `OpenVPN` firewall support so that you can allow traffic between these services without interruption.
+
+<br />
+
+We also host a `csf.deny` blocklist which is updated daily and contains a list of bad actor IP addresses which are widely known for port sniffing, SSH bruteforce attempts, etc. You can apply this file to `/etc/csf/csf.deny` and block these IP addresses from accessing your server. Powered by services such as [AbuseIPDB](https://abuseipdb.com/) and [IPThreat](https://ipthreat.net/).
 
 </p>
 

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # #
 #   @usage              https://github.com/Aetherinox/csf-firewall
 #   @type               bash script
@@ -15,17 +17,45 @@
 #               📄 db-blocklist-download.sh
 #           📁 workflows
 #               📄 db-blocklist-download.yml
+#
+#   @uage               db-blocklist-download.sh <URL_BLOCKLIST_DOWNLOAD> <FILE_SAVEAS>
+#                       db-blocklist-download.sh https://path/to/website/ipv4.list csf.deny
 # #
 
-#!/bin/bash
+# #
+#    Define > Parameters
+# #
 
 s100_90d_url="$1"
 s100_90d_file="$2"
+
+# #
+#    Define > IPThreat.net Lists
+# #
+
+ipt_url="https://lists.ipthreat.net/file/ipthreat-lists/threat/threat-90.txt"
+ipt_file="_ipb.txt"
+
+# #
+#    Define > General
+# #
+
 NOW=`date -u`
 lines_static=0
 lines_dynamic=0
+lines_ipt=0
 
-echo -e "⭐ Starting"
+# #
+#   Output > Header
+# #
+
+echo -e
+echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
+echo -e "   csf.deny Blacklist Generation"
+echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
+
+echo -e
+echo -e "  ⭐ Starting"
 
 # #
 #   Func > Download List
@@ -36,23 +66,27 @@ download_list()
     local url=$1
     local file=$2
     
-    curl ${url} -o ${file} >/dev/null 2>&1
-    sed -i '/^#/d' ${file}
-    sed -i 's/$/\t\t\t\#\ do\ not\ delete/' ${file}
-    lines_dynamic=$(wc -l < ${file})
+    echo -e "  🌎 Downloading IP blacklist to ${file}"
 
-    echo -e "Dynamic Count: ${lines_dynamic}"
+    curl ${url} -o ${file} >/dev/null 2>&1
+    sed -i '/^#/d' ${file}                              # remove lines starting with `#`
+    sed -i 's/$/\t\t\t\#\ do\ not\ delete/' ${file}     # add csf `# do not delete` to end of each line
+    lines_dynamic=$(wc -l < ${file})                    # count ip lines
+
+# #
+#   Header > Dynamic List
+# #
 
 ed -s ${file} <<EOT
 1i
 # #
-#    🧱 ConfigServer Firewall (Deny List)
+#   🧱 ConfigServer Firewall (Deny List)
 #
-#    @url          Aetherinox/csf-firewall
-#    @desc         list of ip addresses actively trying to scan servers
-#                  ip addresses no more than 90 days old.
-#    @last         ${NOW}
-#    @ips          {COUNT}
+#   @url            Aetherinox/csf-firewall
+#   @desc           list of ip addresses actively trying to scan servers
+#                       ip addresses no more than 90 days old.
+#   @last           ${NOW}
+#   @count          {COUNT_TOTAL}
 # #
 
 .
@@ -69,6 +103,64 @@ EOT
 download_list ${s100_90d_url} ${s100_90d_file}
 
 # #
+#   IPThreat > Modify
+# #
+
+curl ${ipt_url} -o ${ipt_file} >/dev/null 2>&1
+sed -i 's/\ #.*//' ${ipt_file}                          # remove comments at end
+sed -i 's/\-.*//' ${ipt_file}                           # remove hyphens for ip ranges
+sed -i '/^#/d' ${ipt_file}                              # remove lines starting with `#`
+sed -i 's/$/\t\t\t\#\ do\ not\ delete/' ${ipt_file}     # add csf `# do not delete` to end of each line
+
+lines_ipt=$(wc -l < ${ipt_file})                        # count ip lines
+
+# #
+#   IPThreat > Add Header
+# #
+
+ed -s ${s100_90d_file} <<END
+a
+
+# #
+#   🧱 IPThreat.net
+#   Full list available at https://ipthreat.net/
+#
+#   @count          {COUNT_IPT}
+# #
+
+.
+w
+q
+END
+
+# #
+#   IPThreat > Save list to csf.deny
+# #
+
+cat ${ipt_file} >> ${s100_90d_file}
+
+# #
+#   Static > Add Header
+# #
+
+ed -s ${s100_90d_file} <<END
+a
+
+# #
+#   🧱 Static Threat List
+#
+#   This is a static list of abusive IP addresses provided by https://github.com/Aetherinox/csf-firewall
+#   These have been found port scanning and attempting multiple ssh bruteforce attacks.
+#
+#   @count          {COUNT_STATIC}
+# #
+
+.
+w
+q
+END
+
+# #
 #   Static Block Lists:
 #
 #   Merge custom block list
@@ -77,21 +169,30 @@ download_list ${s100_90d_url} ${s100_90d_file}
 
 if [ -d .github/blocks/ ]; then
 	for file in .github/blocks/*.txt; do
-		echo -e "🗄️ Adding static file ${file}"
+		echo -e "  🗄️  Adding static file ${file}"
+    
 		cat ${file} >> ${s100_90d_file}
+        count=$(grep -c "^[0-9]" ${file} | wc -l < ${file})     # count lines starting with number, print line count
+        lines_static=`expr $lines_static + $count`              # add line count from each file together
 	done
 fi
 
 # #
-#   Static > Get IP Count
+#   Header > Add Counts
 # #
 
-lines_static=$(grep -c "^[0-9]" ${file} | wc -l < ${file})
-echo -e "Static Count: ${lines_static}"
+lines=`expr $lines_static + $lines_dynamic + $lines_ipt`
+sed -i -e "s/{COUNT_TOTAL}/$lines/g" ${s100_90d_file}
+sed -i -e "s/{COUNT_IPT}/$lines_ipt/g" ${s100_90d_file}
+sed -i -e "s/{COUNT_STATIC}/$lines_static/g" ${s100_90d_file}
 
 # #
-#   Set header line count
+#   Output
 # #
 
-lines=`expr $lines_static + $lines_dynamic`
-sed -i -e "s/{COUNT}/$lines/g" ${s100_90d_file}
+echo -e
+echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
+printf "%-25s | %-30s\n" "  #️⃣  Dynamic" "${lines_dynamic}"
+printf "%-25s | %-30s\n" "  #️⃣  IPThreat" "${lines_ipt}"
+printf "%-25s | %-30s\n" "  #️⃣  Static" "${lines_static}"
+echo -e
