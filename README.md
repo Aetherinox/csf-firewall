@@ -111,17 +111,20 @@ ConfigServer Security & Firewall (CSF) is a popular and powerful firewall soluti
 
 ## Summary
 This repository contains several folders:
-- 📁 `extras`: Extra resources
+- 📁 `extras`:
+  - Extra resources you can add to your copy of CSF
   - Official CSF `extras/etc/csf/csf.conf` (full version)
   - Official CSF `extras/etc/csf/csf.conf.clean` (clean version)
   - GeoIP configuration file
   - Dark theme
-- 📁 `patches`: Custom patches
+- 📁 `patches`:
+  - Custom patches
   - Docker
   - OpenVPN Server
-- 📁 `blocklists`: Bad actors list
+- 📁 `blocklists`: 
+  - List of IP addresses which have been reported for ssh brute-force attempts, port scanning, etc.
+  - 100% Confidence, powdered by services such as [AbuseIPDB](https://abuseipdb.com/)
   - Place in `/etc/csf/csf.deny` and restart csf with `sudo csf -ra`
-  - Contains a list of abusive ip addresses associated with port scanning, ssh brute-force attempts, etc.
 
 <br />
 <br />
