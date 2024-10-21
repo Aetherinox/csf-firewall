@@ -79,7 +79,7 @@ jobs:
                 # #
 
                 chmod +x ".github/scripts/bl-download.sh"
-                run_master=".github/scripts/bl-download.sh ${{ secrets.API_01_ENDPOINT }} ${{ secrets.API_01_FILE_01 }} ${{ secrets.API_01_FILE_02 }} ${{ secrets.API_01_FILE_03 }}"
+                run_master=".github/scripts/bl-download.sh ${{ vars.API_01_OUT }} false ${{ secrets.API_01_FILE_01 }} ${{ secrets.API_01_FILE_02 }} ${{ secrets.API_01_FILE_03 }}"
                 eval "./$run_master"
 
                 # #
@@ -87,7 +87,7 @@ jobs:
                 # #
 
                 mkdir -p blocklists/
-                mv ${{ secrets.API_01_FILE }} blocklists/
+                mv ${{ vars.API_01_OUT }} blocklists/
 
             # #
             #   Generate > Precommit
