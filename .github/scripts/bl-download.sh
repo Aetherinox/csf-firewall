@@ -100,6 +100,12 @@ download_list()
     cat ${tempFile} >> ${fnFile}                            # copy .tmp contents to real file
 
     echo -e "  ☑️  Added ${lines} lines to ${fnFile}"
+
+    # #
+    #   Cleanup
+    # #
+
+    rm ${tempFile}
 }
 
 # #
