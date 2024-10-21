@@ -1,5 +1,5 @@
 <div align="center">
-<h6>Adds a new dark theme, and support for Docker, Traefik, and OpenVPN servers</h6>
+<h6>New dark theme, and support for Docker, Traefik, and OpenVPN servers</h6>
 <h1>♾️ ConfigServer Firewall ♾️</h1>
 
 <br />
