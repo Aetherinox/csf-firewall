@@ -15,6 +15,9 @@ run-name: "🧱 Blocklist › Generate"
 on:
     workflow_dispatch:
 
+    schedule:
+        - cron: '0 * * * *'
+
 # #
 #   environment variables
 # #
