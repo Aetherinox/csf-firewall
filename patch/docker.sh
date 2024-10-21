@@ -97,6 +97,22 @@ app_repo_branch="main"
 app_repo_url="https://github.com/${app_repo_author}/${app_repo_name}"
 
 # #
+#   Find CSF path on system
+# #
+
+csf_path=$(command -v csf)
+
+# #
+#   Clean container ips added by script once per restart
+# #
+
+if [[ $csf_path ]]; then
+    echo -e
+    echo -e "  ${BOLD}${DEVGREY}+ WHITELIST     ${WHITE}Cleaning ${CSF_FILE_ALLOW}${NORMAL}"
+    sed --in-place "/${CSF_COMMENT}/d" ${CSF_FILE_ALLOW}
+fi
+
+# #
 #   distro
 #
 #   returns distro information.
@@ -572,7 +588,8 @@ if [ `echo ${containers} | wc -c` -gt "1" ]; then
                 # #
 
                 ipaddr=`docker inspect -f "{{with index .NetworkSettings.Networks \"${network}\"}}{{.IPAddress}}{{end}}" ${container}`
-                
+                ipaddr_orig=${ipaddr}
+
                 if [ -z "${bridge}" ]; then bridge="${RED}Not found${NORMAL}"; fi
                 if [ -z "${DOCKER_NET_INT}" ]; then DOCKER_NET_INT="${RED}Not found${NORMAL}"; fi
                 if [ -z "${ipaddr}" ]; then ipaddr="${RED}Not found${NORMAL}"; fi
@@ -601,22 +618,16 @@ if [ `echo ${containers} | wc -c` -gt "1" ]; then
             else
 
                 # #
-                #   Find CSF path on system
-                # #
-
-                csf_path=$(command -v csf)
-
-                # #
                 #   Found CSF binary, add container IP to allow list /etc/csf/csf.allow
                 # #
 
                 if [[ $csf_path ]]; then
                     printf '\n%-17s %-52s %-55s' " " "${DEVGREY}  └── ${DEVGREY}WHITELIST" "${GREEN}Adding ${ipaddr} to allow list ${CSF_FILE_ALLOW}${NORMAL}"
-                    $csf_path -a ${ipaddr} ${CSF_COMMENT}
+                    $csf_path -a ${ipaddr} ${CSF_COMMENT} >/dev/null 2>&1
                 fi
             fi
         else
-            printf '\n%-17s %-52s %-55s' " " "${DEVGREY}  └── ${DEVGREY}WHITELIST" "${RED}Invalid IP, cannot be added to ${CSF_FILE_ALLOW}${NORMAL}"
+            printf '\n%-17s %-52s %-55s' " " "${DEVGREY}  └── ${DEVGREY}WHITELIST" "${RED}Found blank IP, cannot be added to ${CSF_FILE_ALLOW}${NORMAL}"
         fi
 
         # #
