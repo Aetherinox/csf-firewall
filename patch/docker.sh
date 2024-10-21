@@ -368,7 +368,7 @@ add_to_nat()
         ${PATH_IPTABLES6} -A DOCKER -i ${docker_int} -j RETURN
 
         echo -e "                  ${DEVGREY}+ RULE v6:               ${FUCHSIA}-t nat -A POSTROUTING -s ${subnet} ! -o ${docker_int} -j MASQUERADE${NORMAL}"
-        echo -e "                  ${DEVGREY}+ RULE v6:               ${FUCHSIA}-t nat -A DOCKER -i ${docker_int} -j RETURN${NORMAL}"
+        echo -e "                  ${DEVGREY}+ RULE v6:               ${FUCHSIA}-A DOCKER -i ${docker_int} -j RETURN${NORMAL}"
     else
         echo "Unrecognized subnet format '$subnet'"
     fi
