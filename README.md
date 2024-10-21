@@ -113,14 +113,14 @@ ConfigServer Security & Firewall (CSF) is a popular and powerful firewall soluti
 This repository contains several folders:
 - 📁 `extras`
   - Extra resources you can add to your copy of CSF
-  - Official CSF `extras/etc/csf/csf.conf` (full version)
-  - Official CSF `extras/etc/csf/csf.conf.clean` (clean version)
-  - GeoIP configuration file
+  - Ready-to-use CSF config files
+    - Official CSF `extras/etc/csf/csf.conf` (full version)
+    - Official CSF `extras/etc/csf/csf.conf.clean` (clean version)
+  - GeoIP configuration file for [MaxMind geo-blocking](https://www.maxmind.com/en/home)
   - Dark theme
 - 📁 `patches`
-  - Custom patches
-  - Docker
-  - OpenVPN Server
+  - Docker patch which allows CSF and Docker to work together
+  - OpenVPN integration patch
 - 📁 `blocklists` 
   - List of IP addresses which have been reported for ssh brute-force attempts, port scanning, etc.
   - 100% Confidence, powdered by services such as [AbuseIPDB](https://abuseipdb.com/)
