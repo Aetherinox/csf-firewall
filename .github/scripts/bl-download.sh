@@ -19,18 +19,17 @@
 #           📁 scripts
 #               📄 bl-download.sh
 #           📁 workflows
-#               📄 bl-download.yml
+#               📄 blocklist-generate.yml
 #
 #   @uage               bl-download.sh <URL_BLOCKLIST_DOWNLOAD> <FILE_SAVEAS>
-#                       bl-download.sh https://api.endpoint/to/website/ipv4.list csf.deny
-#                       bl-download.sh https://api.endpoint/to/website/ipv4.list csf.deny true
+#                       bl-download.sh csf.deny false API_URL_1 
+#                       bl-download.sh csf.deny true API_URL_1 API_URL_2 API_URL_3
 # #
+
+regexURL='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]\.[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$'
 
 # #
 #   Parameters
-#   
-#   arg_url
-#       web url to download blocklist from
 #
 #   arg_file
 #       file to save to
@@ -39,9 +38,8 @@
 #       add `#do not delete` to end of each line
 # #
 
-arg_url=$1
-arg_file=$2
-arg_bDND=$3
+arg_file=$1
+arg_bDND=$2
 
 # #
 #    Define > General
@@ -75,6 +73,53 @@ else
 fi
 
 # #
+#   Func > Download List
+# #
+
+download_list()
+{
+
+    local fnUrl=$1
+    local fnFile=$2
+    local tempFile="${2}.tmp"
+
+    echo -e "  🌎 Downloading IP blacklist to ${tempFile}"
+
+    curl ${fnUrl} -o ${tempFile} >/dev/null 2>&1            # download file
+    sed -i 's/\ #.*//' ${tempFile}                          # remove comments at end
+    sed -i 's/\-.*//' ${tempFile}                           # remove hyphens for ip ranges
+    sed -i '/^#/d' ${tempFile}                              # remove lines starting with `#`
+    if [ "$arg_bDND" = true ] ; then
+        echo -e "  ⭕ Enabled \`# do not delete\`"
+        sed -i 's/$/\t\t\t\#\ do\ not\ delete/' ${tempFile} # add csf `# do not delete` to end of each line
+    fi
+
+    lines=$(wc -l < ${tempFile})                            # count ip lines
+
+    echo -e "  🌎 Move ${tempFile} to ${fnFile}"
+    cat ${tempFile} >> ${fnFile}                            # copy .tmp contents to real file
+
+    echo -e "  ☑️  Added ${lines} lines to ${fnFile}"
+}
+
+# #
+#   Download lists
+# #
+
+for arg in "${@:3}"; do
+    if [[ $arg =~ $regexURL ]]; then
+        download_list ${arg} ${arg_file}
+        echo -e
+    fi
+done
+
+# #
+#   count total lines
+# #
+
+lines=$(wc -l < ${arg_file})    # count ip lines
+
+# #
 #   ed
 #       0a  top of file
 # #
@@ -102,41 +147,17 @@ w
 q
 END_ED
 
-# #
-#   Func > Download List
-# #
+echo -e "  ✏️  Modifying template values in ${arg_file}"
+sed -i -e "s/{COUNT_TOTAL}/$lines/g" ${arg_file}          # replace {COUNT_TOTAL} with number of lines
 
-download_list()
-{
-
-    local fnUrl=$1
-    local fnFile=$2
-    local tempFile="${2}.tmp"
-
-    echo -e "  🌎 Downloading IP blacklist to ${tempFile}"
-
-    curl ${fnUrl} -o ${tempFile} >/dev/null 2>&1            # download file
-    sed -i 's/\ #.*//' ${tempFile}                          # remove comments at end
-    sed -i 's/\-.*//' ${tempFile}                           # remove hyphens for ip ranges
-    sed -i '/^#/d' ${tempFile}                              # remove lines starting with `#`
-    if [ "$arg_bDND" = true ] ; then
-        echo -e "  ⭕ Enabled \`# do not delete\`"
-        sed -i 's/$/\t\t\t\#\ do\ not\ delete/' ${tempFile} # add csf `# do not delete` to end of each line
-    fi
-
-    lines=$(wc -l < ${tempFile})                            # count ip lines
-
-    echo -e "  🌎 Move ${tempFile} to ${fnFile}"
-    cat ${tempFile} >> ${fnFile}                            # copy .tmp contents to real file
-
-    echo -e "  ✏️  Modifying template values in ${fnFile}"
-    sed -i -e "s/{COUNT_TOTAL}/$lines/g" ${fnFile}          # replace {COUNT_TOTAL} with number of lines
-
-    echo -e "  ☑️  Added ${lines} lines to ${fnFile}"
-}
+echo -e "  🎌 Finished"
 
 # #
-#   Download lists
+#   Output
 # #
 
-download_list ${arg_url} ${arg_file}
+echo -e
+echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
+printf "%-25s | %-30s\n" "  #️⃣  ${arg_file}" "${lines}"
+echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
+echo -e

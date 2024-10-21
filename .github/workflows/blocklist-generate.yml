@@ -2,7 +2,7 @@
 #   @usage              https://github.com/Aetherinox/csf-firewall
 #   @type               github workflow
 #   
-#   used in combination with .github/scripts/db-blocklist-download.sh
+#   used in combination with .github/scripts/bl-download.sh
 #
 #   download AbuseIPDB ip list after list of ips are downloaded, merges them with a static list
 #   that is not updated as often which contains a list of long-term abusive ip addresses
@@ -12,9 +12,9 @@
 #           📁 blocks
 #               📄 1.txt
 #           📁 scripts
-#               📄 db-blocklist-download.sh
+#               📄 bl-download.sh
 #           📁 workflows
-#               📄 db-blocklist-download.yml
+#               📄 blocklist-generate.yml
 # #
 
 name: "🧱 Blocklist › Generate"
@@ -79,7 +79,7 @@ jobs:
                 # #
 
                 chmod +x ".github/scripts/bl-download.sh"
-                run_master=".github/scripts/bl-download.sh ${{ secrets.API_01_ENDPOINT }} ${{ secrets.API_01_FILE }}"
+                run_master=".github/scripts/bl-download.sh ${{ secrets.API_01_ENDPOINT }} ${{ secrets.API_01_FILE_01 }} ${{ secrets.API_01_FILE_02 }} ${{ secrets.API_01_FILE_03 }}"
                 eval "./$run_master"
 
                 # #
