@@ -112,13 +112,16 @@ ConfigServer Security & Firewall (CSF) is a popular and powerful firewall soluti
 ## Summary
 This repository contains several folders:
 - 📁 `extras`: Extra resources
-  - Official CSF `config.conf` (full version)
-  - Official CSF `config.conf` (clean version)
+  - Official CSF `extras/etc/csf/csf.conf` (full version)
+  - Official CSF `extras/etc/csf/csf.conf.clean` (clean version)
   - GeoIP configuration file
   - Dark theme
 - 📁 `patches`: Custom patches
   - Docker
   - OpenVPN Server
+- 📁 `blocklists`: Bad actors list
+  - Place in `/etc/csf/csf.deny` and restart csf with `sudo csf -ra`
+  - Contains a list of abusive ip addresses associated with port scanning, ssh brute-force attempts, etc.
 
 <br />
 <br />
@@ -165,7 +168,7 @@ This guide will help you with the following:
 - Straight-forward SPI iptables firewall script
 - Daemon process that checks for login authentication failures for:
     - Courier imap, Dovecot, uw-imap, Kerio
-    - openSSH
+    - OpenSSH
     - cPanel, WHM, Webmail (cPanel servers only)
     - Pure-ftpd, vsftpd, Proftpd
     - Password protected web pages (htpasswd)
