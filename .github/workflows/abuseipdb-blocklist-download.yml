@@ -1,4 +1,5 @@
 # #
+#   @usage              https://github.com/Aetherinox/csf-firewall
 #   @type               github workflow
 #   @desc               download AbuseIPDB ip list
 #                       after list of ips are downloaded, merges them with a static list
