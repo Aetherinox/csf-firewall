@@ -123,7 +123,7 @@ This repository contains several folders:
   - OpenVPN integration patch
 - 📁 `blocklists` 
   - List of IP addresses which have been reported for ssh brute-force attempts, port scanning, etc.
-  - 100% Confidence, powdered by services such as [AbuseIPDB](https://abuseipdb.com/)
+  - 100% Confidence, powered by services such as [AbuseIPDB](https://abuseipdb.com/)
   - IPs are no older than 120 days old _(updated daily)_
   - Place in `/etc/csf/csf.deny` and restart csf with `sudo csf -ra`
 
