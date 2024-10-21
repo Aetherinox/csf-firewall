@@ -1,8 +1,17 @@
 # #
 #   @type               github workflow
 #   @desc               download AbuseIPDB ip list
-#   @author             Aetherinox
-#   @url                https://github.com/Aetherinox
+#                       after list of ips are downloaded, merges them with a static list
+#                       that is not updated as often.
+#
+#                       local test requires the same structure as the github workflow
+#                           📁 .github
+#                               📁 blocks
+#                                   📄 1.txt
+#                               📁 scripts
+#                                   📄 abuseipdb-blocklist-download.sh
+#                               📁 workflows
+#                                   📄 abuseipdb-blocklist-download.yml
 # #
 
 name: "🧱 Blocklist › Generate"
@@ -75,8 +84,8 @@ jobs:
               run: |
                 # set permissions and run
                 echo ${GITHUB_WORKSPACE}
-                chmod +x ".github/scripts/lists-download.sh"
-                command=".github/scripts/lists-download.sh"
+                chmod +x ".github/scripts/abuseipdb-blocklist-download.sh"
+                command=".github/scripts/abuseipdb-blocklist-download.sh"
                 eval "./$command"
 
                 # cat csf.deny
