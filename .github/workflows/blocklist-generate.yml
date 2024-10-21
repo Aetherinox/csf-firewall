@@ -80,7 +80,7 @@ jobs:
 
                 # assign vars
                 now=$(date '+%m/%d/%Y %H:%M')
-                commit_label="CRON" >> $GITHUB_ENV
+                commit_label="Sync" >> $GITHUB_ENV
                 commit_message="\`️️⚡️ $commit_label ⚡️\` \`$now\`" >> $GITHUB_ENV
                 echo "COMMIT_MESSAGE=$(echo $commit_message)" >> $GITHUB_ENV
                 echo "NOW=$(echo $now)" >> $GITHUB_ENV
