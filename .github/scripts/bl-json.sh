@@ -23,15 +23,6 @@
 # #
 
 # #
-#    Define > General
-# #
-
-FOLDER_SAVETO="blocklists"
-NOW=`date -u`
-LINES=0
-regexURL='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]\.[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$'
-
-# #
 #   Parameters
 #
 #   arg_output
@@ -75,6 +66,17 @@ if [[ -z "${arg_jsonquery}" ]]; then
     echo -e
     exit 1
 fi
+
+# #
+#    Define > General
+# #
+
+FOLDER_SAVETO="blocklists"
+NOW=`date -u`
+LINES=0
+ID="${arg_output//[^[:alnum:]]/_}"
+DESCRIPTION=$(curl -sS "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/.github/descriptions/${ID}.txt")
+regexURL='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]\.[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$'
 
 # #
 #   output
@@ -143,7 +145,7 @@ ed -s ${arg_output} <<END_ED
 #   @expires        6 hours
 #   @category       full
 #
-#   This list contains ip addresses associated with Google crawlers.
+${DESCRIPTION}
 # #
 
 .
