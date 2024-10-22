@@ -82,13 +82,6 @@ jobs:
                 run_master=".github/scripts/bl-download.sh ${{ vars.API_01_OUT }} false ${{ secrets.API_01_FILE_01 }} ${{ secrets.API_01_FILE_02 }} ${{ secrets.API_01_FILE_03 }}"
                 eval "./$run_master"
 
-                # #
-                #   move blocklist
-                # #
-
-                mkdir -p blocklists/
-                mv ${{ vars.API_01_OUT }} blocklists/
-
             # #
             #   Generate > Privacy
             # #
