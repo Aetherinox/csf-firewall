@@ -10,7 +10,11 @@ ConfigServer Security & Firewall (CSF) is a popular and powerful firewall soluti
 
 <br />
 
-We also host a `csf.deny` blocklist which is updated daily and contains a list of bad actor IP addresses which are widely known for port sniffing, SSH bruteforce attempts, etc. You can apply this file to `/etc/csf/csf.deny` and block these IP addresses from accessing your server. Powered by services such as [AbuseIPDB](https://abuseipdb.com/) and [IPThreat](https://ipthreat.net/).
+We also host a group ipsets / blocklists which are updated every few hours. These sets contain various lists of IP addresses which block connections known for SSH bruteforce attempts, port knocking / scanning, research, data collection, etc. These ipsets are compatible with ConfigServer Firewall, and also any other application which supports one IP per line (pi-hole, Windows hosts, etc).
+
+<br />
+
+Ipsets include lists from [AbuseIPDB](https://abuseipdb.com/) and [IPThreat](https://ipthreat.net/). For information on how to use these sets, read the section [IP Rulesets & Blocklists](#ip-rulesets--blocklist).
 
 </p>
 
