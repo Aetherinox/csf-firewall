@@ -5,39 +5,38 @@
 #   @assoc              bl-download.yml
 #   @type               bash script
 #   
-#   used in combination with .github/workflows/bl-download.yml
+#                       📁 .github
+#                           📁 blocks
+#                               📁 bruteforce
+#                                   📄 *.txt
+#                           📁 scripts
+#                               📄 bl-download.sh
+#                           📁 workflows
+#                               📄 blocklist-generate.yml
+#
+#   activated from github workflow:
+#       - .github/workflows/blocklist-generate.yml
 #
 #   downloads a list of .txt / .ipset IP addresses in single file.
 #   generates a header to place at the top.
 #   
-#   api-endpoint hosted internally
-#   
-#   local test requires the same structure as the github workflow
-#       📁 .github
-#           📁 blocks
-#               📄 1.txt
-#           📁 scripts
-#               📄 bl-download.sh
-#           📁 workflows
-#               📄 blocklist-generate.yml
-#
-#   @uage               bl-download.sh <URL_BLOCKLIST_DOWNLOAD> <FILE_SAVEAS>
+#   @uage               bl-download.sh <ARG_SAVEFILE> <ARG_BOOL_DND:false|true> [ <URL_BL_1>, <URL_BL_1> {...} ]
 #                       bl-download.sh 01_master.ipset false API_URL_1 
 #                       bl-download.sh 01_master.ipset true API_URL_1 API_URL_2 API_URL_3
 # #
 
 # #
-#   Parameters
+#   Arguments
 #
-#       arg_output
-#       file to save to
+#   This bash script has the following arguments:
 #
-#       arg_bDND
-#       add `#do not delete` to end of each line
+#       ARG_SAVEFILE        (str)       file to save IP addresses into
+#       ARG_BOOL_DND        (bool)      add `#do not delete` to end of each line
+#       { ... }             (varg)      list of URLs to download files from
 # #
 
-arg_output=$1
-arg_bDND=$2
+ARG_SAVEFILE=$1
+ARG_BOOL_DND=$2
 
 # #
 #    Define > General
@@ -46,7 +45,7 @@ arg_bDND=$2
 FOLDER_SAVETO="blocklists"
 NOW=`date -u`
 LINES=0
-ID="${arg_output//[^[:alnum:]]/_}"
+ID="${ARG_SAVEFILE//[^[:alnum:]]/_}"
 DESCRIPTION=$(curl -sS "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/.github/descriptions/${ID}.txt")
 CATEGORY=$(curl -sS "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/.github/categories/${ID}.txt")
 regexURL='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]\.[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$'
@@ -57,7 +56,7 @@ regexURL='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=
 
 echo -e
 echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
-echo -e "  Blocklist - ${arg_output}"
+echo -e "  Blocklist - ${ARG_SAVEFILE}"
 echo -e "  ID:         ${ID}"
 echo -e "  CATEGORY:   ${CATEGORY}"
 echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
@@ -73,12 +72,12 @@ echo -e "  ⭐ Starting"
 #   Create or Clean file
 # #
 
-if [ -f $arg_output ]; then
-    echo -e "  📄 Cleaning ${arg_output}"
-   > ${arg_output}       # clean file
+if [ -f $ARG_SAVEFILE ]; then
+    echo -e "  📄 Cleaning ${ARG_SAVEFILE}"
+   > ${ARG_SAVEFILE}       # clean file
 else
-    echo -e "  📄 Creating ${arg_output}"
-   touch ${arg_output}
+    echo -e "  📄 Creating ${ARG_SAVEFILE}"
+   touch ${ARG_SAVEFILE}
 fi
 
 # #
@@ -98,7 +97,7 @@ download_list()
     sed -i 's/\ #.*//' ${tempFile}                          # remove comments at end
     sed -i 's/\-.*//' ${tempFile}                           # remove hyphens for ip ranges
     sed -i '/^#/d' ${tempFile}                              # remove lines starting with `#`
-    if [ "$arg_bDND" = true ] ; then
+    if [ "$ARG_BOOL_DND" = true ] ; then
         echo -e "  ⭕ Enabled \`# do not delete\`"
         sed -i 's/$/\t\t\t\#\ do\ not\ delete/' ${tempFile} # add csf `# do not delete` to end of each line
     fi
@@ -123,7 +122,7 @@ download_list()
 
 for arg in "${@:3}"; do
     if [[ $arg =~ $regexURL ]]; then
-        download_list ${arg} ${arg_output}
+        download_list ${arg} ${ARG_SAVEFILE}
         echo -e
     fi
 done
@@ -136,10 +135,10 @@ if [ -d .github/blocks/ ]; then
 	for file in .github/blocks/bruteforce/*.ipset; do
 		echo -e "  📒 Adding static file ${file}"
     
-		cat ${file} >> ${arg_output}
+		cat ${file} >> ${ARG_SAVEFILE}
         filter=$(grep -c "^[0-9]" ${file})     # count lines starting with number, print line count
         count=$(echo ${filter} | wc -l < ${file})
-        echo -e "  👌 Added ${count} lines to ${arg_output}"
+        echo -e "  👌 Added ${count} lines to ${ARG_SAVEFILE}"
 	done
 fi
 
@@ -147,17 +146,17 @@ fi
 #   count total lines
 # #
 
-LINES=$(wc -l < ${arg_output})    # count ip lines
+LINES=$(wc -l < ${ARG_SAVEFILE})    # count ip lines
 
 # #
 #   ed
 #       0a  top of file
 # #
 
-ed -s ${arg_output} <<END_ED
+ed -s ${ARG_SAVEFILE} <<END_ED
 0a
 # #
-#   🧱 Firewall Blocklist - ${arg_output}
+#   🧱 Firewall Blocklist - ${ARG_SAVEFILE}
 #
 #   @url            https://github.com/Aetherinox/csf-firewall
 #   @updated        ${NOW}
@@ -173,16 +172,16 @@ w
 q
 END_ED
 
-echo -e "  ✏️ Modifying template values in ${arg_output}"
-sed -i -e "s/{COUNT_TOTAL}/$LINES/g" ${arg_output}          # replace {COUNT_TOTAL} with number of lines
+echo -e "  ✏️ Modifying template values in ${ARG_SAVEFILE}"
+sed -i -e "s/{COUNT_TOTAL}/$LINES/g" ${ARG_SAVEFILE}          # replace {COUNT_TOTAL} with number of lines
 
 # #
 #   Move ipset to final location
 # #
 
-echo -e "  📡 Moving ${arg_output} to ${FOLDER_SAVETO}/${arg_output}"
+echo -e "  📡 Moving ${ARG_SAVEFILE} to ${FOLDER_SAVETO}/${ARG_SAVEFILE}"
 mkdir -p ${FOLDER_SAVETO}/
-mv ${arg_output} ${FOLDER_SAVETO}/
+mv ${ARG_SAVEFILE} ${FOLDER_SAVETO}/
 
 # #
 #   Finished
@@ -196,6 +195,6 @@ echo -e "  🎌 Finished"
 
 echo -e
 echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
-printf "%-25s | %-30s\n" "  #️⃣  ${arg_output}" "${LINES}"
+printf "%-25s | %-30s\n" "  #️⃣  ${ARG_SAVEFILE}" "${LINES}"
 echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
 echo -e

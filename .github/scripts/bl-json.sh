@@ -5,55 +5,53 @@
 #   @assoc              bl-download.yml
 #   @type               bash script
 #   
-#   used in combination with .github/workflows/bl-download.yml
+#                       📁 .github
+#                           📁 scripts
+#                               📄 bl-json.sh
+#                           📁 workflows
+#                               📄 blocklist-generate.yml
+#
+#   activated from github workflow:
+#       - .github/workflows/blocklist-generate.yml
 #
 #   allows you to specify a .json file, and the query to use for data extraction.
-#   
-#   local test requires the same structure as the github workflow
-#       📁 .github
-#           📁 blocks
-#               📄 privacy.txt
-#           📁 scripts
-#               📄 bl-download.sh
-#           📁 workflows
-#               📄 blocklist-generate.yml
 #
-#   @uage               bl-json.sh <FILE_SAVE_AS> <API_URL> <JQ_JSON_QUERY>
-#                       bl-json.sh googlecrawl.ipset https://api.domain.lan/googlebot.json '.prefixes | .[] |.ipv4Prefix//empty,.ipv6Prefix//empty'
+#   @uage               bl-json.sh <ARG_SAVEFILE> <ARG_JSON_URL> <ARG_JSON_QRY>
+#                       bl-json.sh 02_privacy_google.ipset https://api.domain.lan/googlebot.json '.prefixes | .[] |.ipv4Prefix//empty,.ipv6Prefix//empty'
 # #
 
 # #
-#   Parameters
+#   Arguments
 #
-#   arg_output
-#       file to save to
+#   This bash script has the following arguments:
 #
-#   arg_url
-#       url to online api file
+#       ARG_SAVEFILE        (str)       file to save IP addresses into
+#       ARG_JSON_URL        (str)       direct url to json file to download
+#       ARG_JSON_QRY        (str)       jq rules which pull the needed ip addresses
 # #
 
-arg_output=$1
-arg_url=$2
-arg_jsonquery=$3
+ARG_SAVEFILE=$1
+ARG_JSON_URL=$2
+ARG_JSON_QRY=$3
 
 # #
 #   Validation checks
 # #
 
-if [[ -z "${arg_output}" ]]; then
+if [[ -z "${ARG_SAVEFILE}" ]]; then
     echo -e "  ⭕ No output file specified for Google Crawler list"
     echo -e
     exit 1
 fi
 
-if [[ -z "${arg_url}" ]] || [[ ! $arg_url =~ $regexURL ]]; then
-    echo -e "  ⭕ Invalid URL specified for ${arg_output}"
+if [[ -z "${ARG_JSON_URL}" ]] || [[ ! $ARG_JSON_URL =~ $regexURL ]]; then
+    echo -e "  ⭕ Invalid URL specified for ${ARG_SAVEFILE}"
     echo -e
     exit 1
 fi
 
-if [[ -z "${arg_jsonquery}" ]]; then
-    echo -e "  ⭕ No valid jq query specified for ${arg_output}"
+if [[ -z "${ARG_JSON_QRY}" ]]; then
+    echo -e "  ⭕ No valid jq query specified for ${ARG_SAVEFILE}"
     echo -e
     exit 1
 fi
@@ -65,7 +63,7 @@ fi
 FOLDER_SAVETO="blocklists"
 NOW=`date -u`
 LINES=0
-ID="${arg_output//[^[:alnum:]]/_}"
+ID="${ARG_SAVEFILE//[^[:alnum:]]/_}"
 DESCRIPTION=$(curl -sS "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/.github/descriptions/${ID}.txt")
 CATEGORY=$(curl -sS "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/.github/categories/${ID}.txt")
 regexURL='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]\.[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$'
@@ -76,7 +74,7 @@ regexURL='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=
 
 echo -e
 echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
-echo -e "  Blocklist - ${arg_output}"
+echo -e "  Blocklist - ${ARG_SAVEFILE}"
 echo -e "  ID:         ${ID}"
 echo -e "  CATEGORY:   ${CATEGORY}"
 echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
@@ -92,54 +90,54 @@ echo -e "  ⭐ Starting"
 #   Create or Clean file
 # #
 
-if [ -f $arg_output ]; then
-    echo -e "  📄 Cleaning ${arg_output}"
-   > ${arg_output}       # clean file
+if [ -f $ARG_SAVEFILE ]; then
+    echo -e "  📄 Cleaning ${ARG_SAVEFILE}"
+   > ${ARG_SAVEFILE}       # clean file
 else
-    echo -e "  📄 Creating ${arg_output}"
-   touch ${arg_output}
+    echo -e "  📄 Creating ${ARG_SAVEFILE}"
+   touch ${ARG_SAVEFILE}
 fi
 
 # #
 #   Get IP list
 # #
 
-echo -e "  🌎 Downloading IP blacklist to ${arg_output}"
+echo -e "  🌎 Downloading IP blacklist to ${ARG_SAVEFILE}"
 
 # #
 #   Get IP list
 # #
 
-tempFile="${arg_output}.tmp"
-jsonOutput=$(curl -Ss ${arg_url} | jq -r "${arg_jsonquery}" | sort > ${tempFile})
-sed -i 's/\ #.*//' ${tempFile}                          # remove comments at end
-sed -i 's/\-.*//' ${tempFile}                           # remove hyphens for ip ranges
-sed -i '/^#/d' ${tempFile}                              # remove lines starting with `#`
+tempFile="${ARG_SAVEFILE}.tmp"
+jsonOutput=$(curl -Ss ${ARG_JSON_URL} | jq -r "${ARG_JSON_QRY}" | sort > ${tempFile})
+sed -i 's/\ #.*//' ${tempFile}                                  # remove comments at end
+sed -i 's/\-.*//' ${tempFile}                                   # remove hyphens for ip ranges
+sed -i '/^#/d' ${tempFile}                                      # remove lines starting with `#`
 
 # #
 #   count lines
 # #
 
-LINES=$(wc -l < ${tempFile})                            # count ip lines
+LINES=$(wc -l < ${tempFile})                                    # count ip lines
 
 # #
 #   move temp file to perm
 # #
 
-echo -e "  🌎 Move ${tempFile} to ${arg_output}"
-cat ${tempFile} >> ${arg_output}                        # copy .tmp contents to real file
+echo -e "  🌎 Move ${tempFile} to ${ARG_SAVEFILE}"
+cat ${tempFile} >> ${ARG_SAVEFILE}                              # copy .tmp contents to real file
 rm ${tempFile}
-echo -e "  👌 Added ${LINES} lines to ${arg_output}"
+echo -e "  👌 Added ${LINES} lines to ${ARG_SAVEFILE}"
 
 # #
 #   ed
 #       0a  top of file
 # #
 
-ed -s ${arg_output} <<END_ED
+ed -s ${ARG_SAVEFILE} <<END_ED
 0a
 # #
-#   🧱 Firewall Blocklist - ${arg_output}
+#   🧱 Firewall Blocklist - ${ARG_SAVEFILE}
 #
 #   @url            https://github.com/Aetherinox/csf-firewall
 #   @updated        ${NOW}
@@ -155,16 +153,16 @@ w
 q
 END_ED
 
-echo -e "  ✏️ Modifying template values in ${arg_output}"
-sed -i -e "s/{COUNT_TOTAL}/$LINES/g" ${arg_output}          # replace {COUNT_TOTAL} with number of lines
+echo -e "  ✏️ Modifying template values in ${ARG_SAVEFILE}"
+sed -i -e "s/{COUNT_TOTAL}/$LINES/g" ${ARG_SAVEFILE}            # replace {COUNT_TOTAL} with number of lines
 
 # #
 #   Move ipset to final location
 # #
 
-echo -e "  📡 Moving ${arg_output} to ${FOLDER_SAVETO}/${arg_output}"
+echo -e "  📡 Moving ${ARG_SAVEFILE} to ${FOLDER_SAVETO}/${ARG_SAVEFILE}"
 mkdir -p ${FOLDER_SAVETO}/
-mv ${arg_output} ${FOLDER_SAVETO}/
+mv ${ARG_SAVEFILE} ${FOLDER_SAVETO}/
 
 # #
 #   Finished
@@ -178,6 +176,6 @@ echo -e "  🎌 Finished"
 
 echo -e
 echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
-printf "%-25s | %-30s\n" "  #️⃣  ${arg_output}" "${LINES}"
+printf "%-25s | %-30s\n" "  #️⃣  ${ARG_SAVEFILE}" "${LINES}"
 echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
 echo -e

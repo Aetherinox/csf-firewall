@@ -5,53 +5,51 @@
 #   @assoc              bl-download.yml
 #   @type               bash script
 #   
-#   used in combination with .github/workflows/bl-download.yml
+#                       📁 .github
+#                           📁 blocks
+#                               📁 privacy
+#                                   📄 *.txt
+#                           📁 scripts
+#                               📄 bl-static.sh
+#                           📁 workflows
+#                               📄 blocklist-generate.yml
 #
-#   fetches a list of ipsets within the local repository and puts them together into
-#   a single file
-#   
-#   api-endpoint hosted internally
-#   
-#   local test requires the same structure as the github workflow
-#       📁 .github
-#           📁 blocks
-#               📄 privacy.txt
-#           📁 scripts
-#               📄 bl-download.sh
-#           📁 workflows
-#               📄 blocklist-generate.yml
+#   activated from github workflow:
+#       - .github/workflows/blocklist-generate.yml
 #
-#   @uage               bl-static.sh <FILE_SAVE_AS> <STATIC_CATEGORY>
+#   fetches entries from a local static file. these files are located within the repo directory
+#       - .github/blocks/${ARG_BLOCKS_CAT}/*.ipset
+#
+#   IP addresses in static file are cleaned up to remove comments, and then saved to a new file
+#   within the public blocklists folder within the repository.
+#
+#   @uage               bl-static.sh <ARG_SAVEFILE> <ARG_BLOCKS_CAT>
 #                       bl-static.sh 02_privacy_general.ipset privacy
 # #
 
 # #
-#   Parameters
+#   Arguments
 #
-#   arg_output
-#       file to save to
+#   This bash script has the following arguments:
 #
-#   arg_folder
-#       static file to compile
-#       options:
-#           - privacy
-#           - bruteforce
+#       ARG_SAVEFILE        (str)       file to save IP addresses into
+#       ARG_BLOCKS_CAT      (str)       which blocks folder to inject static IP addresses from
 # #
 
-arg_output=$1
-arg_folder=$2
+ARG_SAVEFILE=$1
+ARG_BLOCKS_CAT=$2
 
 # #
 #   Validation checks
 # #
 
-if [[ -z "${arg_output}" ]]; then
+if [[ -z "${ARG_SAVEFILE}" ]]; then
     echo -e "  ⭕ No output file specified for Google Crawler list"
     echo -e
     exit 1
 fi
 
-if [ -z "${arg_folder}" ]; then
+if [ -z "${ARG_BLOCKS_CAT}" ]; then
     echo -e "  ⭕  Aborting -- no static file category specified. ex: privacy"
     exit 1
 fi
@@ -63,7 +61,7 @@ fi
 FOLDER_SAVETO="blocklists"
 NOW=`date -u`
 LINES=0
-ID="${arg_output//[^[:alnum:]]/_}"
+ID="${ARG_SAVEFILE//[^[:alnum:]]/_}"
 DESCRIPTION=$(curl -sS "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/.github/descriptions/${ID}.txt")
 CATEGORY=$(curl -sS "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/.github/categories/${ID}.txt")
 regexURL='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]\.[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$'
@@ -74,7 +72,7 @@ regexURL='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=
 
 echo -e
 echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
-echo -e "  Blocklist - ${arg_output} (${arg_folder})"
+echo -e "  Blocklist - ${ARG_SAVEFILE} (${ARG_BLOCKS_CAT})"
 echo -e "  ID:         ${ID}"
 echo -e "  CATEGORY:   ${CATEGORY}"
 echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
@@ -90,12 +88,12 @@ echo -e "  ⭐ Starting"
 #   Create or Clean file
 # #
 
-if [ -f $arg_output ]; then
-    echo -e "  📄 Cleaning ${arg_output}"
-   > ${arg_output}       # clean file
+if [ -f $ARG_SAVEFILE ]; then
+    echo -e "  📄 Cleaning ${ARG_SAVEFILE}"
+   > ${ARG_SAVEFILE}       # clean file
 else
-    echo -e "  📄 Creating ${arg_output}"
-   touch ${arg_output}
+    echo -e "  📄 Creating ${ARG_SAVEFILE}"
+   touch ${ARG_SAVEFILE}
 fi
 
 # #
@@ -103,13 +101,13 @@ fi
 # #
 
 if [ -d .github/blocks/ ]; then
-	for file in .github/blocks/${arg_folder}/*.ipset; do
+	for file in .github/blocks/${ARG_BLOCKS_CAT}/*.ipset; do
 		echo -e "  📒 Adding static file ${file}"
     
-		cat ${file} >> ${arg_output}
+		cat ${file} >> ${ARG_SAVEFILE}
         count=$(grep -c "^[0-9]" ${file})           # count lines starting with number, print line count
         LINES=`expr $LINES + $count`                # add line count from each file together
-        echo -e "  👌 Added ${count} lines to ${arg_output}"
+        echo -e "  👌 Added ${count} lines to ${ARG_SAVEFILE}"
 	done
 fi
 
@@ -118,10 +116,10 @@ fi
 #       0a  top of file
 # #
 
-ed -s ${arg_output} <<END_ED
+ed -s ${ARG_SAVEFILE} <<END_ED
 0a
 # #
-#   🧱 Firewall Blocklist - ${arg_output}
+#   🧱 Firewall Blocklist - ${ARG_SAVEFILE}
 #
 #   @url            https://github.com/Aetherinox/csf-firewall
 #   @updated        ${NOW}
@@ -137,16 +135,16 @@ w
 q
 END_ED
 
-echo -e "  ✏️ Modifying template values in ${arg_output}"
-sed -i -e "s/{COUNT_TOTAL}/$LINES/g" ${arg_output}          # replace {COUNT_TOTAL} with number of lines
+echo -e "  ✏️ Modifying template values in ${ARG_SAVEFILE}"
+sed -i -e "s/{COUNT_TOTAL}/$LINES/g" ${ARG_SAVEFILE}          # replace {COUNT_TOTAL} with number of lines
 
 # #
 #   Move ipset to final location
 # #
 
-echo -e "  📡 Moving ${arg_output} to ${FOLDER_SAVETO}/${arg_output}"
+echo -e "  📡 Moving ${ARG_SAVEFILE} to ${FOLDER_SAVETO}/${ARG_SAVEFILE}"
 mkdir -p ${FOLDER_SAVETO}/
-mv ${arg_output} ${FOLDER_SAVETO}/
+mv ${ARG_SAVEFILE} ${FOLDER_SAVETO}/
 
 # #
 #   Finished
@@ -160,6 +158,6 @@ echo -e "  🎌 Finished"
 
 echo -e
 echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
-printf "%-25s | %-30s\n" "  #️⃣  ${arg_output}" "${LINES}"
+printf "%-25s | %-30s\n" "  #️⃣  ${ARG_SAVEFILE}" "${LINES}"
 echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
 echo -e
