@@ -40,15 +40,6 @@ arg_jsonquery=$3
 #   Output > Header
 # #
 
-echo -e
-echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
-echo -e "  Blocklist - ${arg_output}"
-echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
-
-# #
-#   Validate arguments
-# #
-
 if [[ -z "${arg_output}" ]]; then
     echo -e "  ⭕ No output file specified for Google Crawler list"
     echo -e
@@ -78,6 +69,17 @@ ID="${arg_output//[^[:alnum:]]/_}"
 DESCRIPTION=$(curl -sS "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/.github/descriptions/${ID}.txt")
 CATEGORY=$(curl -sS "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/.github/categories/${ID}.txt")
 regexURL='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]\.[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$'
+
+# #
+#   Output > Header
+# #
+
+echo -e
+echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
+echo -e "  Blocklist - ${arg_output}"
+echo -e "  ID:         ${ID}"
+echo -e "  CATEGORY:   ${CATEGORY}"
+echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
 
 # #
 #   output

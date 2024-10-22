@@ -25,8 +25,6 @@
 #                       bl-static.sh privacy.ipset privacy
 # #
 
-regexURL='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]\.[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$'
-
 # #
 #   Parameters
 #
@@ -41,16 +39,6 @@ arg_output=$1
 arg_folder=$2
 
 # #
-#    Define > General
-# #
-
-NOW=`date -u`
-LINES=0
-ID="${arg_output//[^[:alnum:]]/_}"
-DESCRIPTION=$(curl -sS "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/.github/descriptions/${ID}.txt")
-CATEGORY=$(curl -sS "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/.github/categories/${ID}.txt")
-
-# #
 #   Validate vars
 # #
 
@@ -60,13 +48,31 @@ if [ -z "${arg_folder}" ]; then
 fi
 
 # #
+#    Define > General
+# #
+
+FOLDER_SAVETO="blocklists"
+NOW=`date -u`
+LINES=0
+ID="${arg_output//[^[:alnum:]]/_}"
+DESCRIPTION=$(curl -sS "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/.github/descriptions/${ID}.txt")
+CATEGORY=$(curl -sS "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/.github/categories/${ID}.txt")
+regexURL='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]\.[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$'
+
+# #
 #   Output > Header
 # #
 
 echo -e
 echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
 echo -e "  Blocklist - ${arg_output} (${arg_folder})"
+echo -e "  ID:         ${ID}"
+echo -e "  CATEGORY:   ${CATEGORY}"
 echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
+
+# #
+#   output
+# #
 
 echo -e
 echo -e "  ⭐ Starting"
