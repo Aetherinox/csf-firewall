@@ -28,7 +28,7 @@
 
 FOLDER_SAVETO="blocklists"
 NOW=`date -u`
-lines=0
+LINES=0
 regexURL='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]\.[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$'
 
 # #
@@ -51,7 +51,7 @@ arg_jsonquery=$3
 
 echo -e
 echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
-echo -e "  Blocklist - ${arg_output} (Google Crawler Bots)"
+echo -e "  Blocklist - ${arg_output}"
 echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
 
 # #
@@ -116,7 +116,7 @@ sed -i '/^#/d' ${tempFile}                              # remove lines starting 
 #   count lines
 # #
 
-lines=$(wc -l < ${tempFile})                            # count ip lines
+LINES=$(wc -l < ${tempFile})                            # count ip lines
 
 # #
 #   move temp file to perm
@@ -125,7 +125,7 @@ lines=$(wc -l < ${tempFile})                            # count ip lines
 echo -e "  🌎 Move ${tempFile} to ${arg_output}"
 cat ${tempFile} >> ${arg_output}                        # copy .tmp contents to real file
 rm ${tempFile}
-echo -e "  👌 Added ${lines} lines to ${arg_output}"
+echo -e "  👌 Added ${LINES} lines to ${arg_output}"
 
 # #
 #   ed
@@ -152,7 +152,7 @@ q
 END_ED
 
 echo -e "  ✏️  Modifying template values in ${arg_output}"
-sed -i -e "s/{COUNT_TOTAL}/$lines/g" ${arg_output}          # replace {COUNT_TOTAL} with number of lines
+sed -i -e "s/{COUNT_TOTAL}/$LINES/g" ${arg_output}          # replace {COUNT_TOTAL} with number of lines
 
 # #
 #   Move ipset to final location
@@ -174,6 +174,6 @@ echo -e "  🎌 Finished"
 
 echo -e
 echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
-printf "%-25s | %-30s\n" "  #️⃣  ${arg_output}" "${lines}"
+printf "%-25s | %-30s\n" "  #️⃣  ${arg_output}" "${LINES}"
 echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
 echo -e
