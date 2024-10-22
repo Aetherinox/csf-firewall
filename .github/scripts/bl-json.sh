@@ -76,6 +76,7 @@ NOW=`date -u`
 LINES=0
 ID="${arg_output//[^[:alnum:]]/_}"
 DESCRIPTION=$(curl -sS "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/.github/descriptions/${ID}.txt")
+CATEGORY=$(curl -sS "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/.github/categories/${ID}.txt")
 regexURL='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]\.[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$'
 
 # #
@@ -143,7 +144,7 @@ ed -s ${arg_output} <<END_ED
 #   @updated        ${NOW}
 #   @entries        {COUNT_TOTAL}
 #   @expires        6 hours
-#   @category       full
+#   @category       ${CATEGORY}
 #
 ${DESCRIPTION}
 # #
