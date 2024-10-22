@@ -109,6 +109,18 @@ jobs:
                 run_bing=".github/scripts/bl-json.sh ${{ vars.API_02_BING_OUT }} ${{secrets.API_02_BING_URL}} '.prefixes | .[] |.ipv4Prefix//empty,.ipv6Prefix//empty'"
                 eval "./$run_bing"
                 
+                chmod +x ".github/scripts/bl-json.sh"
+                run_fastly=".github/scripts/bl-json.sh ${{ vars.API_02_FASTLY_OUT }} ${{secrets.API_02_FASTLY_URL}} 'map(.[]) | .[]'"
+                eval "./$run_fastly"
+
+                chmod +x ".github/scripts/bl-json.sh"
+                run_amz_aws=".github/scripts/bl-json.sh ${{ vars.API_02_AMAZON_AWS_OUT }} ${{secrets.API_02_AMAZON_URL}} '.prefixes[] | select(.service=="AMAZON") | .ip_prefix'"
+                eval "./$run_amz_aws"
+
+                chmod +x ".github/scripts/bl-json.sh"
+                run_amz_ec2=".github/scripts/bl-json.sh ${{ vars.API_02_AMAZON_EC2_OUT }} ${{secrets.API_02_AMAZON_URL}} '.prefixes[] | select(.service=="EC2") | .ip_prefix'"
+                eval "./$run_amz_ec2"
+
             # #
             #   Generate > Precommit
             # #

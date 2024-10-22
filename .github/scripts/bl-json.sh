@@ -111,7 +111,7 @@ echo -e "  🌎 Downloading IP blacklist to ${arg_output}"
 # #
 
 tempFile="${arg_output}.tmp"
-jsonOutput=$(curl -Ss ${arg_url} | jq -r "${arg_jsonquery}" > ${tempFile})
+jsonOutput=$(curl -Ss ${arg_url} | jq -r "${arg_jsonquery}" | sort > ${tempFile})
 sed -i 's/\ #.*//' ${tempFile}                          # remove comments at end
 sed -i 's/\-.*//' ${tempFile}                           # remove hyphens for ip ranges
 sed -i '/^#/d' ${tempFile}                              # remove lines starting with `#`
