@@ -14,7 +14,7 @@ We also host a group ipsets / blocklists which are updated every few hours. Thes
 
 <br />
 
-Ipsets include lists from [AbuseIPDB](https://abuseipdb.com/) and [IPThreat](https://ipthreat.net/). For information on how to use these sets, read the section [IP Rulesets & Blocklists](#ip-rulesets--blocklist).
+Ipsets include lists from [AbuseIPDB](https://abuseipdb.com/) and [IPThreat](https://ipthreat.net/). For information on how to use these sets, read the section [IP Rulesets & Blocklists](#ip-sets--blocklist).
 
 </p>
 
@@ -106,7 +106,7 @@ Ipsets include lists from [AbuseIPDB](https://abuseipdb.com/) and [IPThreat](htt
 - [Install Dark Theme](#install-dark-theme)
 - [Traefik Integration with CSF WebUI](#traefik-integration-with-csf-webui)
   - [Adding Authentik Provider](#adding-authentik-provider)
-- [IP Rulesets / Blocklist](#ip-rulesets--blocklist)
+- [IP Sets / Blocklist](#ip-sets--blocklist)
 - [Download ConfigServer Firewall](#download-configserver-firewall)
 - [References for More Help](#references-for-more-help)
 - [Contributors ✨](#contributors-)
@@ -1322,7 +1322,7 @@ You should be able to access `csf.domain.com` and be prompted now to authenticat
 
 <br />
 
-## IP Rulesets / Blocklist
+## IP Sets / Blocklist
 This repository contains a set of ipsets which are automatically updated every `6 hours`. You may add these sets to your ConfigServer Firewall `/etc/csf/csf.blocklists` with the following new line:
 
 ```
@@ -1331,16 +1331,16 @@ csf|86400|0|https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/block
 
 <br />
 
-| Set | Description |
-| --- | --- |
-| <sub>`01_master.ipset`</sub> | <sub>Abusive IP addresses which have been reported for port scanning and SSH bruteforcing. This list is highly recommended.</sub> |
-| <sub>`02_privacy_general.ipset`</sub> | <sub>Servers which scan ip addresses for data collection and research purposes. Also known for port knocking, but may not be for nefarious acts.</sub> |
-| <sub>`02_privacy_amazon_aws.ipset`</sub> | <sub>Amazon AWS</sub> |
-| <sub>`02_privacy_amazon_ec2.ipset`</sub> | <sub>Amazon EC2</sub> |
-| <sub>`02_privacy_bing.ipset`</sub> | <sub>Bing Crawlers</sub> |
-| <sub>`02_privacy_cloudfront.ipset`</sub> | <sub>Cloudfront CDN</sub> |
-| <sub>`02_privacy_fastly.ipset`</sub> | <sub>Fastly CDN</sub> |
-| <sub>`02_privacy_google.ipset`</sub> | <sub>Google Crawlers</sub> |
+| Set | Description | Importence |
+| --- | --- | --- |
+| <sub>`01_master.ipset`</sub> | <sub>Abusive IP addresses which have been reported for port scanning and SSH bruteforcing. HIGHLY recommended.</sub> | ⭐⭐⭐⭐⭐ |
+| <sub>`02_privacy_general.ipset`</sub> | <sub>Servers which scan ip addresses for data collection and research purposes. Also known for port knocking, but may not be for nefarious acts.</sub> | ⭐⭐⭐⭐ |
+| <sub>`02_privacy_amazon_aws.ipset`</sub> | <sub>Amazon AWS</sub> | ⭐⭐ |
+| <sub>`02_privacy_amazon_ec2.ipset`</sub> | <sub>Amazon EC2</sub> | ⭐⭐ |
+| <sub>`02_privacy_bing.ipset`</sub> | <sub>Bing Crawlers</sub> | ⭐⭐ |
+| <sub>`02_privacy_cloudfront.ipset`</sub> | <sub>Cloudfront CDN</sub> | ⭐ |
+| <sub>`02_privacy_fastly.ipset`</sub> | <sub>Fastly CDN</sub> | ⭐ |
+| <sub>`02_privacy_google.ipset`</sub> | <sub>Google Crawlers</sub> | ⭐⭐ |
 
 <br />
 
