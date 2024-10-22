@@ -2,7 +2,7 @@
 
 # #
 #   @for                https://github.com/Aetherinox/csf-firewall
-#   @assoc              bl-download.yml
+#   @assoc              blocklist-generate.yml
 #   @type               bash script
 #   
 #                       📁 .github
@@ -13,6 +13,11 @@
 #
 #   activated from github workflow:
 #       - .github/workflows/blocklist-generate.yml
+#
+#   within github workflow, run:
+#       chmod +x ".github/scripts/bl-json.sh"
+#       run_google=".github/scripts/bl-json.sh ${{ vars.API_02_GOOGLE_OUT }} ${{secrets.API_02_GOOGLE_URL}} '.prefixes | .[] |.ipv4Prefix//empty,.ipv6Prefix//empty'"
+#       eval "./$run_google"
 #
 #   allows you to specify a .json file, and the query to use for data extraction.
 #

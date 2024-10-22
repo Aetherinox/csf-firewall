@@ -2,7 +2,7 @@
 
 # #
 #   @for                https://github.com/Aetherinox/csf-firewall
-#   @assoc              bl-download.yml
+#   @assoc              blocklist-generate.yml
 #   @type               bash script
 #   
 #                       📁 .github
@@ -16,6 +16,11 @@
 #
 #   activated from github workflow:
 #       - .github/workflows/blocklist-generate.yml
+#
+#   within github workflow, run:
+#       chmod +x ".github/scripts/bl-static.sh"
+#       run_general=".github/scripts/bl-static.sh ${{ vars.API_02_GENERAL_OUT }} privacy"
+#       eval "./$run_general"
 #
 #   fetches entries from a local static file. these files are located within the repo directory
 #       - .github/blocks/${ARG_BLOCKS_CAT}/*.ipset

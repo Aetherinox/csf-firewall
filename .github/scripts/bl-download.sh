@@ -2,7 +2,7 @@
 
 # #
 #   @for                https://github.com/Aetherinox/csf-firewall
-#   @assoc              bl-download.yml
+#   @assoc              blocklist-generate.yml
 #   @type               bash script
 #   
 #                       📁 .github
@@ -16,6 +16,11 @@
 #
 #   activated from github workflow:
 #       - .github/workflows/blocklist-generate.yml
+#
+#   within github workflow, run:
+#       chmod +x ".github/scripts/bl-download.sh"
+#       run_master=".github/scripts/bl-download.sh ${{ vars.API_01_OUT }} false ${{ secrets.API_01_FILE_01 }} ${{ secrets.API_01_FILE_02 }} ${{ secrets.API_01_FILE_03 }}"
+#       eval "./$run_master"
 #
 #   downloads a list of .txt / .ipset IP addresses in single file.
 #   generates a header to place at the top.
