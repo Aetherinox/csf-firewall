@@ -33,25 +33,28 @@ regexURL='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=
 #   arg_output
 #       file to save to
 #
-#   arg_static
+#   arg_folder
 #       static file to compile
 # #
 
 arg_output=$1
-arg_static=$2
+arg_folder=$2
 
 # #
 #    Define > General
 # #
 
 NOW=`date -u`
-lines=0
+LINES=0
+ID="${arg_output//[^[:alnum:]]/_}"
+DESCRIPTION=$(curl -sS "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/.github/descriptions/${ID}.txt")
+CATEGORY=$(curl -sS "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/.github/categories/${ID}.txt")
 
 # #
 #   Validate vars
 # #
 
-if [ -z "${arg_static}" ]; then
+if [ -z "${arg_folder}" ]; then
     echo -e "  ⭕  Aborting -- no static file category specified"
     exit 1
 fi
@@ -62,7 +65,7 @@ fi
 
 echo -e
 echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
-echo -e "  Blocklist - ${arg_output} (${arg_static})"
+echo -e "  Blocklist - ${arg_output} (${arg_folder})"
 echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
 
 echo -e
@@ -85,12 +88,12 @@ fi
 # #
 
 if [ -d .github/blocks/ ]; then
-	for file in .github/blocks/${arg_static}/*.ipset; do
+	for file in .github/blocks/${arg_folder}/*.ipset; do
 		echo -e "  📒 Adding static file ${file}"
     
 		cat ${file} >> ${arg_output}
         count=$(grep -c "^[0-9]" ${file})           # count lines starting with number, print line count
-        lines=`expr $lines + $count`                # add line count from each file together
+        LINES=`expr $LINES + $count`                # add line count from each file together
         echo -e "  👌 Added ${count} lines to ${arg_output}"
 	done
 fi
@@ -109,11 +112,9 @@ ed -s ${arg_output} <<END_ED
 #   @updated        ${NOW}
 #   @entries        {COUNT_TOTAL}
 #   @expires        6 hours
-#   @category       full
+#   @category       ${CATEGORY}
 #
-#   This is a static list of abusive IP addresses provided by https://github.com/Aetherinox/csf-firewall
-#   This list contains IP addresses to servers that frequently scan websites in order to obtain information. 
-#   This can include crawlers and research groups.
+${DESCRIPTION}
 # #
 
 .
@@ -122,7 +123,7 @@ q
 END_ED
 
 echo -e "  ✏️  Modifying template values in ${arg_output}"
-sed -i -e "s/{COUNT_TOTAL}/$lines/g" ${arg_output}          # replace {COUNT_TOTAL} with number of lines
+sed -i -e "s/{COUNT_TOTAL}/$LINES/g" ${arg_output}          # replace {COUNT_TOTAL} with number of lines
 
 echo -e "  🎌 Finished"
 
@@ -132,6 +133,6 @@ echo -e "  🎌 Finished"
 
 echo -e
 echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
-printf "%-25s | %-30s\n" "  #️⃣  ${arg_output}" "${lines}"
+printf "%-25s | %-30s\n" "  #️⃣  ${arg_output}" "${LINES}"
 echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
 echo -e
