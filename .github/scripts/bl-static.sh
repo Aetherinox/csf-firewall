@@ -21,9 +21,8 @@
 #           📁 workflows
 #               📄 blocklist-generate.yml
 #
-#   @uage               bl-download.sh <URL_BLOCKLIST_DOWNLOAD> <FILE_SAVEAS>
-#                       bl-download.sh csf.deny false API_URL_1 
-#                       bl-download.sh csf.deny true API_URL_1 API_URL_2 API_URL_3
+#   @uage               bl-static.sh <FILE_SAVE_AS> <STATIC_CATEGORY>
+#                       bl-static.sh privacy.ipset privacy
 # #
 
 regexURL='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]\.[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$'

@@ -18,9 +18,8 @@
 #           📁 workflows
 #               📄 blocklist-generate.yml
 #
-#   @uage               bl-download.sh <URL_BLOCKLIST_DOWNLOAD> <FILE_SAVEAS>
-#                       bl-download.sh csf.deny false API_URL_1 
-#                       bl-download.sh csf.deny true API_URL_1 API_URL_2 API_URL_3
+#   @uage               bl-json.sh <FILE_SAVE_AS> <API_URL> <JQ_JSON_QUERY>
+#                       bl-json.sh googlecrawl.ipset https://api.domain.lan/googlebot.json '.prefixes | .[] |.ipv4Prefix//empty,.ipv6Prefix//empty'
 # #
 
 regexURL='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]\.[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$'
