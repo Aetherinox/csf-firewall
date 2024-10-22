@@ -255,7 +255,7 @@ jobs:
                   echo Building STABLE Package .zip ${{ inputs.PLUGIN_NAME }}-v${{ inputs.PLUGIN_VERSION }}-patches.zip
                   mv patch/* .
                   zip -r ${{ inputs.PLUGIN_NAME }}-v${{ inputs.PLUGIN_VERSION }}-patches.zip README.md LICENSE *.sh
-                  mv dark_theme/* .
+                  mv theme/* .
                   zip -r ${{ inputs.PLUGIN_NAME }}-v${{ inputs.PLUGIN_VERSION }}-theme-dark.zip ./etc/csf/ui/* ./etc/csf/ui/* ./usr/*
                   ls
               env:
@@ -267,7 +267,7 @@ jobs:
               run: |
                   echo Building PRE-RELEASE Package .zip ${{ inputs.PLUGIN_NAME }}-v${{ inputs.PLUGIN_VERSION }}-rc.${{ inputs.VERSION_RC }}-patches.zip
                   zip -r ${{ inputs.PLUGIN_NAME }}-v${{ inputs.PLUGIN_VERSION }}-rc.${{ inputs.VERSION_RC }}-patches.zip README.md LICENSE *.sh
-                  mv dark_theme/* .
+                  mv theme/* .
                   zip -r ${{ inputs.PLUGIN_NAME }}-v${{ inputs.PLUGIN_VERSION }}-rc.${{ inputs.VERSION_RC }}-theme-dark.zip ./etc/csf/ui/* ./etc/csf/ui/* ./usr/*
                   ls
               env:

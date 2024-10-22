@@ -122,10 +122,10 @@ Ipsets include lists from [AbuseIPDB](https://abuseipdb.com/) and [IPThreat](htt
 This repository contains several folders:
 - 📁 `configs`
   - Ready-to-use CSF config files
-    - Official CSF `extras/etc/csf/csf.conf` (full version)
-    - Official CSF `extras/etc/csf/csf.conf.clean` (clean version)
-  - GeoIP configuration file for [MaxMind geo-blocking](https://www.maxmind.com/en/home)
-- 📁 `dark_theme`
+    - `configs/etc/csf/csf.conf` (full version)
+    - `configs/etc/csf/csf.conf.clean` (clean version)
+    - `configs/etc/GeoIP.conf` GeoIP Config File for [MaxMind geo-blocking](https://www.maxmind.com/en/home)
+- 📁 `theme`
   - Dark theme for ConfigServer Firewall
 - 📁 `patches`
   - Docker patch which allows CSF and Docker to work together
