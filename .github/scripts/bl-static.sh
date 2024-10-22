@@ -131,6 +131,18 @@ END_ED
 echo -e "  ✏️  Modifying template values in ${arg_output}"
 sed -i -e "s/{COUNT_TOTAL}/$LINES/g" ${arg_output}          # replace {COUNT_TOTAL} with number of lines
 
+# #
+#   Move ipset to final location
+# #
+
+echo -e "  📡  Moving ${arg_output} to ${FOLDER_SAVETO}/${arg_output}"
+mkdir -p ${FOLDER_SAVETO}/
+mv ${arg_output} ${FOLDER_SAVETO}/
+
+# #
+#   Finished
+# #
+
 echo -e "  🎌 Finished"
 
 # #
