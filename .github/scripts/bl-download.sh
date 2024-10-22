@@ -125,10 +125,11 @@ done
 
 if [ -d .github/blocks/ ]; then
 	for file in .github/blocks/bruteforce/*.ipset; do
-		echo -e "  🗄️  Adding static file ${file}"
+		echo -e "  📒 Adding static file ${file}"
     
 		cat ${file} >> ${arg_file}
-        count=$(grep -c "^[0-9]" ${file} | wc -l < ${file})     # count lines starting with number, print line count
+        filter=$(grep -c "^[0-9]" ${file})     # count lines starting with number, print line count
+        count=$(echo ${filter} | wc -l < ${file})
         echo -e "  👌 Added ${count} lines to ${arg_file}"
 	done
 fi
