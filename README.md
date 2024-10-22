@@ -1333,8 +1333,14 @@ csf|86400|0|https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/block
 
 | Set | Description |
 | --- | --- |
-| `01_master.ipset` | Contains a list of abusive IP addresses which have been reported for port scanning and SSH bruteforcing. This list is highly recommended. |
-| `02_privacy.ipset` | A list of servers which scan ip addresses for data collection and research purposes. Also known for port knocking, but may not be for nefarious acts. |
+| <sub>`01_master.ipset`</sub> | <sub>Abusive IP addresses which have been reported for port scanning and SSH bruteforcing. This list is highly recommended.</sub> |
+| <sub>`02_privacy_general.ipset`</sub> | <sub>Servers which scan ip addresses for data collection and research purposes. Also known for port knocking, but may not be for nefarious acts.</sub> |
+| <sub>`02_privacy_amazon_aws.ipset`</sub> | <sub>Amazon AWS</sub> |
+| <sub>`02_privacy_amazon_ec2.ipset`</sub> | <sub>Amazon EC2</sub> |
+| <sub>`02_privacy_bing.ipset`</sub> | <sub>Bing Crawlers</sub> |
+| <sub>`02_privacy_cloudfront.ipset`</sub> | <sub>Cloudfront CDN</sub> |
+| <sub>`02_privacy_fastly.ipset`</sub> | <sub>Fastly CDN</sub> |
+| <sub>`02_privacy_google.ipset`</sub> | <sub>Google Crawlers</sub> |
 
 <br />
 

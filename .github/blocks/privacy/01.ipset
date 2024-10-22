@@ -18,9 +18,18 @@
 
 # #
 #   CariNet, Inc.
+#
+#   a wide variety of bots come from this company (or customers of the company),
+#   including scrapers, brute-forcing, email spam, data collection, etc.
+#
 # #
 
-71.6.134.235
+135.84.216.0/24
+209.126.128.0/17
+216.75.0.0/18
+216.98.128.0/19
+66.240.192.0/18
+71.6.128.0/17
 
 # #
 #   Shodan is a search engine which does not index web sites or web contents,
