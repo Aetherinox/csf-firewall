@@ -1330,6 +1330,7 @@ csf|86400|0|https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/block
 | Set | Description |
 | --- | --- |
 | `01_master.ipset` | Contains a list of abusive IP addresses which have been reported for port scanning and SSH bruteforcing. This list is highly recommended. |
+| `02_privacy.ipset` | A list of servers which scan ip addresses for data collection and research purposes. Also known for port knocking, but may not be for nefarious acts. |
 
 <br />
 
