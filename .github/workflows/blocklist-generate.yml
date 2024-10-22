@@ -111,15 +111,6 @@ jobs:
                 chmod +x ".github/scripts/bl-json.sh"
                 run_cloudfront=".github/scripts/bl-json.sh ${{ vars.API_02_CLOUDFRONT_OUT }} ${{secrets.API_02_CLOUDFRONT_URL}} 'map(.[]) | sort | .[]'"
                 eval "./$run_cloudfront"
-
-                # #
-                #   move blocklist
-                # #
-
-                mkdir -p blocklists/
-                mv ${{ vars.API_02_GENERAL_OUT }} blocklists/
-                mv ${{ vars.API_02_GOOGLE_OUT }} blocklists/
-
             # #
             #   Generate > Precommit
             # #

@@ -26,6 +26,13 @@
 #                       bl-download.sh csf.deny true API_URL_1 API_URL_2 API_URL_3
 # #
 
+# #
+#    Define > General
+# #
+
+FOLDER_SAVETO="blocklists"
+NOW=`date -u`
+lines=0
 regexURL='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]\.[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$'
 
 # #
@@ -40,13 +47,6 @@ regexURL='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=
 
 arg_file=$1
 arg_bDND=$2
-
-# #
-#    Define > General
-# #
-
-NOW=`date -u`
-lines=0
 
 # #
 #   Output > Header
@@ -170,6 +170,18 @@ END_ED
 
 echo -e "  ✏️  Modifying template values in ${arg_file}"
 sed -i -e "s/{COUNT_TOTAL}/$lines/g" ${arg_file}          # replace {COUNT_TOTAL} with number of lines
+
+# #
+#   Move ipset to final location
+# #
+
+echo -e "  📡  Moving ${arg_file} to ${FOLDER_SAVETO}/${arg_file}"
+mkdir -p ${FOLDER_SAVETO}/
+mv ${arg_file} ${FOLDER_SAVETO}/
+
+# #
+#   Finished
+# #
 
 echo -e "  🎌 Finished"
 

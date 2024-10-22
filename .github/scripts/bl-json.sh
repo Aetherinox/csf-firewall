@@ -22,6 +22,13 @@
 #                       bl-json.sh googlecrawl.ipset https://api.domain.lan/googlebot.json '.prefixes | .[] |.ipv4Prefix//empty,.ipv6Prefix//empty'
 # #
 
+# #
+#    Define > General
+# #
+
+FOLDER_SAVETO="blocklists"
+NOW=`date -u`
+lines=0
 regexURL='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]\.[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$'
 
 # #
@@ -68,13 +75,6 @@ if [[ -z "${arg_jsonquery}" ]]; then
     echo -e
     exit 1
 fi
-
-# #
-#    Define > General
-# #
-
-NOW=`date -u`
-lines=0
 
 # #
 #   output
@@ -153,6 +153,18 @@ END_ED
 
 echo -e "  ✏️  Modifying template values in ${arg_output}"
 sed -i -e "s/{COUNT_TOTAL}/$lines/g" ${arg_output}          # replace {COUNT_TOTAL} with number of lines
+
+# #
+#   Move ipset to final location
+# #
+
+echo -e "  📡  Moving ${arg_output} to ${FOLDER_SAVETO}/${arg_output}"
+mkdir -p ${FOLDER_SAVETO}/
+mv ${arg_output} ${FOLDER_SAVETO}/
+
+# #
+#   Finished
+# #
 
 echo -e "  🎌 Finished"
 
