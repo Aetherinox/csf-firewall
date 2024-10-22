@@ -163,13 +163,9 @@ ed -s ${arg_output} <<END_ED
 #   @updated        ${NOW}
 #   @entries        {COUNT_TOTAL}
 #   @expires        6 hours
-#   @category       full
+#   @category       ${CATEGORY}
 #
-#   auto-generated list which contains the following:
-#       - AbuseIPDB 100% Confidence
-#       - IPThreat.net 90% Confidence
-#       - Port scanners
-#       - SSH bruteforce attempts
+${DESCRIPTION}
 # #
 
 .
