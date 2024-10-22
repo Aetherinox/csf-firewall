@@ -22,9 +22,22 @@
 #               📄 blocklist-generate.yml
 #
 #   @uage               bl-download.sh <URL_BLOCKLIST_DOWNLOAD> <FILE_SAVEAS>
-#                       bl-download.sh csf.deny false API_URL_1 
-#                       bl-download.sh csf.deny true API_URL_1 API_URL_2 API_URL_3
+#                       bl-download.sh 01_master.ipset false API_URL_1 
+#                       bl-download.sh 01_master.ipset true API_URL_1 API_URL_2 API_URL_3
 # #
+
+# #
+#   Parameters
+#
+#       arg_output
+#       file to save to
+#
+#       arg_bDND
+#       add `#do not delete` to end of each line
+# #
+
+arg_output=$1
+arg_bDND=$2
 
 # #
 #    Define > General
@@ -32,21 +45,11 @@
 
 FOLDER_SAVETO="blocklists"
 NOW=`date -u`
-lines=0
+LINES=0
+ID="${arg_output//[^[:alnum:]]/_}"
+DESCRIPTION=$(curl -sS "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/.github/descriptions/${ID}.txt")
+CATEGORY=$(curl -sS "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/.github/categories/${ID}.txt")
 regexURL='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]\.[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$'
-
-# #
-#   Parameters
-#
-#   arg_file
-#       file to save to
-#
-#   arg_bDND
-#       add `#do not delete` to end of each line
-# #
-
-arg_file=$1
-arg_bDND=$2
 
 # #
 #   Output > Header
@@ -54,8 +57,14 @@ arg_bDND=$2
 
 echo -e
 echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
-echo -e "  Blocklist - ${arg_file}"
+echo -e "  Blocklist - ${arg_output}"
+echo -e "  ID:         ${ID}"
+echo -e "  CATEGORY:   ${CATEGORY}"
 echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
+
+# #
+#   output
+# #
 
 echo -e
 echo -e "  ⭐ Starting"
@@ -64,12 +73,12 @@ echo -e "  ⭐ Starting"
 #   Create or Clean file
 # #
 
-if [ -f $arg_file ]; then
-    echo -e "  📄 Cleaning ${arg_file}"
-   > ${arg_file}       # clean file
+if [ -f $arg_output ]; then
+    echo -e "  📄 Cleaning ${arg_output}"
+   > ${arg_output}       # clean file
 else
-    echo -e "  📄 Creating ${arg_file}"
-   touch ${arg_file}
+    echo -e "  📄 Creating ${arg_output}"
+   touch ${arg_output}
 fi
 
 # #
@@ -94,12 +103,12 @@ download_list()
         sed -i 's/$/\t\t\t\#\ do\ not\ delete/' ${tempFile} # add csf `# do not delete` to end of each line
     fi
 
-    lines=$(wc -l < ${tempFile})                            # count ip lines
+    LINES=$(wc -l < ${tempFile})                            # count ip lines
 
     echo -e "  🌎 Move ${tempFile} to ${fnFile}"
     cat ${tempFile} >> ${fnFile}                            # copy .tmp contents to real file
 
-    echo -e "  👌 Added ${lines} lines to ${fnFile}"
+    echo -e "  👌 Added ${LINES} lines to ${fnFile}"
 
     # #
     #   Cleanup
@@ -114,7 +123,7 @@ download_list()
 
 for arg in "${@:3}"; do
     if [[ $arg =~ $regexURL ]]; then
-        download_list ${arg} ${arg_file}
+        download_list ${arg} ${arg_output}
         echo -e
     fi
 done
@@ -127,10 +136,10 @@ if [ -d .github/blocks/ ]; then
 	for file in .github/blocks/bruteforce/*.ipset; do
 		echo -e "  📒 Adding static file ${file}"
     
-		cat ${file} >> ${arg_file}
+		cat ${file} >> ${arg_output}
         filter=$(grep -c "^[0-9]" ${file})     # count lines starting with number, print line count
         count=$(echo ${filter} | wc -l < ${file})
-        echo -e "  👌 Added ${count} lines to ${arg_file}"
+        echo -e "  👌 Added ${count} lines to ${arg_output}"
 	done
 fi
 
@@ -138,17 +147,17 @@ fi
 #   count total lines
 # #
 
-lines=$(wc -l < ${arg_file})    # count ip lines
+LINES=$(wc -l < ${arg_output})    # count ip lines
 
 # #
 #   ed
 #       0a  top of file
 # #
 
-ed -s ${arg_file} <<END_ED
+ed -s ${arg_output} <<END_ED
 0a
 # #
-#   🧱 Firewall Blocklist - ${arg_file}
+#   🧱 Firewall Blocklist - ${arg_output}
 #
 #   @url            https://github.com/Aetherinox/csf-firewall
 #   @updated        ${NOW}
@@ -168,16 +177,16 @@ w
 q
 END_ED
 
-echo -e "  ✏️  Modifying template values in ${arg_file}"
-sed -i -e "s/{COUNT_TOTAL}/$lines/g" ${arg_file}          # replace {COUNT_TOTAL} with number of lines
+echo -e "  ✏️ Modifying template values in ${arg_output}"
+sed -i -e "s/{COUNT_TOTAL}/$LINES/g" ${arg_output}          # replace {COUNT_TOTAL} with number of lines
 
 # #
 #   Move ipset to final location
 # #
 
-echo -e "  📡  Moving ${arg_file} to ${FOLDER_SAVETO}/${arg_file}"
+echo -e "  📡 Moving ${arg_output} to ${FOLDER_SAVETO}/${arg_output}"
 mkdir -p ${FOLDER_SAVETO}/
-mv ${arg_file} ${FOLDER_SAVETO}/
+mv ${arg_output} ${FOLDER_SAVETO}/
 
 # #
 #   Finished
@@ -191,6 +200,6 @@ echo -e "  🎌 Finished"
 
 echo -e
 echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
-printf "%-25s | %-30s\n" "  #️⃣  ${arg_file}" "${lines}"
+printf "%-25s | %-30s\n" "  #️⃣  ${arg_output}" "${LINES}"
 echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
 echo -e

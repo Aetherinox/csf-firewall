@@ -22,7 +22,7 @@
 #               📄 blocklist-generate.yml
 #
 #   @uage               bl-static.sh <FILE_SAVE_AS> <STATIC_CATEGORY>
-#                       bl-static.sh privacy.ipset privacy
+#                       bl-static.sh 02_privacy_general.ipset privacy
 # #
 
 # #
@@ -33,17 +33,26 @@
 #
 #   arg_folder
 #       static file to compile
+#       options:
+#           - privacy
+#           - bruteforce
 # #
 
 arg_output=$1
 arg_folder=$2
 
 # #
-#   Validate vars
+#   Validation checks
 # #
 
+if [[ -z "${arg_output}" ]]; then
+    echo -e "  ⭕ No output file specified for Google Crawler list"
+    echo -e
+    exit 1
+fi
+
 if [ -z "${arg_folder}" ]; then
-    echo -e "  ⭕  Aborting -- no static file category specified"
+    echo -e "  ⭕  Aborting -- no static file category specified. ex: privacy"
     exit 1
 fi
 
@@ -128,14 +137,14 @@ w
 q
 END_ED
 
-echo -e "  ✏️  Modifying template values in ${arg_output}"
+echo -e "  ✏️ Modifying template values in ${arg_output}"
 sed -i -e "s/{COUNT_TOTAL}/$LINES/g" ${arg_output}          # replace {COUNT_TOTAL} with number of lines
 
 # #
 #   Move ipset to final location
 # #
 
-echo -e "  📡  Moving ${arg_output} to ${FOLDER_SAVETO}/${arg_output}"
+echo -e "  📡 Moving ${arg_output} to ${FOLDER_SAVETO}/${arg_output}"
 mkdir -p ${FOLDER_SAVETO}/
 mv ${arg_output} ${FOLDER_SAVETO}/
 

@@ -37,7 +37,7 @@ arg_url=$2
 arg_jsonquery=$3
 
 # #
-#   Output > Header
+#   Validation checks
 # #
 
 if [[ -z "${arg_output}" ]]; then
@@ -156,14 +156,14 @@ w
 q
 END_ED
 
-echo -e "  ✏️  Modifying template values in ${arg_output}"
+echo -e "  ✏️ Modifying template values in ${arg_output}"
 sed -i -e "s/{COUNT_TOTAL}/$LINES/g" ${arg_output}          # replace {COUNT_TOTAL} with number of lines
 
 # #
 #   Move ipset to final location
 # #
 
-echo -e "  📡  Moving ${arg_output} to ${FOLDER_SAVETO}/${arg_output}"
+echo -e "  📡 Moving ${arg_output} to ${FOLDER_SAVETO}/${arg_output}"
 mkdir -p ${FOLDER_SAVETO}/
 mv ${arg_output} ${FOLDER_SAVETO}/
 
