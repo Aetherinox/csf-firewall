@@ -24,4 +24,3 @@
 #	- Fraudulent activities
 #	- Email Spam
 #	- Web App Attacks
-#       - SSH bruteforce attempts
