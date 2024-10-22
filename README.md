@@ -1331,7 +1331,7 @@ csf|86400|0|https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/block
 
 <br />
 
-| Set | Description | Importence |
+| Set | Description | Importance |
 | --- | --- | --- |
 | <sub>`01_master.ipset`</sub> | <sub>Abusive IP addresses which have been reported for port scanning and SSH bruteforcing. HIGHLY recommended.</sub> | ⭐⭐⭐⭐⭐ |
 | <sub>`02_privacy_general.ipset`</sub> | <sub>Servers which scan ip addresses for data collection and research purposes. Also known for port knocking, but may not be for nefarious acts.</sub> | ⭐⭐⭐⭐ |
