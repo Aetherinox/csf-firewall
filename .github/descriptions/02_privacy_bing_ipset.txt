@@ -1,4 +1,4 @@
-#   This list contains ip addresses associated with Google crawlers.
+#   This list contains ip addresses associated with Bing crawlers.
 #   
 #   These are useful if you do not wish for search engines to grab content
 #   from your website.

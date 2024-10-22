@@ -104,6 +104,11 @@ jobs:
                 chmod +x ".github/scripts/bl-json.sh"
                 run_cloudfront=".github/scripts/bl-json.sh ${{ vars.API_02_CLOUDFRONT_OUT }} ${{secrets.API_02_CLOUDFRONT_URL}} 'map(.[]) | sort | .[]'"
                 eval "./$run_cloudfront"
+
+                chmod +x ".github/scripts/bl-json.sh"
+                run_bing=".github/scripts/bl-json.sh ${{ vars.API_02_BING_OUT }} ${{secrets.API_02_BING_URL}} '.prefixes | .[] |.ipv4Prefix//empty,.ipv6Prefix//empty'"
+                eval "./$run_bing"
+                
             # #
             #   Generate > Precommit
             # #
