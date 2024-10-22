@@ -108,6 +108,10 @@ jobs:
                 run_google=".github/scripts/bl-json.sh ${{ vars.API_02_GOOGLE_OUT }} ${{secrets.API_02_GOOGLE_URL}} '.prefixes | .[] |.ipv4Prefix//empty,.ipv6Prefix//empty'"
                 eval "./$run_google"
 
+                chmod +x ".github/scripts/bl-json.sh"
+                run_cloudfront=".github/scripts/bl-json.sh ${{ vars.API_02_CLOUDFRONT_OUT }} ${{secrets.API_02_CLOUDFRONT_URL}} 'map(.[]) | sort | .[]'"
+                eval "./$run_cloudfront"
+
                 # #
                 #   move blocklist
                 # #
