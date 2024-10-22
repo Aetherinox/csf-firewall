@@ -72,7 +72,7 @@ jobs:
             # #
 
             - name: "🧱 Generate › Master"
-              id: task_build_generate
+              id: task_build_generate_master
               run: |
                 # #
                 #   set permissions and run generator
@@ -88,6 +88,28 @@ jobs:
 
                 mkdir -p blocklists/
                 mv ${{ vars.API_01_OUT }} blocklists/
+
+            # #
+            #   Generate > Privacy
+            # #
+
+            - name: "🧱 Generate › Privacy"
+              id: task_build_generate_privacy
+              run: |
+                # #
+                #   set permissions and run generator
+                # #
+
+                chmod +x ".github/scripts/bl-privacy.sh"
+                run_privacy=".github/scripts/bl-privacy.sh ${{ vars.API_02_OUT }}"
+                eval "./$run_privacy"
+
+                # #
+                #   move blocklist
+                # #
+
+                mkdir -p blocklists/
+                mv ${{ vars.API_02_OUT }} blocklists/
 
             # #
             #   Generate > Precommit
