@@ -101,15 +101,20 @@ jobs:
                 # #
 
                 chmod +x ".github/scripts/bl-static.sh"
-                run_static=".github/scripts/bl-static.sh ${{ vars.API_02_OUT }} privacy"
-                eval "./$run_static"
+                run_general=".github/scripts/bl-static.sh ${{ vars.API_02_GENERAL_OUT }} privacy"
+                eval "./$run_general"
+
+                chmod +x ".github/scripts/bl-json.sh"
+                run_google=".github/scripts/bl-json.sh ${{ vars.API_02_GOOGLE_OUT }} ${{secrets.API_02_GOOGLE_URL}} '.prefixes | .[] |.ipv4Prefix//empty,.ipv6Prefix//empty'"
+                eval "./$run_google"
 
                 # #
                 #   move blocklist
                 # #
 
                 mkdir -p blocklists/
-                mv ${{ vars.API_02_OUT }} blocklists/
+                mv ${{ vars.API_02_GENERAL_OUT }} blocklists/
+                mv ${{ vars.API_02_GOOGLE_OUT }} blocklists/
 
             # #
             #   Generate > Precommit
