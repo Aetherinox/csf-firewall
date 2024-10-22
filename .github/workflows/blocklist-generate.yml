@@ -100,9 +100,9 @@ jobs:
                 #   set permissions and run generator
                 # #
 
-                chmod +x ".github/scripts/bl-privacy.sh"
-                run_privacy=".github/scripts/bl-privacy.sh ${{ vars.API_02_OUT }}"
-                eval "./$run_privacy"
+                chmod +x ".github/scripts/bl-static.sh"
+                run_static=".github/scripts/bl-static.sh ${{ vars.API_02_OUT }} privacy"
+                eval "./$run_static"
 
                 # #
                 #   move blocklist

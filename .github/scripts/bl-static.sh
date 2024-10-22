@@ -31,15 +31,15 @@ regexURL='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=
 # #
 #   Parameters
 #
-#   arg_file
+#   arg_output
 #       file to save to
 #
-#   arg_bDND
-#       add `#do not delete` to end of each line
+#   arg_static
+#       static file to compile
 # #
 
-arg_file=$1
-arg_bDND=$2
+arg_output=$1
+arg_static=$2
 
 # #
 #    Define > General
@@ -49,12 +49,21 @@ NOW=`date -u`
 lines=0
 
 # #
+#   Validate vars
+# #
+
+if [ -z "${arg_static}" ]; then
+    echo -e "  ⭕  Aborting -- no static file category specified"
+    exit 1
+fi
+
+# #
 #   Output > Header
 # #
 
 echo -e
 echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
-echo -e "  Blocklist - ${arg_file} (Privacy)"
+echo -e "  Blocklist - ${arg_output} (${arg_static})"
 echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
 
 echo -e
@@ -64,12 +73,12 @@ echo -e "  ⭐ Starting"
 #   Create or Clean file
 # #
 
-if [ -f $arg_file ]; then
-    echo -e "  📄 Cleaning ${arg_file}"
-   > ${arg_file}       # clean file
+if [ -f $arg_output ]; then
+    echo -e "  📄 Cleaning ${arg_output}"
+   > ${arg_output}       # clean file
 else
-    echo -e "  📄 Creating ${arg_file}"
-   touch ${arg_file}
+    echo -e "  📄 Creating ${arg_output}"
+   touch ${arg_output}
 fi
 
 # #
@@ -77,13 +86,13 @@ fi
 # #
 
 if [ -d .github/blocks/ ]; then
-	for file in .github/blocks/privacy/*.ipset; do
+	for file in .github/blocks/${arg_static}/*.ipset; do
 		echo -e "  📒 Adding static file ${file}"
     
-		cat ${file} >> ${arg_file}
+		cat ${file} >> ${arg_output}
         count=$(grep -c "^[0-9]" ${file})           # count lines starting with number, print line count
         lines=`expr $lines + $count`                # add line count from each file together
-        echo -e "  👌 Added ${count} lines to ${arg_file}"
+        echo -e "  👌 Added ${count} lines to ${arg_output}"
 	done
 fi
 
@@ -92,10 +101,10 @@ fi
 #       0a  top of file
 # #
 
-ed -s ${arg_file} <<END_ED
+ed -s ${arg_output} <<END_ED
 0a
 # #
-#   🧱 Firewall Blocklist - ${arg_file}
+#   🧱 Firewall Blocklist - ${arg_output}
 #
 #   @url            https://github.com/Aetherinox/csf-firewall
 #   @updated        ${NOW}
@@ -113,8 +122,8 @@ w
 q
 END_ED
 
-echo -e "  ✏️  Modifying template values in ${arg_file}"
-sed -i -e "s/{COUNT_TOTAL}/$lines/g" ${arg_file}          # replace {COUNT_TOTAL} with number of lines
+echo -e "  ✏️  Modifying template values in ${arg_output}"
+sed -i -e "s/{COUNT_TOTAL}/$lines/g" ${arg_output}          # replace {COUNT_TOTAL} with number of lines
 
 echo -e "  🎌 Finished"
 
@@ -124,6 +133,6 @@ echo -e "  🎌 Finished"
 
 echo -e
 echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
-printf "%-25s | %-30s\n" "  #️⃣  ${arg_file}" "${lines}"
+printf "%-25s | %-30s\n" "  #️⃣  ${arg_output}" "${lines}"
 echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
 echo -e
