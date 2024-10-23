@@ -44,8 +44,7 @@ env:
 
 jobs:
     build:
-        runs-on: ubuntu-22.04
-        timeout-minutes: 3
+        runs-on: orion-x64
         steps:
 
             # #
@@ -68,19 +67,24 @@ jobs:
                 fetch-depth: 0
 
             # #
+            #   Generate > Install Packages
+            # #
+
+            - name: "🧱 Install Packages"
+              id: task_build_shell_install
+              run: |
+                  sudo apt-get install -y ipcalc
+
+            # #
             #   Generate > Master
             # #
 
             - name: "🧱 Generate › Master"
               id: task_build_generate_master
               run: |
-                # #
-                #   set permissions and run generator
-                # #
-
-                chmod +x ".github/scripts/bl-download.sh"
-                run_master=".github/scripts/bl-download.sh ${{ vars.API_01_OUT }} false ${{ secrets.API_01_FILE_01 }} ${{ secrets.API_01_FILE_02 }} ${{ secrets.API_01_FILE_03 }}"
-                eval "./$run_master"
+                  # chmod +x ".github/scripts/bl-master.sh"
+                  # run_master=".github/scripts/bl-master.sh ${{ vars.API_01_OUT }} false ${{ secrets.API_01_FILE_01 }} ${{ secrets.API_01_FILE_02 }} ${{ secrets.API_01_FILE_03 }}"
+                  # eval "./$run_master"
 
             # #
             #   Generate > Privacy
@@ -89,37 +93,44 @@ jobs:
             - name: "🧱 Generate › Privacy"
               id: task_build_generate_privacy
               run: |
-                # #
-                #   set permissions and run generator
-                # #
+                  chmod +x ".github/scripts/bl-static.sh"
+                  run_general=".github/scripts/bl-static.sh ${{ vars.API_02_GENERAL_OUT }} privacy"
+                  eval "./$run_general"
 
-                chmod +x ".github/scripts/bl-static.sh"
-                run_general=".github/scripts/bl-static.sh ${{ vars.API_02_GENERAL_OUT }} privacy"
-                eval "./$run_general"
+                  chmod +x ".github/scripts/bl-json.sh"
+                  run_google=".github/scripts/bl-json.sh ${{ vars.API_02_GOOGLE_OUT }} ${{secrets.API_02_GOOGLE_URL}} '.prefixes | .[] |.ipv4Prefix//empty,.ipv6Prefix//empty'"
+                  eval "./$run_google"
 
-                chmod +x ".github/scripts/bl-json.sh"
-                run_google=".github/scripts/bl-json.sh ${{ vars.API_02_GOOGLE_OUT }} ${{secrets.API_02_GOOGLE_URL}} '.prefixes | .[] |.ipv4Prefix//empty,.ipv6Prefix//empty'"
-                eval "./$run_google"
+                  chmod +x ".github/scripts/bl-json.sh"
+                  run_cloudfront=".github/scripts/bl-json.sh ${{ vars.API_02_CLOUDFRONT_OUT }} ${{ secrets.API_02_CLOUDFRONT_URL }} 'map(.[]) | sort | .[]'"
+                  eval "./$run_cloudfront"
 
-                chmod +x ".github/scripts/bl-json.sh"
-                run_cloudfront=".github/scripts/bl-json.sh ${{ vars.API_02_CLOUDFRONT_OUT }} ${{ secrets.API_02_CLOUDFRONT_URL }} 'map(.[]) | sort | .[]'"
-                eval "./$run_cloudfront"
-
-                chmod +x ".github/scripts/bl-json.sh"
-                run_bing=".github/scripts/bl-json.sh ${{ vars.API_02_BING_OUT }} ${{ secrets.API_02_BING_URL }} '.prefixes | .[] |.ipv4Prefix//empty,.ipv6Prefix//empty'"
-                eval "./$run_bing"
+                  chmod +x ".github/scripts/bl-json.sh"
+                  run_bing=".github/scripts/bl-json.sh ${{ vars.API_02_BING_OUT }} ${{ secrets.API_02_BING_URL }} '.prefixes | .[] |.ipv4Prefix//empty,.ipv6Prefix//empty'"
+                  eval "./$run_bing"
                 
-                chmod +x ".github/scripts/bl-json.sh"
-                run_fastly=".github/scripts/bl-json.sh ${{ vars.API_02_FASTLY_OUT }} ${{ secrets.API_02_FASTLY_URL }} 'map(.[]) | .[]'"
-                eval "./$run_fastly"
+                  chmod +x ".github/scripts/bl-json.sh"
+                  run_fastly=".github/scripts/bl-json.sh ${{ vars.API_02_FASTLY_OUT }} ${{ secrets.API_02_FASTLY_URL }} 'map(.[]) | .[]'"
+                  eval "./$run_fastly"
 
-                chmod +x ".github/scripts/bl-json.sh"
-                run_amz_aws=".github/scripts/bl-json.sh ${{ vars.API_02_AMAZON_AWS_OUT }} ${{ secrets.API_02_AMAZON_URL }} '.prefixes[] | select(.service==\"AMAZON\") | .ip_prefix'"
-                eval "./$run_amz_aws"
+                  chmod +x ".github/scripts/bl-json.sh"
+                  run_amz_aws=".github/scripts/bl-json.sh ${{ vars.API_02_AMAZON_AWS_OUT }} ${{ secrets.API_02_AMAZON_URL }} '.prefixes[] | select(.service==\"AMAZON\") | .ip_prefix'"
+                  eval "./$run_amz_aws"
 
-                chmod +x ".github/scripts/bl-json.sh"
-                run_amz_ec2=".github/scripts/bl-json.sh ${{ vars.API_02_AMAZON_EC2_OUT }} ${{ secrets.API_02_AMAZON_URL }} '.prefixes[] | select(.service==\"EC2\") | .ip_prefix'"
-                eval "./$run_amz_ec2"
+                  chmod +x ".github/scripts/bl-json.sh"
+                  run_amz_ec2=".github/scripts/bl-json.sh ${{ vars.API_02_AMAZON_EC2_OUT }} ${{ secrets.API_02_AMAZON_URL }} '.prefixes[] | select(.service==\"EC2\") | .ip_prefix'"
+                  eval "./$run_amz_ec2"
+
+            # #
+            #   Generate > Spam
+            # #
+
+            - name: "🧱 Generate › Spam"
+              id: task_build_generate_spam
+              run: |
+                  chmod +x ".github/scripts/bl-download.sh"
+                  run_spamhaus=".github/scripts/bl-download.sh ${{ vars.API_03_SPAM_SPAMHAUS_OUT }} false ${{ secrets.API_03_SPAM_SPAMHAUS_URL }}"
+                  eval "./$run_spamhaus"
 
             # #
             #   Generate > Precommit
@@ -128,11 +139,11 @@ jobs:
             - name: "📦 Pre-commit"
               id: task_build_precommit
               run: |
-                now=$(date '+%m/%d/%Y %H:%M')
-                commit_label="Sync" >> $GITHUB_ENV
-                commit_message="\`️️⚡️ $commit_label ⚡️\` \`$now\`" >> $GITHUB_ENV
-                echo "COMMIT_MESSAGE=$(echo $commit_message)" >> $GITHUB_ENV
-                echo "NOW=$(echo $now)" >> $GITHUB_ENV
+                  now=$(date '+%m/%d/%Y %H:%M')
+                  commit_label="Sync" >> $GITHUB_ENV
+                  commit_message="\`️️⚡️ $commit_label ⚡️\` \`$now\`" >> $GITHUB_ENV
+                  echo "COMMIT_MESSAGE=$(echo $commit_message)" >> $GITHUB_ENV
+                  echo "NOW=$(echo $now)" >> $GITHUB_ENV
 
             # #
             #   Generate > Commit
@@ -142,4 +153,4 @@ jobs:
               id: task_build_commit
               uses: stefanzweifel/git-auto-commit-action@v5
               with:
-                commit_message: ${{ env.COMMIT_MESSAGE }}
+                  commit_message: ${{ env.COMMIT_MESSAGE }}

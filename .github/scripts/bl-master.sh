@@ -4,13 +4,16 @@
 #   @for                https://github.com/Aetherinox/csf-firewall
 #   @assoc              blocklist-generate.yml
 #   @type               bash script
-#   @summary            Uses a URL to fetch a plaintext file from the internet.
-#                       It then reads each line, counts how many IP addresses and subnets it contains, and removes 
-#                       any comments the original file had, including text that starts with the characters `;` and `#`.
+#   @summary            Uses a URL to download various files from online websites.
+#                       At the end, it also fetches any file inside `github/blocks/bruteforce/*` and adds those IPs to the end of the file.
 #                       Supports multiple URLs as arguments.
+#   
 #                       📁 .github
+#                           📁 blocks
+#                               📁 bruteforce
+#                                   📄 *.txt
 #                           📁 scripts
-#                               📄 bl-download.sh
+#                               📄 bl-master.sh
 #                           📁 workflows
 #                               📄 blocklist-generate.yml
 #
@@ -18,16 +21,16 @@
 #       - .github/workflows/blocklist-generate.yml
 #
 #   within github workflow, run:
-#       chmod +x ".github/scripts/bl-download.sh"
-#       run_master=".github/scripts/bl-download.sh ${{ vars.API_01_OUT }} false ${{ secrets.API_01_FILE_01 }} ${{ secrets.API_01_FILE_02 }} ${{ secrets.API_01_FILE_03 }}"
+#       chmod +x ".github/scripts/bl-master.sh"
+#       run_master=".github/scripts/bl-master.sh ${{ vars.API_01_OUT }} false ${{ secrets.API_01_FILE_01 }} ${{ secrets.API_01_FILE_02 }} ${{ secrets.API_01_FILE_03 }}"
 #       eval "./$run_master"
 #
 #   downloads a list of .txt / .ipset IP addresses in single file.
 #   generates a header to place at the top.
 #   
-#   @uage               bl-download.sh <ARG_SAVEFILE> <ARG_BOOL_DND:false|true> [ <URL_BL_1>, <URL_BL_1> {...} ]
-#                       bl-download.sh 01_master.ipset false API_URL_1 
-#                       bl-download.sh 01_master.ipset true API_URL_1 API_URL_2 API_URL_3
+#   @uage               bl-master.sh <ARG_SAVEFILE> <ARG_BOOL_DND:false|true> [ <URL_BL_1>, <URL_BL_1> {...} ]
+#                       bl-master.sh 01_master.ipset false API_URL_1 
+#                       bl-master.sh 01_master.ipset true API_URL_1 API_URL_2 API_URL_3
 # #
 
 # #
@@ -42,6 +45,10 @@
 
 ARG_SAVEFILE=$1
 ARG_BOOL_DND=$2
+
+# #
+#   Validation checks
+# #
 
 if [[ -z "${ARG_SAVEFILE}" ]]; then
     echo -e "  ⭕ No output file specified for downloader script"
@@ -208,12 +215,76 @@ for arg in "${@:3}"; do
 done
 
 # #
-#   Format Counts
+#   Add Static Files
 # #
 
-COUNT_LINES=$(printf "%'d" "$COUNT_LINES")                                      # GLOBAL add commas to thousands
-COUNT_TOTAL_IP=$(printf "%'d" "$COUNT_TOTAL_IP")                                # GLOBAL add commas to thousands
-COUNT_TOTAL_SUBNET=$(printf "%'d" "$COUNT_TOTAL_SUBNET")                        # GLOBAL add commas to thousands
+if [ -d .github/blocks/ ]; then
+	for tempFile in .github/blocks/bruteforce/*.ipset; do
+		echo -e "  📒 Adding static file ${tempFile}"
+
+        # #
+        #   calculate how many IPs are in a subnet
+        #   if you want to calculate the USABLE IP addresses, subtract -2 from any subnet not ending with 31 or 32.
+        #   
+        #   for our purpose, we want to block them all in the event that the network has reconfigured their network / broadcast IPs,
+        #   so we will count every IP in the block.
+        # #
+
+        BLOCKS_COUNT_TOTAL_IP=0
+        BLOCKS_COUNT_TOTAL_SUBNET=0
+
+        for line in $(cat ${tempFile}); do
+            if [ "$line" != "${line#*:[0-9a-fA-F]}" ]; then
+                COUNT_TOTAL_SUBNET=`expr $COUNT_TOTAL_SUBNET + 1`                   # GLOBAL count subnet
+                BLOCKS_COUNT_TOTAL_SUBNET=`expr $BLOCKS_COUNT_TOTAL_SUBNET + 1`     # LOCAL count subnet
+
+            # is subnet
+            elif [[ $line =~ /[0-9]{1,2}$ ]]; then
+                ips=$(( 1 << (32 - ${line#*/}) ))
+
+                regexIsNum='^[0-9]+$'
+                if [[ $ips =~ $regexIsNum ]]; then
+                    CIDR=$(echo $line | sed 's:.*/::')
+
+                    # subtract - 2 from any cidr not ending with 31 or 32
+                    # if [[ $CIDR != "31" ]] && [[ $CIDR != "32" ]]; then
+                        # BLOCKS_COUNT_TOTAL_IP=`expr $BLOCKS_COUNT_TOTAL_IP - 2`
+                        # COUNT_TOTAL_IP=`expr $COUNT_TOTAL_IP - 2`
+                    # fi
+
+                    BLOCKS_COUNT_TOTAL_IP=`expr $BLOCKS_COUNT_TOTAL_IP + $ips`          # LOCAL count IPs in subnet
+                    BLOCKS_COUNT_TOTAL_SUBNET=`expr $BLOCKS_COUNT_TOTAL_SUBNET + 1`     # LOCAL count subnet
+
+                    COUNT_TOTAL_IP=`expr $COUNT_TOTAL_IP + $ips`                        # GLOBAL count IPs in subnet
+                    COUNT_TOTAL_SUBNET=`expr $COUNT_TOTAL_SUBNET + 1`                   # GLOBAL count subnet
+                fi
+
+            # is normal IP
+            elif [[ $line =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+                BLOCKS_COUNT_TOTAL_IP=`expr $BLOCKS_COUNT_TOTAL_IP + 1`
+                COUNT_TOTAL_IP=`expr $COUNT_TOTAL_IP + 1`
+            fi
+        done
+
+        # #
+        #   Count lines and subnets
+        # #
+
+        COUNT_LINES=$(wc -l < ${tempFile})                                              # GLOBAL count ip lines
+        COUNT_LINES=$(printf "%'d" "$COUNT_LINES")                                      # GLOBAL add commas to thousands
+        COUNT_TOTAL_IP=$(printf "%'d" "$COUNT_TOTAL_IP")                                # GLOBAL add commas to thousands
+        COUNT_TOTAL_SUBNET=$(printf "%'d" "$COUNT_TOTAL_SUBNET")                        # GLOBAL add commas to thousands
+
+        BLOCKS_COUNT_TOTAL_IP=$(printf "%'d" "$BLOCKS_COUNT_TOTAL_IP")                  # LOCAL add commas to thousands
+        BLOCKS_COUNT_TOTAL_SUBNET=$(printf "%'d" "$BLOCKS_COUNT_TOTAL_SUBNET")          # LOCAL add commas to thousands
+
+        echo -e "  🚛 Move ${tempFile} to ${ARG_SAVEFILE}"
+        cat ${tempFile} >> ${ARG_SAVEFILE}                                              # copy .tmp contents to real file
+
+        echo -e "  ➕ Added ${BLOCKS_COUNT_TOTAL_IP} IPs and ${BLOCKS_COUNT_TOTAL_SUBNET} Subnets to ${tempFile}"
+        echo -e
+	done
+fi
 
 # #
 #   ed
