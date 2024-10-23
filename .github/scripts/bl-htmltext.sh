@@ -4,11 +4,15 @@
 #   @for                https://github.com/Aetherinox/csf-firewall
 #   @assoc              blocklist-generate.yml
 #   @type               bash script
-#   @summary            uses a URL to fetch JSON from a website, then formats that JSON so that there is one IP per line.
+#   @summary            fetches a website using curl, converts all of the html over to plain text, and then grep can be used to extract
+#                       data
 #   
 #                       📁 .github
+#                           📁 blocks
+#                               📁 bruteforce
+#                                   📄 *.txt
 #                           📁 scripts
-#                               📄 bl-json.sh
+#                               📄 bl-htmltext.sh
 #                           📁 workflows
 #                               📄 blocklist-generate.yml
 #
@@ -16,14 +20,18 @@
 #       - .github/workflows/blocklist-generate.yml
 #
 #   within github workflow, run:
-#       chmod +x ".github/scripts/bl-json.sh"
-#       run_google=".github/scripts/bl-json.sh ${{ vars.API_02_GOOGLE_OUT }} ${{secrets.API_02_GOOGLE_URL}} '.prefixes | .[] |.ipv4Prefix//empty,.ipv6Prefix//empty'"
-#       eval "./$run_google"
+#       chmod +x ".github/scripts/bl-static.sh"
+#       run_general=".github/scripts/bl-static.sh ${{ vars.API_02_GENERAL_OUT }} privacy"
+#       eval "./$run_general"
 #
-#   allows you to specify a .json file, and the query to use for data extraction.
+#   fetches entries from a local static file. these files are located within the repo directory
+#       - .github/blocks/${ARG_BLOCKS_CAT}/*.ipset
 #
-#   @uage               bl-json.sh <ARG_SAVEFILE> <ARG_JSON_URL> <ARG_JSON_QRY>
-#                       bl-json.sh 02_privacy_google.ipset https://api.domain.lan/googlebot.json '.prefixes | .[] |.ipv4Prefix//empty,.ipv6Prefix//empty'
+#   IP addresses in static file are cleaned up to remove comments, and then saved to a new file
+#   within the public blocklists folder within the repository.
+#
+#   @uage               bl-static.sh <ARG_SAVEFILE> <ARG_BLOCKS_CAT>
+#                       bl-static.sh 02_privacy_general.ipset privacy
 # #
 
 # #
@@ -32,13 +40,12 @@
 #   This bash script has the following arguments:
 #
 #       ARG_SAVEFILE        (str)       file to save IP addresses into
-#       ARG_JSON_URL        (str)       direct url to json file to download
-#       ARG_JSON_QRY        (str)       jq rules which pull the needed ip addresses
+#       ARG_BLOCKS_CAT      (str)       which blocks folder to inject static IP addresses from
 # #
 
 ARG_SAVEFILE=$1
-ARG_JSON_URL=$2
-ARG_JSON_QRY=$3
+ARG_URL=$2
+ARG_GREP=$3
 
 # #
 #   Validation checks
@@ -50,15 +57,13 @@ if [[ -z "${ARG_SAVEFILE}" ]]; then
     exit 1
 fi
 
-if [[ -z "${ARG_JSON_URL}" ]] || [[ ! $ARG_JSON_URL =~ $regexURL ]]; then
-    echo -e "  ⭕ Invalid URL specified for ${ARG_SAVEFILE}"
-    echo -e
+if [[ -z "${ARG_URL}" ]]; then
+    echo -e "  ⭕  Aborting -- no url specified"
     exit 1
 fi
 
-if [[ -z "${ARG_JSON_QRY}" ]]; then
-    echo -e "  ⭕ No valid jq query specified for ${ARG_SAVEFILE}"
-    echo -e
+if [[ -z "${ARG_GREP}" ]]; then
+    echo -e "  ⭕  Aborting -- no grep query specified"
     exit 1
 fi
 
@@ -69,10 +74,10 @@ fi
 FOLDER_SAVETO="blocklists"
 SECONDS=0
 NOW=`date -u`
-COUNT_LINES=0                   # number of lines in doc
-COUNT_TOTAL_SUBNET=0            # number of IPs in all subnets combined
-COUNT_TOTAL_IP=0                # number of single IPs (counts each line)
-ID="${ARG_SAVEFILE//[^[:alnum:]]/_}"
+COUNT_LINES=0                           # number of lines in doc
+COUNT_TOTAL_SUBNET=0                    # number of IPs in all subnets combined
+COUNT_TOTAL_IP=0                        # number of single IPs (counts each line)
+ID="${ARG_SAVEFILE//[^[:alnum:]]/_}"    # ipset id, /description/* and /category/* files must match this value
 DESCRIPTION=$(curl -sS "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/.github/descriptions/${ID}.txt")
 CATEGORY=$(curl -sS "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/.github/categories/${ID}.txt")
 regexURL='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]\.[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$'
@@ -132,7 +137,7 @@ echo -e "  🌎 Downloading IP blacklist to ${ARG_SAVEFILE}"
 # #
 
 tempFile="${ARG_SAVEFILE}.tmp"
-jsonOutput=$(curl -Ss ${ARG_JSON_URL} | jq -r "${ARG_JSON_QRY}" | sort -n | awk '{if (++dup[$0] == 1) print $0;}' > ${tempFile})
+jsonOutput=$(curl -Ss ${ARG_URL} | html2text | grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' | sort -n | awk '{if (++dup[$0] == 1) print $0;}' > ${tempFile})
 sed -i '/[#;]/{s/#.*//;s/;.*//;/^$/d}' ${tempFile}                              # remove # and ; comments
 sed -i 's/\-.*//' ${tempFile}                                                   # remove hyphens for ip ranges
 sed -i 's/[[:blank:]]*$//' ${tempFile}                                          # remove space / tab from EOL

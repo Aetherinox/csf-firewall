@@ -75,6 +75,7 @@ jobs:
               run: |
                   sudo apt-get install -y ipcalc
                   sudo apt-get install -y ed
+                  sudo apt-get install -y html2text
 
             # #
             #   Generate > Master
