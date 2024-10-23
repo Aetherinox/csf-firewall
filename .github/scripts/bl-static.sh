@@ -67,10 +67,10 @@ fi
 FOLDER_SAVETO="blocklists"
 SECONDS=0
 NOW=`date -u`
-COUNT_LINES=0                   # number of lines in doc
-COUNT_TOTAL_SUBNET=0            # number of IPs in all subnets combined
-COUNT_TOTAL_IP=0                # number of single IPs (counts each line)
-ID="${ARG_SAVEFILE//[^[:alnum:]]/_}"
+COUNT_LINES=0                           # number of lines in doc
+COUNT_TOTAL_SUBNET=0                    # number of IPs in all subnets combined
+COUNT_TOTAL_IP=0                        # number of single IPs (counts each line)
+ID="${ARG_SAVEFILE//[^[:alnum:]]/_}"    # ipset id, /description/* and /category/* files must match this value
 DESCRIPTION=$(curl -sS "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/.github/descriptions/${ID}.txt")
 CATEGORY=$(curl -sS "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/.github/categories/${ID}.txt")
 regexURL='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]\.[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$'
@@ -124,7 +124,7 @@ fi
 # #
 
 if [ -d .github/blocks/ ]; then
-	for tempFile in .github/blocks/bruteforce/*.ipset; do
+	for tempFile in .github/blocks/${ARG_BLOCKS_CAT}/*.ipset; do
 		echo -e "  📒 Adding static file ${tempFile}"
 
         # #
@@ -142,8 +142,8 @@ if [ -d .github/blocks/ ]; then
 
             # is ipv6
             if [ "$line" != "${line#*:[0-9a-fA-F]}" ]; then
-                COUNT_TOTAL_IP=`expr $COUNT_TOTAL_IP + 1`                           # GLOBAL count subnet
-                BLOCKS_COUNT_TOTAL_IP=`expr $BLOCKS_COUNT_TOTAL_IP + 1`             # LOCAL count subnet
+                COUNT_TOTAL_IP=`expr $COUNT_TOTAL_IP + 1`                               # GLOBAL count subnet
+                BLOCKS_COUNT_TOTAL_IP=`expr $BLOCKS_COUNT_TOTAL_IP + 1`                 # LOCAL count subnet
 
             # is subnet
             elif [[ $line =~ /[0-9]{1,2}$ ]]; then

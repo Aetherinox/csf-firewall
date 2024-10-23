@@ -135,14 +135,14 @@ download_list()
 
     echo -e "  🌎 Downloading IP blacklist to ${tempFile}"
 
-    curl ${fnUrl} -o ${tempFile} >/dev/null 2>&1                # download file
-    sed -i 's/\-.*//' ${tempFile}                               # remove hyphens for ip ranges
-    sed -i '/[#;]/{s/#.*//;s/;.*//;/^$/d}' ${tempFile}          # remove # and ; comments
-    sed -i 's/[[:blank:]]*$//' ${tempFile}                      # remove space / tab from EOL
+    curl ${fnUrl} -o ${tempFile} >/dev/null 2>&1                        # download file
+    sed -i 's/\-.*//' ${tempFile}                                       # remove hyphens for ip ranges
+    sed -i '/[#;]/{s/#.*//;s/;.*//;/^$/d}' ${tempFile}                  # remove # and ; comments
+    sed -i 's/[[:blank:]]*$//' ${tempFile}                              # remove space / tab from EOL
 
     if [ "$ARG_BOOL_DND" = true ] ; then
         echo -e "  ⭕ Enabled \`# do not delete\`"
-        sed -i 's/$/\t\t\t\#\ do\ not\ delete/' ${tempFile}     # add csf `# do not delete` to end of each line
+        sed -i 's/$/\t\t\t\#\ do\ not\ delete/' ${tempFile}             # add csf `# do not delete` to end of each line
     fi
 
     # #
@@ -156,8 +156,8 @@ download_list()
     for line in $(cat ${tempFile}); do
         # is ipv6
         if [ "$line" != "${line#*:[0-9a-fA-F]}" ]; then
-            COUNT_TOTAL_IP=`expr $COUNT_TOTAL_IP + 1`               # GLOBAL count subnet
-            DL_COUNT_TOTAL_IP=`expr $DL_COUNT_TOTAL_IP + 1`         # LOCAL count subnet
+            COUNT_TOTAL_IP=`expr $COUNT_TOTAL_IP + 1`                   # GLOBAL count subnet
+            DL_COUNT_TOTAL_IP=`expr $DL_COUNT_TOTAL_IP + 1`             # LOCAL count subnet
 
         # is subnet
         elif [[ $line =~ /[0-9]{1,2}$ ]]; then
@@ -191,14 +191,14 @@ download_list()
     #   Count lines and subnets
     # #
 
-    COUNT_LINES=$(wc -l < ${tempFile})                              # count ip lines
+    COUNT_LINES=$(wc -l < ${tempFile})                                  # count ip lines
 
-    DL_COUNT_TOTAL_IP=$(printf "%'d" "$DL_COUNT_TOTAL_IP")          # LOCAL add commas to thousands
-    DL_COUNT_TOTAL_SUBNET=$(printf "%'d" "$DL_COUNT_TOTAL_SUBNET")  # LOCAL add commas to thousands
+    DL_COUNT_TOTAL_IP=$(printf "%'d" "$DL_COUNT_TOTAL_IP")              # LOCAL add commas to thousands
+    DL_COUNT_TOTAL_SUBNET=$(printf "%'d" "$DL_COUNT_TOTAL_SUBNET")      # LOCAL add commas to thousands
 
     echo -e "  🚛 Move ${tempFile} to ${fnFile}"
-    cat ${tempFile} >> ${fnFile}                                    # copy .tmp contents to real file
-    rm ${tempFile}                                                  # delete temp file
+    cat ${tempFile} >> ${fnFile}                                        # copy .tmp contents to real file
+    rm ${tempFile}                                                      # delete temp file
 
     echo -e "  ➕ Added ${DL_COUNT_TOTAL_IP} IPs and ${DL_COUNT_TOTAL_SUBNET} subnets to ${fnFile}"
 }
@@ -235,8 +235,8 @@ if [ -d .github/blocks/ ]; then
 
         for line in $(cat ${tempFile}); do
             if [ "$line" != "${line#*:[0-9a-fA-F]}" ]; then
-                COUNT_TOTAL_SUBNET=`expr $COUNT_TOTAL_SUBNET + 1`                   # GLOBAL count subnet
-                BLOCKS_COUNT_TOTAL_SUBNET=`expr $BLOCKS_COUNT_TOTAL_SUBNET + 1`     # LOCAL count subnet
+                COUNT_TOTAL_SUBNET=`expr $COUNT_TOTAL_SUBNET + 1`                       # GLOBAL count subnet
+                BLOCKS_COUNT_TOTAL_SUBNET=`expr $BLOCKS_COUNT_TOTAL_SUBNET + 1`         # LOCAL count subnet
 
             # is subnet
             elif [[ $line =~ /[0-9]{1,2}$ ]]; then

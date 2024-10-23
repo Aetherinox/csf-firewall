@@ -44,7 +44,7 @@ env:
 
 jobs:
     build:
-        runs-on: orion-x64
+        runs-on: apollo-x64
         steps:
 
             # #
@@ -74,6 +74,7 @@ jobs:
               id: task_build_shell_install
               run: |
                   sudo apt-get install -y ipcalc
+                  sudo apt-get install -y ed
 
             # #
             #   Generate > Master
@@ -82,9 +83,9 @@ jobs:
             - name: "🧱 Generate › Master"
               id: task_build_generate_master
               run: |
-                  # chmod +x ".github/scripts/bl-master.sh"
-                  # run_master=".github/scripts/bl-master.sh ${{ vars.API_01_OUT }} false ${{ secrets.API_01_FILE_01 }} ${{ secrets.API_01_FILE_02 }} ${{ secrets.API_01_FILE_03 }}"
-                  # eval "./$run_master"
+                  chmod +x ".github/scripts/bl-master.sh"
+                  run_master=".github/scripts/bl-master.sh ${{ vars.API_01_OUT }} false ${{ secrets.API_01_FILE_01 }} ${{ secrets.API_01_FILE_02 }} ${{ secrets.API_01_FILE_03 }}"
+                  eval "./$run_master"
 
             # #
             #   Generate > Privacy

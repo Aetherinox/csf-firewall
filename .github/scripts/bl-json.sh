@@ -133,9 +133,9 @@ echo -e "  🌎 Downloading IP blacklist to ${ARG_SAVEFILE}"
 
 tempFile="${ARG_SAVEFILE}.tmp"
 jsonOutput=$(curl -Ss ${ARG_JSON_URL} | jq -r "${ARG_JSON_QRY}" | sort > ${tempFile})
-sed -i '/[#;]/{s/#.*//;s/;.*//;/^$/d}' ${tempFile}          # remove # and ; comments
-sed -i 's/\-.*//' ${tempFile}                               # remove hyphens for ip ranges
-sed -i 's/[[:blank:]]*$//' ${tempFile}                      # remove space / tab from EOL
+sed -i '/[#;]/{s/#.*//;s/;.*//;/^$/d}' ${tempFile}                              # remove # and ; comments
+sed -i 's/\-.*//' ${tempFile}                                                   # remove hyphens for ip ranges
+sed -i 's/[[:blank:]]*$//' ${tempFile}                                          # remove space / tab from EOL
 
 # #
 #   calculate how many IPs are in a subnet
@@ -152,8 +152,8 @@ for line in $(cat ${tempFile}); do
 
     # is ipv6
     if [ "$line" != "${line#*:[0-9a-fA-F]}" ]; then
-        COUNT_TOTAL_IP=`expr $COUNT_TOTAL_IP + 1`                           # GLOBAL count subnet
-        BLOCKS_COUNT_TOTAL_IP=`expr $BLOCKS_COUNT_TOTAL_IP + 1`             # LOCAL count subnet
+        COUNT_TOTAL_IP=`expr $COUNT_TOTAL_IP + 1`                               # GLOBAL count subnet
+        BLOCKS_COUNT_TOTAL_IP=`expr $BLOCKS_COUNT_TOTAL_IP + 1`                 # LOCAL count subnet
 
     # is subnet
     elif [[ $line =~ /[0-9]{1,2}$ ]]; then
