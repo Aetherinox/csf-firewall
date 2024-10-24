@@ -124,10 +124,11 @@ download_list()
 
     echo -e "  🌎 Downloading IP blacklist to ${tempFile}"
 
-    curl ${fnUrl} -o ${tempFile} >/dev/null 2>&1                        # download file
-    sed -i 's/\-.*//' ${tempFile}                                       # remove hyphens for ip ranges
-    sed -i '/[#;]/{s/#.*//;s/;.*//;/^$/d}' ${tempFile}                  # remove # and ; comments
-    sed -i 's/[[:blank:]]*$//' ${tempFile}                              # remove space / tab from EOL
+    curl ${fnUrl} -o ${tempFile} >/dev/null 2>&1                            # download file
+    sed -i 's/\-.*//' ${tempFile}                                           # remove hyphens for ip ranges
+    sed -i '/[#;]/{s/#.*//;s/;.*//;/^$/d}' ${tempFile}                      # remove # and ; comments
+    sed -i 's/[[:blank:]]*$//' ${tempFile}                                  # remove space / tab from EOL
+    sed -i '/^\s*$/d' ${tempFile}                                           # remove empty lines
 
     if [ "$ARG_BOOL_DND" = true ] ; then
         echo -e "  ⭕ Enabled \`# do not delete\`"
