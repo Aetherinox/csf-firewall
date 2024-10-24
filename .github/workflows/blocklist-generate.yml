@@ -37,7 +37,8 @@ on:
     workflow_dispatch:
 
     schedule:
-        - cron: '0 */6 * * *'
+        - cron: '0 0,6,12,18 * * *'
+        - cron: '0 2 * * *'
 
 # #
 #   environment variables
@@ -212,6 +213,20 @@ jobs:
                   chmod +x ".github/scripts/bl-download.sh"
                   run_spamhaus=".github/scripts/bl-download.sh ${{ vars.API_03_SPAM_SPAMHAUS_OUT }} false ${{ secrets.API_03_SPAM_SPAMHAUS_URL }}"
                   eval "./$run_spamhaus"
+
+            # #
+            #   Generate > Spam > Forums
+            #
+            #   only updated once per day (at 1am UTC)
+            # #
+
+            - name: "🧱 Generate › Spam › Forums (1/day)"
+              id: task_blocklist_spam_generate_forums
+              if: github.event_name == 'schedule' && github.event.schedule == '0 2 * * *'
+              run: |
+                  chmod +x ".github/scripts/bl-download.sh"
+                  run_forums=".github/scripts/bl-download.sh ${{ vars.API_03_SPAM_FORUMS_OUT }} false ${{ secrets.API_03_SPAM_FORUMS_URL }}"
+                  eval "./$run_forums"
 
     # #
     #   Job > Commit
