@@ -4,8 +4,10 @@
 #   
 #   used in combination with .github/scripts/bl-download.sh
 #
-#   download AbuseIPDB ip list after list of ips are downloaded, merges them with a static list
-#   that is not updated as often which contains a list of long-term abusive ip addresses
+#   populates all ipsets hosted within the repository, including:
+#       - master list
+#       - spam
+#       - privacy
 #   
 #   local test requires the same structure as the github workflow
 #       📁 .github
@@ -241,7 +243,7 @@ jobs:
               run: |
                   now=$(date '+%m/%d/%Y %H:%M')
                   commit_label="Sync" >> $GITHUB_ENV
-                  commit_message="\`️️⚡️ $commit_label ⚡️\` \`$now\`" >> $GITHUB_ENV
+                  commit_message="\`️️🔒 $commit_label 🔒\` \`$now\`" >> $GITHUB_ENV
                   echo "COMMIT_MESSAGE=$(echo $commit_message)" >> $GITHUB_ENV
                   echo "NOW=$(echo $now)" >> $GITHUB_ENV
 
