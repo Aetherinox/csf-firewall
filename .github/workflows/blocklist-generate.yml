@@ -10,9 +10,16 @@
 #   local test requires the same structure as the github workflow
 #       📁 .github
 #           📁 blocks
-#               📄 1.txt
+#               📁 bruteforce
+#                   📄 01.ipset
+#               📁 privacy
+#                   📄 01.ipset
 #           📁 scripts
 #               📄 bl-download.sh
+#               📄 bl-htmltext.sh
+#               📄 bl-json.sh
+#               📄 bl-master.sh
+#               📄 bl-static.sh
 #           📁 workflows
 #               📄 blocklist-generate.yml
 # #
@@ -43,16 +50,19 @@ env:
 # #
 
 jobs:
-    build:
+
+    # #
+    #   Job > Setup
+    # #
+
+    blocklist-setup:
+        name: >-
+          📦 Setup
         runs-on: apollo-x64
         steps:
 
-            # #
-            #   Job > Start
-            # #
-
             - name: "✅ Start"
-              id: task_build_start
+              id: task_setup_start
               run: |
                 echo "Starting blocklist build script"
 
@@ -61,7 +71,7 @@ jobs:
             # #
 
             - name: "☑️ Checkout"
-              id: task_build_checkout
+              id: task_setup_checkout
               uses: actions/checkout@v4
               with:
                 fetch-depth: 0
@@ -71,79 +81,79 @@ jobs:
             # #
 
             - name: "🧱 Install Packages"
-              id: task_build_shell_install
+              id: task_setup_install
               run: |
                   sudo apt-get install -y ipcalc
                   sudo apt-get install -y ed
                   sudo apt-get install -y html2text
 
-            # #
-            #   Generate > Master
-            # #
+    # #
+    #   Job > Blocklist > Master
+    # #
 
-            - name: "🧱 Generate › Master"
-              id: task_build_generate_master
-              run: |
-                  chmod +x ".github/scripts/bl-master.sh"
-                  run_master=".github/scripts/bl-master.sh ${{ vars.API_01_OUT }} false ${{ secrets.API_01_FILE_01 }} ${{ secrets.API_01_FILE_02 }} ${{ secrets.API_01_FILE_03 }} ${{ secrets.API_01_FILE_04 }} ${{ secrets.API_01_FILE_05 }} ${{ secrets.API_01_FILE_06 }} ${{ secrets.API_01_FILE_07 }} ${{ secrets.API_01_FILE_08 }}"
-                  eval "./$run_master"
-
-                  chmod +x ".github/scripts/bl-htmltext.sh"
-                  run_highrisk=".github/scripts/bl-htmltext.sh ${{ vars.API_01_HIGHRISK_OUT }} ${{ secrets.API_01_HIGHRISK_URL }} '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}'"
-                  eval "./$run_highrisk"
+    blocklist-generate-master:
+        name: >-
+          📋 Generate › Master
+        runs-on: apollo-x64
+        steps:
 
             # #
-            #   Generate > Privacy
+            #   Generate > Checkout
             # #
 
-            - name: "🧱 Generate › Privacy"
-              id: task_build_generate_privacy
-              run: |
-                  chmod +x ".github/scripts/bl-static.sh"
-                  run_general=".github/scripts/bl-static.sh ${{ vars.API_02_GENERAL_OUT }} privacy"
-                  eval "./$run_general"
+            - name: "☑️ Checkout"
+              id: task_blocklist_master_checkout
+              uses: actions/checkout@v4
+              with:
+                fetch-depth: 0
 
-                  chmod +x ".github/scripts/bl-json.sh"
-                  run_google=".github/scripts/bl-json.sh ${{ vars.API_02_GOOGLE_OUT }} ${{secrets.API_02_GOOGLE_URL}} '.prefixes | .[] |.ipv4Prefix//empty,.ipv6Prefix//empty'"
-                  eval "./$run_google"
+    # #
+    #   Job > Blocklist > Spam
+    # #
 
-                  chmod +x ".github/scripts/bl-json.sh"
-                  run_cloudfront=".github/scripts/bl-json.sh ${{ vars.API_02_CLOUDFRONT_OUT }} ${{ secrets.API_02_CLOUDFRONT_URL }} 'map(.[]) | sort | .[]'"
-                  eval "./$run_cloudfront"
+    blocklist-generate-spam:
+      name: >-
+        📋 Generate › Spam
+      runs-on: apollo-x64
+      steps:
 
-                  chmod +x ".github/scripts/bl-json.sh"
-                  run_bing=".github/scripts/bl-json.sh ${{ vars.API_02_BING_OUT }} ${{ secrets.API_02_BING_URL }} '.prefixes | .[] |.ipv4Prefix//empty,.ipv6Prefix//empty'"
-                  eval "./$run_bing"
-                
-                  chmod +x ".github/scripts/bl-json.sh"
-                  run_fastly=".github/scripts/bl-json.sh ${{ vars.API_02_FASTLY_OUT }} ${{ secrets.API_02_FASTLY_URL }} 'map(.[]) | .[]'"
-                  eval "./$run_fastly"
+            # #
+            #   Generate > Checkout
+            # #
 
-                  chmod +x ".github/scripts/bl-json.sh"
-                  run_amz_aws=".github/scripts/bl-json.sh ${{ vars.API_02_AMAZON_AWS_OUT }} ${{ secrets.API_02_AMAZON_URL }} '.prefixes[] | select(.service==\"AMAZON\") | .ip_prefix'"
-                  eval "./$run_amz_aws"
-
-                  chmod +x ".github/scripts/bl-json.sh"
-                  run_amz_ec2=".github/scripts/bl-json.sh ${{ vars.API_02_AMAZON_EC2_OUT }} ${{ secrets.API_02_AMAZON_URL }} '.prefixes[] | select(.service==\"EC2\") | .ip_prefix'"
-                  eval "./$run_amz_ec2"
+            - name: "☑️ Checkout"
+              id: task_blocklist_spam_checkout
+              uses: actions/checkout@v4
+              with:
+                fetch-depth: 0
 
             # #
             #   Generate > Spam
             # #
 
             - name: "🧱 Generate › Spam"
-              id: task_build_generate_spam
+              id: task_blocklist_spam_generate
               run: |
                   chmod +x ".github/scripts/bl-download.sh"
                   run_spamhaus=".github/scripts/bl-download.sh ${{ vars.API_03_SPAM_SPAMHAUS_OUT }} false ${{ secrets.API_03_SPAM_SPAMHAUS_URL }}"
                   eval "./$run_spamhaus"
 
+    # #
+    #   Job > Commit
+    # #
+
+    blocklist-commit:
+      name: >-
+        📋 Commit
+      runs-on: apollo-x64
+      steps:
+
             # #
-            #   Generate > Precommit
+            #   Commit > Precommit
             # #
 
             - name: "📦 Pre-commit"
-              id: task_build_precommit
+              id: task_commit_pre
               run: |
                   now=$(date '+%m/%d/%Y %H:%M')
                   commit_label="Sync" >> $GITHUB_ENV
@@ -152,11 +162,32 @@ jobs:
                   echo "NOW=$(echo $now)" >> $GITHUB_ENV
 
             # #
-            #   Generate > Commit
+            #   GPG
+            # #
+
+            - name: "📦 GPG Key"
+              id: task_commit_gpg
+              uses: crazy-max/ghaction-import-gpg@v6
+              with:
+                  gpg_private_key: ${{ secrets.ADMINSERV_GPG_KEY_ASC }}
+                  passphrase: ${{ secrets.ADMINSERV_GPG_PASSPHRASE }}
+                  git_user_signingkey: true
+                  git_commit_gpgsign: true
+
+            # #
+            #   Commit > Commit
             # #
 
             - name: "📦 Commit"
-              id: task_build_commit
+              id: task_commit_execute
               uses: stefanzweifel/git-auto-commit-action@v5
               with:
                   commit_message: ${{ env.COMMIT_MESSAGE }}
+                  commit_author: "${{ steps.task_commit_gpg.outputs.name }} <${{ steps.task_commit_gpg.outputs.email }}>"
+                  commit_user_name: ${{ steps.task_commit_gpg.outputs.name }}
+                  commit_user_email: ${{ steps.task_commit_gpg.outputs.email }}
+
+
+
+
+
