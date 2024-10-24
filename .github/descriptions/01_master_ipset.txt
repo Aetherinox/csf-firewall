@@ -22,5 +22,4 @@
 #	- DNS Poisoning
 #	- IoT Target
 #	- Fraudulent activities
-#	- Email Spam
 #	- Web App Attacks
