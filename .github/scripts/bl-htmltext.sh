@@ -135,9 +135,10 @@ echo -e "  🌎 Downloading IP blacklist to ${ARG_SAVEFILE}"
 
 tempFile="${ARG_SAVEFILE}.tmp"
 jsonOutput=$(curl -Ss ${ARG_URL} | html2text | grep -v "^#" | grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' | sort -n | awk '{if (++dup[$0] == 1) print $0;}' > ${tempFile})
-sed -i '/[#;]/{s/#.*//;s/;.*//;/^$/d}' ${tempFile}                              # remove # and ; comments
-sed -i 's/\-.*//' ${tempFile}                                                   # remove hyphens for ip ranges
-sed -i 's/[[:blank:]]*$//' ${tempFile}                                          # remove space / tab from EOL
+sed -i '/[#;]/{s/#.*//;s/;.*//;/^$/d}' ${tempFile}                      # remove # and ; comments
+sed -i 's/\-.*//' ${tempFile}                                           # remove hyphens for ip ranges
+sed -i 's/[[:blank:]]*$//' ${tempFile}                                  # remove space / tab from EOL
+sed -i '/^\s*$/d' ${tempFile}                                           # remove empty lines
 
 # #
 #   calculate how many IPs are in a subnet
