@@ -74,7 +74,7 @@ COUNT_TOTAL_IP=0                # number of single IPs (counts each line)
 ID="${ARG_SAVEFILE//[^[:alnum:]]/_}"
 DESCRIPTION=$(curl -sS "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/.github/descriptions/${ID}.txt")
 CATEGORY=$(curl -sS "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/.github/categories/${ID}.txt")
-DAYS=$(curl -sS "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/.github/days/${ID}.txt")
+EXPIRES=$(curl -sS "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/.github/expires/${ID}.txt")
 regexURL='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]\.[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$'
 
 # #
@@ -83,7 +83,7 @@ regexURL='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=
 
 DESCRIPTION=$([ "${DESCRIPTION}" == *"404: Not Found"* ] && echo "#   No description provided" || echo "${DESCRIPTION}")
 CATEGORY=$([ "${CATEGORY}" == *"404: Not Found"* ] && echo "Uncategorized" || echo "${CATEGORY}")
-DAYS=$([ "${DAYS}" == *"404: Not Found"* ] && echo "6 hours" || echo "${DAYS}")
+EXPIRES=$([ "${EXPIRES}" == *"404: Not Found"* ] && echo "6 hours" || echo "${EXPIRES}")
 
 # #
 #   Output > Header
@@ -189,14 +189,19 @@ download_list()
     #   Count lines and subnets
     # #
 
-    COUNT_LINES=$(wc -l < ${tempFile})                                  # count ip lines
+    COUNT_TOTAL_IP=$(printf "%'d" "$COUNT_TOTAL_IP")                        # GLOBAL add commas to thousands
+    COUNT_TOTAL_SUBNET=$(printf "%'d" "$COUNT_TOTAL_SUBNET")                # GLOBAL add commas to thousands
 
-    DL_COUNT_TOTAL_IP=$(printf "%'d" "$DL_COUNT_TOTAL_IP")              # LOCAL add commas to thousands
-    DL_COUNT_TOTAL_SUBNET=$(printf "%'d" "$DL_COUNT_TOTAL_SUBNET")      # LOCAL add commas to thousands
+    DL_COUNT_TOTAL_IP=$(printf "%'d" "$DL_COUNT_TOTAL_IP")                  # LOCAL add commas to thousands
+    DL_COUNT_TOTAL_SUBNET=$(printf "%'d" "$DL_COUNT_TOTAL_SUBNET")          # LOCAL add commas to thousands
+
+    # #
+    #   Move temp file to final
+    # #
 
     echo -e "  🚛 Move ${tempFile} to ${fnFile}"
-    cat ${tempFile} >> ${fnFile}                                        # copy .tmp contents to real file
-    rm ${tempFile}                                                      # delete temp file
+    cat ${tempFile} >> ${fnFile}                                            # copy .tmp contents to real file
+    rm ${tempFile}                                                          # delete temp file
 
     echo -e "  ➕ Added ${DL_COUNT_TOTAL_IP} IPs and ${DL_COUNT_TOTAL_SUBNET} subnets to ${fnFile}"
 }
@@ -268,8 +273,6 @@ if [ -d .github/blocks/ ]; then
         #   Count lines and subnets
         # #
 
-        COUNT_LINES=$(wc -l < ${tempFile})                                              # GLOBAL count ip lines
-        COUNT_LINES=$(printf "%'d" "$COUNT_LINES")                                      # GLOBAL add commas to thousands
         COUNT_TOTAL_IP=$(printf "%'d" "$COUNT_TOTAL_IP")                                # GLOBAL add commas to thousands
         COUNT_TOTAL_SUBNET=$(printf "%'d" "$COUNT_TOTAL_SUBNET")                        # GLOBAL add commas to thousands
 
@@ -297,6 +300,13 @@ cat ${ARG_SAVEFILE}.sort >> ${ARG_SAVEFILE}
 rm ${ARG_SAVEFILE}.sort
 
 # #
+#   Format Counts
+# #
+
+COUNT_LINES=$(wc -l < ${ARG_SAVEFILE})                                      # count ip lines
+COUNT_LINES=$(printf "%'d" "$COUNT_LINES")                                  # GLOBAL add commas to thousands
+
+# #
 #   ed
 #       0a  top of file
 # #
@@ -312,7 +322,7 @@ ed -s ${ARG_SAVEFILE} <<END_ED
 #   @entries        $COUNT_TOTAL_IP ips
 #                   $COUNT_TOTAL_SUBNET subnets
 #                   $COUNT_LINES lines
-#   @expires        6 hours
+#   @expires        ${EXPIRES}
 #   @category       ${CATEGORY}
 #
 ${DESCRIPTION}
