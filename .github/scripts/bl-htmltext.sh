@@ -80,19 +80,16 @@ COUNT_TOTAL_IP=0                        # number of single IPs (counts each line
 ID="${ARG_SAVEFILE//[^[:alnum:]]/_}"    # ipset id, /description/* and /category/* files must match this value
 DESCRIPTION=$(curl -sS "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/.github/descriptions/${ID}.txt")
 CATEGORY=$(curl -sS "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/.github/categories/${ID}.txt")
+DAYS=$(curl -sS "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/.github/days/${ID}.txt")
 regexURL='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]\.[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$'
 
 # #
 #   Default Values
 # #
 
-if [[ $DESCRIPTION == *"404: Not Found"* ]]; then
-    DESCRIPTION="#   No description provided"
-fi
-
-if [[ $CATEGORY == *"404: Not Found"* ]]; then
-    CATEGORY="Uncategorized"
-fi
+DESCRIPTION=$([ "${DESCRIPTION}" == *"404: Not Found"* ] && echo "#   No description provided" || echo "${DESCRIPTION}")
+CATEGORY=$([ "${CATEGORY}" == *"404: Not Found"* ] && echo "Uncategorized" || echo "${CATEGORY}")
+DAYS=$([ "${DAYS}" == *"404: Not Found"* ] && echo "6 hours" || echo "${DAYS}")
 
 # #
 #   Output > Header
@@ -137,7 +134,7 @@ echo -e "  🌎 Downloading IP blacklist to ${ARG_SAVEFILE}"
 # #
 
 tempFile="${ARG_SAVEFILE}.tmp"
-jsonOutput=$(curl -Ss ${ARG_URL} | html2text | grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' | sort -n | awk '{if (++dup[$0] == 1) print $0;}' > ${tempFile})
+jsonOutput=$(curl -Ss ${ARG_URL} | html2text | grep -v "^#" | grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' | sort -n | awk '{if (++dup[$0] == 1) print $0;}' > ${tempFile})
 sed -i '/[#;]/{s/#.*//;s/;.*//;/^$/d}' ${tempFile}                              # remove # and ; comments
 sed -i 's/\-.*//' ${tempFile}                                                   # remove hyphens for ip ranges
 sed -i 's/[[:blank:]]*$//' ${tempFile}                                          # remove space / tab from EOL
@@ -157,8 +154,13 @@ for line in $(cat ${tempFile}); do
 
     # is ipv6
     if [ "$line" != "${line#*:[0-9a-fA-F]}" ]; then
-        COUNT_TOTAL_IP=`expr $COUNT_TOTAL_IP + 1`                               # GLOBAL count subnet
-        BLOCKS_COUNT_TOTAL_IP=`expr $BLOCKS_COUNT_TOTAL_IP + 1`                 # LOCAL count subnet
+        if [[ $line =~ /[0-9]{1,3}$ ]]; then
+            COUNT_TOTAL_SUBNET=`expr $COUNT_TOTAL_SUBNET + 1`                       # GLOBAL count subnet
+            BLOCKS_COUNT_TOTAL_SUBNET=`expr $BLOCKS_COUNT_TOTAL_SUBNET + 1`         # LOCAL count subnet
+        else
+            COUNT_TOTAL_IP=`expr $COUNT_TOTAL_IP + 1`                               # GLOBAL count ip
+            BLOCKS_COUNT_TOTAL_IP=`expr $BLOCKS_COUNT_TOTAL_IP + 1`                 # LOCAL count ip
+        fi;
 
     # is subnet
     elif [[ $line =~ /[0-9]{1,2}$ ]]; then
@@ -220,10 +222,10 @@ ed -s ${ARG_SAVEFILE} <<END_ED
 #   @url            https://github.com/Aetherinox/csf-firewall
 #   @id             ${ID}
 #   @updated        ${NOW}
-#   @entries        $COUNT_LINES lines
+#   @entries        $COUNT_TOTAL_IP ips
 #                   $COUNT_TOTAL_SUBNET subnets
-#                   $COUNT_TOTAL_IP ips
-#   @expires        6 hours
+#                   $COUNT_LINES lines
+#   @expires        15 days
 #   @category       ${CATEGORY}
 #
 ${DESCRIPTION}

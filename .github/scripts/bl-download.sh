@@ -73,13 +73,9 @@ regexURL='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=
 #   Default Values
 # #
 
-if [[ $DESCRIPTION == *"404: Not Found"* ]]; then
-    DESCRIPTION="#   No description provided"
-fi
-
-if [[ $CATEGORY == *"404: Not Found"* ]]; then
-    CATEGORY="Uncategorized"
-fi
+DESCRIPTION=$([ "${DESCRIPTION}" == *"404: Not Found"* ] && echo "#   No description provided" || echo "${DESCRIPTION}")
+CATEGORY=$([ "${CATEGORY}" == *"404: Not Found"* ] && echo "Uncategorized" || echo "${CATEGORY}")
+DAYS=$([ "${DAYS}" == *"404: Not Found"* ] && echo "6 hours" || echo "${DAYS}")
 
 # #
 #   Output > Header
@@ -128,14 +124,14 @@ download_list()
 
     echo -e "  🌎 Downloading IP blacklist to ${tempFile}"
 
-    curl ${fnUrl} -o ${tempFile} >/dev/null 2>&1                            # download file
-    sed -i 's/\-.*//' ${tempFile}                                           # remove hyphens for ip ranges
-    sed -i '/[#;]/{s/#.*//;s/;.*//;/^$/d}' ${tempFile}                      # remove # and ; comments
-    sed -i 's/[[:blank:]]*$//' ${tempFile}                                  # remove space / tab from EOL
+    curl ${fnUrl} -o ${tempFile} >/dev/null 2>&1                        # download file
+    sed -i 's/\-.*//' ${tempFile}                                       # remove hyphens for ip ranges
+    sed -i '/[#;]/{s/#.*//;s/;.*//;/^$/d}' ${tempFile}                  # remove # and ; comments
+    sed -i 's/[[:blank:]]*$//' ${tempFile}                              # remove space / tab from EOL
 
     if [ "$ARG_BOOL_DND" = true ] ; then
         echo -e "  ⭕ Enabled \`# do not delete\`"
-        sed -i 's/$/\t\t\t\#\ do\ not\ delete/' ${tempFile}                 # add csf `# do not delete` to end of each line
+        sed -i 's/$/\t\t\t\#\ do\ not\ delete/' ${tempFile}             # add csf `# do not delete` to end of each line
     fi
 
     # #
@@ -149,8 +145,8 @@ download_list()
     for line in $(cat ${tempFile}); do
         # is ipv6
         if [ "$line" != "${line#*:[0-9a-fA-F]}" ]; then
-            COUNT_TOTAL_IP=`expr $COUNT_TOTAL_IP + 1`                       # GLOBAL count subnet
-            DL_COUNT_TOTAL_IP=`expr $DL_COUNT_TOTAL_IP + 1`                 # LOCAL count subnet
+            COUNT_TOTAL_IP=`expr $COUNT_TOTAL_IP + 1`                   # GLOBAL count subnet
+            DL_COUNT_TOTAL_IP=`expr $DL_COUNT_TOTAL_IP + 1`             # LOCAL count subnet
 
         # is subnet
         elif [[ $line =~ /[0-9]{1,2}$ ]]; then
@@ -208,6 +204,18 @@ for arg in "${@:3}"; do
 done
 
 # #
+#   Sort
+#       - sort lines numerically and create .sort file
+#       - move re-sorted text from .sort over to real file
+#       - remove .sort temp file
+# #
+
+sorting=$(cat ${ARG_SAVEFILE} | grep -v "^#" | sort -n | awk '{if (++dup[$0] == 1) print $0;}' > ${ARG_SAVEFILE}.sort)
+> ${ARG_SAVEFILE}
+cat ${ARG_SAVEFILE}.sort >> ${ARG_SAVEFILE}
+rm ${ARG_SAVEFILE}.sort
+
+# #
 #   Format Counts
 # #
 
@@ -228,9 +236,9 @@ ed -s ${ARG_SAVEFILE} <<END_ED
 #   @url            https://github.com/Aetherinox/csf-firewall
 #   @id             ${ID}
 #   @updated        ${NOW}
-#   @entries        $COUNT_LINES lines
+#   @entries        $COUNT_TOTAL_IP ips
 #                   $COUNT_TOTAL_SUBNET subnets
-#                   $COUNT_TOTAL_IP ips
+#                   $COUNT_LINES lines
 #   @expires        6 hours
 #   @category       ${CATEGORY}
 #

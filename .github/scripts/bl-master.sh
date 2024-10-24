@@ -74,19 +74,16 @@ COUNT_TOTAL_IP=0                # number of single IPs (counts each line)
 ID="${ARG_SAVEFILE//[^[:alnum:]]/_}"
 DESCRIPTION=$(curl -sS "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/.github/descriptions/${ID}.txt")
 CATEGORY=$(curl -sS "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/.github/categories/${ID}.txt")
+DAYS=$(curl -sS "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/.github/days/${ID}.txt")
 regexURL='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]\.[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$'
 
 # #
 #   Default Values
 # #
 
-if [[ $DESCRIPTION == *"404: Not Found"* ]]; then
-    DESCRIPTION="#   No description provided"
-fi
-
-if [[ $CATEGORY == *"404: Not Found"* ]]; then
-    CATEGORY="Uncategorized"
-fi
+DESCRIPTION=$([ "${DESCRIPTION}" == *"404: Not Found"* ] && echo "#   No description provided" || echo "${DESCRIPTION}")
+CATEGORY=$([ "${CATEGORY}" == *"404: Not Found"* ] && echo "Uncategorized" || echo "${CATEGORY}")
+DAYS=$([ "${DAYS}" == *"404: Not Found"* ] && echo "6 hours" || echo "${DAYS}")
 
 # #
 #   Output > Header
@@ -287,6 +284,18 @@ if [ -d .github/blocks/ ]; then
 fi
 
 # #
+#   Sort
+#       - sort lines numerically and create .sort file
+#       - move re-sorted text from .sort over to real file
+#       - remove .sort temp file
+# #
+
+sorting=$(cat ${ARG_SAVEFILE} | grep -v "^#" | sort -n | awk '{if (++dup[$0] == 1) print $0;}' > ${ARG_SAVEFILE}.sort)
+> ${ARG_SAVEFILE}
+cat ${ARG_SAVEFILE}.sort >> ${ARG_SAVEFILE}
+rm ${ARG_SAVEFILE}.sort
+
+# #
 #   ed
 #       0a  top of file
 # #
@@ -299,9 +308,9 @@ ed -s ${ARG_SAVEFILE} <<END_ED
 #   @url            https://github.com/Aetherinox/csf-firewall
 #   @id             ${ID}
 #   @updated        ${NOW}
-#   @entries        $COUNT_LINES lines
+#   @entries        $COUNT_TOTAL_IP ips
 #                   $COUNT_TOTAL_SUBNET subnets
-#                   $COUNT_TOTAL_IP ips
+#                   $COUNT_LINES lines
 #   @expires        6 hours
 #   @category       ${CATEGORY}
 #
