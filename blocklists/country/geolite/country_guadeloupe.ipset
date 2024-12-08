@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_guadeloupe_ipset
 #   @uuid           f97a66b7-47ac-3650-88e2-4b03e9f401fc
-#   @updated        Sat 07 Dec 2024 12:28:51 AM UTC
+#   @updated        Sun 08 Dec 2024 12:30:56 AM UTC
 #   @entries        266,948 ips
 #                   243 subnets
 #                   243 lines

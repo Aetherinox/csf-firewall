@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_aruba_ipset
 #   @uuid           20bfc7f9-a6c5-369b-afe6-e7a089262bd0
-#   @updated        Sat 07 Dec 2024 12:28:26 AM UTC
+#   @updated        Sun 08 Dec 2024 12:30:29 AM UTC
 #   @entries        113,289 ips
 #                   191 subnets
 #                   191 lines
