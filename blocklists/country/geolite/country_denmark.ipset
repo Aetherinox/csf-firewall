@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_denmark_ipset
 #   @uuid           4bd40831-2214-3fe2-b7fd-12405a9b7acc
-#   @updated        Mon 09 Dec 2024 12:25:15 AM UTC
+#   @updated        Tue 10 Dec 2024 12:35:57 AM UTC
 #   @entries        12,890,150 ips
 #                   5,417 subnets
 #                   5,417 lines

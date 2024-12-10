@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_mauritania_ipset
 #   @uuid           06c0688c-1972-358e-b78f-7c481016ad00
-#   @updated        Mon 09 Dec 2024 12:25:41 AM UTC
+#   @updated        Tue 10 Dec 2024 12:36:25 AM UTC
 #   @entries        55,439 ips
 #                   160 subnets
 #                   160 lines
