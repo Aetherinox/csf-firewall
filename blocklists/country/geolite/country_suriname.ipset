@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_suriname_ipset
 #   @uuid           d3c9b19f-4772-3509-96a8-f319d723e8a2
-#   @updated        Tue 10 Dec 2024 12:36:41 AM UTC
+#   @updated        Wed 11 Dec 2024 12:35:37 AM UTC
 #   @entries        86,188 ips
-#                   138 subnets
-#                   138 lines
+#                   140 subnets
+#                   140 lines
 #   @country        Suriname (SR)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -146,7 +146,9 @@
 2a09:bac6:5630::/44
 2a0a:6042:9b00::/40
 2a0a:6044:68f4::/46
-2a0a:6044:68f8::/45
+2a0a:6044:68f8::/46
+2a0a:6044:68fc::/47
+2a0a:6044:68fe::/48
 2a0a:6044:6900::/47
 2a0a:6044:6902::/48
 2a0a:6044:f8f4::/46

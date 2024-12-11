@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_bosnia_herzegovina_ipset
 #   @uuid           d4466cbd-8452-3c6d-a2d8-30b6fb76a3ac
-#   @updated        Tue 10 Dec 2024 12:35:43 AM UTC
-#   @entries        807,756 ips
-#                   444 subnets
-#                   444 lines
+#   @updated        Wed 11 Dec 2024 12:34:35 AM UTC
+#   @entries        810,828 ips
+#                   440 subnets
+#                   440 lines
 #   @country        Bosnia Herzegovina (BA)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -48,6 +48,7 @@
 37.208.32.0/21
 38.191.116.0/22
 43.113.226.128/25
+45.8.0.0/22
 45.14.36.0/22
 45.82.88.0/22
 45.131.116.0/22
@@ -107,6 +108,7 @@
 84.41.118.104/29
 85.92.224.0/19
 85.94.128.0/19
+85.158.32.0/21
 85.209.96.0/22
 85.235.84.0/22
 87.247.136.0/22
@@ -380,15 +382,9 @@
 2a02:17a8::/32
 2a02:2030::/32
 2a02:21c0::/32
-2a02:26f7:ca40:4000::/64
-2a02:26f7:ca40:d400::/60
-2a02:26f7:ca40:d410::/61
-2a02:26f7:ca40:d418::/63
+2a02:26f7:ca40::/48
 2a02:26f7:ca41:4000::/64
-2a02:26f7:ca44:4000::/64
-2a02:26f7:ca44:d400::/60
-2a02:26f7:ca44:d410::/61
-2a02:26f7:ca44:d418::/63
+2a02:26f7:ca44::/48
 2a02:26f7:ca45:4000::/64
 2a02:26f7:ca48:4000::/64
 2a02:26f7:ca48:d400::/60

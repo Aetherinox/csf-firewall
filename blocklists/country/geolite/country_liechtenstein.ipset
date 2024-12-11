@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_liechtenstein_ipset
 #   @uuid           db8a7760-9c01-3fae-84a4-35800842bd28
-#   @updated        Tue 10 Dec 2024 12:36:20 AM UTC
-#   @entries        116,172 ips
-#                   778 subnets
-#                   778 lines
+#   @updated        Wed 11 Dec 2024 12:35:14 AM UTC
+#   @entries        115,825 ips
+#                   767 subnets
+#                   767 lines
 #   @country        Liechtenstein (LI)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -160,19 +160,6 @@
 128.77.12.0/25
 128.77.98.224/27
 128.90.180.0/32
-130.41.29.128/25
-130.41.78.192/26
-130.41.83.224/28
-130.41.83.240/30
-130.41.83.244/31
-130.41.83.247/32
-130.41.83.248/32
-130.41.83.253/32
-130.41.83.254/31
-130.41.147.224/27
-130.41.176.128/26
-130.41.236.96/28
-130.41.246.240/28
 134.231.199.64/26
 134.238.123.96/27
 134.238.123.128/25
@@ -718,6 +705,8 @@
 2a0e:97c0:bc0::/44
 2a0e:97c0:be0::/43
 2a0e:97c0:c00::/43
+2a0e:97c0:c24::/46
+2a0e:97c0:c28::/45
 2a0e:97c0:c30::/44
 2a0e:97c0:c50::/44
 2a0e:97c0:c60::/43
