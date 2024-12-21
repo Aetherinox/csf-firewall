@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_saint_helena_ipset
 #   @uuid           235a6118-84b6-355c-b4ab-3f624b63a353
-#   @updated        Fri 20 Dec 2024 12:19:26 AM UTC
-#   @entries        1,299 ips
-#                   43 subnets
-#                   43 lines
+#   @updated        Sat 21 Dec 2024 12:23:03 AM UTC
+#   @entries        1,043 ips
+#                   42 subnets
+#                   42 lines
 #   @country        Saint Helena (SH)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -24,7 +24,6 @@
 5.62.63.90/31
 104.28.13.16/31
 104.28.13.18/32
-129.122.212.0/24
 136.23.1.141/32
 136.23.21.41/32
 140.248.56.198/32

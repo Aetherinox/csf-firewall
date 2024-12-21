@@ -5,8 +5,8 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_burundi_ipset
 #   @uuid           6d26dde4-9e04-3131-b2e4-21768abd8f94
-#   @updated        Fri 20 Dec 2024 12:18:38 AM UTC
-#   @entries        40,640 ips
+#   @updated        Sat 21 Dec 2024 12:22:06 AM UTC
+#   @entries        40,384 ips
 #                   155 subnets
 #                   155 lines
 #   @country        Burundi (BI)
@@ -91,7 +91,6 @@
 196.199.59.0/24
 196.223.3.0/24
 196.223.36.0/24
-196.231.250.0/24
 197.157.192.0/22
 197.231.249.0/24
 2001:470:1f05:79::/64
@@ -165,6 +164,7 @@
 2a0c:3b80:6269::/48
 2a0c:9a40:95b2:4000::/52
 2a10:500:f00::/40
+2a11:f140:f000::/36
 2a13:a5c3:d114::/46
 2a14:1c4:7800::/37
 2c0f:2a80:800::/42

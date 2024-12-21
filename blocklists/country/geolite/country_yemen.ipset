@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_yemen_ipset
 #   @uuid           290e7290-dc10-3df1-8d05-97d46b576e40
-#   @updated        Fri 20 Dec 2024 12:19:42 AM UTC
+#   @updated        Sat 21 Dec 2024 12:23:20 AM UTC
 #   @entries        237,679 ips
-#                   222 subnets
-#                   222 lines
+#                   223 subnets
+#                   223 lines
 #   @country        Yemen (YE)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -239,6 +239,7 @@
 2a0f:7803:ff10:a000::/51
 2a10:500:6a00::/40
 2a10:9007:2:22::/64
+2a11:f146:a000::/36
 2a13:a5c3:d4cc::/46
 2a13:b487:5023::/48
 2a14:1c1:6000::/37

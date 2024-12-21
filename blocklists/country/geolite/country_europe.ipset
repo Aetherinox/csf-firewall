@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_europe_ipset
 #   @uuid           c4472bbd-f795-3479-b208-a1f9c7c979b8
-#   @updated        Fri 20 Dec 2024 12:18:51 AM UTC
-#   @entries        232,109 ips
-#                   843 subnets
-#                   843 lines
+#   @updated        Sat 21 Dec 2024 12:22:21 AM UTC
+#   @entries        231,597 ips
+#                   842 subnets
+#                   842 lines
 #   @country        Europe (EU)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -121,7 +121,6 @@
 78.109.11.0/24
 78.109.14.0/24
 80.64.224.0/24
-80.70.222.0/23
 80.79.82.0/24
 80.79.86.128/29
 80.150.93.131/32

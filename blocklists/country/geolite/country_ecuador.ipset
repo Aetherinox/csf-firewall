@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_ecuador_ipset
 #   @uuid           1a14483e-aa0a-3c2a-a982-6087b313a94c
-#   @updated        Fri 20 Dec 2024 12:18:49 AM UTC
-#   @entries        2,835,594 ips
-#                   1,188 subnets
-#                   1,188 lines
+#   @updated        Sat 21 Dec 2024 12:22:19 AM UTC
+#   @entries        2,835,882 ips
+#                   1,182 subnets
+#                   1,182 lines
 #   @country        Ecuador (EC)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -478,13 +478,7 @@
 190.111.64.0/19
 190.114.3.0/25
 190.120.64.0/19
-190.123.32.0/23
-190.123.34.0/24
-190.123.35.0/25
-190.123.35.160/27
-190.123.35.192/26
-190.123.36.0/23
-190.123.39.0/24
+190.123.32.0/21
 190.123.48.0/20
 190.130.128.0/17
 190.131.0.0/17

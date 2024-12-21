@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_haiti_ipset
 #   @uuid           634caffd-a630-3f77-9390-1230c043a941
-#   @updated        Fri 20 Dec 2024 12:19:00 AM UTC
+#   @updated        Sat 21 Dec 2024 12:22:32 AM UTC
 #   @entries        156,702 ips
-#                   191 subnets
-#                   191 lines
+#                   190 subnets
+#                   190 lines
 #   @country        Haiti (HT)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -209,5 +209,4 @@
 2a0c:3b80:4854::/48
 2a0c:3b80:6874::/48
 2a0c:9a40:95b5:f000::/52
-2a10:500:a600::/40
 2a14:1c5:d800::/37
