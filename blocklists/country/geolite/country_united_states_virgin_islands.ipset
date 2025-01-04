@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_united_states_virgin_islands_ipset
 #   @uuid           afbe3fa6-010a-3df3-8090-2127a3842651
-#   @updated        Fri 03 Jan 2025 12:19:52 AM UTC
-#   @entries        198,548 ips
-#                   292 subnets
-#                   292 lines
+#   @updated        Sat 04 Jan 2025 12:19:39 AM UTC
+#   @entries        195,557 ips
+#                   273 subnets
+#                   273 lines
 #   @country        United States Virgin Islands (VI)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -135,26 +135,7 @@
 199.76.61.208/28
 199.76.61.224/27
 199.76.62.0/23
-199.77.128.0/24
-199.77.129.0/26
-199.77.129.64/31
-199.77.129.67/32
-199.77.129.68/30
-199.77.129.72/29
-199.77.129.80/28
-199.77.129.96/27
-199.77.129.128/25
-199.77.130.0/24
-199.77.131.0/25
-199.77.131.128/26
-199.77.131.224/27
 199.77.132.0/22
-199.77.136.0/25
-199.77.136.128/28
-199.77.136.192/26
-199.77.137.0/24
-199.77.138.0/23
-199.77.140.0/22
 199.77.204.0/22
 204.8.64.0/22
 204.11.152.0/21

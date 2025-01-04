@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_portugal_ipset
 #   @uuid           2af1633a-f3e8-331e-84af-72a92e3a5552
-#   @updated        Fri 03 Jan 2025 12:19:32 AM UTC
-#   @entries        6,903,989 ips
-#                   2,351 subnets
-#                   2,351 lines
+#   @updated        Sat 04 Jan 2025 12:19:15 AM UTC
+#   @entries        6,903,477 ips
+#                   2,350 subnets
+#                   2,350 lines
 #   @country        Portugal (PT)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -1234,7 +1234,6 @@
 185.99.26.196/30
 185.99.232.0/22
 185.101.176.0/22
-185.106.192.0/23
 185.113.140.0/22
 185.113.156.0/22
 185.117.225.0/24
