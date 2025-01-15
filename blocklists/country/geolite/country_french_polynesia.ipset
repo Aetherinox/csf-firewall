@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_french_polynesia_ipset
 #   @uuid           c60577a2-0fbc-3853-912a-85febbd2a46d
-#   @updated        Mon 13 Jan 2025 12:23:18 AM UTC
+#   @updated        Wed 15 Jan 2025 12:22:33 AM UTC
 #   @entries        77,425 ips
-#                   201 subnets
-#                   201 lines
+#                   198 subnets
+#                   198 lines
 #   @country        French Polynesia (PF)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -217,7 +217,4 @@
 2a0a:6044:f490::/45
 2a0a:6044:f498::/47
 2a0a:6044:f49a::/48
-2a0c:3b80:5046::/48
-2a0c:3b80:7066::/48
 2a0c:9a40:95b4:d000::/52
-2a14:1c6:1800::/37
