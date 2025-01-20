@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_mongolia_ipset
 #   @uuid           760a0090-7cbd-3547-ab0a-f4d73c082f5d
-#   @updated        Sun 19 Jan 2025 12:26:30 AM UTC
+#   @updated        Mon 20 Jan 2025 12:22:17 AM UTC
 #   @entries        184,498 ips
 #                   404 subnets
 #                   404 lines

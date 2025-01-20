@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_serbia_ipset
 #   @uuid           8e9ca69f-5c25-3d83-be66-ddf4edb91984
-#   @updated        Sun 19 Jan 2025 12:26:49 AM UTC
+#   @updated        Mon 20 Jan 2025 12:22:36 AM UTC
 #   @entries        2,327,110 ips
 #                   1,323 subnets
 #                   1,323 lines
