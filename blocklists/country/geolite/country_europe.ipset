@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_europe_ipset
 #   @uuid           c4472bbd-f795-3479-b208-a1f9c7c979b8
-#   @updated        Sun 02 Feb 2025 12:23:14 AM UTC
+#   @updated        Mon 03 Feb 2025 12:22:15 AM UTC
 #   @entries        226,965 ips
 #                   788 subnets
 #                   788 lines

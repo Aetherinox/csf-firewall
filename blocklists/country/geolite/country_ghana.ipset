@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_ghana_ipset
 #   @uuid           ea54933d-a319-3359-a553-f8ecf1e68b3d
-#   @updated        Sun 02 Feb 2025 12:23:25 AM UTC
+#   @updated        Mon 03 Feb 2025 12:22:25 AM UTC
 #   @entries        2,222,288 ips
 #                   521 subnets
 #                   521 lines
