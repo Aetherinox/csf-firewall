@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_afghanistan_ipset
 #   @uuid           08cd1aec-051b-3b4b-988a-87488b4fa719
-#   @updated        Thu 13 Feb 2025 12:20:51 AM UTC
+#   @updated        Fri 14 Feb 2025 12:21:24 AM UTC
 #   @entries        186,400 ips
 #                   914 subnets
 #                   914 lines
