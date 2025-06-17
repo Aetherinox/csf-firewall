@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_guinea_ipset
 #   @uuid           fcef6a45-284a-341d-a11d-46aae90a8d48
-#   @updated        Mon 16 Jun 2025 12:31:54 AM UTC
+#   @updated        Tue 17 Jun 2025 12:32:13 AM UTC
 #   @entries        42,880 ips
-#                   182 subnets
-#                   182 lines
+#                   183 subnets
+#                   183 lines
 #   @country        Guinea (GN)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -127,6 +127,7 @@
 2001:470:1f13:180::/64
 2001:470:1f21:31::/64
 2001:470:1f21:6e::/64
+2001:470:1f23:363::/64
 2001:43f8:c60::/47
 2606:40:938::/45
 2606:40:940::/45
