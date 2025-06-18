@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_guernsey_ipset
 #   @uuid           67664050-8eff-3298-bc00-b404e2905f5a
-#   @updated        Tue 17 Jun 2025 12:32:11 AM UTC
+#   @updated        Wed 18 Jun 2025 12:32:50 AM UTC
 #   @entries        62,137 ips
-#                   230 subnets
-#                   230 lines
+#                   231 subnets
+#                   231 lines
 #   @country        Guernsey (GG)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -158,6 +158,7 @@
 2001:470:1f0b:617::/64
 2001:470:1f0b:748::/64
 2001:470:1f13:f1::/64
+2001:470:1f13:289::/64
 2001:470:1f13:e1b::/64
 2001:470:1f15:ea::/64
 2001:470:1f1b:249::/64
