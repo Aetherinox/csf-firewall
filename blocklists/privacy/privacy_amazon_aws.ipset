@@ -5,8 +5,8 @@
 #   @source         https://ip-ranges.amazonaws.com/ip-ranges.json
 #   @id             privacy_amazon_aws_ipset
 #   @uuid           0dad23a4-276f-3f28-9f0b-3d543e375f70
-#   @updated        Fri 20 Jun 2025 12:13:32 AM UTC
-#   @entries        95,235,971 ips
+#   @updated        Sat 21 Jun 2025 02:56:24 AM UTC
+#   @entries        95,235,203 ips
 #                   5,140 subnets
 #                   5,140 lines
 #   @expires        6 hours
@@ -25,7 +25,6 @@
 #       - https://repost.aws/knowledge-center/report-aws-abuse
 # #
 
-1.178.4.0/22
 1.178.72.0/21
 3.0.0.0/15
 3.2.0.0/24
@@ -1977,6 +1976,7 @@
 35.96.240.0/24
 35.96.241.0/24
 35.96.242.0/24
+35.96.243.0/24
 35.96.244.0/24
 35.96.245.0/24
 35.96.246.0/24
