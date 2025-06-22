@@ -2,8 +2,25 @@
 #   @type               github workflow
 #   @author             Aetherinox
 #   @url                https://github.com/Aetherinox
-#   @usage              pings the developer when an issue comment is made
-#
+#   @usage              cleans up the cache for a repository.
+#   
+#   
+#   You can view your current cached items by going to Github and going to the page:
+#       https://github.com/USERNAME/REPO/actions/caches
+#   
+#   Caches have branch scope restrictions in place, which means some caches have limited usage options. For more information
+#   on cache scope restrictions, see Restrictions for accessing a cache, earlier in this article. If caches limited to a specific
+#   branch are using a lot of storage quota, it may cause caches from the default branch to be created and deleted at a high frequency.
+#   
+#   For example, a repository could have many new pull requests opened, each with their own caches that are restricted to that branch.
+#   These caches could take up the majority of the cache storage for that repository. Once a repository has reached its maximum cache
+#   storage, the cache eviction policy will create space by deleting the caches in order of last access date, from oldest to most
+#   recent. In order to prevent cache thrashing when this happens, you can set up workflows to delete caches on a faster cadence than
+#   the cache eviction policy will. You can use the GitHub CLI to delete caches for specific branches.
+#   
+#   @reference          https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/caching-dependencies-to-speed-up-workflows#deleting-cache-entries
+#   
+#   
 #   @secrets            secrets.SELF_TOKEN                                          self github personal access token (fine-grained)
 #                       secrets.SELF_TOKEN_CL                                       self github personal access token (classic)
 #                       secrets.NPM_TOKEN                                           self npmjs access token
@@ -24,6 +41,7 @@
 #                       secrets.DISCORD_WEBHOOK_CHAN_GITHUB_RELEASES                discord webhook to report release notifications from github to discord
 #                       secrets.DISCORD_WEBHOOK_CHAN_GITHUB_WORKFLOWS               discord webhook to report workflow notifications from github to discord
 #                       secrets.DISCORD_WEBHOOK_CHAN_GITHUB_UPDATES                 discord webhook to report activity notifications from github to discord
+#   
 #
 #   @local              these workflows can be tested locally through the use of `act`
 #                           https://github.com/nektos/act
@@ -31,27 +49,46 @@
 #                       Add system env var with path to act.exe
 #                       Run the commands:
 #                           git pull https://github.com/username/repo
-#                           act -W .github/workflows/ping-developer.yml -P ubuntu-latest=catthehacker/ubuntu:full-22.04
-#                           act -W .github/workflows/ping-developer.yml -s TOKEN_CL=XXXXXXXXXX --pull=false
+#                           act -W .github/workflows/cache-clean.yml -P ubuntu-latest=catthehacker/ubuntu:full-22.04
+#                           act -W .github/workflows/cache-clean.yml -s TOKEN_CL=XXXXXXXXXX --pull=false
 # #
 
-name: '💬 Ping › Developer'
-run-name: '💬 Ping › Developer'
+# #
+
+name: '🧹 Cache › Clean'
+run-name: '🧹 Cache › Clean'
 
 # #
 #   triggers
 # #
 
 on:
-    issue_comment:
-        types: [created]
+
+    # #
+    #   Trigger › Workflow Dispatch
+    # #
+
+    workflow_dispatch:
+        inputs:
+
+            # #
+            #   Cache › Num Per Page
+            #   
+            #   this is the number of cached items to fetch per page.
+            # #
+
+            NUM_PER_PAGE:
+                description:    '📦 Number Per Page'
+                required:       true
+                default:        '100'
+                type:           string
 
 # #
 #   environment variables
 # #
 
 env:
-    DEPLOYMENT_ENV:             ${{ github.event.inputs.DEPLOYMENT_ENV || 'orion' }}
+    NUM_PER_PAGE:               ${{ github.event.inputs.NUM_PER_PAGE || '100' }}
     BOT_NAME_1:                 EuropaServ
     BOT_NAME_2:                 BinaryServ
     BOT_NAME_DEPENDABOT:        dependabot[bot]
@@ -59,23 +96,21 @@ env:
 
 # #
 #   jobs
-#
-#   env not available for job.if
 # #
 
 jobs:
-    deploy:
+    cleanup:
         name: >-
-            💬 Issue › Accept
+            🧹 Cache › Clean
         runs-on: ubuntu-latest
       # runs-on: apollo-x64
         timeout-minutes: 5
-        if: |
-            contains(github.event.comment.body, '/ping')
+        permissions: write-all
+
         steps:
 
             # #
-            #   Ping › Checkout
+            #   Cache › Clean › Checkout
             # #
 
             - name: '☑️ Checkout'
@@ -84,7 +119,7 @@ jobs:
                   fetch-depth: 0
 
             # #
-            #   Ping › Job Information
+            #   Cache › Clean › Job Information
             # #
 
             - name: >-
@@ -93,7 +128,7 @@ jobs:
               id: 'context'
 
             # #
-            #   Ping › Start
+            #   Cache › Clean › Start
             # #
 
             - name: >-
@@ -193,131 +228,75 @@ jobs:
                   echo "‎"
 
             # #
-            #   Ping › Developer › Send Mail
+            #   Cache › Clean › Start
             #   
-            #   Add Label to accepted PR
+            #   You can view your current cached items by going to Github and going to the page:
+            #       https://github.com/USERNAME/REPO/actions/caches
             #   
-            #   port 465
-            #       server_port: 465
-            #       secure: true
-            #       ignore_cert: false
+            #   Caches have branch scope restrictions in place, which means some caches have limited usage options. For more information
+            #   on cache scope restrictions, see Restrictions for accessing a cache, earlier in this article. If caches limited to a specific
+            #   branch are using a lot of storage quota, it may cause caches from the default branch to be created and deleted at a high frequency.
             #   
-            #   port 587
-            #       server_port: 587
-            #       secure: false
+            #   For example, a repository could have many new pull requests opened, each with their own caches that are restricted to that branch.
+            #   These caches could take up the majority of the cache storage for that repository. Once a repository has reached its maximum cache
+            #   storage, the cache eviction policy will create space by deleting the caches in order of last access date, from oldest to most
+            #   recent. In order to prevent cache thrashing when this happens, you can set up workflows to delete caches on a faster cadence than
+            #   the cache eviction policy will. You can use the GitHub CLI to delete caches for specific branches.
+            #   
+            #   @reference      https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/caching-dependencies-to-speed-up-workflows#deleting-cache-entries
             # #
 
             - name: >-
-                  📨 Send mail
-              id: task_ping_developer_mail
-              uses: dawidd6/action-send-mail@v5
+                🪣 Cache › Clean
+              uses: actions/github-script@v7
               with:
-                  server_address: ${{ secrets.EMAIL_SMTP }}
-                  server_port: 465
-                  secure: true
-                  username: ${{ secrets.EMAIL_FROM }}
-                  password: ${{ secrets.EMAIL_KEY }}
-                  subject: "Github: Ping notification from ${{ github.repository }}"
-                  to: ${{ secrets.EMAIL_TO }}
-                  from: ${{ secrets.EMAIL_FROM }}
-                  html_body: |
-                      <!DOCTYPE html>
-                      <html>
-                      <head>
-                      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-                      <title>Title</title>
+                  script: |
+                          try
+                          {
+                              const cacheConf =
+                              {
+                                  owner: context.repo.owner,
+                                  repo: context.repo.repo,
+                                  per_page: ${{ env.NUM_PER_PAGE }},
+                              };
 
-                      <style>
-                      body {
-                      background: url('https://images.unsplash.com/photo-1541422348463-9bc715520974?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZGFyayUyMG1vdW50YWlufGVufDB8fDB8fHww');
-                      font-size:9pt;
-                      margin:0;
-                      padding:0;
-                      }
-                      .background-overlay {
-                      background-color: #1111119f;
-                      }
-                      .background-header {
-                      background: url('https://process.fs.teachablecdn.com/ADNupMnWyR7kCWRvm76Laz/resize=width:705/https://cdn.filestackcontent.com/MipxnobQRRS5h7raz9aM');
-                      background-size: cover;
-                      background-size: 100%;
-                      background-color:#1b1b1b;
-                      padding:5px;
-                      height:100px;
-                      }
-                      </style>
-                      </head>
+                              console.log( `✅ Starting to clean cache; showing ${{ env.NUM_PER_PAGE }} cached items per page` )
+                              const caches = await github.rest.actions.getActionsCacheList( cacheConf )
 
-                      <body>
-                      <div class="background-overlay">
-                      <center>
-                      <div class="background-header">
-                      <a href="https://github.com/${{ github.repository }}"><img style="height:80px;padding-top:10px;" src="https://cdn0.iconfinder.com/data/icons/shift-logotypes/32/Github-512.png"></a>
-                      </div>
-                      </center>
+                              while( caches.data.actions_caches.length )
+                              {
+                                  for ( const cache of caches.data.actions_caches )
+                                  {
+                                      console.log( `⚠️ Clearing cache id: ${cache.key} (${cache.id})` )
+                                      const res = await github.rest.actions.deleteActionsCacheById(
+                                      {
+                                          owner: context.repo.owner,
+                                          repo: context.repo.repo,
+                                          cache_id: cache.id,
+                                      });
 
-                      <div style="font-size:9pt;padding: 20px;color:#FFF;">
-                      <h3><span style="font-size:9pt;color:#cc6613;">[Github]</span> <span style="font-size:9pt;color:#FFF;">Dear ${{github.repository_owner}},</span></h3>
-                      <p style="font-size:9pt;color:#FFF;"><br />You have received a ping notification from <a href="https://github.com/${{ github.repository }}">${{ github.repository }}</a> by <a href="https://github.com/${{ github.event.comment.user.login }}">${{ github.event.comment.user.login }}</a>.</p>
-                      <br>
-                      <br>
-                      <center>
-                      <table cellspacing="0" cellpadding="0" width="40%" class="center">
-                      <tbody>
-                      <tr>
-                      <td
-                      style="font-size:9pt;background-color:#8a2138;color:#FFF;padding:6px;padding-left:10px;"><b>Repository</b></td>
-                      <td style="font-size:9pt;padding-left:5px;color:#b3b3b3;background-color:#1b1b1b;padding-left:10px;">${{ github.repository }}</td>
-                      </tr>
-                      <tr>
-                      <td
-                      style="font-size:9pt;background-color:#8a2138;color:#FFF;padding:6px;padding-left:10px;"><b>Date</b></td>
-                      <td style="font-size:9pt;padding-left:5px;color:#b3b3b3;background-color:#0f0f0f;padding-left:10px;">${{ env.NOW }}</td>
-                      </tr>
-                      <tr>
-                      <td
-                      style="font-size:9pt;background-color:#8a2138;color:#FFF;padding:6px;padding-left:10px;"><b>Commenter</b></td>
-                      <td style="font-size:9pt;padding-left:5px;color:#b3b3b3;background-color:#1b1b1b;padding-left:10px;">${{ github.event.comment.user.login }}</td>
-                      </tr>
-                      <tr>
-                      <td
-                      style="font-size:9pt;background-color:#8a2138;color:#FFF;padding:6px;padding-left:10px;"><b>Issue #</b></td>
-                      <td style="font-size:9pt;padding-left:5px;color:#b3b3b3;background-color:#0f0f0f;padding-left:10px;">${{ github.event.issue.number }}</td>
-                      </tr>
-                      <tr>
-                      <td
-                      style="font-size:9pt;background-color:#8a2138;color:#FFF;padding:6px;padding-left:10px;"><b>Action</b></td>
-                      <td style="font-size:9pt;padding-left:5px;color:#b3b3b3;background-color:#1b1b1b;padding-left:10px;">Notification</td>
-                      </tr>
-                      </tbody>
-                      </table>
-                      </center>
+                                      console.log( `✔️ Cache item ${cache.key} (${cache.id}) cleared at ${new Date().toISOString()}` )
+                                  }
 
-                      <br><br>
+                                  caches = await github.rest.actions.getActionsCacheList(congif);
+                                  console.log( `Getting another ${caches.data.actions_caches.length} caches from github ...` );
+                              }
 
-                      <center>
-                      <div style="font-family:Consolas;">
+                              console.log( `✔️ Finished cleaning the cache` );
+                          }
+                          catch( e )
+                          {
+                              console.log( `❌ The workflow has terminated with an error:`, e )
+                              return;
+                          }
 
-                      <textarea readonly=true style="font-size:9pt;width:60%;background-color:#363636;color:#FFF;padding:15px;border:1px solid #5a5a5a;" id="w3review" name="w3review" rows="20" cols="100">
-                      ${{ github.event.comment.body }}
-                      </textarea>
+            # #
+            #   Cache › Clean › Get Weekly Commits
+            # #
 
-                      </div>
-                      </center>
-
-                      <p>&nbsp;</p>
-                      <p style="color:#FFF;"><br /> ~ Github
-                      </p>
-                      </div>
-
-                      <br /><br />
-
-                      <div style="background-color:#1b1b1b;padding:5px;line-height:70px;height:70px;text-align:center;">
-                      <span style="color:#FFF;font-size:8pt;">Copyright &copy; ${{ env.YEAR }}</span>
-                      </div>
-                      </div>
-                      </body>
-                      </html>
-                  ignore_cert: true
-                  convert_markdown: true
-                  priority: normal
+            - name: >-
+                🕛 Get Weekly Commit List
+              run: |
+                  echo 'WEEKLY_COMMITS<<EOF' >> $GITHUB_ENV
+                  git log --format="[\`%h\`](${{ github.server_url }}/${{ github.repository }}/commit/%H) %s - %an" --since=7.days >> $GITHUB_ENV
+                  echo 'EOF' >> $GITHUB_ENV
