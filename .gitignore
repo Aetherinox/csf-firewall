@@ -43,6 +43,7 @@ go.work
 # #
 
 .vscode/
+.history
 
 # #
 #   Python Cache
