@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_chad_ipset
 #   @uuid           33e6ca9a-082c-31c9-81e1-2817751b5737
-#   @updated        Wed 18 Jun 2025 12:34:04 AM UTC
-#   @entries        35,300 ips
-#                   191 subnets
-#                   191 lines
+#   @updated        Sun 22 Jun 2025 12:35:33 AM UTC
+#   @entries        35,296 ips
+#                   190 subnets
+#                   190 lines
 #   @country        Chad (TD)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -32,7 +32,6 @@
 46.36.203.12/30
 57.82.58.0/23
 57.82.176.0/20
-74.118.126.216/30
 85.255.21.96/28
 86.62.31.0/24
 102.23.84.0/22

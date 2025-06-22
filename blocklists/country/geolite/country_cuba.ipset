@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_cuba_ipset
 #   @uuid           b7b75721-45ee-3fc5-ba13-8e85ed54f132
-#   @updated        Wed 18 Jun 2025 12:32:22 AM UTC
+#   @updated        Sun 22 Jun 2025 12:33:55 AM UTC
 #   @entries        259,484 ips
-#                   182 subnets
-#                   182 lines
+#                   181 subnets
+#                   181 lines
 #   @country        Cuba (CU)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -110,7 +110,7 @@
 2001:470:5:2a7::/64
 2001:470:5:2d8::/64
 2001:470:5:3b7::/64
-2001:470:b:132::/64
+2001:470:b:6c3::/64
 2001:470:d:699::/64
 2001:470:d:740::/64
 2001:470:d:913::/64
@@ -137,7 +137,6 @@
 2001:470:d869::/48
 2001:470:d9ca::/47
 2001:470:ef96::/48
-2001:470:f522::/48
 2001:1340::/32
 2001:1358::/32
 2001:13c8::/32
