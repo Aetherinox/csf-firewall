@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_pitcairn_ipset
 #   @uuid           e55ac757-ccae-32f3-adb2-f2ceb7b158a0
-#   @updated        Tue 24 Jun 2025 12:28:28 AM UTC
+#   @updated        Wed 25 Jun 2025 12:30:24 AM UTC
 #   @entries        278 ips
-#                   49 subnets
-#                   49 lines
+#                   50 subnets
+#                   50 lines
 #   @country        Pitcairn (PN)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -50,6 +50,7 @@
 2001:470:efe5::/48
 2406:2d40:7380::/42
 2600:70ff:a41f::/48
+2600:70ff:a432::/48
 2606:40:1070::/44
 2606:40:1080::/44
 2606:40:217f:4000::/51
