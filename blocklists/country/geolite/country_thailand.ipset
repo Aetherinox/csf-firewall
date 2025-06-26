@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_thailand_ipset
 #   @uuid           96b6db22-0059-3454-b825-4a03eb6b02b2
-#   @updated        Wed 25 Jun 2025 12:30:50 AM UTC
+#   @updated        Thu 26 Jun 2025 12:28:53 AM UTC
 #   @entries        10,059,124 ips
 #                   3,613 subnets
 #                   3,613 lines

@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_turkey_ipset
 #   @uuid           322bc9a4-0865-3685-a429-1edd4473a429
-#   @updated        Wed 25 Jun 2025 12:30:54 AM UTC
+#   @updated        Thu 26 Jun 2025 12:28:56 AM UTC
 #   @entries        17,173,388 ips
 #                   6,160 subnets
 #                   6,160 lines
