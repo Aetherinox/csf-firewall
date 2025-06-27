@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_portugal_ipset
 #   @uuid           2af1633a-f3e8-331e-84af-72a92e3a5552
-#   @updated        Thu 26 Jun 2025 12:28:33 AM UTC
+#   @updated        Fri 27 Jun 2025 12:28:49 AM UTC
 #   @entries        6,895,781 ips
 #                   2,642 subnets
 #                   2,642 lines
