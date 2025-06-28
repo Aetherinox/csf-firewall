@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_bermuda_ipset
 #   @uuid           92a5451d-b60e-3201-837b-9fcc4e892886
-#   @updated        Fri 27 Jun 2025 12:27:14 AM UTC
-#   @entries        129,748 ips
-#                   232 subnets
-#                   232 lines
+#   @updated        Sat 28 Jun 2025 12:25:42 AM UTC
+#   @entries        129,752 ips
+#                   237 subnets
+#                   237 lines
 #   @country        Bermuda (BM)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -75,6 +75,9 @@
 146.75.252.2/31
 157.5.67.169/32
 157.5.67.170/32
+157.5.74.208/32
+157.5.74.211/32
+157.5.82.148/31
 157.5.91.168/31
 157.167.116.0/24
 157.167.224.3/32
@@ -191,6 +194,8 @@
 2607:18c0::/32
 2607:8940:4023:a900::/56
 2607:8940:4023:aa00::/56
+2607:8940:4070:c800::/55
+2607:8940:40f0:9400::/55
 2607:8940:4143:a800::/55
 2a00:1378::/32
 2a02:26f7:cc80:4000::/64
