@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_fiji_ipset
 #   @uuid           a9d0f8ff-431b-388e-9ce5-b6d12e96fa02
-#   @updated        Fri 27 Jun 2025 12:27:45 AM UTC
-#   @entries        152,243 ips
-#                   214 subnets
-#                   214 lines
+#   @updated        Sat 28 Jun 2025 12:26:11 AM UTC
+#   @entries        152,245 ips
+#                   217 subnets
+#                   217 lines
 #   @country        Fiji (FJ)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -89,6 +89,7 @@
 146.75.160.18/31
 146.75.190.0/31
 157.5.112.72/31
+157.5.122.46/31
 157.167.41.0/24
 157.167.231.67/32
 157.167.231.68/32
@@ -144,6 +145,7 @@
 210.7.0.0/19
 2001:470:24:893::/64
 2001:470:28:a2c::/64
+2001:470:36:92b::/64
 2001:470:ffb5::/48
 2001:dd8::/48
 2001:df0:91::/48
@@ -177,6 +179,7 @@
 2606:54c0:3178::/45
 2606:54c3:0:127e::/64
 2607:8940:41a0:4800::/55
+2607:8940:41e0:2e00::/55
 2a02:26f7:f600:4000::/64
 2a02:26f7:f600:c220::/64
 2a02:26f7:f601:4000::/64
