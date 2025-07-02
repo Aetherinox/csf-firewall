@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_wallis_futuna_ipset
 #   @uuid           83f13c4a-cdda-37f4-b93a-bb0d620e2d27
-#   @updated        Tue 01 Jul 2025 12:32:19 AM UTC
+#   @updated        Wed 02 Jul 2025 12:29:40 AM UTC
 #   @entries        3,692 ips
-#                   132 subnets
-#                   132 lines
+#                   129 subnets
+#                   129 lines
 #   @country        Wallis Futuna (WF)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -69,19 +69,16 @@
 2001:470:36:7e2::/64
 2001:470:36:860::/64
 2001:470:36:897::/64
-2001:470:6d:67a::/64
 2001:470:185a::/48
 2001:470:187c::/48
 2001:470:1887::/48
 2001:470:1949::/48
 2001:470:1b27::/48
-2001:470:1f07:80::/64
 2001:470:1f0f:64::/64
 2001:470:1f1d:e8::/63
 2001:470:1f1d:576::/64
 2001:470:1f1d:71b::/64
 2001:470:1f1d:72c::/64
-2001:470:8875::/48
 2001:470:efb1::/48
 2001:470:efcf::/48
 2001:470:efdb::/48
