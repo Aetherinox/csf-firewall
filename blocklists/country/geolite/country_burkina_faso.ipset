@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_burkina_faso_ipset
 #   @uuid           70d69e0c-84df-3898-9c0c-115094ce876d
-#   @updated        Fri 04 Jul 2025 12:26:53 AM UTC
+#   @updated        Sun 06 Jul 2025 12:28:38 AM UTC
 #   @entries        342,815 ips
-#                   239 subnets
-#                   239 lines
+#                   238 subnets
+#                   238 lines
 #   @country        Burkina Faso (BF)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -147,14 +147,13 @@
 2001:470:d:114e::/64
 2001:470:d:118b::/64
 2001:470:19:10c8::/64
-2001:470:24:8bf::/64
 2001:470:24:908::/64
 2001:470:24:956::/64
 2001:470:26:7c1::/64
+2001:470:36:9d::/64
 2001:470:36:8b6::/64
 2001:470:1f05:6c0::/64
 2001:470:1f09:11d0::/64
-2001:470:1f27:73::/64
 2001:470:82a9::/48
 2001:470:f34d::/48
 2001:470:f353::/48
