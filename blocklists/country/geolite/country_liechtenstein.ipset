@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_liechtenstein_ipset
 #   @uuid           db8a7760-9c01-3fae-84a4-35800842bd28
-#   @updated        Sun 06 Jul 2025 12:29:47 AM UTC
+#   @updated        Mon 07 Jul 2025 12:29:11 AM UTC
 #   @entries        116,946 ips
 #                   770 subnets
 #                   770 lines
