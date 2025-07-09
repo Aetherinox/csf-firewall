@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_rwanda_ipset
 #   @uuid           3f1c99ee-cd45-37c9-a8cf-50e4ac0e3d10
-#   @updated        Tue 08 Jul 2025 12:28:53 AM UTC
+#   @updated        Wed 09 Jul 2025 12:28:59 AM UTC
 #   @entries        315,408 ips
-#                   195 subnets
-#                   195 lines
+#                   196 subnets
+#                   196 lines
 #   @country        Rwanda (RW)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -199,6 +199,7 @@
 2a0f:fb43::/32
 2a10:500:3000::/40
 2a10:9007:2:16::/64
+2a11:3a81:2000::/35
 2a13:a5c3:d18c::/46
 2a13:a5c7:25c0::/48
 2a13:a5c7:25ff:bf00::/56
