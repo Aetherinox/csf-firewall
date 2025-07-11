@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_jordan_ipset
 #   @uuid           51ed3e85-4f93-3e0e-89f9-61e8ee0f86e5
-#   @updated        Thu 10 Jul 2025 12:28:04 AM UTC
+#   @updated        Fri 11 Jul 2025 12:28:54 AM UTC
 #   @entries        662,107 ips
 #                   544 subnets
 #                   544 lines
