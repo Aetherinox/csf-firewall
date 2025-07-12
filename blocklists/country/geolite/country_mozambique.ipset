@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_mozambique_ipset
 #   @uuid           31a60a96-0de7-300e-9d30-b943f0d9e702
-#   @updated        Fri 11 Jul 2025 12:29:16 AM UTC
+#   @updated        Sat 12 Jul 2025 12:29:01 AM UTC
 #   @entries        473,257 ips
-#                   244 subnets
-#                   244 lines
+#                   245 subnets
+#                   245 lines
 #   @country        Mozambique (MZ)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -173,6 +173,7 @@
 2001:470:1f19:a0::/64
 2001:470:6b72::/48
 2001:470:fd88::/48
+2001:470:fdd4::/48
 2001:4378::/32
 2001:43f8:640::/48
 2001:43f8:930::/47
