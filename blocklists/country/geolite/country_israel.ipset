@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_israel_ipset
 #   @uuid           464e44d2-39df-37be-ab6d-510fa06a3ed0
-#   @updated        Fri 11 Jul 2025 12:28:48 AM UTC
-#   @entries        8,793,793 ips
-#                   3,459 subnets
-#                   3,459 lines
+#   @updated        Sat 12 Jul 2025 12:28:33 AM UTC
+#   @entries        8,795,105 ips
+#                   3,462 subnets
+#                   3,462 lines
 #   @country        Israel (IL)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -247,6 +247,7 @@
 38.93.214.0/24
 38.122.229.224/29
 38.134.116.0/24
+38.143.153.0/24
 38.190.110.0/24
 38.191.128.0/20
 38.210.103.0/24
@@ -1006,6 +1007,7 @@
 130.110.212.0/24
 130.110.238.0/24
 130.117.182.0/24
+130.117.191.224/27
 130.176.1.0/24
 130.176.155.0/24
 130.185.96.0/21
@@ -1919,6 +1921,7 @@
 202.181.133.128/28
 203.11.132.0/24
 203.33.70.0/24
+203.100.212.0/22
 203.159.81.0/24
 203.188.169.0/24
 204.52.208.0/24

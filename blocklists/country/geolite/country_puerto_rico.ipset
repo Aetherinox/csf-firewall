@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_puerto_rico_ipset
 #   @uuid           d624d93e-0228-30c5-bc52-57237a83fbeb
-#   @updated        Fri 11 Jul 2025 12:29:32 AM UTC
-#   @entries        1,320,280 ips
-#                   1,507 subnets
-#                   1,507 lines
+#   @updated        Sat 12 Jul 2025 12:29:16 AM UTC
+#   @entries        1,319,004 ips
+#                   1,503 subnets
+#                   1,503 lines
 #   @country        Puerto Rico (PR)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -166,6 +166,7 @@
 38.66.24.0/21
 38.87.232.0/21
 38.88.128.0/29
+38.99.8.144/30
 38.107.88.0/21
 38.120.128.0/23
 38.120.130.62/31
@@ -367,11 +368,6 @@
 40.102.44.0/22
 44.63.32.224/27
 45.33.192.0/23
-45.39.143.0/24
-45.39.145.0/24
-45.39.146.0/24
-45.39.149.0/24
-45.39.156.0/24
 45.41.40.0/22
 45.41.152.0/21
 45.62.191.0/28
