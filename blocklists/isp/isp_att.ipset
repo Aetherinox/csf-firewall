@@ -5,10 +5,10 @@
 #   @source         whois.radb.net
 #   @id             isp_att_ipset
 #   @uuid           c2a8f492-a17f-36a3-821d-aae3d9b8669e
-#   @updated        Mon 14 Jul 2025 12:22:19 AM UTC
-#   @entries        64,063,744 ips
-#                   1,378 subnets
-#                   1,378 lines
+#   @updated        Mon 14 Jul 2025 10:06:04 AM UTC
+#   @entries        64,062,976 ips
+#                   1,375 subnets
+#                   1,375 lines
 #   @asn            
 #                   AS7018
 #   @expires        7 days
@@ -640,9 +640,6 @@
 104.243.202.0/24
 104.243.204.0/24
 104.243.208.0/24
-104.253.143.0/24
-104.253.148.0/24
-104.253.206.0/24
 104.255.225.0/24
 107.128.0.0/12
 107.166.16.0/22
