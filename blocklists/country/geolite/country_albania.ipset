@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_albania_ipset
 #   @uuid           860e720b-f03c-3b17-926a-1896e0f6131e
-#   @updated        Tue 15 Jul 2025 12:29:22 AM UTC
+#   @updated        Wed 16 Jul 2025 12:28:49 AM UTC
 #   @entries        338,822 ips
-#                   856 subnets
-#                   856 lines
+#                   858 subnets
+#                   858 lines
 #   @country        Albania (AL)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -463,6 +463,7 @@
 2001:470:71:8aa::/64
 2001:470:7c:2c6::/64
 2001:470:1f07:50::/64
+2001:470:1f07:125::/64
 2001:470:1f07:434::/64
 2001:470:1f07:5c9::/64
 2001:470:1f09:5a6::/64
@@ -471,6 +472,7 @@
 2001:470:1f0f:60::/64
 2001:470:1f0f:145::/64
 2001:470:1f11:fa::/64
+2001:470:1f13:144::/64
 2001:470:1f13:18a::/64
 2001:470:1f13:18c::/64
 2001:470:1f13:54f::/64
