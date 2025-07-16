@@ -5,10 +5,10 @@
 #   @source         https://api.bunny.net/system/edgeserverlist/plain | https://api.bunny.net/system/edgeserverlist/ipv6
 #   @id             privacy_bunnycdn_ipset
 #   @uuid           6526e73d-f7e2-3927-8d8e-7e8873d0b484
-#   @updated        Tue 15 Jul 2025 08:05:34 PM UTC
-#   @entries        782 ips
+#   @updated        Wed 16 Jul 2025 12:09:05 AM UTC
+#   @entries        781 ips
 #                   0 subnets
-#                   782 lines
+#                   781 lines
 #   @expires        6 hours
 #   @category       Privacy
 #
@@ -519,7 +519,6 @@
 195.201.109.59
 195.201.11.156
 195.201.81.217
-195.206.229.106
 195.206.229.69
 195.238.127.98
 195.69.140.112
