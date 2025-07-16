@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_saint_vincent_grenadines_ipset
 #   @uuid           8eaf2405-bc9a-3054-8831-87718a25262b
-#   @updated        Tue 15 Jul 2025 12:32:20 AM UTC
+#   @updated        Wed 16 Jul 2025 12:31:21 AM UTC
 #   @entries        28,137 ips
-#                   178 subnets
-#                   178 lines
+#                   180 subnets
+#                   180 lines
 #   @country        Saint Vincent Grenadines (VC)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -118,6 +118,7 @@
 216.110.119.0/24
 216.110.120.0/23
 216.110.122.0/24
+2001:470:19:908::/64
 2001:470:19:df4::/64
 2001:470:24:8ae::/64
 2001:470:36:1c9::/64
@@ -129,6 +130,7 @@
 2001:505:141::/48
 2600:1e00::/28
 2600:70ff:a40f::/48
+2600:70ff:a809::/48
 2600:70ff:a97d::/48
 2602:fce4::/36
 2605:59c8:64c0::/42
