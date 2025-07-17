@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_british_virgin_islands_ipset
 #   @uuid           e6b4ef15-e8b2-3829-9e19-6a18222ba30d
-#   @updated        Wed 16 Jul 2025 12:31:22 AM UTC
+#   @updated        Thu 17 Jul 2025 12:35:59 AM UTC
 #   @entries        90,322 ips
 #                   349 subnets
 #                   349 lines

@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_ireland_ipset
 #   @uuid           4a2cf023-c0b7-3626-9de9-59138fd15398
-#   @updated        Wed 16 Jul 2025 12:29:48 AM UTC
-#   @entries        18,489,307 ips
-#                   9,557 subnets
-#                   9,557 lines
+#   @updated        Thu 17 Jul 2025 12:34:26 AM UTC
+#   @entries        18,489,310 ips
+#                   9,560 subnets
+#                   9,560 lines
 #   @country        Ireland (IE)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -4107,6 +4107,7 @@
 148.139.1.0/24
 148.139.8.0/22
 148.139.80.0/20
+148.230.46.168/32
 148.252.8.0/21
 149.5.32.0/24
 149.5.33.0/28
@@ -5416,7 +5417,9 @@
 208.127.204.0/23
 208.127.207.0/24
 208.178.9.168/30
+209.40.110.3/32
 209.40.110.53/32
+209.40.120.62/32
 209.54.184.0/21
 209.206.12.0/25
 212.2.160.0/19
