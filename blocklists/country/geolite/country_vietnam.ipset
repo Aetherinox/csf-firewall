@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_vietnam_ipset
 #   @uuid           c1de558e-4e3f-3769-9139-550a9e7e6abc
-#   @updated        Wed 16 Jul 2025 12:31:23 AM UTC
-#   @entries        16,689,764 ips
-#                   3,676 subnets
-#                   3,676 lines
+#   @updated        Thu 17 Jul 2025 12:36:00 AM UTC
+#   @entries        16,690,276 ips
+#                   3,678 subnets
+#                   3,678 lines
 #   @country        Vietnam (VN)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -1785,7 +1785,7 @@
 162.120.185.110/31
 162.120.185.127/32
 162.128.50.0/23
-162.128.80.0/23
+162.128.80.0/22
 162.128.141.0/24
 162.128.142.0/23
 162.128.144.0/24
@@ -2309,6 +2309,7 @@
 2001:470:1f29:177::/64
 2001:470:1f29:2bf::/64
 2001:470:1f29:2e6::/64
+2001:470:1f29:363::/64
 2001:470:1f29:3ec::/64
 2001:470:1f29:417::/64
 2001:470:1f29:418::/63
@@ -2370,6 +2371,7 @@
 2001:470:ed1d::/48
 2001:470:ed38::/48
 2001:470:ed4f::/48
+2001:470:ed59::/48
 2001:470:ef7a::/48
 2001:470:ef7e::/48
 2001:470:ef88::/48
