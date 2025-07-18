@@ -5,8 +5,8 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_romania_ipset
 #   @uuid           fc647a87-d88f-315d-8834-bc3eef606cf3
-#   @updated        Thu 17 Jul 2025 12:35:11 AM UTC
-#   @entries        7,479,713 ips
+#   @updated        Fri 18 Jul 2025 12:33:34 AM UTC
+#   @entries        7,479,521 ips
 #                   4,849 subnets
 #                   4,849 lines
 #   @country        Romania (RO)
@@ -79,6 +79,7 @@
 8.43.226.0/24
 13.104.187.32/28
 18.68.24.0/25
+18.68.24.128/26
 31.5.0.0/16
 31.6.1.0/24
 31.14.8.0/24
@@ -2777,7 +2778,6 @@
 188.212.126.0/23
 188.212.128.0/23
 188.212.130.0/24
-188.212.131.0/24
 188.212.134.0/24
 188.212.152.0/24
 188.212.156.0/24
