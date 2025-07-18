@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_mauritius_ipset
 #   @uuid           d024a351-4cca-3744-b572-4f4736acfe81
-#   @updated        Thu 17 Jul 2025 12:34:52 AM UTC
-#   @entries        2,755,440 ips
-#                   793 subnets
-#                   793 lines
+#   @updated        Fri 18 Jul 2025 12:33:13 AM UTC
+#   @entries        2,754,416 ips
+#                   792 subnets
+#                   792 lines
 #   @country        Mauritius (MU)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -120,7 +120,8 @@
 45.195.78.0/24
 45.195.88.0/23
 45.195.91.0/24
-45.195.92.0/22
+45.195.93.0/24
+45.195.94.0/23
 45.195.104.0/23
 45.195.108.0/22
 45.195.112.0/20
@@ -139,11 +140,9 @@
 45.195.250.32/27
 45.195.250.64/26
 45.195.250.128/25
-45.195.252.0/23
 45.196.24.0/24
 45.196.26.0/24
 45.196.30.0/23
-45.196.152.0/24
 45.196.156.0/23
 45.196.159.0/24
 45.196.192.0/24
