@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_indonesia_ipset
 #   @uuid           9efe1ecd-8c26-38f2-a3a3-54bbf56f50cf
-#   @updated        Thu 17 Jul 2025 12:34:25 AM UTC
-#   @entries        20,560,523 ips
-#                   10,648 subnets
-#                   10,648 lines
+#   @updated        Fri 18 Jul 2025 12:32:47 AM UTC
+#   @entries        20,561,803 ips
+#                   10,652 subnets
+#                   10,652 lines
 #   @country        Indonesia (ID)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -355,9 +355,11 @@
 38.225.120.0/22
 38.226.44.0/22
 38.226.62.0/24
+38.226.240.0/22
 38.244.146.0/23
 38.244.180.0/23
 38.246.88.0/24
+38.246.93.0/24
 38.246.94.0/24
 38.246.176.0/23
 38.253.225.0/24
@@ -6396,8 +6398,10 @@
 2001:470:36:304::/64
 2001:470:36:306::/63
 2001:470:36:30d::/64
+2001:470:36:30f::/64
 2001:470:36:311::/64
 2001:470:36:314::/64
+2001:470:36:316::/64
 2001:470:36:31b::/64
 2001:470:36:322::/63
 2001:470:36:331::/64
