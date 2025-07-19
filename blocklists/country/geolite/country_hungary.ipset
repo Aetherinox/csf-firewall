@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_hungary_ipset
 #   @uuid           951217fc-b9dc-3eb3-bb79-77b92b18bf52
-#   @updated        Fri 18 Jul 2025 12:32:46 AM UTC
+#   @updated        Sat 19 Jul 2025 12:29:44 AM UTC
 #   @entries        5,952,753 ips
-#                   2,737 subnets
-#                   2,737 lines
+#                   2,739 subnets
+#                   2,739 lines
 #   @country        Hungary (HU)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -1848,6 +1848,7 @@
 2001:470:1f1b:130::/64
 2001:470:1f1b:135::/64
 2001:470:1f1b:138::/64
+2001:470:1f1b:13d::/64
 2001:470:1f1b:13e::/64
 2001:470:1f1b:149::/64
 2001:470:1f1b:14d::/64
@@ -1992,6 +1993,7 @@
 2001:470:2023::/48
 2001:470:2024::/47
 2001:470:2027::/48
+2001:470:2028::/48
 2001:470:2030::/48
 2001:470:2037::/48
 2001:470:2038::/48
