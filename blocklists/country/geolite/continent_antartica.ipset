@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             continent_antartica_ipset
 #   @uuid           4664790b-caa6-3b99-b0ab-15f30c9016d1
-#   @updated        Fri 18 Jul 2025 12:29:31 AM UTC
+#   @updated        Sat 19 Jul 2025 12:26:21 AM UTC
 #   @entries        3,068 ips
-#                   558 subnets
-#                   558 lines
+#                   560 subnets
+#                   560 lines
 #   @continent      Antartica (AN)
 #   @countries      French Southern Territories (TF), South Georgia and the South Sandwich Islands (GS), 
 #                   Antarctica (AQ), Heard Island and McDonald Islands (HM), 
@@ -267,6 +267,8 @@
 2001:470:ecce::/48
 2001:470:ed34::/48
 2001:470:ed5c::/48
+2001:470:ed9e::/48
+2001:470:eda3::/48
 2001:470:ee9d::/48
 2001:470:ef7b::/48
 2001:470:efd9::/48
@@ -281,7 +283,6 @@
 2001:470:f346::/48
 2001:470:f42c::/48
 2001:470:f8b8::/48
-2001:470:f911::/48
 2001:470:f92b::/48
 2001:470:f9ef::/48
 2001:470:fa4d::/48
@@ -321,6 +322,7 @@
 2001:470:d:888::/64
 2001:470:d:930::/64
 2001:470:d:956::/64
+2001:470:f0b6:6720::/64
 2001:470:fa58:6720::/64
 2001:470:fcce:6720::/64
 2001:470:1f07:b5e::/64
@@ -403,7 +405,6 @@
 2001:470:19:6b2::/64
 2001:470:19:6f9::/64
 2001:470:19:7f0::/64
-2001:470:19:83::/64
 2001:470:19:88a::/64
 2001:470:19:95c::/64
 2001:470:19:109d::/64
@@ -442,6 +443,7 @@
 2001:470:36:2ed::/64
 2001:470:36:6de::/64
 2001:470:36:8b8::/64
+2001:470:36:33e::/64
 2001:470:36:78d::/64
 2001:470:36:91a::/64
 2001:470:36:92::/64

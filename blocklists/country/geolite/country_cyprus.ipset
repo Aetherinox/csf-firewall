@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_cyprus_ipset
 #   @uuid           7f133d29-c277-39c8-80e1-faac8ad5d1d6
-#   @updated        Fri 18 Jul 2025 12:32:14 AM UTC
+#   @updated        Sat 19 Jul 2025 12:29:11 AM UTC
 #   @entries        1,127,062 ips
-#                   1,336 subnets
-#                   1,336 lines
+#                   1,339 subnets
+#                   1,339 lines
 #   @country        Cyprus (CY)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -1177,6 +1177,7 @@
 2a0f:d280::/29
 2a0f:d500::/29
 2a0f:e480::/29
+2a0f:edc0::/29
 2a0f:f380::/29
 2a0f:f480::/29
 2a0f:f580::/29
@@ -1253,6 +1254,7 @@
 2a11:3a86:a000::/35
 2a11:3a87:e000::/35
 2a11:5900::/29
+2a11:6600::/29
 2a11:6c40::/29
 2a11:7600::/29
 2a11:8140::/29
@@ -1282,6 +1284,7 @@
 2a11:e280::/29
 2a11:e900::/29
 2a11:ec00::/29
+2a11:f080::/29
 2a11:f780::/29
 2a11:f980::/29
 2a11:fa80::/29
