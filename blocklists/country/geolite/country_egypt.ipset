@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_egypt_ipset
 #   @uuid           72b278a4-426a-31f9-9ef4-b8fd97796a62
-#   @updated        Tue 22 Jul 2025 12:29:55 AM UTC
-#   @entries        24,213,961 ips
-#                   1,062 subnets
-#                   1,062 lines
+#   @updated        Wed 23 Jul 2025 12:30:11 AM UTC
+#   @entries        24,213,705 ips
+#                   1,061 subnets
+#                   1,061 lines
 #   @country        Egypt (EG)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -169,7 +169,6 @@
 72.14.201.115/32
 74.63.22.0/24
 74.80.117.0/24
-77.90.174.0/24
 80.75.160.0/19
 81.10.0.0/17
 81.21.96.0/20
