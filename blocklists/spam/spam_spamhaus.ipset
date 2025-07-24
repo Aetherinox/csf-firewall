@@ -5,10 +5,10 @@
 #   @source         https://spamhaus.org/drop/drop.txt
 #   @id             spam_spamhaus_ipset
 #   @uuid           58ac5de8-785d-356a-ab2b-8be8960e311b
-#   @updated        Thu 24 Jul 2025 12:22:14 AM UTC
-#   @entries        15,845,888 ips
-#                   1,564 subnets
-#                   1,564 lines
+#   @updated        Thu 24 Jul 2025 10:06:36 AM UTC
+#   @entries        15,844,608 ips
+#                   1,559 subnets
+#                   1,559 lines
 #   @expires        6 hours
 #   @category       Spam
 #
@@ -448,12 +448,7 @@
 101.248.0.0/15
 101.99.92.0/24
 101.99.95.0/24
-102.135.10.0/24
-102.135.1.0/24
-102.135.103.0/24
-102.135.30.0/24
 102.135.64.0/19
-102.135.96.0/24
 102.135.98.0/24
 102.211.56.0/22
 102.216.254.0/23
