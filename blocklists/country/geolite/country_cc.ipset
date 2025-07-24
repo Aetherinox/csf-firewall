@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_cc_ipset
 #   @uuid           d9106d0a-027b-3fd5-8505-4727d45f293f
-#   @updated        Wed 23 Jul 2025 12:29:53 AM UTC
+#   @updated        Thu 24 Jul 2025 12:29:07 AM UTC
 #   @entries        33 ips
 #                   66 subnets
 #                   66 lines
