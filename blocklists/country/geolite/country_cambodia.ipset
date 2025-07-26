@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_cambodia_ipset
 #   @uuid           eb3d3651-e289-341b-aec3-0af24e6471ab
-#   @updated        Fri 25 Jul 2025 12:31:41 AM UTC
-#   @entries        466,256 ips
-#                   700 subnets
-#                   700 lines
+#   @updated        Sat 26 Jul 2025 12:32:27 AM UTC
+#   @entries        466,768 ips
+#                   702 subnets
+#                   702 lines
 #   @country        Cambodia (KH)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -26,7 +26,9 @@
 5.62.62.65/32
 5.62.62.66/31
 23.26.198.0/24
+23.226.54.0/24
 23.230.72.0/24
+23.248.217.0/24
 27.96.84.0/22
 27.109.112.0/22
 27.111.8.0/22
