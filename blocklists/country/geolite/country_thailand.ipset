@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_thailand_ipset
 #   @uuid           96b6db22-0059-3454-b825-4a03eb6b02b2
-#   @updated        Fri 25 Jul 2025 12:32:30 AM UTC
-#   @entries        10,069,370 ips
-#                   3,523 subnets
-#                   3,523 lines
+#   @updated        Sat 26 Jul 2025 12:33:26 AM UTC
+#   @entries        10,070,394 ips
+#                   3,526 subnets
+#                   3,526 lines
 #   @country        Thailand (TH)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -477,6 +477,7 @@
 94.74.112.0/21
 94.190.195.232/29
 95.134.81.0/24
+95.134.136.0/24
 95.134.232.0/21
 95.135.74.0/23
 96.6.41.0/24
@@ -879,6 +880,7 @@
 110.34.166.0/24
 110.34.168.0/21
 110.34.176.0/22
+110.34.180.0/23
 110.34.182.0/24
 110.34.186.0/23
 110.34.188.0/23
@@ -1503,6 +1505,7 @@
 173.82.20.0/24
 173.82.67.0/24
 173.82.76.0/24
+173.82.94.0/24
 173.82.104.0/24
 173.222.188.0/22
 173.239.196.240/28
