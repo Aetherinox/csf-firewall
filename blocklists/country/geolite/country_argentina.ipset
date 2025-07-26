@@ -5,8 +5,8 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_argentina_ipset
 #   @uuid           bb580c66-5180-3cd0-aa88-796509949a56
-#   @updated        Fri 25 Jul 2025 12:30:36 AM UTC
-#   @entries        19,656,031 ips
+#   @updated        Sat 26 Jul 2025 12:31:14 AM UTC
+#   @entries        19,656,023 ips
 #                   5,602 subnets
 #                   5,602 lines
 #   @country        Argentina (AR)
@@ -3276,7 +3276,7 @@
 200.123.206.0/24
 200.123.207.0/25
 200.123.207.128/27
-200.123.207.176/28
+200.123.207.176/29
 200.123.207.192/26
 200.123.216.0/21
 200.123.240.0/20
