@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_czech_republic_ipset
 #   @uuid           f4553f76-3492-3f53-a5e3-78af0767e8ee
-#   @updated        Fri 25 Jul 2025 12:31:01 AM UTC
-#   @entries        8,677,268 ips
-#                   5,410 subnets
-#                   5,410 lines
+#   @updated        Sat 26 Jul 2025 12:31:42 AM UTC
+#   @entries        8,676,500 ips
+#                   5,408 subnets
+#                   5,408 lines
 #   @country        Czech Republic (CZ)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -381,7 +381,6 @@
 46.8.191.0/24
 46.8.206.0/23
 46.8.235.0/24
-46.8.254.0/24
 46.13.0.0/16
 46.16.120.0/21
 46.23.48.0/20
@@ -1391,7 +1390,7 @@
 109.107.192.0/19
 109.108.96.0/19
 109.122.1.0/24
-109.122.2.0/23
+109.122.3.0/24
 109.122.4.0/23
 109.122.9.0/24
 109.122.10.0/23
@@ -1612,7 +1611,6 @@
 146.120.28.0/22
 146.120.48.0/21
 146.120.118.0/23
-146.120.171.0/24
 146.120.180.0/22
 146.120.215.0/24
 146.158.80.0/21

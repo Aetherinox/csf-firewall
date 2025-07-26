@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_finland_ipset
 #   @uuid           25e72cd6-ea8d-395e-8335-d27d18945779
-#   @updated        Fri 25 Jul 2025 12:31:14 AM UTC
-#   @entries        14,760,603 ips
-#                   48,667 subnets
-#                   48,667 lines
+#   @updated        Sat 26 Jul 2025 12:31:55 AM UTC
+#   @entries        14,760,859 ips
+#                   48,669 subnets
+#                   48,669 lines
 #   @country        Finland (FI)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -2856,6 +2856,7 @@
 196.245.219.0/24
 198.105.124.0/23
 199.247.36.0/24
+202.71.12.0/24
 202.181.128.200/29
 202.181.132.208/28
 204.68.252.148/31
@@ -48524,6 +48525,7 @@
 2a0b:3480::/29
 2a0b:4141:1000::/36
 2a0b:4143::/32
+2a0b:4e07:38::/48
 2a0b:5c80::/29
 2a0b:7880::/32
 2a0b:7980::/29
