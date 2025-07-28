@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_netherlands_ipset
 #   @uuid           84366ea6-7807-38af-b752-f6a2c15a90c0
-#   @updated        Sun 27 Jul 2025 12:32:42 AM UTC
+#   @updated        Mon 28 Jul 2025 12:32:15 AM UTC
 #   @entries        53,402,940 ips
 #                   74,826 subnets
 #                   74,826 lines
