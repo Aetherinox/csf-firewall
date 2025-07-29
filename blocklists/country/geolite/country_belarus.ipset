@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_belarus_ipset
 #   @uuid           2c022716-2784-3acf-a8bd-b6cbef0dabef
-#   @updated        Mon 28 Jul 2025 12:30:50 AM UTC
+#   @updated        Tue 29 Jul 2025 12:31:10 AM UTC
 #   @entries        1,882,624 ips
 #                   634 subnets
 #                   634 lines
