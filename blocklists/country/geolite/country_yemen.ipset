@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_yemen_ipset
 #   @uuid           290e7290-dc10-3df1-8d05-97d46b576e40
-#   @updated        Tue 29 Jul 2025 12:33:38 AM UTC
+#   @updated        Wed 30 Jul 2025 01:40:42 AM UTC
 #   @entries        238,521 ips
-#                   229 subnets
-#                   229 lines
+#                   238 subnets
+#                   238 lines
 #   @country        Yemen (YE)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -147,6 +147,7 @@
 2001:470:1f0b:1d::/64
 2001:470:1f0b:11cd::/64
 2001:470:1f29:35::/64
+2001:4b28:a00::/40
 2600:70ff:d01e::/48
 2606:40:7bc::/46
 2606:40:818::/45
@@ -159,6 +160,7 @@
 2606:54c3:0:bfd::/64
 2606:54c3:0:1518::/64
 2606:54c3:0:164b::/64
+2a01:528:a00::/40
 2a02:26f7:c0c0:4000::/64
 2a02:26f7:c0c0:c9a0::/64
 2a02:26f7:c0c1:4000::/64
@@ -178,6 +180,13 @@
 2a02:5746:207::/48
 2a02:5747:207::/48
 2a02:e280::/29
+2a04:1d41:a00::/40
+2a04:1d42:a00::/40
+2a04:1d43:a00::/40
+2a04:1d44:a00::/40
+2a04:1d45:a00::/40
+2a04:1d46:a00::/40
+2a04:1d47:a00::/40
 2a04:4e41:1848::/48
 2a04:4e41:401f:4000::/52
 2a04:4e41:402f:4000::/52

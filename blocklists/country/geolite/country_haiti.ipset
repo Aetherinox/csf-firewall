@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_haiti_ipset
 #   @uuid           634caffd-a630-3f77-9390-1230c043a941
-#   @updated        Tue 29 Jul 2025 12:31:54 AM UTC
+#   @updated        Wed 30 Jul 2025 01:38:49 AM UTC
 #   @entries        158,084 ips
-#                   215 subnets
-#                   215 lines
+#                   223 subnets
+#                   223 lines
 #   @country        Haiti (HT)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -144,6 +144,7 @@
 2001:470:fcc8::/48
 2001:470:fdc2::/48
 2001:13c7:6003::/48
+2001:4b28:d800::/40
 2602:2a9:b60::/44
 2606:40:ee0::/43
 2606:40:20f5:8000::/51
@@ -168,6 +169,7 @@
 2803:a580::/32
 2803:c680::/32
 2803:cac0::/32
+2a01:528:d800::/40
 2a02:26f7:f780:4000::/64
 2a02:26f7:f780:4640::/64
 2a02:26f7:f781:4000::/64
@@ -197,6 +199,12 @@
 2a02:5745:97::/48
 2a02:5746:97::/48
 2a02:5747:97::/48
+2a04:1d41:d800::/40
+2a04:1d42:d800::/40
+2a04:1d43:d800::/40
+2a04:1d44:d800::/40
+2a04:1d45:d800::/40
+2a04:1d46:d800::/40
 2a04:4e41:a:1400::/56
 2a04:4e41:3014::/48
 2a04:4e41:361e::/48
