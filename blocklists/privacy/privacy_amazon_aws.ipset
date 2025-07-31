@@ -5,10 +5,10 @@
 #   @source         https://ip-ranges.amazonaws.com/ip-ranges.json
 #   @id             privacy_amazon_aws_ipset
 #   @uuid           0dad23a4-276f-3f28-9f0b-3d543e375f70
-#   @updated        Thu 31 Jul 2025 10:16:55 AM UTC
-#   @entries        95,216,763 ips
-#                   5,174 subnets
-#                   5,174 lines
+#   @updated        Thu 31 Jul 2025 08:16:50 PM UTC
+#   @entries        95,347,835 ips
+#                   5,175 subnets
+#                   5,175 lines
 #   @expires        6 hours
 #   @category       Privacy
 #
@@ -4039,6 +4039,7 @@
 83.118.240.0/21
 83.119.64.0/18
 83.119.128.0/18
+83.160.0.0/15
 87.238.80.0/21
 88.104.0.0/15
 88.106.0.0/15
