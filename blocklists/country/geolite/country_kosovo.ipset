@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_kosovo_ipset
 #   @uuid           b356dc5e-c550-3ba8-95ad-049b1236b1a0
-#   @updated        Wed 30 Jul 2025 01:40:42 AM UTC
+#   @updated        Thu 31 Jul 2025 01:39:21 AM UTC
 #   @entries        159,573 ips
 #                   89 subnets
 #                   89 lines
