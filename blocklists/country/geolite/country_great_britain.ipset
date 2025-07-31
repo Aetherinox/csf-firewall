@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_great_britain_ipset
 #   @uuid           5eb8e397-2174-3220-988a-4bce861d06cc
-#   @updated        Wed 30 Jul 2025 01:38:36 AM UTC
+#   @updated        Thu 31 Jul 2025 01:37:21 AM UTC
 #   @entries        136,400,202 ips
 #                   48,539 subnets
 #                   48,539 lines
