@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_united_states_minor_outlying_islands_ipset
 #   @uuid           0b97f4e5-fdb7-3d9b-b787-7b74fae9bdc2
-#   @updated        Fri 01 Aug 2025 01:57:03 AM UTC
+#   @updated        Sat 02 Aug 2025 01:35:38 AM UTC
 #   @entries        159 ips
-#                   131 subnets
-#                   131 lines
+#                   130 subnets
+#                   130 lines
 #   @country        United States Minor Outlying Islands (UM)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -143,7 +143,6 @@
 2a04:4e41:406e:7000::/52
 2a04:4e41:407e:7000::/52
 2a04:4e41:408e:7000::/52
-2a05:dfc1:5aef::/48
 2a07:d887:e600::/40
 2a09:bac4:730::/45
 2a09:bac4:1730::/45
