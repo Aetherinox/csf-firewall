@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_bouvet_island_ipset
 #   @uuid           0fcc357a-3aef-3193-86cd-ba6866297396
-#   @updated        Sat 02 Aug 2025 01:33:36 AM UTC
+#   @updated        Sun 03 Aug 2025 01:53:44 AM UTC
 #   @entries        271 ips
 #                   60 subnets
 #                   60 lines
