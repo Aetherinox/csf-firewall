@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_antarctica_ipset
 #   @uuid           04dc0aca-cb31-383c-ada7-31ce31bdd2eb
-#   @updated        Sat 02 Aug 2025 01:33:20 AM UTC
+#   @updated        Sun 03 Aug 2025 01:53:30 AM UTC
 #   @entries        1,457 ips
 #                   373 subnets
 #                   373 lines
