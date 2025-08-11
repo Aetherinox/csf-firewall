@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_argentina_ipset
 #   @uuid           bb580c66-5180-3cd0-aa88-796509949a56
-#   @updated        Sun Aug 10 01:35:03 UTC 2025
+#   @updated        Mon Aug 11 01:32:06 UTC 2025
 #   @entries        19641644 ips
 #                   5260 subnets
 #                   5260 lines
