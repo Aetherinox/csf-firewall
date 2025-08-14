@@ -112,7 +112,7 @@ jobs:
           📦 Setup
       # runs-on: ubuntu-latest
         runs-on: apollo-x64
-        timeout-minutes: 20
+        timeout-minutes: 40
         steps:
 
             # #
@@ -188,7 +188,7 @@ jobs:
           📋 Generate › Blocklist
       # runs-on: ubuntu-latest
         runs-on: apollo-x64
-        timeout-minutes: 20
+        timeout-minutes: 40
         needs: [ blocklist-setup ]
         steps:
 
