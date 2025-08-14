@@ -278,7 +278,7 @@ jobs:
                                       console.log( `✔️ Cache item ${cache.key} (${cache.id}) cleared at ${new Date().toISOString()}` )
                                   }
 
-                                  caches = await github.rest.actions.getActionsCacheList(congif);
+                                  caches = await github.rest.actions.getActionsCacheList( cacheConf );
                                   console.log( `Getting another ${caches.data.actions_caches.length} caches from github ...` );
                               }
 
