@@ -50,8 +50,8 @@
 #               📄 blocklist-generate.yml
 # #
 
-name: '📦 Blocklist › Generate'
-run-name: '📦 Blocklist › Generate'
+name: "🧱 Blocklist › Generate"
+run-name: "🧱 Blocklist › Generate"
 
 # #
 #   triggers
@@ -64,38 +64,35 @@ on:
     # #
 
     workflow_dispatch:
-        inputs:
+      inputs:
 
-            # #
-            #   true          runs all actions, even ones not scheduled
-            #   false         only scheduled tasks will run
-            # #
-      
-            RUN_ALL_ACTIONS:
-              description:    '📑 Run All Actions'
-              required:       true
-              default:        false
-              type:           boolean
+        # #
+        #   true:     runs all actions, even ones not scheduled
+        #   false:    only scheduled tasks will run
+        # #
+  
+        RUN_ALL_ACTIONS:
+          description:  "📑 Run All Actions"
+          required:     true
+          default:      false
+          type:         boolean
 
     # #
     #   Trigger > Cron Schedule
     # #
 
     schedule:
-      # - cron: '0 2,8,14,20 * * *'
-        - cron: '0 */10 * * *'
-        - cron: '0 0 * * *'
+    # - cron: '0 2,8,14,20 * * *'
+      - cron: '0 */12 * * *'
+      - cron: '0 0 * * *'
 
 # #
 #   environment variables
 # #
 
 env:
-    ASSIGN_USER:                    Aetherinox
-    BOT_NAME_1:                     EuropaServ
-    BOT_NAME_2:                     BinaryServ
-    BOT_NAME_DEPENDABOT:            dependabot[bot]
-    BOT_NAME_RENOVATE:              renovate[bot]
+    BOT_NAME_1:           EuropaServ
+    BOT_NAME_DEPENDABOT:  dependabot[bot]
 
 # #
 #   jobs
@@ -112,75 +109,124 @@ jobs:
           📦 Setup
       # runs-on: ubuntu-latest
         runs-on: apollo-x64
-        timeout-minutes: 40
+        timeout-minutes: 60
         steps:
-
-            # #
-            #   Job > Set Env Variables
-            # #
-
-            - name: >-
-                🕛 Get Timestamp
-              id: task_setup_envvar
-              run: |
-                  echo "YEAR=$(date +'%Y')" >> $GITHUB_ENV
-                  echo "NOW=$(date +'%m-%d-%Y %H:%M:%S')" >> $GITHUB_ENV
-                  echo "NOW_SHORT=$(date +'%m-%d-%Y')" >> $GITHUB_ENV
-                  echo "NOW_LONG=$(date +'%m-%d-%Y %H:%M')" >> $GITHUB_ENV
-                  echo "NOW_DOCKER_LABEL=$(date +'%Y%m%d')" >> $GITHUB_ENV
-
-            # #
-            #   Job > Start
-            # #
-
-            - name: >-
-                ✅ Start
-              id: task_setup_start
-              run: |
-                echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
-                echo " Starting blocklist build script"
-                echo " Runner .............. ${{ runner.name }}"
-                echo " Workflow ............ ${{ github.workflow }} (#${{ github.workflow_ref }})"
-                echo " Run Number .......... #${{ github.run_number }}"
-                echo " Run ID .............. https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-                echo " Triggered By ........ ${{ github.actor }}"
-                echo " Time ................ ${{ env.NOW_LONG }}"
-                echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
 
             # #
             #   Job > Checkout
             # #
 
-            - name: >-
-                ☑️ Checkout
-              id: task_setup_checkout
+            - name: '☑️ Checkout'
               uses: actions/checkout@v4
               with:
                   fetch-depth: 0
 
             # #
-            #   Generate > Packages › Install
+            #   Job › Job Information
             # #
 
             - name: >-
-                📦 Packages › Install
-              id: task_setup_install
+                  🔄 Load Job
+              uses: qoomon/actions--context@v4
+              id: 'context'
+
+            # #
+            #   Job › Start
+            # #
+
+            - name: >-
+                  ✅ Start
+              run: |
+                  echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
+                  echo " Starting Job ${{ steps.context.outputs.job_name }}"
+                  echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
+
+                  year="$(date +'%Y')"
+                  echo "YEAR=${year}" >> $GITHUB_ENV
+
+                  now="$(date +'%m-%d-%Y %H:%M:%S')"
+                  echo "NOW=${now}" >> $GITHUB_ENV
+
+                  now_short="$(date +'%m-%d-%Y')"
+                  echo "now_short=${now_short}" >> $GITHUB_ENV
+
+                  now_long="$(date +'%m-%d-%Y %H:%M')"
+                  echo "now_long=${now_long}" >> $GITHUB_ENV
+
+                  now_docker="$(date +'%Y%m%d')"
+                  echo "now_docker=${now_docker}" >> $GITHUB_ENV
+
+                  now_docker_ts="$(date -u +'%FT%T.%3NZ')"
+                  echo "now_docker_ts=${now_docker}" >> $GITHUB_ENV
+
+                  echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
+                  echo -e
+                  sudo apt -qq update
+                  sudo apt -qq install tree
+                  echo -e
+                  echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
+                  echo -e
+                  echo " Runner .............. ${{ runner.name }}"
+                  echo " Workflow ............ ${{ github.workflow }} (#${{ github.workflow_ref }})"
+                  echo " Run Number .......... #${{ github.run_number }}"
+                  echo " Ref ................. #${{ github.ref }}"
+                  echo " Ref Name ............ #${{ github.ref_name }}"
+                  echo " Event Name .......... #${{ github.event_name }}"
+                  echo " Repo ................ #${{ github.repository }}"
+                  echo " Repo Owner .......... #${{ github.repository_owner }}"
+                  echo " Run ID .............. https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                  echo " Triggered By ........ ${{ github.actor }}"
+                  echo " SHA 1 ............... ${GITHUB_SHA}"
+                  echo " SHA 2 ............... ${{ github.sha }}"
+                  echo " Workspace ........... ${{ github.workspace }}"
+                  echo " PWD ................. ${PWD}"
+                  echo " Job Name ............ ${{ steps.context.outputs.job_name }}"
+                  echo " Job ID .............. ${{ steps.context.outputs.job_id }}"
+                  echo " Job URL ............. ${{ steps.context.outputs.job_url }}"
+                  echo " Run ID .............. ${{ steps.context.outputs.run_id }}"
+                  echo " Run Attempt ......... ${{ steps.context.outputs.run_attempt }}"
+                  echo " Run Number .......... ${{ steps.context.outputs.run_number }}"
+                  echo " Run URL ............. ${{ steps.context.outputs.run_url }}"
+                  echo " Run Env ............. ${{ steps.context.outputs.environment }}"
+                  echo " Run Env URL ......... ${{ steps.context.outputs.environment_url }}"
+                  echo " Run Deployment ...... ${{ steps.context.outputs.deployment_id }}"
+                  echo " Run Deployment URL .. ${{ steps.context.outputs.deployment_url }}"
+                  echo " Run Deployment ...... ${{ steps.context.outputs.deployment_id }}"
+                  echo " Run Runner Name ..... ${{ steps.context.outputs.runner_name }}"
+                  echo " Run Runner ID ....... ${{ steps.context.outputs.runner_id }}"
+                  echo " Year ................ ${year}"
+                  echo " Now ................. ${now}"
+                  echo " Now (Short) ......... ${now_short}"
+                  echo " Now (Long) .......... ${now_long}"
+                  echo " Now (Docker) ........ ${now_docker}"
+                  echo " Now (Docker TS) ..... ${now_docker_ts}"
+                  echo -e
+                  echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
+                  echo -e
+                  tree -I node_modules -I .git
+                  echo -e
+                  echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
+
+            # #
+            #   Generate › Install Packages
+            # #
+
+            - name: "🧱 Install Packages"
               run: |
                   sudo apt-get install -y ipcalc ed html2text whois uuid-runtime autoconf
 
             # #
-            #   Generate > Packages › Cache
+            #   Generate › Cache Packages
             # #
 
-            - name: >-
-                📦 Packages › Cache
+            - name: "🧱 Cache Packages"
               uses: awalsh128/cache-apt-pkgs-action@latest
               with:
                   packages: ipcalc ed html2text whois uuid-runtime
                   version: 1.0
 
     # #
-    #   Job > Blocklist > Master
+    #   Job › Blocklist › Master
     # #
 
     blocklist-generate:
@@ -188,23 +234,109 @@ jobs:
           📋 Generate › Blocklist
       # runs-on: ubuntu-latest
         runs-on: apollo-x64
-        timeout-minutes: 40
+        timeout-minutes: 60
         needs: [ blocklist-setup ]
+        outputs:
+            artifact-name: ${{ steps.generate_artifact_zip.outputs.artifact-name }}
         steps:
 
             # #
-            #   Generate > Checkout
+            #   Generate › Checkout
             # #
 
-            - name: >-
-                ☑️ Checkout
-              id: task_blocklist_generate_checkout
+            - name: '☑️ Checkout'
               uses: actions/checkout@v4
               with:
                   fetch-depth: 0
 
             # #
-            #   Generate > Configure
+            #   Generate › Job Information
+            # #
+
+            - name: >-
+                  🔄 Load Job
+              uses: qoomon/actions--context@v4
+              id: 'context'
+
+            # #
+            #   Generate › Start
+            # #
+
+            - name: >-
+                  ✅ Start
+              run: |
+                  echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
+                  echo " Starting Job ${{ steps.context.outputs.job_name }}"
+                  echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
+
+                  year="$(date +'%Y')"
+                  echo "YEAR=${year}" >> $GITHUB_ENV
+
+                  now="$(date +'%m-%d-%Y %H:%M:%S')"
+                  echo "NOW=${now}" >> $GITHUB_ENV
+
+                  now_short="$(date +'%m-%d-%Y')"
+                  echo "now_short=${now_short}" >> $GITHUB_ENV
+
+                  now_long="$(date +'%m-%d-%Y %H:%M')"
+                  echo "now_long=${now_long}" >> $GITHUB_ENV
+
+                  now_docker="$(date +'%Y%m%d')"
+                  echo "now_docker=${now_docker}" >> $GITHUB_ENV
+
+                  now_docker_ts="$(date -u +'%FT%T.%3NZ')"
+                  echo "now_docker_ts=${now_docker}" >> $GITHUB_ENV
+
+                  echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
+                  echo -e
+                  sudo apt -qq update
+                  sudo apt -qq install tree
+                  echo -e
+                  echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
+                  echo -e
+                  echo " Runner .............. ${{ runner.name }}"
+                  echo " Workflow ............ ${{ github.workflow }} (#${{ github.workflow_ref }})"
+                  echo " Run Number .......... #${{ github.run_number }}"
+                  echo " Ref ................. #${{ github.ref }}"
+                  echo " Ref Name ............ #${{ github.ref_name }}"
+                  echo " Event Name .......... #${{ github.event_name }}"
+                  echo " Repo ................ #${{ github.repository }}"
+                  echo " Repo Owner .......... #${{ github.repository_owner }}"
+                  echo " Run ID .............. https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                  echo " Triggered By ........ ${{ github.actor }}"
+                  echo " SHA 1 ............... ${GITHUB_SHA}"
+                  echo " SHA 2 ............... ${{ github.sha }}"
+                  echo " Workspace ........... ${{ github.workspace }}"
+                  echo " PWD ................. ${PWD}"
+                  echo " Job Name ............ ${{ steps.context.outputs.job_name }}"
+                  echo " Job ID .............. ${{ steps.context.outputs.job_id }}"
+                  echo " Job URL ............. ${{ steps.context.outputs.job_url }}"
+                  echo " Run ID .............. ${{ steps.context.outputs.run_id }}"
+                  echo " Run Attempt ......... ${{ steps.context.outputs.run_attempt }}"
+                  echo " Run Number .......... ${{ steps.context.outputs.run_number }}"
+                  echo " Run URL ............. ${{ steps.context.outputs.run_url }}"
+                  echo " Run Env ............. ${{ steps.context.outputs.environment }}"
+                  echo " Run Env URL ......... ${{ steps.context.outputs.environment_url }}"
+                  echo " Run Deployment ...... ${{ steps.context.outputs.deployment_id }}"
+                  echo " Run Deployment URL .. ${{ steps.context.outputs.deployment_url }}"
+                  echo " Run Deployment ...... ${{ steps.context.outputs.deployment_id }}"
+                  echo " Run Runner Name ..... ${{ steps.context.outputs.runner_name }}"
+                  echo " Run Runner ID ....... ${{ steps.context.outputs.runner_id }}"
+                  echo " Year ................ ${year}"
+                  echo " Now ................. ${now}"
+                  echo " Now (Short) ......... ${now_short}"
+                  echo " Now (Long) .......... ${now_long}"
+                  echo " Now (Docker) ........ ${now_docker}"
+                  echo " Now (Docker TS) ..... ${now_docker_ts}"
+                  echo -e
+                  echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
+                  echo -e
+                  tree -I node_modules -I .git
+                  echo -e
+                  echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
+
+            # #
+            #   Generate › Configure
             #
             #   this step installs packages we need to manage ipsets.
             #       - iprange
@@ -216,8 +348,7 @@ jobs:
             #       https://github.com/firehol/iprange
             # #
 
-            - name: >-
-                ⚙️ Configure
+            - name: '⚙️ Configure'
               id: task_blocklist_generate_configure
               run: |
                   git clone https://github.com/firehol/iprange.git ./.temp/iprange
@@ -227,14 +358,12 @@ jobs:
                   sudo make && make install
 
             # #
-            #   Generate > Set Template Permissions
+            #   Generate › Set Template Permissions
             # #
 
-            - name: >-
-                ☑️ Set Permissions
+            - name: "☑️ Set Permissions"
               id: task_blocklist_generate_perms
               run: |
-
                   #   Set Permissions
                   chmod +x ".github/scripts/bl-master.sh"
                   chmod +x ".github/scripts/bl-format.sh"
@@ -250,22 +379,20 @@ jobs:
                   chmod +x ".github/scripts/tool-range-iprange.sh"
 
             # #
-            #   Generate > Set Env Variables
+            #   Generate › Set Env Variables
             # #
 
-            - name: >-
-                ⚙️ Set Env Variables
+            - name: "📦 Set Env Variables"
               id: task_commit_pre
               run: |
                   useragent="${{ vars.API_USERAGENT }}"
                   echo "USERAGENT=$(echo $useragent)" >> $GITHUB_ENV
 
             # #
-            #   Generate > Master
+            #   Generate › Master
             # #
 
-            - name: >-
-                🧱 Generate › Master
+            - name: "🧱 Generate › Master"
               id: task_blocklist_generate_master
               run: |
                   run_master=".github/scripts/bl-master.sh blocklists/master.ipset ${{ secrets.API_01_FILE_01 }} ${{ secrets.API_01_FILE_02 }} ${{ secrets.API_01_FILE_03 }} ${{ secrets.API_01_FILE_04 }} ${{ secrets.API_01_FILE_05 }} ${{ secrets.API_01_FILE_06 }} ${{ secrets.API_01_FILE_07 }} ${{ secrets.API_01_FILE_08 }} ${{ secrets.API_01_FILE_09 }}"
@@ -275,11 +402,10 @@ jobs:
                   eval "./$run_highrisk"
 
             # #
-            #   Generate > Privacy
+            #   Generate › Privacy
             # #
 
-            - name: >-
-                🧱 Generate › Privacy
+            - name: "🧱 Generate › Privacy"
               id: task_blocklist_generate_privacy
               run: |
 
@@ -415,8 +541,7 @@ jobs:
             #   Generate > Spam
             # #
 
-            - name: >-
-                🧱 Generate › Spam
+            - name: "🧱 Generate › Spam"
               id: task_blocklist_generate_spam
               run: |
                   run_spamhaus=".github/scripts/bl-plain.sh blocklists/spam/spam_spamhaus.ipset ${{ secrets.API_03_SPAM_SPAMHAUS_URL }}"
@@ -428,8 +553,7 @@ jobs:
             #   only updated once per day (at 1am UTC)
             # #
 
-            - name: >-
-                🧱 Generate › Spam › Forums (1/day)
+            - name: "🧱 Generate › Spam › Forums (1/day)"
               id: task_blocklist_spam_generate_forums
               if: (github.event_name == 'schedule' && github.event.schedule == '0 0 * * *') || inputs.RUN_ALL_ACTIONS
               run: |
@@ -454,8 +578,7 @@ jobs:
             #                   we use numerous resources to compare ASNs to see which ones are active and which ones have been migrated.
             # #
 
-            - name: >-
-                🧱 Generate › ISP
+            - name: "🧱 Generate › ISP"
               id: task_blocklist_generate_isp
               run: |
                   # ISP › AOL
@@ -525,8 +648,7 @@ jobs:
             #                                         308_2024
             # #
 
-            - name: >-
-                🧱 Generate › Geographical › GeoLite2 (Setup)
+            - name: "🧱 Geographical › GeoLite2 (Setup)"
               id: task_blocklist_geographical_generate_setup
               if: (github.event_name == 'schedule' && github.event.schedule == '0 0 * * *') || ( github.event_name == 'workflow_dispatch' && inputs.RUN_ALL_ACTIONS == true )
               run: |
@@ -543,8 +665,7 @@ jobs:
             #                         if: steps.task_blocklist_geographical_generate_cache.outputs.cache-hit == 'true'
             # #
 
-            - name: >-
-                🧱 Generate › Geographical › GeoLite2 (Cache)
+            - name: "🧱 Geographical › GeoLite2 (Cache)"
               id: task_blocklist_geographical_generate_cache
               uses: actions/cache@v4
               if: steps.task_blocklist_geographical_generate_setup.outcome == 'success'
@@ -556,8 +677,7 @@ jobs:
             #   Generate > Geographical > Geolite2 > Build
             # #
 
-            - name: >-
-                🧱 Generate › Geographical › GeoLite2 (1/day)
+            - name: "🧱 Geographical › GeoLite2 (1/day)"
               id: task_blocklist_geographical_generate_geolite2
               if: steps.task_blocklist_geographical_generate_setup.outcome == 'success'
               run: |
@@ -569,28 +689,66 @@ jobs:
             #   Generate > Transmission
             # #
 
-            - name: >-
-                🧱 Generate › Transmission
+            - name: "🧱 Generate › Transmission"
               id: task_blocklist_generate_transmission
               run: |
                   run_bt=".github/scripts/bt-transmission.sh"
                   eval "./$run_bt"
 
             # #
-            #   Generate  > Artifact > Upload
+            #   Generate › Verbose › List Tree
             # #
 
-            - name: >-
-                📦 Generate › Artifact › Upload
-              id: task_blocklist_generate_artifact_upload
-              uses: actions/upload-artifact@v4
-              with:
-                  name: blocklist-latest
-                  path: ./
-                  retention-days: 1
+            - name: '🌲 Verbose › Tree Listing'
+              run: |
+                  tree -I ./
+
+            # #
+            #   Generate › SFTP / SSH › Upload Artifact
+            # #
+
+            - name: 'SSH › Zip Artifacts'
+              id: generate_artifact_zip
+              run: |
+                  ARTIFACT_NAME="artifacts_${{ github.ref_name }}_${{ github.run_id }}.zip"
+                  echo "ARTIFACT_NAME=$ARTIFACT_NAME" >> $GITHUB_ENV
+                  echo "artifact-name=$ARTIFACT_NAME" >> $GITHUB_OUTPUT
+                  zip -r "$ARTIFACT_NAME" ./*
+
+            # #
+            #   Generate › SFTP / SSH › Setup SSH Key
+            # #
+
+            - name: 'SSH › Upload Artifacts'
+              run: |
+                  # Make sure the .ssh folder exists
+                  mkdir -p ~/.ssh
+                  echo "${{ secrets.SFTP_GITHUB_SSH_PRIVATE_KEY }}" > ~/.ssh/github_sftp_key
+                  chmod 600 ~/.ssh/github_sftp_key
+
+                  # Upload uniquely named artifact
+                  sftp -P ${{ secrets.SFTP_SERVER_PORT }} \
+                      -i ~/.ssh/github_sftp_key \
+                      -o StrictHostKeyChecking=no \
+                  github@${{ secrets.SFTP_SERVER_IP }} <<EOF
+                  put $ARTIFACT_NAME
+                  bye
+                  EOF
+
+            # #
+            #   Generate › Artifact › Upload
+            # #
+
+          #  - name: "🎁 Generate › Upload Artifact"
+          #    id: task_blocklist_generate_artifact_upload
+          #    uses: actions/upload-artifact@v4
+          #    with:
+          #        name: blocklist-latest
+          #        path: ./
+          #        retention-days: 1
 
     # #
-    #   Job > Commit
+    #   Job › Commit
     # #
 
     blocklist-commit:
@@ -598,39 +756,65 @@ jobs:
           📋 Commit
       # runs-on: ubuntu-latest
         runs-on: apollo-x64
-        timeout-minutes: 5
+        timeout-minutes: 60
         needs: [ blocklist-setup, blocklist-generate ]
         steps:
 
             # #
-            #   Generate > Checkout
+            #   Generate › Checkout
             # #
 
-            - name: >-
-                ☑️ Commit › Checkout
-              id: task_blocklist_master_checkout
+            - name: '☑️ Commit › Checkout'
               uses: actions/checkout@v4
               with:
                   fetch-depth: 0
 
             # #
-            #   Generate  > Artifact > Download
+            #   Generate › Artifact › Setup SSH
             # #
 
-            - name: >-
-                🎁 Commit › Artifact › Download
-              id: task_commit_artifact_download
-              uses: actions/download-artifact@v4
-              with:
-                  name: blocklist-latest
-                  path: ./
+            - name: '🎁 Commit › Setup SSH Artifact'
+              run: |
+                  mkdir -p ~/.ssh
+                  echo "${{ secrets.SFTP_GITHUB_SSH_PRIVATE_KEY }}" > ~/.ssh/github_sftp_key
+                  chmod 600 ~/.ssh/github_sftp_key
 
             # #
-            #   Commit > Pre-commit
+            #   Generate › Artifact › Download
             # #
 
-            - name: >-
-                📦 Commit › Pre-commit
+            - name: '🎁 Commit › Download Artifact'
+              run: |
+                  ARTIFACT_NAME="${{ needs.blocklist-generate.outputs.artifact-name }}"
+                  echo "Downloading $ARTIFACT_NAME"
+
+                  sftp -P ${{ secrets.SFTP_SERVER_PORT }} \
+                      -i ~/.ssh/github_sftp_key \
+                      -o StrictHostKeyChecking=no \
+                      github@${{ secrets.SFTP_SERVER_IP }} <<EOF
+                  get $ARTIFACT_NAME
+                  bye
+                  EOF
+
+                  unzip -o "$ARTIFACT_NAME"
+                  rm -f "$ARTIFACT_NAME"
+
+            # #
+            #   Generate › Artifact › Download
+            # #
+
+        #    - name: "🎁 Commit › Download Artifact"
+        #      id: task_commit_artifact_download
+        #      uses: actions/download-artifact@v4
+        #      with:
+        #          name: blocklist-latest
+        #          path: ./
+
+            # #
+            #   Commit › Precommit
+            # #
+
+            - name: "📦 Commit › Pre-commit"
               id: task_commit_pre
               run: |
                   now=$(date -u '+%m/%d/%Y %H:%M')
@@ -640,11 +824,10 @@ jobs:
                   echo "NOW=$(echo $now)" >> $GITHUB_ENV
 
             # #
-            #   Update README
+            #   Commit › Update README
             # #
 
-            - name: >-
-                📄 Commit › README › Update
+            - name: "📄 Update README"
               id: task_commit_readme_update
               run: |
                   chmod +x ".github/scripts/update-readme.sh"
@@ -652,11 +835,10 @@ jobs:
                   eval "./$run_readme"
 
             # #
-            #   GPG Key
+            #   Commit › GPG Key
             # #
 
-            - name: >-
-                📦 Commit › GPG Key
+            - name: "📦 Commit › GPG Key"
               id: task_commit_gpg
               uses: crazy-max/ghaction-import-gpg@v6
               with:
@@ -666,11 +848,10 @@ jobs:
                   git_commit_gpgsign: true
 
             # #
-            #   Commit > Commit
+            #   Commit › Commit
             # #
 
-            - name: >-
-                📦 Commit › Execute
+            - name: "📦 Commit › Execute"
               id: task_commit_execute
               uses: stefanzweifel/git-auto-commit-action@v5
               with:
@@ -678,3 +859,17 @@ jobs:
                   commit_author: "${{ steps.task_commit_gpg.outputs.name }} <${{ steps.task_commit_gpg.outputs.email }}>"
                   commit_user_name: ${{ steps.task_commit_gpg.outputs.name }}
                   commit_user_email: ${{ steps.task_commit_gpg.outputs.email }}
+
+            # #
+            #   Commit › Clean up Artifacts
+            #   
+            #   Left-behind artifacts cleaned up after 5 days
+            # #
+
+            - name: '🎁 Commit › Cleanup Old Artifacts'
+              run: |
+                  ssh -p ${{ secrets.SFTP_SERVER_PORT }} \
+                  -i ~/.ssh/github_sftp_key \
+                  -o StrictHostKeyChecking=no \
+                  github@${{ secrets.SFTP_SERVER_IP }} \
+                  "find ~/public_html -name 'artifacts_*.zip' -type f -mtime +5 -delete"
