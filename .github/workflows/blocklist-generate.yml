@@ -794,18 +794,11 @@ jobs:
             #   Generate › Artifact › Download
             # #
 
-# #
-#   Generate › Artifact › Download
-# #
-
             - name: '🎁 Commit › Download Artifact'
               run: |
-                  REPO_NAME="${{ github.event.repository.name }}"
-                  BRANCH_NAME="${{ github.ref_name }}"
-                  RUN_ID="${{ github.run_id }}"
-
-                  ARTIFACT_NAME="artifact_${BRANCH_NAME}_${RUN_ID}.zip"
-                  ARTIFACT_PATH="${REPO_NAME}/${ARTIFACT_NAME}"
+                  ARTIFACT_PATH="${{ needs.blocklist-generate.outputs.artifact-path }}"
+                  ARTIFACT_NAME="$(basename "$ARTIFACT_PATH")"
+                  REPO_NAME="$(dirname "$ARTIFACT_PATH")"
 
                   echo "Downloading $ARTIFACT_PATH"
 
