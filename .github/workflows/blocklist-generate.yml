@@ -710,9 +710,18 @@ jobs:
             - name: 'SSH › Zip Artifacts'
               id: generate_artifact_zip
               run: |
-                  ARTIFACT_NAME="artifacts_${{ github.ref_name }}_${{ github.run_id }}.zip"
+                  REPO_NAME="${{ github.event.repository.name }}"
+                  BRANCH_NAME="${{ github.ref_name }}"
+                  RUN_ID="${{ github.run_id }}"
+
+                  ARTIFACT_NAME="artifact_${BRANCH_NAME}_${RUN_ID}.zip"
+                  ARTIFACT_PATH="${REPO_NAME}/${ARTIFACT_NAME}"
+
+                  echo "REPO_NAME=$REPO_NAME" >> $GITHUB_ENV
                   echo "ARTIFACT_NAME=$ARTIFACT_NAME" >> $GITHUB_ENV
-                  echo "artifact-name=$ARTIFACT_NAME" >> $GITHUB_OUTPUT
+                  echo "ARTIFACT_PATH=$ARTIFACT_PATH" >> $GITHUB_ENV
+                  echo "artifact-path=$ARTIFACT_PATH" >> $GITHUB_OUTPUT
+
                   zip -r "$ARTIFACT_NAME" ./*
 
             # #
@@ -726,11 +735,13 @@ jobs:
                   echo "${{ secrets.SFTP_GITHUB_SSH_PRIVATE_KEY }}" > ~/.ssh/github_sftp_key
                   chmod 600 ~/.ssh/github_sftp_key
 
-                  # Upload uniquely named artifact
+                  # Upload to repo-specific directory
                   sftp -P ${{ secrets.SFTP_SERVER_PORT }} \
                       -i ~/.ssh/github_sftp_key \
                       -o StrictHostKeyChecking=no \
                   github@${{ secrets.SFTP_SERVER_IP }} <<EOF
+                  mkdir $REPO_NAME
+                  cd $REPO_NAME
                   put $ARTIFACT_NAME
                   bye
                   EOF
