@@ -794,15 +794,26 @@ jobs:
             #   Generate › Artifact › Download
             # #
 
+# #
+#   Generate › Artifact › Download
+# #
+
             - name: '🎁 Commit › Download Artifact'
               run: |
-                  ARTIFACT_NAME="${{ needs.blocklist-generate.outputs.artifact-name }}"
-                  echo "Downloading $ARTIFACT_NAME"
+                  REPO_NAME="${{ github.event.repository.name }}"
+                  BRANCH_NAME="${{ github.ref_name }}"
+                  RUN_ID="${{ github.run_id }}"
+
+                  ARTIFACT_NAME="artifact_${BRANCH_NAME}_${RUN_ID}.zip"
+                  ARTIFACT_PATH="${REPO_NAME}/${ARTIFACT_NAME}"
+
+                  echo "Downloading $ARTIFACT_PATH"
 
                   sftp -P ${{ secrets.SFTP_SERVER_PORT }} \
                       -i ~/.ssh/github_sftp_key \
                       -o StrictHostKeyChecking=no \
                       github@${{ secrets.SFTP_SERVER_IP }} <<EOF
+                  cd $REPO_NAME
                   get $ARTIFACT_NAME
                   bye
                   EOF
