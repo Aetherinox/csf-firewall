@@ -866,10 +866,10 @@ jobs:
             #   Left-behind artifacts cleaned up after 5 days
             # #
 
-            - name: '🎁 Commit › Cleanup Old Artifacts'
-              run: |
-                  ssh -p ${{ secrets.SFTP_SERVER_PORT }} \
-                  -i ~/.ssh/github_sftp_key \
-                  -o StrictHostKeyChecking=no \
-                  github@${{ secrets.SFTP_SERVER_IP }} \
-                  "find ~/public_html -name 'artifacts_*.zip' -type f -mtime +5 -delete"
+        #   - name: '🎁 Commit › Cleanup Old Artifacts'
+        #     run: |
+        #         ssh -p ${{ secrets.SFTP_SERVER_PORT }} \
+        #         -i ~/.ssh/github_sftp_key \
+        #         -o StrictHostKeyChecking=no \
+        #         github@${{ secrets.SFTP_SERVER_IP }} \
+        #         "find ~/public_html -name 'artifacts_*.zip' -type f -mtime +5 -delete"
