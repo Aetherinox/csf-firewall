@@ -238,6 +238,7 @@ jobs:
         needs: [ blocklist-setup ]
         outputs:
             artifact-name: ${{ steps.generate_artifact_zip.outputs.artifact-name }}
+            artifact-path: ${{ steps.generate_artifact_zip.outputs.artifact-path }}
         steps:
 
             # #
@@ -720,6 +721,8 @@ jobs:
                   echo "REPO_NAME=$REPO_NAME" >> $GITHUB_ENV
                   echo "ARTIFACT_NAME=$ARTIFACT_NAME" >> $GITHUB_ENV
                   echo "ARTIFACT_PATH=$ARTIFACT_PATH" >> $GITHUB_ENV
+
+                  echo "artifact-name=$ARTIFACT_NAME" >> $GITHUB_OUTPUT
                   echo "artifact-path=$ARTIFACT_PATH" >> $GITHUB_OUTPUT
 
                   zip -r "$ARTIFACT_NAME" ./*
