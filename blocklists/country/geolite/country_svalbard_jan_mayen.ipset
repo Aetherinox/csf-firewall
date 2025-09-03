@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_svalbard_jan_mayen_ipset
 #   @uuid           3c8709aa-0982-38e5-a8d0-24b8f776dd6f
-#   @updated        Mon Aug 11 01:33:04 UTC 2025
+#   @updated        Wed 03 Sep 2025 01:22:39 AM UTC
 #   @entries        536 ips
 #                   79 subnets
 #                   79 lines
@@ -68,8 +68,8 @@
 2600:70ff:a952::/48
 2606:40:16b0::/44
 2606:40:16c0::/44
-2606:40:21c2::/51
-2606:40:22e9:2000::/51
+2606:40:21c2::/54
+2606:40:22e9:2000::/54
 2607:8940:4120:a600::/56
 2607:8940:4130:a600::/56
 2607:8940:4163:fc00::/55
