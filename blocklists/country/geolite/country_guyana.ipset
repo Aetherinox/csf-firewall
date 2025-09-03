@@ -5,8 +5,8 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_guyana_ipset
 #   @uuid           bc500bbe-e40e-3f0b-8b6a-a7e6242d122f
-#   @updated        Mon Aug 11 01:32:34 UTC 2025
-#   @entries        75258 ips
+#   @updated        Wed 03 Sep 2025 01:21:23 AM UTC
+#   @entries        75,258 ips
 #                   203 subnets
 #                   203 lines
 #   @country        Guyana (GY)
@@ -117,8 +117,8 @@
 2605:59c0:15c0::/42
 2605:59c8:6400::/42
 2606:40:ba0::/43
-2606:40:20f5:6000::/51
-2606:40:214a:a000::/51
+2606:40:20f5:6000::/54
+2606:40:214a:a000::/54
 2606:54c0:3908::/45
 2606:54c3:0:4ab::/64
 2607:8940:4023:8100::/56
