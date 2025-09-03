@@ -1,0 +1,49 @@
+###############################################################################
+# Copyright (C) 2006-2025 Jonathan Michaelson
+#
+# https://github.com/waytotheweb/scripts
+#
+# This program is free software; you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free Software
+# Foundation; either version 3 of the License, or (at your option) any later
+# version.
+#
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+# details.
+#
+# You should have received a copy of the GNU General Public License along with
+# this program; if not, see <https://www.gnu.org/licenses>.
+###############################################################################
+# The following is a list of log files for the LOGSCANNER feature
+
+# All:
+/var/log/messages
+/var/log/lfd.log
+/var/log/cxswatch.log
+
+# RedHat:
+/var/log/secure
+
+# Debian/Ubuntu:
+/var/log/auth.log
+/var/log/daemon.log
+/var/log/syslog
+
+# cPanel:
+/usr/local/cpanel/logs/error_log
+/var/log/exim_paniclog
+
+# DirectAdmin:
+/var/log/directadmin/error.log
+/var/log/directadmin/security.log
+/var/log/exim/paniclog
+
+# InterWorx
+/usr/local/interworx/var/log/error.log
+
+# CyberPanel
+/home/cyberpanel/error-logs.txt
+/usr/local/lscp/cyberpanel/logs/error.log
+/usr/local/lscp/cyberpanel/logs/stderr.log
