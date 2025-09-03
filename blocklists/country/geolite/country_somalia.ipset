@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_somalia_ipset
 #   @uuid           b3c221ba-a4ed-3fbf-9d1f-fa0d5961be05
-#   @updated        Mon Aug 11 01:33:05 UTC 2025
-#   @entries        56032 ips
-#                   192 subnets
-#                   192 lines
+#   @updated        Wed 03 Sep 2025 01:22:42 AM UTC
+#   @entries        56,033 ips
+#                   194 subnets
+#                   194 lines
 #   @country        Somalia (SO)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -25,6 +25,7 @@
 41.78.72.0/22
 41.79.196.0/22
 41.223.108.0/22
+44.32.192.202/32
 66.96.123.0/26
 84.254.175.0/24
 88.202.36.0/24
@@ -200,6 +201,7 @@
 2a13:a5c3:d654::/46
 2a13:a5c7:25cd::/48
 2a13:a5c7:25ff:cd00::/56
+2a14:7581:bc7::/48
 2c0f:b00::/32
 2c0f:2a80:3180::/41
 2c0f:4700::/32
