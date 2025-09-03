@@ -1,0 +1,43 @@
+###############################################################################
+# Copyright (C) 2006-2025 Jonathan Michaelson
+#
+# https://github.com/waytotheweb/scripts
+#
+# This program is free software; you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free Software
+# Foundation; either version 3 of the License, or (at your option) any later
+# version.
+#
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+# details.
+#
+# You should have received a copy of the GNU General Public License along with
+# this program; if not, see <https://www.gnu.org/licenses>.
+###############################################################################
+
+1. Download and install cmc:
+
+cd /usr/src
+rm -fv /usr/src/cmc.tgz
+wget http://download.configserver.com/cmc.tgz
+tar -xzf cmc.tgz
+cd cmc
+sh install.sh
+rm -Rfv /usr/src/cmc*
+
+2. Login to WHM and scroll to the bottom of the left hand menu and you should see "ConfigServer ModSecurity Control"
+
+
+If you want to uninstall, simply:
+
+cd /usr/src
+rm -fv /usr/src/cmc.tgz
+wget http://download.configserver.com/cmc.tgz
+tar -xzf cmc.tgz
+cd cmc
+sh uninstall.sh
+rm -Rfv /usr/src/cmc*
+
+Note: This won't remove the mod_security files and rules which you will need to do manually within /usr/local/apache/conf/
