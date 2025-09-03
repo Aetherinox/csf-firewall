@@ -1,0 +1,41 @@
+###############################################################################
+# Copyright (C) 2006-2025 Jonathan Michaelson
+#
+# https://github.com/waytotheweb/scripts
+#
+# This program is free software; you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free Software
+# Foundation; either version 3 of the License, or (at your option) any later
+# version.
+#
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+# details.
+#
+# You should have received a copy of the GNU General Public License along with
+# this program; if not, see <https://www.gnu.org/licenses>.
+###############################################################################
+# The following is a list of files that lfd directory watching will ignore. You
+# must specify the full path to the file
+#
+# You can also use perl regular expression pattern matching, for example:
+# /tmp/clamav.*
+# /tmp/.*\.wrk
+#
+# Remember that you will need to escape special characters (precede them with a
+# backslash) such as \. \?
+#
+# Pattern matching will only occur with strings containing an asterix (*),
+# otherwise full file path matching will be applied
+#
+# You can also add entries to ignore files owner by a particular user by
+# preceding it with user:, for example:
+# user:bob
+#
+# Note: files owned by root are ignored
+
+#/tmp/\.horde
+#/tmp/\.horde/.*
+#/tmp/yarn--[\d\-\.]+/(node|yarn)
+#/tmp/\.spamassassin.*

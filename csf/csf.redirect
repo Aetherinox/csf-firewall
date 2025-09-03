@@ -1,0 +1,47 @@
+###############################################################################
+# Copyright (C) 2006-2025 Jonathan Michaelson
+#
+# https://github.com/waytotheweb/scripts
+#
+# This program is free software; you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free Software
+# Foundation; either version 3 of the License, or (at your option) any later
+# version.
+#
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+# details.
+#
+# You should have received a copy of the GNU General Public License along with
+# this program; if not, see <https://www.gnu.org/licenses>.
+###############################################################################
+# The following is a list of port and/or IP address assignments to direct
+# traffic to alternative ports/IP addresses
+#
+# Requirements:
+#   nat tables
+#   ipt_DNAT iptables module
+#   ipt_SNAT iptables module
+#   ipt_REDIRECT iptables module
+#
+# The following are the allowed redirection formats
+#
+# DNAT (redirect from one IP address to a different one):
+# IPx|*|IPy|*|tcp/udp          - To IPx redirects to IPy
+# IPx|portA|IPy|portB|tcp/udp  - To IPx to portA redirects to IPy portB
+#
+# DNAT examples:
+# 192.168.254.62|*|10.0.0.1|*|tcp
+# 192.168.254.62|666|10.0.0.1|25|tcp
+#
+# REDIRECT (redirect from port to a different one):
+# IPx|portA|*|portB|tcp/udp    - To IPx to portA redirects to portB
+# *|portA|*|portB|tcp/udp      - To portA redirects to portB
+#
+# REDIRECT examples:
+# 192.168.254.60|666|*|25|tcp
+# *|666|*|25|tcp
+#
+# See readme.txt for more information
+#

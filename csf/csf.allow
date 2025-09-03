@@ -1,0 +1,33 @@
+###############################################################################
+# Copyright (C) 2006-2025 Jonathan Michaelson
+#
+# https://github.com/waytotheweb/scripts
+#
+# This program is free software; you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free Software
+# Foundation; either version 3 of the License, or (at your option) any later
+# version.
+#
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+# details.
+#
+# You should have received a copy of the GNU General Public License along with
+# this program; if not, see <https://www.gnu.org/licenses>.
+###############################################################################
+# The following IP addresses will be allowed through iptables.
+# One IP address per line.
+# CIDR addressing allowed with a quaded IP (e.g. 192.168.254.0/24).
+# Only list IP addresses, not domain names (they will be ignored)
+#
+# Advanced port+ip filtering allowed with the following format
+# tcp/udp|in/out|s/d=port,port,...|s/d=ip
+# See readme.txt for more information
+#
+# Note: IP addressess listed in this file will NOT be ignored by lfd, so they
+# can still be blocked. If you do not want lfd to block an IP address you must
+# add it to csf.ignore
+
+Include /etc/csf/cpanel.comodo.allow
+Include /etc/csf/cpanel.allow

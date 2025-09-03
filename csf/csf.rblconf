@@ -1,0 +1,35 @@
+###############################################################################
+# Copyright (C) 2006-2025 Jonathan Michaelson
+#
+# https://github.com/waytotheweb/scripts
+#
+# This program is free software; you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free Software
+# Foundation; either version 3 of the License, or (at your option) any later
+# version.
+#
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+# details.
+#
+# You should have received a copy of the GNU General Public License along with
+# this program; if not, see <https://www.gnu.org/licenses>.
+###############################################################################
+# This file configures optional entries for the IP checking against RBLs within
+# csf
+#
+# There are 4 options available to enable/disable RBLs and IPs:
+#
+# To disable inbuilt RBLs or to enable other RBLs, e.g.:
+#
+# enablerbl:my.dnsrbl.net
+# disablerbl:bl.spamcop.net
+#
+# To disable local IPs or to enable other IPs, e.g.:
+# 
+# enableip:11.22.33.44
+# disableip:10.10.10.10
+#
+# There should be no spaces on any of the configuration lines. Lines beginning
+# with # are comments
