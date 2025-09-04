@@ -10,15 +10,29 @@
 #                       secrets.PYPI_API_TOKEN                                      self Pypi API token (production site) - https://pypi.org/
 #                       secrets.PYPI_API_TEST_TOKEN                                 self Pypi API token (test site) - https://test.pypi.org/
 #                       secrets.SELF_DOCKERHUB_TOKEN                                self Dockerhub token
+#                       secrets.CODECOV_TOKEN                                       codecov upload token for nodejs projects
+#                       secrets.MAXMIND_GELITE_TOKEN                                maxmind API token
+#                       secrets.CF_ACCOUNT_ID                                       cloudflare account id
+#                       secrets.CF_ACCOUNT_TOKEN                                    cloudflare account token
 #                       secrets.ORG_TOKEN                                           org github personal access token (fine-grained)
 #                       secrets.ORG_TOKEN_CL                                        org github personal access token (classic)
 #                       secrets.ORG_DOCKERHUB_TOKEN                                 org dockerhub secret
 #                       secrets.ORG_GITEA_TOKEN                                     org gitea personal access token (classic) with package:write permission
 #                       secrets.BOT_GPG_KEY_ASC                                     bot gpg private key (armored) | BEGIN PGP PRIVATE KEY BLOCK
+#                       secrets.BOT_GPG_KEY_B64                                     bot gpg private key (binary) converted to base64
 #                       secrets.BOT_GPG_PASSPHRASE                                  bot gpg private key passphrase
 #                       secrets.DISCORD_WEBHOOK_CHAN_GITHUB_RELEASES                discord webhook to report release notifications from github to discord
 #                       secrets.DISCORD_WEBHOOK_CHAN_GITHUB_WORKFLOWS               discord webhook to report workflow notifications from github to discord
 #                       secrets.DISCORD_WEBHOOK_CHAN_GITHUB_UPDATES                 discord webhook to report activity notifications from github to discord
+#   
+#   @local              these workflows can be tested locally through the use of `act`
+#                           https://github.com/nektos/act
+#                       Extract act to folder
+#                       Add system env var with path to act.exe
+#                       Run the commands:
+#                           git pull https://github.com/username/repo
+#                           act -W .github/workflows/documentation.yml -P ubuntu-latest=catthehacker/ubuntu:full-22.04
+#                           act -W .github/workflows/documentation.yml -s TOKEN_CL=XXXXXXXXXX --pull=false
 # #
 
 name: '📒 Docs › Build'
@@ -30,8 +44,7 @@ run-name: '📒 Docs › Build'
 
 env:
     ASSIGN_USER:                    Aetherinox
-    BOT_NAME_1:                     EuropaServ
-    BOT_NAME_2:                     BinaryServ
+    BOT_NAME_1:                     BinaryServ
     BOT_NAME_DEPENDABOT:            dependabot[bot]
     BOT_NAME_RENOVATE:              renovate[bot]
 
@@ -56,9 +69,9 @@ on:
 
 jobs:
     build-docs:
-        runs-on: ubuntu-latest
-        # runs-on: apollo-x64
-        timeout-minutes: 5
+      # runs-on: ubuntu-latest
+        runs-on: apollo-x64
+        timeout-minutes: 10
         permissions:
             contents: write
             pages: write
@@ -72,7 +85,6 @@ jobs:
 
             - name: >-
                 🕛 Get Timestamp
-              id: task_build_envvar
               run: |
                   echo "YEAR=$(date +'%Y')" >> $GITHUB_ENV
                   echo "NOW=$(date +'%m-%d-%Y %H:%M:%S')" >> $GITHUB_ENV
@@ -86,17 +98,16 @@ jobs:
 
             - name: >-
                 ✅ Start
-              id: task_build_start
               run: |
-                echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
-                echo " Starting Documentation Build script"
-                echo " Runner .............. ${{ runner.name }}"
-                echo " Workflow ............ ${{ github.workflow }} (#${{ github.workflow_ref }})"
-                echo " Run Number .......... #${{ github.run_number }}"
-                echo " Run ID .............. https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-                echo " Triggered By ........ ${{ github.actor }}"
-                echo " Time ................ ${{ env.NOW_LONG }}"
-                echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
+                  echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
+                  echo " Starting Documentation Build script"
+                  echo " Runner .............. ${{ runner.name }}"
+                  echo " Workflow ............ ${{ github.workflow }} (#${{ github.workflow_ref }})"
+                  echo " Run Number .......... #${{ github.run_number }}"
+                  echo " Run ID .............. https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                  echo " Triggered By ........ ${{ github.actor }}"
+                  echo " Time ................ ${{ env.NOW_LONG }}"
+                  echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
 
             # #
             #   Build › Checkout
@@ -112,7 +123,6 @@ jobs:
 
             - name: >-
                 🐍 Python › Setup
-              id: task_build_python_setup
               uses: actions/setup-python@v5
               with:
                   python-version: 3.x
@@ -123,7 +133,6 @@ jobs:
 
             - name: >-
                 📕 Build Documentation
-              id: task_build_docs
               run: |
                   export DOCS_NAME=${{ secrets.DOCS_NAME }}
                   export DOCS_SECRET_L1=${{ secrets.DOCS_SECRET_L1 }}
@@ -148,7 +157,6 @@ jobs:
 
             - name: >-
                 💽 Deploy
-              id: task_build_deploy
               uses: peaceiris/actions-gh-pages@v4
               with:
                   personal_token: ${{ secrets.ADMINSERV_TOKEN_CL }}
