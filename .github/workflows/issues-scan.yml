@@ -498,98 +498,6 @@ jobs:
                       console.log(JSON.stringify(github, null, 4));
                       let ct = context;
 
-                        /*  #
-                        #    Example PR used for local act testing
-                        #    Uncomment to use in local env
-                        #
-                        #       can be tested using act:
-                        #           - https://github.com/nektos/act
-                        #       command:
-                        #           git pull https://github.com/username/repo
-                        #           act -W .github/workflows/issues-scan.yml -P ubuntu-latest=catthehacker/ubuntu:full-22.04
-                        #           act -W .github/workflows/issues-scan.yml -s TOKEN_CL=XXXXXXXXXX --pull=false
-                        #  */
-
-                      /*
-                      ct = {
-                            "issue": {
-                                "number": 32
-                            },
-                            "repo": {
-                                "owner": "Aetherinox",
-                                "repo": "TheRepoName"
-                            },
-                            "payload": {
-                                "action": "synchronize",
-                                "after": "f087c5bea8800f41018ef328463531ea247547ef",
-                                "before": "a8bdd791b80b2fbb78169234690ccb61b9d014f1",
-                                "number": 32,
-                                "organization": {
-                                    "avatar_url": "https://avatars.githubusercontent.com/u/200161462?v=4",
-                                    "events_url": "https://api.github.com/orgs/Aetherinox/events",
-                                    "hooks_url": "https://api.github.com/orgs/Aetherinox/hooks",
-                                    "issues_url": "https://api.github.com/orgs/Aetherinox/issues",
-                                    "login": "Aetherinox",
-                                    "members_url": "https://api.github.com/orgs/Aetherinox/members{/member}",
-                                    "public_members_url": "https://api.github.com/orgs/Aetherinox/public_members{/member}",
-                                    "repos_url": "https://api.github.com/orgs/Aetherinox/repos",
-                                    "url": "https://api.github.com/orgs/Aetherinox"
-                                },
-                                "pull_request": {
-                                    "created_at": "2025-03-17T23:32:22Z",
-                                    "updated_at": "2025-03-17T23:32:22Z",
-                                    "url": "https://api.github.com/repos/Aetherinox/TheRepoName",
-                                    "title": "Test PR Workflow",
-                                    "head": {
-                                        "ref": "main"
-                                    },
-                                    "base": {
-                                        "ref": "main"
-                                    },
-                                    "user": {
-                                        "login": "Aetherinox"
-                                    },
-                                    "labels": [
-                                      {
-                                          "color": "146b4a",
-                                          "default": false,
-                                          "description": "Ready to be reviewed",
-                                          "id": 7821944832,
-                                          "name": "AC › Passed",
-                                          "node_id": "LA_kwDONW-GkM8AAAAB0jloAA",
-                                          "url": "https://api.github.com/repos/Aetherinox/TheRepoName/labels/AC%20%E2%80%BA%20Passed"
-                                      },
-                                      {
-                                          "color": "8F1784",
-                                          "default": false,
-                                          "description": "Normal pull request",
-                                          "id": 7821944963,
-                                          "name": "Type › Pull Request",
-                                          "node_id": "LA_kwDONW-GkM8AAAAB0jlogw",
-                                          "url": "https://api.github.com/repos/Aetherinox/TheRepoName/labels/Type%20%E2%97%A6%20Pull%20Request"
-                                      }
-                                  ]
-                                },
-                            },
-                            "eventName": "pull_request_target",
-                            "sha": "c938f7a21247f69b29cf352d0c6890a63f260d47",
-                            "ref": "refs/heads/main",
-                            "workflow": "🎫 Issues › Scan",
-                            "action": "task_prscan_run",
-                            "actor": "renovate[bot]",
-                            "job": "job-pr-autoscan",
-                            "runNumber": 45,
-                            "runId": 13911964505,
-                            "apiUrl": "https://api.github.com",
-                            "serverUrl": "https://github.com",
-                            "graphqlUrl": "https://api.github.com/graphql"
-                      }
-                      */
-
-                      /*  #
-                      #    if local env ct isn't used, set ct to context for production
-                      #  */
-
                       if (!ct) {
                         ct = context;
                       }
@@ -597,10 +505,6 @@ jobs:
                       const fs                = require( 'fs' );
                       const escape_html       = ( unsafe ) => unsafe.replace( /&/g, '&amp;' ).replace( /</g, '&lt;' ).replace( />/g, '&gt;' ).replace( /"/g, '&quot;' ).replace( /'/g, '&#039;' );
                       const labels            = [];
-
-                      /*  #
-                       #   Get existing labels and add to list
-                       #  */
 
                       const labelsExisting = await github.rest.issues.listLabelsOnIssue({
                           issue_number: ct.issue.number,
@@ -685,10 +589,6 @@ jobs:
 
                       let date_created        = dateTimeformat( date ) + " UTC";
 
-                      /*  #
-                       #   ct.payload.pull_request.base.repo.owner.login
-                       #  */
-
                       let md_table =
                       `
                       | Category | Value |
@@ -719,17 +619,7 @@ jobs:
                       "- `General`\n" +
                       "- `Settings`\n"
 
-                      /*
-                          Loop files
-                      */
-
                       const files_skipped = [];
-
-                      /*
-                          List of files to skip check
-                          Entries are CASE sensitive
-                          For folders, append / at the end of the parent directory
-                      */
 
                       const type_dependency =
                       [
@@ -801,10 +691,6 @@ jobs:
                               bHasWarning   = true;
                           }
 
-                          /*
-                              Regex Searches
-                          */
-
                           const file_current                  = file;
                           const filesData                     = fs.readFileSync( file_current, 'utf8' );
                           const bContainsStyle                = /([A-Za-z]+\.style\.[A-Za-z]+)/gi.test( filesData );
@@ -825,7 +711,6 @@ jobs:
                           const bFuncFS_MkdirSync             = /(fs.mkdirSync)\((.*)\)(\[([^\]]*)\])?/gm.test( filesData );
                           const bFoundBadWord                 = /(?:'|").*(Settings|General).*(?:'|")?/gmi.test( filesData );
                           const bContainsGeneric              = /(?:^|(?<= ))(MyPlugin|MyPluginSettings|SampleSettings|SampleSettingTab|SampleModal|Sample Plugin|my-plugin)(?:(?= )|$)/gim.test( filesData );
-                          const check_depGetUnpinnedLeaf      = "app.workspace.getUnpinnedLeaf"
 
                           const bFileSkip                     = files_skipList.some( s => s.includes( file_current ) || file_current.includes( s ) );
 
@@ -835,207 +720,66 @@ jobs:
                               continue;
                           }
 
-                          /*
-                              Header
-                          */
-
                           message.push        ( "\n<br />\n\n---\n\n<br />\n" );
                           message.push        ( "### 📄 " + file_current + "\n" );
                           message             = message.concat( warnings );
 
-                          /*
-                              Skip File
-
-                              all contents in the array below will be skipped.
-
-                              E.g:    any file which resides in the .github folder will be skipped.
-                                      any file which ends in .yml will be skipped.
-                          */
-
-                          /*
-                              ( Deprecated ) app.workspace.getUnpinnedLeaf
-
-                              @usage  : obsidian.md
-                          */
-
-                          /*
-                          if ( filesData.toLowerCase( ).includes( check_depGetUnpinnedLeaf.toLowerCase( ) ) )
-                          {
-                              addError( "This function is deprecated, use `this.app.workspace.getLeaf( false )` instead" );
-                          }
-                          */
-
-                          /*
-                              Using inline style
-                          */
-
                           if ( bContainsStyle == true )
-                          {
                               addError( "Avoid assigning `inline styles` via JavaScript or in HTML. Move these styles to CSS so that they are adaptable by themes and other plugins." );
-                          }
-
-                          /*
-                              Using fetch
-                          */
 
                           if ( bFuncFetch == true )
-                          {
                               addError( "Do not handle http data with `fetch( )`. Use the Obsidian API -> `requestUrl` method instead, which will make sure that network requests work on every platform." );
-                          }
-
-                          /*
-                              Using var
-                          */
 
                           if ( bVar == true )
-                          {
                               addError( "Change all instances of `var` to **const** or **let**. var has function-level scope, and leads to bugs." );
-                          }
-
-                          /*
-                              Using lookbehind
-                          */
 
                           if ( bLookBehind == true )
-                          {
                               addError( "Lookbehinds are not supported in iOS < 16.4" );
-                          }
-
-                          /*
-                              Using HTML Node
-                          */
 
                           if ( bMarkdownHtmlNode == true )
-                          {
                               addError( "Do not use `NodeHtmlMarkdown`. Use Obsidian API -> `htmlToMarkdown` instead." );
-                          }
-
-                          /*
-                              As TFile
-                          */
 
                           if ( bAsTFile == true )
-                          {
                               addError( "Do not cast `as TFile`, use `instanceof` instead to check if the item is actually a file / folder" );
-                          }
-
-                          /*
-                              As TFolder
-                          */
 
                           if ( bAsTFolder == true )
-                          {
                               addError( "Do not cast `as TFolder`, use `instanceof` instead to check if the item is actually a file / folder" );
-                          }
-
-                          /*
-                              Casting to Any
-                          */
 
                           if ( bAsAny == true )
-                          {
                               addError( "Do not cast to `Any`" );
-                          }
-
-                          /*
-                              innerHTML
-                          */
 
                           if ( bInnerHTML == true )
-                          {
                               addError( `Using \`innerHTML\` is a security risk.` );
-                          }
-
-                          /*
-                              outerHTML
-                          */
 
                           if ( bOuterHTML == true )
-                          {
                               addError( `Using \`outerHTML\` is a security risk.` );
-                          }
-
-                          /*
-                              setTimeout
-                          */
 
                           if ( bFuncSetTimeout == true )
-                          {
                               addError( "Do not utilize `setTimeout`, utilize Obsidian API -> `sleep`. E.g: `await sleep( X )`" );
-                          }
-
-                          /*
-                              require("fs")
-                          */
 
                           if ( bFuncFS_Chk1 == true || bFuncFS_Chk2 == true  )
-                          {
                               addError( "`fs` import only available from Node.js runtime, this will throw errors for users running on mobile" );
-                          }
-
-                          /*
-                              require("fs") / fs.existsSync
-                          */
 
                           if ( bFuncFS_ExistsSync == true  )
-                          {
                               addError( "`fs` import only available from Node.js runtime, this will throw errors for users running on mobile." );
-                          }
-
-                          /*
-                              require("fs") / fs.mkdirSync
-                          */
 
                           if ( bFuncFS_MkdirSync == true  )
-                          {
                               addError( "`fs` import only available from Node.js runtime, this will throw errors for users running on mobile." );
-                          }
-
-                          /*
-                              Generic Calls
-                          */
 
                           if ( bContainsGeneric == true )
-                          {
                               addError( "Rename sample classes to something that makes sense. You are not allowed to have names such as: " + error_Generic );
-                          }
-
-                          /*
-                              console.log found
-                          */
-
-                          /*
-                          if ( bFuncConsoleLog == true )
-                          {
-                              addWarning( "Avoid unnecessary logging or ensure logging only occurs in development environment." );
-                          }
-                          */
-
-                          /*
-                              Bad words found
-                          */
 
                           if ( bFoundBadWord == true && file != "package.json" && file != "manifest.json" )
-                          {
                               addWarning( "A restricted word was found in your code. Generic words are not allowed in strings such as: " + warn_BadWords );
-                          }
 
                           if ( errors.length > 0 || warnings.length > 0 )
                           {
-
-                              /*
-                                  Errors
-                              */
 
                               if ( errors.length > 0 )
                               {
                                   message.push    ( "\n\n\n> [!CAUTION]\n> Errors must be fixed prior to a pull request being reviewed and accepted.<br />The file `" + file + "` contains the following errors:\n\n<br>\n\n" );
                                   message         = message.concat( errors );
                               }
-
-                              /*
-                                  Warnings
-                              */
 
                               if ( warnings.length > 0 )
                               {
@@ -1066,16 +810,8 @@ jobs:
                           }
                       }
 
-                      /*
-                          footer
-                      */
-
                       message.push    ( "\n<br />\n\n---\n<br />\n" );
                       message.push    ( `<sup>This check was done automatically. Do <b>NOT</b> open a new PR for re-validation. Instead, to trigger this check again, make a change to your PR and wait a few minutes, or close and re-open it.</sup>` );
-
-                      /*
-                          Has Errors
-                      */
 
                       if ( bHasError == true )
                       {
@@ -1083,16 +819,8 @@ jobs:
                           core.setFailed( "Pull Request Failed Autocheck: " + ct.issue.number + ": " + ct.payload.pull_request.title + "." );
                       }
 
-                      /*
-                          No Errors
-                      */
-
                       if ( bHasError == false )
                       {
-
-                          /*
-                              change pr title
-                          */
 
                           const pr_title          = `${ ct.payload.pull_request.title }`;
                           const pr_title_append   = `PR ${ ct.issue.number }:`;
@@ -1111,10 +839,6 @@ jobs:
                           if ( !ct.payload.pull_request.labels.filter( label => label.name === "${{ env.LABEL_CHECK_CHANGES_REQ }}" ).length > 0 )
                               labels.push( "${{ env.LABEL_CHECK_REVIEW_READY }}" );
                       }
-
-                      /*
-                          Determine Labels
-                      */
 
                       const bGitaction    = type_gitaction.some( s => s.includes( branch_ref ) || branch_ref.includes( s ) );
                       const bDependency   = type_dependency.some( s => s.includes( branch_ref ) || branch_ref.includes( s ) );
@@ -1144,10 +868,6 @@ jobs:
 
                       labels.push( "${{ env.LABEL_TYPE_PR }}" );
 
-                      /*
-                          Set Label
-                      */
-
                       await github.rest.issues.setLabels(
                       {
                           issue_number:   ct.issue.number,
@@ -1155,10 +875,6 @@ jobs:
                           repo:           ct.repo.repo,
                           labels,
                       } );
-
-                      /*
-                          Create Comment
-                      */
 
                       await github.rest.issues.createComment(
                       {
