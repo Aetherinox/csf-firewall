@@ -281,4 +281,4 @@ Detailed information about csf and lfd
 .SH BUGS
 Report bugs on the forums at http://forum.configserver.com
 .SH AUTHOR
-(c)2006-2023, Way to the Web Limited (http://www.configserver.com)
+(c)2006-2023, Jonathan Michaelson (http://www.configserver.com)
