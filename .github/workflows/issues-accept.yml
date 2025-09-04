@@ -48,23 +48,26 @@ run-name: '🎫 Issue › Accept'
 
 # #
 #   triggers
+#       conditions:
+#           - if created comment is from `Aetherinox` and contains text `!accept`
 # #
 
 on:
     issue_comment:
-        types: [created]
+        types:
+            - created
 
 # #
 #   environment variables
 # #
 
 env:
-    LABEL_ACCEPT:               'Status › Accepted'
-    DEPLOYMENT_ENV:             ${{ github.event.inputs.DEPLOYMENT_ENV || 'orion' }}
-    BOT_NAME_1:                 EuropaServ
-    BOT_NAME_2:                 BinaryServ
-    BOT_NAME_DEPENDABOT:        dependabot[bot]
-    BOT_NAME_RENOVATE:          renovate[bot]
+    LABEL_ACCEPT:                   'Status › Accepted'
+    DEPLOYMENT_ENV:                 ${{ github.event.inputs.DEPLOYMENT_ENV || 'orion' }}
+    BOT_NAME_1:                     EuropaServ
+    BOT_NAME_2:                     BinaryServ
+    BOT_NAME_DEPENDABOT:            dependabot[bot]
+    BOT_NAME_RENOVATE:              renovate[bot]
 
 # #
 #   jobs
@@ -72,19 +75,45 @@ env:
 
 jobs:
 
-    # #
-    #   Issues › Accept
-    # #
-
     issues-accept:
         name: >-
             🎫 Issue › Accept
         if: |
-            contains(github.event.comment.body, '/accept') && github.event.comment.user.login == 'Aetherinox'
-        runs-on: ubuntu-latest
-      # runs-on: apollo-x64
+            contains(github.event.comment.body, '!accept') && github.event.comment.user.login == 'Aetherinox'
+      # runs-on: ubuntu-latest
+        runs-on: apollo-x64
         timeout-minutes: 5
         steps:
+
+            # #
+            #   Issues › Accept › Prerequisites › Check
+            # #
+
+            - name: >-
+                  ☑️ Prerequisites › Check
+              id: pr_scan_prerequisites
+              run: |
+                  if [[ "$GITHUB_EVENT_NAME" != "issue_comment" ]] || \
+                    [[ "$GITHUB_ACTOR" != "$ASSIGN_USER" ]] || \
+                    [[ "$(jq -r .comment.body "$GITHUB_EVENT_PATH")" != "!accept"* ]]; then
+                      echo "Prerequisite conditions not met. Skipping job."
+                      echo "PRECHECK_RESULT=abort" >> $GITHUB_OUTPUT
+                  else
+                      echo "Prerequisite conditions met. Running job."
+                      echo "PRECHECK_RESULT=run" >> $GITHUB_OUTPUT
+                  fi
+
+            # #
+            #   Issues › Accept › Prerequisites › Abort
+            # #
+
+            - name: >-
+                  ❌ Prerequisites › Abort
+              if: steps.pr_scan_prerequisites.outputs.PRECHECK_RESULT == 'abort'
+              run: |
+                  echo "Aborting job; prerequisites not met"
+                  gh run cancel ${{ github.run_id }}
+                  gh run watch ${{ github.run_id }}
 
             # #
             #   Issues › Accept › Set TImestamps
