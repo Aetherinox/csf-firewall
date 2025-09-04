@@ -63,6 +63,8 @@ env:
           { "name": "AC › Failed",                  "color": "a61f2d", "description": "Autocheck failed to run through a complete cycle, requires investigation" },
           { "name": "AC › Needs Rebase",            "color": "8F1784", "description": "Due to the permissions on the requesting repo, this pull request must be rebased by the author" },
           { "name": "AC › Passed",                  "color": "146b4a", "description": "Ready to be reviewed" },
+          { "name": "AC › Approved",                "color": "24996d", "description": "PR has been approved for merge" },
+          { "name": "AC › Merged",                  "color": "35b987", "description": "PR has been merged with branch" },
           { "name": "AC › Review Required",         "color": "8F1784", "description": "PR needs to be reviewed by another person, after the requested changes have been made" },
           { "name": "AC › Security Warning",        "color": "761620", "description": "Does not conform to developer policies, or includes potentially dangerous code" },
           { "name": "AC › Skipped Scan",            "color": "8F1784", "description": "Author has skipped code scan" },
@@ -135,8 +137,8 @@ jobs:
     issues-labels-create:
         name: >-
             🎫 Labels › Create
-        runs-on: ubuntu-latest
-      # runs-on: apollo-x64
+      # runs-on: ubuntu-latest
+        runs-on: apollo-x64
         timeout-minutes: 3
         permissions:
             contents: 'read'
@@ -198,10 +200,10 @@ jobs:
                   SHA1_GH="$(echo ${GITHUB_SHA})"                                                   #  71fad013cfce9116ec62779e4a7e627fe4c33627
                   echo "SHA1_GH=${SHA1_GH}" >> $GITHUB_ENV
 
-                  PKG_VER_1DIGIT="$(echo ${{ env.IMAGE_VERSION }} | cut -d '.' -f1-1)"              #  3.22 > 3
+                  PKG_VER_1DIGIT="$(echo ${{ env.IMAGE_VERSION }} | cut -d '.' -f1-1)"              #  15.52.35 > 15
                   echo "PKG_VER_1DIGIT=${PKG_VER_1DIGIT}" >> $GITHUB_ENV
 
-                  PKG_VER_2DIGIT="$(echo ${{ env.IMAGE_VERSION }} | cut -f2 -d ":" | cut -c1-3)"    #  3.22 > 3.2
+                  PKG_VER_2DIGIT="$(echo ${{ env.IMAGE_VERSION }} | cut -d '.' -f1-2)"              #  15.52.35 > 15.52
                   echo "PKG_VER_2DIGIT=${PKG_VER_2DIGIT}" >> $GITHUB_ENV
 
                   echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
