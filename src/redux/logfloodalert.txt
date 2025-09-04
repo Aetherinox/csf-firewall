@@ -1,6 +1,0 @@
-From: root
-To: root
-Subject: lfd on [hostname]: Log file flooding
-
-Time:     [time]
-Alert:    [text]
