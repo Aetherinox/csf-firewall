@@ -5,7 +5,7 @@
 </div>
 
 <div align="center">
-<h6>Unofficial dark theme, Docker, Traefik, and OpenVPN support. Includes "bad actor" blocklists / ipsets, and numerous helper patches.</h6>
+<h6>A GUI based wrapper for iptables. Includes dark theme, Docker, Traefik, and OpenVPN support. "Bad Actor" blocklists / ipsets, and configuration helper patches.</h6>
 <h1>♾️ ConfigServer Firewall & Blocklist ♾️</h1>
 </div>
 
