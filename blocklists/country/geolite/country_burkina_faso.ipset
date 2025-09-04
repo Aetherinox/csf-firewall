@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_burkina_faso_ipset
 #   @uuid           70d69e0c-84df-3898-9c0c-115094ce876d
-#   @updated        Wed 03 Sep 2025 01:20:26 AM UTC
+#   @updated        Thu 04 Sep 2025 01:23:01 AM UTC
 #   @entries        342,816 ips
 #                   248 subnets
 #                   248 lines
