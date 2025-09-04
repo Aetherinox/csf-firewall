@@ -1,1 +1,0 @@
-start cmd /k "mkdocs serve --clean"
