@@ -42,7 +42,7 @@ our %session;
 our @sessiondata;
 unless (-e "/var/lib/csf/csf.da.skip") {
 	if ($ENV{SESSION_ID} =~ /^\w+$/) {
-		open (my $SESSION, "<", "/usr/local/directadmin/data/sessions/da_sess_".$ENV{SESSION_ID}) or &loginfail("Security Error: No valid session key for [$ENV{SESSION_ID}]");
+		open (my $SESSION, "<", "/usr/local/directadmin/data/sessions/da_sess_".$ENV{SESSION_ID}) or &loginfail("Security Error: No valid session ID for [$ENV{SESSION_ID}]");
 		flock ($SESSION, LOCK_SH);
 		@sessiondata = <$SESSION>;
 		close ($SESSION);
@@ -57,10 +57,11 @@ unless (-e "/var/lib/csf/csf.da.skip") {
 		exit;
 	}
 
-my ($ppid, $pexe) = &getexe(getppid());
-if ($pexe ne "/usr/local/directadmin/directadmin") {
-	&loginfail("Security Error: Invalid parent");
-	exit;
+	my ($ppid, $pexe) = &getexe(getppid());
+	if ($pexe ne "/usr/local/directadmin/directadmin") {
+		&loginfail("Security Error: Invalid parent");
+		exit;
+	}
 }
 
 open (my $IN, "<", "/etc/csf/version.txt") or die $!;
