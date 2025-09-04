@@ -182,15 +182,16 @@ jobs:
                   ☑️ Prerequisites › Check
               id: pr_scan_prerequisites
               run: |
-                  if [[ "$GITHUB_EVENT_NAME" != "pull_request_target" ]] &&
-                    ! ([[ "$GITHUB_EVENT_NAME" == "issue_comment" ]] &&
-                        [[ "$GITHUB_ACTOR" == "$ASSIGN_USER" ]] &&
-                        [[ "$(jq -r .comment.body "$GITHUB_EVENT_PATH")" == "!rescan"* ]]); then
-                      echo "Prerequisites conditions not met. Skipping job."
+                  if [[ "$GITHUB_EVENT_NAME" != "pull_request_target" ]] && \
+                    { [[ "$GITHUB_EVENT_NAME" != "issue_comment" ]] || \
+                      [[ "$GITHUB_ACTOR" != "$ASSIGN_USER" ]] || \
+                      [[ "$(jq -r .comment.body "$GITHUB_EVENT_PATH")" != "!rescan"* ]]; }; then
+                      echo "Trigger conditions not met. Skipping job."
                       echo "PRECHECK_RESULT=abort" >> $GITHUB_OUTPUT
                   else
-                      echo "Prerequisites conditions met. Running job."
+                      echo "Trigger conditions met. Running job."
                       echo "PRECHECK_RESULT=run" >> $GITHUB_OUTPUT
+                  fi
 
             # #
             #   PR › Scan › Prerequisites › Abort
