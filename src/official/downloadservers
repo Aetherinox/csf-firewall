@@ -1,3 +1,8 @@
-# ConfigServer has closed down and download servers no longer active.
-#download.configserver.com
-#download2.configserver.com
+# #
+#   Official configserver.com download servers went offline on August 31, 2025.
+#   
+#   @todo           switch update servers over to github api endpoint
+# #
+
+# download.configserver.com
+# download2.configserver.com
