@@ -506,52 +506,60 @@ jobs:
                       const escape_html       = ( unsafe ) => unsafe.replace( /&/g, '&amp;' ).replace( /</g, '&lt;' ).replace( />/g, '&gt;' ).replace( /"/g, '&quot;' ).replace( /'/g, '&#039;' );
                       const labels            = [];
 
-                      const labelsExisting = await github.rest.issues.listLabelsOnIssue({
-                          issue_number: ct.issue.number,
+                      const prLabelsData = await github.rest.issues.listLabelsOnIssue({
+                          issue_number: pr_number, // pr_number is already set safely above
                           owner: ct.repo.owner,
                           repo: ct.repo.repo
-                      })
-
-                      labelsExisting.data.forEach(({ name }) => {
-                          labels.push(name);
                       });
+
+                      const existingLabelNames = prLabelsData.data.map(label => label.name);
 
                       const files_List  = `${{ steps.task_prscan_changed_files_get.outputs.all_changed_files }}` || ''
                       const files_Array = files_List.split(',')
 
-                      let branch_ref = '';
-                      let base_ref = '';
+                      let branch_ref    = '';
+                      let base_ref      = '';
                       let pr_created_at = '';
+                      let pr_title      = '';
+                      let pr_number     = 0;
+                      let pr_html_url   = '';
+                      let pr_author     = '';
 
-                      if (ct.payload.pull_request)
-                      {
+                      if (ct.payload.pull_request) {
                           // Triggered by pull_request_target
-                          branch_ref = ct.payload.pull_request.head.ref;
-                          base_ref = ct.payload.pull_request.base.ref;
+                          branch_ref    = ct.payload.pull_request.head.ref;
+                          base_ref      = ct.payload.pull_request.base.ref;
                           pr_created_at = ct.payload.pull_request.created_at;
-                      }
-                      else if (ct.payload.comment && ct.issue)
-                      {
+                          pr_title      = ct.payload.pull_request.title;
+                          pr_number     = ct.payload.pull_request.number;
+                          pr_html_url   = ct.payload.pull_request.html_url;
+                          pr_author     = ct.payload.pull_request.user.login;
+                      } else if (ct.payload.comment && ct.issue) {
                           // Triggered by issue_comment (!rescan)
-                          const pr_number = ct.issue.number;
+                          const pr_num_from_issue = ct.issue.number;
 
-                          const { data: pr } = await github.rest.pulls.get(
-                          {
+                          const { data: pr } = await github.rest.pulls.get({
                               owner: ct.repo.owner,
                               repo: ct.repo.repo,
-                              pull_number: pr_number
+                              pull_number: pr_num_from_issue
                           });
 
-                          branch_ref = pr.head.ref;
-                          base_ref = pr.base.ref;
+                          branch_ref    = pr.head.ref;
+                          base_ref      = pr.base.ref;
                           pr_created_at = pr.created_at;
-                      }
-                      else
-                      {
+                          pr_title      = pr.title;
+                          pr_number     = pr.number;
+                          pr_html_url   = pr.html_url;
+                          pr_author     = pr.user.login;
+                      } else {
                           // Could not determine PR info
-                          branch_ref = 'unknown';
-                          base_ref = 'unknown';
+                          branch_ref    = 'unknown';
+                          base_ref      = 'unknown';
                           pr_created_at = '';
+                          pr_title      = 'unknown';
+                          pr_number     = 0;
+                          pr_html_url   = '';
+                          pr_author     = 'unknown';
                       }
 
                       let message             = [ "\n<br />\n" ]
@@ -593,10 +601,10 @@ jobs:
                       `
                       | Category | Value |
                       | --- | --- |
-                      | Title | [ ` + ct.payload.pull_request.title + ` ](https://github.com/` + ct.repo.owner + `/` + ct.repo.repo + `/pull/` + ct.payload.pull_request.number + `) |
+                      | Title | [ ` + pr_title + ` ](https://github.com/` + ct.repo.owner + `/` + ct.repo.repo + `/pull/` + pr_number + `) |
                       | Created | [ ` + date_created + ` ](https://worldtimebuddy.com) |
-                      | ID | ` + ct.payload.pull_request.html_url + ` |
-                      | Author | [ ` + ct.payload.pull_request.user.login + ` ](https://github.com/` + ct.repo.owner + `/) |
+                      | ID | ` + pr_html_url + ` |
+                      | Author | [ ` + pr_author + ` ](https://github.com/` + ct.repo.owner + `/) |
                       | Repo | [ ` + ct.repo.repo + ` ](https://github.com/` + ct.repo.owner + `/` + ct.repo.repo + `) |
                       | Branch | [ ` + branch_ref + `](https://github.com/` + ct.repo.owner + `/` + ct.repo.repo + `/tree/` + branch_ref + `) ⇁ [ ` + base_ref + `](https://github.com/` + ct.repo.owner + `/` + ct.repo.repo + `/tree/` + base_ref + `) |
                       | Added Files | ${{ steps.task_prscan_changed_files_get.outputs.added_files_count }} |
@@ -816,13 +824,13 @@ jobs:
                       if ( bHasError == true )
                       {
                           labels.push( "${{ env.LABEL_CHECK_STATUS_FAILED }}" );
-                          core.setFailed( "Pull Request Failed Autocheck: " + ct.issue.number + ": " + ct.payload.pull_request.title + "." );
+                          core.setFailed( "Pull Request Failed Autocheck: " + ct.issue.number + ": " + pr_title + "." );
                       }
 
                       if ( bHasError == false )
                       {
 
-                          const pr_title          = `${ ct.payload.pull_request.title }`;
+                          const pr_title          = `${ pr_title }`;
                           const pr_title_append   = `PR ${ ct.issue.number }:`;
 
                           if ( !pr_title.startsWith( pr_title_append ) && actor !=  "${{ env.BOT_NAME_RENOVATE }}" )
@@ -832,11 +840,11 @@ jobs:
                                   owner:        ct.repo.owner,
                                   repo:         ct.repo.repo,
                                   pull_number:  ct.issue.number,
-                                  title:        `${ pr_title_append } ${ ct.payload.pull_request.title }`
+                                  title:        `${ pr_title_append } ${ pr_title }`
                               } );
                           }
 
-                          if ( !ct.payload.pull_request.labels.filter( label => label.name === "${{ env.LABEL_CHECK_CHANGES_REQ }}" ).length > 0 )
+                          if ( !existingLabelNames.includes("${{ env.LABEL_CHECK_CHANGES_REQ }}") )
                               labels.push( "${{ env.LABEL_CHECK_REVIEW_READY }}" );
                       }
 
@@ -851,19 +859,19 @@ jobs:
                       else if ( actor ==  "${{ env.BOT_NAME_DEPENDABOT }}" && bMaintenance || actor ==  "${{ env.BOT_NAME_RENOVATE }}" && bMaintenance )
                           labels.push( "${{ env.LABEL_TYPE_MAINTENANCE }}" );
 
-                      if ( ct.payload.pull_request.labels.filter( label => label.name === "${{ env.LABEL_CHECK_CHANGES_REQ }}" ).length > 0 )
+                      if ( !existingLabelNames.includes("${{ env.LABEL_CHECK_CHANGES_REQ }}") )
                           labels.push( "${{ env.LABEL_CHECK_CHANGES_REQ }}" );
 
-                      if (ct.payload.pull_request.labels.filter(label => label.name === "${{ env.LABEL_CHECK_REBASE_REQ }}" ).length > 0 )
+                      if ( !existingLabelNames.includes("${{ env.LABEL_CHECK_REBASE_REQ }}") )
                           labels.push( "${{ env.LABEL_CHECK_REBASE_REQ }}" );
 
-                      if ( ct.payload.pull_request.labels.filter(label => label.name === "${{ env.LABEL_CHECK_SECURITY_ERR }}" ).length > 0 )
+                      if ( !existingLabelNames.includes("${{ env.LABEL_CHECK_SECURITY_ERR }}") )
                           labels.push( "${{ env.LABEL_CHECK_SECURITY_ERR }}" );
 
-                      if (ct.payload.pull_request.labels.filter( label => label.name === "${{ env.LABEL_CHECK_STATUS_CHGMADE }}" ).length > 0 )
+                      if ( !existingLabelNames.includes("${{ env.LABEL_CHECK_STATUS_CHGMADE }}") )
                           labels.push( "${{ env.LABEL_CHECK_STATUS_CHGMADE }}" );
 
-                      if ( ct.payload.pull_request.labels.filter( label => label.name === "${{ env.LABEL_CHECK_SCAN_SKIPPED }}" ).length > 0 )
+                      if ( !existingLabelNames.includes("${{ env.LABEL_CHECK_SCAN_SKIPPED }}") )
                           labels.push( "${{ env.LABEL_CHECK_SCAN_SKIPPED }}" );
 
                       labels.push( "${{ env.LABEL_TYPE_PR }}" );
