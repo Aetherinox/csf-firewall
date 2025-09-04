@@ -506,14 +506,6 @@ jobs:
                       const escape_html       = ( unsafe ) => unsafe.replace( /&/g, '&amp;' ).replace( /</g, '&lt;' ).replace( />/g, '&gt;' ).replace( /"/g, '&quot;' ).replace( /'/g, '&#039;' );
                       const labels            = [];
 
-                      const prLabelsData = await github.rest.issues.listLabelsOnIssue({
-                          issue_number: pr_number, // pr_number is already set safely above
-                          owner: ct.repo.owner,
-                          repo: ct.repo.repo
-                      });
-
-                      const existingLabelNames = prLabelsData.data.map(label => label.name);
-
                       const files_List  = `${{ steps.task_prscan_changed_files_get.outputs.all_changed_files }}` || ''
                       const files_Array = files_List.split(',')
 
@@ -561,6 +553,14 @@ jobs:
                           pr_html_url   = '';
                           pr_author     = 'unknown';
                       }
+
+                      const prLabelsData = await github.rest.issues.listLabelsOnIssue({
+                          issue_number: pr_number, // pr_number is already set safely above
+                          owner: ct.repo.owner,
+                          repo: ct.repo.repo
+                      });
+
+                      const existingLabelNames = prLabelsData.data.map(label => label.name);
 
                       let message             = [ "\n<br />\n" ]
                       message.push            ( "## Automatic Self-Check - #" + ct.issue.number + "\n" );
