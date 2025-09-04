@@ -46,12 +46,18 @@ run-name: '🎫 PR › Scan'
 
 # #
 #   triggers
+#       conditions:
+#           - if PR created targeting branch `main`
+#           - if 
 # #
 
 on:
     pull_request_target:
         branches:
             - main
+    issue_comment:
+        types:
+            - created
 
 # #
 #   environment variables
@@ -169,10 +175,41 @@ jobs:
         steps:
 
             # #
+            #   PR › Scan › Prerequisites › Check
+            # #
+
+            - name: >-
+                  ☑️ Prerequisites › Check
+              id: pr_scan_prerequisites
+              run: |
+                  if [[ "$GITHUB_EVENT_NAME" != "pull_request_target" ]] &&
+                    ! ([[ "$GITHUB_EVENT_NAME" == "issue_comment" ]] &&
+                        [[ "$GITHUB_ACTOR" == "$ASSIGN_USER" ]] &&
+                        [[ "$(jq -r .comment.body "$GITHUB_EVENT_PATH")" == "!rescan"* ]]); then
+                      echo "Prerequisites conditions not met. Skipping job."
+                      echo "PRECHECK_RESULT=abort" >> $GITHUB_OUTPUT
+                  else
+                      echo "Prerequisites conditions met. Running job."
+                      echo "PRECHECK_RESULT=run" >> $GITHUB_OUTPUT
+
+            # #
+            #   PR › Scan › Prerequisites › Abort
+            # #
+
+            - name: >-
+                  ❌ Prerequisites › Abort
+              if: steps.pr_scan_prerequisites.outputs.PRECHECK_RESULT == 'abort'
+              run: |
+                  echo "Aborting job; prerequisites not met"
+                  gh run cancel ${{ github.run_id }}
+                  gh run watch ${{ github.run_id }}
+
+            # #
             #   PR › Scan › Checkout
             # #
 
-            - name: '☑️ Checkout'
+            - name: >-
+                  ☑️ Checkout
               uses: actions/checkout@v4
               with:
                   fetch-depth: 0
