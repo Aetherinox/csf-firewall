@@ -52,12 +52,10 @@ unless (-e "/var/lib/csf/csf.da.skip") {
 			$session{$name} = $value;
 		}
 	}
-	if (($session{key} eq "") or ($session{ip} eq "") or ($session{ip} ne $ENV{REMOTE_ADDR}) or ($session{key} ne $ENV{SESSION_KEY})) {
+	if (($session{key} eq "") or ($session{ip} eq "") or ($session{key} ne $ENV{SESSION_KEY})) {
 		&loginfail("Security Error: No valid session key");
 		exit;
 	}
-##	&loginfail("Security Error: test error");
-}
 
 my ($ppid, $pexe) = &getexe(getppid());
 if ($pexe ne "/usr/local/directadmin/directadmin") {
