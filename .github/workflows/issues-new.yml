@@ -93,6 +93,8 @@ env:
           { "name": "AC › Failed",                  "color": "a61f2d", "description": "Autocheck failed to run through a complete cycle, requires investigation" },
           { "name": "AC › Needs Rebase",            "color": "8F1784", "description": "Due to the permissions on the requesting repo, this pull request must be rebased by the author" },
           { "name": "AC › Passed",                  "color": "146b4a", "description": "Ready to be reviewed" },
+          { "name": "AC › Approved",                "color": "24996d", "description": "PR has been approved for merge" },
+          { "name": "AC › Merged",                  "color": "35b987", "description": "PR has been merged with branch" },
           { "name": "AC › Review Required",         "color": "8F1784", "description": "PR needs to be reviewed by another person, after the requested changes have been made" },
           { "name": "AC › Security Warning",        "color": "761620", "description": "Does not conform to developer policies, or includes potentially dangerous code" },
           { "name": "AC › Skipped Scan",            "color": "8F1784", "description": "Author has skipped code scan" },
