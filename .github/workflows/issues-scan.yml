@@ -518,7 +518,6 @@ jobs:
                       let pr_author     = '';
 
                       if (ct.payload.pull_request) {
-                          // Triggered by pull_request_target
                           branch_ref    = ct.payload.pull_request.head.ref;
                           base_ref      = ct.payload.pull_request.base.ref;
                           pr_created_at = ct.payload.pull_request.created_at;
@@ -527,15 +526,12 @@ jobs:
                           pr_html_url   = ct.payload.pull_request.html_url;
                           pr_author     = ct.payload.pull_request.user.login;
                       } else if (ct.payload.comment && ct.issue) {
-                          // Triggered by issue_comment (!rescan)
                           const pr_num_from_issue = ct.issue.number;
-
                           const { data: pr } = await github.rest.pulls.get({
                               owner: ct.repo.owner,
                               repo: ct.repo.repo,
                               pull_number: pr_num_from_issue
                           });
-
                           branch_ref    = pr.head.ref;
                           base_ref      = pr.base.ref;
                           pr_created_at = pr.created_at;
@@ -544,7 +540,6 @@ jobs:
                           pr_html_url   = pr.html_url;
                           pr_author     = pr.user.login;
                       } else {
-                          // Could not determine PR info
                           branch_ref    = 'unknown';
                           base_ref      = 'unknown';
                           pr_created_at = '';
@@ -555,11 +550,10 @@ jobs:
                       }
 
                       const prLabelsData = await github.rest.issues.listLabelsOnIssue({
-                          issue_number: pr_number, // pr_number is already set safely above
+                          issue_number: pr_number,
                           owner: ct.repo.owner,
                           repo: ct.repo.repo
                       });
-
                       const existingLabelNames = prLabelsData.data.map(label => label.name);
 
                       let message             = [ "\n<br />\n" ]
@@ -827,25 +821,21 @@ jobs:
                           core.setFailed( "Pull Request Failed Autocheck: " + ct.issue.number + ": " + pr_title + "." );
                       }
 
-                      if ( bHasError == false )
-                      {
+                      if (bHasError == false) {
+                          const pr_title_append = `PR ${ct.issue.number}:`;
 
-                          const pr_title          = `${ pr_title }`;
-                          const pr_title_append   = `PR ${ ct.issue.number }:`;
-
-                          if ( !pr_title.startsWith( pr_title_append ) && actor !=  "${{ env.BOT_NAME_RENOVATE }}" )
-                          {
-                              await github.rest.pulls.update(
-                              {
-                                  owner:        ct.repo.owner,
-                                  repo:         ct.repo.repo,
-                                  pull_number:  ct.issue.number,
-                                  title:        `${ pr_title_append } ${ pr_title }`
-                              } );
+                          if (pr_title !== 'unknown' && !pr_title.startsWith(pr_title_append) && actor != "${{ env.BOT_NAME_RENOVATE }}") {
+                              await github.rest.pulls.update({
+                                  owner: ct.repo.owner,
+                                  repo: ct.repo.repo,
+                                  pull_number: ct.issue.number,
+                                  title: `${pr_title_append} ${pr_title}`
+                              });
                           }
 
-                          if ( !existingLabelNames.includes("${{ env.LABEL_CHECK_CHANGES_REQ }}") )
-                              labels.push( "${{ env.LABEL_CHECK_REVIEW_READY }}" );
+                          if (!existingLabelNames.includes("${{ env.LABEL_CHECK_CHANGES_REQ }}")) {
+                              labels.push("${{ env.LABEL_CHECK_REVIEW_READY }}");
+                          }
                       }
 
                       const bGitaction    = type_gitaction.some( s => s.includes( branch_ref ) || branch_ref.includes( s ) );
