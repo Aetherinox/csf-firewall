@@ -27,6 +27,16 @@ This branch serves as an archive for all of the scripts originally developed by 
 
 <br />
 
+- [About](#about)
+- [Updates](#updates)
+- [Legal Notices](#legal-notices)
+
+<br />
+
+---
+
+<br />
+
 ### Archive Status
 
 This branch contains the following software for archival purposes:
