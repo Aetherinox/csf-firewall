@@ -21,7 +21,7 @@ sub content {
     my ($locale_handle) = @_;
 
     my $content = {
-        'vendor' => 'Way to the Web Limited',
+        'vendor' => 'Jonathan Michaelson',
         'url'    => 'www.configserver.com',
         'name'   => {
             'short'  => 'ConfigServercsf Driver',
