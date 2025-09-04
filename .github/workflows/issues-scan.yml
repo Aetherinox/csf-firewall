@@ -204,6 +204,8 @@ jobs:
                   echo "Aborting job; prerequisites not met"
                   gh run cancel ${{ github.run_id }}
                   gh run watch ${{ github.run_id }}
+              env:
+                  GH_TOKEN: ${{ secrets.SELF_TOKEN_CL }}
 
             # #
             #   PR › Scan › Checkout
