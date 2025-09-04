@@ -849,20 +849,17 @@ jobs:
                       else if ( actor ==  "${{ env.BOT_NAME_DEPENDABOT }}" && bMaintenance || actor ==  "${{ env.BOT_NAME_RENOVATE }}" && bMaintenance )
                           labels.push( "${{ env.LABEL_TYPE_MAINTENANCE }}" );
 
-                      if ( !existingLabelNames.includes("${{ env.LABEL_CHECK_CHANGES_REQ }}") )
-                          labels.push( "${{ env.LABEL_CHECK_CHANGES_REQ }}" );
-
-                      if ( !existingLabelNames.includes("${{ env.LABEL_CHECK_REBASE_REQ }}") )
-                          labels.push( "${{ env.LABEL_CHECK_REBASE_REQ }}" );
-
-                      if ( !existingLabelNames.includes("${{ env.LABEL_CHECK_SECURITY_ERR }}") )
-                          labels.push( "${{ env.LABEL_CHECK_SECURITY_ERR }}" );
-
-                      if ( !existingLabelNames.includes("${{ env.LABEL_CHECK_STATUS_CHGMADE }}") )
-                          labels.push( "${{ env.LABEL_CHECK_STATUS_CHGMADE }}" );
-
-                      if ( !existingLabelNames.includes("${{ env.LABEL_CHECK_SCAN_SKIPPED }}") )
-                          labels.push( "${{ env.LABEL_CHECK_SCAN_SKIPPED }}" );
+                      for (const labelName of [
+                          "${{ env.LABEL_CHECK_CHANGES_REQ }}",
+                          "${{ env.LABEL_CHECK_REBASE_REQ }}",
+                          "${{ env.LABEL_CHECK_SECURITY_ERR }}",
+                          "${{ env.LABEL_CHECK_STATUS_CHGMADE }}",
+                          "${{ env.LABEL_CHECK_SCAN_SKIPPED }}"
+                      ]) {
+                          if (existingLabelNames.includes(labelName)) {
+                              labels.push(labelName);
+                          }
+                      }
 
                       labels.push( "${{ env.LABEL_TYPE_PR }}" );
 
