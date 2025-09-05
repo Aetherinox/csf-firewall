@@ -312,6 +312,7 @@ function init_decryptor() {
             decryptor_reaction(content_decrypted, password_input, decrypted_content);
         }
     });
+    decrypted_content.style.display = '';
 }
 if (typeof base_url === 'undefined') {
     var base_url = JSON.parse(document.getElementById('__config').textContent).base;
