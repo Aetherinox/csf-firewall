@@ -868,22 +868,6 @@ jobs:
             # #
 
             - name: '📁 Release › Upload Artifacts'
-              run: |
-                # Make sure the .ssh folder exists
-                mkdir -p ~/.ssh
-                  echo "$sshkey" > "$HOME/.ssh/github_sftp_key"
-                  chmod 600 "$HOME/.ssh/github_sftp_key"
-            
-                  # Upload to repo-specific directory + subdir
-                  sftp -P "$port" \
-                      -i "$HOME/.ssh/github_sftp_key" \
-                      -o StrictHostKeyChecking=no \
-                      "$username@$domain" <<EOF
-                  mkdir $repo
-                  cd $repo
-                  put $artifact
-                  bye
-                  EOF
               env:
                   repo: ${{ github.event.repository.name }}
                   username: github
@@ -891,8 +875,27 @@ jobs:
                   domain: ${{ secrets.ARTIFACTS_DOMAIN }}
                   sshkey: ${{ secrets.ARTIFACTS_GITHUB_SSH_PRIVATE_KEY }}
                   artifact: "releases/${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.zip"
-                  version: ${{ env.VERSION_CSF }}
-                  
+              run: |
+                  mkdir -p ~/.ssh
+                  echo "$sshkey" > "$HOME/.ssh/github_sftp_key"
+                  chmod 600 "$HOME/.ssh/github_sftp_key"
+            
+                  # Extract folder and filename from the artifact path
+                  folder=$(dirname "$artifact")
+                  file=$(basename "$artifact")
+            
+                  # Upload using sftp
+                  sftp -P "$port" \
+                      -i "$HOME/.ssh/github_sftp_key" \
+                      -o StrictHostKeyChecking=no \
+                      "$username@$domain" <<EOF
+                  mkdir $repo
+                  cd $repo
+                  mkdir -p $folder
+                  put $artifact $folder/
+                  bye
+                  EOF
+
             # #
             #   Release › Verbose › List Tree
             # #
