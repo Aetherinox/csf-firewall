@@ -717,7 +717,7 @@ jobs:
 
                   #  SHA1SUM › Main App
                   sha1sum_app_main="$(shasum --algorithm 1 ${file_app_main} | awk '{ print $1 }')"
-                  echo "SHA1SUM_APP_MAIN=${sha1sum_extra_dark}" >> $GITHUB_ENV
+                  echo "SHA1SUM_APP_MAIN=${sha1sum_app_main}" >> $GITHUB_ENV
 
                   #  SHA1SUM › Extra › Helpers
                   sha1sum_extra_helpers="$(shasum --algorithm 1 ${file_extra_helpers} | awk '{ print $1 }')"
@@ -1212,16 +1212,16 @@ jobs:
                   echo "## Summary"
                   echo "A new version of `${{ env.PROJECT_NAME }}` has been released on Github; the following is a summary of the workflow's results:"
                   echo "\n"
-                  echo "| Data                                | Result                          |" >> $GITHUB_STEP_SUMMARY
-                  echo "| ----------------------------------- | ------------------------------- |" >> $GITHUB_STEP_SUMMARY
-                  echo "| 📦 **Project**                      | ${{ env.PROJECT_NAME }}         |" >> $GITHUB_STEP_SUMMARY
-                  echo "| 🕛 **Build Time**                   | ${{ env.NOW }}                  |" >> $GITHUB_STEP_SUMMARY
-                  echo "| 🔖 Tag (Previous)                   | ${{ env.TAG_LAST }}                     |" >> $GITHUB_STEP_SUMMARY
-                  echo "| 🏷️ Tag (Now)                        | ${{ github.ref }}                       |" >> $GITHUB_STEP_SUMMARY
+                  echo "| Data                                | Result                                  |" >> $GITHUB_STEP_SUMMARY
+                  echo "| ----------------------------------- | --------------------------------------- |" >> $GITHUB_STEP_SUMMARY
+                  echo "| 📦 **Project**                      | ${{ env.PROJECT_NAME }}                 |" >> $GITHUB_STEP_SUMMARY
+                  echo "| 🕛 **Build Time**                   | ${{ env.NOW }}                          | " >> $GITHUB_STEP_SUMMARY
+                  echo "| 🏷️ Tag (Previous)                   | ${{ env.TAG_LAST }}                     |" >> $GITHUB_STEP_SUMMARY
+                  echo "| ↔️ Branch                           | ${{ github.ref }}                       |" >> $GITHUB_STEP_SUMMARY
                   echo "| 🖍️ Last Commit                      | ${{ env.COMMIT_LAST }}                  |" >> $GITHUB_STEP_SUMMARY
                   echo "| 🆔 ST Output ID                     | ${{ steps.task_release_bundle_st.outputs.id }} |" >> $GITHUB_STEP_SUMMARY
                   echo "| 🆔 RC Output ID                     | ${{ steps.task_release_bundle_rc.outputs.id }} |" >> $GITHUB_STEP_SUMMARY
-                  echo "\n"
+                  echo "\n\n\n"
                   echo ""
                   echo "### 📄 File (${{ env.FILE_APP_MAIN }})                                    " >> $GITHUB_STEP_SUMMARY
                   echo "The main application release" >> $GITHUB_STEP_SUMMARY
@@ -1229,7 +1229,7 @@ jobs:
                   echo "| ----------------------------------- | -------------------------------------- |" >> $GITHUB_STEP_SUMMARY
                   echo "| 🆔 **SHA1**                         | ${{ env.SHA1SUM_APP_MAIN }}            |" >> $GITHUB_STEP_SUMMARY
                   echo "| 🆔 **SHA256**                       | ${{ env.SHA256SUM_APP_MAIN }}          |" >> $GITHUB_STEP_SUMMARY
-                  echo "\n"
+                  echo "\n\n\n"
                   echo ""
                   echo "### 📄 File (${{ env.FILE_EXTRA_HELPERS }})                               " >> $GITHUB_STEP_SUMMARY
                   echo "Helper scripts which include OpenVPN and Docker integration" >> $GITHUB_STEP_SUMMARY
@@ -1237,7 +1237,7 @@ jobs:
                   echo "| ----------------------------------- | ------------------------------------- |" >> $GITHUB_STEP_SUMMARY
                   echo "| 🆔 **SHA1**                         | ${{ env.SHA1SUM_EXTRA_HELPERS }}      |" >> $GITHUB_STEP_SUMMARY
                   echo "| 🆔 **SHA256**                       | ${{ env.SHA256SUM_EXTRA_HELPERS }}    |" >> $GITHUB_STEP_SUMMARY
-                  echo "\n"
+                  echo "\n\n\n"
                   echo ""
                   echo "### 📄 File (${{ env.FILE_EXTRA_DARK }})                                  " >> $GITHUB_STEP_SUMMARY
                   echo "Dark theme template files" >> $GITHUB_STEP_SUMMARY
