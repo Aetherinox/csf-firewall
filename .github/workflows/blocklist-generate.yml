@@ -1,8 +1,9 @@
 # #
 #   @usage              https://github.com/Aetherinox/csf-firewall
 #   @type               github workflow
+#   @updated            09.05.25
+#   @usage              generates a list of ipsets which can then be used within host files, config server firewall, and various other apps
 #
-#   generates a list of ipsets which can then be used within host files, config server firewall, and various other apps
 #   
 #   @secrets            secrets.SELF_TOKEN                                          self github personal access token (fine-grained)
 #                       secrets.SELF_TOKEN_CL                                       self github personal access token (classic)
@@ -10,17 +11,33 @@
 #                       secrets.PYPI_API_TOKEN                                      self Pypi API token (production site) - https://pypi.org/
 #                       secrets.PYPI_API_TEST_TOKEN                                 self Pypi API token (test site) - https://test.pypi.org/
 #                       secrets.SELF_DOCKERHUB_TOKEN                                self Dockerhub token
+#                       secrets.CODECOV_TOKEN                                       codecov upload token for nodejs projects
+#                       secrets.API_GEOLITE2_KEY                                    maxmind API token
+#                       secrets.CF_ACCOUNT_ID                                       cloudflare account id
+#                       secrets.CF_ACCOUNT_TOKEN                                    cloudflare account token
+#                       secrets.ARTIFACTS_DOMAIN                                    github artifacts domain name
+#                       secrets.ARTIFACTS_PORT                                      github artifacts port
+#                       secrets.ARTIFACTS_GITHUB_SSH_PRIVATE_KEY                    github artifacts server ssh private key
 #                       secrets.ORG_TOKEN                                           org github personal access token (fine-grained)
 #                       secrets.ORG_TOKEN_CL                                        org github personal access token (classic)
 #                       secrets.ORG_DOCKERHUB_TOKEN                                 org dockerhub secret
 #                       secrets.ORG_GITEA_TOKEN                                     org gitea personal access token (classic) with package:write permission
 #                       secrets.BOT_GPG_KEY_ASC                                     bot gpg private key (armored) | BEGIN PGP PRIVATE KEY BLOCK
+#                       secrets.BOT_GPG_KEY_B64                                     bot gpg private key (binary) converted to base64
 #                       secrets.BOT_GPG_PASSPHRASE                                  bot gpg private key passphrase
 #                       secrets.DISCORD_WEBHOOK_CHAN_GITHUB_RELEASES                discord webhook to report release notifications from github to discord
 #                       secrets.DISCORD_WEBHOOK_CHAN_GITHUB_WORKFLOWS               discord webhook to report workflow notifications from github to discord
 #                       secrets.DISCORD_WEBHOOK_CHAN_GITHUB_UPDATES                 discord webhook to report activity notifications from github to discord
-#
-#
+#   
+#   @local              these workflows can be tested locally through the use of `act`
+#                           https://github.com/nektos/act
+#                       Extract act to folder
+#                       Add system env var with path to act.exe
+#                       Run the commands:
+#                           git pull https://github.com/username/repo
+#                           act -W .github/workflows/blocklist-generate.yml -P ubuntu-latest=catthehacker/ubuntu:full-22.04
+#                           act -W .github/workflows/blocklist-generate.yml -s TOKEN_CL=XXXXXXXXXX --pull=false
+#   
 #   📄 bl-master.sh               generate master ipset | URLs: VARARG
 #   📄 bl-plain.sh                generate ipset from online plain-text url / page | URLs: VARARG
 #   📄 bl-json.sh                 generate ipset from json formatted web url. requires url and jq query | URLs: SINGLE
@@ -29,7 +46,7 @@
 #   📄 bl-block.sh                generate ipset by fetching locally specified file in /blocks/ repo folder
 #   📄 bl-format.sh               generate ipset by from an existing list of IPs. does not generate ips itself. only validates a list provided
 #   📄 bl-spf.sh                  generate ipset by fetching _spf ips from domain
-#
+#   
 #   local test requires the same structure as the github workflow
 #       📁 .github
 #           📁 blocks
@@ -50,8 +67,8 @@
 #               📄 blocklist-generate.yml
 # #
 
-name: "🧱 Blocklist › Generate"
-run-name: "🧱 Blocklist › Generate"
+name: '🧱 Blocklist › Generate'
+run-name: '🧱 Blocklist › Generate'
 
 # #
 #   triggers
@@ -72,7 +89,7 @@ on:
         # #
   
         RUN_ALL_ACTIONS:
-          description:  "📑 Run All Actions"
+          description:  '📑 Run All Actions'
           required:     true
           default:      false
           type:         boolean
@@ -91,9 +108,13 @@ on:
 # #
 
 env:
-    BOT_NAME_1:           EuropaServ
-    BOT_NAME_DEPENDABOT:  dependabot[bot]
-
+    ASSIGN_USER:                    Aetherinox
+    BOT_NAME_1:                     BinaryServ
+    BOT_NAME_DEPENDABOT:            dependabot[bot]
+    BOT_NAME_RENOVATE:              renovate[bot]
+    GPG_KEY_BASE64:                 ${{ secrets.ADMINSERV_GPG_KEY_B64 }}
+    GPG_KEY_PASSPHRASE:             ${{ secrets.ADMINSERV_GPG_PASSPHRASE }}
+  
 # #
 #   jobs
 # #
@@ -636,20 +657,20 @@ jobs:
 
             # #
             #   Generate > Geographical > Geolite2 > Setup
-            #
+            #   
             #   this step should only be ran once per day (at 1am UTC).
             #   The vars defined below are used for caching. The current day of the year + year are calculated, this allows
             #   the same cached files to be used in a 24 hour period. When the day of the year changes, a new set of geo files will
             #   be updated.
-            #
+            #   
             #   CACHE VARS:           year_week       outputs the current week of the year, and year
             #                                         51_2024
-            #
+            #   
             #                         year_day        outputs the current day of the year, and year
             #                                         308_2024
             # #
 
-            - name: "🧱 Geographical › GeoLite2 (Setup)"
+            - name: '🧱 Geographical › GeoLite2 (Setup)''
               id: task_blocklist_geographical_generate_setup
               if: (github.event_name == 'schedule' && github.event.schedule == '0 0 * * *') || ( github.event_name == 'workflow_dispatch' && inputs.RUN_ALL_ACTIONS == true )
               run: |
@@ -658,15 +679,15 @@ jobs:
 
             # #
             #   Generate > Geographical > Geolite2 > Cache
-            #
+            #   
             #   uses the same cache in a 24 hour period.
-            #
+            #   
             #   @output               cache-hit
             #                         only run step if cache hit found
             #                         if: steps.task_blocklist_geographical_generate_cache.outputs.cache-hit == 'true'
             # #
 
-            - name: "🧱 Geographical › GeoLite2 (Cache)"
+            - name: '🧱 Geographical › GeoLite2 (Cache)''
               id: task_blocklist_geographical_generate_cache
               uses: actions/cache@v4
               if: steps.task_blocklist_geographical_generate_setup.outcome == 'success'
@@ -678,7 +699,7 @@ jobs:
             #   Generate > Geographical > Geolite2 > Build
             # #
 
-            - name: "🧱 Geographical › GeoLite2 (1/day)"
+            - name: '🧱 Geographical › GeoLite2 (1/day)''
               id: task_blocklist_geographical_generate_geolite2
               if: steps.task_blocklist_geographical_generate_setup.outcome == 'success'
               run: |
@@ -690,7 +711,7 @@ jobs:
             #   Generate > Transmission
             # #
 
-            - name: "🧱 Generate › Transmission"
+            - name: '🧱 Generate › Transmission'
               id: task_blocklist_generate_transmission
               run: |
                   run_bt=".github/scripts/bt-transmission.sh"
@@ -711,21 +732,22 @@ jobs:
             - name: 'SSH › Zip Artifacts'
               id: generate_artifact_zip
               run: |
-                  REPO_NAME="${{ github.event.repository.name }}"
-                  BRANCH_NAME="${{ github.ref_name }}"
-                  RUN_ID="${{ github.run_id }}"
+                  REPO_NAME="${{ github.event.repository.name }}"                         # csf-firewall
+                  BRANCH_NAME="${{ github.ref_name }}"                                    # main
+                  RUN_ID="${{ github.run_id }}"                                           # 17373119899
 
-                  ARTIFACT_NAME="artifact_${BRANCH_NAME}_${RUN_ID}.zip"
-                  ARTIFACT_PATH="${REPO_NAME}/${ARTIFACT_NAME}"
+                  ARTIFACT_NAME="artifact_${BRANCH_NAME}_${RUN_ID}.zip"                   # artifacts_main_xxxxxx.zip
+                  ARTIFACT_PATH="${REPO_NAME}/${ARTIFACT_NAME}"                           # csf-firewall/artifacts_main_xxxxxx.zip
 
-                  echo "REPO_NAME=$REPO_NAME" >> $GITHUB_ENV
-                  echo "ARTIFACT_NAME=$ARTIFACT_NAME" >> $GITHUB_ENV
-                  echo "ARTIFACT_PATH=$ARTIFACT_PATH" >> $GITHUB_ENV
+                  echo "REPO_NAME=$REPO_NAME" >> $GITHUB_ENV                              # csf-firewall
 
-                  echo "artifact-name=$ARTIFACT_NAME" >> $GITHUB_OUTPUT
-                  echo "artifact-path=$ARTIFACT_PATH" >> $GITHUB_OUTPUT
+                  echo "ARTIFACT_NAME=$ARTIFACT_NAME" >> $GITHUB_ENV                      # artifacts_main_xxxxxx.zip
+                  echo "ARTIFACT_PATH=$ARTIFACT_PATH" >> $GITHUB_ENV                      # csf-firewall/artifacts_main_xxxxxx.zip
 
-                  zip -r "$ARTIFACT_NAME" ./*
+                  echo "artifact-name=$ARTIFACT_NAME" >> $GITHUB_OUTPUT                   # artifacts_main_xxxxxx.zip
+                  echo "artifact-path=$ARTIFACT_PATH" >> $GITHUB_OUTPUT                   # csf-firewall/artifacts_main_xxxxxx.zip
+
+                  zip -r "$ARTIFACT_NAME" ./*                                             # delete original zip before push
 
             # #
             #   Generate › SFTP / SSH › Setup SSH Key
@@ -775,7 +797,7 @@ jobs:
         steps:
 
             # #
-            #   Generate › Checkout
+            #   Commit › Checkout
             # #
 
             - name: '☑️ Commit › Checkout'
@@ -784,7 +806,7 @@ jobs:
                   fetch-depth: 0
 
             # #
-            #   Generate › Artifact › Setup SSH
+            #   Commit › Artifact › Setup SSH
             # #
 
             - name: '🎁 Commit › Setup SSH Artifact'
@@ -794,14 +816,14 @@ jobs:
                   chmod 600 ~/.ssh/github_sftp_key
 
             # #
-            #   Generate › Artifact › Download
+            #   Commit › Artifact › Download
             # #
 
             - name: '🎁 Commit › Download Artifact'
               run: |
-                  ARTIFACT_PATH="${{ needs.blocklist-generate.outputs.artifact-path }}"
-                  ARTIFACT_NAME="$(basename "$ARTIFACT_PATH")"
-                  REPO_NAME="$(dirname "$ARTIFACT_PATH")"
+                  ARTIFACT_PATH="${{ needs.blocklist-generate.outputs.artifact-path }}"     # csf-firewall/artifacts_main_xxxxxx.zip
+                  ARTIFACT_NAME="$(basename "$ARTIFACT_PATH")"                              # artifacts_main_xxxxxx.zip
+                  REPO_NAME="$(dirname "$ARTIFACT_PATH")"                                   # csf-firewall
 
                   echo "Downloading $ARTIFACT_PATH"
 
@@ -814,19 +836,53 @@ jobs:
                   bye
                   EOF
 
-                  unzip -o "$ARTIFACT_NAME"
-                  rm -f "$ARTIFACT_NAME"
+                  unzip -o "$ARTIFACT_NAME"                                                 # unzip -o artifacts_main_xxxxxx.zip
+                  rm -f "$ARTIFACT_NAME"                                                    # rm -f artifacts_main_xxxxxx.zip
 
             # #
-            #   Generate › Artifact › Download
+            #   Commit › GPG › Import Key (No Passphrase)
+            #   
+            #   requires your GPG private key, converted to base64 binary .gpg (not armored .asc)
+            #   
+            #   this is utilized to generate signed hash digest
+            #   
+            #       find . -maxdepth 1 \( -name '*.zip' -o -name '*.gz' \) -printf '%P\n' | xargs -r sha1sum | gpg --digest-algo sha256 --clearsign > sha1sum.txt.asc
+            #       find . -maxdepth 1 \( -name '*.zip' -o -name '*.gz' \) -printf '%P\n' | xargs -r sha256sum | gpg --digest-algo sha256 --clearsign > sha256
             # #
 
-        #    - name: "🎁 Commit › Download Artifact"
-        #      id: task_commit_artifact_download
-        #      uses: actions/download-artifact@v4
-        #      with:
-        #          name: blocklist-latest
-        #          path: ./
+            - name: '🪪 Commit › GPG › Import Signing Key › W/o Passphrase'
+              if: env.GPG_KEY_BASE64 != '' && env.GPG_KEY_PASSPHRASE == ''
+              run: |
+                  echo "$GPG_KEY_BASE64" | base64 -di | gpg --import
+
+            # #
+            #   Commit › GPG › Import Key (With Passphrase)
+            #   
+            #   requires your GPG private key, converted to base64 binary .gpg (not armored .asc)
+            #   
+            #   this is utilized to generate signed hash digest
+            #   
+            #       find . -maxdepth 1 \( -name '*.zip' -o -name '*.gz' \) -printf '%P\n' | xargs -r sha1sum | gpg --digest-algo sha256 --clearsign > sha1sum.txt.asc
+            #       find . -maxdepth 1 \( -name '*.zip' -o -name '*.gz' \) -printf '%P\n' | xargs -r sha256sum | gpg --digest-algo sha256 --clearsign > sha256
+            # #
+
+            - name: '🪪 Commit › GPG › Import Signing Key › w/ Passphrase'
+              if: env.GPG_KEY_BASE64 != '' && env.GPG_KEY_PASSPHRASE != ''
+              run: |
+                  echo "$GPG_KEY_BASE64" | base64 -di > /tmp/signing-key.gpg
+                  echo "$GPG_KEY_PASSPHRASE" | gpg --pinentry-mode loopback --passphrase-fd 0 --import /tmp/signing-key.gpg
+                  (echo "$GPG_KEY_PASSPHRASE"; echo; echo) | gpg --command-fd 0 --pinentry-mode loopback --change-passphrase $(gpg --list-secret-keys --with-colons 2> /dev/null | grep '^sec:' | cut --delimiter ':' --fields 5 | tail -n 1)
+
+            # #
+            #   Commit › Artifact › Download
+            # #
+
+            #    - name: "🎁 Commit › Download Artifact"
+            #      id: task_commit_artifact_download
+            #      uses: actions/download-artifact@v4
+            #      with:
+            #          name: blocklist-latest
+            #          path: ./
 
             # #
             #   Commit › Precommit
@@ -845,7 +901,7 @@ jobs:
             #   Commit › Update README
             # #
 
-            - name: "📄 Update README"
+            - name: "📄 Commit › Update README"
               id: task_commit_readme_update
               run: |
                   chmod +x ".github/scripts/update-readme.sh"
@@ -854,6 +910,8 @@ jobs:
 
             # #
             #   Commit › GPG Key
+            #   
+            #   required in order to do signed commits
             # #
 
             - name: "📦 Commit › GPG Key"
