@@ -879,20 +879,24 @@ jobs:
                   mkdir -p ~/.ssh
                   echo "$sshkey" > "$HOME/.ssh/github_sftp_key"
                   chmod 600 "$HOME/.ssh/github_sftp_key"
-            
-                  # Extract folder and filename from the artifact path
+
                   folder=$(dirname "$artifact")
                   file=$(basename "$artifact")
-            
-                  # Upload using sftp
-                  sftp -P "$port" \
-                      -i "$HOME/.ssh/github_sftp_key" \
-                      -o StrictHostKeyChecking=no \
-                      "$username@$domain" <<EOF
+
+                  # Start SFTP session
+                  sftp -P "$port" -i "$HOME/.ssh/github_sftp_key" -o StrictHostKeyChecking=no "$username@$domain" <<EOF
                   mkdir $repo
                   cd $repo
-                  mkdir -p $folder
-                  put $artifact $folder/
+
+                  # Create nested directories if folder is not "."
+                  $(IFS=/; for d in $folder; do
+                      if [ "$d" != "." ]; then
+                          echo "mkdir $d"
+                          echo "cd $d"
+                      fi
+                  done)
+
+                  put $artifact
                   bye
                   EOF
 
