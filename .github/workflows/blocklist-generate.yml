@@ -735,14 +735,14 @@ jobs:
               run: |
                   # Make sure the .ssh folder exists
                   mkdir -p ~/.ssh
-                  echo "${{ secrets.SFTP_GITHUB_SSH_PRIVATE_KEY }}" > ~/.ssh/github_sftp_key
+                  echo "${{ secrets.ARTIFACTS_GITHUB_SSH_PRIVATE_KEY }}" > ~/.ssh/github_sftp_key
                   chmod 600 ~/.ssh/github_sftp_key
 
                   # Upload to repo-specific directory
-                  sftp -P ${{ secrets.SFTP_SERVER_PORT }} \
+                  sftp -P ${{ secrets.ARTIFACTS_PORT }} \
                       -i ~/.ssh/github_sftp_key \
                       -o StrictHostKeyChecking=no \
-                  github@${{ secrets.SFTP_SERVER_IP }} <<EOF
+                  github@${{ secrets.ARTIFACTS_DOMAIN }} <<EOF
                   mkdir $REPO_NAME
                   cd $REPO_NAME
                   put $ARTIFACT_NAME
@@ -790,7 +790,7 @@ jobs:
             - name: '🎁 Commit › Setup SSH Artifact'
               run: |
                   mkdir -p ~/.ssh
-                  echo "${{ secrets.SFTP_GITHUB_SSH_PRIVATE_KEY }}" > ~/.ssh/github_sftp_key
+                  echo "${{ secrets.ARTIFACTS_GITHUB_SSH_PRIVATE_KEY }}" > ~/.ssh/github_sftp_key
                   chmod 600 ~/.ssh/github_sftp_key
 
             # #
@@ -805,10 +805,10 @@ jobs:
 
                   echo "Downloading $ARTIFACT_PATH"
 
-                  sftp -P ${{ secrets.SFTP_SERVER_PORT }} \
+                  sftp -P ${{ secrets.ARTIFACTS_PORT }} \
                       -i ~/.ssh/github_sftp_key \
                       -o StrictHostKeyChecking=no \
-                      github@${{ secrets.SFTP_SERVER_IP }} <<EOF
+                      github@${{ secrets.ARTIFACTS_DOMAIN }} <<EOF
                   cd $REPO_NAME
                   get $ARTIFACT_NAME
                   bye
@@ -886,8 +886,8 @@ jobs:
 
         #   - name: '🎁 Commit › Cleanup Old Artifacts'
         #     run: |
-        #         ssh -p ${{ secrets.SFTP_SERVER_PORT }} \
+        #         ssh -p ${{ secrets.ARTIFACTS_PORT }} \
         #         -i ~/.ssh/github_sftp_key \
         #         -o StrictHostKeyChecking=no \
-        #         github@${{ secrets.SFTP_SERVER_IP }} \
+        #         github@${{ secrets.ARTIFACTS_DOMAIN }} \
         #         "find ~/public_html -name 'artifacts_*.zip' -type f -mtime +5 -delete"
