@@ -763,12 +763,12 @@ jobs:
               run: |
                   # Make sure the .ssh folder exists
                   mkdir -p ~/.ssh
-                  echo "${{ secrets.ARTIFACTS_GITHUB_SSH_PRIVATE_KEY }}" > "~/.ssh/github_sftp_key"
-                  chmod 600 "~/.ssh/github_sftp_key"
+                  echo "${{ secrets.ARTIFACTS_GITHUB_SSH_PRIVATE_KEY }}" > "$HOME/.ssh/github_sftp_key"
+                  chmod 600 "$HOME/.ssh/github_sftp_key"
 
                   # Upload to repo-specific directory
                   sftp -P ${{ secrets.ARTIFACTS_PORT }} \
-                      -i ~/.ssh/github_sftp_key \
+                      -i "$HOME/.ssh/github_sftp_key" \
                       -o StrictHostKeyChecking=no \
                   github@${{ secrets.ARTIFACTS_DOMAIN }} <<EOF
                   mkdir $REPO_NAME
@@ -818,8 +818,8 @@ jobs:
             - name: '🎁 Commit › Setup SSH Artifact'
               run: |
                   mkdir -p ~/.ssh
-                  echo "${{ secrets.ARTIFACTS_GITHUB_SSH_PRIVATE_KEY }}" > ~/.ssh/github_sftp_key
-                  chmod 600 ~/.ssh/github_sftp_key
+                  echo "${{ secrets.ARTIFACTS_GITHUB_SSH_PRIVATE_KEY }}" > "$HOME/.ssh/github_sftp_key"
+                  chmod 600 "$HOME/.ssh/github_sftp_key"
 
             # #
             #   Commit › Artifact › Download
@@ -834,7 +834,7 @@ jobs:
                   echo "Downloading $ARTIFACT_PATH"
 
                   sftp -P ${{ secrets.ARTIFACTS_PORT }} \
-                      -i ~/.ssh/github_sftp_key \
+                      -i "$HOME/.ssh/github_sftp_key" \
                       -o StrictHostKeyChecking=no \
                       github@${{ secrets.ARTIFACTS_DOMAIN }} <<EOF
                   cd $REPO_NAME
