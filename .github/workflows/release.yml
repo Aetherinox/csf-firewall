@@ -883,20 +883,20 @@ jobs:
                   folder=$(dirname "$artifact")
                   file=$(basename "$artifact")
 
-                  # Start SFTP session
                   sftp -P "$port" -i "$HOME/.ssh/github_sftp_key" -o StrictHostKeyChecking=no "$username@$domain" <<EOF
                   mkdir $repo
                   cd $repo
 
-                  # Create nested directories if folder is not "."
+                  # Create remote directories
                   $(IFS=/; for d in $folder; do
-                      if [ "$d" != "." ]; then
-                          echo "mkdir $d"
-                          echo "cd $d"
-                      fi
+                        if [ "$d" != "." ]; then
+                            echo "mkdir $d"
+                            echo "cd $d"
+                        fi
                   done)
 
-                  put $artifact
+                  # Upload the file
+                  put $file
                   bye
                   EOF
 
