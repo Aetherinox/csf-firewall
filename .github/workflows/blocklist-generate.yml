@@ -563,7 +563,7 @@ jobs:
             #   Generate > Spam
             # #
 
-            - name: "🧱 Generate › Spam"
+            - name: '🧱 Generate › Spam'
               id: task_blocklist_generate_spam
               run: |
                   run_spamhaus=".github/scripts/bl-plain.sh blocklists/spam/spam_spamhaus.ipset ${{ secrets.API_03_SPAM_SPAMHAUS_URL }}"
@@ -575,7 +575,7 @@ jobs:
             #   only updated once per day (at 1am UTC)
             # #
 
-            - name: "🧱 Generate › Spam › Forums (1/day)"
+            - name: '🧱 Generate › Spam › Forums (1/day)'
               id: task_blocklist_spam_generate_forums
               if: (github.event_name == 'schedule' && github.event.schedule == '0 0 * * *') || inputs.RUN_ALL_ACTIONS
               run: |
@@ -600,7 +600,7 @@ jobs:
             #                   we use numerous resources to compare ASNs to see which ones are active and which ones have been migrated.
             # #
 
-            - name: "🧱 Generate › ISP"
+            - name: '🧱 Generate › ISP'
               id: task_blocklist_generate_isp
               run: |
                   # ISP › AOL
@@ -670,7 +670,7 @@ jobs:
             #                                         308_2024
             # #
 
-            - name: '🧱 Geographical › GeoLite2 (Setup)''
+            - name: '🧱 Geographical › GeoLite2 (Setup)'
               id: task_blocklist_geographical_generate_setup
               if: (github.event_name == 'schedule' && github.event.schedule == '0 0 * * *') || ( github.event_name == 'workflow_dispatch' && inputs.RUN_ALL_ACTIONS == true )
               run: |
@@ -687,7 +687,7 @@ jobs:
             #                         if: steps.task_blocklist_geographical_generate_cache.outputs.cache-hit == 'true'
             # #
 
-            - name: '🧱 Geographical › GeoLite2 (Cache)''
+            - name: '🧱 Geographical › GeoLite2 (Cache)'
               id: task_blocklist_geographical_generate_cache
               uses: actions/cache@v4
               if: steps.task_blocklist_geographical_generate_setup.outcome == 'success'
@@ -699,7 +699,7 @@ jobs:
             #   Generate > Geographical > Geolite2 > Build
             # #
 
-            - name: '🧱 Geographical › GeoLite2 (1/day)''
+            - name: '🧱 Geographical › GeoLite2 (1/day)'
               id: task_blocklist_geographical_generate_geolite2
               if: steps.task_blocklist_geographical_generate_setup.outcome == 'success'
               run: |
