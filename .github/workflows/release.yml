@@ -258,7 +258,7 @@ jobs:
                   echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
                   echo "‎"
                   echo "‎"
-                  tree -I node_modules -I .git -I ./
+                  tree -I node_modules -I .git -I blocklists -I ./
                   echo "‎"
                   echo "‎"
                   echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
@@ -315,7 +315,7 @@ jobs:
                   echo " GITHUB.WORKSPACE ........ ${{ github.workspace }}"
                   echo -e
                   echo -e
-                  tree -I node_modules -I .git -I ./
+                  tree -I node_modules -I .git -I blocklists -I ./
                   echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
 
     # #
@@ -461,7 +461,7 @@ jobs:
                   echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
                   echo "‎"
                   echo "‎"
-                  tree -I node_modules -I .git -I ./
+                  tree -I node_modules -I .git -I blocklists -I ./
                   echo "‎"
                   echo "‎"
                   echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
@@ -472,23 +472,25 @@ jobs:
             #   Release › Build › Stable
             # #
 
-            - name: '🔨 Build › Stable ( ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-helpers.zip )'
+            - name: '🔨 Build › Stable ( ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }} )'
               id: task_release_build_st
               if: |
                   startsWith( inputs.RC_RELEASE, false ) ||
                   startsWith( env.RC_RELEASE, false )
               run: |
                   BASE_PATH="${GITHUB_WORKSPACE}"
-                  echo "⚙️ Building STABLE Package .zip ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-helpers.zip"
 
                   #  Zip contents of "📁 src" | first add readme and license | then add all files from src folddr
+                  echo "⚙️ Building STABLE Package .zip ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.zip"
                   zip "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.zip" README.md LICENSE.md 
                   (cd src && zip -r "../${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.zip" .)
 
                   #  Zip contents of "📁 extras/helper_scripts"
+                  echo "⚙️ Building STABLE Package .zip ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-helpers.zip"
                   zip -r "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-helpers.zip" README.md LICENSE.md -j extras/helper_scripts/*
 
                   #  Zip contents of "📁 extras/theme_dark"
+                  echo "⚙️ Building STABLE Package .zip ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-theme-dark.zip"
                   cd extras/theme_dark || exit 1
                   zip -r "../../${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-theme-dark.zip" ./*
               env:
@@ -498,25 +500,27 @@ jobs:
             #   Release › Build › Release Candidate
             # #
 
-            - name: "🔨 Build › RC ( ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}-helpers.zip )"
+            - name: "🔨 Build › RC ( ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }} )"
               id: task_release_build_rc
               if: |
-                  startsWith( inputs.RC_RELEASE, false ) ||
-                  startsWith( env.RC_RELEASE, false )
+                  startsWith( inputs.RC_RELEASE, true ) ||
+                  startsWith( env.RC_RELEASE, true )
               run: |
                   BASE_PATH="${GITHUB_WORKSPACE}"
-                  echo "⚙️ Building PRE-RELEASE Package .zip ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}-helpers.zip"
 
                   #  Zip contents of "📁 src" | first add readme and license | then add all files from src folddr
+                  echo "⚙️ Building RC Package .zip ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}.zip"
                   zip "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}.zip" README.md LICENSE.md 
                   (cd src && zip -r "../${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}" .)
 
                   #  Zip contents of "📁 extras/helper_scripts"
+                  echo "⚙️ Building RC Package .zip ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}-helpers.zip"
                   zip -r "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}-helpers.zip" README.md LICENSE.md -j extras/helper_scripts/*
 
                   #  Zip contents of "📁 extras/theme_dark"
+                  echo "⚙️ Building RC Package .zip ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}-theme-dark.zip"
                   cd extras/theme_dark || exit 1
-                  zip -r "../../${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.VERSION_CSF }}-theme-dark.zip" ./*
+                  zip -r "../../${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}-theme-dark.zip" ./*
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.ADMINSERV_TOKEN_CL }}
 
@@ -532,7 +536,7 @@ jobs:
                   echo " GITHUB.WORKSPACE ........ ${{ github.workspace }}"
                   echo -e
                   echo -e
-                  tree -I node_modules -I .git -I ./
+                  tree -I node_modules -I .git -I blocklists -I ./
                   echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
 
             # #
@@ -595,6 +599,21 @@ jobs:
                   echo "$GPG_KEY_BASE64" | base64 -di > "/tmp/signing-key.gpg"
                   echo "$GPG_KEY_PASSPHRASE" | gpg --pinentry-mode loopback --passphrase-fd 0 --import "/tmp/signing-key.gpg"
                   (echo "$GPG_KEY_PASSPHRASE"; echo; echo) | gpg --command-fd 0 --pinentry-mode loopback --change-passphrase $(gpg --list-secret-keys --with-colons 2> /dev/null | grep '^sec:' | cut --delimiter ':' --fields 5 | tail -n 1)
+
+            # #
+            #   Release › Verbose › List Tree
+            # #
+
+            - name: >-
+                  🌲 Verbose › Tree Listing
+              run: |
+                  echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
+                  echo " PWD ..................... ${PWD}"
+                  echo " GITHUB.WORKSPACE ........ ${{ github.workspace }}"
+                  echo -e
+                  echo -e
+                  tree -I node_modules -I .git -I blocklists -I ./
+                  echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
 
             # #
             #   Release › Checksum › Stable
@@ -807,7 +826,7 @@ jobs:
                   echo " GITHUB.WORKSPACE ........ ${{ github.workspace }}"
                   echo -e
                   echo -e
-                  tree -I node_modules -I .git -I ./
+                  tree -I node_modules -I .git -I blocklists -I ./
                   echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
 
             # #
