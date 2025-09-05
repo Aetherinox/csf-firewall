@@ -133,10 +133,10 @@ jobs:
 
     job-precheck:
         name: >-
-            📦 Package › Upload
+            📦 Package › Precheck
       # runs-on: ubuntu-latest
         runs-on: apollo-x64
-        timeout-minutes: 5
+        timeout-minutes: 15
         permissions:
             contents: write
             packages: write
