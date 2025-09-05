@@ -58,17 +58,6 @@ on:
                 type:               string
 
             # #
-            #   Version to release
-            #     e.g: v15.0.0
-            # #
-
-            PROJECT_VERSION:
-                description:        '📦 Version'
-                required:           true
-                default:            '15.x.x'
-                type:               string
-
-            # #
             #   true            the changelog generated in releases tab will only display single commits.
             #   false           the changelog shows pull requests completed based on their labels
             # #
@@ -121,7 +110,6 @@ on:
 
 env:
     PROJECT_NAME:                   ${{ github.event.inputs.PROJECT_NAME || 'csf-firewall' }}
-    PROJECT_VERSION:                ${{ github.event.inputs.PROJECT_VERSION || '15.00' }}
     CHANGELOG_MODE_COMMIT:          ${{ github.event.inputs.CHANGELOG_MODE_COMMIT || true }}
     SHOW_UNCATEGORIZED:             ${{ github.event.inputs.SHOW_UNCATEGORIZED || false }}
     RC_RELEASE:                     ${{ github.event.inputs.RC_RELEASE || false }}
@@ -484,21 +472,25 @@ jobs:
             #   Release › Build › Stable
             # #
 
-            - name: '🔨 Build › Stable ( ${{ env.PROJECT_NAME }}-v${{ env.PROJECT_VERSION }}-patches.zip )'
+            - name: '🔨 Build › Stable ( ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-helpers.zip )'
               id: task_release_build_st
               if: |
                   startsWith( inputs.RC_RELEASE, false ) ||
                   startsWith( env.RC_RELEASE, false )
               run: |
                   BASE_PATH="${GITHUB_WORKSPACE}"
-                  echo "⚙️ Building STABLE Package .zip ${{ env.PROJECT_NAME }}-v${{ env.PROJECT_VERSION }}-helpers.zip"
+                  echo "⚙️ Building STABLE Package .zip ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-helpers.zip"
 
-                  #  Zip contents of "📁 helper_scripts" to root of repo
-                  zip -r "${{ env.PROJECT_NAME }}-v${{ env.PROJECT_VERSION }}-helpers.zip" README.md LICENSE.md -j extras/helper_scripts/*
+                  #  Zip contents of "📁 src" | first add readme and license | then add all files from src folddr
+                  zip "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.zip" README.md LICENSE.md 
+                  (cd src && zip -r "../${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.zip" .)
 
-                  #  Zip theme dark
+                  #  Zip contents of "📁 extras/helper_scripts"
+                  zip -r "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-helpers.zip" README.md LICENSE.md -j extras/helper_scripts/*
+
+                  #  Zip contents of "📁 extras/theme_dark"
                   cd extras/theme_dark || exit 1
-                  zip -r ../../${{ env.PROJECT_NAME }}-v${{ env.PROJECT_VERSION }}-theme-dark.zip ./*
+                  zip -r "../../${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-theme-dark.zip" ./*
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.ADMINSERV_TOKEN_CL }}
 
@@ -506,22 +498,25 @@ jobs:
             #   Release › Build › Release Candidate
             # #
 
-            - name: "🔨 Build › Release Candidate ( ${{ env.PROJECT_NAME }}-v${{ env.PROJECT_VERSION }}-rc.${{ env.RC_VERSION }}-patches.zip )"
+            - name: "🔨 Build › RC ( ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}-helpers.zip )"
               id: task_release_build_rc
               if: |
                   startsWith( inputs.RC_RELEASE, false ) ||
                   startsWith( env.RC_RELEASE, false )
               run: |
                   BASE_PATH="${GITHUB_WORKSPACE}"
-                  echo "⚙️ Building PRE-RELEASE Package .zip ${{ env.PROJECT_NAME }}-v${{ env.PROJECT_VERSION }}-rc.${{ env.RC_VERSION }}-helpers.zip"
+                  echo "⚙️ Building PRE-RELEASE Package .zip ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}-helpers.zip"
 
-                  #  Zip contents of "📁 helper_scripts" to root of repo
-                  zip -r "${{ env.PROJECT_NAME }}-v${{ env.PROJECT_VERSION }}-rc.${{ env.RC_VERSION }}-helpers.zip" README.md LICENSE.md -j extras/helper_scripts/*
+                  #  Zip contents of "📁 src" | first add readme and license | then add all files from src folddr
+                  zip "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}.zip" README.md LICENSE.md 
+                  (cd src && zip -r "../${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}" .)
 
-                  #  Zip theme dark
+                  #  Zip contents of "📁 extras/helper_scripts"
+                  zip -r "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}-helpers.zip" README.md LICENSE.md -j extras/helper_scripts/*
+
+                  #  Zip contents of "📁 extras/theme_dark"
                   cd extras/theme_dark || exit 1
-                  zip -r ../../${{ env.PROJECT_NAME }}-v${{ env.PROJECT_VERSION }}-rc.${{ env.PROJECT_VERSION }}-theme-dark.zip ./*
-
+                  zip -r "../../${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.VERSION_CSF }}-theme-dark.zip" ./*
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.ADMINSERV_TOKEN_CL }}
 
@@ -548,11 +543,11 @@ jobs:
             #   the list of commits will not be for the correct release.
             # #
 
-            - name: '🔖 Tag › Pre Create ${{ env.PROJECT_VERSION }}'
+            - name: '🔖 Tag › Pre Create ${{ env.VERSION_CSF }}'
               uses: rickstaa/action-create-tag@v1
               id: task_release_tag_create
               with:
-                  tag: ${{ env.PROJECT_VERSION }}
+                  tag: ${{ env.VERSION_CSF }}
                   tag_exists_error: false
                   message: "Latest release"
                   gpg_private_key: ${{ secrets.ADMINSERV_GPG_KEY_ASC }}
@@ -562,7 +557,7 @@ jobs:
             #   Release › Tags › Confirm
             # #
 
-            - name: '🔖 Tag › Confirm ${{ env.PROJECT_VERSION }}'
+            - name: '🔖 Tag › Confirm ${{ env.VERSION_CSF }}'
               run: |
                   echo "Tag already present: ${{ env.TAG_EXISTS }}"
                   echo "Tag already present: ${{ steps.task_release_tag_create.outputs.tag_exists }}"
@@ -597,8 +592,8 @@ jobs:
             - name: '🪪 Release › GPG › Import Signing Key › w/ Passphrase'
               if: env.GPG_KEY_BASE64 != '' && env.GPG_KEY_PASSPHRASE != ''
               run: |
-                  echo "$GPG_KEY_BASE64" | base64 -di > /tmp/signing-key.gpg
-                  echo "$GPG_KEY_PASSPHRASE" | gpg --pinentry-mode loopback --passphrase-fd 0 --import /tmp/signing-key.gpg
+                  echo "$GPG_KEY_BASE64" | base64 -di > "/tmp/signing-key.gpg"
+                  echo "$GPG_KEY_PASSPHRASE" | gpg --pinentry-mode loopback --passphrase-fd 0 --import "/tmp/signing-key.gpg"
                   (echo "$GPG_KEY_PASSPHRASE"; echo; echo) | gpg --command-fd 0 --pinentry-mode loopback --change-passphrase $(gpg --list-secret-keys --with-colons 2> /dev/null | grep '^sec:' | cut --delimiter ':' --fields 5 | tail -n 1)
 
             # #
@@ -610,30 +605,57 @@ jobs:
                   startsWith( inputs.RC_RELEASE, false ) ||
                   startsWith( env.RC_RELEASE, false )
               run: |
-                  #  windows
-                  file_extra_dark="${{ env.PROJECT_NAME }}-v${{ env.PROJECT_VERSION }}-theme-dark.zip"
+                  #  Filename › Main ›App
+                  file_app_main="${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.zip"
+                  echo "FILE_APP_MAIN=${file_app_main}" >> $GITHUB_ENV
+
+                  #  Filename › Extra › Helpers
+                  file_extra_helpers="${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-helpers.zip"
+                  echo "FILE_EXTRA_HELPERS=${file_extra_helpers}" >> $GITHUB_ENV
+
+                  #  Filename › Extra › Dark
+                  file_extra_dark="${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-theme-dark.zip"
+                  echo "FILE_EXTRA_DARK=${file_extra_dark}" >> $GITHUB_ENV
+
+
+
+                  #  SHA1SUM › Main App
+                  sha1sum_app_main="$(shasum --algorithm 1 ${file_app_main} | awk '{ print $1 }')"
+                  echo "SHA1SUM_APP_MAIN=${sha1sum_extra_dark}" >> $GITHUB_ENV
+
+                  #  SHA1SUM › Extra › Helpers
+                  sha1sum_extra_helpers="$(shasum --algorithm 1 ${file_extra_helpers} | awk '{ print $1 }')"
+                  echo "SHA1SUM_EXTRA_HELPERS=${sha1sum_extra_helpers}" >> $GITHUB_ENV
+
+                  #  SHA1SUM › Extra › Dark
+                  sha1sum_extra_dark="$(shasum --algorithm 1 ${file_extra_dark} | awk '{ print $1 }')"
+                  echo "SHA1SUM_EXTRA_DARK=${sha1sum_extra_dark}" >> $GITHUB_ENV
+
+
+
+                  #  SHA256SUM › Main App
+                  sha256sum_app_main="$(shasum --algorithm 256 ${file_app_main} | awk '{ print $1 }')"
+                  echo "SHA256SUM_APP_MAIN=${sha256sum_app_main}" >> $GITHUB_ENV
+
+                  #  SHA256SUM › Extra › Helpers 
+                  sha256sum_extra_helpers"$(shasum --algorithm 256 ${file_extra_helpers} | awk '{ print $1 }')"
+                  echo "SHA256SUM_EXTRA_HELPERS=${sha256sum_extra_helpers}" >> $GITHUB_ENV
+
+                  #  SHA256SUM › Extra › Dark 
+                  sha256sum_extra_dark="$(shasum --algorithm 256 ${file_extra_dark} | awk '{ print $1 }')"
+                  echo "SHA256SUM_EXTRA_DARK=${sha256sum_extra_dark}" >> $GITHUB_ENV
+
+
 
                   #  get sha1 and sha256 for .zip and .gz files
                   find . -maxdepth 1 \( -name '*.zip' -o -name '*.gz' \) -printf '%P\n' | xargs -r sha1sum | gpg --digest-algo sha256 --clearsign > sha1sum.txt.asc
                   find . -maxdepth 1 \( -name '*.zip' -o -name '*.gz' \) -printf '%P\n' | xargs -r sha256sum | gpg --digest-algo sha256 --clearsign > sha256sum.txt.asc
 
 
-                  #  SHA1SUM > Windows
-                  sha1sum_extra_dark="$(shasum --algorithm 1 ${file_extra_dark} | awk '{ print $1 }')"
-                  echo "SHA1SUM_WIN32_ARM64=${sha1sum_extra_dark}" >> $GITHUB_ENV
 
-
-                  #  SHA256SUM > Windows
-                  sha256sum_extra_dark="$(shasum --algorithm 256 ${file_extra_dark} | awk '{ print $1 }')"
-                  echo "SHA256SUM_WIN32_ARM64=${sha256sum_extra_dark}" >> $GITHUB_ENV
-
-
-                  #  no longer needed, replaced by find . command
-                  #  shasum --algorithm 256 ${file_extra_dark} > SHA256SUMS.txt
-                  echo "FILE_EXTRA_DARK=${file_extra_dark}" >> $GITHUB_ENV
-
-                  gpg --batch --yes --quiet --armor --detach-sig --sign --output sha256sum.sig sha256sum.txt.asc
-                  gpg --batch --yes --quiet --armor --detach-sig --sign --output sha1sum.sig sha1sum.txt.asc
+                  #  create sha .sig from .asc
+                  gpg --batch --yes --quiet --armor --detach-sig --sign --output "sha256sum.sig" "sha256sum.txt.asc"
+                  gpg --batch --yes --quiet --armor --detach-sig --sign --output "sha1sum.sig" "sha1sum.txt.asc"
 
             # #
             #   Release › Contributor Images
@@ -689,19 +711,7 @@ jobs:
                   fetchViaCommits: true
                   configurationJson: |
                     {
-                      "template": "## Release Info \n| Item | Value |\n| --- | --- | --- |\n|
-                      <sub>🏷️ Version</sub>|
-                          <sub>${{ env.VERSION_CSF }}</sub>|
-                          <sub>${{  }}</sub>|\n|
-                      <sub>📄 ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.tgz</sub>|
-                          <sub>ConfigServer Firewall main app</sub>|\n|
-                      <sub>📄 ${{ env.PROJECT_NAME }}-v${{ env.PROJECT_VERSION }}-patches.zip</sub>|
-                          <sub>Helper patches. View README for instructionss</sub>|\n|
-                      <sub>📄 ${{ env.PROJECT_NAME }}-v${{ env.PROJECT_VERSION }}-theme-dark.zip</sub>|
-                          <sub>Dark theme</sub>|\n|
-                      <sub>🕟 Stamp</sub>|<sub>`#{{FROM_TAG}}-#{{FROM_TAG_DATE}} 🔺 #{{TO_TAG}}-#{{TO_TAG_DATE}}`</sub>|\n|
-                      <sub>📅 Last Release</sub>|
-                          <sub>`#{{DAYS_SINCE}} days ago`</sub>|\n\n<br>\n\n---\n\n<br>\n\n### What's New\nThis release contains the following changes:\n\n<br>\n\n---\n\n<br>\n\n### Statistics\nHow the files have changed:\n<ul><li><a href='#{{RELEASE_DIFF}}'>Changed files</a>  : <b>#{{CHANGED_FILES}}</b> </li><li>Changes  : <b>#{{CHANGES}}</b> </li><li>Commits : <b>#{{COMMITS}}</b> </li><li>Additions : <b>#{{ADDITIONS}}</b></li><li>Deletions : <b>#{{DELETIONS}}</b></li><li>PRs (categorized) : <b>#{{CATEGORIZED_COUNT}}</b></li><li>PRs (uncategorized) : <b>#{{UNCATEGORIZED_COUNT}}</b></li><li>PRs (open) : <b>#{{OPEN_COUNT}}</b></li>\n<br />\n</ul>\n\n<br>\n\n---\n\n<br>\n\n### Pull Requests\nThis release is associated with the following pull requests:\n#{{CHANGELOG}}\n\n<br>\n\n---\n\n<br>\n\n"
+                      "template": "## Release Info \n| Item | Value |\n| --- | --- |\n| <sub>🏷️ Version</sub> | <sub>${{ env.VERSION_CSF }}</sub>|\n| <sub>📄 ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.tgz</sub> | <sub>ConfigServer Firewall main app</sub><br /><sub>${{ env.SHA256SUM_MAIN }}</sub>|\n| <sub>📄 ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-helpers.zip</sub> | <sub>Helper patches. View README for instructions</sub><br /><sub>${{ env.SHA256SUM_EXTRA_HELPERS }}</sub>|\n| <sub>📄 ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-theme-dark.zip</sub> | <sub>Dark theme</sub><br /><sub>${{ env.SHA256SUM_EXTRA_DARK }}</sub>|\n| <sub>🕟 Stamp</sub>| <sub>`#{{FROM_TAG}}-#{{FROM_TAG_DATE}} 🔺 #{{TO_TAG}}-#{{TO_TAG_DATE}}`</sub>|\n| <sub>📅 Last Release</sub>| <sub>`#{{DAYS_SINCE}} days ago`</sub>|\n\n<br>\n\n---\n\n<br>\n\n### What's New\nThis release contains the following changes:\n\n<br>\n\n---\n\n<br>\n\n### Statistics\nHow the files have changed:\n<ul><li><a href='#{{RELEASE_DIFF}}'>Changed files</a>  : <b>#{{CHANGED_FILES}}</b> </li><li>Changes  : <b>#{{CHANGES}}</b> </li><li>Commits : <b>#{{COMMITS}}</b> </li><li>Additions : <b>#{{ADDITIONS}}</b></li><li>Deletions : <b>#{{DELETIONS}}</b></li><li>PRs (categorized) : <b>#{{CATEGORIZED_COUNT}}</b></li><li>PRs (uncategorized) : <b>#{{UNCATEGORIZED_COUNT}}</b></li><li>PRs (open) : <b>#{{OPEN_COUNT}}</b></li>\n<br />\n</ul>\n\n<br>\n\n---\n\n<br>\n\n### Pull Requests\nThis release is associated with the following pull requests:\n#{{CHANGELOG}}\n\n<br>\n\n---\n\n<br>\n\n"
                     }
               env:
                   GITHUB_TOKEN: ${{ secrets.ADMINSERV_TOKEN }}
@@ -737,7 +747,7 @@ jobs:
                   fetchViaCommits: true
                   configurationJson: |
                     {
-                      "template": "## Release Info \n| Item | Value |\n| --- | --- |\n|<sub>📄 ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.tgz</sub>|<sub>Contains the latest verison of the ConfigServer Firewall application. This file is optional to download and is not required if you have already installed CSF on your system.</sub>|\n|<sub>📄 ${{ env.PROJECT_NAME }}-v${{ env.PROJECT_VERSION }}-patches.zip</sub>|<sub>Contains the latest verison of the ConfigServer Firewall patches. View README for instructions; run patch by launching the file `./install.sh`.</sub>|\n|<sub>📄 ${{ env.PROJECT_NAME }}-v${{ env.PROJECT_VERSION }}-theme-dark.zip</sub>|<sub>Contains custom dark theme.</sub>|\n|<sub>🕟 Stamp</sub>|<sub>`#{{FROM_TAG}}-#{{FROM_TAG_DATE}} 🔺 #{{TO_TAG}}-#{{TO_TAG_DATE}}`</sub>|\n|<sub>📅 Last Release</sub>|<sub>`#{{DAYS_SINCE}} days ago`</sub>|\n\n<br>\n\n---\n\n<br>\n\n### What's New\nThis release contains the following changes:\n\n<br>\n\n---\n\n<br>\n\n### Statistics\nHow the files have changed:\n<ul><li><a href='#{{RELEASE_DIFF}}'>Changed files</a>  : <b>#{{CHANGED_FILES}}</b> </li><li>Changes  : <b>#{{CHANGES}}</b> </li><li>Commits : <b>#{{COMMITS}}</b> </li><li>Additions : <b>#{{ADDITIONS}}</b></li><li>Deletions : <b>#{{DELETIONS}}</b></li><li>PRs (categorized) : <b>#{{CATEGORIZED_COUNT}}</b></li><li>PRs (uncategorized) : <b>#{{UNCATEGORIZED_COUNT}}</b></li><li>PRs (open) : <b>#{{OPEN_COUNT}}</b></li>\n<br />\n</ul>\n\n<br>\n\n---\n\n<br>\n\n### Pull Requests\nThis release is associated with the following pull requests:\n#{{CHANGELOG}}\n\n<br>\n\n"
+                      "template": "## Release Info \n| Item | Value |\n| --- | --- |\n| <sub>🏷️ Version</sub> | <sub>${{ env.VERSION_CSF }}</sub>|\n| <sub>📄 ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.tgz</sub> | <sub>ConfigServer Firewall main app</sub><br /><sub>${{ env.SHA256SUM_MAIN }}</sub>|\n| <sub>📄 ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-helpers.zip</sub> | <sub>Helper patches. View README for instructions</sub><br /><sub>${{ env.SHA256SUM_EXTRA_HELPERS }}</sub>|\n| <sub>📄 ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-theme-dark.zip</sub> | <sub>Dark theme</sub><br /><sub>${{ env.SHA256SUM_EXTRA_DARK }}</sub>|\n| <sub>🕟 Stamp</sub>| <sub>`#{{FROM_TAG}}-#{{FROM_TAG_DATE}} 🔺 #{{TO_TAG}}-#{{TO_TAG_DATE}}`</sub>|\n| <sub>📅 Last Release</sub>| <sub>`#{{DAYS_SINCE}} days ago`</sub>|\n\n<br>\n\n---\n\n<br>\n\n### What's New\nThis release contains the following changes:\n\n<br>\n\n---\n\n<br>\n\n### Statistics\nHow the files have changed:\n<ul><li><a href='#{{RELEASE_DIFF}}'>Changed files</a>  : <b>#{{CHANGED_FILES}}</b> </li><li>Changes  : <b>#{{CHANGES}}</b> </li><li>Commits : <b>#{{COMMITS}}</b> </li><li>Additions : <b>#{{ADDITIONS}}</b></li><li>Deletions : <b>#{{DELETIONS}}</b></li><li>PRs (categorized) : <b>#{{CATEGORIZED_COUNT}}</b></li><li>PRs (uncategorized) : <b>#{{UNCATEGORIZED_COUNT}}</b></li><li>PRs (open) : <b>#{{OPEN_COUNT}}</b></li>\n<br />\n</ul>\n\n<br>\n\n---\n\n<br>\n\n### Pull Requests\nThis release is associated with the following pull requests:\n#{{CHANGELOG}}\n\n<br>\n\n"
                     }
               env:
                   GITHUB_TOKEN: ${{ secrets.ADMINSERV_TOKEN }}
@@ -819,15 +829,15 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.ADMINSERV_TOKEN_CL }}
               with:
                   token: ${{ secrets.ADMINSERV_TOKEN_CL }}
-                  name: v${{ env.PROJECT_VERSION }}
-                  tag_name: ${{ env.PROJECT_VERSION }}
+                  name: v${{ env.VERSION_CSF }}
+                  tag_name: ${{ env.VERSION_CSF }}
                   target_commitish: ${{ github.event.inputs.branch }}
                   draft: false
                   generate_release_notes: false
                   files: |
-                      ${{ env.PROJECT_NAME }}-v${{ env.PROJECT_VERSION }}-theme-dark.zip
-                      ${{ env.PROJECT_NAME }}-v${{ env.PROJECT_VERSION }}-patches.zip
-                      ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.tgz/${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.tgz
+                      ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.zip
+                      ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-helpers.zip
+                      ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-theme-dark.zip
                   prerelease: false
                   body: |
                       ${{ steps.task_release_changelog_categorized.outputs.changelog }}
@@ -852,15 +862,15 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.ADMINSERV_TOKEN }}
               with:
                   token: ${{ secrets.ADMINSERV_TOKEN }}
-                  name: v${{ env.PROJECT_VERSION }}
-                  tag_name: ${{ env.PROJECT_VERSION }}
+                  name: v${{ env.VERSION_CSF }}
+                  tag_name: ${{ env.VERSION_CSF }}
                   target_commitish: ${{ github.event.inputs.branch }}
                   draft: false
                   generate_release_notes: false
                   files: |
-                      ${{ env.PROJECT_NAME }}-v${{ env.PROJECT_VERSION }}-rc.${{ env.RC_VERSION }}-theme-dark.zip
-                      ${{ env.PROJECT_NAME }}-v${{ env.PROJECT_VERSION }}-rc.${{ env.RC_VERSION }}-patches.zip
-                      ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.tgz/${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.tgz
+                      ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}.zip
+                      ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}-helpers.zip
+                      ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}-theme-dark.zip
                   prerelease: false
                   body: |
                       > [!WARNING]
@@ -895,7 +905,7 @@ jobs:
                   echo ""
                   echo ""
                   echo "---- VARIABLES ---------------------------------------------------------------"
-                  echo "Package Version ............ ${{ env.PROJECT_VERSION }}"
+                  echo "Package Version ............ ${{ env.VERSION_CSF }}"
                   echo "Tag: Previous .............. ${{ env.TAG_LAST }}"
                   echo "Tag: Now.... ............... ${{ github.ref }}"
                   echo "Last Commit ................ ${{ env.COMMIT_LAST }}"
