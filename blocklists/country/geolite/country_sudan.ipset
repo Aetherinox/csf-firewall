@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_sudan_ipset
 #   @uuid           aaaa9090-a738-3d76-adb5-e1e130a32ab3
-#   @updated        Thu 04 Sep 2025 01:25:37 AM UTC
+#   @updated        Sat 06 Sep 2025 01:07:50 AM UTC
 #   @entries        1,895,446 ips
-#                   189 subnets
-#                   189 lines
+#                   193 subnets
+#                   193 lines
 #   @country        Sudan (SD)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -200,6 +200,10 @@
 2a11:3a81:8000::/35
 2a13:a5c7:25c4::/48
 2a13:a5c7:25ff:c300::/56
+2a14:7581:b12:d300::/56
+2a14:7581:b13:d300::/56
+2a14:7581:b14:d300::/56
+2a14:7581:b15:d300::/56
 2c0f:1e40::/32
 2c0f:2200::/32
 2c0f:2a80:3000::/40
