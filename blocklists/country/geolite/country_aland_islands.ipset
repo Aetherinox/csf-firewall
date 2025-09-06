@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_aland_islands_ipset
 #   @uuid           d23ed596-7342-327f-8c0a-8b0b93ba62c8
-#   @updated        Thu 04 Sep 2025 01:22:56 AM UTC
+#   @updated        Sat 06 Sep 2025 01:04:47 AM UTC
 #   @entries        43,386 ips
-#                   176 subnets
-#                   176 lines
+#                   180 subnets
+#                   180 lines
 #   @country        Aland Islands (AX)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -196,3 +196,7 @@
 2a11:a680:9000::/36
 2a13:a5c7:250f::/48
 2a13:a5c7:25ff:e00::/56
+2a14:7581:b12:4a00::/56
+2a14:7581:b13:4a00::/56
+2a14:7581:b14:4a00::/56
+2a14:7581:b15:4a00::/56
