@@ -2645,11 +2645,21 @@ EOF
 
 	}
 
-	unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq "logtailcmd" or $FORM{action} eq "loggrepcmd") {
-		print "<br>\n";
-		print "<div class='well well-sm'>csf: v$myv</div>";
-		print "<div class='copy-left'>&copy;2006-$year, <a href='http://configserver.com' target='_blank'>ConfigServer Services</a> (Way to the Web Limited)</div><div class='copy-right'><a href='$th_dark_url'>Dark Theme</a> v$th_dark_version by Aetherinox</div><div class='clear'></div>";
-		print "</div>\n";
+	unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq "logtailcmd" or $FORM{action} eq "loggrepcmd")
+    {
+
+		print "<div class='footer'>";
+			print "<div class='footer-left'>";
+				print "© 2025 ConfigServer Firewall - All rights reserved.";
+			print "</div>";
+
+			print "<div class='footer-right'>";
+				print "<button id='btn-theme' class='btn-footer btn-theme'>Switch Theme</button>";
+				print "<button id='btn-github' class='btn-footer btn-github'><i class='axb ax-github'></i></button>";
+				print "<button id='btn-logout' class='btn-footer btn-logout' title='Logout'><i class='axs ax-lock'></i></button>";
+			print "</div>";
+		print "</div>";
+
 		print "<div style='padding-bottom: 50px;'></div>";
 	}
 
