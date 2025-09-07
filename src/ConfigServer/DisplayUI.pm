@@ -2334,7 +2334,7 @@ EOF
 		print "<div class='bs-callout bs-callout-info text-center collapse' id='upgradebs'><h4>A new version of csf is <a href='#upgradetable'>available</a></h4></div>";
 
 		print "<ul class='nav nav-tabs' id='myTabs' style='font-weight:bold'>\n";
-		print "<li class='active'><a data-toggle='tab' href='#' id='tabAll'>All</a></li>\n";
+		print "<li class='active'><a data-toggle='tab' href='#tabAllPane' id='tabAll'>All</a></li>\n";
 		print "<li><a data-toggle='tab' href='#home'>Info</a></li>\n";
 		print "<li><a data-toggle='tab' href='#csf'>csf</a></li>\n";
 		print "<li><a data-toggle='tab' href='#lfd'>lfd</a></li>\n";
@@ -2353,6 +2353,9 @@ EOF
 		print "</table>\n";
 
 		print "<div class='tab-content'>\n";
+		print "<div id='tabAllPane' class='tab-pane'>\n";
+		print "</div>\n";
+	
 		print "<div id='home' class='tab-pane active'>\n";
 		print "<form action='$script' method='post'>\n";
 		print "<table class='table table-bordered table-striped'>\n";
