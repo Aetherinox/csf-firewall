@@ -5,8 +5,7 @@
 </div>
 
 <div align="center">
-<h6>A GUI based wrapper for iptables. Includes dark theme, Docker, Traefik, and OpenVPN support. "Bad Actor" blocklists / ipsets, and configuration helper patches.</h6>
-<h1>♾️ ConfigServer Firewall & Blocklist ♾️</h1>
+<h6>Official repository for Config Server Firewall ♾️</h1>
 </div>
 
 <br />
@@ -17,7 +16,10 @@ ConfigServer Firewall (CSF) is a popular and powerful firewall solution for Linu
 
 <br />
 
-This repository also contains a list of ipsets / blocklists which are updated every few hours. These sets contain various lists of IP addresses which block connections known for [SSH brute-force](https://www.cmu.edu/iso/aware/be-aware/brute-force_ssh_attack.html) attempts, [port knocking](https://en.wikipedia.org/wiki/Port_knocking) / [scanning](https://www.paloaltonetworks.com/cyberpedia/what-is-a-port-scan), research, [IoT](https://en.wikipedia.org/wiki/Internet_of_things), data collection, etc. These ipsets are compatible with ConfigServer Firewall, and also any other application which supports one IP per line (Windows Hosts file, etc).
+In August 2025, the original developer of ConfigServer Firewall decided to shut down operations. After that time, this repository has maintained constant updates to Config Server Firewall (csf), and currently pushes releases as new updates are available. Along with ConfigServer Firewall; we also provide the following:
+
+- Free IPSET blocklist service (compatible with CSF)
+- Addon scripts which helps support OpenVPN and Docker within CSF
 
 <br />
 
