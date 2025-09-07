@@ -5,7 +5,26 @@
 </div>
 
 <div align="center">
-<h6>♾️ Official repository for Config Server Firewall ♾️</h1>
+<h6>♾️ Official repository for Config Server Firewall (CSF) ♾️</h1>
+</div>
+
+<div align="center">
+
+<img src="src/csf/csf-logo.png" height="230">
+
+<!-- prettier-ignore-start -->
+[![Version][github-version-img]][github-version-uri]
+[![Downloads][github-downloads-img]][github-downloads-uri]
+[![Size][github-size-img]][github-size-img]
+[![Last Commit][github-commit-img]][github-commit-img]
+[![Contributors][contribs-all-img]](#contributors-)
+
+[![Built with Material for MkDocs](https://img.shields.io/badge/Powered_by_Material_for_MkDocs-526CFE?style=for-the-badge&logo=MaterialForMkDocs&logoColor=white)](https://aetherinox.github.io/csf-firewall/)
+<!-- prettier-ignore-end -->
+
+<br />
+<br />
+
 </div>
 
 <br />
@@ -28,25 +47,6 @@ In August 2025, the original developer of ConfigServer Firewall ceased operation
 <br />
 
 <div align="center">
-
-<img src="src/csf/csf-logo.png" height="230">
-
-<br />
-<br />
-
-</div>
-
-<div align="center">
-
-<!-- prettier-ignore-start -->
-[![Version][github-version-img]][github-version-uri]
-[![Downloads][github-downloads-img]][github-downloads-uri]
-[![Size][github-size-img]][github-size-img]
-[![Last Commit][github-commit-img]][github-commit-img]
-[![Contributors][contribs-all-img]](#contributors-)
-
-[![Built with Material for MkDocs](https://img.shields.io/badge/Powered_by_Material_for_MkDocs-526CFE?style=for-the-badge&logo=MaterialForMkDocs&logoColor=white)](https://aetherinox.github.io/csf-firewall/)
-<!-- prettier-ignore-end -->
 
 <br />
 
@@ -74,6 +74,8 @@ In August 2025, the original developer of ConfigServer Firewall ceased operation
 <br />
 
 - [Summary](#summary)
+  - [Releases](#releases)
+  - [Folders](#folders)
 - [ConfigServer Firewall Features](#configserver-firewall-features)
 - [How 📁 Extras/Scripts Works](#how--extrasscripts-works)
 - [Install ConfigServer Firewall](#install-configserver-firewall)
@@ -134,6 +136,7 @@ In August 2025, the original developer of ConfigServer Firewall ceased operation
     - [Unblock Port](#unblock-port)
     - [Allow OpenVPN](#allow-openvpn)
 - [References for More Help](#references-for-more-help)
+- [Questions \& Answers](#questions--answers)
 - [Contributors ✨](#contributors-)
 
 <br />
@@ -144,54 +147,46 @@ In August 2025, the original developer of ConfigServer Firewall ceased operation
 
 ## Summary
 
+In August 2025, the original developer, Way to the Web Ltd, discontinued development of ConfigServer Firewall. This repository has since taken over, continuing its development by adding new features and providing ongoing bug fixes.
+
+<br />
+<br />
+
+### Releases
+
+Each release posted on the [Releases Page](https://github.com/Aetherinox/csf-firewall/releases) contains several `.zip` files:
+- `csf-firewall-vxx.xx.zip`
+  - Latest official version of ConfigServer Firewall. You do not need this if you already have CSF installed on your system.
+- `csf-firewall-vx.x.x-scripts.zip`
+  - These files are optional patches maintained by this repository. They assist with setting up and configuring OpenVPN and Docker with your copy of CSF. The script files include:
+    - 📄 install.sh
+    - 📄 csfpost.sh
+    - 📄 csfpre.sh
+    - 📄 docker.sh
+    - 📄 openvpn.sh
+
+<br />
+<br />
+
+### Folders
+
 This repository contains several folders:
 - 📁 `src`
   - Source code related to ConfigServer Firewall
 - 📁 `blocklists` 
+  - Free ipset blocklist service
   - List of IP addresses which have been reported for ssh brute-force attempts, port scanning, etc.
   - 100% Confidence, powered by services such as [AbuseIPDB](https://abuseipdb.com/)
   - IPs are no older than 90 days old _(updated daily)_, and also contain blocks to protect your privacy from certain online services
   - Add to `csf.blocklists`
 - 📁 `extras/example_configs`
   - Ready-to-use CSF config files
-    - `extras/example_configs/etc/csf/csf.conf` (full version)
-    - `extras/example_configs/etc/csf/csf.conf.clean` (clean version)
-    - `extras/example_configs/etc/GeoIP.conf` GeoIP Config File for [MaxMind geo-blocking](https://www.maxmind.com/en/home)
+    - 📄 `extras/example_configs/etc/csf/csf.conf` (full version)
+    - 📄 `extras/example_configs/etc/csf/csf.conf.clean` (clean version)
+    - 📄 `extras/example_configs/etc/GeoIP.conf` GeoIP Config File for [MaxMind geo-blocking](https://www.maxmind.com/en/home)
 - 📁 `extras/scripts`
   - Docker patch which allows CSF and Docker to work together
   - OpenVPN integration patch
-
-<br />
-<br />
-
-Each release posted on the [Releases Page](https://github.com/Aetherinox/csf-firewall/releases) contains several `.zip` files and a `.tgz`:
-- `csf-firewall-vxx.xx.tgz`
-  - Latest official version of ConfigServer Firewall. You do not need this if you already have CSF installed on your system.
-- `csf-firewall-vx.x.x-scripts.zip`
-  - The patches contained in this repository, which include the files:
-    - 📄 csfpost.sh
-    - 📄 csfpre.sh
-    - 📄 docker.sh
-    - 📄 install.sh
-    - 📄 openvpn.sh
-    - 📄 README.md
-    - 📄 LICENSE
-
-<br />
-<br />
-
-This guide will help you with the following:
-
-- Install CSF (ConfigServer Firewall)
-- Install CSF WebUI interface
-- Install patches
-  - Docker Integration
-  - OpenVPN Integration
-- Install Dark Theme
-- Traefik + CSF WebUI
-  - Access CSF WebUI via domain
-  - Secure domain with Authentik
-  - IP Whitelist access to CSF WebUI
 
 <br />
 
@@ -201,6 +196,11 @@ This guide will help you with the following:
 
 ## ConfigServer Firewall Features
 
+Thinking of using ConfigServer Firewall? Check out our features:
+
+<br />
+
+- Dark & Light theme
 - Straight-forward SPI iptables firewall script
 - Daemon process that checks for login authentication failures for:
     - Courier imap, Dovecot, uw-imap, Kerio
@@ -1941,6 +1941,71 @@ Your OpenVPN server should now be able to allow connections between CSF / Iptabl
 If you need additional help apart from this guide to configure CSF; use the following pages for more help:
 - Chapter 1: [How to Install and Configure CSF Firewall on Linux](https://tecadmin.net/install-csf-firewall-on-linux/)
 - Chapter 2: [How to Enable CSF Firewall Web UI](https://tecadmin.net/how-to-enable-csf-firewall-web-ui/)
+
+<br />
+
+---
+
+<br />
+
+## Questions & Answers
+
+Have a question? See if it's answered here:
+
+<br />
+
+<details>
+<summary>Are you officially taking over development on CSF?</summary>
+
+<br />
+
+_Yes. This repository will continue to release updates to Config Server Firewall, both bug fixes and new functionality._
+
+</details>
+
+<br />
+
+<details>
+<summary>What happened to the dark theme?</summary>
+
+<br />
+
+_The dark theme was officially integrated into ConfigServer Firewall. It will release with `v15.10` with a theme selector._
+
+</details>
+
+<br />
+
+<details>
+<summary>Will cPanel continue to support CSF?</summary>
+
+<br />
+
+_I cannot say for certain. Nobody from cPanel has reached out to me. I hope they continue to support it._
+
+</details>
+
+<br />
+
+<details>
+<summary>what about documentation?</summary>
+
+<br />
+
+_Since I started managing ConfigServer Firewall; I have been working on re-doing the current documentation so that it supports CSF in its entirety._
+
+</details>
+
+<br />
+
+<details>
+<summary>I see emojis, is this written with AI?</summary>
+
+<br />
+
+_I hate AI. If you enjoy using it, that's fine. I have a few select emojis that I use which indicate whether my docs are talking about a folder or file. I have written it all by hand._
+
+</details>
 
 <br />
 
