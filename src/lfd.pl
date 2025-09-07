@@ -1,24 +1,24 @@
 #!/usr/bin/perl
-###############################################################################
-# Copyright (C) 2006-2025 Jonathan Michaelson
+# #
+#	  @author                   Copyright (C) 2025 Aetherinox
+#                               Copyright (C) 2006-2025 Jonathan Michaelson
+#	  @repo_primary             https://github.com/Aetherinox/csf-firewall/actions
+#	  @repo_legacy              https://github.com/waytotheweb/scripts
 #
-# https://github.com/waytotheweb/scripts
+#	  This program is free software; you can redistribute it and/or modify it under
+#	  the terms of the GNU General Public License as published by the Free Software
+#	  Foundation; either version 3 of the License, or (at your option) any later
+#	  version.
 #
-# This program is free software; you can redistribute it and/or modify it under
-# the terms of the GNU General Public License as published by the Free Software
-# Foundation; either version 3 of the License, or (at your option) any later
-# version.
+#	  This program is distributed in the hope that it will be useful, but WITHOUT
+#	  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+#	  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+#	  details.
 #
-# This program is distributed in the hope that it will be useful, but WITHOUT
-# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
-# details.
-#
-# You should have received a copy of the GNU General Public License along with
-# this program; if not, see <https://www.gnu.org/licenses>.
-###############################################################################
-## no critic (RequireUseWarnings, ProhibitExplicitReturnUndef, ProhibitMixedBooleanOperators, RequireBriefOpen, RequireLocalizedPunctuationVars)
-# start main
+#	  You should have received a copy of the GNU General Public License along with
+#	  this program; if not, see <https://www.gnu.org/licenses>.
+# #
+
 use strict;
 use lib '/usr/local/csf/lib';
 use Fcntl qw(:DEFAULT :flock);
@@ -106,53 +106,68 @@ if ($config{UI}) {
 		import IO::Socket::SSL;
 	};
 }
+
 if ($config{LF_DIRWATCH}) {
 	require File::Find;
 	import File::Find;
 }
+
 if ($config{UI} or $config{LF_DIRWATCH_FILE}) {
 	require Digest::MD5;
 	import Digest::MD5;
 }
+
 if ($config{SYSLOG} or $config{SYSLOG_CHECK}) {
 	eval('use Sys::Syslog;'); ##no critic
 	unless ($@) {$sys_syslog = 1}
 }
+
 if ($config{DEBUG}) {
 	require Time::HiRes;
 	import Time::HiRes;
 }
+
 if ($config{CLUSTER_SENDTO} or $config{CLUSTER_RECVFROM}) {
 	require Crypt::CBC;
 	import Crypt::CBC;
 	require File::Basename;
 	import File::Basename;
 }
+
 if ($config{CLUSTER_SENDTO} or $config{CLUSTER_RECVFROM}) {
 	require IO::Socket::INET;
 	import IO::Socket::INET;
 }
+
 if ($config{MESSENGER}) {
 	require ConfigServer::Messenger;
 	import ConfigServer::Messenger;
 }
+
 if ($config{CF_ENABLE}) {
 	require ConfigServer::CloudFlare;
 	import ConfigServer::CloudFlare;
 }
+
 if (-e "/etc/cxs/cxs.reputation" and -e "/usr/local/csf/lib/ConfigServer/cxs.pm") {
 	require ConfigServer::cxs;
 	import ConfigServer::cxs;
 	$cxsreputation = 1;
 	%cxsports = ConfigServer::cxs::Rports();
 }
+
 $SIG{CHLD} = 'IGNORE';
 
-if ($pid = fork)  {
+if ($pid = fork)
+{
 	exit 0;
-} elsif (defined($pid)) {
+}
+elsif (defined($pid))
+{
 	$pid = $$;
-} else {
+}
+else
+{
 	die "*Error* Unable to fork: $!";
 }
 
@@ -165,6 +180,9 @@ open STDIN, "<","/dev/null";
 open STDOUT, ">","/dev/null";
 open STDERR, ">","/dev/null";
 setsid();
+
+our $th_dark_version = 2.21;
+my $th_dark_url = "https://github.com/Aetherinox/csf-firewall";
 
 my $oldfh = select STDERR; ##no critic
 $| = 1;
@@ -6290,7 +6308,8 @@ sub countrycode6 {
 			if ($cc eq "") {next}
 			undef @ipset;
 			$cc = lc $cc;
-			if ($config{CC_ALLOW_FILTER} and $redo_allow_filter) {&iptablescmd(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} -A CC_ALLOWF -m set --match-set cc_6_$cc src -j RETURN")}
+			if ($config{CC_ALLOW_FILTER} and $redo_allow_filter) {
+				&iptablescmd(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} -A CC_ALLOWF -m set --match-set cc_6_$cc src -j RETURN")}
 			if (-e "/var/lib/csf/zone/$cc.zone6") {
 				logfile("CC: Repopulating ipset cc_6_$cc with IP addresses from [".uc($cc)."]");
 				open (my $IN, "<", "/var/lib/csf/zone/$cc.zone6");
@@ -9678,7 +9697,6 @@ sub ui {
 						if ($line =~ /^\r\n$/) {last}
 						$line =~ s/\r\n$//;
 						my ($field,$value) = split(/\:\s/,$line);
-						$field = lc($field);
 						$header{$field} = $value;
 						if ($config{DEBUG} >= 2) {logfile("UI debug: header [$field] [$value]")}
 						$linecnt++;
@@ -9689,17 +9707,17 @@ sub ui {
 							exit;
 						}
 					}
-					if ($header{'content-length'} > 0) {
-						if ($header{'content-length'} > $maxbody) {
+					if ($header{'Content-Length'} > 0) {
+						if ($header{'Content-Length'} > $maxbody) {
 							&ui_413;
 							close ($client);
 							alarm(0);
 							exit;
 						} else {
-							if ($header{'content-type'} =~ /multipart\/form-data/i) {
-								$client->read($fileinc,$header{'content-length'});
+							if ($header{'Content-Type'} =~ /multipart\/form-data/) {
+								$client->read($fileinc,$header{'Content-Length'});
 							} else {
-								$client->read($buffer,$header{'content-length'});
+								$client->read($buffer,$header{'Content-Length'});
 							}
 						}
 					}
@@ -9712,7 +9730,7 @@ sub ui {
 						$value =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C", hex($1))/eg;
 						$FORM{$name} = $value;
 					}
-					if ($header{cookie} =~ /csfsession=(\w+)/) {$cookie = $1}
+					if ($header{Cookie} =~ /csfsession=(\w+)/) {$cookie = $1}
 
 					if (($session ne "" and $cookie ne "") or defined $FORM{csflogin}) {
 						sysopen (my $SESSION,"/var/lib/csf/ui/ui.session", O_RDWR | O_CREAT) or &childcleanup(__LINE__,"UI: unable to open csf.session: $!");
@@ -9723,7 +9741,7 @@ sub ui {
 						truncate ($SESSION, 0);
 
 						my $md5current = Digest::MD5->new;
-						$md5current->add($header{'user-agent'});
+						$md5current->add($header{'User-Agent'});
 						my $md5sum = $md5current->b64digest;
 						foreach my $record (@records) {
 							my ($rtype,$rstart,$rtime,$rsession,$rcookie,$rip,$rhead,$rapp) = split(/\|/,$record,8);
@@ -9863,7 +9881,7 @@ sub ui {
 						$cookie = join '', map {$chars[rand(@chars)]} (1..(15 + int(rand(15))));
 
 						my $md5current = Digest::MD5->new;
-						$md5current->add($header{'user-agent'});
+						$md5current->add($header{'User-Agent'});
 						my $md5sum = $md5current->b64digest;
 						my $time = time;
 						sysopen (my $SESSION,"/var/lib/csf/ui/ui.session", O_RDWR | O_CREAT) or &childcleanup(__LINE__,"UI: unable to open csf.session: $!");
@@ -9898,48 +9916,261 @@ sub ui {
 							ConfigServer::Sendmail::relay("", "", @message);
 						}
 					}
-					if ($valid eq "login") {
+
+					if ($valid eq "login")
+					{
+
 						print "HTTP/1.0 200 OK\r\n";
 						print "Content-type: text/html\r\n";
 						print "\r\n";
 						print "<!DOCTYPE html>\n";
-						print "<HTML>\n<TITLE>ConfigServer Security & Firewall</TITLE>\n<BODY style='font-family:Arial, Helvetica, sans-serif;' onload='document.getElementById(\"user\").focus()'>\n";
+						print "<HTML>\n";
+						print "<HEAD>";
+						print "<TITLE>ConfigServer Security & Firewall</TITLE>\n";
+						print <<EOF;
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
+<link rel="icon" type="image/x-icon" href="https://github.com/user-attachments/assets/ba005563-da8b-456c-8c4d-19f4ee31eb71">
+<style>
+
+\@-webkit-keyframes fade-in
+{
+    from { opacity: 0.6; }
+    to { opacity: 1; }
+}
+
+\@-moz-keyframes fade-in
+{
+    from { opacity: 0.6; }
+    to { opacity: 1; }
+}
+
+\@keyframes fade-in
+{
+    from { opacity: 0.6; }
+    to { opacity: 1; }
+}
+
+\@keyframes scale-in
+{
+    from {
+        transform: scale(1, 1);
+    }
+    to {
+        transform: scale(1.1, 1.1);
+    }
+}
+
+body
+{
+	font-family: Nunito,Roboto,sans-serif;
+}
+
+input::placeholder
+{
+	font-weight: lighter;
+	opacity: 0.8;
+	color: #707070;
+}
+
+input:focus::placeholder
+{
+	color: transparent;
+}
+
+input:focus
+{
+    outline: none;
+}
+
+.btn-login
+{
+	background-color: #a81840;
+	color: #FFF;
+	border: 1px solid #e3e3e31a;
+	border-radius: 4px;
+	padding-left: 4px;
+	padding-right: 4px;
+	padding-top: 7px;
+	padding-bottom: 7px;
+	min-width: 100px;
+	margin-top: 15px;
+	cursor: pointer;
+}
+
+.btn-login:hover
+{
+	background-color: #6a791c;
+	transition: all 0.3s;
+}
+
+img.login-logo
+{
+	width: 100px;
+	opacity: 0.6;
+}
+
+img.login-logo:hover
+{
+	animation-name:             fade-in, scale-in;
+	animation-duration:         1s, 0.5s;
+	animation-timing-function:  ease-in, linear;
+	animation-direction:        alternate, alternate;
+	animation-iteration-count:  infinite, 1;
+	transition: all 0.3s;
+	opacity: 0.5;
+	transform: scale(1.1);
+}
+
+img.login-logo:not(:hover)
+{
+	transition: all 0.3s;
+	opacity: 0.5;
+	transform: scale(1);
+}
+
+form.login-form
+{
+
+}
+
+.login-container-logo
+{
+	margin-top: -75px;
+	margin-bottom: 20px;
+}
+
+.login-container-main
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	min-height: 100vh;
+}
+
+.login-container
+{
+	background-color: #282828;
+	border:1px solid #e3e3e31a;
+	padding:15px;
+}
+
+.login-footer
+{
+	font-size: 8pt;
+	padding-top: 20px;
+	color: #868686;
+}
+
+.login-footer a
+{
+	color: #dd761c;
+	text-decoration: none;
+}
+
+.login-footer a:hover
+{
+	color: #ffa354;
+	transition: all 0.3s;
+}
+
+.input
+{
+	width: 30vw;
+	max-width: 400px;
+	min-width: 100px;
+	padding-left:10px;
+	padding-right: 10px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	background-color: #393939;
+	border: 1px solid #e3e3e31a;
+	color: #FFF;
+	font-size: 16pt;
+	font-family: "Abel";
+	transition: 0.5s;
+	background: linear-gradient(#ff3678 0 0) bottom / 0% 2px no-repeat #393939;
+	cursor: pointer;
+	text-align: center;
+}
+
+.input:hover, .input:focus
+{
+	background-size: 100% 2px;
+	transition: all 0.3s;
+}
+
+.input:focus
+{
+	transition: 0.5s;
+	background: linear-gradient(#1F85DE 0 0) bottom / 0% 2px no-repeat #393939;
+	background-size: 100% 2px;
+	transition: all 0.3s;
+}
+
+</style>
+EOF
+						print "</HEAD>\n";
+						print "<BODY style='background-color:#1c1c1c;font-family:Arial, Helvetica, sans-serif;' onload='document.getElementById(\"user\").focus()'>\n";
+
 						if ($valid eq "failed") {print "<div align='center'><h2>Login Failed</h2></div>\n"}
-						print "<form action='/' method='post'><div align='center'>\n";
-						print "<table align='center' border='0' cellspacing='0' cellpadding='4' bgcolor='#FFFFFF' style='border:1px solid #990000'>\n";
-						print "<tr bgcolor='#F4F4EA'><td>Username:</td><td><input id='user' name='csflogin' type='text' size='15'></td></tr>\n";
-						print "<tr bgcolor='#F4F4EA'><td>Password:</td><td><input name='csfpassword' type='password' size='15'></td></tr>\n";
-						print "<tr bgcolor='#FFFFFF'><td colspan='2' align='center'><input type='submit' value='Enter'></td></tr>\n";
-						print "<", "/table></div></form>\n";
+
+						print "<div class='login-container-main'>";
+						print "<form action='/' method='post'><div class='login-form' align='center'>\n";
+						print "<div class='login-container-logo'><a href='$th_dark_url'><img class='login-logo' src='https://github.com/user-attachments/assets/ba005563-da8b-456c-8c4d-19f4ee31eb71'></a></div>";
+						print "<table align='center' cellspacing='0' cellpadding='4' class='login-container'>\n";
+						print "<tr><td><input placeholder='Username' id='user' name='csflogin' type='text' class='input' size='25'></td></tr>\n";
+						print "<tr><td><input placeholder='Password' name='csfpassword' type='password' class='input' size='25'></td></tr>\n";
+						print "<tr><td colspan='2' align='center'><input type='submit' value='Enter' class='btn-login'></td></tr>\n";
+						print "<", "/table>";
+						print "<div class='login-footer'><a href='$th_dark_url'>Dark Theme</a> v$th_dark_version</div>";
+						print "</div></form>\n";
+						print "</div>";
 						print "\n</BODY>\n</HTML>\n";
 					}
-					if ($valid eq "session") {
-						if (defined $FORM{csfapp} and ($FORM{csfapp} ne $application)) {
+	
+					if ($valid eq "session")
+					{
+						if (defined $FORM{csfapp} and ($FORM{csfapp} ne $application))
+						{
 							my $newapp = $application;
 							if ($FORM{csfapp} eq "csf") {$newapp = "csf"}
 							elsif ($FORM{csfapp} eq "cxs" and $config{UI_CXS}) {$newapp = "cxs"}
 							elsif ($FORM{csfapp} eq "cse" and $config{UI_CSE}) {$newapp = "cse"}
-							if ($newapp ne $application) {
+							if ($newapp ne $application)
+							{
 								sysopen (my $SESSION,"/var/lib/csf/ui/ui.session", O_RDWR | O_CREAT) or &childcleanup(__LINE__,"UI: unable to open csf.session: $!");
 								flock ($SESSION, LOCK_EX);
 								my @records = <$SESSION>;
 								chomp @records;
 								seek ($SESSION, 0, 0);
 								truncate ($SESSION, 0);
-								foreach my $record (@records) {
+
+								foreach my $record (@records)
+								{
 									my ($rtype,$rstart,$rtime,$rsession,$rcookie,$rip,$rhead,$rapp) = split(/\|/,$record,8);
-									if ($rip eq $peeraddress and $rsession eq $session) {
+									if ($rip eq $peeraddress and $rsession eq $session)
+									{
 										$record = "$rtype|$rstart|$rtime|$rsession|$rcookie|$rip|$rhead|$newapp";
 										$application = $newapp;
 									}
+
 									print $SESSION "$record\n"
 								}
+
 								close ($SESSION);
 							}
 						}
-						if ($file eq "/") {
+			
+						if ($file eq "/")
+						{
 							print "HTTP/1.0 200 OK\r\n";
-							if ($application eq "csf") {
+						
+							if ($application eq "csf")
+							{
 								open (my $IN, "<", "/etc/csf/version.txt") or die $!;
 								flock ($IN, LOCK_SH);
 								$myv = <$IN>;
@@ -9948,25 +10179,34 @@ sub ui {
 								$script = "/$session/";
 								$images = "/$session/images";
 								$config{THIS_UI} = 1;
+	
 								my $bootstrapcss = "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css'>";
 								my $jqueryjs = "<script src='$images/jquery.min.js'></script>";
 								my $bootstrapjs = "<script src='$images/bootstrap/js/bootstrap.min.js'></script>";
+								my $csfjs = "<script src='$images/csf.min.js'></script>";
+								my $enginejs = "<script src='$images/engine.min.js'></script>";
 								my @header;
 								my @footer;
 								my $htmltag = "data-post='$FORM{action}'";
-								if (-e "/etc/csf/csf.header") {
+				
+								if (-e "/etc/csf/csf.header")
+								{
 									open (my $HEADER, "<", "/etc/csf/csf.header");
 									flock ($HEADER, LOCK_SH);
 									@header = <$HEADER>;
 									close ($HEADER);
 								}
-								if (-e "/etc/csf/csf.footer") {
+
+								if (-e "/etc/csf/csf.footer")
+								{
 									open (my $FOOTER, "<", "/etc/csf/csf.footer");
 									flock ($FOOTER, LOCK_SH);
 									@footer = <$FOOTER>;
 									close ($FOOTER);
 								}
-								unless ($config{STYLE_CUSTOM}) {
+
+								unless ($config{STYLE_CUSTOM})
+								{
 									undef @header;
 									undef @footer;
 									$htmltag = "";
@@ -9974,17 +10214,24 @@ sub ui {
 
 								print "Content-type: text/html\r\n";
 								print "\r\n";
+
 								unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq "logtailcmd" or $FORM{action} eq "loggrepcmd") {
 									print <<EOF;
 <!doctype html>
 <html lang='en' $htmltag>
 <head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
+<link rel="icon" type="image/x-icon" href="https://github.com/user-attachments/assets/ba005563-da8b-456c-8c4d-19f4ee31eb71">
 <title>ConfigServer Security &amp; Firewall</title>
 <meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
 $bootstrapcss
 <link href='$images/configserver.css' rel='stylesheet' type='text/css'>
 $jqueryjs
+$csfjs
+$enginejs
 $bootstrapjs
 
 <style>
@@ -9995,7 +10242,8 @@ display:none;
 display:block;
 }
 EOF
-									if ($config{STYLE_MOBILE}) {
+									if ($config{STYLE_MOBILE})
+									{
 	print <<EOF;
 \@media (max-width: 480px) {
 .mobilecontainer {
@@ -10007,6 +10255,7 @@ EOF
 }
 EOF
 									}
+
 									print "</style>\n";
 									print @header;
 									print <<EOF;
@@ -10017,24 +10266,40 @@ EOF
 <div class='container-fluid'>
 EOF
 								}
-								unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq "logtailcmd" or $FORM{action} eq "loggrepcmd") {
+								unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq "logtailcmd" or $FORM{action} eq "loggrepcmd")
+								{
+
 									print "<div class='pull-right' style='margin:8px'>\n";
-									if ($config{UI_CXS} or $config{UI_CSE}) {
+
+									if ($config{UI_CXS} or $config{UI_CSE})
+									{
 										print "<form action='$script' method='post'><select name='csfapp'><option>csf</option>";
-										if ($config{UI_CXS}) {print "<option>cxs</option>"}
-										if ($config{UI_CSE}) {print "<option>cse</option>"}
+
+										if ($config{UI_CXS})
+										{
+											print "<option>cxs</option>"
+										}
+
+										if ($config{UI_CSE})
+										{
+											print "<option>cse</option>"
+										}
+
 										print "<", "/select> <input class='btn btn-default' type='submit' value='Switch'></form>\n";
 									}
+
 									print " <a class='btn btn-default' href='/$session/?csfaction=csflogout'>csf Logout</a>\n";
 									print "</div>\n";
 									print <<EOF;
 <div class='panel panel-default panel-body'>
-<img align='absmiddle' src='$images/csf_small.png' alt='ConfigServer Firewall &amp; Security' style='float:left'>
-<h3>ConfigServer Security &amp; Firewall - csf v$myv</h3>
+<a href='/$session/'><img class='logo' align='absmiddle' src='https://github.com/user-attachments/assets/ba005563-da8b-456c-8c4d-19f4ee31eb71' alt='ConfigServer Firewall' style='float:left'></a>
+<h3><a class='app-name' href='/$session/'>ConfigServer Firewall v$myv</a></h3>
 </div>
 EOF
 								}
+
 								ConfigServer::DisplayUI::main(\%FORM, $script, 0, $images, $myv, $config{THIS_UI});
+
 								unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq "logtailcmd" or $FORM{action} eq "loggrepcmd") {
 									print <<EOF;
 <a class='botlink' id='botlink' title='Go to top'><span class='glyphicon glyphicon-hand-up'></span></a>
@@ -10152,6 +10417,8 @@ EOF
 								my $bootstrapcss = "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css'>";
 								my $jqueryjs = "<script src='$images/jquery.min.js'></script>";
 								my $bootstrapjs = "<script src='$images/bootstrap/js/bootstrap.min.js'></script>";
+								my $csfjs = "<script src='$images/csf.min.js'></script>";
+								my $enginejs = "<script src='$images/engine.min.js'></script>";
 								my $fontawesome = "<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.0.10/css/all.css'>";
 								if ($FORM{action} eq "cc_body" or $FORM{action} eq "cc_dbody" or $FORM{action} eq "cc_showreports") {
 								} elsif ($ajaxsubs{$FORM{action}} or $FORM{action} eq "tailcmd" or $FORM{action} eq "tailscancmd") {
@@ -10171,6 +10438,8 @@ $fontawesome
 <link href='$images/configserver.css' rel='stylesheet' type='text/css'>
 $jqueryjs
 $bootstrapjs
+$csfjs
+$enginejs
 <link href='https://fonts.googleapis.com/css?family=Raleway:400,700' rel='stylesheet' type='text/css'>
 </head>
 <body>
@@ -10189,7 +10458,7 @@ EOF
 										print "</div>\n";
 										print <<EOF;
 <div class='panel panel-default panel-body'>
-<img align='absmiddle' src='$images/cxs_small.png' alt='ConfigServer eXploit Scanner' style='float:left'>
+<img class='logo' align='absmiddle' src='https://github.com/user-attachments/assets/ba005563-da8b-456c-8c4d-19f4ee31eb71' alt='ConfigServer eXploit Scanner' style='float:left'>
 <h3>ConfigServer eXploit Scanner - cxs v$myv</h3>
 </div>
 EOF
@@ -10202,6 +10471,8 @@ EOF
 	<link href='$images/configserver.css' rel='stylesheet' type='text/css'>
 	$jqueryjs
 	$bootstrapjs
+	$csfjs
+	$enginejs
 </head>
 <body>
 <div class='container-fluid'>
