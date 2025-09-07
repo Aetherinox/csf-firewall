@@ -16,14 +16,11 @@ ConfigServer Firewall (CSF) is a robust and widely used firewall for Linux serve
 
 <br />
 
-In August 2025, the original developer of ConfigServer Firewall decided to shut down operations. After that time, this repository has maintained constant updates to Config Server Firewall (csf), and currently pushes releases as new updates are available. Along with ConfigServer Firewall; we also provide the following:
+In August 2025, the original developer of ConfigServer Firewall ceased operations. Since then, this repository has continued actively maintaining CSF, releasing updates as they become available. In addition to ConfigServer Firewall, we also provide:
 
-- Free IPSET blocklist service (compatible with CSF)
-- Addon scripts which helps support OpenVPN and Docker within CSF
-
-<br />
-
-Ipsets include lists from [AbuseIPDB](https://abuseipdb.com/) and [IPThreat](https://ipthreat.net/). For information on how to use these sets, read the section [IP Rulesets & Blocklists](#ip-sets--blocklist).
+- A free IPSET blocklist service (fully compatible with CSF)
+  - Ipsets include lists from [AbuseIPDB](https://abuseipdb.com/) and [IPThreat](https://ipthreat.net/). For information on how to use these sets, read the section [IP Rulesets & Blocklists](#ip-sets--blocklist).
+- Addon scripts to enhance CSF with OpenVPN and Docker support
 
 </p>
 
