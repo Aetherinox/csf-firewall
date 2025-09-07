@@ -1,23 +1,23 @@
-###############################################################################
-# Copyright (C) 2006-2025 Jonathan Michaelson
+# #
+#	  @author                   Copyright (C) 2025 Aetherinox
+#                               Copyright (C) 2006-2025 Jonathan Michaelson
+#	  @repo_primary             https://github.com/Aetherinox/csf-firewall/actions
+#	  @repo_legacy              https://github.com/waytotheweb/scripts
 #
-# https://github.com/waytotheweb/scripts
+#	  This program is free software; you can redistribute it and/or modify it under
+#	  the terms of the GNU General Public License as published by the Free Software
+#	  Foundation; either version 3 of the License, or (at your option) any later
+#	  version.
 #
-# This program is free software; you can redistribute it and/or modify it under
-# the terms of the GNU General Public License as published by the Free Software
-# Foundation; either version 3 of the License, or (at your option) any later
-# version.
+#	  This program is distributed in the hope that it will be useful, but WITHOUT
+#	  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+#	  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+#	  details.
 #
-# This program is distributed in the hope that it will be useful, but WITHOUT
-# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
-# details.
-#
-# You should have received a copy of the GNU General Public License along with
-# this program; if not, see <https://www.gnu.org/licenses>.
-###############################################################################
-## no critic (RequireUseWarnings, ProhibitExplicitReturnUndef, ProhibitMixedBooleanOperators, RequireBriefOpen)
-# start main
+#	  You should have received a copy of the GNU General Public License along with
+#	  this program; if not, see <https://www.gnu.org/licenses>.
+# #
+
 package ConfigServer::RBLCheck;
 
 use strict;
@@ -96,64 +96,84 @@ sub report {
 	}
 	@RBLS = sort @RBLS;
 
-	foreach my $ip (sort keys %ips) {
+	foreach my $ip (sort keys %ips)
+	{
 		my $netip = Net::IP->new($ip);
 		my $type = $netip->iptype();
-		if ($type eq "PUBLIC") {
 
-			if ($verbose and -e "/var/lib/csf/${ip}.rbls") {
+		if ($type eq "PUBLIC")
+		{
+
+			if ($verbose and -e "/var/lib/csf/${ip}.rbls")
+			{
 				unlink "/var/lib/csf/${ip}.rbls";
 			}
 
-			if (-e "/var/lib/csf/${ip}.rbls") {
+			if (-e "/var/lib/csf/${ip}.rbls")
+			{
 				my $text = join("\n",slurp("/var/lib/csf/${ip}.rbls"));
 				if ($ui) {print $text} else {$output .= $text}
-			} else {
-				if ($verbose) {
+			}
+			else
+			{
+				if ($verbose)
+				{
 					$ipresult = "";
 					my $hits = 0;
 					&addtitle("Checked $ip ($type) on ".localtime());
 
-					foreach my $line (@RBLS) {
+					foreach my $line (@RBLS)
+					{
 						my ($rbl,$rblurl) = split(/:/,$line,2);
 						if ($rbl eq "") {next}
 
 						my ($rblhit,$rbltxt)  = rbllookup($ip,$rbl);
 						my @tmptxt = $rbltxt;
 						$rbltxt = "";
-						foreach my $line (@tmptxt) {
+	
+						foreach my $line (@tmptxt)
+						{
 							$line =~ s/(http(\S+))/<a target="_blank" href="$1">$1<\/a>/g;
 							$rbltxt .= "${line}\n";
 						}
+		
 						$rbltxt =~ s/\n/<br>\n/g;
 
-						if ($rblhit eq "timeout") {
+						if ($rblhit eq "timeout")
+						{
 							&addline(0,$rbl,$rblurl,"TIMEOUT");
 						}
-						elsif ($rblhit eq "") {
-							if ($verbose == 2) {
+						elsif ($rblhit eq "")
+						{
+							if ($verbose == 2)
+							{
 								&addline(0,$rbl,$rblurl,"OK");
 							}
 						}
-						else {
+						else
+						{
 							&addline(1,$rbl,$rblurl,$rbltxt);
 							$hits++;
 						}
 					}
-					unless ($hits) {
+
+					unless ($hits)
+					{
 						my $text;
-						$text .= "<div style='clear: both;background: #BDECB6;padding: 8px;border: 1px solid #DDDDDD;'>OK</div>\n";
+						$text .= "<div class='server-check-result'>OK</div>\n";
 						if ($ui) {print $text} else {$output .= $text}
 						$ipresult .= $text;
 					}
+
 					sysopen (my $OUT, "/var/lib/csf/${ip}.rbls", O_WRONLY | O_CREAT);
 					flock($OUT, LOCK_EX);
 					print $OUT $ipresult;
 					close ($OUT);
-				} else {
+				} else
+				{
 					&addtitle("New $ip ($type)");
 					my $text;
-					$text .= "<div style='clear: both;background: #FFD1DC;padding: 8px;border: 1px solid #DDDDDD;'>Not Checked</div>\n";
+					$text .= "<div class='server-check-result'>Not Checked</div>\n";
 					if ($ui) {print $text} else {$output .= $text}
 				}
 			}
@@ -161,7 +181,7 @@ sub report {
 			if ($verbose == 2) {
 				&addtitle("Skipping $ip ($type)");
 				my $text;
-				$text .= "<div style='clear: both;background: #BDECB6;padding: 8px;border: 1px solid #DDDDDD;'>OK</div>\n";
+				$text .= "<div class='server-check-result'>OK</div>\n";
 				if ($ui) {print $text} else {$output .= $text}
 			}
 		}
@@ -179,7 +199,8 @@ sub startoutput {
 # end startoutput
 ###############################################################################
 # start addline
-sub addline {
+sub addline
+{
 	my $status = shift;
 	my $rbl = shift;
 	my $rblurl = shift;
@@ -188,18 +209,20 @@ sub addline {
 	my $check = $rbl;
 	if ($rblurl ne "") {$check = "<a href='$rblurl' target='_blank'>$rbl</a>"}
 
-	if ($status) {
-		$text .= "<div style='display: flex;width: 100%;clear: both;'>\n";
-		$text .= "<div style='width: 250px;background: #FFD1DC;padding: 8px;border-bottom: 1px solid #DDDDDD;border-left: 1px solid #DDDDDD;border-right: 1px solid #DDDDDD;'>$check</div>\n";
-		$text .= "<div style='flex: 1;padding: 8px;border-bottom: 1px solid #DDDDDD;border-right: 1px solid #DDDDDD;'>$comment</div>\n";
+	if ($status)
+	{
+		$text .= "<div class='server-check-status-container'>\n";
+		$text .= "<div class='server-check-status-check'>$check</div>\n";
+		$text .= "<div class='server-check-status-comment'>$comment</div>\n";
 		$text .= "</div>\n";
 		$failures ++;
 		$ipresult .= $text;
 	}
-	elsif ($verbose) {
-		$text .= "<div style='display: flex;width: 100%;clear: both;'>\n";
-		$text .= "<div style='width: 250px;background: #BDECB6;padding: 8px;border-bottom: 1px solid #DDDDDD;border-left: 1px solid #DDDDDD;border-right: 1px solid #DDDDDD;'>$check</div>\n";
-		$text .= "<div style='flex: 1;padding: 8px;border-bottom: 1px solid #DDDDDD;border-right: 1px solid #DDDDDD;'>$comment</div>\n";
+	elsif ($verbose)
+	{
+		$text .= "<div class='server-check-verbose-container'>\n";
+		$text .= "<div class='server-check-verbose-check'>$check</div>\n";
+		$text .= "<div class='server-check-verbose-comment'>$comment</div>\n";
 		$text .= "</div>\n";
 	}
 	if ($ui) {print $text} else {$output .= $text}
@@ -207,19 +230,22 @@ sub addline {
 	return;
 }
 # end addline
+
 ###############################################################################
+
 # start addtitle
 sub addtitle {
 	my $title = shift;
 	my $text;
 
-	$text .= "<br><div style='clear: both;padding: 8px;background: #F4F4EA;border: 1px solid #DDDDDD;border-top-right-radius: 5px;border-top-left-radius: 5px;'><strong>$title</strong></div>\n";
+	$text .= "<br><div class='rbl-check-status-header'><strong>$title</strong></div>\n";
 
 	$ipresult .= $text;
 	if ($ui) {print $text} else {$output .= $text}
 
 	return;
 }
+
 # end addtitle
 ###############################################################################
 # start endoutput
