@@ -29,7 +29,7 @@ In August 2025, the original developer of ConfigServer Firewall ceased operation
 
 <div align="center">
 
-<img src="https://malware.expert/wp-content/uploads/2018/09/csf_firewall.png" height="230">
+<img src="src/csf/csf-logo.png" height="230">
 
 <br />
 <br />
