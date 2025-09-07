@@ -1,23 +1,23 @@
-###############################################################################
-# Copyright (C) 2006-2025 Jonathan Michaelson
+# #
+#	  @author                   Copyright (C) 2025 Aetherinox
+#                               Copyright (C) 2006-2025 Jonathan Michaelson
+#	  @repo_primary             https://github.com/Aetherinox/csf-firewall/actions
+#	  @repo_legacy              https://github.com/waytotheweb/scripts
 #
-# https://github.com/waytotheweb/scripts
+#	  This program is free software; you can redistribute it and/or modify it under
+#	  the terms of the GNU General Public License as published by the Free Software
+#	  Foundation; either version 3 of the License, or (at your option) any later
+#	  version.
 #
-# This program is free software; you can redistribute it and/or modify it under
-# the terms of the GNU General Public License as published by the Free Software
-# Foundation; either version 3 of the License, or (at your option) any later
-# version.
+#	  This program is distributed in the hope that it will be useful, but WITHOUT
+#	  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+#	  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+#	  details.
 #
-# This program is distributed in the hope that it will be useful, but WITHOUT
-# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
-# details.
-#
-# You should have received a copy of the GNU General Public License along with
-# this program; if not, see <https://www.gnu.org/licenses>.
-###############################################################################
-## no critic (RequireUseWarnings, ProhibitExplicitReturnUndef, ProhibitMixedBooleanOperators, RequireBriefOpen)
-# start main
+#	  You should have received a copy of the GNU General Public License along with
+#	  this program; if not, see <https://www.gnu.org/licenses>.
+# #
+
 package ConfigServer::ServerCheck;
 
 use strict;
@@ -86,15 +86,18 @@ sub report {
 
 	$failures = 0;
 	$total = 0;
+
 	if ($ENV{cp_security_token}) {$cpurl = $ENV{cp_security_token}}
 	$DEBIAN = 0;
+
 	if (-e "/etc/lsb-release" or -e "/etc/debian_version") {$DEBIAN = 1}
 
 	$sysinit = ConfigServer::Service::type();
 	if ($sysinit ne "systemd") {$sysinit = "init"}
 
 	opendir (PROCDIR, "/proc");
-	while (my $pid = readdir(PROCDIR)) {
+	while (my $pid = readdir(PROCDIR))
+	{
 		if ($pid !~ /^\d+$/) {next}
 		push @processes, readlink("/proc/$pid/exe");
 	}
@@ -127,8 +130,11 @@ sub report {
 # end report
 ###############################################################################
 # start startoutput
-sub startoutput {
-	if ($config{THIS_UI} and !$config{GENERIC}) {
+sub startoutput
+{
+
+	if ($config{THIS_UI} and !$config{GENERIC})
+	{
 		$output .= "<p align='center'><strong>Note: Internal WHM links will not work within the csf Integrated UI</strong></p>\n";
 	}
 
@@ -137,27 +143,33 @@ sub startoutput {
 # end startoutput
 ###############################################################################
 # start addline
-sub addline {
+sub addline
+{
+
 	my $status = shift;
 	my $check = shift;
 	my $comment = shift;
+
 	$total++;
 
-	if ($status) {
-		$output .= "<div style='display: flex;width: 100%;clear: both;'>\n";
-		$output .= "<div style='width: 250px;background: #FFD1DC;padding: 8px;border-bottom: 1px solid #DDDDDD;border-left: 1px solid #DDDDDD;border-right: 1px solid #DDDDDD;'>$check</div>\n";
-		$output .= "<div style='flex: 1;padding: 8px;border-bottom: 1px solid #DDDDDD;border-right: 1px solid #DDDDDD;'>$comment</div>\n";
+	if ($status)
+	{
+		$output .= "<div class='server-check-status-container'>\n";
+		$output .= "<div class='server-check-status-check'>$check</div>\n";
+		$output .= "<div class='server-check-status-comment'>$comment</div>\n";
 		$output .= "</div>\n";
 		$failures ++;
 		$current++;
 	}
-	elsif ($verbose) {
-		$output .= "<div style='display: flex;width: 100%;clear: both;'>\n";
-		$output .= "<div style='width: 250px;background: #BDECB6;padding: 8px;border-bottom: 1px solid #DDDDDD;border-left: 1px solid #DDDDDD;border-right: 1px solid #DDDDDD;'>$check</div>\n";
-		$output .= "<div style='flex: 1;padding: 8px;border-bottom: 1px solid #DDDDDD;border-right: 1px solid #DDDDDD;'>$comment</div>\n";
+	elsif ($verbose)
+	{
+		$output .= "<div class='server-check-verbose-container'>\n";
+		$output .= "<div class='server-check-verbose-check'>$check</div>\n";
+		$output .= "<div class='server-check-verbose-comment'>$comment</div>\n";
 		$output .= "</div>\n";
 		$current++;
 	}
+
 	return;
 }
 # end addline
@@ -166,46 +178,58 @@ sub addline {
 sub addtitle {
 	my $title = shift;
 	if (defined $current and $current == 0) {
-		$output .= "<div style='clear: both;background: #BDECB6;padding: 8px;border: 1px solid #DDDDDD;'>OK</div>\n";
+		$output .= "<div class='server-check-result'>OK</div>\n";
 	}
 	$current = 0;
-	$output .= "<br><div style='clear: both;padding: 8px;background: #F4F4EA;border: 1px solid #DDDDDD;border-top-right-radius: 5px;border-top-left-radius: 5px;'><strong>$title</strong></div>\n";
+	$output .= "<br><div class='section-header' style='clear: both;'><strong>$title</strong></div>\n";
 	return;
 }
 # end addtitle
 ###############################################################################
 # start endoutput
-sub endoutput {
-	if (defined $current and $current == 0) {
-		$output .= "<div style='clear: both;background: #BDECB6;padding: 8px;border: 1px solid #DDDDDD;'>OK</div>\n";
+sub endoutput
+{
+	if (defined $current and $current == 0)
+	{
+		$output .= "<div class='server-check-output'>OK</div>\n";
 	}
+
 	$output .= "<br>\n";
 
-	my $gap = int(($total-3)/4);
-	my $score = ($total - $failures);
-	my $width = int ((400 / $total) * $score) - 4;
-	$output .= "<br>\n<table align='center'>\n<tr><td><div style='border:1px solid #DDDDDD;padding:8px;border-radius:5px'>\n";
-	$output .= "<h4 style='text-align:center'>Server Score: $score/$total*</h4>\n";
-	$output .= "<div style='text-align:center;border:1px solid #DDDDDD;width:500px'>\n";
+	my $gap = int( ( $total - 3 ) / 4 );
+	my $score = ( $total - $failures );
+
+	# #
+	# 	CSS width
+	#	server-check-grade-poor + server-check-grade-ok + server-check-grade-good
+	# #
+
+	my $width = int ( ( 500 / $total ) * $score ) - 4;
+
+	$output .= "<br>\n<table align='center'>\n<tr><td><div class='server-check-score-container'>\n";
+	$output .= "<h4 class='server-check-grade-score' style='text-align:center'>Server Score: <span class='server-check-grade-score-num'>$score/$total</span></h4>\n";
+	$output .= "<div class='server-check-score-bar'>\n";
 	$output .= "<table>\n";
 	$output .= "<tr>\n";
-	$output .= "<td nowrap style='width:300px; height:30px; background:#FFD1DC'>&nbsp;</td>\n";
-	$output .= "<td nowrap style='width:60px; height:30px; background:#FFFDD8'>&nbsp;</td>\n";
-	$output .= "<td nowrap style='width:40px; height:30px; background:#BDECB6'>&nbsp;</td>\n";
+	$output .= "<td nowrap class='server-check-grade-poor'>&nbsp;</td>\n";
+	$output .= "<td nowrap class='server-check-grade-ok'>&nbsp;</td>\n";
+	$output .= "<td nowrap class='server-check-grade-good'>&nbsp;</td>\n";
+	$output .= "<td nowrap class='server-check-grade-great'>&nbsp;</td>\n";
+	$output .= "<td nowrap class='server-check-grade-excellent'>&nbsp;</td>\n";
 	$output .= "<td nowrap style='width:100px; height:30px;'>&nbsp;$total (max)&nbsp;</td>\n";
 	$output .= "</tr>\n";
 	$output .= "</table>\n";
 	$output .= "</div>\n";
-	$output .= "<div style='text-align:center;border:1px solid #DDDDDD;width:500px'>\n";
+	$output .= "<div class='server-check-score-bar'>\n";
 	$output .= "<table>\n";
-	$output .= "<tr>\n";
+	$output .= "<tr class='server-check-grade-container'>\n";
 	$output .= "<td nowrap style='width:${width}px; height:30px;'>&nbsp;</td>\n";
-	$output .= "<td nowrap style='width:1px; height:30px; background:#990000'>&nbsp;</td>\n";
-	$output .= "<td nowrap>&nbsp;$score (score)</td>\n";
+	$output .= "<td nowrap class='server-check-grade'>&nbsp;</td>\n";
+	$output .= "<td class='server-check-grade-text' nowrap>&nbsp;$score (you)</td>\n";
 	$output .= "</tr>\n";
 	$output .= "</table>\n";
 	$output .= "</div>\n";
-	$output .= "<br><div>* This scoring does not necessarily reflect the security of the server or the relative merits of each check</div>";
+	$output .= "<br><div class='server-check-grade-notice'>Score does not reflect the security of a server or the relative merits of each check</div>";
 	$output .= "</td></tr></table>";
 	return;
 }
@@ -237,7 +261,8 @@ sub firewallcheck {
 	if (-e "/etc/csf/csf.disable") {$status = 1}
 	&addline($status,"csf enabled check","csf is currently disabled and should be enabled otherwise it is not functioning");
 	
-	if (-x $config{IPTABLES}) {
+	if (-x $config{IPTABLES})
+	{
 		my ($childin, $childout);
 		my $mypid = open3($childin, $childout, $childout, "$config{IPTABLES} $config{IPTABLESWAIT} -L INPUT -n");
 		my @iptstatus = <$childout>;
@@ -351,7 +376,8 @@ sub firewallcheck {
 # end firewallcheck
 ###############################################################################
 # start servercheck
-sub servercheck {
+sub servercheck
+{
 	&addtitle("Server Check");
 	my $status = 0;
 
@@ -393,12 +419,15 @@ sub servercheck {
 	}
 
 	$status = 0;
-	if (&getportinfo(53)) {
+	if (&getportinfo(53))
+	{
 		my @files = ("/var/named/chroot/etc/named.conf","/etc/named.conf","/etc/bind/named.conf","/var/named/chroot/etc/bind/named.conf");
 		my @namedconf;
 		my @morefiles;
 		my $hit;
-		foreach my $file (@files) {
+
+		foreach my $file (@files)
+		{
 			if (-e $file) {
 				$hit = 1;
 				open (my $IN, "<", "$file");
@@ -406,16 +435,22 @@ sub servercheck {
 				my @conf = <$IN>;
 				close ($IN);
 				chomp @conf;
-				if (my @ls = grep {$_ =~ /^\s*include\s+(.*)\;\s*$/i} @conf) {
-					foreach my $more (@ls) {
+				if (my @ls = grep {$_ =~ /^\s*include\s+(.*)\;\s*$/i} @conf)
+				{
+					foreach my $more (@ls)
+					{
 						if ($more =~ /^\s*include\s+\"(.*)\"\s*\;\s*$/i) {push @morefiles, $1}
 					}
 				}
+
 				@namedconf = (@namedconf, @conf);
 			}
 		}
-		foreach my $file (@morefiles) {
-			if (-e $file) {
+
+		foreach my $file (@morefiles)
+		{
+			if (-e $file)
+			{
 				open (my $IN, "<", "$file");
 				flock ($IN, LOCK_SH);
 				my @conf = <$IN>;
@@ -425,7 +460,8 @@ sub servercheck {
 			}
 		}
 
-		if ($hit) {
+		if ($hit)
+		{
 #			if (my @ls = grep {$_ =~ /^\s*(recursion\s+no|allow-recursion)/} @namedconf) {$status = 0} else {$status = 1}
 #			&addline($status,"Check for DNS recursion restrictions","You have a local DNS server running but do not appear to have any recursion restrictions set. This is a security and performance risk and you should look at restricting recursive lookups to the local IP addresses only");
 
@@ -434,7 +470,8 @@ sub servercheck {
 		}
 	}
 
-	if (!$DEBIAN and $sysinit eq "init" and -x "/sbin/runlevel") {
+	if (!$DEBIAN and $sysinit eq "init" and -x "/sbin/runlevel")
+	{
 		$status = 0;
 		$mypid = open3($childin, $childout, $childout, "/sbin/runlevel");
 		my @conf = <$childout>;
@@ -451,14 +488,17 @@ sub servercheck {
 
 	$status = 0;
 	my ($isfedora, $isrh, $version, $conf) = 0;
-	if (-e "/etc/fedora-release") {
+	if (-e "/etc/fedora-release")
+	{
 		open (my $IN, "<", "/etc/fedora-release");
 		flock ($IN, LOCK_SH);
 		$conf = <$IN>;
 		close ($IN);
 		$isfedora = 1;
 		if ($conf =~ /release (\d+)/i) {$version = $1}
-	} elsif (-e "/etc/redhat-release") {
+	}
+	elsif (-e "/etc/redhat-release")
+	{
 		open (my $IN, "<", "/etc/redhat-release");
 		flock ($IN, LOCK_SH);
 		$conf = <$IN>;
@@ -466,63 +506,85 @@ sub servercheck {
 		$isrh = 1;
 		if ($conf =~ /release (\d+)/i) {$version = $1}
 	}
+
 	chomp $conf;
 
-	if ($isrh or $isfedora) {
+	if ($isrh or $isfedora)
+	{
 		if (($isfedora and $version < 30) or ($isrh and $version < 6)) {$status = 1}
 		&addline($status,"Check Operating System support","You are running an OS - <i>$conf</i> - that is no longer supported by the OS vendor, or is about to become obsolete. This means that you will be receiving no OS updates (i.e. application or security bug fixes) or kernel updates and should consider moving to an OS that is supported as soon as possible");
 	}
 
 	$status = 0;
-	if ($] < 5.008008) {
+	if ($] < 5.008008)
+	{
 		$status = 1;
 	} else {$status = 0}
+
 	&addline($status,"Check perl version","The version of perl (v$]) is out of date and you should upgrade it");
 
 	$status = 0;
-	while (my ($name,undef,$uid) = getpwent()) {
+	while (my ($name,undef,$uid) = getpwent())
+	{
 		if (($uid == 0) and ($name ne "root")) {$status = 1}
 	}
+
 	&addline($status,"Check SUPERUSER accounts","You have accounts other than root set up with UID 0. This is a considerable security risk. You should use <b>su</b>, or best of all <b>sudo</b> for such access");
 
-	if (-e "/usr/local/cpanel/version" or $config{DIRECTADMIN}) {
+	if (-e "/usr/local/cpanel/version" or $config{DIRECTADMIN})
+	{
 		$status = 0;
-		unless (-e "/etc/cxs/cxs.pl") {
+		unless (-e "/etc/cxs/cxs.pl")
+		{
 			$status = 1;
 		}
+
 		&addline($status,"Check for cxs","You should consider using <b><u><a href='http://www.configserver.com/cp/cxs.html' target='_blank'>cxs</a></u></b> to scan web script uploads and user accounts for exploits uploaded to the server");
 		$status = 0;
-		unless (-e "/etc/osm/osmd.pl") {
+
+		unless (-e "/etc/osm/osmd.pl")
+		{
 			$status = 1;
 		}
+
 		&addline($status,"Check for osm","You should consider using <b><u><a href='http://www.configserver.com/cp/osm.html' target='_blank'>osm</a></u></b> to provide protection from spammers exploiting the server");
 	}
 
-	unless ($config{IPV6}) {
+	unless ($config{IPV6})
+	{
 		$status = 0;
 		my $ipv6 = "";
-		foreach my $key (keys %g_ipv6) {
+		foreach my $key (keys %g_ipv6)
+		{
 			if ($ipv6) {$ipv6 .= ", "}
 			$ipv6 .= $key;
 			$status = 1;
 		}
+
 		if ($ipv6 eq "::1") {$ipv6 = ""; $status = 0}
 		&addline($status,"Check for IPv6","IPv6 appears to be enabled [<b>$ipv6</b>]. If ip6tables is installed, you should enable the csf IPv6 firewall (IPV6 in csf.conf)");
 	}
 
-	if ($sysinit eq "init") {
+	if ($sysinit eq "init")
+	{
 		$status = 1;
 		my $syslog = 0;
-		if (grep {$_ =~ /\/syslogd\s*/} @processes) {
+		if (grep {$_ =~ /\/syslogd\s*/} @processes)
+		{
 			$syslog = 1;
 			if (grep {$_ =~ /\/klogd$/} @processes) {$status = 0}
 			&addline($status,"Check for kernel logger","syslogd appears to be running, but not klogd which logs kernel firewall messages to syslog. You should ensure that klogd is running");
 		}
-		if (grep {$_ =~ /\/rsyslogd\s*/} @processes) {
+
+		if (grep {$_ =~ /\/rsyslogd\s*/} @processes)
+		{
 			$syslog = 1;
-			if (grep {$_ =~ /\/rklogd\s*/} @processes) {
+			if (grep {$_ =~ /\/rklogd\s*/} @processes)
+			{
 				$status = 0;
-			} else {
+			}
+			else
+			{
 				open (my $IN, "<", "/etc/rsyslog.conf");
 				flock ($IN, LOCK_SH);
 				my @conf = <$IN>;
@@ -532,7 +594,9 @@ sub servercheck {
 			}
 			&addline($status,"Check for kernel logger","rsyslogd appears to be running, but klog may not be loaded which logs kernel firewall messages to rsyslog. You should modify /etc/rsyslogd to load the klog module with:<br><b>\$ModLoad imklog</b><br>Then restart rsyslog");
 		}
-		unless ($syslog) {
+
+		unless ($syslog)
+		{
 			$status = 1;
 			&addline($status,"Check for syslog or rsyslog","Neither syslog nor rsyslog appear to be running");
 		}
@@ -542,7 +606,8 @@ sub servercheck {
 	if (grep {$_ =~ /\/dhclient\s*/} @processes) {$status = 1}
 	&addline($status,"Check for dhclient","dhclient appears to be running which suggests that the server is obtaining an IP address via DHCP. This can pose a security risk. You should configure static IP addresses for all ethernet controllers");
 
-	unless ($config{VPS}) {
+	unless ($config{VPS})
+	{
 		$status = 1;
 		open (my $IN, "<", "/proc/swaps");
 		flock ($IN, LOCK_SH);
@@ -551,20 +616,24 @@ sub servercheck {
 		if (scalar(@swaps) > 1) {$status = 0}
 		&addline($status,"Check for swap file","The server appears to have no swap file. This is usually considered a stability and performance risk. You should either add a swap partition, or <a href='http://www.cyberciti.biz/faq/linux-add-a-swap-file-howto/' target='_blank'>create one via a normal file on an existing partition</a>");
 
-		if (-e "/etc/redhat-release") {
+		if (-e "/etc/redhat-release")
+		{
 			open (my $IN, "<", "/etc/redhat-release");
 			flock ($IN, LOCK_SH);
 			$conf = <$IN>;
 			close ($IN);
 			chomp $conf;
 
-			if ($conf =~ /^CloudLinux/i) {
+			if ($conf =~ /^CloudLinux/i)
+			{
 				$status = 0;
-				if (-e "/usr/sbin/cagefsctl") {
+				if (-e "/usr/sbin/cagefsctl")
+				{
 				} else {$status = 1}
 				&addline($status,"CloudLinux CageFS","CloudLinux <a target='_blank' href='http://docs.cloudlinux.com/index.html?cagefs.html'>CageFS</a> is not installed. This CloudLinux option greatly improves server security on we servers by separating user accounts into their own environment");
 
-				unless ($status) {
+				unless ($status)
+				{
 					$status = 0;
 					$mypid = open3($childin, $childout, $childout, "/usr/sbin/cagefsctl","--cagefs-status");
 					my @conf = <$childout>;
@@ -580,6 +649,7 @@ sub servercheck {
 				$conf = <$ENFORCE_SYMLINKSIFOWNER>;
 				close ($ENFORCE_SYMLINKSIFOWNER);
 				chomp $conf;
+
 				if ($conf < 1) {$status = 1}
 				&addline($status,"CloudLinux Symlink Protection","CloudLinux <a target='_blank' href='http://docs.cloudlinux.com/index.html?securelinks.html'>Symlink Protection</a> is not configured. You should configure it in /etc/sysctl.conf to prevent symlink attacks on web servers");
 
@@ -589,6 +659,7 @@ sub servercheck {
 				$conf = <$PROC_CAN_SEE_OTHER_UID>;
 				close ($PROC_CAN_SEE_OTHER_UID);
 				chomp $conf;
+
 				if ($conf > 0) {$status = 1}
 				&addline($status,"CloudLinux Virtualised /proc","CloudLinux <a target='_blank' href='http://docs.cloudlinux.com/index.html?virtualized_proc_filesystem.html'>Virtualised /proc</a> is not configured. You should configure it in /etc/sysctl.conf to prevent users accessing server resources that they do not need on web servers");
 
@@ -608,7 +679,8 @@ sub servercheck {
 # end servercheck
 ###############################################################################
 # start whmcheck
-sub whmcheck {
+sub whmcheck
+{
 	my $status = 0;
 	&addtitle("WHM Settings Check");
 
@@ -624,7 +696,8 @@ sub whmcheck {
 	if (-e "/var/cpanel/greylist/enabled") {$status = 1}
 	&addline($status,"Check GreyListing is disabled","Using GreyListing can and will lead to lost legitimate emails. It can also cause significant problems with \"password verification\" systems. See <a href='https://en.wikipedia.org/wiki/Greylisting#Disadvantages' target='_blank'>here</a> for more information");
 
-	if (defined $cpconf->{popbeforesmtp}) {
+	if (defined $cpconf->{popbeforesmtp})
+	{
 		$status = 0;
 		if ($cpconf->{popbeforesmtp}) {$status = 1}
 		&addline($status,"Check popbeforesmtp is disabled","Using pop before smtp is considered a security risk, SMTP AUTH should be used instead. You should disable it in <i>WHM > <a href='$cpurl/scripts2/tweaksettings' target='_blank'>Tweak Settings</a> > Allow users to relay mail if they use an IP address through which someone has validated an IMAP or POP3 login</i>");
@@ -642,7 +715,8 @@ sub whmcheck {
 	if ($cpconf->{resetpass_sub}) {$status = 1}
 	&addline($status,"Check Reset Password for Subaccounts","This poses a potential security risk and should be disabled unless necessary in <i>WHM > <a href='$cpurl/scripts2/tweaksettings' target='_blank'>Tweak Settings</a> > Reset Password for Subaccounts </i>");
 
-	foreach my $openid (glob "/var/cpanel/authn/openid_connect/*") {
+	foreach my $openid (glob "/var/cpanel/authn/openid_connect/*")
+	{
 		open (my $IN, "<", $openid);
 		flock ($IN, LOCK_SH);
 		my $line = <$IN>;
@@ -655,7 +729,8 @@ sub whmcheck {
 		&addline($status,"Check cPanelID for $file","You should only enable this option if you are going to use it otherwise it is a potential security risk in <i>WHM > <a href='$cpurl/scripts2/manage_external_auth/providers' target='_blank'>Manage External Authentications</a> > $file</i>");
 	}
 
-	unless ($cpconf->{nativessl} eq undef) {
+	unless ($cpconf->{nativessl} eq undef)
+	{
 		$status = 0;
 		unless ($cpconf->{nativessl}) {$status = 1}
 		&addline($status,"Check whether native cPanel SSL is enabled","You should enable this option so that lfd tracks SSL cpanel login attempts <i>WHM > <a href='$cpurl/scripts2/tweaksettings' target='_blank'>Tweak Settings</a> > Use native SSL support if possible, negating need for Stunnel</i>");
@@ -663,39 +738,53 @@ sub whmcheck {
 
 	$status = 0;
     my $cc = '/usr/bin/cc';
-    while ( readlink($cc) ) {
+
+    while ( readlink($cc) )
+	{
         $cc = readlink($cc);
     }
+
     if ( $cc !~ /^\// ) { $cc = '/usr/bin/' . $cc; }
     my $mode = substr( sprintf( "%o", ( ( stat($cc) )[2] ) ), 2, 4 );
     if ( $mode > 750 ) {$status = 1}
+
 	&addline($status,"Check compilers","You should disable compilers <i>WHM > Security Center > <a href='$cpurl/scripts2/tweakcompilers' target='_blank'>Compilers Access</a></i>");
 
-	if (-e "/etc/pure-ftpd.conf" and ($cpconf->{ftpserver} eq "pure-ftpd") and !(-e "/etc/ftpddisable")) {
+	if (-e "/etc/pure-ftpd.conf" and ($cpconf->{ftpserver} eq "pure-ftpd") and !(-e "/etc/ftpddisable"))
+	{
 		$status = 0;
 		open (my $IN, "<", "/etc/pure-ftpd.conf");
 		flock ($IN, LOCK_SH);
 		my @conf = <$IN>;
 		close ($IN);
 		chomp @conf;
+
 		if (my @ls = grep {$_ =~ /^\s*NoAnonymous\s*(no|off)/i} @conf) {$status = 1}
 		&addline($status,"Check Anonymous FTP Logins","Used as an attack vector by hackers and should be disabled unless actively used <i>WHM > <a href='$cpurl/scripts2/ftpconfiguration' target='_blank'>FTP Server Configuration</a> > Allow Anonymous Logins</b> > No</i>");
 		$status = 0;
+
 		if (my @ls = grep {$_ =~ /^\s*AnonymousCantUpload\s*(no|off)/i} @conf) {$status = 1}
 		&addline($status,"Check Anonymous FTP Uploads","Used as an attack vector by hackers and should be disabled unless actively used <i>WHM > <a href='$cpurl/scripts2/ftpconfiguration' target='_blank'>FTP Server Configuration</a> > Allow Anonymous Uploads</b> > No</i>");
 
 		$status = 0;
 		my $ciphers;
 		my $error;
-		if (my @ls = grep {$_ =~ /^\s*TLSCipherSuite/} @conf) {
+		if (my @ls = grep {$_ =~ /^\s*TLSCipherSuite/} @conf)
+		{
 			if ($ls[0] =~ /TLSCipherSuite\s+(.*)$/) {$ciphers = $1}
 			$ciphers =~ s/\s*|\"|\'//g;
-			if ($ciphers eq "") {
+
+			if ($ciphers eq "")
+			{
 				$status = 1;
 			}
-			elsif ($ciphers !~ /SSL/) {
+
+			elsif ($ciphers !~ /SSL/)
+			{
 				$status = 0
-			} else {
+			}
+			else
+			{
 				if (-x "/usr/bin/openssl") {
 					my ($childin, $childout);
 					my $cmdpid = open3($childin, $childout, $childout, "/usr/bin/openssl","ciphers","-v",$ciphers);
@@ -707,9 +796,12 @@ sub whmcheck {
 				}
 			}
 		} else {$status = 1}
-		if ($status == 2) {
+
+		if ($status == 2)
+		{
 			&addline($status,"Check pure-ftpd weak SSL/TLS Ciphers (TLSCipherSuite)","Unable to determine cipher list for [$ciphers] from openssl:<br>[$error]");
 		}
+
 		&addline($status,"Check pure-ftpd weak SSL/TLS Ciphers (TLSCipherSuite)","Cipher list [$ciphers]. Due to weaknesses in the SSLv2 cipher you should disable SSLv2 in <i>WHM > <a href='$cpurl/scripts2/ftpconfiguration' target='_blank'>FTP Server Configuration</a> > TLS Cipher Suite</b> > Remove +SSLv2 or Add -SSLv2</i>");
 
 		$status = 0;
@@ -717,7 +809,8 @@ sub whmcheck {
 		&addline($status,"Check FTP Logins with Root Password","Allowing root login via FTP is a considerable security risk and should be disabled <i>WHM > <a href='$cpurl/scripts2/ftpconfiguration' target='_blank'>FTP Server Configuration</a> > Allow Logins with Root Password</b> > No</i>");
 	}
 
-	if (-e "/var/cpanel/conf/proftpd/main" and ($cpconf->{ftpserver} eq "proftpd") and !(-e "/etc/ftpddisable")) {
+	if (-e "/var/cpanel/conf/proftpd/main" and ($cpconf->{ftpserver} eq "proftpd") and !(-e "/etc/ftpddisable"))
+	{
 		$status = 0;
 		open (my $IN, "<", "/var/cpanel/conf/proftpd/main");
 		flock ($IN, LOCK_SH);
@@ -733,9 +826,12 @@ sub whmcheck {
 		if (my @ls = grep {$_ =~ /^\s*TLSCipherSuite/} @conf) {
 			if ($ls[0] =~ /TLSCipherSuite\:\s+(.*)$/) {$ciphers = $1}
 			$ciphers =~ s/\s*|\"|\'//g;
-			if ($ciphers eq "") {
+			if ($ciphers eq "")
+			{
 				$status = 1;
-			} else {
+			}
+			else
+			{
 				if (-e "/usr/bin/openssl") {
 					my ($childin, $childout);
 					my $cmdpid = open3($childin, $childout, $childout, "/usr/bin/openssl","ciphers","-v",$ciphers);
@@ -747,19 +843,24 @@ sub whmcheck {
 				}
 			}
 		} else {$status = 1}
-		if ($status == 2) {
+
+		if ($status == 2)
+		{
 			&addline($status,"Check proftpd weak SSL/TLS Ciphers (TLSCipherSuite)","Unable to determine cipher list for [$ciphers] from openssl:<br>[$error]");
 		}
+
 		&addline($status,"Check proftpd weak SSL/TLS Ciphers (TLSCipherSuite)","Cipher list [$ciphers]. Due to weaknesses in the SSLv2 cipher you should disable SSLv2 in <i>WHM > <a href='$cpurl/scripts2/ftpconfiguration' target='_blank'>FTP Server Configuration</a> > TLS Cipher Suite</b> > Remove +SSLv2 or Add -SSLv2</i>");
 
-		if ($config{VPS}) {
+		if ($config{VPS})
+		{
 			$status = 0;
 			open (my $IN, "<", "/etc/proftpd.conf");
 			flock ($IN, LOCK_SH);
 			my @conf = <$IN>;
 			close ($IN);
 			chomp @conf;
-			if (my @ls = grep {$_ =~ /^\s*PassivePorts\s+(\d+)\s+(\d+)/} @conf) {
+			if (my @ls = grep {$_ =~ /^\s*PassivePorts\s+(\d+)\s+(\d+)/} @conf)
+			{
 				if ($config{TCP_IN} !~ /\b$1:$2\b/) {$status = 1}
 			} else {$status = 1}
 			&addline($status,"Check VPS FTP PASV hole","Since the Virtuozzo VPS iptables ip_conntrack_ftp kernel module is currently broken you have to open a PASV port hole in iptables for incoming FTP connections to work correctly. See the csf readme.txt under 'A note about FTP Connection Issues' on how to do this");
@@ -790,7 +891,8 @@ sub whmcheck {
 	if ($cpconf->{cpaddons_notify_root}) {$status = 0}
 	&addline($status,"Check cPAddons update email to root","You should have cPAddons email root if cPAddon installations require updating WHM > <a href='$cpurl/scripts2/tweaksettings' target='_blank'>Tweak Settings</a> > Notify root of cPAddons Site Software installations");
 
-	if (-e "/etc/cpupdate.conf") {
+	if (-e "/etc/cpupdate.conf")
+	{
 		open (my $IN, "<", "/etc/cpupdate.conf");
 		flock ($IN, LOCK_SH);
 		my @conf = <$IN>;
@@ -819,7 +921,8 @@ sub whmcheck {
 	if ($cpconf->{account_login_access} eq "user") {$status = 0}
 	&addline($status,"Check accounts that can access a cPanel user","You should consider setting this option to \"user\" after use. WHM > <a href='$cpurl/scripts2/tweaksettings' target='_blank'>Tweak Settings</a> > Accounts that can access a cPanel user account");
 
-	unless ($status) {
+	unless ($status)
+	{
 		$status = 0;
 		open (my $IN, "<", "/usr/local/cpanel/3rdparty/etc/php.ini");
 		flock ($IN, LOCK_SH);
@@ -874,7 +977,8 @@ sub whmcheck {
 	if (-e "/var/cpanel/smtpgidonlytweak") {$status = 1}
 	&addline($status,"Check SMTP Restrictions","This option in WHM will not function when running csf. You should disable WHM > Security Center > <a href='$cpurl/scripts2/smtpmailgidonly' target='_blank'>SMTP Restrictions</a> and use the csf configuration option SMTP_BLOCK instead");
 
-	if (-e "/etc/wwwacct.conf") {
+	if (-e "/etc/wwwacct.conf")
+	{
 		$status = 1;
 		open (my $IN, "<", "/etc/wwwacct.conf");
 		flock ($IN, LOCK_SH);
@@ -883,25 +987,35 @@ sub whmcheck {
 		chomp @conf;
 
 		my %ips;
-	foreach my $key (keys %g_ipv4) {
+	foreach my $key (keys %g_ipv4)
+	{
 		$ips{$key} = 1;
 	}
 
 		my $nameservers;
 		my $local = 0;
 		my $allns = 0;
-		foreach my $line (@conf) {
-			if ($line =~ /^NS(\d)?\s+(.*)\s*$/) {
+
+		foreach my $line (@conf)
+		{
+			if ($line =~ /^NS(\d)?\s+(.*)\s*$/)
+			{
 				my $ns = $2;
 				$ns =~ s/\s//g;
-				if ($ns) {
+				if ($ns)
+				{
+
 					$allns++;
 					$nameservers .= "<b>$ns</b><br>\n";
 					my $ip;
-					if (checkip(\$ns)) {
+
+					if (checkip(\$ns))
+					{
 						$ip = $ns;
 						if ($ips{$ip}) {$local++}
-					} else {
+					}
+					else
+					{
 						my @ips = getips($ns);
 						unless (scalar @ips) {&addline(1,"Check nameservers","Unable to resolve nameserver [$ns]")}
 						my $hit = 0;
@@ -913,6 +1027,7 @@ sub whmcheck {
 				}
 			}
 		}
+
 		if ($local < $allns) {$status = 0}
 		&addline($status,"Check nameservers","At least one of the configured nameservers:<br>\n$nameservers should be located in a topologically and geographically dispersed location on the Internet - See RFC 2182 (Section 3.1)");
 	}
@@ -1408,7 +1523,7 @@ sub phpcheck {
 		if ($key eq "version") {
 			my $status = 0;
 			if ($values ne "") {$status = 1}
-			&addline($status,"Check php version","Any version of PHP older than v8.1.* is now obsolete and should be considered a security threat. You should upgrade to at least PHP v8.1+:<br><b>Affected PHP versions:</b>$values");
+			&addline($status,"Check php version","Any version of PHP older than v7.2.* is now obsolete and should be considered a security threat. You should upgrade exclusively to PHP v7.3+:<br><b>Affected PHP versions:</b>$values");
 		}
 		if ($key eq "enable_dl") {
 			my $status = 0;
