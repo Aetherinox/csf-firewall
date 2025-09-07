@@ -5,14 +5,14 @@
 </div>
 
 <div align="center">
-<h6>Official repository for Config Server Firewall ♾️</h1>
+<h6>♾️ Official repository for Config Server Firewall ♾️</h1>
 </div>
 
 <br />
 
 <p>
 
-ConfigServer Firewall (CSF) is a popular and powerful firewall solution for Linux servers. This repo contains complete installation guides, a new dark theme, and also numerous patches for `Docker` and `OpenVPN` firewall support so that you can allow traffic between these services without interruption.
+ConfigServer Firewall (CSF) is a robust and widely used firewall for Linux servers, offering an intuitive graphical interface that lets you manage your own firewall rules and supports both iptables and nftables.
 
 <br />
 
@@ -147,21 +147,21 @@ Ipsets include lists from [AbuseIPDB](https://abuseipdb.com/) and [IPThreat](htt
 ## Summary
 
 This repository contains several folders:
-- 📁 `configs`
-  - Ready-to-use CSF config files
-    - `configs/etc/csf/csf.conf` (full version)
-    - `configs/etc/csf/csf.conf.clean` (clean version)
-    - `configs/etc/GeoIP.conf` GeoIP Config File for [MaxMind geo-blocking](https://www.maxmind.com/en/home)
-- 📁 `theme`
-  - Dark theme for ConfigServer Firewall
-- 📁 `patches`
-  - Docker patch which allows CSF and Docker to work together
-  - OpenVPN integration patch
+- 📁 `src`
+  - Source code related to ConfigServer Firewall
 - 📁 `blocklists` 
   - List of IP addresses which have been reported for ssh brute-force attempts, port scanning, etc.
   - 100% Confidence, powered by services such as [AbuseIPDB](https://abuseipdb.com/)
   - IPs are no older than 90 days old _(updated daily)_, and also contain blocks to protect your privacy from certain online services
   - Add to `csf.blocklists`
+- 📁 `extras/example_configs`
+  - Ready-to-use CSF config files
+    - `extras/example_configs/etc/csf/csf.conf` (full version)
+    - `extras/example_configs/etc/csf/csf.conf.clean` (clean version)
+    - `extras/example_configs/etc/GeoIP.conf` GeoIP Config File for [MaxMind geo-blocking](https://www.maxmind.com/en/home)
+- 📁 `extras/helper_scripts`
+  - Docker patch which allows CSF and Docker to work together
+  - OpenVPN integration patch
 
 <br />
 <br />
@@ -169,9 +169,7 @@ This repository contains several folders:
 Each release posted on the [Releases Page](https://github.com/Aetherinox/csf-firewall/releases) contains several `.zip` files and a `.tgz`:
 - `csf-firewall-vxx.xx.tgz`
   - Latest official version of ConfigServer Firewall. You do not need this if you already have CSF installed on your system.
-- `csf-firewall-vx.x.x-theme-dark.zip`
-  - Custom dark theme
-- `csf-firewall-vx.x.x-patches.zip`
+- `csf-firewall-vx.x.x-scripts.zip`
   - The patches contained in this repository, which include the files:
     - 📄 csfpost.sh
     - 📄 csfpre.sh
