@@ -19,7 +19,8 @@ ConfigServer Firewall (CSF) is a robust and widely used firewall for Linux serve
 In August 2025, the original developer of ConfigServer Firewall ceased operations. Since then, this repository has continued actively maintaining CSF, releasing updates as they become available. In addition to ConfigServer Firewall, we also provide:
 
 - A free IPSET blocklist service (fully compatible with CSF)
-  - Ipsets include lists from [AbuseIPDB](https://abuseipdb.com/) and [IPThreat](https://ipthreat.net/). For information on how to use these sets, read the section [IP Rulesets & Blocklists](#ip-sets--blocklist).
+  - Ipsets include lists from [AbuseIPDB](https://abuseipdb.com/) and [IPThreat](https://ipthreat.net/).
+  - For information on how to use these sets, read the section [IP Rulesets & Blocklists](#ip-sets--blocklist).
 - Addon scripts to enhance CSF with OpenVPN and Docker support
 
 </p>
@@ -74,7 +75,7 @@ In August 2025, the original developer of ConfigServer Firewall ceased operation
 
 - [Summary](#summary)
 - [ConfigServer Firewall Features](#configserver-firewall-features)
-- [How The Patcher Works](#how-the-patcher-works)
+- [How 📁 Extras/Scripts Works](#how--extrasscripts-works)
 - [Install ConfigServer Firewall](#install-configserver-firewall)
   - [Install Using Patcher](#install-using-patcher)
   - [Install Manually](#install-manually)
@@ -156,7 +157,7 @@ This repository contains several folders:
     - `extras/example_configs/etc/csf/csf.conf` (full version)
     - `extras/example_configs/etc/csf/csf.conf.clean` (clean version)
     - `extras/example_configs/etc/GeoIP.conf` GeoIP Config File for [MaxMind geo-blocking](https://www.maxmind.com/en/home)
-- 📁 `extras/helper_scripts`
+- 📁 `extras/scripts`
   - Docker patch which allows CSF and Docker to work together
   - OpenVPN integration patch
 
@@ -268,7 +269,7 @@ This guide will help you with the following:
 
 <br />
 
-## How The Patcher Works
+## How 📁 Extras/Scripts Works
 
 You can read this if you want, or skip it. It outlines exactly how the patches work:
   - Download all the files in the `/patch` folder to your system.
