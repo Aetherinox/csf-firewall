@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_laos_ipset
 #   @uuid           c322e2c7-b595-3ceb-a607-d9fc43a81933
-#   @updated        Sat 06 Sep 2025 01:06:46 AM UTC
+#   @updated        Mon 08 Sep 2025 01:07:58 AM UTC
 #   @entries        98,705 ips
 #                   258 subnets
 #                   258 lines
