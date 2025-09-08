@@ -1,22 +1,24 @@
 #!/usr/bin/perl
 # #
-#	  @author                   Copyright (C) 2025 Aetherinox
-#                               Copyright (C) 2006-2025 Jonathan Michaelson
-#	  @repo_primary             https://github.com/Aetherinox/csf-firewall/actions
-#	  @repo_legacy              https://github.com/waytotheweb/scripts
+#   @app                        ConfigServer Firewall (csf)
+#	@author						Copyright (C) 2025 Aetherinox
+#								Copyright (C) 2006-2025 Jonathan Michaelson
+#   @license                    GPLv3
+#	@repo_primary             	https://github.com/Aetherinox/csf-firewall/actions
+#	@repo_legacy              	https://github.com/waytotheweb/scripts
 #
-#	  This program is free software; you can redistribute it and/or modify it under
-#	  the terms of the GNU General Public License as published by the Free Software
-#	  Foundation; either version 3 of the License, or (at your option) any later
-#	  version.
+#	This program is free software; you can redistribute it and/or modify it under
+#	the terms of the GNU General Public License as published by the Free Software
+#	Foundation; either version 3 of the License, or (at your option) any later
+#	version.
 #
-#	  This program is distributed in the hope that it will be useful, but WITHOUT
-#	  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-#	  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
-#	  details.
+#	This program is distributed in the hope that it will be useful, but WITHOUT
+#	ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+#	FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+#	details.
 #
-#	  You should have received a copy of the GNU General Public License along with
-#	  this program; if not, see <https://www.gnu.org/licenses>.
+#	You should have received a copy of the GNU General Public License along with
+#	this program; if not, see <https://www.gnu.org/licenses>.
 # #
 
 use strict;
@@ -181,6 +183,10 @@ open STDOUT, ">","/dev/null";
 open STDERR, ">","/dev/null";
 setsid();
 
+# #
+#	Login page vars
+# #
+
 our $th_dark_version = 2.21;
 my $th_dark_url = "https://github.com/Aetherinox/csf-firewall";
 
@@ -234,32 +240,43 @@ eval {local $SIG{__DIE__} = undef; $ipscidr->add("127.0.0.0/8")};
 
 $faststart = 0;
 
-eval {
+eval
+{
 	local $SIG{__DIE__} = undef;
 	$urlget = ConfigServer::URLGet->new($config{URLGET}, "csf/$version", $config{URLPROXY});
 };
-unless (defined $urlget) {
-	if (-e $config{CURL} or -e $config{WGET}) {
+
+unless (defined $urlget)
+{
+	if (-e $config{CURL} or -e $config{WGET})
+	{
 		$config{URLGET} = 3;
 		$urlget = ConfigServer::URLGet->new($config{URLGET}, "csf/$version", $config{URLPROXY});
 		logfile("*WARNING* URLGET set to use LWP but perl module is not installed, fallback to using CURL/WGET");
-	} else {
+	}
+	else
+	{
 		$config{URLGET} = 1;
 		$urlget = ConfigServer::URLGet->new($config{URLGET}, "csf/$version", $config{URLPROXY});
 		logfile("*WARNING* URLGET set to use LWP but perl module is not installed, CURL and WGET not installed - reverting to HTTP::Tiny");
 	}
 }
 
-if (-e "/etc/wwwacct.conf") {
-	foreach my $line (slurp("/etc/wwwacct.conf")) {
+if (-e "/etc/wwwacct.conf")
+{
+	foreach my $line (slurp("/etc/wwwacct.conf"))
+	{
 		$line =~ s/$cleanreg//g;
 		if ($line =~ /^(\s|\#|$)/) {next}
 		my ($name,$value) = split (/ /,$line,2);
 		$cpconfig{$name} = $value;
 	}
 }
-if (-e "/usr/local/cpanel/version") {
-	foreach my $line (slurp("/usr/local/cpanel/version")) {
+
+if (-e "/usr/local/cpanel/version")
+{
+	foreach my $line (slurp("/usr/local/cpanel/version"))
+	{
 		$line =~ s/$cleanreg//g;
 		if ($line =~ /\d/) {$cpconfig{version} = $line}
 	}
@@ -282,6 +299,7 @@ flock ($IN, LOCK_SH);
 $version = <$IN>;
 close ($IN);
 chomp $version;
+
 my $generic = " (cPanel)";
 if ($config{GENERIC}) {$generic = " (generic)"}
 if ($config{DIRECTADMIN}) {$generic = " (DirectAdmin)"}
@@ -289,18 +307,23 @@ if ($config{INTERWORX}) {$generic = " (InterWorx)"}
 if ($config{CYBERPANEL}) {$generic = " (CyberPanel)"}
 if ($config{CWP}) {$generic = " (CentOS Web Panel)"}
 if ($config{VESTA}) {$generic = " (VestaCP)"}
-logfile("daemon started on $hostname - csf v$version$generic");
-if ($config{DEBUG} >= 1) {logfile("Clock Ticks: $clock_ticks")}
-if ($config{DEBUG} >= 1) {logfile("debug: **** DEBUG LEVEL $config{DEBUG} ENABLED ****")}
 
-unless (-e $config{SENDMAIL}) {
+logfile( "daemon started on $hostname - csf v$version$generic" );
+
+if ( $config{DEBUG} >= 1 ) { logfile( "Clock Ticks: $clock_ticks" ) }
+if ( $config{DEBUG} >= 1 ) { logfile("debug: **** DEBUG LEVEL $config{DEBUG} ENABLED ****") }
+
+unless (-e $config{SENDMAIL})
+{
 	logfile("*WARNING* Unable to send email reports - [$config{SENDMAIL}] not found");
 }
 
-if (ConfigServer::Service::type() eq "systemd") {
+if (ConfigServer::Service::type() eq "systemd")
+{
 	my @reply = &syscommand(__LINE__,$config{SYSTEMCTL},"is-active","firewalld");
 	chomp @reply;
-	if ($reply[0] eq "active" or $reply[0] eq "activating") {
+	if ($reply[0] eq "active" or $reply[0] eq "activating")
+	{
 		&cleanup(__LINE__,"*Error* firewalld found to be running. You must stop and disable firewalld when using csf");
 		exit 1;
 	}
@@ -309,44 +332,56 @@ if (ConfigServer::Service::type() eq "systemd") {
 require ConfigServer::RegexMain;
 import ConfigServer::RegexMain;
 
-if ($config{RESTRICT_SYSLOG} == 1) {
+if ($config{RESTRICT_SYSLOG} == 1)
+{
 	logfile("Restricted log file access (RESTRICT_SYSLOG)");
 	foreach (qw{LF_SSHD LF_FTPD LF_IMAPD LF_POP3D LF_BIND LF_SUHOSIN
 				LF_SSH_EMAIL_ALERT LF_SU_EMAIL_ALERT LF_CONSOLE_EMAIL_ALERT
 				LF_DISTATTACK LF_DISTFTP LT_POP3D LT_IMAPD PS_INTERVAL
 				UID_INTERVAL WEBMIN_LOG LF_WEBMIN_EMAIL_ALERT
-				PORTKNOCKING_ALERT LF_SUDO_EMAIL_ALERT}) {
-		if ($config{$_} != 0) {
+				PORTKNOCKING_ALERT LF_SUDO_EMAIL_ALERT})
+	{
+		if ($config{$_} != 0)
+		{
 			$config{$_} = 0;
 			logfile("RESTRICT_SYSLOG: Option $_ *Disabled*");
 		}
 	}
 }
-elsif ($config{RESTRICT_SYSLOG} == 3) {
+elsif ($config{RESTRICT_SYSLOG} == 3)
+{
 	logfile("Restricting syslog/rsyslog socket acccess to group [$config{RESTRICT_SYSLOG_GROUP}]...");
 	&syslog_init;
 }
 
-if ($config{SYSLOG} or $config{SYSLOG_CHECK}) {
-	unless ($sys_syslog) {
+if ($config{SYSLOG} or $config{SYSLOG_CHECK})
+{
+	unless ($sys_syslog)
+	{
 		logfile("*Error* Cannot log to SYSLOG - Perl module Sys::Syslog required");
 	}
 }
 
-if (-e "/etc/csf/csf.blocklists") {
+if (-e "/etc/csf/csf.blocklists")
+{
 	my @entries = slurp("/etc/csf/csf.blocklists");
-	foreach my $line (@entries) {
-		if ($line =~ /^Include\s*(.*)$/) {
+	foreach my $line (@entries)
+	{
+		if ($line =~ /^Include\s*(.*)$/)
+		{
 			my @incfile = slurp($1);
 			push @entries,@incfile;
 		}
 	}
-	foreach my $line (@entries) {
+
+	foreach my $line (@entries)
+	{
 		$line =~ s/$cleanreg//g;
 		if ($line eq "") {next}
 		if ($line =~ /^\s*\#|Include/) {next}
 		my ($name,$interval,$max,$url) = split(/\|/,$line);
-		if ($name =~ /^\w+$/) {
+		if ($name =~ /^\w+$/)
+		{
 			$name = substr(uc $name, 0, 25);
 			if ($name =~ /^CXS_/) {$name =~ s/^CXS_/X_CXS_/}
 			if ($interval < 3600) {$interval = 3600}
@@ -10126,7 +10161,7 @@ EOF
 						print "<tr><td><input placeholder='Password' name='csfpassword' type='password' class='input' size='25'></td></tr>\n";
 						print "<tr><td colspan='2' align='center'><input type='submit' value='Enter' class='btn-login'></td></tr>\n";
 						print "<", "/table>";
-						print "<div class='login-footer'><a href='$th_dark_url'>Dark Theme</a> v$th_dark_version</div>";
+						print "<div class='login-footer'><a href='$th_dark_url'>ConfigServer Firewall</a> v$version</div>";
 						print "</div></form>\n";
 						print "</div>";
 						print "\n</BODY>\n</HTML>\n";
