@@ -33,7 +33,7 @@ Date: [RFC3339]
 Source: [ip]
 Source-Type: [iptype]
 Attachment: text/plain
-Schema-URL: https://download.configserver.com/abuse_login-attack_0.2.json
+Schema-URL: https://raw.githubusercontent.com/Aetherinox/csf-firewall/refs/heads/main/api/templates/schema/abuse_login-attack_0.2.json
 
 --csf-[boundary]
 Content-Transfer-Encoding: 7bit
