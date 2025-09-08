@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_cook_islands_ipset
 #   @uuid           a17d0ea9-ead0-31be-afee-c29fc0e72b0d
-#   @updated        Sat 06 Sep 2025 01:05:15 AM UTC
+#   @updated        Mon 08 Sep 2025 01:06:32 AM UTC
 #   @entries        9,678 ips
 #                   147 subnets
 #                   147 lines

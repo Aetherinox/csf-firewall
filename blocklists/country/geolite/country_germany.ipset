@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_germany_ipset
 #   @uuid           123c91a3-612f-3439-95e0-b5a81c99b9be
-#   @updated        Sat 06 Sep 2025 01:05:30 AM UTC
+#   @updated        Mon 08 Sep 2025 01:06:46 AM UTC
 #   @entries        562,950,085,739,113 ips
 #                   71,941 subnets
 #                   71,941 lines
