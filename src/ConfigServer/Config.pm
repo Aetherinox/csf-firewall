@@ -1,21 +1,23 @@
 # #
-#	  @author                   Copyright (C) 2025 Aetherinox
-#                               Copyright (C) 2006-2025 Jonathan Michaelson
-#	  @repo_primary             https://github.com/Aetherinox/csf-firewall/actions
-#	  @repo_legacy              https://github.com/waytotheweb/scripts
+#   @app                        ConfigServer Firewall (csf)
+#	@author						Copyright (C) 2025 Aetherinox
+#								Copyright (C) 2006-2025 Jonathan Michaelson
+#   @license                    GPLv3
+#	@repo_primary             	https://github.com/Aetherinox/csf-firewall/actions
+#	@repo_legacy              	https://github.com/waytotheweb/scripts
 #
-#	  This program is free software; you can redistribute it and/or modify it under
-#	  the terms of the GNU General Public License as published by the Free Software
-#	  Foundation; either version 3 of the License, or (at your option) any later
-#	  version.
+#	This program is free software; you can redistribute it and/or modify it under
+#	the terms of the GNU General Public License as published by the Free Software
+#	Foundation; either version 3 of the License, or (at your option) any later
+#	version.
 #
-#	  This program is distributed in the hope that it will be useful, but WITHOUT
-#	  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-#	  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
-#	  details.
+#	This program is distributed in the hope that it will be useful, but WITHOUT
+#	ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+#	FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+#	details.
 #
-#	  You should have received a copy of the GNU General Public License along with
-#	  this program; if not, see <https://www.gnu.org/licenses>.
+#	You should have received a copy of the GNU General Public License along with
+#	this program; if not, see <https://www.gnu.org/licenses>.
 # #
 
 package ConfigServer::Config;
@@ -346,16 +348,22 @@ sub loadconfig {
 	}
 
 	my @ipdata = &systemcmd("$config{IPTABLES} $config{IPTABLESWAIT} -t nat -L POSTROUTING -nv");
-	if ($ipdata[0] =~ /^Chain POSTROUTING/) {
+	if ($ipdata[0] =~ /^Chain POSTROUTING/)
+	{
 		$config{NAT} = 1;
-	} else {
-		if ($config{MESSENGER}) {
+	}
+	else
+	{
+		if
+		($config{MESSENGER})
+		{
 			$warning .= "*WARNING* iptables nat table not present - disabling MESSENGER Service\n";
 			$config{MESSENGER} = 0;
 		}
 	}
 
-	if ($config{PT_USERKILL}) {
+	if ($config{PT_USERKILL})
+	{
 		$warning .= "*WARNING* PT_USERKILL should not normally be enabled as it can easily lead to legitimate processes being terminated, use csf.pignore instead\n";
 	}
 
@@ -364,7 +372,9 @@ sub loadconfig {
 	$config{cc_country} = "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country-CSV&suffix=zip&license_key=$config{MM_LICENSE_KEY}";
 	$config{cc_city} = "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City-CSV&suffix=zip&license_key=$config{MM_LICENSE_KEY}";
 	$config{cc_asn} = "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-ASN-CSV&suffix=zip&license_key=$config{MM_LICENSE_KEY}";
-	if ($config{CC_SRC} eq "2") {
+
+	if ($config{CC_SRC} eq "2")
+	{
 		$config{cc_src} = "DB-IP";
 		$config{asn_src} = "iptoasn.com";
 		$config{ccl_src} = "ipdeny.com";
@@ -382,48 +392,43 @@ sub loadconfig {
 
 	return $self;
 }
-# end loadconfig
-###############################################################################
-# start config
-sub config {
+
+sub config
+{
 	return %config;
 }
-# end config
-###############################################################################
-# start resetconfig
-sub resetconfig {
+
+sub resetconfig
+{
 	undef %config;
 	undef %configsetting;
 	undef $warning;
 
 	return;
 }
-# end resetconfig
-###############################################################################
-# start configsetting
-sub configsetting {
+
+sub configsetting
+{
 	return %configsetting;
 }
-# end configsetting
-###############################################################################
-# start ipv4reg
-sub ipv4reg {
+
+sub ipv4reg
+{
 	return $ipv4reg;
 }
-# end ipv4reg
-###############################################################################
-# start ipv6reg
-sub ipv6reg {
+
+sub ipv6reg
+{
 	return $ipv6reg;
 }
-# end ipv6reg
-###############################################################################
-# start systemcmd
-sub systemcmd {
+
+sub systemcmd
+{
 	my @command = @_;
 	my @result;
 
-	eval {
+	eval
+	{
 		my ($childin, $childout);
 		my $pid = open3($childin, $childout, $childout, @command);
 		@result = <$childout>;
@@ -434,32 +439,52 @@ sub systemcmd {
 
 	return @result;
 }
-# end systemcmd
-###############################################################################
-## start getdownloadserver
-sub getdownloadserver {
+
+# #
+#	fetches a list of csf download server endpoints
+# #
+
+sub getdownloadserver
+{
 	my @servers;
 	my $downloadservers = "/etc/csf/downloadservers";
 	my $chosen;
-	if (-e $downloadservers) {
-##		open (my $DOWNLOAD, "<", $downloadservers);
-##		flock ($DOWNLOAD, LOCK_SH);
-##		my @data = <$DOWNLOAD>;
-##		close ($DOWNLOAD);
-##		chomp @data;
-##		foreach my $line (@data) {
-##			if ($line =~ /^download/) {push @servers, $line}
-##		}
-		foreach my $line (slurp($downloadservers)) {
-			$line =~ s/$cleanreg//g;
-			if ($line =~ /^download/) {push @servers, $line}
+
+	if (-e $downloadservers)
+	{
+		open (my $DOWNLOAD, "<", $downloadservers);
+		flock ($DOWNLOAD, LOCK_SH);
+		my @data = <$DOWNLOAD>;
+		close ($DOWNLOAD);
+		chomp @data;
+	
+		foreach my $line (@data) 
+		{
+			if ($line =~ /^(?:raw|download|cdn|csf|updates)\./) 
+			{
+				push @servers, $line;
+			}
 		}
+
+		foreach my $line (slurp($downloadservers)) 
+		{
+			$line =~ s/$cleanreg//g;
+			if ($line =~ /^(?:raw|download|cdn|csf|updates)\./) 
+			{
+				push @servers, $line;
+			}
+		}
+	
 		$chosen = $servers[rand @servers];
 	}
-##	if ($chosen eq "") {$chosen = "download.configserver.com"}
+
+	# #
+	#	fallback
+	# #
+
+	if ($chosen eq "") {$chosen = "raw.githubusercontent.com/Aetherinox/csf-firewall/main/api/templates/versions"}
+
 	return $chosen;
 }
-## end getdownloadserver
-###############################################################################
 
 1;
