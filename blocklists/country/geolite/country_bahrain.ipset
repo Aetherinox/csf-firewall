@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_bahrain_ipset
 #   @uuid           9d562a47-eed2-3274-a895-0deaa40538a4
-#   @updated        Mon 08 Sep 2025 01:06:12 AM UTC
+#   @updated        Tue 09 Sep 2025 01:02:04 AM UTC
 #   @entries        879,497 ips
 #                   464 subnets
 #                   464 lines
