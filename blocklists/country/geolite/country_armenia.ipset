@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_armenia_ipset
 #   @uuid           9969777b-460e-39db-89f6-b13719a0b51d
-#   @updated        Mon 08 Sep 2025 01:05:57 AM UTC
+#   @updated        Tue 09 Sep 2025 01:01:50 AM UTC
 #   @entries        617,587 ips
 #                   829 subnets
 #                   829 lines
