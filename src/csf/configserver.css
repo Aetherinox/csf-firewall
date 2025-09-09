@@ -12,7 +12,8 @@
 	Theme › Light
 */
 
-:root 
+:root,
+[data-theme="light"]
 {
     --bg-color: #ffffff;
     --text-color: #111111;
@@ -28,6 +29,28 @@
 
 	--button-1-background: #3566c0;
 	--button-1-border: #3566c0;
+
+	--input-textfield-main-normal-background: #e8e8e8;
+	--input-textfield-main-normal-border: #f7f7f7;
+	--input-textfield-main-normal-text: #111;
+	--input-textfield-main-hover-line: #2b62b4;
+	--input-textfield-main-focus-background: #FFFFFF;
+	--input-textfield-main-focus-line: #ff0062;
+	--input-textfield-main-focus-border: #c7c7c7;
+	--input-textfield-main-hover-line: #2b62b4;
+
+	--input-textfield-allow-normal-text: #111;
+	--input-textfield-allow-normal-background: #9edbb6;
+	--input-textfield-allow-normal-border: #f7f7f7;
+	--input-textfield-allow-hover-line: #62aa7f;
+	--input-textfield-allow-focus-line: #2b7448;
+	--input-textfield-allow-focus-background: #FFFFFF;
+	--input-textfield-allow-focus-border: #c7c7c7;
+
+	--input-textfield-deny-normal-text: #ff0062;
+	--input-textfield-deny-hover-line: #ff8b97;
+	--input-textfield-deny-normal-background: #f9bfc5;
+	--input-textfield-deny-normal-border: #f7f7f7;
 
 	--tabs-background: #37373700;
 	--tabs-border: #e3e3e31a;
@@ -75,6 +98,33 @@
 
 	--button-1-background: #3566c0;
 	--button-1-border: #3566c0;
+
+	--input-textfield-main-normal-text: #adadad;
+	--input-textfield-main-normal-background: #1f2324;
+	--input-textfield-main-normal-border: #5e5e5e;
+	--input-textfield-main-focus-background: #2b2b2b;
+	--input-textfield-main-focus-line: #FFFFFF;
+	--input-textfield-main-focus-border: #b08400;
+	--input-textfield-main-focus-text: #FFF;
+	--input-textfield-main-hover-line: #b08400;
+
+	--input-textfield-allow-normal-text: #75e6b2;
+	--input-textfield-allow-normal-background: #1f2324;
+	--input-textfield-allow-normal-border: #1b915a;
+	--input-textfield-allow-focus-background: #24573f;
+	--input-textfield-allow-focus-line: #FFF;
+	--input-textfield-allow-focus-border: #20af6d;
+	--input-textfield-allow-focus-text: #FFF;
+	--input-textfield-allow-hover-line: #2bcf83;
+
+	--input-textfield-deny-normal-text: #df4655;
+	--input-textfield-deny-normal-background: #1f2324;
+	--input-textfield-deny-normal-border: #bd2330;
+	--input-textfield-deny-focus-line: #FFFFFF;
+	--input-textfield-deny-focus-background: #731720;
+	--input-textfield-deny-focus-border: #dd3e4c;
+	--input-textfield-deny-focus-text: #FFF;
+	--input-textfield-deny-hover-line: #ff8b97;
 
 	--tabs-background: #373737;
 	--tabs-border: #e3e3e31a;
@@ -139,6 +189,33 @@
 }
 
 /*
+	Helper Containers
+*/
+
+.mobilecontainer
+{
+	display:none;
+}
+.normalcontainer
+{
+	display:block;
+}
+
+/*
+	Helpers
+*/
+
+.no-transition *
+{
+    transition: none !important;
+}
+
+html.theme-transition *
+{
+    transition: all 0.1s ease-in-out;
+}
+
+/*
 	Main Body
 */
 
@@ -149,6 +226,7 @@ body
     line-height: 1.42857143;
     color: var(--text-color);
     background-color: var(--bg-color);
+	padding-bottom: 100px;
 }
 
 button#CSFpauseID
@@ -162,7 +240,7 @@ button#CSFpauseID
 button#CSFpauseID:hover
 {
 	filter: brightness(120%) !important;
-	transition: all 0.3s;
+	transition: all 0.2s;
 }
 
 #paginatediv2 > .btn-default, #paginatediv > .btn-default
@@ -177,7 +255,7 @@ button#CSFpauseID:hover
 #paginatediv2 > .btn-default:hover, #paginatediv > .btn-default:hover
 {
 	filter: brightness(120%) !important;
-	transition: all 0.3s;
+	transition: all 0.2s;
 }
 
 button:not([class]):not(#fontminus-btn):not(#CSFpauseID):not(#fontplus-btn),
@@ -192,38 +270,7 @@ button.btn.btn-default {
 button:not(button#fontminus-btn):not(button#CSFpauseID):not(button#fontplus-btn):not(.btn-edit):hover
 {
 	filter: brightness(120%);
-	transition: all 0.3s;
-}
-/*
-	Logo
-
-	Live 		: /usr/sbin/lfd
-	Source		: /src/lfd.pl
-*/
-
-img.logo
-{
-	width: 75px;
-	opacity: 0.6;
-}
-
-img.logo:hover
-{
-	animation-name:             fade-in, scale-in;
-	animation-duration:         1s, 0.5s;
-	animation-timing-function:  ease-in, linear;
-	animation-direction:        alternate, alternate;
-	animation-iteration-count:  infinite, 1;
-	transition: all 0.3s;
-	opacity: 0.5;
-	transform: scale(1.1);
-}
-
-img.logo:not(:hover)
-{
-	transition: all 0.3s;
-	opacity: 0.5;
-	transform: scale(1);
+	transition: all 0.2s;
 }
 
 a.app-name
@@ -241,9 +288,47 @@ a.app-name:hover
 
 a.app-name:not(:hover)
 {
-	transition: all 0.3s;
+	transition: all 0.2s;
 	text-decoration: none;
 	color: var(--app-name-text);
+}
+
+/*
+	Input > Default
+*/
+
+input
+{
+    background-color: #FFF;
+    color: var( --input-textfield-main-normal-text );
+    font-size: 11pt;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    background: linear-gradient( var( --input-textfield-main-hover-line ) 0 0) no-repeat var( --input-textfield-main-normal-background );
+    background-position: center bottom;
+    background-size: 0% 2px;
+	border-left: 1px solid var( --input-textfield-main-normal-border );
+	border-top: 1px solid var( --input-textfield-main-normal-border );
+	border-right: 1px solid var( --input-textfield-main-normal-border );
+	border-bottom: 1px solid var( --input-textfield-main-normal-border );
+	font-size: 12pt;
+}
+
+input:hover
+{
+    background-size: calc(100% - 4px) 2px;
+}
+
+input:focus
+{
+	color: var( --input-textfield-main-focus-text );
+    background-image: linear-gradient(var( --input-textfield-main-focus-line ) 0 0);
+    background-color: var( --input-textfield-main-focus-background );
+    background-size: calc(100% - 4px) 2px;
+	border-left: 1px solid var( --input-textfield-main-focus-border );
+	border-top: 1px solid var( --input-textfield-main-focus-border );
+	border-right: 1px solid var( --input-textfield-main-focus-border );
+	border-bottom: 1px solid var( --input-textfield-main-focus-border );
 }
 
 /*
@@ -252,22 +337,36 @@ a.app-name:not(:hover)
 
 .input-allow
 {
-	transition: 0.5s;
-	background-color: #26643db5 !important;
+    background-color: #FFF;
+	color: var( --input-textfield-allow-normal-text );
+    font-size: 11pt;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+	background: linear-gradient( var( --input-textfield-allow-hover-line ) 0 0) no-repeat var( --input-textfield-allow-normal-background );
+    background-position: center bottom;
+    background-size: 0% 2px;
+	border-left: 1px solid var( --input-textfield-allow-normal-border );
+	border-top: 1px solid var( --input-textfield-allow-normal-border );
+	border-right: 1px solid var( --input-textfield-allow-normal-border );
+	border-bottom: 1px solid var( --input-textfield-allow-normal-border );
+	font-size: 12pt;
 }
 
 .input-allow:hover
 {
-	background: linear-gradient(#50b978d5 0 0) bottom / 0% 2px no-repeat #393939;
-	background-size: 100% 2px;
-	transition: all 0.3s;
+    background-size: calc(100% - 4px) 2px;
 }
 
 .input-allow:focus
 {
-	background: linear-gradient(#f8f8f8d5 0 0) bottom / 0% 2px no-repeat #393939;
-	background-size: 100% 2px;
-	transition: all 0.3s;
+	color: var( --input-textfield-allow-focus-text );
+    background-image: linear-gradient(var( --input-textfield-allow-focus-line ) 0 0);
+    background-color: var( --input-textfield-allow-focus-background );
+    background-size: calc(100% - 4px) 2px;
+	border-left: 1px solid var( --input-textfield-allow-focus-border );
+	border-top: 1px solid var( --input-textfield-allow-focus-border );
+	border-right: 1px solid var( --input-textfield-allow-focus-border );
+	border-bottom: 1px solid var( --input-textfield-allow-focus-border );
 }
 
 /*
@@ -276,23 +375,39 @@ a.app-name:not(:hover)
 
 .input-deny
 {
-	transition: 0.5s;
-	background-color: #99244bb5 !important;
+    background-color: #FFF;
+	color: var( --input-textfield-deny-normal-text );
+    font-size: 11pt;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+	background: linear-gradient( var( --input-textfield-deny-hover-line ) 0 0) no-repeat var( --input-textfield-deny-normal-background );
+    background-position: center bottom;
+    background-size: 0% 2px;
+	border-left: 1px solid var( --input-textfield-deny-normal-border );
+	border-top: 1px solid var( --input-textfield-deny-normal-border );
+	border-right: 1px solid var( --input-textfield-deny-normal-border );
+	border-bottom: 1px solid var( --input-textfield-deny-normal-border );
+	font-size: 12pt;
 }
 
 .input-deny:hover
 {
-	background: linear-gradient(#f92574 0 0) bottom / 0% 2px no-repeat #393939;
-	background-size: 100% 2px;
-	transition: all 0.3s;
+    background-size: calc(100% - 4px) 2px;
 }
 
 .input-deny:focus
 {
-	background: linear-gradient(#FFFFFF 0 0) bottom / 0% 2px no-repeat #393939;
-	background-size: 100% 2px;
-	transition: all 0.3s;
+	color: var( --input-textfield-deny-focus-text );
+    background-image: linear-gradient(var( --input-textfield-deny-focus-line ) 0 0);
+    background-color: var( --input-textfield-deny-focus-background );
+    background-size: calc(100% - 4px) 2px;
+	border-left: 1px solid var( --input-textfield-deny-focus-border );
+	border-top: 1px solid var( --input-textfield-deny-focus-border );
+	border-right: 1px solid var( --input-textfield-deny-focus-border );
+	border-bottom: 1px solid var( --input-textfield-deny-focus-border );
 }
+
+
 
 .login-body
 {
@@ -332,7 +447,7 @@ a.app-name:not(:hover)
 .btn-allow:hover
 {
 	filter: brightness(120%);
-	transition: all 0.3s;
+	transition: all 0.2s;
 }
 
 /*
@@ -348,7 +463,7 @@ a.app-name:not(:hover)
 .btn-deny:hover
 {
 	filter: brightness(120%);
-	transition: all 0.3s;
+	transition: all 0.2s;
 }
 
 /*
@@ -366,7 +481,7 @@ a.app-name:not(:hover)
 .btn-desktop-view:hover
 {
 	filter: brightness(120%);
-	transition: all 0.3s;
+	transition: all 0.2s;
 }
 
 .mobilecontainer
@@ -398,22 +513,6 @@ a.app-name:not(:hover)
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0),0 0 8px rgba(102, 174, 233, 0);
 }
 
-form input[type=text], form input[type=password]
-{
-	background-color: #393939;
-	border: 1px solid #e3e3e31a;
-	color: #FFF;
-	font-size: 11pt;
-	transition: 0.5s;
-	background: linear-gradient(#ffffff73 0 0) bottom / 0% 1px no-repeat #202020;
-	cursor: pointer;
-}
-
-form input:hover
-{
-	background-size: 100% 1px;
-}
-
 .input-ipaddr
 {
 	margin: 0 auto !important;
@@ -433,11 +532,6 @@ form input:hover
 	cursor: pointer;
 	text-align: center;
 	margin-bottom: 20px !important;
-}
-
-.input-ipaddr:hover
-{
-	background-size: 100% 1px;
 }
 
 .input-ipaddr::placeholder
@@ -475,7 +569,7 @@ form input:hover
 .btn-edit:hover
 {
 	filter: brightness(120%);
-	transition: all 0.3s;
+	transition: all 0.2s;
 }
 
 /*
@@ -494,7 +588,7 @@ form input:hover
 .btn-long:hover
 {
 	filter: brightness(120%);
-	transition: all 0.3s;
+	transition: all 0.2s;
 }
 
 .btn-apply
@@ -511,7 +605,7 @@ form input:hover
 .btn-apply:hover
 {
 	filter: brightness(120%);
-	transition: all 0.3s;
+	transition: all 0.2s;
 }
 
 /*
@@ -530,7 +624,7 @@ form input:hover
 .btn-mobile:hover
 {
 	filter: brightness(120%);
-	transition: all 0.3s;
+	transition: all 0.2s;
 	background-color: #2a7582;
 }
 
@@ -550,7 +644,7 @@ form input:hover
 .glyphicon:hover
 {
 	color: #FFF !important;
-	transition: all 0.3s;
+	transition: all 0.2s;
 }
 
 /*
@@ -563,57 +657,6 @@ form input:hover
 	background-color: var(--panel-box-alt);
 	color: #ff7420;
 	border-radius: 4px;
-}
-
-/*
-select:has(+ .btn-default)
-{
-	background:#3566c0;
-	border-radius:4px;
-	border: 1px solid #3566c0;
-	color: #FFF !important;
-	max-width: 7em;
-}
-*/
-
-/*
-	Button > Logout
-*/
-
-.pull-right > a[href*="csflogout"]
-{
-	background-color: #a81840;
-	color: #FFF;
-	border: 1px solid #FFF0;
-	position: absolute;
-	top: 2.9%;
-	right: 8%;
-	transition: all 0.3s;
-}
-
-.pull-right > a[href*="csflogout"]:after
-{
-	content: '\00bb';
-	position: absolute;
-	opacity: 0;
-	top: 0;
-	right: -20px;
-	transition: 0.5s;
-	padding-top: 6px;
-}
-
-.pull-right > a[href*="csflogout"]:hover:after
-{
-	opacity: 1;
-	right: 0;
-	margin-right: 13px;
-}
-
-.pull-right > a[href*="csflogout"]:hover
-{
-	filter: brightness(120%);
-	transition: all 0.3s;
-	padding-right: 30px;
 }
 
 .icon-configserver
@@ -632,7 +675,7 @@ select:has(+ .btn-default)
 #fontminus-btn:hover, #fontplus-btn:hover
 {
 	filter: brightness(120%);
-	transition: all 0.3s;
+	transition: all 0.2s;
 }
 
 #fontminus-btn
@@ -643,7 +686,7 @@ select:has(+ .btn-default)
 input.btn-default[type="submit"]
 {
 	background: var(--button-1-background);
-	border-radius: 4px;
+	border-radius: 6px;
 	border: 1px solid var(--button-1-background);
 	color: #FFF !important;
 	max-width: 7em;
@@ -652,13 +695,13 @@ input.btn-default[type="submit"]
 input.btn-default[type="submit"]:hover
 {
 	filter: brightness(120%);
-	transition: all 0.3s;
+	transition: all 0.2s;
 }
 
 .btn-default:hover
 {
 	filter: brightness(120%);
-	transition: all 0.3s;
+	transition: all 0.2s;
 }
 
 .btn-csf-config:focus,
@@ -681,7 +724,8 @@ input.btn-default[type="submit"]:hover
 		- lfd restart
 */
 
-:not(select):not(button) + .btn-default:not(button#CSFpauseID):not(a)
+select + .btn-default,
+.btn-group + .btn-default
 {
   	min-width: 13em;
 }
@@ -853,52 +897,27 @@ input[type="text"]
 	outline: none;
 	padding: 3px 0px 3px 3px;
 	margin: 5px 1px 3px 0px;
-	border: 1px solid #f2f2f238;
-	background-color: #1c1c1c;
 	padding-left: 10px;
 	padding-right: 10px;
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
 
-input[type="text"], select
+select
 {
-	-webkit-transition: all 0.30s ease-in-out;
-	-moz-transition: all 0.30s ease-in-out;
-	-ms-transition: all 0.30s ease-in-out;
-	-o-transition: all 0.30s ease-in-out;
-	transition: all 0.30s ease-in-out;
-	border-radius: 3px;
-	outline: none;
-	padding: 3px 0px 3px 3px;
-	margin: 5px 1px 3px 0px;
-	border: 1px solid #f2f2f238;
-	background-color: #1c1c1c;
-	padding-left: 10px;
-	padding-right: 10px;
-	padding-top: 5px;
-	padding-bottom: 5px;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    background-color: var(--bg-color, #222);
+    color: var(--text-color, #fff);
+    padding: 8px 12px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 	cursor: pointer;
 }
 
-input[type=text]:focus, select:focus
-{
-	-webkit-transition: all 0.30s ease-in-out;
-	-moz-transition: all 0.30s ease-in-out;
-	-ms-transition: all 0.30s ease-in-out;
-	-o-transition: all 0.30s ease-in-out;
-	transition: all 0.30s ease-in-out;
-	border-radius: 3px;
-	outline: none;
-	padding: 3px 0px 3px 3px;
-	margin: 5px 1px 3px 0px;
-	border: 1px solid #f2f2f238;
-	background-color: #1c1c1c;
-	padding-left: 10px;
-	padding-right: 10px;
-	padding-top: 5px;
-	padding-bottom: 5px;
-}
+
 
 .table-bordered
 {
@@ -1705,7 +1724,21 @@ input[type="checkbox"], input[type="radio"]
 	padding-left: 44px !important;
 }
 
-.footer {
+/*
+	Section ›  Return (Button)
+*/
+
+.section-return
+{
+	padding-top: 20px;
+}
+
+/*
+	Section ›  Footer
+*/
+
+.footer
+{
     position: fixed;
     bottom: 0;
     left: 0;
@@ -1721,10 +1754,18 @@ input[type="checkbox"], input[type="radio"]
     border-top: 1px solid var(--panel-footer-border);
 }
 
+/*
+	Section ›  Footer › Inner Left
+*/
+
 .footer-left
 {
     text-align: left;
 }
+
+/*
+	Section ›  Footer › Inner Right
+*/
 
 .footer-right
 {
@@ -1775,6 +1816,23 @@ input[type="checkbox"], input[type="radio"]
     border-color: var(--button-1-background);
     color: white;
     min-width: auto;
+}
+
+/*
+	Button › Update
+*/
+
+button.btn-update
+{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #44662d;
+    font-size: 11pt;
+    font-weight: 100;
+    padding: 5pt;
+    border: 1px solid #000;
+    border-radius: 6px;
 }
 
 /*
