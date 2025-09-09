@@ -1265,15 +1265,187 @@ code
 	clear: both;
 }
 
+/*
+	Header
+*/
+
 .section-header
 {
-	background-color: var(--panel-section-background);
-	padding: 8px;
-	line-height: 1.42857143;
-	border-bottom: 1px solid #e3e3e31a !important;
-	border-top-left-radius: 3px;
-	border-top-right-radius: 3px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: var(--panel-header-box);
 }
+
+.section-header .header-left
+{
+    display: flex;
+    align-items: center;
+}
+
+.section-header .header-right .btn-logout
+{
+	background-color: #fd0966;
+	border-color: #fd0966;
+	color: white;
+}
+
+.section-header .header-right a[href*="csflogout"]
+{
+	background-color: #ce2d5a;
+	color: #FFF;
+	border: 1px solid #FFF0;
+	border-radius: 6px;
+	transition: all 0.2s;
+	padding-left: 15px;
+}
+
+.section-header .header-right a[href*="csflogout"]:after
+{
+	content: '\00bb';
+	opacity: 0;
+	transition: 0.5s;
+}
+
+.section-header .header-right a[href*="csflogout"]:hover:after
+{
+	opacity: 1;
+	padding-left: 8px;
+}
+
+.section-header .header-right a[href*="csflogout"]:hover
+{
+	filter: brightness(120%);
+	transition: all 0.2s;
+}
+
+.section-header .header-right
+{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.section-header .header-btn
+{
+    font-size: 14px;
+    border-radius: 6px;
+    border: 1px solid var(--primary-color);
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.section-header .header-btn:hover
+{
+    background-color: var(--secondary-color);
+}
+
+.section-header .header-form form
+{
+    display: flex;
+    align-items: center;
+    margin: 0;
+    gap: 5px;
+}
+
+.section-header .btn-csfapp-dropdown
+{
+	color: #fff;
+	background-color: #282828;
+	border-color: #bd7e25;
+	border-radius: 6px;
+}
+
+.section-header .btn-csfapp-dropdown .caret
+{
+	display: inline-block;
+	width: 0;
+	height: 0;
+	margin-left: 5px !important;
+	vertical-align: middle;
+	border-top: 4px dashed;
+	border-top: 4px solid\9;
+	border-right: 4px solid transparent;
+	border-left: 4px solid transparent;
+  }
+
+/*
+	Header › Doprodnw › Select CSF App
+*/
+
+.section-header form.form-csfapp-dropdown  .dropdown-menu
+{
+	background-color: #181a1b;
+	box-shadow: rgba(0, 0, 0, 0.17);
+	min-width: 60px;
+}
+
+.section-header form.form-csfapp-dropdown .dropdown-menu > li > a
+{
+	color: #d0ccc6;
+}
+
+.section-header form.form-csfapp-dropdown .dropdown-menu > li > a:focus, .dropdown-menu > li > a:hover
+{
+	background-color: #2f3233;
+}
+
+/*
+	Logo
+
+	Live 		: /usr/sbin/lfd
+	Source		: /src/lfd.pl
+*/
+
+img.logo
+{
+	width: 						70px;
+	height: 					auto;
+}
+
+img.logo:hover
+{
+	animation-name:             fade-in, scale-in;
+	animation-duration:         1s, 0.5s;
+	animation-timing-function:  ease-in, linear;
+	animation-direction:        alternate, alternate;
+	animation-iteration-count:  infinite, 1;
+	transition: 				all 0.2s;
+	transform: 					scale(1.1);
+}
+
+img.logo:not(:hover)
+{
+	transition: 				all 0.2s;
+	transform: 					scale(1);
+}
+
+.app-info
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding-top: 16px;
+	padding-left: 13px;
+}
+
+.app-name
+{
+    font-size: 18px;
+    font-weight: 100;
+    color: var(--text-color);
+}
+
+.app-version
+{
+    font-size: 12px;
+    color: var(--text-muted-color);
+}
+
+
 
 .server-check-status-container
 {
