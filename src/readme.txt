@@ -1,25 +1,28 @@
-###############################################################################
-# Copyright (C) 2006-2025 Jonathan Michaelson
+# #
+#   @app                        ConfigServer Firewall (csf)
+#   @author                     Copyright (C) 2025 Aetherinox
+#                               Copyright (C) 2006-2025 Jonathan Michaelson
+#   @license                    GPLv3
+#   @repo_primary             	https://github.com/Aetherinox/csf-firewall
+#   @repo_legacy              	https://github.com/waytotheweb/scripts
 #
-# https://github.com/waytotheweb/scripts
+#   This program is free software; you can redistribute it and/or modify it under
+#   the terms of the GNU General Public License as published by the Free Software
+#   Foundation; either version 3 of the License, or (at your option) any later
+#   version.
 #
-# This program is free software; you can redistribute it and/or modify it under
-# the terms of the GNU General Public License as published by the Free Software
-# Foundation; either version 3 of the License, or (at your option) any later
-# version.
+#   This program is distributed in the hope that it will be useful, but WITHOUT
+#   ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+#   OR A PARTICULAR PURPOSE. See the GNU General Public License for more
+#   details.
 #
-# This program is distributed in the hope that it will be useful, but WITHOUT
-# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
-# details.
-#
-# You should have received a copy of the GNU General Public License along with
-# this program; if not, see <https://www.gnu.org/licenses>.
-###############################################################################
+#   You should have received a copy of the GNU General Public License along with
+#   this program; if not, see <https://www.gnu.org/licenses>.
+# #
 
-
+###############################################################################
 ConfigServer Security & Firewall
-################################
+###############################################################################
 
 This suite of scripts provides:
 
@@ -37,61 +40,33 @@ as they could or should be.
 This document contains:
 
 1. Introduction
-
 2. csf Principles
-
 3. lfd Principles
-
 4. csf Command Line Options
-
 5. lfd Command Line Options
-
 6. Login Tracking
-
 7. Script Email Alerts
-
 8. Process Tracking
-
 9. Directory Watching
-
 10. Advanced Allow/Deny Filters
-
 11. Multiple Ethernet Devices
-
 12. Installation on a Generic Linux Server
-
 13. A note about FTP Connection Issues
-
 14. Messenger Service (v1, v2 and v3)
-
 15. Block Reporting
-
 16. Port Flood Protection
-
 17. External Pre- and Post- Scripts
-
 18. lfd Clustering
-
 19. Port Knocking
-
 20. Connection Limit Protection
-
 21. Port/IP address Redirection
-
 22. Integrated User Interface Feature
-
 23. IP Block Lists
-
 24. Mitigating issues with syslog/rsyslog logs (RESTRICT_SYSLOG)
-
 25. Exim SMTP AUTH Restriction
-
 26. UI Skinning and Mobile View
-
 27. CloudFlare
-
 28. InterWorx
-
 29. CentOS Web Panel (CWP)
 
 
@@ -344,35 +319,35 @@ where its activities are logged.
 The various email alert templates follow, care should be taken if you
 modify that file to maintain the correct format:
 
-/usr/local/csf/tpl/accounttracking.txt - for account tracking alert emails
-/usr/local/csf/tpl/alert.txt - for port blocking emails
-/usr/local/csf/tpl/connectiontracking.txt - for connection tracking emails
-/usr/local/csf/tpl/consolealert.txt - for console root login alert emails
-/usr/local/csf/tpl/cpanelalert.txt - for WHM/cPanel account access emails
-/usr/local/csf/tpl/exploitalert.txt - for system exploit alert emails
-/usr/local/csf/tpl/filealert.txt - for suspicious file alert emails
-/usr/local/csf/tpl/forkbombalert.txt - for fork bomb alert emails
-/usr/local/csf/tpl/integrityalert.txt - for system integrity alert emails
-/usr/local/csf/tpl/loadalert.txt - for high load average alert emails
-/usr/local/csf/tpl/logalert.txt - for log scanner report emails
-/usr/local/csf/tpl/logfloodalert.txt - for log file flooding alert emails
-/usr/local/csf/tpl/modsecipdbcheck.txt - for ModSecurity IP DB size alert emails
-/usr/local/csf/tpl/netblock.txt - for netblock alert emails
-/usr/local/csf/tpl/permblock.txt - for temporary to permanent block alert emails
-/usr/local/csf/tpl/portknocking.txt - for Port Knocking alert emails
-/usr/local/csf/tpl/portscan.txt - for port scan tracking alert emails
-/usr/local/csf/tpl/processtracking.txt - for process tracking alert emails
-/usr/local/csf/tpl/queuealert.txt - for email queue alert emails
-/usr/local/csf/tpl/relayalert.txt - for email relay alert emails
-/usr/local/csf/tpl/resalert.txt - for process resource alert emails
-/usr/local/csf/tpl/scriptalert.txt - for script alert emails
-/usr/local/csf/tpl/sshalert.txt - for SSH login emails
-/usr/local/csf/tpl/sualert.txt - for SU alert emails
-/usr/local/csf/tpl/tracking.txt - for POP3/IMAP blocking emails
-/usr/local/csf/tpl/uialert.txt - for UI alert emails
-/usr/local/csf/tpl/usertracking.txt - for user process tracking alert emails
-/usr/local/csf/tpl/watchalert.txt - for watched file and directory change alert emails
-/usr/local/csf/tpl/webminalert.txt - for Webmin login emails
+/usr/local/csf/tpl/accounttracking.txt      - for account tracking alert emails
+/usr/local/csf/tpl/alert.txt                - for port blocking emails
+/usr/local/csf/tpl/connectiontracking.txt   - for connection tracking emails
+/usr/local/csf/tpl/consolealert.txt         - for console root login alert emails
+/usr/local/csf/tpl/cpanelalert.txt          - for WHM/cPanel account access emails
+/usr/local/csf/tpl/exploitalert.txt         - for system exploit alert emails
+/usr/local/csf/tpl/filealert.txt            - for suspicious file alert emails
+/usr/local/csf/tpl/forkbombalert.txt        - for fork bomb alert emails
+/usr/local/csf/tpl/integrityalert.txt       - for system integrity alert emails
+/usr/local/csf/tpl/loadalert.txt            - for high load average alert emails
+/usr/local/csf/tpl/logalert.txt             - for log scanner report emails
+/usr/local/csf/tpl/logfloodalert.txt        - for log file flooding alert emails
+/usr/local/csf/tpl/modsecipdbcheck.txt      - for ModSecurity IP DB size alert emails
+/usr/local/csf/tpl/netblock.txt             - for netblock alert emails
+/usr/local/csf/tpl/permblock.txt            - for temporary to permanent block alert emails
+/usr/local/csf/tpl/portknocking.txt         - for Port Knocking alert emails
+/usr/local/csf/tpl/portscan.txt             - for port scan tracking alert emails
+/usr/local/csf/tpl/processtracking.txt      - for process tracking alert emails
+/usr/local/csf/tpl/queuealert.txt           - for email queue alert emails
+/usr/local/csf/tpl/relayalert.txt           - for email relay alert emails
+/usr/local/csf/tpl/resalert.txt             - for process resource alert emails
+/usr/local/csf/tpl/scriptalert.txt          - for script alert emails
+/usr/local/csf/tpl/sshalert.txt             - for SSH login emails
+/usr/local/csf/tpl/sualert.txt              - for SU alert emails
+/usr/local/csf/tpl/tracking.txt             - for POP3/IMAP blocking emails
+/usr/local/csf/tpl/uialert.txt              - for UI alert emails
+/usr/local/csf/tpl/usertracking.txt         - for user process tracking alert emails
+/usr/local/csf/tpl/watchalert.txt           - for watched file and directory change alert emails
+/usr/local/csf/tpl/webminalert.txt          - for Webmin login emails
 
 6. Login Tracking
 #################
