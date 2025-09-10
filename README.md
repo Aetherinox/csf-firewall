@@ -1955,6 +1955,65 @@ Have a question? See if it's answered here:
 <br />
 
 <details>
+<summary>I can't get the statistics button to show</summary>
+
+<br />
+
+_In order to view statistics in CSF, you must ensure you do the following:
+
+First, enable the setting within `/etc/csf/csf.conf`:
+
+```bash
+ST_ENABLE = "1"
+```
+
+<br />
+
+You can confirm the setting by running:
+
+```shell
+grep ST_ENABLE /etc/csf/csf.conf
+
+# Should return:
+ST_ENABLE = "1"
+```
+
+<br />
+
+Next, ensure you have the `ServerStats` perl module installed:
+
+```shell
+ls -l /usr/local/csf/lib/ConfigServer/ServerStats.pm
+
+# Should return:
+-rw------- 1 root root 138268 Aug 25 08:46 /usr/local/csf/lib/ConfigServer/ServerStats.pm
+```
+
+<br />
+
+Finally, ensure you installed the perl module `GD::Graph / GD`:
+
+```shell
+# Ubuntu/Debian
+sudo apt-get install -y libgd-graph-perl libgd-perl
+
+# CentOS/RHEL
+sudo yum install -y perl-GDGraph perl-GD
+```
+
+<br />
+
+Then give CSF / LFD a restart:
+
+```shell
+sudo csf -ra
+```
+
+</details>
+
+<br />
+
+<details>
 <summary>Are you officially taking over development on CSF?</summary>
 
 <br />
