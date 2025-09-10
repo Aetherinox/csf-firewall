@@ -3,7 +3,7 @@
 #	@author						Copyright (C) 2025 Aetherinox
 #								Copyright (C) 2006-2025 Jonathan Michaelson
 #   @license                    GPLv3
-#	@repo_primary             	https://github.com/Aetherinox/csf-firewall/actions
+#	@repo_primary             	https://github.com/Aetherinox/csf-firewall
 #	@repo_legacy              	https://github.com/waytotheweb/scripts
 #
 #	This program is free software; you can redistribute it and/or modify it under
@@ -482,7 +482,10 @@ sub getdownloadserver
 	#	fallback
 	# #
 
-	if ($chosen eq "") {$chosen = "raw.githubusercontent.com/Aetherinox/csf-firewall/main/api/templates/versions"}
+	if ($chosen eq "")
+	{
+		$chosen = "raw.githubusercontent.com/Aetherinox/csf-firewall/main/api/download/versions"
+	}
 
 	return $chosen;
 }
