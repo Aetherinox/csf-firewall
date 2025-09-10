@@ -1,245 +1,260 @@
 ChangeLog:
 
-15.00 - Final version released by Jonathan Michaelson / configserver.com
-		
-		Download and update servers taken offline
-		
-		Disabled automatic updates within csf
-		
-		Added country code validation and warning output
-		
-		Updated regex to extract client ip from logs
-		
+15.00 - Changed license to GPLv3
+
+	Final version released by Jonathan Michaelson / configserver.com
+
+	Download and update servers taken offline
+
+	Disabled automatic updates within csf
+
+	Added country code validation and warning output
+
+	Updated regex to extract client ip from logs
+
+14.24 - Fixed regression bug in v14.23 "Modified UI HTTP header checks to be
+        case agnostic"
+
+14.23 - Modified Apache regexes to detect "remote" or "client" as the IP trigger
+        Mdified UI HTTP header checks to be case agnostic
+	
+	Sanitise CC list strings
+
+14.22 - Removed session IP match check from DA login
+
+        Added example spamassassin temp file regex to csf.fignore for
+	new installations
+
 14.21 - Modified IP lookup to strip some missed quotes
-		
-		Added exe:/usr/bin/dbus-broker-launch and exe:/usr/bin/dbus-broker to
-		csf.pignore for new installations
-		
-		Added check to ensure that only PUBLIC IP addresses are used when
-		loading IPv4 CC zone files
-		
-		Fixed issue when converting embedded IPv4 addresses in IPv6 connections
-		
+
+        Added exe:/usr/bin/dbus-broker-launch and exe:/usr/bin/dbus-broker to
+	csf.pignore for new installations
+	
+	Added check to ensure that only PUBLIC IP addresses are used when
+	loading IPv4 CC zone files
+	
+	Fixed issue when converting embedded IPv4 addresses in IPv6 connections
+
 14.20 - Modified MaxMind URLs to use https
-		
-		Fixed DOCTYPE print order for integrated UI login
-		
-		Added "Require all granted" to Messenger v3 .htaccess generation
-		
-		Normalise source IP during connection tracking for IPv6 comparisons
-		
-		Fixed regression for some IMAP logon failure detections
-		
+
+        Fixed DOCTYPE print order for integrated UI login
+
+        Added "Require all granted" to Messenger v3 .htaccess generation
+
+	Normalise source IP during connection tracking for IPv6 comparisons
+
+	Fixed regression for some IMAP logon failure detections
+
 14.19 - Switch to using iptables-nft if it exists in /usr/sbin/iptables-nft
-		
-		Added IO::Handle::clearerr() call before reading data from a log file
-		
-		Added "Require all granted" to the MESSENGER .htaccess file
-		
-		Added UID/GID rules to IPv6 if enabled
-		
-		Modified dovecot regex to look for "failed: Connection reset by peer"
-		
+
+        Added IO::Handle::clearerr() call before reading data from a log file
+
+	Added "Require all granted" to the MESSENGER .htaccess file
+
+	Added UID/GID rules to IPv6 if enabled
+
+	Modified dovecot regex to look for "failed: Connection reset by peer"
+
 14.18 - Added port 853 for DoT to all new installs
-		
-		Added exe wpt-panopticon on cPanel servers to csf.pignore
-		
-		Updated list of EOL PHP versions
-		
-		Modified HTACCESS regex to include "remote" as well as "client" log
-		lines
-		
-		Implemented DA POST workaround for saving large text files via the UI
-		
-		Modified MESSENGER to only send unblock email if a valid IP is
-		requested
-		
-		Modified DA server check to look for multiple php versions in
-		/usr/local/php*
-		
+
+        Added exe wpt-panopticon on cPanel servers to csf.pignore
+
+	Updated list of EOL PHP versions
+	
+	Modified HTACCESS regex to include "remote" as well as "client" log
+	lines
+
+	Implemented DA POST workaround for saving large text files via the UI
+
+	Modified MESSENGER to only send unblock email if a valid IP is
+	requested
+
+	Modified DA server check to look for multiple php versions in
+	/usr/local/php*
+
 14.17 - Removed Security Report recommendations that do not apply to
-		unsupported control panels
-		
-		Updated Security Report to show PHP v7.3 is EOL
-		
-		Confirmed support for RHEL v9
-		
+        unsupported control panels
+
+	Updated Security Report to show PHP v7.3 is EOL
+
+	Confirmed support for RHEL v9
+
 14.16 - Removed some spurious debug code
-		
-		Modified alert templates for: 
-			LF_WEBMIN_EMAIL_ALERT
-			LF_CPANEL_ALERT
-			LF_SUDO_EMAIL_ALERT
-			LF_SU_EMAIL_ALERT
-			LF_SSH_EMAIL_ALERT
-		These have been changed to include the log line that triggered the
-		alert to help give context to the alert and the date/time from the
-		log to identify when the event occurred. All the relevant templates
-		are modified to include the log line for existing and new installs
-		
-		Implemented an addition check for webmin that we're in the csf module
-		before creating symlink to the UI script
-		
-		Fixed parameter checking for some dovecot regexes
-		
-		If DEBUG is enabled and the sendmail binary fails to send an lfd alert,
-		the email text will now be logged to /var/log/lfd.log with an error
-		
+
+        Modified alert templates for: 
+	  LF_WEBMIN_EMAIL_ALERT
+	  LF_CPANEL_ALERT
+	  LF_SUDO_EMAIL_ALERT
+	  LF_SU_EMAIL_ALERT
+	  LF_SSH_EMAIL_ALERT
+	These have been changed to include the log line that triggered the
+	alert to help give context to the alert and the date/time from the
+	log to identify when the event occurred. All the relevant templates
+	are modified to include the log line for existing and new installs
+
+        Implemented an addition check for webmin that we're in the csf module
+	before creating symlink to the UI script
+
+	Fixed parameter checking for some dovecot regexes
+
+	If DEBUG is enabled and the sendmail binary fails to send an lfd alert,
+	the email text will now be logged to /var/log/lfd.log with an error
+
 14.15 - Fixed regression issue with logfile regexes
-		
-		Implemented an improved email wrapper
-		
+
+        Implemented an improved email wrapper
+
 14.14 - Fixed issue with using Text::Wrap
-		
+
 14.13 - Added inline pid match to all system regexes to cater for logging
-		changes
-		
-		Use Text::Wrap to ensure email line lengths are within specifications
-		
-		Updated dovecot log regexes to support the changed format in v2.3.15+
-		
+        changes
+
+	Use Text::Wrap to ensure email line lengths are within specifications
+
+	Updated dovecot log regexes to support the changed format in v2.3.15+
+
 14.12 - Added cPanel SaaS servers to cpanel.allow
-		
-		Added a fix for RHEL v8 processes that were reporting excessive null or
-		whitespace characters at the end of /prod/[pid]/cmdline. This is turn
-		meant that such processes (e.g. spamd on cPanel servers) subverted some
-		entries in csf.pignore
-		
-		Updated systemd entries in csf.logignore for RHEL v8+
-		
-		Updated dovecot log regexes to support the changed format in v2.3.15+
-		
-		Modify LookUpIP to hopefully account for data inconsistencies from
-		Maxmind
-		
+
+        Added a fix for RHEL v8 processes that were reporting excessive null or
+	whitespace characters at the end of /prod/[pid]/cmdline. This is turn
+	meant that such processes (e.g. spamd on cPanel servers) subverted some
+	entries in csf.pignore
+
+	Updated systemd entries in csf.logignore for RHEL v8+
+
+	Updated dovecot log regexes to support the changed format in v2.3.15+
+
+	Modify LookUpIP to hopefully account for data inconsistencies from
+	Maxmind
+
 14.11 - Added entries in csf.pignore for new cPanel installations:
-		exe:/usr/sbin/mariadbd
-		exe:/usr/sbin/atd
-		exe:/usr/lib/systemd/systemd-timesyncd
-		exe:/usr/lib/systemd/systemd-networkd
-		exe:/usr/sbin/rsyslogd
-		
-		Updated configuration files to support cPanel on Ubuntu
-		
-		In Server Check don't check for Fork Bomb protection on cPanel servers
-		running CloudLinux
-		
+	exe:/usr/sbin/mariadbd
+	exe:/usr/sbin/atd
+	exe:/usr/lib/systemd/systemd-timesyncd
+	exe:/usr/lib/systemd/systemd-networkd
+	exe:/usr/sbin/rsyslogd
+
+	Updated configuration files to support cPanel on Ubuntu
+
+        In Server Check don't check for Fork Bomb protection on cPanel servers
+	running CloudLinux
+
 14.10 - Fixed error message regarding location/permissions to the iptables
-		binary in correctly referencing ip6tables
-		
-		Added PASV port range hole for VZ servers on cPanel for new installs
-		
-		Fixed MESSENGERV3 Apache tree search where ServerRoot is not configured
-		so that csf defaults to /etc/apache2/ so that relative Includes are
-		still defined correctly
-		
-		Modified LF_BIND regex to deal with new log field
-		
+        binary in correctly referencing ip6tables
+
+	Added PASV port range hole for VZ servers on cPanel for new installs
+
+	Fixed MESSENGERV3 Apache tree search where ServerRoot is not configured
+	so that csf defaults to /etc/apache2/ so that relative Includes are
+	still defined correctly
+
+	Modified LF_BIND regex to deal with new log field
+
 14.09 - Improvements to CC IP lookup binary search
-		
-		Modified index.recaptcha.php and index.php to use square instead of
-		deprecated curly brackets on array index for PHP v7.4+
-		
-		Modified Server Check regex matching on include in dovecot config files
-		in RHEL v8+
-		
-		Added workaround for iOS issue with bootstrap modals
-		
-		Added EOL messages to Server Check report
-		
-		Modified dovecot.conf parsing on cPanel for include_try in Server Check
-		
-		Modified Apache 404 regex to check for either "info" or "error"
-		
-		Added two new CLI options: --temprma [ip], --temprmd [ip]. This allows
-		distinction between allow and deny that does not exist for
-		--temprm [ip]
-		
-		Updated UI to offer either --temprma [ip] or --temprmd [ip] instead of
-		--temprm [ip]
-		
-		Added PHP v7.2 EOL notice to Server Report
-		
+
+        Modified index.recaptcha.php and index.php to use square instead of
+	deprecated curly brackets on array index for PHP v7.4+
+
+	Modified Server Check regex matching on include in dovecot config files
+	in RHEL v8+
+
+	Added workaround for iOS issue with bootstrap modals
+
+	Added EOL messages to Server Check report
+
+	Modified dovecot.conf parsing on cPanel for include_try in Server Check
+
+	Modified Apache 404 regex to check for either "info" or "error"
+
+	Added two new CLI options: --temprma [ip], --temprmd [ip]. This allows
+	distinction between allow and deny that does not exist for
+	--temprm [ip]
+
+	Updated UI to offer either --temprma [ip] or --temprmd [ip] instead of
+	--temprm [ip]
+
+	Added PHP v7.2 EOL notice to Server Report
+
 14.08 - Added missing images/ subdir to webmin and interworx installers
-		
-		Added new option LF_TEMP_EMAIL_ALERT. This allows the disabling of temp
-		IP block emails. It is enabled by default (send temp email alerts as
-		before)
-		
+
+        Added new option LF_TEMP_EMAIL_ALERT. This allows the disabling of temp
+	IP block emails. It is enabled by default (send temp email alerts as
+	before)
+
 14.07 - Added missing images/ subdir to DA installer
-		
+
 14.06 - If DOCKER is enabled and the iptables nat table exists, csf now creates
-		a DOCKER chain in the nat table for IPv4
-		
-		cPanel additions to csf.pignore on new and existing installs
-		
-		Disable reputation service on error
-		
-		Added new options MESSENGERV3PERMS and MESSENGERV3GROUP for the
-		creation of the MESSENGER_USER public_html directory. See csf.conf for
-		information, defaults set for each install control panel type where
-		possible
-		
-		Added exe:/sbin/rngd to csf.pignore for new installations
-		
+        a DOCKER chain in the nat table for IPv4
+
+	cPanel additions to csf.pignore on new and existing installs
+
+	Disable reputation service on error
+
+	Added new options MESSENGERV3PERMS and MESSENGERV3GROUP for the
+	creation of the MESSENGER_USER public_html directory. See csf.conf for
+	information, defaults set for each install control panel type where
+	possible
+
+	Added exe:/sbin/rngd to csf.pignore for new installations
+
 14.05 - Modified dovecot pop3d/imapd log line parsing to repeat single lines
-		reporting multiple login failure attempts
-		
-		Additional entries in csf.pignore for new installs on CyberPanel v2
-		
-		cPanel additions to csf.pignore on new and existing installs
-		
-		Convert embedded IPv4 addresses in /proc/net/tcp6 back to IPv4
-		
+	reporting multiple login failure attempts
+
+	Additional entries in csf.pignore for new installs on CyberPanel v2
+
+	cPanel additions to csf.pignore on new and existing installs
+
+	Convert embedded IPv4 addresses in /proc/net/tcp6 back to IPv4
+
 14.04 - Added two new options: CC_MESSENGER_ALLOW, CC_MESSENGER_DENY. These
-		options can control which Country Code IP blocks are redirected to the
-		MESSENGER service, if it is enabled
-		
-		Fixed some typos in csf.conf
-		
-		Added DirectAdmin diagnostics to the admin UI for session security
-		checks, together with a method to skip the checks if desired
-		
+        options can control which Country Code IP blocks are redirected to the
+	MESSENGER service, if it is enabled
+
+	Fixed some typos in csf.conf
+
+	Added DirectAdmin diagnostics to the admin UI for session security
+	checks, together with a method to skip the checks if desired
+
 14.03 - Updated DSHIELD blocklist to use https
-		
-		Updated Server Check PHP EOL information
-		
-		Improved DA session checking
-		
-		Improved DA Server Check report
-		
-		Modified cpanel.comodo.allow and cpanel.comodo.ignore with an
-		additional IP address
-		
-		MESSENGERv3 now out of BETA testing
-		
-		Added UDP ports 80 and 443 to UDP_IN/UDP6_IN for new installations to
-		support QUIC/HTTP3
-		
-		Modified DA regex for Roundcube v1.4+
-		
-		Modified DIRECTADMIN_LOG_R to point to
-		/var/www/html/roundcube/logs/errors.log for Roundcube v1.4+ by default
-		on new installs and change for old installs if not already set
-		
-		Added a new DA regex for phpMyAdmin
-		
-		Modified iframe resizer on DA, thank you to Martynas @ DirectAdmin
-		
-		Updated Integrated User Interface documentation to point to the latest
-		Apache docs
-		
-		Added newly generated self-signed keys for lfd UI
-		
-		Updated Server Report descriptions for cPanel
-		
-		Updated Server Report for systemd processes
-		
-		Added back cPanel update check to the Server Report now that it has
-		been reinstated by cPanel
-		
-		Removed outdated Server Report checks
-		
+        
+	Updated Server Check PHP EOL information
+
+	Improved DA session checking
+
+	Improved DA Server Check report
+
+	Modified cpanel.comodo.allow and cpanel.comodo.ignore with an
+	additional IP address
+
+	MESSENGERv3 now out of BETA testing
+
+	Added UDP ports 80 and 443 to UDP_IN/UDP6_IN for new installations to
+	support QUIC/HTTP3
+
+	Modified DA regex for Roundcube v1.4+
+
+        Modified DIRECTADMIN_LOG_R to point to
+	/var/www/html/roundcube/logs/errors.log for Roundcube v1.4+ by default
+	on new installs and change for old installs if not already set
+
+	Added a new DA regex for phpMyAdmin
+
+	Modified iframe resizer on DA, thank you to Martynas @ DirectAdmin
+
+	Updated Integrated User Interface documentation to point to the latest
+	Apache docs
+
+	Added newly generated self-signed keys for lfd UI
+
+	Updated Server Report descriptions for cPanel
+
+	Updated Server Report for systemd processes
+
+	Added back cPanel update check to the Server Report now that it has
+	been reinstated by cPanel
+
+	Removed outdated Server Report checks
+
 14.02 - Added new BETA TESTING option: MESSENGERV3. This provides the MESSENGER
         service utilising the local webserver. It currently supports Apache
 	v2.4+ and Litespeed/Openlitespeed. As the first iteration this likely
