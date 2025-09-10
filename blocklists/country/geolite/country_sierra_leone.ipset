@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_sierra_leone_ipset
 #   @uuid           92971a41-1b3e-385c-9405-99bc753600a2
-#   @updated        Tue 09 Sep 2025 01:04:26 AM UTC
-#   @entries        91,358 ips
-#                   190 subnets
-#                   190 lines
+#   @updated        Wed 10 Sep 2025 01:01:56 AM UTC
+#   @entries        91,362 ips
+#                   191 subnets
+#                   191 lines
 #   @country        Sierra Leone (SL)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -85,6 +85,7 @@
 157.5.101.170/32
 157.5.109.169/32
 157.5.109.170/32
+159.26.127.144/30
 160.19.152.0/22
 160.20.112.0/22
 162.120.204.80/32

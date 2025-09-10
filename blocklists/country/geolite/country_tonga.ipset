@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_tonga_ipset
 #   @uuid           d9320a31-63f1-311a-a69d-451468a3d754
-#   @updated        Tue 09 Sep 2025 01:04:39 AM UTC
+#   @updated        Wed 10 Sep 2025 01:02:09 AM UTC
 #   @entries        15,331 ips
 #                   152 subnets
 #                   152 lines

@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_united_states_minor_outlying_islands_ipset
 #   @uuid           0b97f4e5-fdb7-3d9b-b787-7b74fae9bdc2
-#   @updated        Tue 09 Sep 2025 01:04:45 AM UTC
+#   @updated        Wed 10 Sep 2025 01:02:15 AM UTC
 #   @entries        184 ips
 #                   142 subnets
 #                   142 lines
@@ -73,12 +73,12 @@
 216.252.220.240/29
 216.252.221.112/29
 216.252.221.240/29
+2001:470:8:231::/64
 2001:470:d:228::/64
 2001:470:d:3e1::/64
 2001:470:d:ce9::/64
 2001:470:19:534::/64
 2001:470:1d:158::/64
-2001:470:24:6a::/64
 2001:470:24:30f::/64
 2001:470:24:921::/64
 2001:470:28:66::/64
