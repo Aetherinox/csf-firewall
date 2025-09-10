@@ -2027,8 +2027,38 @@ perl /usr/local/csf/lib/ConfigServer/ServerStats.pm
 You can confirm the required perl modules by running in terminal:
 
 ```shell
+# Core modules (usually installed, but included for completeness)
+perl -MCPAN -e 'install strict'
+perl -MCPAN -e 'install warnings'
+perl -MCPAN -e 'install IO::Socket::INET'
+perl -MCPAN -e 'install Socket'
+perl -MCPAN -e 'install File::Path'
+perl -MCPAN -e 'install File::Basename'
+perl -MCPAN -e 'install File::Copy'
+perl -MCPAN -e 'install File::Temp'
+perl -MCPAN -e 'install Fcntl'
+perl -MCPAN -e 'install Time::Local'
+perl -MCPAN -e 'install POSIX'
+perl -MCPAN -e 'install IPC::Open3'
+perl -MCPAN -e 'install Sys::Hostname'
+perl -MCPAN -e 'install Cwd'
+
+# ServerStats and web reporting modules
 perl -MCPAN -e 'install IO::Socket::SSL'
 perl -MCPAN -e 'install LWP::UserAgent'
+perl -MCPAN -e 'install HTTP::Request'
+perl -MCPAN -e 'install JSON'
+perl -MCPAN -e 'install Net::SSLeay'
+perl -MCPAN -e 'install Crypt::SSLeay'
+perl -MCPAN -e 'install Digest::MD5'
+perl -MCPAN -e 'install Digest::SHA'
+
+# Optional / recommended modules for extended CSF features
+perl -MCPAN -e 'install Regexp::Common'
+perl -MCPAN -e 'install Email::Valid'
+perl -MCPAN -e 'install Time::HiRes'
+perl -MCPAN -e 'install Mail::Sendmail'
+perl -MCPAN -e 'install Net::SMTP'
 ```
 
 <br />
