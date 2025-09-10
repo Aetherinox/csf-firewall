@@ -1959,9 +1959,7 @@ Have a question? See if it's answered here:
 
 <br />
 
-_In order to view statistics in CSF, you must ensure you do the following:
-
-First, enable the setting within `/etc/csf/csf.conf`:
+In order to view statistics in CSF, you must ensure you do the following steps. First, enable the setting within `/etc/csf/csf.conf`:
 
 ```bash
 ST_ENABLE = "1"
@@ -2007,6 +2005,54 @@ Then give CSF / LFD a restart:
 
 ```shell
 sudo csf -ra
+```
+
+<br />
+
+You can also run the following command to test the required module. If no errors pop up, then you should be able to run the statistics functionality without issues:
+
+```shell
+perl /usr/local/csf/lib/ConfigServer/ServerStats.pm
+```
+
+</details>
+
+<br />
+
+<details>
+<summary>What other perl modules are required?</summary>
+
+<br />
+
+You can confirm the required perl modules by running in terminal:
+
+```shell
+perl -MCPAN -e 'install IO::Socket::SSL'
+perl -MCPAN -e 'install LWP::UserAgent'
+```
+
+<br />
+
+Or if you’re on a Debian/Ubuntu system:
+
+```shell
+apt-get install -y perl libio-socket-ssl-perl libwww-perl libjson-perl libnet-ssleay-perl libcrypt-ssleay-perl
+```
+
+<br />
+
+On CentOS/RHEL:
+
+```shell
+yum install -y perl perl-IO-Socket-SSL perl-libwww-perl perl-JSON perl-Net-SSLeay perl-Crypt-SSLeay
+```
+
+<br />
+
+Or you can install using **CPAN**
+
+```shell
+cpan install IO::Socket::SSL LWP::UserAgent JSON Net::SSLeay Crypt::SSLeay Digest::MD5 Digest::SHA Email::Valid
 ```
 
 </details>
