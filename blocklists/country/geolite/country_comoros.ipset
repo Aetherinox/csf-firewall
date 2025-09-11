@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_comoros_ipset
 #   @uuid           f2a6bb8d-143e-3298-8cc1-5d7feac56ed1
-#   @updated        Wed 10 Sep 2025 01:00:56 AM UTC
+#   @updated        Thu 11 Sep 2025 01:04:00 AM UTC
 #   @entries        9,676 ips
 #                   142 subnets
 #                   142 lines
