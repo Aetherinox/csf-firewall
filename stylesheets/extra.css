@@ -64,6 +64,15 @@
         margin-bottom: 28px;
     }
 
+    .md-header__button.md-logo img, .md-header__button.md-logo svg
+    {
+        fill: currentcolor;
+        height: 34px;
+        width: 34px;
+        margin: 0px;
+        padding: 0px;
+    }
+
     /*
         Badge > H3
 
@@ -191,7 +200,7 @@
 [ data-md-color-scheme="main" ]
 {
 
-    --md-primary-fg-color:              #a40547;
+    --md-primary-fg-color:              #7b1234;
     --md-default-bg-color:              #151515;
     --md-tooltip-width:                 400px;
     --glow-color:                       hsl(186 100% 69%);
