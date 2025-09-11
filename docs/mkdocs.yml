@@ -124,6 +124,8 @@ theme:
         quote: fontawesome/solid/quote-left
         annotation: material/arrow-right-circle
         hi: aetherx/axs/clock
+        csf1: aetherx/axs/csf-logo
+        csf2: aetherx/axs/csf-logo-alt
         tag:
             html: fontawesome/brands/html5
             js: fontawesome/brands/js
@@ -152,7 +154,7 @@ theme:
         code: Roboto Mono
     favicon: assets/favicon.png
     icon:
-        logo: /aetherx/axd/tv
+        logo: /aetherx/axs/csf-logo
     features:
         - announce.dismiss
         - toc.follow
