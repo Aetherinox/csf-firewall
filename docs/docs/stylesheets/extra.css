@@ -67,10 +67,10 @@
     .md-header__button.md-logo img, .md-header__button.md-logo svg
     {
         fill: currentcolor;
-        height: 34px;
-        width: 34px;
-        margin: 0px;
-        padding: 0px;
+        height: 34px !important;
+        width: 34px !important;
+        margin: 0px !important;
+        padding: 0px !important;
     }
 
     /*
