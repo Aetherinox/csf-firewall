@@ -35,7 +35,7 @@ sudo csf -ra
 
 ## Full Version
 ```ini
---8<-- "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/configs/etc/csf/csf.conf"
+--8<-- "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf"
 ```
 
 <br />
@@ -46,7 +46,7 @@ sudo csf -ra
 
 ## Clean Version
 ```ini
---8<-- "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/configs/etc/csf/csf.conf.clean"
+--8<-- "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf.clean"
 ```
 
 
