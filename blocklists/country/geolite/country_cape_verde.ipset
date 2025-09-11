@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_cape_verde_ipset
 #   @uuid           6aa37f49-5942-30c1-971e-afa448efc6ba
-#   @updated        Wed 10 Sep 2025 01:00:03 AM UTC
+#   @updated        Thu 11 Sep 2025 01:03:06 AM UTC
 #   @entries        48,625 ips
 #                   191 subnets
 #                   191 lines
