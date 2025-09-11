@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_senegal_ipset
 #   @uuid           f2695eb3-c9b5-3096-a7ab-515dbc9d85cc
-#   @updated        Wed 10 Sep 2025 01:01:57 AM UTC
+#   @updated        Thu 11 Sep 2025 01:05:02 AM UTC
 #   @entries        413,056 ips
 #                   257 subnets
 #                   257 lines
