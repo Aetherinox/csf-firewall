@@ -58,7 +58,7 @@ CSF allows you to pick which service you want to use for geographical blocks. By
 To change which database is used for geo blocking; open your CSF's `csf.conf` config file and locate the setting `CC_SRC`. If you have the [ConfigServer WebUI](../../webui/) enabled; you can access these settings from the CSF Admin WebUI.
 
 ```ini hl_lines="23"
---8<-- "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/configs/etc/csf/csf.conf:943:965"
+--8<-- "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf:943:965"
 ```
 
 <br />
@@ -70,7 +70,7 @@ To change which database is used for geo blocking; open your CSF's `csf.conf` co
 ## Using MaxMind
 To configure MaxMind as your specified geo service; you must go to their website and register an account.
 
-- [Register for MaxMind](https://www.maxmind.com/en/accounts)
+- [Register for MaxMind](https://maxmind.com/en/accounts)
 
 <br />
 
@@ -130,7 +130,7 @@ Add the following code to your newly created `/etc/GeoIP.conf`. After you paste 
 - `LicenseKey`
 
 ```ini
---8<-- "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/configs/etc/GeoIP.conf"
+--8<-- "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/GeoIP.conf"
 ```
 
 <br />
@@ -203,7 +203,7 @@ Open up your `csf.conf` file in a text editor and locate the following settings:
 <br />
 
 ```ini hl_lines="28-29"
---8<-- "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/configs/etc/csf/csf.conf:967:995"
+--8<-- "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf:967:995"
 ```
 
 <br />
