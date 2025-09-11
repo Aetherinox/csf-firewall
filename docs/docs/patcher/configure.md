@@ -22,7 +22,7 @@ sudo nano /patch/docker.sh
 Find the following settings:
 
 ```ini
---8<-- "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/patch/docker.sh:57:71"
+--8<-- "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/scripts/docker.sh:57:71"
 ```
 
 <br />
@@ -144,7 +144,7 @@ sudo nano /patch/openvpn.sh
 Find the following settings:
 
 ```ini
---8<-- "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/patch/openvpn.sh:37:50"
+--8<-- "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/scripts/openvpn.sh:37:50"
 ```
 
 <br />
