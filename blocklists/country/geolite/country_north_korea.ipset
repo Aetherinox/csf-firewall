@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_north_korea_ipset
 #   @uuid           8e30e8dc-6c70-3f55-81c6-1ad746e8203e
-#   @updated        Thu 11 Sep 2025 01:04:01 AM UTC
+#   @updated        Fri 12 Sep 2025 01:02:55 AM UTC
 #   @entries        3,082 ips
 #                   368 subnets
 #                   368 lines
