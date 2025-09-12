@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_madagascar_ipset
 #   @uuid           af763214-f92b-31a3-9b06-8d8de82dc00e
-#   @updated        Thu 11 Sep 2025 01:04:15 AM UTC
+#   @updated        Fri 12 Sep 2025 01:03:09 AM UTC
 #   @entries        587,766 ips
 #                   229 subnets
 #                   229 lines
