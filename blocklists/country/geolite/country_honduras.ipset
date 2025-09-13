@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_honduras_ipset
 #   @uuid           0514a696-77aa-30fa-b5dc-6fce585fb215
-#   @updated        Fri 12 Sep 2025 01:02:35 AM UTC
+#   @updated        Sat 13 Sep 2025 12:56:44 AM UTC
 #   @entries        476,178 ips
-#                   579 subnets
-#                   579 lines
+#                   589 subnets
+#                   589 lines
 #   @country        Honduras (HN)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -515,6 +515,7 @@
 2803:f400::/32
 2803:fed0::/32
 2a01:528:d600::/40
+2a01:ce94:4000::/36
 2a02:26f7:be00::/48
 2a02:26f7:be01:4000::/64
 2a02:26f7:be04:4000::/64
@@ -525,6 +526,14 @@
 2a02:26f7:be0c::/46
 2a02:26f7:be10::/48
 2a02:26f7:be11:4000::/64
+2a02:5740:98::/48
+2a02:5741:98::/48
+2a02:5742:98::/48
+2a02:5743:98::/48
+2a02:5744:98::/48
+2a02:5745:98::/48
+2a02:5746:98::/48
+2a02:5747:98::/48
 2a04:1d41:d600::/40
 2a04:1d42:d600::/40
 2a04:1d43:d600::/40
@@ -545,6 +554,7 @@
 2a04:4e41:4086::/52
 2a04:4e41:7017::/48
 2a04:4e41:7217::/48
+2a05:a780::/48
 2a07:d887:6000::/40
 2a09:bac0:1000:627::/64
 2a09:bac1:3280::/64
