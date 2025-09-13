@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_vanuatu_ipset
 #   @uuid           9d78205d-fb40-379a-8ab5-7195c3245fde
-#   @updated        Fri 12 Sep 2025 01:04:38 AM UTC
+#   @updated        Sat 13 Sep 2025 12:58:42 AM UTC
 #   @entries        18,727 ips
-#                   305 subnets
-#                   305 lines
+#                   312 subnets
+#                   312 lines
 #   @country        Vanuatu (VU)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -122,7 +122,6 @@
 2001:df5:6d40::/44
 2001:4b28:d00::/40
 2400:3100::/32
-2400:3400::/32
 2400:c0c0::/32
 2401:7a40::/32
 2403:fbc0:1::/48
@@ -207,6 +206,14 @@
 2a02:26f7:f208:4000::/64
 2a02:26f7:f208:c940::/64
 2a02:26f7:f209:4000::/64
+2a02:5740:203::/48
+2a02:5741:203::/48
+2a02:5742:203::/48
+2a02:5743:203::/48
+2a02:5744:203::/48
+2a02:5745:203::/48
+2a02:5746:203::/48
+2a02:5747:203::/48
 2a04:1d41:d00::/40
 2a04:1d42:d00::/40
 2a04:1d43:d00::/40

@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_equatorial_guinea_ipset
 #   @uuid           35f250c2-6a5e-3c8e-a2ff-39caa6b60785
-#   @updated        Fri 12 Sep 2025 01:02:29 AM UTC
+#   @updated        Sat 13 Sep 2025 12:56:37 AM UTC
 #   @entries        22,677 ips
-#                   149 subnets
-#                   149 lines
+#                   157 subnets
+#                   157 lines
 #   @country        Equatorial Guinea (GQ)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -121,6 +121,14 @@
 2a02:26f7:ee0c:cde0::/63
 2a02:26f7:ee0c:cde2::/64
 2a02:26f7:ee0d:4000::/64
+2a02:5740:83::/48
+2a02:5741:83::/48
+2a02:5742:83::/48
+2a02:5743:83::/48
+2a02:5744:83::/48
+2a02:5745:83::/48
+2a02:5746:83::/48
+2a02:5747:83::/48
 2a04:1d41:cf00::/40
 2a04:1d42:cf00::/40
 2a04:1d43:cf00::/40
