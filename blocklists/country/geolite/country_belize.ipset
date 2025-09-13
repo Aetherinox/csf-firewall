@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_belize_ipset
 #   @uuid           ae13f343-a55e-3bcc-862e-5f5bdffa878d
-#   @updated        Fri 12 Sep 2025 01:01:45 AM UTC
+#   @updated        Sat 13 Sep 2025 12:55:54 AM UTC
 #   @entries        127,010 ips
-#                   400 subnets
-#                   400 lines
+#                   408 subnets
+#                   408 lines
 #   @country        Belize (BZ)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -318,6 +318,14 @@
 2a02:26f7:c050:cfc0::/62
 2a02:26f7:c050:cfc4::/63
 2a02:26f7:c051:4000::/64
+2a02:5740:49::/48
+2a02:5741:49::/48
+2a02:5742:49::/48
+2a02:5743:49::/48
+2a02:5744:49::/48
+2a02:5745:49::/48
+2a02:5746:49::/48
+2a02:5747:49::/48
 2a04:1d41:a300::/40
 2a04:1d42:a300::/40
 2a04:1d43:a300::/40
