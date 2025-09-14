@@ -42,6 +42,38 @@
     }
 
     /*
+        Badge icons (if using fontawesome .js file instead of .css
+    */
+
+    .mdx-badge__icon .svg-inline--ax.ax-file 
+    {
+        width: 14px !important;
+        height: 14px !important;
+        display: inline-block;
+        vertical-align: middle;
+        fill: currentColor;
+    }
+
+    /*
+        AX Icons
+    */
+
+    .i, .axs
+    {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        vertical-align: middle;
+        fill: currentColor;
+    }
+    
+    /* Optional: spacing between icon and text */
+    .i + span, .axs + span
+    {
+        margin-left: 0.3em;
+    }
+
+    /*
         Tag > Background Color
     */
 
@@ -102,13 +134,18 @@
         margin-inline-end: 5px;
     }
 
-    .color-box {
+    /*
+        Control > Color Box
+    */
+
+    .color-box
+    {
         float: left;
-        height: 21px;
-        width: 21px;
+        height: 25px;
+        width: 25px;
         border: 1px solid rgba( 255, 255, 255, 0.2 );
         clear: both;
-      }
+    }
 
     .color-container
     {
@@ -304,6 +341,41 @@
     }
 
     /*
+        AX Icons
+    */
+
+    .svg-inline--ax
+    {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        vertical-align: middle;
+        fill: currentColor;
+    }
+    
+    /* Optional: spacing between icon and text */
+    .svg-inline--ax + span,
+    .svg-inline--ax + a,
+    .svg-inline--ax + i
+    {
+        margin-left: 0.7em;
+        vertical-align: middle;
+    }
+
+    /*
+        Badge icons (if using fontawesome .js file instead of .css
+    */
+
+    .mdx-badge__icon .svg-inline--ax.ax-file 
+    {
+        width: 14px !important;
+        height: 14px !important;
+        display: inline-block;
+        vertical-align: middle;
+        fill: currentColor;
+    }
+
+    /*
         Navigation > Tabs
     */
 
@@ -345,9 +417,106 @@
         height: 100%;
     }
 
+    /*
+        Table > Most background
+            This does NOT show iff you have alternating row colors.
+    */
+
     .md-typeset table:not([ class ] ) tbody tr
     {
         background-color: rgb( 15, 15, 15 );
+    }
+
+    /*
+        Codeblock 
+            RRemove gap between tabs and codeblock
+    */
+
+    .md-typeset pre
+    {
+        display: flow-root;
+        line-height: 1.4;
+        position: relative;
+    }
+
+    /*
+        Codeblock
+            remove border, remove top margin
+    */
+
+    
+    .md-typeset .admonition, .md-typeset details
+    {
+        background-color: var(--md-admonition-bg-color);
+        border-radius: .2rem;
+        box-shadow: var(--md-shadow-z1);
+        color: var(--md-admonition-fg-color);
+        display: flow-root;
+        font-size: .64rem;
+        margin: 1.5625em 0;
+        page-break-inside: avoid;
+        transition: box-shadow 125ms;
+    }
+
+    /*
+        Background color for top tabs
+    */
+
+    .md-typeset .tabbed-labels
+    {
+        background-color: #2f4373;
+        border-top-left-radius: 4px;
+        border-left: 1px solid #242735;
+        border-top: 1px solid #242735;
+        border-right: 1px solid #242735;
+        border-top-right-radius: 4px;
+    }
+
+    .tabbed-labels::before
+    {
+        background: hsla(343.1, 87.9%, 51.6%, 0.82);
+        bottom: 0;
+        content: "";
+        display: block;
+        height: 2px;
+        left: 0;
+        position: absolute;
+        transform: translateX(var(--md-indicator-x));
+        transition: width 225ms,background-color .25s,transform .25s;
+        transition-timing-function: ease, ease, ease;
+        transition-timing-function: cubic-bezier(.4,0,.2,1);
+        width: var(--md-indicator-width);
+    }
+
+    /*
+        Tabs > Body
+            the body div of tab contens
+    */
+
+    .md-typeset .tabbed-content 
+    {
+        width: 100%;
+        background-color: var(--md-code-bg-color, #232633);
+        padding: 15px;
+    }
+
+    /*
+        Tabs > Body > Code Blocks
+            only changes the background if the codeblock is within tabs
+    */
+
+    .md-typeset .tabbed-content code
+    {
+        background-color: #171922;
+    }
+
+    /*
+        Should ensure that only inline code blocks don't wrap code on multiple lines.
+    */
+
+    p code
+    {
+        white-space: nowrap;
     }
 
     /*
@@ -359,18 +528,29 @@
         background-color: var(--md-footer-bg-color);
     }
 
-    .md-typeset table:not([class]) th
-    {
-        padding-top:10px;
-        padding-bottom: 10px;
-        padding-left: 15px;
-    }
-
     .md-typeset table:not([class]) td
     {
+        padding-top: 10px;
         padding-left: 15px;
-        padding-top: 5px;
-        padding-bottom: 5px;
+        padding-bottom: 10px;
+    }
+
+    /* 
+        Table > Even rows 
+    */
+
+    .md-typeset table:not([class]) tr:nth-child(even) td
+    {
+        background-color: #1a1c26;
+    }
+    
+    /* 
+        Table > Odd rows 
+    */
+
+    .md-typeset table:not([class]) tr:nth-child(odd) td
+    {
+        background-color: #21232f;
     }
 
     /*
@@ -380,8 +560,28 @@
     .md-typeset__table > table > tbody > tr > td:first-child
     {
         white-space: nowrap;
+        vertical-align: middle;
         /*background-color: var(--md-code-bg-color);*/
     }
+
+    /*
+        Make sure block-level children inside td also align
+    */
+    [data-md-color-scheme="main"] .md-typeset table:not([class]) td > *
+    {
+        margin: 0;
+        vertical-align: middle;
+        display: inline-block !important;
+    }
+
+    [data-md-color-scheme="main"] .md-typeset table:not([class]) td
+    {
+        padding-left: 15px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        vertical-align: middle;
+    }
+
 
     /*
         First row of table nowrap
@@ -470,36 +670,6 @@
     }
 
     /*
-        Background color for top tabs
-    */
-
-    .md-typeset .tabbed-labels
-    {
-        background-color: #0b0b0b;
-        border-top-left-radius: 4px;
-        border-left: 1px solid #242735;
-        border-top: 1px solid #242735;
-        border-right: 1px solid #242735;
-        border-top-right-radius: 4px;
-    }
-
-    .tabbed-labels::before
-    {
-        background: hsla(343.1, 87.9%, 51.6%, 0.82);
-        bottom: 0;
-        content: "";
-        display: block;
-        height: 2px;
-        left: 0;
-        position: absolute;
-        transform: translateX(var(--md-indicator-x));
-        transition: width 225ms,background-color .25s,transform .25s;
-        transition-timing-function: ease, ease, ease;
-        transition-timing-function: cubic-bezier(.4,0,.2,1);
-        width: var(--md-indicator-width);
-    }
-
-    /*
         Make <small>text</small> opaque. used for changelog to show date
     */
 
@@ -532,7 +702,30 @@
 
     .mdx-badge__text
     {
-        background-color: #44454a;
+        background-color: #40568e;
+    }
+
+    .md-typeset .mdx-badge__text
+    {
+        box-shadow: none;;
+        padding: .2rem .3rem;
+    }
+
+    /*
+        Badge border
+    */
+
+    [dir="ltr"] .md-typeset .mdx-badge__icon 
+    {
+        border-bottom-left-radius: .1rem;
+        border-right: 1px solid #202020;
+    }
+
+    .md-typeset .mdx-badge__icon 
+    {
+        background: var(--md-accent-fg-color--transparent);
+        padding-left: 6px;
+        padding-right: 5px;
     }
 
     /*
@@ -543,6 +736,41 @@
     {
         background-color: transparent;
         color: #FFF;
+    }
+
+    /*
+        File Preview > Right Align
+    */
+
+    .mdx-badge--files-group-right
+    {
+        float: right;
+        clear: both;
+        justify-content: flex-end; /* same as left, shrink-wrap */
+        gap: 0.35em;
+        vertical-align: middle;
+    }
+
+    /*
+        File Preview > Left Align
+    */
+
+    .mdx-badge--files-group-left
+    {
+        display: inline-flex;
+        justify-content: flex-start;
+        gap: 0.35em;
+        vertical-align: middle;
+    }
+
+    /*
+        File Preview > Right Align > Files View
+            add padding to the right of the file view icon
+    */
+
+    .mdx-badge--files-group-right .mdx-badge.mdx-badge--files-view
+    {
+        padding-right: 5px;
     }
 
 }
@@ -563,18 +791,127 @@ h4:has(.mdx-badge:nth-child(1)) > .mdx-badge
 
 h4:has(.twemoji) .twemoji
 {
-    font-size: 1.6em;
-    padding-bottom: 1px;
-    margin-block-start: -6px;
+    font-size: 1.9em;
+    padding-top: 10px;
+    margin-block-start: -7px;
     margin-left: -7px;
+
+    /*
+        Bigger icon for h4
+        font-size: 2.1em;
+        width: 25px !important;
+    */
 }
 
-.md-typeset .emojione, .md-typeset .gemoji, .md-typeset .twemoji
+/* Apply styles only inside badges */
+.md-typeset .mdx-badge .twemoji 
 {
-    --md-icon-size: 1.125em;
+    --md-icon-size: 1.130em;
     display: inline-flex;
     height: var(--md-icon-size);
-    vertical-align: middle;
+    vertical-align: text-bottom;
+    width: 17px;
+}
+
+/* Reset to default inside tooltips (optional safety) */
+.md-typeset .md-tooltip__inner .twemoji 
+{
+    vertical-align: top;
+    height: 18px;
+    padding-right: 5px;
+}
+
+/*
+    Annotations > Code Block
+        This is the overall style of a comment / annotation within a code
+        block.
+*/
+
+.md-tooltip__inner
+{
+    font-size: 1.0em !important;
+}
+
+/*
+    Add styling to annotation blocks within code blocks.
+        these properties will adjust color, size, etc.
+
+    1.  :aetherx-axdr-lightbulb:{ .pulsate .icon-clr-yellow } Defines if the csf web interface is enabled or not. Will be
+        accessible via your web browser.
+        <div class='red right'><small>Required</small></div>
+        <div class='yellow right'><small>Values: `0`, `1`</small></div>
+*/
+
+.md-tooltip__inner small
+{
+    font-size: 10pt;
+}
+
+/*
+    Annotation > Code Blocks
+        Applies padding to 2nd to last div
+*/
+
+.md-tooltip__inner div:nth-last-child(2)
+{
+    padding-top: 10px;
+}
+
+.md-tooltip__inner div.red
+{
+    font-size: 10pt;
+    color: #cf4b4b;
+}
+
+.md-tooltip__inner div.blue
+{
+    font-size: 10pt;
+    color: #4b84cf;
+}
+
+.md-tooltip__inner div.yellow
+{
+    font-size: 10pt;
+    color: #fcc530;
+}
+
+.md-tooltip__inner div.right
+{
+    text-align: right;
+}
+
+.md-tooltip__inner div.para
+{
+    padding-top: 15px;
+}
+
+/*
+    Icon color > yellow
+*/
+
+.icon-clr-yellow
+{
+    color: #e7af13;
+}
+
+.icon-clr-redhat
+{
+    color: #e71348;
+}
+
+/*
+    Icons in Tabbed Menus
+        makes icon slightly larger
+*/
+
+.tabbed-labels span.twemoji
+{
+    --md-icon-size: 1.425em;
+    display: inline-flex;
+    height: var(--md-icon-size);
+    vertical-align: top;
+    padding-right: 5px;
+    margin-left: -4px;
 }
 
 /*
@@ -646,6 +983,19 @@ h4:has(.twemoji) .twemoji
     --md-typeset-bg-color: #111;
 }
 
+@keyframes pulsate
+{
+    0% { 
+        opacity: 0.5;
+    }
+    50% { 
+        opacity: 1.0;
+    }
+    100% { 
+        opacity: 0.5;
+    }
+}
+
 @keyframes health
 {
     0%, 40%, 80%, 100% {
@@ -660,29 +1010,68 @@ h4:has(.twemoji) .twemoji
     }
 }
 
+.pulsate
+{
+    -webkit-animation: pulsate 3s ease-out;
+    -webkit-animation-iteration-count: infinite; 
+    animation: pulsate 3s ease-out;
+    animation-iteration-count: infinite;
+    opacity: 0.5;
+}
+
 .heart
 {
     animation: health 1000ms infinite;
 }
 
-.md-typeset .mdx-badge--heart {
+.md-typeset .mdx-badge--heart
+{
     --md-badge-icon-color: #e92063;
     --md-badge-icon-hover-color: #FFFFFF;
     --md-accent-fg-color: #ff4281;
     --md-accent-fg-color--transparent: #e920631a;
 }
 
-.md-typeset .mdx-badge--heart .twemoji {
+.md-typeset .mdx-badge--heart .twemoji
+{
     animation: heart 1s infinite;
 }
+
+
+
+
+/*
+    Badges > Commands
+
+        <!-- md:command --> Specified setting has a default value  <!-- @md:command -->
+        <!-- md:command csf -ra --> Specified setting has a default value  <!-- @md:command csf -ra -->
+*/
 
 .md-typeset .mdx-badge--command
 {
     --md-typeset-a-color: #ff2d72;
     --md-accent-fg-color: #fff;
     --md-accent-fg-color--transparent: #ffffff1a;
-    color: #e91e63;
+    color: #c9c9c9;
+    font-size: 8pt !important;
 }
+
+.mdx-badge--command .mdx-badge__text
+{
+    background-color: #464646;
+}
+
+/*
+    Badges > Overall icon and text size
+*/
+
+.md-typeset .mdx-badge
+{
+    font-size: .90em !important;
+}
+
+
+
 
 /*
     Badge > Header Positioning
@@ -691,12 +1080,12 @@ h4:has(.twemoji) .twemoji
 
 h2:has(.mdx-badge) > .mdx-badge > span
 {
-  padding-bottom: 2px;
+    padding-bottom: 2px;
 }
 
 h2:has(.mdx-badge) > .mdx-badge svg
 {
-  margin-bottom: 2px;
+    margin-bottom: 2px;
 }
 
 /*
@@ -820,7 +1209,7 @@ nav.md-nav > ul.md-nav__list > li.md-nav__item > a.md-nav__link > span::before
 
 nav.md-nav--secondary li
 {
-    font-size: 0.6rem !important;
+    font-size: 0.55rem !important;
 }
 
 /*
@@ -934,7 +1323,6 @@ figure img
     margin: 0 auto;
     margin-bottom: 0px;
     margin-top: 5px;
-    width: clamp(200px, 100%, 75%);
 }
 
 .mkde-embed-container:hover
@@ -1473,11 +1861,15 @@ figure img
     margin-block-end: -7px;
 }
 
+/*
+    Control > Color Box
+*/
+
 .color-box
 {
     float: left;
-    height: 21px;
-    width: 21px;
+    height: 25px;
+    width: 25px;
     border: 1px solid rgba( 255, 255, 255, 0.2 );
     clear: both;
 }
