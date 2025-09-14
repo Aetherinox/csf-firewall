@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_tuvalu_ipset
 #   @uuid           eac4219d-af9b-3cee-b08f-741e267524be
-#   @updated        Sat 13 Sep 2025 12:58:16 AM UTC
+#   @updated        Sun 14 Sep 2025 01:05:33 AM UTC
 #   @entries        11,739 ips
 #                   150 subnets
 #                   150 lines
