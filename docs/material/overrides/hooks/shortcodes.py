@@ -1,16 +1,16 @@
 # #
 #   Copyright (c) 2025 Aetherinox
-#
+#   
 #   Permission is hereby granted, free of charge, to any person obtaining a copy
 #   of this software and associated documentation files (the "Software"), to
 #   deal in the Software without restriction, including without limitation the
 #   rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
 #   sell copies of the Software, and to permit persons to whom the Software is
 #   furnished to do so, subject to the following conditions:
-#
+#   
 #   The above copyright notice and this permission notice shall be included in
 #   all copies or substantial portions of the Software.
-#
+#   
 #   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 #   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 #   FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
@@ -48,6 +48,7 @@ from __future__ import annotations
 import posixpath
 import re
 import inspect
+import os
 
 # #
 #   From
@@ -62,7 +63,7 @@ from re import Match
 #   ASCII Colors
 # #
 
-class clr():
+class clr( ):
     BLACK = '\033[30m'
     RED = '\033[31m'
     GREEN = '\033[32m'
@@ -77,7 +78,7 @@ class clr():
 
 # #
 #   Pages
-#
+#   
 #   these must be configured to a valid page path; otherwise the script will error
 # #
 
@@ -86,72 +87,170 @@ PAGE_BACKERS = "about/backers.md"
 PAGE_CONVENTIONS = "about/conventions.md"
 
 # #
-#   Hooks > on_page_markdown
-#
-#   do not change this function name
+#   Hooks › on_page_markdown
+#   
+#   there are two ways you can make a badge appear
+#       1.  the actual badge                <!-- md:flag required -->
+#       2.  an html raw code example        <!-- @md:flag required -->
+#   
+#   @warning    do not change this function name
+#   
+#   @args       markdown        returns the full markdown of the entire page
+#               page            returns page name                               Page(title='Troubleshooting', url='/csf-firewall/usage/troubleshooting/')
+#               config          full mkdocs config parameters                   {'config_file_path': '/path/csf-firewall/docs/mkdocs.yml', 'site_name': 'Doc Name', 'nav': [{'Home': 'home.md'}
+#               files           file structure                                  <mkdocs.structure.files.Files object at 0x000002296F748C20>
 # #
 
 def on_page_markdown(markdown: str, *, page: Page, config: MkDocsConfig, files: Files):
-
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Loading Page: ' + clr.YELLOW + str(page) + clr.WHITE )
 
-    # Replace callback
     def replace(match: Match):
-        type, args = match.groups()
-        args = args.strip()
+        esc_marker, type, args = match.groups( )
+        args = args.strip( )
+
+        # #
+        #   if user wrote <!-- @md:... --> -> return literal comment (strip @)
+        # #
+
+        if esc_marker == "@":
+            if args:
+                literal = f"<!-- md:{type} {args} -->"
+            else:
+                literal = f"<!-- md:{type} -->"
+
+            # Return literal directly, no wrapping in backticks
+            return literal
+
+        # #
+        #   process badge
+        # #
 
         if type == "version":
-            if args.startswith( "development-" ):
-                return Version_Development(args, page, files)
-            elif args.startswith( "stable-" ):
-                return Version_Stable( args, page, files )
+            if re.match(r"^(dev(elopment)?-)", args, re.I):
+                return badgeVersionDev(args, page, files )
+            elif re.match(r"^(stable-|public-)", args, re.I):
+                return badgeVersionStable(args, page, files )
             else:
-                return Version( args, page, files )
+                return badgeVersionDefault(args, page, files )
 
-        elif type == "control":         return badgeControl(args, page, files)
-        elif type == "flag":            return badgeFlag(args, page, files)
+        elif type == "control":         return badgeControl(args, page, files )
+        elif type == "flag":            return badgeFlag(args, page, files )
         elif type == "option":          return badgeOption(args)
         elif type == "setting":         return badgeSetting(args)
-        elif type == "backers":         return badgeBackers(page, files)
-        elif type == "command":         return badgeCommand(args, page, files)
-        elif type == "feature":         return badgeFeature(args, page, files)
-        elif type == "plugin":          return badgePlugin(args, page, files)
-        elif type == "markdown":        return badgeMarkdown(args, page, files)
-        elif type == "3rdparty":        return badge3rdParty(args, page, files)
-        elif type == "example":         return badgeExample(args, page, files)
+        elif type == "backers":         return badgeBackers( page, files )
+        elif type == "command":         return badgeCommand(args, page, files )
+        elif type == "feature":         return badgeFeature(args, page, files )
+        elif type == "plugin":          return badgePlugin(args, page, files )
+        elif type == "markdown":        return badgeMarkdown(args, page, files )
+        elif type == "3rdparty":        return badge3rdParty(args, page, files )
+        elif type == "file":            return badgeFile(args, page, files )
+        elif type == "source":          return badgeFileSource(args, page, files )
+        elif type == "requires":        return badgeFileRequires(args, page, files )
         elif type == "default":
-            if   args == "none":        return badgeDefaultNone(page, files)
-            elif args == "computed":    return badgeDefaultVal(page, files)
-            else:                       return badgeDefaultCustom(args, page, files)
+            if   args == "none":        return badgeDefaultNone( page, files )
+            elif args == "computed":    return badgeDefaultComputed( page, files )
+            else:                       return badgeDefaultCustom(args, page, files )
 
-        # Otherwise, raise an error
-        raise RuntimeError( f"Error in shortcodes.yp - Specified an unknown shortcode: {type}" )
+        raise RuntimeError( f"Error in shortcodes.yp - Specified an unknown shortcode: {type}")
 
-    # Find and replace all external asset URLs in current page
+    # #
+    #   one-pass replacement
+    # #
+
     return re.sub(
-        r"<!-- md:(\w+)(.*?) -->",
-        replace, markdown, flags = re.I | re.M
+        r"<!--\s*(@?)md:(\w+)(.*?)-->",
+        replace, markdown, flags=re.I | re.M
     )
 
 # #
-#   Create > Flag
+#   Helper Function › Resolve
+#   
+#   Resolve path of file relative to given page - the posixpath always includes
+#   one additional level of `..` which we need to remove
+#   
+#   used by function _resolve_path
 # #
 
-def badgeFlag(args: str, page: Page, files: Files):
+def _resolve(file: File, page: Page):
+    path = posixpath.relpath(file.src_uri, page.file.src_uri)
+    return posixpath.sep.join(path.split(posixpath.sep)[1:])
+
+# #
+#   Helper Function › Resolve Paths
+#   
+#   Resolve path of file relative to given page - the posixpath always includes
+#   one additional level of `..` which we need to remove
+# #
+
+def _resolve_path(path: str, page: Page, files: Files):
+    path, anchor, *_ = f"{path}#".split("#")
+    path = _resolve(files.get_file_from_path(path), page)
+    return "#".join([path, anchor]) if anchor else path
+
+# #
+#   Badge › Flag
+#       
+#   Normal Badges
+#       <!-- md:flag experimental --> Experimental
+#       <!-- md:flag required --> Required 
+#       <!-- md:flag customization --> Customization
+#       <!-- md:flag metadata --> Metadata
+#       <!-- md:flag dangerous --> Dangerous
+#       <!-- md:flag multiple --> Multiple
+#       <!-- md:flag setting --> Setting
+#   
+#   @args       args            setting, required, experimental, customization, dangerous
+# #
+
+def badgeFlag( args: str, page: Page, files: Files ):
     type, *_ = args.split(" ", 1)
-    if   type == "experimental":    return badgeFlagExperimental(page, files)
-    elif type == "required":        return badgeFlagRequired(page, files)
-    elif type == "customization":   return badgeFlagCustomization(page, files)
-    elif type == "metadata":        return badgeFlagMetadata(page, files)
-    elif type == "dangerous":       return badgeFlagDangerous(page, files)
-    elif type == "multiple":        return badgeFlagMultiInstances(page, files)
-    elif type == "setting":         return badgeFlagSetting(page, files)
+    if   type == "experimental":    return badgeFlagExperimental( page, files )
+    elif type == "required":        return badgeFlagRequired( page, files )
+    elif type == "customization":   return badgeFlagCustomization( page, files )
+    elif type == "metadata":        return badgeFlagMetadata( page, files )
+    elif type == "dangerous":       return badgeFlagDangerous( page, files )
+    elif type == "multiple":        return badgeFlagMultiInstances( page, files )
+    elif type == "setting":         return badgeFlagSetting( page, files )
     else: return badgeFlagDefault( page, files )
 
-    raise RuntimeError(f"Unknown type: {type}")
+    raise RuntimeError( f"Unknown type: {type}")
 
 # #
-#   Create > Controls
+#   Badge › Controls › Default
+#   
+#   This function is activated if no control type specified and is considered the default control
+#   
+#   Normal Badges:
+#       <!-- md:control -->
+# #
+
+def newControlDefault( page: Page, files: Files ):
+    icon = "aetherx-axs-hand-pointer"
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files )
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+
+    return badgeCreate(
+        icon = f"[:{icon}:]({href} 'Type: Textbox')"
+    )
+
+# #
+#   Badge › Controls
+#   
+#   Use these to indicate if a setting can be triggered by a specific in-app control.
+#   
+#   Normal Badges:
+#       <!-- md:control -->                             default
+#       <!-- md:control toggle -->                      toggle
+#       <!-- md:control toggle_on -->                   toggle on
+#       <!-- md:control toggle_off -->                  toggle off
+#       <!-- md:control textbox -->                     textbox
+#       <!-- md:control dropdown -->                    dropdown
+#       <!-- md:control button -->                      button
+#       <!-- md:control slider -->                      slider
+#       <!-- md:control env -->                         env variable
+#       <!-- md:control volume -->                      volume
+#       <!-- md:control color #E5E5E5 #121315 -->   color wheel
 # #
 
 def badgeControl( args: str, page: Page, files: Files ):
@@ -168,65 +267,231 @@ def badgeControl( args: str, page: Page, files: Files ):
     elif type == "color":       return newControlColor( args, page, files )
     else: return newControlDefault( page, files )
 
-    raise RuntimeError(f"Unknown type: {type}")
+    raise RuntimeError( f"Unknown type: {type}")
 
 # #
-#   Create > Option
+#   Badge › Version › Default
+#   
+#   In order for the version badge to work, you must have a corresponding version entry in your changelog.md.
+#   if not, you will receive the console error `'NoneType' object has no attribute 'src_uri'`
+#   
+#   Normal Badges:
+#       <!-- md:version -->
+#       <!-- md:version 1.6.1 -->
 # #
 
-def badgeOption(type: str):
-    _, *_, name = re.split(r"[.:]", type)
-    return f"[`{name}`](#+{type}){{ #+{type} }}\n\n"
+def badgeVersionDefault( text: str, page: Page, files: Files ):
+    spec = text
+    path = f"{PAGE_CHANGELOG}#{spec}"
+
+    # Return badge
+    icon = "aetherx-axs-box"
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#version", page, files )
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+
+    return badgeCreate(
+        icon = f"[:{icon}:]({href} 'Public Release')",
+        text = f"[{text}]({_resolve_path(path, page, files )})" if spec else ""
+    )
 
 # #
-#   Create > Setting
-#
+#   Badge › Version › Stable
+#   
+#   Normal Badges:
+#       <!-- md:version stable- -->
+#       <!-- md:version stable-1.6.1 -->
+#       <!-- md:version public-1.6.1 -->
+# #
+
+def badgeVersionStable( text: str, page: Page, files: Files ):
+    spec = re.sub(r"^(stable-|public-)", "", text, flags=re.I)
+    path = f"{PAGE_CHANGELOG}#{spec}"
+
+    # Return badge
+    icon    = "aetherx-axs-tag"
+    href    = _resolve_path( f"{PAGE_CONVENTIONS}#version-stable", page, files )
+    output  = ""
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+
+    # spec not empty
+    if spec:
+        output = f"Requires stable version {spec}"
+    else:
+        output = f"Stable Release"
+
+    return badgeCreate(
+        icon = f"[:{icon}:]({href} '{output}' )",
+        text = f"[{spec}]({_resolve_path(path, page, files )})" if spec else ""
+    )
+
+# #
+#   Badge › Version › Development
+#   
+#   Normal Badges:
+#       <!-- md:version dev- -->
+#       <!-- md:version dev-1.6.1 -->
+#       <!-- md:version development-1.6.1 -->
+# #
+
+def badgeVersionDev( text: str, page: Page, files: Files ):
+    spec = re.sub(r"^(dev(elopment)?-)", "", text, flags=re.I)
+    path = f"{PAGE_CHANGELOG}#{spec}"
+
+    # Return badge
+    icon    = "aetherx-axs-code"
+    href    = _resolve_path( f"{PAGE_CONVENTIONS}#version-development", page, files )
+    output  = ""
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+
+    # spec not empty
+    if spec:
+        output = f"Requires dev version {spec}"
+    else:
+        output = f"Development Release"
+
+    return badgeCreate(
+        icon = f"[:{icon}:]({href} '{output}' )",
+        text = f"[{spec}]({_resolve_path(path, page, files )})" if spec else ""
+    )
+
+# #
+#   Badge › Default Value › Custom
+#   
+#   This defines what the default value for a setting is.
+#   
+#   Normal Badges:
+#       <!-- md:default `false` -->
+#       <!-- md:default `my settings value` -->
+# #
+
+def badgeDefaultCustom( text: str, page: Page, files: Files ):
+    icon = "material-water"
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#default", page, files )
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+
+    return badgeCreate(
+        icon = f"[:{icon}:]({href} 'Default value')",
+        text = text
+    )
+
+# #
+#   Badge › Default Value › None / Empty
+#   
+#   This defines what the default value for a setting is.
+#   
+#   Normal Badges:
+#       <!-- md:default none -->
+# #
+
+def badgeDefaultNone( page: Page, files: Files ):
+    icon = "material-water-outline"
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#default", page, files )
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+
+    return badgeCreate(
+        icon = f"[:{icon}:]({href} 'Default value is empty')"
+    )
+
+# #
+#   Badge › Default Value › Computed
+#   
+#   This defines what the default value for a setting is.
+#   
+#   Normal Badges:
+#       <!-- md:default computed -->
+# #
+
+def badgeDefaultComputed( page: Page, files: Files ):
+    icon = "material-water-check"
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#default", page, files )
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+
+    return badgeCreate(
+        icon = f"[:{icon}:]({href} 'Default value is computed')"
+    )
+
+# #
+#   Badge › Command
+#   
+#   Used when specifying a command in an app
+#   
+#   Normal Badges:
+#       <!-- md:command -->                     Specified setting has a default value  <!-- @md:command -->
+#       <!-- md:command `-s,  --start` -->      Specified setting has a default value  <!-- @md:command -s, --start -->
+# #
+
+def badgeCommand( text: str, page: Page, files: Files ):
+    icon = "material-console-line"
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#command", page, files )
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+
+    return badgeCreate(
+        icon = f"[:{icon}:]({href} 'Terminal / Console Command')",
+        text = text,
+        type = "command"
+    )
+
+# #
+#   Badge › 3rd Party
+#   
+#   This symbol denotes that the item described is classified as something that changes the overall functionality of the plugin.
+#   
+#   Normal Badges:
+#       <!-- md:3rdparty -->
+#       <!-- md:3rdparty [mike] -->
+# #
+
+def badge3rdParty( text: str, page: Page, files: Files ):
+    icon = "material-package-variant"
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#3rdparty", page, files )
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+
+    return badgeCreate(
+        icon = f"[:{icon}:]({href} 'Third-party utility')",
+        text = text
+    )
+
+# #
+#   Badge › Option
+#   
+#   Normal Badges:
+#       <!-- md:option rss.enabled -->
+#       <!-- md:option rss.match_path -->
+# #
+
+def badgeOption( type: str ):
+    parts = re.split( r"[.:]", type )
+    name = parts[-1]  # last chunk only
+    return f"[`{type}`](#+{type}){{ #+{type} }}\n\n"
+
+# #
+#   Badge › Setting
+#   
+#   Normal Badges:
 #       #### <!-- md:setting example.setting.enabled -->
-#       <!-- md:version 1.0.0 -->
-#       <!-- md:default `true` -->
+#       #### <!-- md:setting config.archive -->
 # #
 
-def badgeSetting(type: str):
-    _, *_, name = re.split(r"[.*]", type)
+def badgeSetting( type: str ):
+    _, *_, name = re.split( r"[.*]", type )
     return f"`{name}` {{ #{type} }}\n\n[{type}]: #{type}\n\n"
 
 # #
-#   Resolve path of file relative to given page - the posixpath always includes
-#   one additional level of `..` which we need to remove
+#   Badge › Color Palette
+#   
+#   Normal Badges
+#       <!-- md:control color #E5E5E5 #121315 -->
 # #
 
-def _resolve_path(path: str, page: Page, files: Files):
-    path, anchor, *_ = f"{path}#".split("#")
-    path = _resolve(files.get_file_from_path(path), page)
-    return "#".join([path, anchor]) if anchor else path
-
-# #
-#   Resolve path of file relative to given page - the posixpath always includes
-#   one additional level of `..` which we need to remove
-# #
-
-def _resolve(file: File, page: Page):
-    path = posixpath.relpath(file.src_uri, page.file.src_uri)
-    return posixpath.sep.join(path.split(posixpath.sep)[1:])
-
-# #
-#   Create > Badge
-# #
-
-def badgeCreate(icon: str, text: str = "", type: str = ""):
-    classes = f"mdx-badge mdx-badge--{type}" if type else "mdx-badge"
-    return "".join([
-        f"<span class=\"{classes}\">",
-        *([f"<span class=\"mdx-badge__icon\">{icon}</span>"] if icon else []),
-        *([f"<span class=\"mdx-badge__text\">{text}</span>"] if text else []),
-        f"</span>",
-    ])
-
-# #
-#   Badge > Color Palette
-# #
-
-def badgeColorPalette(icon: str, text: str = "", type: str = ""):
+def badgeColorPalette( icon: str, text: str = "", type: str = "" ):
     args = type.split( " " )
 
     bg1_clr = "#000000"
@@ -252,114 +517,37 @@ def badgeColorPalette(icon: str, text: str = "", type: str = ""):
     ])
 
 # #
-#   Badge > Sponsor / Backers
-#
+#   Badge › Sponsor / Backers
+#   
 #       In order for the sponsor / backers badge to work, you must have a backers page created in your mkdocs.
 #       add a new file; usually about/backers.md
 #       create a new entry in your mkdocs.yml to add the page to your navigation
-#
-#       use the following tag in your md files:
-#           <!-- md:sponsors --> __Sponsors only__ – this plugin is currently reserved to [our awesome sponsors].
-#           <!-- md:sponsors -->
+#   
+#   Normal Badges:
+#       <!-- md:sponsors --> __Sponsors only__ – this plugin is currently reserved to [our awesome sponsors].
+#       <!-- md:sponsors -->
 # #
 
-def badgeBackers(page: Page, files: Files):
+def badgeBackers( page: Page, files: Files ):
     icon = "material-heart"
-    href = _resolve_path(PAGE_BACKERS, page, files)
+    href = _resolve_path( PAGE_BACKERS, page, files )
     return badgeCreate(
         icon = f"[:{icon}:]({href} 'Backers only')",
         type = "heart"
     )
 
 # #
-#   Badge > Version
-#
-#       In order for the version badge to work, you must have a corresponding version entry in your changelog.md.
-#       if not, you will receive the console error `'NoneType' object has no attribute 'src_uri'`
-#
-#       use the following tag in your md file:
-#           <!-- md:version stable-1.6.1 -->
+#   Badge › Feature
+#   
+#   Normal Badges:
+#       <!-- md:feature -->
 # #
 
-def Version( text: str, page: Page, files: Files ):
-    spec = text
-    path = f"{PAGE_CHANGELOG}#{spec}"
-
-    # Return badge
-    icon = "aetherx-axs-box"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#version", page, files)
-
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
-
-    return badgeCreate(
-        icon = f"[:{icon}:]({href} 'TVApp2 Release')",
-        text = f"[{text}]({_resolve_path(path, page, files)})" if spec else ""
-    )
-
-# #
-#   Badge > Version > Stable
-# #
-
-def Version_Stable( text: str, page: Page, files: Files ):
-    spec = text.replace( "stable-", "" )
-    path = f"{PAGE_CHANGELOG}#{spec}"
-
-    # Return badge
-    icon    = "aetherx-axs-tag"
-    href    = _resolve_path( f"{PAGE_CONVENTIONS}#version-stable", page, files )
-    output  = ""
-
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
-
-    # spec not empty
-    if spec:
-        output = f"Requires version {spec}"
-    else:
-        output = f"Stable Release"
-
-    return badgeCreate(
-        icon = f"[:{icon}:]({href} '{output}' )",
-        text = f"[{spec}]({_resolve_path(path, page, files)})" if spec else ""
-    )
-
-# #
-#   Badge > Version > Development
-# #
-
-def Version_Development( text: str, page: Page, files: Files ):
-    spec = text.replace( "development-", "" )
-    path = f"{PAGE_CHANGELOG}#{spec}"
-
-    # Return badge
-    icon    = "aetherx-axs-code"
-    href    = _resolve_path( f"{PAGE_CONVENTIONS}#version-development", page, files )
-    output  = ""
-
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
-
-    # spec not empty
-    if spec:
-        output = f"Requires version {spec}"
-    else:
-        output = f"Development Release"
-
-    return badgeCreate(
-        icon = f"[:{icon}:]({href} '{output}' )",
-        text = f"[{text}]({_resolve_path(path, page, files)})" if spec else ""
-    )
-
-# #
-#   Badge > Feature
-#
-#       use the following tag in your md file:
-#           <!-- md:feature -->
-# #
-
-def badgeFeature(text: str, page: Page, files: Files):
+def badgeFeature( text: str, page: Page, files: Files ):
     icon = "material-toggle-switch"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#feature", page, files)
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#feature", page, files )
 
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     return badgeCreate(
         icon = f"[:{icon}:]({href} 'Optional feature')",
@@ -367,19 +555,19 @@ def badgeFeature(text: str, page: Page, files: Files):
     )
 
 # #
-#   Badge > Feature
-#
-#       use the following tag in your md file:
-#           <!-- md:plugin -->
-#           <!-- md:plugin [glightbox] -->
-#           <!-- md:plugin [typeset] – built-in -->
+#   Badge › Plugin
+#   
+#   Normal Badges:
+#       <!-- md:plugin -->
+#       <!-- md:plugin [glightbox] -->
+#       <!-- md:plugin [typeset] – built-in -->
 # #
 
-def badgePlugin(text: str, page: Page, files: Files):
+def badgePlugin( text: str, page: Page, files: Files ):
     icon = "material-floppy"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#plugin", page, files)
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#plugin", page, files )
 
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     return badgeCreate(
         icon = f"[:{icon}:]({href} 'Plugin')",
@@ -387,17 +575,17 @@ def badgePlugin(text: str, page: Page, files: Files):
     )
 
 # #
-#   Create badge for Markdown
-#
-#       use the following tag in your md file:
-#           <!-- md:markdown [admonition][Admonition] -->
+#   Badge › Markdown
+#   
+#   Normal Badges:
+#       <!-- md:markdown [admonition][Admonition] -->
 # #
 
-def badgeMarkdown(text: str, page: Page, files: Files):
+def badgeMarkdown( text: str, page: Page, files: Files ):
     icon = "material-language-markdown"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#markdown", page, files)
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#markdown", page, files )
 
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     return badgeCreate(
         icon = f"[:{icon}:]({href} 'Markdown functionality')",
@@ -405,242 +593,219 @@ def badgeMarkdown(text: str, page: Page, files: Files):
     )
 
 # #
-#   Badge > Third Party Plugin / Utility
-#
-#       This symbol denotes that the item described is classified as something that changes the overall functionality of the plugin.
-#
-#       use the following tag in your md files:
-#           <!-- md:3rdparty -->
-#           <!-- md:3rdparty [mike] -->
+#   Badge › File Preview & Download
+#   
+#   Creates a badge which allows a user to download or view a file.
+#   
+#   The badge will have three sections:
+#       - View Example
+#       - Download Example
+#       - .ext text
+#   
+#   If you supply the code below with a title of `my-example-file`, the links generated will be:
+#       - [View Example]                            https://github.com/Aetherinox/csf-firewall/my-example-file/
+#       - [Download Example]                        https://github.com/Aetherinox/csf-firewall/my-example-file.zip
+#       - [Zip]                                     https://github.com/Aetherinox/csf-firewall/my-example-file.zip
+#   
+#   Normal Badges:
+#       <!-- md:file -->                            Icon Only
+#       <!-- md:file something.rar -->              Right Aligned
+#       <!-- md:file something.rar left -->         Left Aligned
+#       <!-- md:file something.rar right -->        Right Aligned
+#       <!-- md:file something.rar l -->            Left Aligned
+#       <!-- md:file something.rar r -->            Right Aligned
 # #
 
-def badge3rdParty(text: str, page: Page, files: Files):
-    icon = "material-package-variant"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#3rdparty", page, files)
+def badgeFile( text: str, page: Page, files: Files ):
 
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+    # #
+    #   Parse arguments: "filename [alignment]"
+    # #
 
-    return badgeCreate(
-        icon = f"[:{icon}:]({href} 'Third-party utility')",
-        text = text
+    parts = text.strip( ).split( )
+    filename = parts[ 0 ] if len(parts) > 0 else ""
+    align_arg = parts[1].lower( ) if len(parts) > 1 else "right"
+
+    # #
+    #   Normalize alignment argument
+    # #
+
+    if align_arg in ("l", "left"):
+        align_class = "mdx-badge--files-group-left"
+    else:
+        align_class = "mdx-badge--files-group-right"
+
+    # #
+    #   If no filename -> just show a generic file icon
+    # #
+
+    if not filename:
+        icon = "material-file"
+        href = _resolve_path( f"{PAGE_CONVENTIONS}#file", page, files )
+        return badgeCreate(
+            icon=f"[:{icon}:]({href} 'File reference')"
+        )
+
+    # #
+    #   Otherwise, return both badges together inside chosen-alignment container
+    # #
+
+    return (
+        f'<span class="mdx-badge {align_class}">'
+        f'{badgeFileView( filename, page, files )}'
+        f'{badgeFileDownload( filename, page, files )}'
+        f'</span>'
     )
 
-# #
-#   Create Download Example > View
-#
-#       Creates a badge which allows a user to download a file.
-#
-#       The badge will have three sections:
-#           - View Example
-#           - Download Example
-#           - .zip text
-#
-#       If you supply the code below with a title of `my-example-file`, the links generated will be:
-#           - [View Example]            https://github.com/TheBinaryNinja/tvapp2/my-example-file/
-#           - [Download Example]        https://github.com/TheBinaryNinja/tvapp2/my-example-file.zip
-#           - [Zip]                     https://github.com/TheBinaryNinja/tvapp2/my-example-file.zip
-#
-#       use the following tag in your md files:
-#           <!-- md:example my-example-file -->
-# #
-
-def badgeExample(text: str, page: Page, files: Files):
-    return "\n".join([
-        badgeExampleDownloadZip(text, page, files),
-        badgeExampleView(text, page, files)
-    ])
-
-def badgeExampleView(text: str, page: Page, files: Files):
+def badgeFileView( text: str, page: Page, files: Files ):
     icon = "material-folder-eye"
-    href = f"https://github.com/TheBinaryNinja/tvapp2/{text}/"
+    href = f"https://github.com/Aetherinox/csf-firewall/{text}/"
 
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW +
+          inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' +
+          clr.GREY + str(href) + clr.WHITE)
 
     return badgeCreate(
-        icon = f"[:{icon}:]({href} 'View example')",
-        type = "right"
+        icon=f"[:{icon}:]({href} 'View' )",
+        type="files-view"
     )
 
-def badgeExampleDownloadZip(text: str, page: Page, files: Files):
+def badgeFileDownload( text: str, page: Page, files: Files ):
     icon = "material-folder-download"
-    href = f"https://github.com/TheBinaryNinja/tvapp2/{text}.zip"
 
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+    # split filename into (basename, extension)
+    basename, ext = os.path.splitext(text)
+
+    # build href (leave .zip or whatever was passed in place)
+    href = f"https://github.com/Aetherinox/csf-firewall/{text}"
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW +
+          inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' +
+          clr.GREY + str(href) + clr.WHITE)
 
     return badgeCreate(
-        icon = f"[:{icon}:]({href} 'Download example')",
-        text = f"[`.zip`]({href})",
-        type = "right"
+        icon=f"[:{icon}:]({href} 'Download' )",
+        text=f"[`{ext}`]({href})",   # show `.zip`, `.tar.gz`, `.json`, etc.
+        type="files-download"
     )
 
 # #
-#   Badge > Command
-#
-#   Used when specifying a command in an app
-#
-#       use the following tag in your md file:
-#           <!-- md:command `-s,  --start` -->
+#   Badge › File › Requires
+#   
+#   This defines what the required file is.
+#   
+#   MUST add an entry in conventions.md
+#   
+#   can switch out css icons for js icons such as font-awesome's all.js
+#       if you replace the icon line with
+#       icon=f"<i class='axd ax-file'></i>",
+#   
+#   Normal Badges:
+#       <!-- md:requires `/usr/local/cwpsrv` -->
 # #
 
-def badgeCommand(text: str, page: Page, files: Files):
-    icon = "material-console-line"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#command", page, files)
+def badgeFileRequires( text: str, page: Page, files: Files ):
+    icon = "aetherx-axs-file"
+    tooltip = "This feature requires the file <pre>" + text + "</pre>"
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#requires", page, files )
 
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW +
+          inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' +
+          clr.GREY + str(href) + clr.WHITE)
 
     return badgeCreate(
-        icon = f"[:{icon}:]({href} 'Terminal / Console Command')",
-        text = text,
-        type = "command"
+        icon = f"[:{icon}:]({href} '{tooltip}')",
+        text=text
     )
 
 # #
-#   Badge > Default Value > Custom
-#
-#   This defines what the default value for a setting is.
-#
-#       use the following tag in your md file:
-#           <!-- md:default `false` -->
-#           <!-- md:default `my settings value` -->
-#           <!-- md:default computed -->
-#           <!-- md:default none -->
+#   Badge › File › Source
+#   
+#   This defines where a setting can be found in what file
+#   
+#   MUST add an entry in conventions.md
+#   
+#   can switch out css icons for js icons such as font-awesome's all.js
+#       if you replace the icon line with
+#       icon=f"<i class='axd ax-file'></i>",
+#   
+#   Normal Badges:
+#       <!-- md:source `/etc/csf/csf.conf` -->
 # #
 
-def badgeDefaultCustom(text: str, page: Page, files: Files):
-    icon = "material-water"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#default", page, files)
+def badgeFileSource( text: str, page: Page, files: Files ):
+    icon = "aetherx-axd-file"
+    tooltip = "This setting can be found in the file <pre>" + text + "</pre>"
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#source", page, files )
 
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW +
+          inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' +
+          clr.GREY + str(href) + clr.WHITE)
 
     return badgeCreate(
-        icon = f"[:{icon}:]({href} 'Default value')",
+        icon = f"[:{icon}:]({href} '{tooltip}')",
         text = text
     )
 
 # #
-#   Badge > Default Value > None / Empty
-#
-#   This defines what the default value for a setting is.
-#
-#       use the following tag in your md file:
-#           <!-- md:default `false` -->
-#           <!-- md:default `my settings value` -->
-#           <!-- md:default computed -->
-#           <!-- md:default none -->
-# #
-
-def badgeDefaultNone(page: Page, files: Files):
-    icon = "material-water-outline"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#default", page, files)
-
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
-
-    return badgeCreate(
-        icon = f"[:{icon}:]({href} 'Default value is empty')"
-    )
-
-# #
-#   Badge > Default Value > Computed
-#
-#   This defines what the default value for a setting is.
-#
-#       use the following tag in your md file:
-#           <!-- md:default `false` -->
-#           <!-- md:default `my settings value` -->
-#           <!-- md:default computed -->
-#           <!-- md:default none -->
-# #
-
-def badgeDefaultVal(page: Page, files: Files):
-    icon = "material-water-check"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#default", page, files)
-
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
-
-    return badgeCreate(
-        icon = f"[:{icon}:]({href} 'Default value is computed')"
-    )
-
-# #
-#   Badge > Flag > Default
-#
+#   Badge › Flags › Default
+#   
 #   This symbol denotes that the specified item is a customizable setting
-#
+#   
 #   MUST add an entry in conventions.md
-#
-#       use the following tag in your md file:
-#           :   <!-- md:flag --> Default
-#           :   <!-- md:flag experimental --> Experimental
-#           :   <!-- md:flag required --> Required
-#           :   <!-- md:flag customization --> Customization
-#           :   <!-- md:flag metadata --> Metadata
-#           :   <!-- md:flag dangerous --> Dangerous
-#           :   <!-- md:flag multiple --> Multiple
-#           :   <!-- md:flag setting --> Setting
+#   
+#   Normal Badges
+#       <!-- md:flag --> Default
 # #
 
-def badgeFlagDefault(page: Page, files: Files):
+def badgeFlagDefault( page: Page, files: Files ):
     icon = "material-flag"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#setting", page, files)
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#setting", page, files )
 
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     return badgeCreate(
         icon = f"[:{icon}:]({href} 'Configurable Setting')"
     )
 
 # #
-#   Badge > Flag > Metadata Property
-#
+#   Badge › Flags › Metadata Property
+#   
 #   This symbol denotes that the item described is a metadata property, which can
 #   be used in Markdown documents as part of the front matter definition.
-#
+#   
 #   MUST add an entry in conventions.md
-#
-#       use the following tag in your md file:
-#           :   <!-- md:flag --> Default
-#           :   <!-- md:flag experimental --> Experimental
-#           :   <!-- md:flag required --> Required
-#           :   <!-- md:flag customization --> Customization
-#           :   <!-- md:flag metadata --> Metadata
-#           :   <!-- md:flag dangerous --> Dangerous
-#           :   <!-- md:flag multiple --> Multiple
-#           :   <!-- md:flag setting --> Setting
+#   
+#   Normal Badges
+#       <!-- md:flag metadata --> Metadata
 # #
 
-def badgeFlagMetadata(page: Page, files: Files):
+def badgeFlagMetadata( page: Page, files: Files ):
     icon = "material-list-box-outline"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#metadata", page, files)
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#metadata", page, files )
 
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     return badgeCreate(
         icon = f"[:{icon}:]({href} 'Metadata property')"
     )
 
 # #
-#   Badge > Flag > Dangerous
-#
+#   Badge › Flags › Dangerous
+#   
 #   This symbol denotes that the item or setting specified may be dangerous to change.
-#
+#   
 #   MUST add an entry in conventions.md
-#
-#       use the following tag in your md file:
-#           :   <!-- md:flag --> Default
-#           :   <!-- md:flag experimental --> Experimental
-#           :   <!-- md:flag required --> Required
-#           :   <!-- md:flag customization --> Customization
-#           :   <!-- md:flag metadata --> Metadata
-#           :   <!-- md:flag dangerous --> Dangerous
-#           :   <!-- md:flag multiple --> Multiple
-#           :   <!-- md:flag setting --> Setting
+#   
+#   Normal Badges
+#       <!-- md:flag dangerous --> Dangerous
 # #
 
-def badgeFlagDangerous(page: Page, files: Files):
+def badgeFlagDangerous( page: Page, files: Files ):
     icon = "aetherx-axd-skull-crossbones"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#dangerous", page, files)
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#dangerous", page, files )
 
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     return badgeCreate(
         icon = f"[:{icon}:]({href} 'This setting is dangerous to change')",
@@ -648,196 +813,142 @@ def badgeFlagDangerous(page: Page, files: Files):
     )
 
 # #
-#   Badge > Flag > Required
-#
+#   Badge › Flags › Required
+#   
 #   Specifies that a value is required.
-#
+#   
 #   MUST add an entry in conventions.md
-#
-#       use the following tag in your md file:
-#           :   <!-- md:flag --> Default
-#           :   <!-- md:flag experimental --> Experimental
-#           :   <!-- md:flag required --> Required
-#           :   <!-- md:flag customization --> Customization
-#           :   <!-- md:flag metadata --> Metadata
-#           :   <!-- md:flag dangerous --> Dangerous
-#           :   <!-- md:flag multiple --> Multiple
-#           :   <!-- md:flag setting --> Setting
+#   
+#   Normal Badges
+#       <!-- md:flag required --> Required 
 # #
 
-def badgeFlagRequired(page: Page, files: Files):
+def badgeFlagRequired( page: Page, files: Files ):
     icon = "material-alert"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#required", page, files)
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#required", page, files )
 
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     return badgeCreate(
         icon = f"[:{icon}:]({href} 'Required value')"
     )
 
 # #
-#   Badge > Flag > Customization
-#
+#   Badge › Flags › Customization
+#   
 #   This symbol denotes that the item described is a customization which affects the overall look of the app.
-#
+#   
 #   MUST add an entry in conventions.md
-#
-#       use the following tag in your md file:
-#           :   <!-- md:flag --> Default
-#           :   <!-- md:flag experimental --> Experimental
-#           :   <!-- md:flag required --> Required
-#           :   <!-- md:flag customization --> Customization
-#           :   <!-- md:flag metadata --> Metadata
-#           :   <!-- md:flag dangerous --> Dangerous
-#           :   <!-- md:flag multiple --> Multiple
-#           :   <!-- md:flag setting --> Setting
+#   
+#   Normal Badges
+#       <!-- md:flag customization --> Customization
 # #
 
-def badgeFlagCustomization(page: Page, files: Files):
+def badgeFlagCustomization( page: Page, files: Files ):
     icon = "material-brush-variant"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#customization", page, files)
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#customization", page, files )
 
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     return badgeCreate(
         icon = f"[:{icon}:]({href} 'Customization')"
     )
 
 # #
-#   Badge > Flag > Experimental
-#
+#   Badge › Flags › Experimental
+#   
 #   This symbol denotes that the item described is Experimental
-#
+#   
 #   MUST add an entry in conventions.md
-#
-#       use the following tag in your md file:
-#           :   <!-- md:flag --> Default
-#           :   <!-- md:flag experimental --> Experimental
-#           :   <!-- md:flag required --> Required
-#           :   <!-- md:flag customization --> Customization
-#           :   <!-- md:flag metadata --> Metadata
-#           :   <!-- md:flag dangerous --> Dangerous
-#           :   <!-- md:flag multiple --> Multiple
-#           :   <!-- md:flag setting --> Setting
+#   
+#   Normal Badges
+#       <!-- md:flag experimental --> Experimental
 # #
 
-def badgeFlagExperimental(page: Page, files: Files):
+def badgeFlagExperimental( page: Page, files: Files ):
     icon = "material-flask-outline"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#experimental", page, files)
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#experimental", page, files )
 
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     return badgeCreate(
         icon = f"[:{icon}:]({href} 'Experimental')"
     )
 
 # #
-#   Badge > Flag > Multiple Instances
-#
+#   Badge › Flags › Multiple Instances
+#   
 #   This symbol denotes that the plugin supports multiple instances, i.e, that it
 #   can be used multiple times in the `plugins` setting
-#
+#   
 #   MUST add an entry in conventions.md
-#
-#       use the following tag in your md file:
-#           :   <!-- md:flag --> Default
-#           :   <!-- md:flag experimental --> Experimental
-#           :   <!-- md:flag required --> Required
-#           :   <!-- md:flag customization --> Customization
-#           :   <!-- md:flag metadata --> Metadata
-#           :   <!-- md:flag dangerous --> Dangerous
-#           :   <!-- md:flag multiple --> Multiple
-#           :   <!-- md:flag setting --> Setting
+#   
+#   Normal Badges
+#       <!-- md:flag multiple --> Multiple Instances
 # #
 
-def badgeFlagMultiInstances(page: Page, files: Files):
+def badgeFlagMultiInstances( page: Page, files: Files ):
     icon = "material-inbox-multiple"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#multiple-instances", page, files)
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#multiple-instances", page, files )
 
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     return badgeCreate(
         icon = f"[:{icon}:]({href} 'Multiple instances')"
     )
 
 # #
-#   Badge > Flag > Setting
-#
+#   Badge › Flags › Setting
+#   
 #   This symbol denotes that the specified item is a customizable setting
-#
+#   
 #   MUST add an entry in conventions.md
-#
-#       use the following tag in your md file:
-#           :   <!-- md:flag --> Default
-#           :   <!-- md:flag experimental --> Experimental
-#           :   <!-- md:flag required --> Required
-#           :   <!-- md:flag customization --> Customization
-#           :   <!-- md:flag metadata --> Metadata
-#           :   <!-- md:flag dangerous --> Dangerous
-#           :   <!-- md:flag multiple --> Multiple
-#           :   <!-- md:flag setting --> Setting
+#   
+#   Normal Badges
+#       <!-- md:flag setting --> Setting
 # #
 
-def badgeFlagSetting(page: Page, files: Files):
+def badgeFlagSetting( page: Page, files: Files ):
     icon = "material-cog"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#setting", page, files)
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#setting", page, files )
 
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     return badgeCreate(
         icon = f"[:{icon}:]({href} 'Configurable Setting')"
     )
 
 # #
-#   Icon : Control : Default
-#
-#   This function is activated if no control type specified
-#
-#       use the following tag in your md file:
-#           <!-- md:control -->
-# #
-
-def newControlDefault( page: Page, files: Files ):
-    icon = "aetherx-axs-hand-pointer"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files )
-
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
-
-    return badgeCreate(
-        icon = f"[:{icon}:]({href} 'Type: Textbox')"
-    )
-
-# #
-#   Icon : Control : Textbox
-#
-#       use the following tag in your md file:
-#           <!-- md:control textbox -->
+#   Icon › New Control › Textbox
+#   
+#   Normal Badges
+#       <!-- md:control textbox -->
 # #
 
 def newControlTextbox( page: Page, files: Files ):
     icon = "aetherx-axs-input-text"
     href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files )
 
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     return badgeCreate(
         icon = f"[:{icon}:]({href} 'Type: Textbox')"
     )
 
 # #
-#   Icon : Control : Toggle Switch
-#
-#       use the following tag in your md file:
-#           <!-- md:control toggle -->
-#           <!-- md:control toggle_on --> `Enabled`
-#           <!-- md:control toggle_off --> `Disabled`
+#   Icon › New Control › Toggle Switch
+#   
+#   Normal Badges
+#       <!-- md:control toggle -->
+#       <!-- md:control toggle_on --> `Enabled`
+#       <!-- md:control toggle_off --> `Disabled`
 # #
 
 def newControlToggle( page: Page, files: Files ):
     icon = "aetherx-axs-toggle-large-on"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files)
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files )
 
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     return badgeCreate(
         icon = f"[:{icon}:]({href} 'Type: Toggle Switch')"
@@ -845,9 +956,9 @@ def newControlToggle( page: Page, files: Files ):
 
 def newControlToggleOn( page: Page, files: Files ):
     icon = "aetherx-axd-toggle-on"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files)
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files )
 
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     return badgeCreate(
         icon = f"[:{icon}:]({href} 'Toggle: Enabled')"
@@ -855,77 +966,77 @@ def newControlToggleOn( page: Page, files: Files ):
 
 def newControlToggleOff( page: Page, files: Files ):
     icon = "aetherx-axd-toggle-off"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files)
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files )
 
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     return badgeCreate(
         icon = f"[:{icon}:]({href} 'Toggle: Disabled')"
     )
 
 # #
-#   Icon : Control : Dropdown
-#
-#       use the following tag in your md file:
-#           <!-- md:control dropdown -->
+#   Icon › New Control › Dropdown
+#   
+#   Normal Badges
+#       <!-- md:control dropdown -->
 # #
 
 def newControlDropdown( page: Page, files: Files ):
     icon = "aetherx-axs-square-caret-down"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files)
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files )
 
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     return badgeCreate(
         icon = f"[:{icon}:]({href} 'Type: Dropdown')"
     )
 
 # #
-#   Icon : Control : Button
-#
-#       use the following tag in your md file:
-#           <!-- md:control button -->
+#   Icon › New Control › Button
+#   
+#   Normal Badges
+#       <!-- md:control button -->
 # #
 
 def newControlButton( page: Page, files: Files ):
     icon = "material-button-pointer"
     href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files )
 
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     return badgeCreate(
         icon = f"[:{icon}:]({href} 'Type: Button')"
     )
 
 # #
-#   Icon : Control : Slider
-#
-#       use the following tag in your md file:
-#           <!-- md:control slider -->
+#   Icon › New Control › Slider
+#   
+#   Normal Badges
+#       <!-- md:control slider -->
 # #
 
 def newControlSlider( page: Page, files: Files ):
     icon = "aetherx-axd-sliders-simple"
     href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files )
 
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     return badgeCreate(
         icon = f"[:{icon}:]({href} 'Type: Slider')"
     )
 
 # #
-#   Icon : Control : Color
-#
-#       use the following tag in your md file:
-#           <!-- md:control color #E5E5E5 #121315 -->
+#   Icon › New Control › Color
+#   
+#   Normal Badges
+#       <!-- md:control color #E5E5E5 #121315 -->
 # #
 
 def newControlColor( text: str, page: Page, files: Files ):
     icon = "aetherx-axs-palette"
     href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files )
 
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     return badgeColorPalette(
         icon = f"[:{icon}:]({href} 'Type: Color Wheel')",
@@ -933,17 +1044,17 @@ def newControlColor( text: str, page: Page, files: Files ):
     )
 
 # #
-#   Icon : Control : Env Variable
-#
-#       use the following tag in your md file:
-#           <!-- md:control env -->
+#   Icon › New Control › Env Variable
+#   
+#   Normal Badges
+#       <!-- md:control env -->
 # #
 
 def newControlEnvVar( page: Page, files: Files ):
     icon = "aetherx-axd-puzzle-piece"
     href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files )
 
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     return badgeCreate(
         icon = f"[:{icon}:]({href} 'Type: Environment Variable')",
@@ -951,19 +1062,32 @@ def newControlEnvVar( page: Page, files: Files ):
     )
 
 # #
-#   Icon : Control : Volume
-#
-#       use the following tag in your md file:
-#           <!-- md:control volume -->
+#   Icon › New Control › Volume
+#   
+#   Normal Badges
+#       <!-- md:control volume -->
 # #
 
 def newControlVolume( page: Page, files: Files ):
     icon = "aetherx-axd-volume"
     href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files )
 
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     return badgeCreate(
         icon = f"[:{icon}:]({href} 'Type: Mountable Volume')",
         type = "volume"
     )
+
+# #
+#   Badge › Create
+# #
+
+def badgeCreate( icon: str, text: str = "", type: str = "" ):
+    classes = f"mdx-badge mdx-badge--{type}" if type else "mdx-badge"
+    return "".join([
+        f"<span class=\"{classes}\">",
+        *([f"<span class=\"mdx-badge__icon\">{icon}</span>"] if icon else []),
+        *([f"<span class=\"mdx-badge__text\">{text}</span>"] if text else []),
+        f"</span>",
+    ])

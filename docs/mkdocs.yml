@@ -39,8 +39,8 @@ markdown_extensions:
     - pymdownx.magiclink:
           normalize_issue_symbols: true
           repo_url_shorthand: true
-          user: TheBinaryNinja
-          repo: tvapp2
+          user: Aetherinox
+          repo: csf-firewall
     - pymdownx.emoji:
           emoji_index: !!python/name:material.extensions.emoji.twemoji
           emoji_generator: !!python/name:material.extensions.emoji.to_svg
@@ -72,18 +72,12 @@ markdown_extensions:
           slugify: !!python/object/apply:pymdownx.slugs.slugify
               kwds:
                   case: lower
-    - pymdownx.tabbed
     - pymdownx.caret
     - pymdownx.mark
     - pymdownx.smartsymbols
     - pymdownx.tilde
     - pymdownx.blocks.html
     - pymdownx.details
-    - pymdownx.magiclink:
-          normalize_issue_symbols: true
-          repo_url_shorthand: true
-          user: Aetherinox
-          repo: csf-firewall
     - pymdownx.keys
     - pymdownx.snippets:
           auto_append:
@@ -109,6 +103,8 @@ theme:
         - javascript
         - lua
         - python
+        - bash
+        - shell
     icon:
         note: fontawesome/solid/note-sticky
         abstract: fontawesome/solid/book
@@ -167,6 +163,8 @@ theme:
         - content.code.annotate
         - content.code.select
         - content.code.copy
+        - navigation.tabs
+        - navigation.sections
         - navigation.footer
         - navigation.indexes
         - navigation.instant
@@ -190,6 +188,8 @@ hooks:
 
 extra_css:
     - stylesheets/extra.css?v1.000
+  # - stylesheets/all.min.css?v7.000
+
 
 # #
 #   Section › Extra › Javascript
@@ -198,6 +198,7 @@ extra_css:
 extra_javascript:
     - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
     - javascripts/tablesort.js
+    - javascripts/all.js?v7.000
 
 # #
 #   Section › Extras
@@ -206,9 +207,7 @@ extra_javascript:
 extra:
     social:
         - icon: fontawesome/brands/github
-          link: https://github.com/TheBinaryNinja/tvapp2
-        - icon: fontawesome/brands/discord
-          link: https://discord.gg/gTze6hRe
+          link: https://github.com/Aetherinox/csf-firewall
     tags:
         HTML5: html
         JavaScript: js
@@ -232,35 +231,32 @@ extra:
 
 nav:
     - Home: 'home.md'
-    - About CSF: 'about_csf.md'
-    - About Patcher: 'about_patcher.md'
-    - Cheatsheet:
-          - Structure: 'cheatsheet/structure.md'
-          - Commands: 'cheatsheet/commands.md'
-          - Troubleshooting: 'cheatsheet/troubleshooting.md'
-          - Example csf.conf: 'cheatsheet/conf.md'
-    - ConfigServer Firewall:
-          - Install: 'csf/install.md'
-          - Configure: 'csf/configure.md'
-          - Install WebUI: 'csf/webui.md'
-          - Test Install: 'csf/testing.md'
-          - Uninstall: 'csf/uninstall.md'
+    - About:
+          - Introduction: 'about/csf.md'
+          - Contributing: 'about/contributing.md'
+          - License: 'about/license.md'
+          - Wiki:
+                - Conventions: 'about/conventions.md'
+                - Tags: 'about/tags.md'
+    - Install:
+          - 1. Dependencies: 'install/dependencies.md'
+          - 2. Download & Install: 'install/install.md'
+          - 3. Diagnostic Tests: 'install/tests.md'
+          - 4. Setup WebUI: 'install/webui.md'
+    - Usage:
+          - Structure: 'usage/structure.md'
+          - Commands: 'usage/commands.md'
+          - Troubleshooting: 'usage/troubleshooting.md'
+          - Example csf.conf: 'usage/conf.md'
+    - Extras:
+          - Patcher:
+                - Download: 'extras/download.md'
+                - Configure: 'extras/configure.md'
           - Tutorials:
                 - Geo Blocking: 'csf/tutorials/geographical.md'
                 - Traefik Integration: 'csf/tutorials/traefik.md'
                 - Authentik Integration: 'csf/tutorials/authentik.md'
-    - Patcher:
-          - Download: 'patcher/download.md'
-          - Configure: 'patcher/configure.md'
-    - Themes:
-          - Install: 'themes/install.md'
-          - Usage: 'themes/usage.md'
-    - About:
-          - License: 'about/license.md'
-          - Conventions: 'about/conventions.md'
-          - Tags: 'about/tags.md'
-          - Changelog: 'about/changelog.md'
-          - Backers: 'backers/index.md'
+    - Changelog: 'about/changelog.md'
 
 # #
 #   Section › Plugins
@@ -334,18 +330,6 @@ plugins:
     - redirects:
           redirect_maps:
               docs/settings/summary.md: settings/summary.md
-    - link-embeds:
-          enabled: true
-          name_default: "Untitled Link"
-          desc_default: "No description found"
-          image_default: "https://github.com/Aetherinox/mkdocs-link-embeds/assets/118329232/c0298d98-0910-4235-a88f-0c3e2f704ba7"
-          image_disabled: false
-          favicon_default: "https://github.com/Aetherinox/mkdocs-link-embeds/assets/118329232/b37da9c6-6f17-4c3f-9c94-c346a6f31bfa"
-          favicon_disabled: false
-          favicon_size: 25
-          target: "blank"
-          accent: "FFFFFF1A"
-          verbose: true
     - external-markdown
 
 copyright: >
