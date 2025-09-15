@@ -242,12 +242,13 @@ nav:
           - 1. Dependencies: 'install/dependencies.md'
           - 2. Download & Install: 'install/install.md'
           - 3. Diagnostic Tests: 'install/tests.md'
-          - 4. Setup WebUI: 'install/webui.md'
+          - 4. Enable Web Interface: 'install/webui.md'
     - Usage:
-          - Structure: 'usage/structure.md'
-          - Commands: 'usage/commands.md'
-          - Troubleshooting: 'usage/troubleshooting.md'
-          - Example csf.conf: 'usage/conf.md'
+          - 1. Getting Started: 'usage/getting-started.md'
+          - Cheatsheet:
+                - Structure: 'usage/cheatsheet/structure.md'
+                - Commands: 'usage/cheatsheet/commands.md'
+                - Example Configs: 'usage/cheatsheet/conf.md'
     - Extras:
           - Patcher:
                 - Download: 'extras/download.md'
