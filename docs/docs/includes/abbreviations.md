@@ -5,9 +5,11 @@
 *[/etc/csf/csf.conf]: The default csf config file
 *[csf.conf]: The default csf config file, usually in <pre>/etc/csf/csf.conf</pre>
 *[CSF]: ConfigServer Security & Firewall
+*[csf]: ConfigServer Security & Firewall
 *[ConfigServer Firewall]: ConfigServer Security & Firewall Security
 *[ConfigServer Firewall & Security]: A security suite for Linux servers that provides firewall management, intrusion detection, and login failure monitoring.
 *[LFD]: Login Failure Daemon
+*[lfd]: Login Failure Daemon
 *[lfd daemon]: Login Failure Daemon
 *[SPI]: Stateful Packet Inspection
 *[nftables]: A Linux firewall framework that replaces iptables with a simpler, faster system.  
@@ -29,7 +31,12 @@
 *[middlewares]: A component in Traefik that modifies requests or responses before they reach a service or client.
 *[Middleware]: A component in Traefik that modifies requests or responses before they reach a service or client.
 *[Middlewares]: A component in Traefik that modifies requests or responses before they reach a service or client.
-*[routers]: Traefik components that match incoming requests to the correct service, applying middlewares if defined.
+*[Entrypoints]: In Traefik, entrypoints define where and how incoming requests arrive at the proxy (e.g., <code>:80</code> for HTTP or <code>:443</code> for HTTPS). They bind Traefik to specific ports/protocols and are the starting point for routing traffic into the system.
+*[entrypoints]: In Traefik, entrypoints define where and how incoming requests arrive at the proxy (e.g., <code>:80</code> for HTTP or <code>:443</code> for HTTPS). They bind Traefik to specific ports/protocols and are the starting point for routing traffic into the system.
+*[Services]: In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).
+*[services]: In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).
+*[routers]: In Traefik, routers match incoming requests (from entrypoints) to the correct service. They evaluate rules (like hostnames, paths, headers) and then forward the traffic to the appropriate service, optionally applying middlewares along the way.
+*[Routers]: In Traefik, routers match incoming requests (from entrypoints) to the correct service. They evaluate rules (like hostnames, paths, headers) and then forward the traffic to the appropriate service, optionally applying middlewares along the way.
 *[whm]: WebHost Manager; an app from the same developers as cPanel used to manage web servers through a control panel.  
 *[WHM]: WebHost Manager; an app from the same developers as cPanel used to manage web servers through a control panel.  
 *[cpanel]: A Linux-based control panel used to manage your web hosting.  
@@ -50,6 +57,6 @@
 *[env]: A general shorthand for “environment” or “environment variables,” often used in configuration and deployment contexts.  
 *[.env]: A plain text file used to define environment variables for applications and services; in Docker, `.env` files are commonly used to inject variables into `docker-compose.yml` or container runtime environments.  
 *[traefik.yml]: The <b>static configuration file</b> for Traefik. It defines settings that must be known at startup (entrypoints, providers, certificate resolvers, logging, etc.). Changes to this file usually require a Traefik restart.  
-*[static file]: Refers to the <b>static configuration file</b> for Traefik, usually named <pre>traefik.yml</pre>. It defines settings that must be known at startup (entrypoints, providers, certificate resolvers, logging, etc.). Changes to this file usually require a Traefik restart.  
+*[static file]: Refers to the <b>static configuration file</b> for Traefik, usually named <code>traefik.yml</code>. It defines settings that must be known at startup (entrypoints, providers, certificate resolvers, logging, etc.). Changes to this file usually require a Traefik restart.  
 *[dynamic.yml]: The <b>dynamic configuration file</b> for Traefik. It defines settings that can be reloaded at runtime (routers, middlewares, services, TLS options, etc.). Traefik continuously watches this file for changes without requiring a restart.  
-*[dynamic file]: Refers to the <b>dynamic configuration file</b> for Traefik, usually named <pre>dynamic.yml</pre>. It defines settings that can be reloaded at runtime (routers, middlewares, services, TLS options, etc.). Traefik continuously watches this file for changes without requiring a restart.  
+*[dynamic file]: Refers to the <b>dynamic configuration file</b> for Traefik, usually named <code>dynamic.yml</code>. It defines settings that can be reloaded at runtime (routers, middlewares, services, TLS options, etc.). Traefik continuously watches this file for changes without requiring a restart.  
