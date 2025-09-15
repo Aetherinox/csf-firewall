@@ -7,28 +7,28 @@
         <meta name="author" content="Aetherinox">
       
       
-        <link rel="canonical" href="https://Aetherinox.github.io/csf-firewall/csf/tutorials/traefik/">
+        <link rel="canonical" href="https://Aetherinox.github.io/csf-firewall/install/install/">
       
       
-        <link rel="prev" href="../geographical/">
+        <link rel="prev" href="../dependencies/">
       
       
-        <link rel="next" href="../authentik/">
+        <link rel="next" href="../tests/">
       
       
-      <link rel="icon" href="../../../assets/favicon.png">
+      <link rel="icon" href="../../assets/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
     
     
       
-        <title>CSF: Traefik Integration - CSF Firewall</title>
+        <title>Download &amp; Install - CSF Firewall</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.e53b48f4.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.e53b48f4.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -47,20 +47,20 @@
       
     
     
-      <link rel="stylesheet" href="../../../css/timeago.css">
+      <link rel="stylesheet" href="../../css/timeago.css">
     
-      <link rel="stylesheet" href="../../../stylesheets/extra.css?v1.000">
+      <link rel="stylesheet" href="../../stylesheets/extra.css?v1.000">
     
-    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
     
     
     
-  <link rel="stylesheet" href="../../../assets/stylesheets/custom.00c04c01.min.css">
+  <link rel="stylesheet" href="../../assets/stylesheets/custom.00c04c01.min.css">
 
-  <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
             html.glightbox-open { overflow: initial; height: 100%; }
             .gslide-title { margin-top: 0px; user-select: text; }
             .gslide-desc { color: #666; user-select: text; }
@@ -90,7 +90,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#traefik-integration" class="md-skip">
+        <a href="#download-install" class="md-skip">
           Skip to content
         </a>
       
@@ -122,12 +122,12 @@
             <div class="md-banner__inner md-grid md-typeset">
               
   You're not viewing the latest version.
-  <a href="../../../.."> 
+  <a href="../../.."> 
     <strong>Click here to go to latest.</strong>
   </a>
 
             </div>
-            <script>var el=document.querySelector("[data-md-component=outdated]"),base=new URL("../../.."),outdated=__md_get("__outdated",sessionStorage,base);!0===outdated&&el&&(el.hidden=!1)</script>
+            <script>var el=document.querySelector("[data-md-component=outdated]"),base=new URL("../.."),outdated=__md_get("__outdated",sessionStorage,base);!0===outdated&&el&&(el.hidden=!1)</script>
           </aside>
         
       </div>
@@ -137,7 +137,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../.." title="CSF Firewall" class="md-header__button md-logo" aria-label="CSF Firewall" data-md-component="logo">
+    <a href="../.." title="CSF Firewall" class="md-header__button md-logo" aria-label="CSF Firewall" data-md-component="logo">
       
   
   <svg id="svgtest" width="100%" height="100%"><g id="transformGroup" transform="scale(1) translate(0 0) rotate(0)"><svg viewBox="0 0 512 512" id="svgContainer" xmlns="http://www.w3.org/2000/svg"><path d="M 153.171 309.301 C 148.062 327.815, 138.987 342.266, 119.133 363.500 C 109.551 373.749, 107.194 376.959, 102.985 385.500 C 100.275 391, 97.535 397.965, 96.897 400.979 C 95.424 407.931, 96.292 425.010, 98.416 430.876 C 100.650 437.047, 100.462 439.887, 97.750 440.926 C 95.766 441.686, 96.504 442.273, 104 445.893 C 132.088 459.458, 175.989 459.768, 204.481 446.604 C 210.886 443.645, 212.098 442.722, 211.493 441.263 C 210.463 438.780, 210.501 438.470, 212.999 429.045 C 214.880 421.949, 215.157 418.895, 214.727 410.045 C 213.852 392.089, 209.622 383.465, 192.358 364.444 C 173.286 343.430, 166.546 332.810, 160.138 313.672 C 157.960 307.167, 156.010 301.677, 155.806 301.472 C 155.601 301.268, 154.415 304.791, 153.171 309.301" stroke="none" fill="#ffffff" fill-rule="evenodd"></path>
@@ -159,7 +159,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              CSF: Traefik Integration
+              Download &amp; Install
             
           </span>
         </div>
@@ -277,7 +277,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../home/" class="md-tabs__link">
+      <a href="../../home/" class="md-tabs__link">
         
   
   
@@ -298,7 +298,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../about/csf/" class="md-tabs__link">
+        <a href="../../about/csf/" class="md-tabs__link">
           
   
   
@@ -316,11 +316,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../../install/dependencies/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../dependencies/" class="md-tabs__link">
           
   
   
@@ -342,7 +344,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../usage/getting-started.md" class="md-tabs__link">
+        <a href="../../usage/getting-started.md" class="md-tabs__link">
           
   
   
@@ -360,8 +362,6 @@
   
   
   
-    
-  
   
     
     
@@ -369,13 +369,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../../../extras/download.md" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../extras/download.md" class="md-tabs__link">
           
   
   
@@ -398,7 +396,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../about/changelog/" class="md-tabs__link">
+      <a href="../../about/changelog/" class="md-tabs__link">
         
   
   
@@ -433,7 +431,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="CSF Firewall" class="md-nav__button md-logo" aria-label="CSF Firewall" data-md-component="logo">
+    <a href="../.." title="CSF Firewall" class="md-nav__button md-logo" aria-label="CSF Firewall" data-md-component="logo">
       
   
   <svg id="svgtest" width="100%" height="100%"><g id="transformGroup" transform="scale(1) translate(0 0) rotate(0)"><svg viewBox="0 0 512 512" id="svgContainer" xmlns="http://www.w3.org/2000/svg"><path d="M 153.171 309.301 C 148.062 327.815, 138.987 342.266, 119.133 363.500 C 109.551 373.749, 107.194 376.959, 102.985 385.500 C 100.275 391, 97.535 397.965, 96.897 400.979 C 95.424 407.931, 96.292 425.010, 98.416 430.876 C 100.650 437.047, 100.462 439.887, 97.750 440.926 C 95.766 441.686, 96.504 442.273, 104 445.893 C 132.088 459.458, 175.989 459.768, 204.481 446.604 C 210.886 443.645, 212.098 442.722, 211.493 441.263 C 210.463 438.780, 210.501 438.470, 212.999 429.045 C 214.880 421.949, 215.157 418.895, 214.727 410.045 C 213.852 392.089, 209.622 383.465, 192.358 364.444 C 173.286 343.430, 166.546 332.810, 160.138 313.672 C 157.960 307.167, 156.010 301.677, 155.806 301.472 C 155.601 301.268, 154.415 304.791, 153.171 309.301" stroke="none" fill="#ffffff" fill-rule="evenodd"></path>
@@ -465,7 +463,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../home/" class="md-nav__link">
+      <a href="../../home/" class="md-nav__link">
         
   
   
@@ -540,7 +538,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../about/csf/" class="md-nav__link">
+      <a href="../../about/csf/" class="md-nav__link">
         
   
   
@@ -563,7 +561,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../about/contributing/" class="md-nav__link">
+      <a href="../../about/contributing/" class="md-nav__link">
         
   
   
@@ -586,7 +584,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../about/license/" class="md-nav__link">
+      <a href="../../about/license/" class="md-nav__link">
         
   
   
@@ -658,7 +656,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../about/conventions/" class="md-nav__link">
+      <a href="../../about/conventions/" class="md-nav__link">
         
   
   
@@ -681,7 +679,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../about/tags/" class="md-nav__link">
+      <a href="../../about/tags/" class="md-nav__link">
         
   
   
@@ -716,8 +714,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -733,19 +733,22 @@
     
     
       
+        
+        
+      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
             
   
   
@@ -758,7 +761,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             Install
@@ -772,7 +775,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../install/dependencies/" class="md-nav__link">
+      <a href="../dependencies/" class="md-nav__link">
         
   
   
@@ -792,10 +795,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../../install/install/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    2. Download &amp; Install
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -806,6 +831,140 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installer-scripts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installer Scripts
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Installer Scripts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installsh" class="md-nav__link">
+    <span class="md-ellipsis">
+      install.sh
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installgenericsh" class="md-nav__link">
+    <span class="md-ellipsis">
+      install.generic.sh
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installcpanelsh" class="md-nav__link">
+    <span class="md-ellipsis">
+      install.cpanel.sh
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installcwpsh" class="md-nav__link">
+    <span class="md-ellipsis">
+      install.cwp.sh
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installcyberpanelsh" class="md-nav__link">
+    <span class="md-ellipsis">
+      install.cyberpanel.sh
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installdirectadminsh" class="md-nav__link">
+    <span class="md-ellipsis">
+      install.directadmin.sh
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installinterworxsh" class="md-nav__link">
+    <span class="md-ellipsis">
+      install.interworx.sh
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installvestash" class="md-nav__link">
+    <span class="md-ellipsis">
+      install.vesta.sh
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#standard-general" class="md-nav__link">
+    <span class="md-ellipsis">
+      Standard / General
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cpanel-whm" class="md-nav__link">
+    <span class="md-ellipsis">
+      cPanel &amp; WHM
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next Steps
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -818,7 +977,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../install/tests/" class="md-nav__link">
+      <a href="../tests/" class="md-nav__link">
         
   
   
@@ -841,7 +1000,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../install/webui/" class="md-nav__link">
+      <a href="../webui/" class="md-nav__link">
         
   
   
@@ -920,7 +1079,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../usage/getting-started.md" class="md-nav__link">
+      <a href="../../usage/getting-started.md" class="md-nav__link">
         
   
   
@@ -994,7 +1153,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../usage/cheatsheet/structure.md" class="md-nav__link">
+      <a href="../../usage/cheatsheet/structure.md" class="md-nav__link">
         
   
   
@@ -1017,7 +1176,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../usage/cheatsheet/commands.md" class="md-nav__link">
+      <a href="../../usage/cheatsheet/commands.md" class="md-nav__link">
         
   
   
@@ -1040,7 +1199,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../usage/cheatsheet/conf.md" class="md-nav__link">
+      <a href="../../usage/cheatsheet/conf.md" class="md-nav__link">
         
   
   
@@ -1075,10 +1234,8 @@
       
   
   
-    
   
   
-  
     
     
       
@@ -1090,22 +1247,19 @@
     
     
       
-        
-        
-      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5">
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
             
   
   
@@ -1118,7 +1272,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Extras
@@ -1144,20 +1298,17 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1">
         
           
-          <label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
             
   
   
@@ -1184,7 +1335,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../extras/download.md" class="md-nav__link">
+      <a href="../../extras/download.md" class="md-nav__link">
         
   
   
@@ -1207,7 +1358,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../extras/configure.md" class="md-nav__link">
+      <a href="../../extras/configure.md" class="md-nav__link">
         
   
   
@@ -1235,10 +1386,8 @@
                 
   
   
-    
   
   
-  
     
     
       
@@ -1253,21 +1402,18 @@
     
       
       
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2">
         
           
-          
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" checked>
-        
-          
-          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="">
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
             
   
   
@@ -1280,7 +1426,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_5_2">
             <span class="md-nav__icon md-icon"></span>
             Tutorials
@@ -1294,7 +1440,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../geographical/" class="md-nav__link">
+      <a href="../../csf/tutorials/geographical/" class="md-nav__link">
         
   
   
@@ -1314,32 +1460,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Traefik Integration
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../csf/tutorials/traefik/" class="md-nav__link">
         
   
   
@@ -1350,35 +1474,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#next-steps" class="md-nav__link">
-    <span class="md-ellipsis">
-      Next Steps
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1391,7 +1486,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../authentik/" class="md-nav__link">
+      <a href="../../csf/tutorials/authentik/" class="md-nav__link">
         
   
   
@@ -1429,7 +1524,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../about/changelog/" class="md-nav__link">
+      <a href="../../about/changelog/" class="md-nav__link">
         
   
   
@@ -1471,6 +1566,111 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#installer-scripts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installer Scripts
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Installer Scripts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installsh" class="md-nav__link">
+    <span class="md-ellipsis">
+      install.sh
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installgenericsh" class="md-nav__link">
+    <span class="md-ellipsis">
+      install.generic.sh
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installcpanelsh" class="md-nav__link">
+    <span class="md-ellipsis">
+      install.cpanel.sh
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installcwpsh" class="md-nav__link">
+    <span class="md-ellipsis">
+      install.cwp.sh
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installcyberpanelsh" class="md-nav__link">
+    <span class="md-ellipsis">
+      install.cyberpanel.sh
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installdirectadminsh" class="md-nav__link">
+    <span class="md-ellipsis">
+      install.directadmin.sh
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installinterworxsh" class="md-nav__link">
+    <span class="md-ellipsis">
+      install.interworx.sh
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installvestash" class="md-nav__link">
+    <span class="md-ellipsis">
+      install.vesta.sh
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#standard-general" class="md-nav__link">
+    <span class="md-ellipsis">
+      Standard / General
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cpanel-whm" class="md-nav__link">
+    <span class="md-ellipsis">
+      cPanel &amp; WHM
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#next-steps" class="md-nav__link">
     <span class="md-ellipsis">
       Next Steps
@@ -1501,7 +1701,7 @@
         
       
       
-        <a href="../../../about/tags/#tag:configure" class="md-tag md-tag-icon">configure</a>
+        <a href="../../about/tags/#tag:install" class="md-tag md-tag-icon">install</a>
       
     
       
@@ -1510,14 +1710,14 @@
         
       
       
-        <a href="../../../about/tags/#tag:tutorials" class="md-tag md-tag-icon">tutorials</a>
+        <a href="../../about/tags/#tag:setup" class="md-tag md-tag-icon">setup</a>
       
     
   </nav>
 
 
   
-    <a href="https://github.com/Aetherinox/csf-firewall/edit/main/docs/docs/csf/tutorials/traefik.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/Aetherinox/csf-firewall/edit/main/docs/docs/install/install.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"></path></svg>
     </a>
@@ -1526,177 +1726,245 @@
     
       
     
-    <a href="https://github.com/Aetherinox/csf-firewall/raw/main/docs/docs/csf/tutorials/traefik.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/Aetherinox/csf-firewall/raw/main/docs/docs/install/install.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"></path></svg>
     </a>
   
 
 
-<h1 id="traefik-integration"><abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr> Integration<a class="headerlink" href="#traefik-integration" title="Permanent link">¶</a></h1>
-<p>This section explains how to integrate <abbr title="ConfigServer Security &amp; Firewall Security">ConfigServer Firewall</abbr> and <abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr> so that you can access the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> WebUI via your domain name, but restrict access to the server IP address and port.</p>
+<h1 id="download-install">Download &amp; Install <!-- omit from toc --><a class="headerlink" href="#download-install" title="Permanent link">¶</a></h1>
+<p>In the previous section, we explained how to install all the required <abbr title="A list of packages required for CSF to function properly">dependencies</abbr> for <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>. Now, we’ll guide you through downloading the latest version of <abbr title="A security suite for Linux servers that provides firewall management, intrusion detection, and login failure monitoring.">ConfigServer Firewall &amp; Security</abbr>, and installing it to your server. <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> offers several ways to obtain the most recent release, which we’ll outline below.</p>
+<p><br>
+<br></p>
+<h2 id="installer-scripts">Installer Scripts<a class="headerlink" href="#installer-scripts" title="Permanent link">¶</a></h2>
+<p>Before we download <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>, we'll explain the different installer scripts that you can access once you download and extract <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> to your server. We have provided a list of the files below, and what platform they are for:</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Requires</th>
+<th>Platform</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>install.sh</code></td>
+<td></td>
+<td>Generic installer script, detects what platform you are running on and re-reroutes your installation request to the correct installer file listed below</td>
+</tr>
+<tr>
+<td><code>install.generic.sh</code></td>
+<td></td>
+<td>Baremetal / Generic installer</td>
+</tr>
+<tr>
+<td><code>install.cpanel.sh</code></td>
+<td><code>/usr/local/cpanel/version</code></td>
+<td><abbr title="A Linux-based control panel used to manage your web hosting.">cPanel</abbr> / <abbr title="WebHost Manager; an app from the same developers as cPanel used to manage web servers through a control panel.">WHM</abbr></td>
+</tr>
+<tr>
+<td><code>install.cwp.sh</code></td>
+<td><code>/usr/local/cwpsrv</code></td>
+<td>CentOS Web Panel (CWP)</td>
+</tr>
+<tr>
+<td><code>install.cyberpanel.sh</code></td>
+<td><code>/usr/local/CyberCP</code></td>
+<td>CyberPanel</td>
+</tr>
+<tr>
+<td><code>install.directadmin.sh</code></td>
+<td><code>/usr/local/directadmin/directadmin</code></td>
+<td>DirectAdmin</td>
+</tr>
+<tr>
+<td><code>install.interworx.sh</code></td>
+<td><code>/usr/local/interworx</code></td>
+<td>Interworx</td>
+</tr>
+<tr>
+<td><code>install.vesta.sh</code></td>
+<td><code>/usr/local/vesta</code></td>
+<td>VestaCP</td>
+</tr>
+</tbody>
+</table>
 <p><br></p>
-<p>Open <code>/etc/csf/csf.conf</code> and change <code>UI_IP</code>. This specifies the IP address that the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> WebUI will bind to. By default, the value is empty and binds <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>'s WebUI to all IPs on your server.</p>
-<p>Find:</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nv">UI_IP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span>
-</span></code></pre></div>
+<h3 id="installsh">install.sh<a class="headerlink" href="#installsh" title="Permanent link">¶</a></h3>
+<p>The <code>install.sh</code> script serves as a launcher that directs you to the appropriate installation script for your platform. It can be run on any system, automatically detects your environment, and executes the correct installer from the options listed above. Before running it, make sure the script is executable by running chmod +x install.sh. We’ll cover this in the steps below.</p>
 <p><br></p>
-<p>Change the IP to your <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> network subnet. You MUST use the format below, which is <code>::IPv6:IPv4</code></p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nv">UI_IP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"::ffff:172.17.0.1"</span>
-</span></code></pre></div>
+<h3 id="installgenericsh">install.generic.sh<a class="headerlink" href="#installgenericsh" title="Permanent link">¶</a></h3>
+<p>This is the generic bare-metal installer for <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>. You should use this script when installing <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> on a server that does not have <abbr title="WebHost Manager; an app from the same developers as cPanel used to manage web servers through a control panel.">WHM</abbr>, <abbr title="A Linux-based control panel used to manage your web hosting.">cPanel</abbr>, DirectAdmin, or other control panels installed. If you run <code>install.sh</code>  and it does not detect any supported control panels, it will automatically start <code>install.generic.sh</code> to begin the installation.</p>
 <p><br></p>
-<p>The above change will ensure that your <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> WebUI is <strong>not</strong> accessible via your public IP address. We're going to allow access to it via your domain name, but add some <abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr> <abbr title="A component in Traefik that modifies requests or responses before they reach a service or client.">middleware</abbr> so that you must authenticate before you can access the WebUI.</p>
+<h3 id="installcpanelsh">install.<abbr title="A Linux-based control panel used to manage your web hosting.">cpanel</abbr>.sh<a class="headerlink" href="#installcpanelsh" title="Permanent link">¶</a></h3>
+<p><span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#requires" title="This feature requires the file <pre>/usr/local/cpanel/version</pre>"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-277.5c0-17-6.7-33.3-18.7-45.3L258.7 18.7C246.7 6.7 230.5 0 213.5 0L64 0zM325.5 176L232 176c-13.3 0-24-10.7-24-24L208 58.5 325.5 176z"></path></svg></span></a></span><span class="mdx-badge__text"><code>/usr/local/cpanel/version</code></span></span></p>
+<p>The <code>install.cpanel.sh</code> script is ran in order to integrate <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> with an existing <abbr title="A Linux-based control panel used to manage your web hosting.">cPanel</abbr>/<abbr title="WebHost Manager; an app from the same developers as cPanel used to manage web servers through a control panel.">WHM</abbr> installation. This file triggers if you run <code>install.sh</code> and it detects that you have the file <code>/usr/local/cpanel/version</code> on your server. </p>
 <p><br></p>
-<p>Next, we can add <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> through <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> and <abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr> so that it's accessible via <code>csf.domain.com</code>. Open up your <abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr>'s <code>dynamic.yml</code> and add the following:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="traefik-integration-dynamicyml-routers" name="__tabbed_1" type="radio"><input id="traefik-integration-dynamicyml-middleware" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="traefik-integration-dynamicyml-routers"><abbr title="The <b>dynamic configuration file</b> for Traefik. It defines settings that can be reloaded at runtime (routers, middlewares, services, TLS options, etc.). Traefik continuously watches this file for changes without requiring a restart.">dynamic.yml</abbr> (<abbr title="In Traefik, routers match incoming requests (from entrypoints) to the correct service. They evaluate rules (like hostnames, paths, headers) and then forward the traffic to the appropriate service, optionally applying middlewares along the way.">routers</abbr>)</label><label for="traefik-integration-dynamicyml-middleware"><abbr title="The <b>dynamic configuration file</b> for Traefik. It defines settings that can be reloaded at runtime (routers, middlewares, services, TLS options, etc.). Traefik continuously watches this file for changes without requiring a restart.">dynamic.yml</abbr> (<abbr title="A component in Traefik that modifies requests or responses before they reach a service or client.">middleware</abbr>)</label></div>
+<h3 id="installcwpsh">install.cwp.sh<a class="headerlink" href="#installcwpsh" title="Permanent link">¶</a></h3>
+<p><span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#requires" title="This feature requires the file <pre>/usr/local/cwpsrv</pre>"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-277.5c0-17-6.7-33.3-18.7-45.3L258.7 18.7C246.7 6.7 230.5 0 213.5 0L64 0zM325.5 176L232 176c-13.3 0-24-10.7-24-24L208 58.5 325.5 176z"></path></svg></span></a></span><span class="mdx-badge__text"><code>/usr/local/cwpsrv</code></span></span></p>
+<p>The <code>install.cwp.sh</code> script is ran in order to integrate <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> with an existing copy of <a href="https://centos-webpanel.com/">CentOS Web Panel (CWP)</a>. This file triggers when you run <code>install.sh</code> and it detects that you have the file <code>/usr/local/cwpsrv</code> on your server.</p>
+<p><br></p>
+<h3 id="installcyberpanelsh">install.cyberpanel.sh<a class="headerlink" href="#installcyberpanelsh" title="Permanent link">¶</a></h3>
+<p><span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#requires" title="This feature requires the file <pre>/usr/local/CyberCP</pre>"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-277.5c0-17-6.7-33.3-18.7-45.3L258.7 18.7C246.7 6.7 230.5 0 213.5 0L64 0zM325.5 176L232 176c-13.3 0-24-10.7-24-24L208 58.5 325.5 176z"></path></svg></span></a></span><span class="mdx-badge__text"><code>/usr/local/CyberCP</code></span></span></p>
+<p>The <code>install.cyberpanel.sh</code> script is ran in order to integrate <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> with an existing copy of <a href="https://cyberpanel.net/">Cyber Panel</a>. This file triggers when you run <code>install.sh</code> and it detects that you have the file <code>/usr/local/CyberCP</code> on your server.</p>
+<p><br></p>
+<h3 id="installdirectadminsh">install.directadmin.sh<a class="headerlink" href="#installdirectadminsh" title="Permanent link">¶</a></h3>
+<p><span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#requires" title="This feature requires the file <pre>/usr/local/directadmin/directadmin</pre>"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-277.5c0-17-6.7-33.3-18.7-45.3L258.7 18.7C246.7 6.7 230.5 0 213.5 0L64 0zM325.5 176L232 176c-13.3 0-24-10.7-24-24L208 58.5 325.5 176z"></path></svg></span></a></span><span class="mdx-badge__text"><code>/usr/local/directadmin/directadmin</code></span></span></p>
+<p>The <code>install.directadmin.sh</code> script is ran in order to integrate <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> with an existing copy of <a href="https://directadmin.com/">DirectAdmin</a>. This file triggers when you run <code>install.sh</code> and it detects that you have the file <code>/usr/local/directadmin/directadmin</code> on your server.</p>
+<p><br></p>
+<h3 id="installinterworxsh">install.interworx.sh<a class="headerlink" href="#installinterworxsh" title="Permanent link">¶</a></h3>
+<p><span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#requires" title="This feature requires the file <pre>/usr/local/interworx</pre>"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-277.5c0-17-6.7-33.3-18.7-45.3L258.7 18.7C246.7 6.7 230.5 0 213.5 0L64 0zM325.5 176L232 176c-13.3 0-24-10.7-24-24L208 58.5 325.5 176z"></path></svg></span></a></span><span class="mdx-badge__text"><code>/usr/local/interworx</code></span></span></p>
+<p>The <code>install.interworx.sh</code> script is ran in order to integrate <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> with an existing copy of <a href="https://interworx.com/">Interworx</a>. This file triggers when you run <code>install.sh</code> and it detects that you have the file <code>/usr/local/interworx</code> on your server.</p>
+<p><br></p>
+<h3 id="installvestash">install.vesta.sh<a class="headerlink" href="#installvestash" title="Permanent link">¶</a></h3>
+<p><span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#requires" title="This feature requires the file <pre>/usr/local/vesta</pre>"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-277.5c0-17-6.7-33.3-18.7-45.3L258.7 18.7C246.7 6.7 230.5 0 213.5 0L64 0zM325.5 176L232 176c-13.3 0-24-10.7-24-24L208 58.5 325.5 176z"></path></svg></span></a></span><span class="mdx-badge__text"><code>/usr/local/vesta</code></span></span></p>
+<p>The <code>install.vesta.sh</code> script is ran in order to integrate <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> with an existing copy of <a href="https://vestacp.com/">VestaCP</a>. This file triggers when you run <code>install.sh</code> and it detects that you have the file <code>/usr/local/vesta</code> on your server.</p>
+<p><br></p>
+<hr>
+<p><br></p>
+<h2 id="standard-general">Standard / General<a class="headerlink" href="#standard-general" title="Permanent link">¶</a></h2>
+<p>These instructions are intended for users who do not have server management software such as <abbr title="A Linux-based control panel used to manage your web hosting.">cPanel</abbr>, <abbr title="WebHost Manager; an app from the same developers as cPanel used to manage web servers through a control panel.">WHM</abbr>, or DirectAdmin. In this case, you will need to manually download the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> files to your server and perform the installation yourself.</p>
+<details class="note">
+<summary>Finding the Latest Version</summary>
+<p>You can find out what the latest version of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> is by visiting our <a href="https://github.com/Aetherinox/csf-firewall/releases">Github Releases</a> page. </p>
+</details>
+<p><br>
+<br></p>
+<p>Download the latest version of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>. You can either download a specific version, or download the repositories' current version.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="standard-general-download-specific-version" name="__tabbed_1" type="radio"><input id="standard-general-download-latest-version" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="standard-general-download-specific-version">Download Specific Version</label><label for="standard-general-download-latest-version">Download Latest Version</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>http:
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>  routers:
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    csf-http:
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>      service: "csf"
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>      rule: "Host(`csf.domain.com`)"
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>      entryPoints:
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>        - "http"
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>      middlewares:
-</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>        - https-redirect@file
-</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>
-</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    csf-https:
-</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>      service: "csf"
-</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>      rule: "Host(`csf.domain.com`)"
-</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>      entryPoints:
-</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>        - "https"
-</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>      middlewares:
-</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>        - authentik@file
-</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>        - whitelist@file
-</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>        - geoblock@file
-</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>      tls:
-</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>        certResolver: cloudflare
-</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>        domains:
-</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>          - main: "domain.com"
-</span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>            sans:
-</span><span id="__span-2-25"><a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>              - "*.domain.com"
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>wget<span class="w"> </span>-O<span class="w"> </span>/tmp/csf-firewall-latest.zip<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span>https://github.com/Aetherinox/csf-firewall/releases/download/15.00/csf-firewall-v15.00.zip
 </span></code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>http:
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>  middlewares:
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    authentik:
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>      forwardauth:
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>        address: http://authentik-server:9000/outpost.goauthentik.io/auth/traefik
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>        trustForwardHeader: true
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>        authResponseHeaders:
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>          - X-authentik-username
-</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>          - X-authentik-groups
-</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>          - X-authentik-email
-</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>          - X-authentik-name
-</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>          - X-authentik-uid
-</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>          - X-authentik-jwt
-</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>          - X-authentik-meta-jwks
-</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>          - X-authentik-meta-outpost
-</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>          - X-authentik-meta-provider
-</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>          - X-authentik-meta-app
-</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>          - X-authentik-meta-version
-</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>
-</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>    geoblock:
-</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>      plugin:
-</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>        GeoBlock:
-</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>          allowLocalRequests: "true"
-</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>          allowUnknownCountries: "false"
-</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a>          blackListMode: "false"
-</span><span id="__span-3-26"><a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a>          api: https://get.geojs.io/v1/ip/country/{ip}
-</span><span id="__span-3-27"><a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a>          ipGeolocationHttpHeaderField: "Cf-Ipcountry"
-</span><span id="__span-3-28"><a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a>          xForwardedFor: "X-Forwarded-For"
-</span><span id="__span-3-29"><a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a>          apiTimeoutMs: "150"
-</span><span id="__span-3-30"><a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a>          cacheSize: "15"
-</span><span id="__span-3-31"><a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a>          addCountryHeader: "true"
-</span><span id="__span-3-32"><a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a>          forceMonthlyUpdate: "true"
-</span><span id="__span-3-33"><a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a>          logAllowedRequests: "true"
-</span><span id="__span-3-34"><a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a>          logApiRequests: "true"
-</span><span id="__span-3-35"><a id="__codelineno-3-35" name="__codelineno-3-35" href="#__codelineno-3-35"></a>          logLocalRequests: "true"
-</span><span id="__span-3-36"><a id="__codelineno-3-36" name="__codelineno-3-36" href="#__codelineno-3-36"></a>          silentStartUp: "false"
-</span><span id="__span-3-37"><a id="__codelineno-3-37" name="__codelineno-3-37" href="#__codelineno-3-37"></a>          unknownCountryApiResponse: nil
-</span><span id="__span-3-38"><a id="__codelineno-3-38" name="__codelineno-3-38" href="#__codelineno-3-38"></a>          countries:
-</span><span id="__span-3-39"><a id="__codelineno-3-39" name="__codelineno-3-39" href="#__codelineno-3-39"></a>            - US
-</span><span id="__span-3-40"><a id="__codelineno-3-40" name="__codelineno-3-40" href="#__codelineno-3-40"></a>
-</span><span id="__span-3-41"><a id="__codelineno-3-41" name="__codelineno-3-41" href="#__codelineno-3-41"></a>    whitelist:
-</span><span id="__span-3-42"><a id="__codelineno-3-42" name="__codelineno-3-42" href="#__codelineno-3-42"></a>      ipAllowList:
-</span><span id="__span-3-43"><a id="__codelineno-3-43" name="__codelineno-3-43" href="#__codelineno-3-43"></a>        sourceRange:
-</span><span id="__span-3-44"><a id="__codelineno-3-44" name="__codelineno-3-44" href="#__codelineno-3-44"></a>          - "127.0.0.0/8"
-</span><span id="__span-3-45"><a id="__codelineno-3-45" name="__codelineno-3-45" href="#__codelineno-3-45"></a>        ipStrategy:
-</span><span id="__span-3-46"><a id="__codelineno-3-46" name="__codelineno-3-46" href="#__codelineno-3-46"></a>          excludedIPs:
-</span><span id="__span-3-47"><a id="__codelineno-3-47" name="__codelineno-3-47" href="#__codelineno-3-47"></a>            # Cloudflare IP List
-</span><span id="__span-3-48"><a id="__codelineno-3-48" name="__codelineno-3-48" href="#__codelineno-3-48"></a>            # These will be ignored and the next IP in line will be checked
-</span><span id="__span-3-49"><a id="__codelineno-3-49" name="__codelineno-3-49" href="#__codelineno-3-49"></a>            - 173.245.48.0/20
-</span><span id="__span-3-50"><a id="__codelineno-3-50" name="__codelineno-3-50" href="#__codelineno-3-50"></a>            - 103.21.244.0/22
-</span><span id="__span-3-51"><a id="__codelineno-3-51" name="__codelineno-3-51" href="#__codelineno-3-51"></a>            - 103.22.200.0/22
-</span><span id="__span-3-52"><a id="__codelineno-3-52" name="__codelineno-3-52" href="#__codelineno-3-52"></a>            - 103.31.4.0/22
-</span><span id="__span-3-53"><a id="__codelineno-3-53" name="__codelineno-3-53" href="#__codelineno-3-53"></a>            - 141.101.64.0/18
-</span><span id="__span-3-54"><a id="__codelineno-3-54" name="__codelineno-3-54" href="#__codelineno-3-54"></a>            - 108.162.192.0/18
-</span><span id="__span-3-55"><a id="__codelineno-3-55" name="__codelineno-3-55" href="#__codelineno-3-55"></a>            - 190.93.240.0/20
-</span><span id="__span-3-56"><a id="__codelineno-3-56" name="__codelineno-3-56" href="#__codelineno-3-56"></a>            - 188.114.96.0/20
-</span><span id="__span-3-57"><a id="__codelineno-3-57" name="__codelineno-3-57" href="#__codelineno-3-57"></a>            - 197.234.240.0/22
-</span><span id="__span-3-58"><a id="__codelineno-3-58" name="__codelineno-3-58" href="#__codelineno-3-58"></a>            - 198.41.128.0/17
-</span><span id="__span-3-59"><a id="__codelineno-3-59" name="__codelineno-3-59" href="#__codelineno-3-59"></a>            - 162.158.0.0/15
-</span><span id="__span-3-60"><a id="__codelineno-3-60" name="__codelineno-3-60" href="#__codelineno-3-60"></a>            - 104.16.0.0/13
-</span><span id="__span-3-61"><a id="__codelineno-3-61" name="__codelineno-3-61" href="#__codelineno-3-61"></a>            - 104.24.0.0/14
-</span><span id="__span-3-62"><a id="__codelineno-3-62" name="__codelineno-3-62" href="#__codelineno-3-62"></a>            - 172.64.0.0/13
-</span><span id="__span-3-63"><a id="__codelineno-3-63" name="__codelineno-3-63" href="#__codelineno-3-63"></a>            - 131.0.72.0/22
-</span><span id="__span-3-64"><a id="__codelineno-3-64" name="__codelineno-3-64" href="#__codelineno-3-64"></a>            - 2400:cb00::/32
-</span><span id="__span-3-65"><a id="__codelineno-3-65" name="__codelineno-3-65" href="#__codelineno-3-65"></a>            - 2606:4700::/32
-</span><span id="__span-3-66"><a id="__codelineno-3-66" name="__codelineno-3-66" href="#__codelineno-3-66"></a>            - 2803:f800::/32
-</span><span id="__span-3-67"><a id="__codelineno-3-67" name="__codelineno-3-67" href="#__codelineno-3-67"></a>            - 2405:b500::/32
-</span><span id="__span-3-68"><a id="__codelineno-3-68" name="__codelineno-3-68" href="#__codelineno-3-68"></a>            - 2405:8100::/32
-</span><span id="__span-3-69"><a id="__codelineno-3-69" name="__codelineno-3-69" href="#__codelineno-3-69"></a>            - 2a06:98c0::/29
-</span><span id="__span-3-70"><a id="__codelineno-3-70" name="__codelineno-3-70" href="#__codelineno-3-70"></a>            - 2c0f:f248::/32
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>wget<span class="w"> </span>-O<span class="w"> </span>/tmp/csf-firewall-latest.zip<span class="w"> </span><span class="s2">"</span><span class="k">$(</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span>curl<span class="w"> </span>-s<span class="w"> </span>https://api.github.com/repos/Aetherinox/csf-firewall/releases/latest<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">'browser_download_url.*csf-firewall-v[0-9]\+\.[0-9]\+\.zip"'</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span><span class="s1">'helpers'</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s1">'"'</span><span class="w"> </span>-f<span class="w"> </span><span class="m">4</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="k">)</span><span class="s2">"</span>
 </span></code></pre></div>
 </div>
 </div>
 </div>
 <p><br></p>
-<p>At the bottom of the same file, we must now add a new <strong>loadBalancer</strong> rule under <code>http</code> -&gt; <code>services</code>. Change the <code>ip</code> and <code>port</code> if you have different values:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>http:
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>  routers:
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    [CODE FROM ABOVE]
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>  services:
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    csf:
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>      loadBalancer:
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>        servers:
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>          - url: "https://172.17.0.1:8546/"
+<p>Next, we need to extract the <code>.zip</code> to a folder on our server. We are egoing to unzip the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> zip to <code>/tmp/csf</code>:</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>unzip<span class="w"> </span>/tmp/csf-firewall-latest.zip<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span>-d<span class="w"> </span>/tmp/csf
 </span></code></pre></div>
 <p><br></p>
-<p>With the example above, we are also going to add a few <abbr title="A component in Traefik that modifies requests or responses before they reach a service or client.">middlewares</abbr>:</p>
+<p>After you extract the <code>.zip</code>, change to the folder:</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">cd</span><span class="w"> </span>/tmp/csf
+</span></code></pre></div>
+<p><br></p>
+<p>You now need to set the <code>install.sh</code> script to have <code>+x</code> executable permissions by running the command:</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>chmod<span class="w"> </span>+x<span class="w"> </span>install.sh
+</span></code></pre></div>
+<p><br></p>
+<p>You may get warnings that certain packages are not installed; which is fine as long as you don't see <code>FATAL</code> errors. <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> has additional features that you can install later with <abbr title="A list of packages required for CSF to function properly">dependencies</abbr> that are not required to get up and running.</p>
+<p><br></p>
+<p>Finally, run the install script:</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sh<span class="w"> </span>install.sh
+</span></code></pre></div>
+<p><br></p>
+<p>Follow any on-screen instructions and <abbr title="ConfigServer Security &amp; Firewall Security">ConfigServer Firewall</abbr> will install.</p>
+<p><br>
+<br></p>
+<h2 id="cpanel-whm"><abbr title="A Linux-based control panel used to manage your web hosting.">cPanel</abbr> &amp; <abbr title="WebHost Manager; an app from the same developers as cPanel used to manage web servers through a control panel.">WHM</abbr><a class="headerlink" href="#cpanel-whm" title="Permanent link">¶</a></h2>
+<p>If you are hosting a server with your own managed license for <abbr title="A Linux-based control panel used to manage your web hosting.">cPanel</abbr> &amp; <abbr title="WebHost Manager; an app from the same developers as cPanel used to manage web servers through a control panel.">WHM</abbr>, this means that you will need to manually install <abbr title="ConfigServer Security &amp; Firewall Security">ConfigServer Firewall</abbr> onto your server to utilize it. First, log in to your server as the root user via SSH.</p>
+<p>You will need to download the latest version of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>. You can either download a specific version, or download the repositories' current version.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="cpanel-whm-download-specific-version" name="__tabbed_2" type="radio"><input id="cpanel-whm-download-latest-version" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="cpanel-whm-download-specific-version">Download Specific Version</label><label for="cpanel-whm-download-latest-version">Download Latest Version</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>wget<span class="w"> </span>-O<span class="w"> </span>./csf-firewall-latest.zip<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span>https://github.com/Aetherinox/csf-firewall/releases/download/15.00/csf-firewall-v15.00.zip
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>wget<span class="w"> </span>-O<span class="w"> </span>./csf-firewall-latest.zip<span class="w"> </span><span class="s2">"</span><span class="k">$(</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span>curl<span class="w"> </span>-s<span class="w"> </span>https://api.github.com/repos/Aetherinox/csf-firewall/releases/latest<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s1">'browser_download_url.*csf-firewall-v[0-9]\+\.[0-9]\+\.zip"'</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-v<span class="w"> </span><span class="s1">'helpers'</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s1">'"'</span><span class="w"> </span>-f<span class="w"> </span><span class="m">4</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="k">)</span><span class="s2">"</span>
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>Unzip / decompress the downloaded file to your server. We have provided instructions for extracting both the newer <code>.zip</code> format, and the older <code>tar .tgz</code> format:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="cpanel-whm-zip" name="__tabbed_3" type="radio"><input id="cpanel-whm-tgz" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="cpanel-whm-zip">.zip</label><label for="cpanel-whm-tgz">.tgz</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>unzip<span class="w"> </span>csf-firewall-latest.zip
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>tar<span class="w"> </span>-xzf<span class="w"> </span>csf-firewall-latest.tgz
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>Change over to the folder you just extracted:</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nb">cd</span><span class="w"> </span>csf-firewall-latest
+</span></code></pre></div>
+<p><br></p>
+<p>Make sure the setup file has the proper permissions by setting it to be <code>+x</code> executable:</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>sudo<span class="w"> </span>chmod<span class="w"> </span>+x<span class="w"> </span>install.cpanel.sh
+</span></code></pre></div>
+<p><br></p>
+<p>Finally, run the installation script:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="cpanel-whm-option-1" name="__tabbed_4" type="radio"><input id="cpanel-whm-option-2" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="cpanel-whm-option-1">Option 1</label><label for="cpanel-whm-option-2">Option 2</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>./install.cpanel.sh
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>sh<span class="w"> </span>install.cpanel.sh
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>To access <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>, use <abbr title="WebHost Manager; an app from the same developers as cPanel used to manage web servers through a control panel.">WHM</abbr>’s <strong>ConfigServer Security &amp; Firewall interface</strong></p>
 <ul>
-<li><a href="https://goauthentik.io/"><abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr></a></li>
-<li><a href="https://doc.traefik.io/traefik/middlewares/http/ipwhitelist/">IP Whitelist</a></li>
-<li><a href="https://plugins.traefik.io/plugins/62947302108ecc83915d7781/LICENSE">Geographical Location Blocking</a></li>
+<li><abbr title="WebHost Manager; an app from the same developers as cPanel used to manage web servers through a control panel.">WHM</abbr> » Home » Plugins » <code>ConfigServer Security &amp; Firewall</code></li>
 </ul>
 <p><br></p>
-<p>By applying the above <abbr title="A component in Traefik that modifies requests or responses before they reach a service or client.">middlewares</abbr>, we can restrict what IP addresses can access your <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> WebUI, as well as add <abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr>'s authentication system so that you must authenticate first before getting into the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> WebUI. These are all optional, and you can apply whatever <abbr title="A component in Traefik that modifies requests or responses before they reach a service or client.">middlewares</abbr> you deem fit.</p>
-<p><br></p>
-<p>You must configure the above <abbr title="A component in Traefik that modifies requests or responses before they reach a service or client.">middleware</abbr> if you have not added it to <abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr> yet. This guide does not go into how to add <abbr title="A component in Traefik that modifies requests or responses before they reach a service or client.">middleware</abbr> to <abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr>, that information can be found at:</p>
-<ul>
-<li><a href="https://doc.traefik.io/traefik/middlewares/overview/">https://doc.traefik.io/traefik/middlewares/overview/</a></li>
-</ul>
-<p><br></p>
-<p>Once you configure these changes in <abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr>, you can restart your <abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr> <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">docker</abbr> container. The command for that depends on how you set up the container. If you used <code>docker-compose.yml</code>, you can <code>cd</code> into the folder with the <code>docker-compose.yml</code> file and then execute:</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>down<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
-</span></code></pre></div>
+<p>A more detailed explanation of how to configure <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> will be explained elsewhere in this guide.</p>
 <p><br></p>
 <hr>
 <p><br></p>
-<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>url:            ../authentik
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>name:           Next: Integrating Authentik
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>desc:           Instructions for adding Authentik middleware to ConfigServer via Traefik
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>image:          https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjXOa4WN-mW3gXnIo_hEY6uAwoi2v_e02eG3TCHxSwIY70Y_OzErdaeaepXFoRa2sYx8M&amp;usqp=CAU
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>favicon:        https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjXOa4WN-mW3gXnIo_hEY6uAwoi2v_e02eG3TCHxSwIY70Y_OzErdaeaepXFoRa2sYx8M&amp;usqp=CAU
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>favicon_size:   25
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>target:         same
-</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>accent:         a40547E0
-</span></code></pre></div>
-<p><br></p>
+<h2 id="next-steps">Next Steps <!-- omit from toc --><a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
+<mark class="critic block">
+<p>Select what documentation you would like to proceed with next ...</p>
+</mark>
+<div class="grid cards">
+<ul>
+<li>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 9V3.5L18.5 9M6 2c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6Z"></path></svg></span> &nbsp; <strong><a href="../tests/">Run Diagnostic Tests</a></strong></p>
 <hr>
+<p>Select this option to see documentation on how
+to run diagnostic tests for your install of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>. </p>
+<p>Tests will confirm whether or not <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> is running
+properly on your server.</p>
+</li>
+<li>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 9V3.5L18.5 9M6 2c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6Z"></path></svg></span> &nbsp; <strong><a href="../webui/">Enable Web Interface</a></strong></p>
+<hr>
+<p>Enable and access the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface via your 
+browser.</p>
+<p>This is an optional step and is not required in
+order to use <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>.</p>
+</li>
+</ul>
+</div>
+<p><br></p>
 <p><br></p>
 
 
@@ -1718,7 +1986,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="February 16, 2025 00:09:11 UTC"><span class="timeago" datetime="2025-02-16T00:09:11+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="February 16, 2025 00:09:11 UTC">2025-02-16</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 15, 2025 13:47:58 UTC"><span class="timeago" datetime="2025-09-15T13:47:58+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 15, 2025 13:47:58 UTC">2025-09-15</span>
   </span>
 
     
@@ -1734,7 +2002,7 @@
     </span>
     <nav>
       
-        <a href="mailto:github-actions[bot]@users.noreply.github.com">github-actions[bot]</a>
+        <a href="mailto:aetherinox@proton.me">Aetherinox</a>
     </nav>
   </span>
 
@@ -1752,9 +2020,9 @@
     
     <nav>
       
-        <a href="https://github.com/apps/github-actions" class="md-author" title="@github-actions[bot]">
+        <a href="https://github.com/Aetherinox" class="md-author" title="@Aetherinox">
           
-          <img src="https://avatars.githubusercontent.com/in/15368?v=4&amp;size=72" alt="github-actions[bot]">
+          <img src="https://avatars.githubusercontent.com/u/118329232?v=4&amp;size=72" alt="Aetherinox">
         </a>
       
       
@@ -1792,7 +2060,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer">
         
           
-          <a href="../geographical/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Geo Blocking">
+          <a href="../dependencies/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 1. Dependencies">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
@@ -1802,20 +2070,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Geo Blocking
+                1. Dependencies
               </div>
             </div>
           </a>
         
         
           
-          <a href="../authentik/" class="md-footer__link md-footer__link--next" aria-label="Next: Authentik Integration">
+          <a href="../tests/" class="md-footer__link md-footer__link--next" aria-label="Next: 3. Diagnostic Tests">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Authentik Integration
+                3. Diagnostic Tests
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -1929,24 +2197,24 @@
     
     
       
-      <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "toc.follow", "content.action.edit", "content.action.view", "content.tooltips", "search.highlight", "search.share", "search.suggest", "content.code.annotate", "content.code.select", "content.code.copy", "navigation.tabs", "navigation.sections", "navigation.footer", "navigation.indexes", "navigation.instant", "navigation.instant.progress", "navigation.instant.prefetch", "navigation.instant.preview", "navigation.tracking", "navigation.path", "navigation.top"], "search": "../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": {"CSS": "css", "HTML5": "html", "JavaScript": "js"}, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"alias": true, "default": "latest", "provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"base": "../..", "features": ["announce.dismiss", "toc.follow", "content.action.edit", "content.action.view", "content.tooltips", "search.highlight", "search.share", "search.suggest", "content.code.annotate", "content.code.select", "content.code.copy", "navigation.tabs", "navigation.sections", "navigation.footer", "navigation.indexes", "navigation.instant", "navigation.instant.progress", "navigation.instant.prefetch", "navigation.instant.preview", "navigation.tracking", "navigation.path", "navigation.top"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": {"CSS": "css", "HTML5": "html", "JavaScript": "js"}, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"alias": true, "default": "latest", "provider": "mike"}}</script>
     
     
   
-      <script src="../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
-        <script src="../../../js/timeago.min.js"></script>
+        <script src="../../js/timeago.min.js"></script>
       
-        <script src="../../../js/timeago_mkdocs_material.js"></script>
+        <script src="../../js/timeago_mkdocs_material.js"></script>
       
         <script src="https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js"></script>
       
-        <script src="../../../javascripts/tablesort.js"></script>
+        <script src="../../javascripts/tablesort.js"></script>
       
-        <script src="../../../javascripts/all.js?v7.000"></script>
+        <script src="../../javascripts/all.js?v7.000"></script>
       
     
-  <script src="../../../assets/javascripts/custom.129bd6ad.min.js"></script>
+  <script src="../../assets/javascripts/custom.129bd6ad.min.js"></script>
 
   
 <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": false, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
