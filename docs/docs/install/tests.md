@@ -1,5 +1,5 @@
 ---
-title: Diagnostic Tests
+title: "Install › Diagnostic Tests"
 tags:
   - install
   - setup
@@ -16,7 +16,7 @@ ConfigServer Firewall & Security includes a few diagnostic tests which you can r
 
 ## csftest.pl
 
-The `csftest.pl` script is a diagnostic tool included with CSF. Its primary purpose is to check whether your server environment is compatible with CSF and LFD (Login Failure Daemon) before or after installation. When you run csftest.pl, it performs a series of tests to verify:
+The `csftest.pl` script is a diagnostic tool included with CSF. Its primary purpose is to check whether your server environment is compatible with CSF and LFD (Login Failure Daemon) before and after installation. When you run `csftest.pl`, it performs a series of tests to verify:
 
 - That required Perl modules are installed and available
 - That essential system commands and binaries (such as iptables, ip6tables, and others) can be found and executed
@@ -25,7 +25,7 @@ The `csftest.pl` script is a diagnostic tool included with CSF. Its primary purp
 
 <br />
 
-If any issues are detected, the script will report them so you can fix missing dependencies or adjust your system configuration. Running this script is a recommended step after installing dependencies and downloading CSF to your server, as it ensures that your server is properly prepared for firewall deployment.
+If any issues are detected, the script will report them so you can fix missing dependencies or adjust your system configuration. Running this script is a recommended step before installing CSF to your server, as it ensures that your server is properly prepared for firewall deployment.
 
 <br />
 
@@ -37,7 +37,7 @@ sudo perl /usr/local/csf/bin/csftest.pl
 
 <br />
 
-After the tests run; you should see the following:
+When the tests run; you should see the following:
 
 ```terminal
 Testing ip_tables/iptable_filter...OK
@@ -57,9 +57,49 @@ RESULT: csf should function on this server
 
 <br />
 
-### Fixing "unknown option --dport" (CSF requires legacy iptables)
+:   :aetherx-axs-triangle-exclamation:{ .icon-clr-yellow } If the tests failed, proceed to the next step [Troubleshooting](#troubleshooting) to see if your error is listed and consult it for a possible fix.
+:   :aetherx-axs-square-check:{ .icon-clr-green } If the tests succeed, proceed to the next part of the guide:
 
-If you see this error during CSF tests, your system is using the nftables backend for iptables. CSF requires the legacy iptables backend. Check the current setting with:
+<br />
+
+{==
+
+Select what documentation you would like to proceed with next ...
+
+==}
+
+<div class="grid cards" markdown>
+
+-   :material-file: &nbsp; __[Install (Generic)](./install.md#generic)__
+
+    ---
+
+    Choose this step if you wish to install CSF using the generic installer. This is good for users who are installing CSF on a bare metal machine with no existing control panels such as cPanel, DirectAdmin, etc.
+
+-   :material-file: &nbsp; __[Install (cPanel)](./install.md#cpanel-and-whm)__
+
+    ---
+
+    Choose this step if you wish to install CSF on a server which already has cPanel and WHM installed. This will allow CSF to be integrated into WHM and will be listed under WHM's **Plugins** category.
+
+</div>
+
+
+<br />
+
+---
+
+<br />
+
+## Troubleshooting
+
+If you received any errors during the process of running `csftest.pl`, review the list of possible errors and solutions below:
+
+<br .>
+
+### unknown option --dport: (CSF requires legacy iptables)
+
+If you see this error during the CSF tests, your system is using the nftables backend for iptables. CSF requires the legacy iptables backend. Check the current setting with:
 
 ```shell
 sudo update-alternatives --display iptables
@@ -72,7 +112,7 @@ If you see `link currently points to /usr/sbin/iptables-nft`, you need to change
 <br />
 
 
-=== "Method 1"
+=== ":aetherx-axd-circle-1: Method 1"
 
       To switch over to `/usr/sbin/iptables-legacy`, run the command:
 
@@ -124,35 +164,54 @@ If you see `link currently points to /usr/sbin/iptables-nft`, you need to change
       sudo update-alternatives --config ebtables
       ```
 
-=== "Method 2"
+=== ":aetherx-axd-circle-2: Method 2"
 
-      To switch over to `/usr/sbin/iptables-legacy`, run the command:
+      To switch over to `/usr/sbin/iptables-legacy`, run the commands listed below:
 
-      **On Debian/Ubuntu:**
+    === ":aetherx-axb-debian: Debian/Ubuntu (apt-get)"
 
-      ```shell
-      sudo update-alternatives --set iptables /usr/sbin/iptables-legacy
-      sudo update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
-      sudo update-alternatives --set arptables /usr/sbin/arptables-legacy
-      sudo update-alternatives --set ebtables /usr/sbin/ebtables-legacy
-      ```
+        ??? warning "Error: Not registered; Not setting"
+            On newer systems (Debian 11+, Ubuntu 20.04+, RHEL 8+), `ebtables` and `arptables` are often completely replaced by nftables, so there isn’t always a legacy version available. This means that
+            you may not have any binaries installed for these two types and could receive the following error if you attempt to change `ebtables` and `arptables`:
+
+            ```console
+            update-alternatives: error: alternative /usr/sbin/ebtables-legacy for ebtables not registered; not setting
+            update-alternatives: error: alternative /usr/sbin/arptables-legacy for arptables not registered; not setting
+            ```
+
+            If you receive the error(s) above; simply skip setting `ebtables` and `arptables`. Only focus on switching `iptables` and `ip6tables` over to `iptables-legacy`
+
+          ```shell
+          sudo update-alternatives --set iptables /usr/sbin/iptables-legacy
+          sudo update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
+          sudo update-alternatives --set arptables /usr/sbin/arptables-legacy
+          sudo update-alternatives --set ebtables /usr/sbin/ebtables-legacy
+          ```
+
+    === ":aetherx-axb-redhat: CentOS/RHEL (yum/dnf)"
+
+          ```shell
+          sudo alternatives --config iptables
+          sudo alternatives --config ip6tables
+          sudo alternatives --config arptables
+          sudo alternatives --config ebtables
+          ```
 
       <br />
 
-      **On CentOS/RHEL:** If `alternatives` is used, the same commands work. Otherwise:
+      You’ll be presented with a numbered list of installed binaries (usually nftables and legacy). You need to type the number corresponding to the legacy version so that `iptables-legacy` becomes the default.
 
       ```shell
-      sudo alternatives --config iptables
-      sudo alternatives --config ip6tables
-      sudo alternatives --config arptables
-      sudo alternatives --config ebtables
+      There are 2 choices for the alternative iptables (providing /usr/sbin/iptables).
+
+        Selection    Path                       Priority   Status
+      ------------------------------------------------------------
+      * 0            /usr/sbin/iptables-nft      20        auto mode
+        1            /usr/sbin/iptables-legacy   10        manual mode
+        2            /usr/sbin/iptables-nft      20        manual mode
+
+      Enter to keep the current selection[+], or type selection number: 1
       ```
-
-      <br />
-
-      Select the `legacy` version for each prompt.
-
-
 
 <br />
 
@@ -184,6 +243,7 @@ sudo update-alternatives --display iptables
 Which should output:
 
 ```shell
+iptables - manual mode
 link currently points to /usr/sbin/iptables-legacy
 ```
 
@@ -211,23 +271,16 @@ Select what documentation you would like to proceed with next ...
 
 <div class="grid cards" markdown>
 
--   :material-file: &nbsp; __[Enable Web Interface (Optional)](./webui.md)__
+-   :material-file: &nbsp; __[Install (Generic)](./install.md#generic)__
 
     ---
 
-    In the next section, we’ll demonstrate how to enable the **ConfigServer 
-    Firewall (CSF) web interface**, which provides a graphical user 
-    interface to help you manage your firewall.  
+    Choose this step if you wish to install CSF using the generic installer. This is good for users who are installing CSF on a bare metal machine with no existing control panels such as cPanel, DirectAdmin, etc.
 
-    Enabling the web interface is entirely **optional**. If you prefer not 
-    to enable it, you can still manage CSF using terminal commands.
-
--   :material-file: &nbsp; __[Configuring CSF](webui.md)__
+-   :material-file: &nbsp; __[Install (cPanel)](./install.md#cpanel-and-whm)__
 
     ---
 
-    Now that you have CSF up and running, you can proceed to our guide 
-    which explains how to use CSF for the first time, and covers some
-    of the settings that you can adjust.
+    Choose this step if you wish to install CSF on a server which already has cPanel and WHM installed. This will allow CSF to be integrated into WHM and will be listed under WHM's **Plugins** category.
 
 </div>

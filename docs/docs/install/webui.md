@@ -86,7 +86,7 @@ To get the CSF web interface functioning on your server, you must first ensure t
 
 ### Step 2: Enable Web UI
 
-To enable CSF web UI, edit the file `/etc/csf/csf.conf` in your favorite text editor:
+To enable CSF web interface, edit the file `/etc/csf/csf.conf` in your favorite text editor:
 
 ```shell
 sudo nano /etc/csf/csf.conf
@@ -130,36 +130,37 @@ UI_USER = "admin" # (4)!
 UI_PASS = "admin" # (5)!
 ```
 
-1.  :aetherx-axdr-lightbulb:{ .pulsate .icon-clr-yellow } Defines if the csf web interface is enabled or not. Will be
+1.  :aetherx-axdr-lightbulb:{ .pulsate .icon-clr-yellow } Defines if the CSF web interface is enabled or not. Will be
     accessible via your web browser.
     <div class='red right'><small>Required</small></div>
     <div class='yellow right'><small>Values: `0`, `1`</small></div>
-2.  :aetherx-axdr-lightbulb:{ .pulsate .icon-clr-yellow } Defines the port to assign for the csf web interface.
+2.  :aetherx-axdr-lightbulb:{ .pulsate .icon-clr-yellow } Defines the port to assign for the CSF web interface.
     This should be set to a value of `1023` or higher.
     <div class='red right'><small>Required</small></div>
     <div class='yellow right'><small>Values: `> 1023`</small></div>
-3.  :aetherx-axdr-lightbulb:{ .pulsate .icon-clr-yellow } Defines the IP address to bind to the csf web interface.
+3.  :aetherx-axdr-lightbulb:{ .pulsate .icon-clr-yellow } Defines the IP address to bind to the CSF web interface.
     If you plan to route this through Traefik, you should set this to your docker subnet such as `::ffff:172.17.0.1`.
     <div style='padding-top:15px'>Leave blank if you want to bind to all IP addresses on server.</div>
     <div class='red right'><small>Required</small></div>
     <div class='yellow right'><small>Values: `blank`, `::IPv6:IPv4`</small></div>
 4.  :aetherx-axdr-lightbulb:{ .pulsate .icon-clr-yellow } Defines the username that will be required in order to
-    sign into the csf web interface. This should be alphabetic or numerical characters.
+    sign into the CSF web interface. This should be alphabetic or numerical characters.
     <div class='red right'><small>Required</small></div>
     <div class='yellow right'><small>Values: `A-Z,a-z,0-9`</small></div>
 5.  :aetherx-axdr-lightbulb:{ .pulsate .icon-clr-yellow } Defines the password that will be required in order to
-    sign into the csf web interface. This should alphabetic, numerical, or special characters.
+    sign into the CSF web interface. This should alphabetic, numerical, or special characters.
     <div class='red right'><small>Required</small></div>
     <div class='yellow right'><small'>Values: `A-Z,a-z,0-9`</small></div>
 
 <br />
 
-Once you have edited the file, save and exit. Next, opoen the file `/etc/csf/ui/ui.allow` and add your public IP to allow access to CSF UI. Ensure you only add one IP address per line:
+Once you have edited the file, save and exit. Next, open the file `/etc/csf/ui/ui.allow` and add your public IP to allow access to the CSF web interface. Ensure you only add one IP address per line:
 
 === ":material-file: /etc/csf/ui/ui.allow"
 
     ```shell
-    xx.xx.xx.xx
+    10.10.0.6           # example LAN ip
+    40.159.100.6        # example WAN ip
     ```
 
 === ":aetherx-axs-square-terminal: Command"
@@ -171,7 +172,7 @@ Once you have edited the file, save and exit. Next, opoen the file `/etc/csf/ui/
 
 <br />
 
-The CSF web interface works under the `lfd daemon`. We need to restart the lfd daemon on your system using the following command:
+The CSF web interface works under the `lfd daemon _LFD_`. We need to restart the LFD on your system using the following command:
 
 ```shell
 sudo service lfd restart
@@ -179,7 +180,7 @@ sudo service lfd restart
 
 <br />
 
-In order to gain access to the online admin panel; you must ensure lfd and csf are running. You can check by running the commands:
+In order to gain access to the online admin panel; you must ensure LFD and CSF are running. You can check by running the commands:
 
 ```shell
 sudo service lfd status
@@ -203,7 +204,7 @@ You should see the following:
 
 <br />
 
-Next, confirm csf service is also running:
+Next, confirm CSF service is also running:
 
 ```shell
 sudo service csf status
@@ -248,7 +249,7 @@ csf[46313]: open3: exec of /sbin/ipset flush failed: No such file or directory a
 
 <br />
 
-Alternatively, you can restart `csf` and `lfd` at the same time by running:
+Alternatively, you can restart `CSF` and `LFD` at the same time by running:
 
 ```shell
 sudo csf -ra
@@ -259,7 +260,7 @@ sudo csf -ra
 
 ### Step 3: Access Web UI
 
-Now, access CSF UI on your browser with the specified port. For this tutorial; we used 1025 port and accessed the CSF admin panel by opening our browser and going to:
+Now, access the CSF interface in your browser with the specified port. For this tutorial; we used 1025 port and accessed the CSF admin panel by opening our browser and going to:
 
 ```shell
 http://127.0.0.1:1025
@@ -300,28 +301,40 @@ We will cover how to actually use the CSF web interface in another section. As o
 
 ## Traefik Integration
 
-This section of the guide explains how to set up ConfigServer Firewall & Security along with Traefik reverse proxy integration.
+This section of the guide explains how to set up CSF along with Traefik reverse proxy integration.
 
-
-<br />
 <br />
 
 ### Domain Name
 
-To set up the CSF web interface with Traefik, you will need a domain. You have two options:
+Before you begin, you’ll need to decide how you want to access Traefik and CSF from your browser. There are three main options:
 
-1. Purchase a domain from a registrar such as [Porkbun](https://porkbun.com), then use Traefik’s built-in ACME Certificates Resolver to generate a free SSL certificate from Let’s Encrypt.
-2. Use a local domain like `myserver.lan` and create a self-signed certificate.
+1. **Use the server’s IP address**  
+   Access services directly by memorizing and entering their IP addresses.  
 
-Typically people choose to purchase a domain as it is easier to obtain an SSL certificate. If you go with the fake local domain, you'll be responsible for generating your own using [OpenSSL](https://github.com/openssl/openssl).
+2. **Purchase a valid domain name**  
+   Register a real TLD (e.g., `.com`, `.org`, `.net`, `.io`) for public access.  
 
-We will explain these options briefly, but we will not go into great detail as that goes beyond the scope of this guide.
+3. **Use a local domain**  
+   Configure a `.local` or `.lan` domain for internal access only.  
+   ⚠️ These domains cannot be reached from outside your local network.
 
+The main reason for choosing how you will access Traefik will determine how you generate the correct **SSL certificate**. SSL certificates allow you to securely access Traefik and the CSF web interface over the `https` protocol. Without a valid certificate, you would be limited to using the insecure `http` protocol.
+
+We will outline the differences in the options below:
+
+<br />
 <br />
 
 #### Purchase Domain
 
-If you plan to go the route of purchasing a domain, you can find a relatively cheap domain through registrars online. We've listed a few recommendations, but you can pick whichever company you want to go with:
+This option involves you buying your own TLD / domain name from a valid domain regisrar online.
+
+<br />
+
+##### How To Obtain
+
+If you plan to go the route of purchasing a valid TLD / domain, you can find a relatively cheap domain through registrars online. We've listed a few recommendations, but you can pick whichever company you want to go with:
 
 ??? note "Our Recommendation"
     
@@ -338,48 +351,109 @@ If you plan to go the route of purchasing a domain, you can find a relatively ch
 - [Cloudflare](https://cloudflare.com/products/registrar/)
 - [NameSilo](https://www.namesilo.com/)
 
-<br />
-
-Once you get your domain purchased, you'll need to set up the domain name to point to your server. You could also decide to set up your domain name to run through [Cloudflare](https://cloudflare.com).
+Once you get your domain purchased, you'll need to set up the domain name to point to your server. You could also decide to set up your domain name to run through [Cloudflare](https://cloudflare.com) _(optional)_.
 
 <br />
 <br />
 
+##### SSL Certificate
+
+Generating an SSL certificate for a purchased domain is extremely simple, and you have a few options:
+
+1. You can create a [Cloudflare](https://cloudflare.com) account, link your domain with Cloudflare, and get a free SSL certificate
+2. Your domain name may include a free 1-year SSL certificate
+3. When you set up your domain to run with Traefik, there are settings which allow you to have Traefik automatically generate an SSL certificate free of charge.
+
+<br />
+<br />
+
+##### Setup
+
+After you have purchased a valid TLD, you will need to associate that domain with the IP address or nameservers that are assigned to your server where Traefik and CSF will be hosted. There are a multitude of tutorials online about configuring your domain, so we won't go into great detail. The process however, is simple.
+
+We do recommend setting your domain up with [Cloudflare](https://cloudflare.com). This allows you to configure your domain name with your server, and also receive free services such as DNS management, SSL certificates, firewall rules, and DDoS protection. No extra cost.
+
+<br />
+<br />
+<br />
 
 #### Local Domain
 
-If you decide to not [purchase a domain](#purchase-domain), your other option is to set up your local server so that it is accessible via a locally made up domain name. This usually entails editing your operating system host file so that when you type a fake name in your browser, your computer re-directs you to the IP address for your Traefik docker container.
+This option allows you to use a free local domain such as `.lan` or `.local` to generate a self-signed certificate and access services such as CSF and Traefik, however, on a local network only.
+
+<br />
+
+##### How To Obtain
+
+If you decide not to [purchase a domain](#purchase-domain), another option is to configure your server so it can be accessed through a **local domain** (such as `.lan` or `.local`).  
+
+- **`.local`** is an officially reserved *special-use domain name* defined in [RFC 6762](https://www.rfc-editor.org/rfc/rfc6762).  
+  It is typically used with **Multicast DNS (mDNS)** and is only accessible within your **local network**.  
+- **`.lan`** (and similar names like `.home` or `.internal`) are **unofficial pseudo-domains**.  
+  They are commonly used for private networks but are not recognized or reserved by ICANN.  
+
+Unlike a registered domain (e.g., `.com`, `.net`, `.org`), a local domain:
+
+- Will not resolve on the public internet.
+- Can only be accessed within your own LAN.
+- May cause conflicts if the pseudo-domain is ever assigned as a real TLD in the future.
+
+This setup works well if you only need access to CSF and Traefik on your **internal network**. However, if you need **external access** from an outside network, you’ll need to [purchase a domain](#purchase-domain).
+
+<br />
+<br />
+
+##### SSL Certificate
+
+Obtaining an SSL certificate for a local domain involves more work. You have the following options:
+
+1. Self-generate your own SSL certificate using an app such as [OpenSSL](https://slproweb.com/products/Win32OpenSSL.html)
+      - :aetherx-axb-windows: [Windows](https://slproweb.com/products/Win32OpenSSL.html)
+      - :aetherx-axb-linux: [Linux](https://docs.openiam.com/docs-4.2.1.3/appendix/2-openssl)
+2. Find an SSL Certificate authority which allows you to generate certificates for a public IP address.
+      - Let's Encrypt [announced](https://letsencrypt.org/2025/07/01/issuing-our-first-ip-address-certificate) that IP based SSL certificates would be available in Q4 of 2025
+3. Use an online self-signed certificate generator instead of OpenSSL.
+      - One example: https://www.devglan.com/online-tools/generate-self-signed-cert
+4. Traefik also provides quick documentation on how to generate your own self-signed certificate; follow that [tutorial here](https://doc.traefik.io/traefik/setup/docker/#create-a-selfsigned-certificate)
+
+<br />
+<br />
+
+##### Setup
+
+If you have decide to go with a `.local` or `.lan` self-hosted domain, you will need to tell your network / computers what domain you want to use, and where the domain / subdomains should go when you type it into your browser.
+
+To configure local domain access, you’ll need to edit your operating system’s **hosts file**. This ensures that when you type a local domain into your browser, your computer redirects it to the IP address of your **Traefik Docker container**.  
+
+Before you can do this, make sure Traefik is installed and running so you know which IP address has been assigned to the container. Once you have the container’s IP, open your OS hosts file and create entries like the following examples. For ours, Traefik is assigned the docker ip `172.18.0.2`:
 
 === ":aetherx-axb-windows: C:\Windows\system32\drivers\etc\hosts"
 
     ```shell
-    172.18.0.2 fakedomain.lan
+    172.18.0.2 myserver.local
+    172.18.0.2 traefik.myserver.local
+    ::1 myserver.local localhost
     ```
 
 === ":aetherx-axb-linux: /etc/hosts"
 
     ```shell
-    172.18.0.2 fakedomain.lan
+    172.18.0.2 myserver.local
+    172.18.0.2 traefik.myserver.local
+    ::1 myserver.local localhost
     ```
 
 <br />
 
-The other requirement for having a local fake domain is that you must generate your own self-signed SSL certificates, which you can do with the application [OpenSSL](https://github.com/openssl/openssl):
-
-- :aetherx-axb-windows: [Windows](https://slproweb.com/products/Win32OpenSSL.html)
-- :aetherx-axb-linux: [Linux](https://docs.openiam.com/docs-4.2.1.3/appendix/2-openssl)
-
-<br />
-
-In the next section [Setup Traefik](#setup-traefik), there is a link to a guide explaining how to generate your own self-signed certificate.
+The host file changes above means that any time you go to `myserver.local` in your browser, the local domain will automatically try to establish a connection with your Traefik container via the IP `172.18.0.2`.
 
 <br />
 <br />
-
+<br />
 
 ### Setup Traefik
 
-After you have your domain ready to go, you need to now install [Traefik Reverse Proxy](https://doc.traefik.io/traefik/setup/docker/) on your server. Traefik allows you to install their software on a few different platforms:
+Now that we have all of the domain information out of the way, we can now install [Traefik Reverse Proxy](https://doc.traefik.io/traefik/setup/docker/) on your server. Traefik allows you to install their software on a few different platforms:
 
 1. [Binary Distribution](https://doc.traefik.io/traefik/getting-started/install-traefik/#use-the-binary-distribution)
 2. [Docker](https://doc.traefik.io/traefik/setup/docker/)
@@ -387,6 +461,8 @@ After you have your domain ready to go, you need to now install [Traefik Reverse
 4. [Kubernetes](https://doc.traefik.io/traefik/setup/kubernetes/)
 
 <br />
+
+We are not going to provide detailed instructions on installing Traefik since that is outside the scope of this documentation, but there are many tutorials online, and we have linked several above next to each installation option.
 
 If you opted to use a [local domain](#local-domain) that you did not purchase, you will need to generate a self-signed certificate and install it in Traefik. This allows you to access your server securely over `https` rather than the insecure `http` protocol.  
 
@@ -423,8 +499,6 @@ In short, `::ffff:172.17.0.1` is just another way of writing the IPv4 address `1
 ```
 UI_IP = "::ffff:172.17.0.1"
 ```
-
-<br />
 
 The above change will ensure that your CSF web interface is not accessible via your public IP address. We're going to allow access to it through our docker network and domain name.
 
