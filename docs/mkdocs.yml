@@ -240,12 +240,14 @@ nav:
                 - Tags: 'about/tags.md'
     - Install:
           - 1. Dependencies: 'install/dependencies.md'
-          - 2. Download & Install: 'install/install.md'
+          - 2. Download: 'install/download.md'
           - 3. Diagnostic Tests: 'install/tests.md'
-          - 4. Enable Web Interface: 'install/webui.md'
+          - 4. Install: 'install/install.md'
+          - 5. Enable Web Interface: 'install/webui.md'
     - Usage:
           - 1. Getting Started: 'usage/getting-started.md'
           - Cheatsheet:
+                - Home: 'usage/cheatsheet/home.md'
                 - Structure: 'usage/cheatsheet/structure.md'
                 - Commands: 'usage/cheatsheet/commands.md'
                 - Example Configs: 'usage/cheatsheet/conf.md'
