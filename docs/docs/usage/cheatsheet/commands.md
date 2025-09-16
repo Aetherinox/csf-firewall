@@ -1,12 +1,18 @@
 ---
-title: "Cheatsheet: Commands"
+title: "Cheatsheet › Commands"
 tags:
   - cheatsheet
   - configure
 ---
 
-# Cheatsheet: Commands
-When installing, configuring, and running CSF; it is helpful to know where files and folders are stored within your system, and what their purpose is. A list of these files and folders used by CSF are provided below:
+# Cheatsheet › Commands <!-- omit from toc -->
+
+This section outlines all of the commands that can be run in your server’s terminal for **ConfigServer Firewall & Security (CSF)** which will allow you to:
+
+- Manage your firewall  
+- Add whitelisted IPs  
+- Start or stop services  
+- List your current rules  
 
 <br />
 
@@ -52,9 +58,9 @@ Flush/Stop firewall rules (Note: lfd may restart csf)
 sudo csf -f
 ```
 
-=== "stop"
+=== ":aetherx-axs-square-terminal: Terminal"
 
-    ```
+    ```console
     Flushing chain `INPUT'
     Flushing chain `FORWARD'
     Flushing chain `CC_ALLOWPORTS'
@@ -77,9 +83,9 @@ Restart firewall rules (csf)
 sudo csf -r
 ```
 
-=== "restart"
+=== ":aetherx-axs-square-terminal: Terminal"
 
-    ```
+    ```console
     Flushing chain `INPUT'
     Flushing chain `FORWARD'
     Flushing chain `OUTPUT'
@@ -101,9 +107,9 @@ Quick restart (csf restarted by lfd)
 sudo csf -q
 ```
 
-=== "startq"
+=== ":aetherx-axs-square-terminal: Terminal"
 
-    ```
+    ```console
     lfd will restart csf within the next 5 seconds
     ```
 
@@ -118,9 +124,9 @@ Force CLI restart regardless of LFDSTART setting
 sudo csf -sf
 ```
 
-=== "startf"
+=== ":aetherx-axs-square-terminal: Terminal"
 
-    ```
+    ```console
     Flushing chain `INPUT'
     Flushing chain `FORWARD'
     Flushing chain `OUTPUT'
@@ -142,9 +148,9 @@ Restart firewall rules (csf) and then restart lfd daemon. Both csf and then lfd 
 sudo csf -ra
 ```
 
-=== "restartall"
+=== ":aetherx-axs-square-terminal: Terminal"
 
-    ```
+    ```console
     Flushing chain `INPUT'
     Flushing chain `FORWARD'
     Flushing chain `OUTPUT'
@@ -241,9 +247,9 @@ Check for updates to csf but do not upgrade
 sudo csf -c
 ```
 
-=== "Output"
+=== ":aetherx-axs-square-terminal: Terminal"
 
-    ```
+    ```console
     csf is already at the latest version: v14.20
     ```
 
@@ -280,10 +286,10 @@ Show csf version
 sudo csf -v
 ```
 
-=== "Output"
+=== ":aetherx-axs-square-terminal: Terminal"
 
     ```
-    csf: v14.20 (generic)
+    csf: v15.10 (generic)
     ```
 
 <br />
@@ -297,7 +303,7 @@ List/Show the IPv4 iptables configuration
 sudo csf -l
 ```
 
-=== "Output"
+=== ":aetherx-axs-square-terminal: Terminal"
 
     ```
     iptables filter table
@@ -330,7 +336,7 @@ List/Show the IPv6 ip6tables configuration
 sudo csf -l6
 ```
 
-=== "Output"
+=== ":aetherx-axs-square-terminal: Terminal"
 
     ```
     ip6tables filter table
@@ -361,7 +367,7 @@ sudo csf -a <IP_ADDRESS>
 sudo csf -a 142.250.189.142
 ```
 
-=== "Output"
+=== ":aetherx-axs-square-terminal: Terminal"
 
     ```
     Adding 142.250.189.142 to csf.allow and iptables ACCEPT...
@@ -412,7 +418,7 @@ Remove and unblock all entries in `/etc/csf/csf.deny`
 sudo csf -df
 ```
 
-=== "Output"
+=== ":aetherx-axs-square-terminal: Terminal"
 
     ```
     csf: all entries removed from csf.deny
@@ -436,14 +442,14 @@ sudo csf -g ACCEPT
 ### Lookup IP
 <!-- md:command `-i,  --iplookup ip` -->
 
-Lookup IP address geographical information using CC_LOOKUPS setting in `/etc/csf/csf.conf`
+Lookup IP address geographical information using `CC_LOOKUPS` setting in `/etc/csf/csf.conf`
 
 ```shell
 sudo csf -i <IP_ADDRESS>
 sudo csf -i 142.250.189.142
 ```
 
-=== "Output"
+=== ":aetherx-axs-square-terminal: Terminal"
 
     ```
     142.250.189.142 (US/United States/mia09s26-in-f14.1e100.net)
@@ -460,7 +466,7 @@ Displays the current list of temporary allow and deny IP entries with their TTL 
 sudo csf -t
 ```
 
-=== "Output"
+=== ":aetherx-axs-square-terminal: Terminal"
 
     ```
     A/D   IP address          Port    Dir     Time To Live     Comment
@@ -479,7 +485,7 @@ sudo csf -tr <IP_ADDRESS>
 sudo csf -tr 142.250.189.142
 ```
 
-=== "Output"
+=== ":aetherx-axs-square-terminal: Terminal"
 
     ```
     ACCEPT  all opt -- in !lo out *  142.250.189.142  -> 0.0.0.0/0  
@@ -533,7 +539,7 @@ sudo csf -ta <IP_ADDRESS>
 sudo csf -ta 142.250.189.142
 ```
 
-=== "Output"
+=== ":aetherx-axs-square-terminal: Terminal"
 
     ```
     ACCEPT  all opt -- in !lo out *  142.250.189.142  -> 0.0.0.0/0  
@@ -551,7 +557,7 @@ Flush all IPs from the temporary IP entries
 sudo csf -tf
 ```
 
-=== "Output"
+=== ":aetherx-axs-square-terminal: Terminal"
 
     ```
     csf: There are no temporary IP bans
@@ -575,7 +581,7 @@ sudo csf -lr
 
 If you receive the following error in console:
 
-=== "Output"
+=== ":aetherx-axs-square-terminal: Terminal"
 
     ```
     Option LOGSCANNER needs to be enabled in csf.conf for this feature
@@ -621,7 +627,7 @@ View ports on the server that have a running process behind them listening for e
 sudo csf -p
 ```
 
-=== "Output"
+=== ":aetherx-axs-square-terminal: Terminal"
 
     ```
     Ports listening for external connections and the executables running behind them:
@@ -639,7 +645,7 @@ sudo csf -p
 ### View Graphs
 <!-- md:command `--graphs [graph type] [directory]` -->
 
-Generate System Statistics html pages and images for a given graph type into a given directory. See ST_SYSTEM for requirements
+Generate System Statistics html pages and images for a given graph type into a given directory. See `ST_SYSTEM` for requirements
 
 `[graph type]`
 
@@ -668,7 +674,7 @@ sudo csf --graphs mem /home/$USER/graphs
 
 If you run the above command and see the error:
 
-=== "Output"
+=== ":aetherx-axs-square-terminal: Terminal"
 
     ```
     ST_SYSTEM is disabled
@@ -699,7 +705,7 @@ ST_SYSTEM = "0"
 
 If you receive the error:
 
-=== "Output"
+=== ":aetherx-axs-square-terminal: Terminal"
 
     ```
     Perl module GD::Graph is not installed/working
@@ -708,9 +714,28 @@ If you receive the error:
 <br />
 
 Install the package `libgd-graph-perl`:
-```shell
-sudo apt-get install libgd-graph-perl
-```
+
+=== ":aetherx-axb-debian: Debian/Ubuntu (apt-get)"
+
+    ```bash
+    apt-get update
+    apt-get install -y perl \
+      libgd-graph-perl
+    ```
+
+=== ":aetherx-axb-redhat: CentOS/RHEL (yum/dnf)"
+
+    ```bash
+    yum install -y perl \
+      perl-GDGraph
+    ```
+
+=== ":aetherx-axs-onion: Perl (CPAN)"
+
+    ```bash
+    perl -MCPAN -eshell
+    cpan> install GD::Graph
+    ```
 
 <br />
 

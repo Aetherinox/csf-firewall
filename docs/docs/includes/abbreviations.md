@@ -25,6 +25,8 @@
 *[http]: Hypertext Transfer Protocol, the standard protocol for transmitting web data.
 *[Let’s Encrypt]: A free, automated certificate authority that provides SSL/TLS certificates for secure HTTPS connections.
 *[Cloudflare]: A web infrastructure and security company providing CDN, DNS, and DDoS protection services.
+*[Porkbun]: A popular domain regisrar which allows you to buy domain names.
+*[NameSilo]: A popular domain regisrar which allows you to buy domain names.
 *[certbot]: A tool to automatically obtain and manage SSL/TLS certificates from Let's Encrypt.
 *[ssl certificate]: A digital certificate that enables encrypted communication and validates a website’s identity.
 *[middleware]: A component in Traefik that modifies requests or responses before they reach a service or client.

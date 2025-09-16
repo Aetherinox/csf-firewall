@@ -98,11 +98,10 @@ Select what documentation you would like to proceed with next ...
 
 <div class="grid cards" markdown>
 
--   :material-file: &nbsp; __[Download & Install CSF](./install.md)__
+-   :material-file: &nbsp; __[Downloading CSF](./download.md)__
 
     ---
 
-    After installing the required dependencies, proceed to the setup instructions to download 
-    and install **ConfigServer Firewall & Security (CSF)**.
+    The next part of the guide will explain how to [download](./download.md) CSF from one of our official sources, and then extract it to a temp location on your server.
 
 </div>
