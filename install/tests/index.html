@@ -10,10 +10,10 @@
         <link rel="canonical" href="https://Aetherinox.github.io/csf-firewall/install/tests/">
       
       
-        <link rel="prev" href="../install/">
+        <link rel="prev" href="../download/">
       
       
-        <link rel="next" href="../webui/">
+        <link rel="next" href="../install/">
       
       
       <link rel="icon" href="../../assets/favicon.png">
@@ -21,7 +21,7 @@
     
     
       
-        <title>Diagnostic Tests - CSF Firewall</title>
+        <title>Install › Diagnostic Tests - CSF Firewall</title>
       
     
     
@@ -159,7 +159,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Diagnostic Tests
+              Install › Diagnostic Tests
             
           </span>
         </div>
@@ -344,7 +344,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../usage/getting-started.md" class="md-tabs__link">
+        <a href="../../usage/getting-started/" class="md-tabs__link">
           
   
   
@@ -729,6 +729,8 @@
       
         
       
+        
+      
     
     
     
@@ -798,12 +800,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../install/" class="md-nav__link">
+      <a href="../download/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    2. Download &amp; Install
+    2. Download
     
   </span>
   
@@ -877,13 +879,22 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="csftest.pl">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Troubleshooting
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#fixing-unknown-option-dport-csf-requires-legacy-iptables" class="md-nav__link">
+  <a href="#unknown-option-dport-csf-requires-legacy-iptables" class="md-nav__link">
     <span class="md-ellipsis">
-      Fixing "unknown option --dport" (CSF requires legacy iptables)
+      unknown option --dport: (CSF requires legacy iptables)
     </span>
   </a>
   
@@ -919,12 +930,35 @@
   
   
     <li class="md-nav__item">
+      <a href="../install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    4. Install
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../webui/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    4. Enable Web Interface
+    5. Enable Web Interface
     
   </span>
   
@@ -998,7 +1032,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/getting-started.md" class="md-nav__link">
+      <a href="../../usage/getting-started/" class="md-nav__link">
         
   
   
@@ -1022,6 +1056,8 @@
   
     
     
+      
+        
       
         
       
@@ -1072,7 +1108,30 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/cheatsheet/structure.md" class="md-nav__link">
+      <a href="../../usage/cheatsheet/home/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/cheatsheet/structure/" class="md-nav__link">
         
   
   
@@ -1095,7 +1154,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/cheatsheet/commands.md" class="md-nav__link">
+      <a href="../../usage/cheatsheet/commands/" class="md-nav__link">
         
   
   
@@ -1118,7 +1177,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/cheatsheet/conf.md" class="md-nav__link">
+      <a href="../../usage/cheatsheet/conf/" class="md-nav__link">
         
   
   
@@ -1491,13 +1550,22 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="csftest.pl">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      Troubleshooting
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#fixing-unknown-option-dport-csf-requires-legacy-iptables" class="md-nav__link">
+  <a href="#unknown-option-dport-csf-requires-legacy-iptables" class="md-nav__link">
     <span class="md-ellipsis">
-      Fixing "unknown option --dport" (CSF requires legacy iptables)
+      unknown option --dport: (CSF requires legacy iptables)
     </span>
   </a>
   
@@ -1594,7 +1662,7 @@
 <p><br>
 <br></p>
 <h2 id="csftestpl">csftest.pl<a class="headerlink" href="#csftestpl" title="Permanent link">¶</a></h2>
-<p>The <code>csftest.pl</code> script is a diagnostic tool included with <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>. Its primary purpose is to check whether your server environment is compatible with <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> and <abbr title="Login Failure Daemon">LFD</abbr> (Login Failure Daemon) before or after installation. When you run csftest.pl, it performs a series of tests to verify:</p>
+<p>The <code>csftest.pl</code> script is a diagnostic tool included with <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>. Its primary purpose is to check whether your server environment is compatible with <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> and <abbr title="Login Failure Daemon">LFD</abbr> (Login Failure Daemon) before and after installation. When you run <code>csftest.pl</code>, it performs a series of tests to verify:</p>
 <ul>
 <li>That required Perl modules are installed and available</li>
 <li>That essential system commands and binaries (such as <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr>, ip6tables, and others) can be found and executed</li>
@@ -1602,13 +1670,13 @@
 <li>That no conflicting firewall rules or <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> prevent <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> from running correctly</li>
 </ul>
 <p><br></p>
-<p>If any issues are detected, the script will report them so you can fix missing <abbr title="A list of packages required for CSF to function properly">dependencies</abbr> or adjust your system configuration. Running this script is a recommended step after installing <abbr title="A list of packages required for CSF to function properly">dependencies</abbr> and downloading <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> to your server, as it ensures that your server is properly prepared for firewall deployment.</p>
+<p>If any issues are detected, the script will report them so you can fix missing <abbr title="A list of packages required for CSF to function properly">dependencies</abbr> or adjust your system configuration. Running this script is a recommended step before installing <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> to your server, as it ensures that your server is properly prepared for firewall deployment.</p>
 <p><br></p>
 <p>To run these tests; ensure you have the package <code>perl</code> installed on your system as explained in the previous step <a href="../dependencies/"><abbr title="A list of packages required for CSF to function properly">Dependencies</abbr></a>. After you have perl installed, run the command:</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>perl<span class="w"> </span>/usr/local/csf/bin/csftest.pl
 </span></code></pre></div>
 <p><br></p>
-<p>After the tests run; you should see the following:</p>
+<p>When the tests run; you should see the following:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Testing ip_tables/iptable_filter...OK
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Testing ipt_LOG...OK
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>Testing ipt_multiport/xt_multiport...OK
@@ -1623,15 +1691,47 @@
 </span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
 </span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>RESULT: csf should function on this server
 </span></code></pre></div>
+<dl>
+<dt><br></dt>
+<dd>
+<p><span class="twemoji icon-clr-yellow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M256 0c14.7 0 28.2 8.1 35.2 21l216 400c6.7 12.4 6.4 27.4-.8 39.5S486.1 480 472 480L40 480c-14.1 0-27.1-7.4-34.4-19.5s-7.5-27.1-.8-39.5l216-400c7-12.9 20.5-21 35.2-21zm0 168c-13.3 0-24 10.7-24 24l0 112c0 13.3 10.7 24 24 24s24-10.7 24-24l0-112c0-13.3-10.7-24-24-24zm26.7 216a26.7 26.7 0 1 0 -53.3 0 26.7 26.7 0 1 0 53.3 0z"></path></svg></span> If the tests failed, proceed to the next step <a href="#troubleshooting">Troubleshooting</a> to see if your error is listed and consult it for a possible fix.</p>
+</dd>
+<dd>
+<p><span class="twemoji icon-clr-green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M64 32C28.7 32 0 60.7 0 96L0 416c0 35.3 28.7 64 64 64l320 0c35.3 0 64-28.7 64-64l0-320c0-35.3-28.7-64-64-64L64 32zM308.4 212.7l-80 128c-4.2 6.7-11.4 10.9-19.3 11.3s-15.5-3.2-20.2-9.6l-48-64c-8-10.6-5.8-25.6 4.8-33.6s25.6-5.8 33.6 4.8l27 36 61.4-98.3c7-11.2 21.8-14.7 33.1-7.6s14.7 21.8 7.6 33.1z"></path></svg></span> If the tests succeed, proceed to the next part of the guide:</p>
+</dd>
+</dl>
 <p><br></p>
-<h3 id="fixing-unknown-option-dport-csf-requires-legacy-iptables">Fixing "unknown option --dport" (<abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> requires legacy <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr>)<a class="headerlink" href="#fixing-unknown-option-dport-csf-requires-legacy-iptables" title="Permanent link">¶</a></h3>
-<p>If you see this error during <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> tests, your system is using the <abbr title="A Linux firewall framework that replaces iptables with a simpler, faster system.">nftables</abbr> backend for <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr>. <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> requires the legacy <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> backend. Check the current setting with:</p>
+<mark class="critic block">
+<p>Select what documentation you would like to proceed with next ...</p>
+</mark>
+<div class="grid cards">
+<ul>
+<li>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 9V3.5L18.5 9M6 2c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6Z"></path></svg></span> &nbsp; <strong><a href="../install/#generic">Install (Generic)</a></strong></p>
+<hr>
+<p>Choose this step if you wish to install <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> using the generic installer. This is good for users who are installing <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> on a bare metal machine with no existing control panels such as <abbr title="A Linux-based control panel used to manage your web hosting.">cPanel</abbr>, DirectAdmin, etc.</p>
+</li>
+<li>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 9V3.5L18.5 9M6 2c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6Z"></path></svg></span> &nbsp; <strong><a href="../install/#cpanel-and-whm">Install (<abbr title="A Linux-based control panel used to manage your web hosting.">cPanel</abbr>)</a></strong></p>
+<hr>
+<p>Choose this step if you wish to install <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> on a server which already has <abbr title="A Linux-based control panel used to manage your web hosting.">cPanel</abbr> and <abbr title="WebHost Manager; an app from the same developers as cPanel used to manage web servers through a control panel.">WHM</abbr> installed. This will allow <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> to be integrated into <abbr title="WebHost Manager; an app from the same developers as cPanel used to manage web servers through a control panel.">WHM</abbr> and will be listed under <abbr title="WebHost Manager; an app from the same developers as cPanel used to manage web servers through a control panel.">WHM</abbr>'s <strong>Plugins</strong> category.</p>
+</li>
+</ul>
+</div>
+<p><br></p>
+<hr>
+<p><br></p>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">¶</a></h2>
+<p>If you received any errors during the process of running <code>csftest.pl</code>, review the list of possible errors and solutions below:</p>
+<p><br .></p>
+<h3 id="unknown-option-dport-csf-requires-legacy-iptables">unknown option --dport: (<abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> requires legacy <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr>)<a class="headerlink" href="#unknown-option-dport-csf-requires-legacy-iptables" title="Permanent link">¶</a></h3>
+<p>If you see this error during the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> tests, your system is using the <abbr title="A Linux firewall framework that replaces iptables with a simpler, faster system.">nftables</abbr> backend for <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr>. <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> requires the legacy <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> backend. Check the current setting with:</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--display<span class="w"> </span>iptables
 </span></code></pre></div>
 <p><br></p>
 <p>If you see <code>link currently points to /usr/sbin/iptables-nft</code>, you need to change this over to <code>/usr/sbin/iptables-legacy</code>. Two methods are listed below for doing this, <strong>pick one</strong>:</p>
 <p><br></p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="fixing-unknown-option-dport-csf-requires-legacy-iptables-method-1" name="__tabbed_1" type="radio"><input id="fixing-unknown-option-dport-csf-requires-legacy-iptables-method-2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="fixing-unknown-option-dport-csf-requires-legacy-iptables-method-1">Method 1</label><label for="fixing-unknown-option-dport-csf-requires-legacy-iptables-method-2">Method 2</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="unknown-option-dport-csf-requires-legacy-iptables-method-1" name="__tabbed_1" type="radio"><input id="unknown-option-dport-csf-requires-legacy-iptables-method-2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="unknown-option-dport-csf-requires-legacy-iptables-method-1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 256a256 256 0 1 0 512 0 256 256 0 1 0 -512 0zm176 88c0-13.3 10.7-24 24-24l32 0 0-128-16 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l40 0c13.3 0 24 10.7 24 24l0 152 32 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-112 0c-13.3 0-24-10.7-24-24z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M192 168c0-13.3 10.7-24 24-24l40 0c13.3 0 24 10.7 24 24l0 152 32 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-112 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l32 0 0-128-16 0c-13.3 0-24-10.7-24-24z"></path></svg></span> Method 1</label><label for="unknown-option-dport-csf-requires-legacy-iptables-method-2"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 256a256 256 0 1 0 512 0 256 256 0 1 0 -512 0zm176 71.6c0-36.2 22.1-68.7 55.8-81.9l44.7-17.6c6.9-2.7 11.4-9.4 11.4-16.8 0-10-8.1-18-18-18l-62 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l62 0c36.5 0 66 29.6 66 66 0 27.1-16.6 51.5-41.9 61.4l-44.7 17.6c-12.9 5.1-22.1 16.3-24.6 29.6l79.3 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-104 0c-13.3 0-24-10.7-24-24l0-16.4z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M184 169.3c0-13.3 10.7-24 24-24l62 0c36.5 0 66 29.6 66 66 0 27.1-16.6 51.5-41.9 61.4l-44.7 17.6c-12.9 5.1-22.1 16.3-24.6 29.6l79.3 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-104 0c-13.3 0-24-10.7-24-24l0-16.4c0-36.2 22.1-68.7 55.8-81.9l44.7-17.6c6.9-2.7 11.4-9.4 11.4-16.8 0-10-8.1-18-18-18l-62 0c-13.3 0-24-10.7-24-24z"></path></svg></span> Method 2</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>To switch over to <code>/usr/sbin/iptables-legacy</code>, run the command:</p>
@@ -1675,45 +1775,70 @@
 </span></code></pre></div>
 </div>
 <div class="tabbed-block">
-<p>To switch over to <code>/usr/sbin/iptables-legacy</code>, run the command:</p>
-<p><strong>On Debian/Ubuntu:</strong></p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--set<span class="w"> </span>iptables<span class="w"> </span>/usr/sbin/iptables-legacy
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--set<span class="w"> </span>ip6tables<span class="w"> </span>/usr/sbin/ip6tables-legacy
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--set<span class="w"> </span>arptables<span class="w"> </span>/usr/sbin/arptables-legacy
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--set<span class="w"> </span>ebtables<span class="w"> </span>/usr/sbin/ebtables-legacy
+<p>To switch over to <code>/usr/sbin/iptables-legacy</code>, run the commands listed below:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="unknown-option-dport-csf-requires-legacy-iptables-debianubuntu-apt-get" name="__tabbed_2" type="radio"><input id="unknown-option-dport-csf-requires-legacy-iptables-centosrhel-yumdnf" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="unknown-option-dport-csf-requires-legacy-iptables-debianubuntu-apt-get"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M380.4 245.6c3-7.6 5.5-14 5.2-24.4l-4.3 9c4.4-13.2 4-27.1 3.6-40.4-.2-6-.3-11.8 0-17.4l-1.8-.5c-1.5-45.2-40.6-93.1-75.3-109.4-30-13.8-76.1-16.2-97.3-5.8 1.3-1.1 4.2-2 6.8-2.7l.3-.1c3.3-1 6-1.7 4-2.9-19.2 1.9-24.9 5.5-31.1 9.4l-.1 0c-4.6 2.9-9.5 6-20.3 8.7-3.5 3.4 1.7 2 5.8 .9s7.2-1.9-.1 2.4c-3.5 1-6.6 1.3-9.6 1.6l-.1 0c-8.3 .8-15.8 1.6-30.7 17 .8 1.3 3.4-.2 5.3-1.3l.1-.1c2.3-1.4 3.4-2-1.7 4.4-19.1-2.4-60.3 43.7-69.1 59l4.6 .8c-3.2 8-6.8 14.8-10 20.8-4.3 8.1-7.9 14.9-8.7 21.3-.3 5.1-1 11-1.7 17.3-.1 1-.2 2-.3 3l-.1 .6c-3 27.3-6.7 60.8 3.9 73l-1.3 13c.6 1.2 1.1 2.3 1.6 3.5 .2 .4 .4 .8 .5 1.1 1 2.1 2 4.2 3.3 6.2l-3 .2c7 22.1 10.8 22.5 15.1 22.9 4.4 .4 9.3 .9 18.7 24.2-2.7-.9-5.5-1.9-9.4-7.2-.5 4.1 5.8 16.3 13.1 25.8l-3.1 3.6c2.1 3.7 4.8 6.2 7.6 8.8 1 .9 2.1 1.9 3.1 2.9-11.9-6.5 3.2 13.7 11.9 25.2 .8 1.1 1.5 2 2.2 2.9 1.4 1.9 2.5 3.4 2.9 4.1l2.4-4.2c-.3 6.1 4.3 13.9 13.1 24.7l7.3-.3c3 6 14 16.7 20.7 17.2l-4.4 5.8c8.1 2.6 10.3 4.3 12.7 6.2 2.6 2.1 5.4 4.3 16.1 8.1l-4.2-7.4c3.5 3 6.2 5.9 8.8 8.7l.1 .1c5.2 5.6 9.9 10.6 19.7 15.3 10.7 3.7 16.6 4.7 22.7 5.8 .3 0 .6 .1 .9 .1 5.4 .8 11.2 1.8 20.8 4.5-1.1-.1-2.2-.1-3.3-.1-2.3-.1-4.7-.1-7-.1-14.4-.2-29.2-.4-42.7-5.2-96.6-25.7-184.9-139-178.4-255.6-.6-9.9-.3-20.9 0-30.7 .4-13.5 .7-24.8-1.6-28.3l1-3.1c5.3-17.4 11.7-38.2 23.8-62.8l-.1-.2 0-.1c.4 .4 3.4 3.4 8.8-5.8 .8-1.8 1.6-3.7 2.4-5.6 .5-1.1 .9-2.2 1.4-3.2 2.5-6.1 5.1-12.3 8.4-17.9l2.6-.6c1.7-10.1 17-23.8 29.8-35.2l1.1-1c5.7-5.1 10.7-9.7 13.6-13.1l.7 4.4c17-15.9 44.6-27.5 65.6-36.4l.5-.2c4.8-2 9.3-3.9 13.3-5.7-3.4 3.8 2.2 2.7 10 1 4.8-1 10.4-2.1 15.3-2.4l-3.9 2.1c-2.7 1.4-5.4 2.8-8 4.6 8.1-2 11.7-1.4 15.7-.8l.3 0c3.5 .6 7.3 1.2 14.6 .2-5.6 .8-12.3 3-11.2 3.8 7.9 .9 12.8-.1 17.2-1l.2 0c5.5-1.1 10.3-2 19.3 .9l-1-4.8c7.3 2.6 12.7 4.3 17.5 5.8l.5 .1c10 3 17.6 5.3 34.2 14.1 3.2 .2 5.3-.5 7.4-1.2l.1 0c3.6-1.1 7-2.1 15.2 1.2 .3 .5 .5 1 .7 1.4 .1 .2 .2 .5 .3 .7l0 .1c1 2.6 1.8 4.6 14.6 12.1 1.7-.7-2.7-4.7-6.4-8.2l-.1-.1c-.2-.1-.3-.3-.5-.4 32.2 17.3 67.3 54.1 78 93.5-6-11.1-5.2-5.5-4.3 .5 .6 4 1.2 8.1-.2 7.5 4.5 12.1 8.1 24.5 10.4 37.4l-.8-2.9-.1-.3c-3.3-11.9-9.6-34.3-19.9-49.3-.4 4.3-2.8 3.9-5.2 3.5l-.1 0c-3.3-.6-6.2-1.1-1.9 12.6 2.6 3.8 3.1 2.4 3.5 1.1 .5-1.5 .9-2.7 4.7 5.2 .1 4.1 1 8.2 2.1 12.7l.1 .6c.1 .3 .1 .5 .2 .8l.1 .6c.6 2.6 1.3 5.4 1.8 8.4-1.1-.2-2.3-2.2-3.4-4.2-1.4-2.4-2.8-4.7-3.7-3.2 2.4 11.5 6.5 17.4 8 18.3-.3 .6-.6 .7-1.1 .7-.8 0-1.8 .1-1.9 5.3 .7 13.7 3.3 12.5 5.3 11.6 .6-.3 1.2-.6 1.7-.4-.6 2.5-1.6 5.1-2.7 7.9-2.8 7.1-6 15.4-3.4 26.1-.8-3-2-6-3.1-8.9l-.1-.4c-.2-.5-.4-1-.6-1.5-.3-.8-.6-1.6-.9-2.3-.6 4.4-.3 7.7-.1 10.6l0 .7c.4 5.3 .7 10-3 19.9 4.3-14.2 3.8-26.9-.2-20.8 1 10.9-3.7 20.4-8 28.9l-.1 .2c-3.6 7.1-6.8 13.5-5.9 19.3l-5.2-7.1c-7.5 10.9-7 13.3-6.5 15.5l0 .1c.5 1.9 1 3.8-3.4 10.8 1.7-2.9 1.3-3.6 1-4.2-.4-.8-.7-1.5 1.7-5.1-1.6 .1-5.5 3.9-10.1 8.5-3.9 3.9-8.5 8.4-12.8 11.8-37.5 30.1-82.3 34-125.6 17.8 .2-1-.2-2.1-3.1-4.1-36.8-28.2-58.5-52.1-50.9-107.5 2.1-1.6 3.6-5.8 5.3-10.8l.2-.4 .1-.3 0-.1c2.9-8.4 6.5-18.8 14.3-23.8 7.8-17.3 31.3-33.3 56.4-33.7 25.6-1.4 47.2 13.7 58.1 27.9-19.8-18.4-52.1-24-79.7-10.4-28.2 12.7-45 43.8-42.5 74.7 .3-.4 .6-.6 .9-.8l.2-.2c.6-.5 1.1-.9 1.4-3.3-.9 60.2 64.8 104.3 112.1 82l.6 1.3c12.7-3.5 15.9-6.5 20.3-10.7l.1-.1c2.2-2.1 4.7-4.5 8.9-7.3-.3 .7-1.3 1.7-2.4 2.7-2.2 2.1-4.6 4.5-1.6 4.6 5-1.3 18.5-13.4 28.5-22.3 .6-.5 1.2-1 1.7-1.5 1.5-1.3 2.8-2.5 4-3.6l.3-.3c1.9-4.2 1.6-5.6 1.3-7l0-.1c-.4-1.6-.8-3.3 2.4-9.6l7.3-3.7c.8-2.1 1.5-4.1 2.2-6 .2-.6 .5-1.2 .7-1.8l-.4-.2-.1-.1zM248 334.1c-6-3-13.7-8.9-14.8-11.4l-.4 .3c-.3 .6-.5 1.3-.2 2.2-12.2-5.7-23.4-14.3-32.6-24.9 4.9 7.1 10.1 14.1 17 19.5-6.9-2.3-15.1-11.8-21.6-19.3l-.1-.1c-4.3-5-7.9-9.1-9.7-9.5 19.8 35.5 80.5 62.3 112.3 49-14.7 .5-33.4 .3-49.9-5.8zm79.3-119.7l-.1-.2c-.5-1.5-1.1-3.1-1.7-3.4 1.4-5.8 5.4-10.7 4.4 4.6-1 3.8-1.8 1.5-2.6-1zm-4.2 22.2c-1.3 7.9-5 15.5-10.1 22.5 .2-2-1.2-2.4-2.6-2.8-2.9-.8-5.9-1.6 5.6-16.1-.5 1.9-2.1 4.6-3.7 7.3l-.3 .4c-3.6 5.9-6.7 11 4 4.3l1-1.8c2.6-4.5 5-8.8 6-13.8l.1 0zm-55.6 33.9c7.1 .6 14.1 .6 21-1.1-2.5 2.4-5.2 4.8-8.3 7.2-11.1-1.7-21.2-6-12.7-6.1zm-92.6 11.6c3.6 7.1 6.4 11.5 9 15.7l.1 .2c2.3 3.7 4.4 7.1 6.8 11.7-5.1-4.2-8.7-9.5-12.5-15l-.3-.5c-1.4-2.1-2.8-4.2-4.4-6.2l1.2-5.9 .1 0zm7.5-9.6c1.6 3.3 3.2 6.4 5.7 9.1l2.6 7.7-1.3-2.1c-3.2-5.3-6.3-10.6-8-16.7l1 2zm238.9-41.6c-2.3 17.4-7.7 34.6-16 50.3 7.6-14.9 12.5-30.9 14.8-47.2l1.2-3.1zM35.8 110.6c.4 .8 1.4 .5 2.3 .3 1.9-.5 3.6-.9-.1 7.6-.5 .3-1 .7-1.5 1-1.4 .9-2.8 1.9-3.9 3 1.9-3.8 3.5-7.4 3.2-11.9zM25.5 152.3c-.7 3.7-1.5 7.9-3.4 13.9 .2-1.9 0-3.5-.2-4.9l0-.1c-.4-3.4-.7-6.3 4.3-12.8-.3 1.2-.5 2.5-.7 3.8l0 .1z"></path></svg></span> Debian/Ubuntu (<abbr title="A command-line tool for handling packages on Debian-based systems; part of the APT (Advanced Package Tool) suite.">apt-get</abbr>)</label><label for="unknown-option-dport-csf-requires-legacy-iptables-centosrhel-yumdnf"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M341.5 285.6c33.7 0 82.3-6.9 82.3-47 .2-6.7 .9-1.8-20.9-96.2-4.6-19.1-8.7-27.8-42.3-44.6-26.1-13.3-82.9-35.4-99.7-35.4-15.7 0-20.2 20.2-38.9 20.2-18 0-31.3-15.1-48.1-15.1-16.1 0-26.7 11-34.8 33.6-27.5 77.6-26.3 74.3-26.1 78.3 0 24.8 97.6 106.1 228.5 106.1zM429 254.8c4.7 22 4.7 24.3 4.7 27.2 0 37.7-42.3 58.6-98 58.6-125.7 .1-235.9-73.6-235.9-122.3 0-6.8 1.4-13.5 4.1-19.7-45.2 2.3-103.8 10.3-103.8 62 0 84.7 200.6 189 359.5 189 121.8 0 152.5-55.1 152.5-98.6 0-34.2-29.6-73-82.9-96.2z"></path></svg></span> CentOS/RHEL (<abbr title="Yellowdog Updater, Modified; a package manager used on older Red Hat–based systems (e.g., CentOS, RHEL).">yum</abbr>/<abbr title="Dandified Yum; the next-generation version of YUM, used on newer Red Hat–based systems (e.g., Fedora, CentOS 8+, RHEL 8+).">dnf</abbr>)</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<details class="warning">
+<summary>Error: Not registered; Not setting</summary>
+<p>On newer systems (Debian 11+, Ubuntu 20.04+, RHEL 8+), <code>ebtables</code> and <code>arptables</code> are often completely replaced by <abbr title="A Linux firewall framework that replaces iptables with a simpler, faster system.">nftables</abbr>, so there isn’t always a legacy version available. This means that
+you may not have any binaries installed for these two types and could receive the following error if you attempt to change <code>ebtables</code> and <code>arptables</code>:</p>
+<div class="language-console highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="go">update-alternatives: error: alternative /usr/sbin/ebtables-legacy for ebtables not registered; not setting</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="go">update-alternatives: error: alternative /usr/sbin/arptables-legacy for arptables not registered; not setting</span>
 </span></code></pre></div>
-<p><br></p>
-<p><strong>On CentOS/RHEL:</strong> If <code>alternatives</code> is used, the same commands work. Otherwise:</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>sudo<span class="w"> </span>alternatives<span class="w"> </span>--config<span class="w"> </span>iptables
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>sudo<span class="w"> </span>alternatives<span class="w"> </span>--config<span class="w"> </span>ip6tables
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>sudo<span class="w"> </span>alternatives<span class="w"> </span>--config<span class="w"> </span>arptables
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>sudo<span class="w"> </span>alternatives<span class="w"> </span>--config<span class="w"> </span>ebtables
+<p>If you receive the error(s) above; simply skip setting <code>ebtables</code> and <code>arptables</code>. Only focus on switching <code>iptables</code> and <code>ip6tables</code> over to <code>iptables-legacy</code></p>
+</details>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--set<span class="w"> </span>iptables<span class="w"> </span>/usr/sbin/iptables-legacy
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--set<span class="w"> </span>ip6tables<span class="w"> </span>/usr/sbin/ip6tables-legacy
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--set<span class="w"> </span>arptables<span class="w"> </span>/usr/sbin/arptables-legacy
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--set<span class="w"> </span>ebtables<span class="w"> </span>/usr/sbin/ebtables-legacy
 </span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>sudo<span class="w"> </span>alternatives<span class="w"> </span>--config<span class="w"> </span>iptables
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>sudo<span class="w"> </span>alternatives<span class="w"> </span>--config<span class="w"> </span>ip6tables
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>sudo<span class="w"> </span>alternatives<span class="w"> </span>--config<span class="w"> </span>arptables
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>sudo<span class="w"> </span>alternatives<span class="w"> </span>--config<span class="w"> </span>ebtables
+</span></code></pre></div>
+</div>
+</div>
+</div>
 <p><br></p>
-<p>Select the <code>legacy</code> version for each prompt.</p>
+<p>You’ll be presented with a numbered list of installed binaries (usually <abbr title="A Linux firewall framework that replaces iptables with a simpler, faster system.">nftables</abbr> and legacy). You need to type the number corresponding to the legacy version so that <code>iptables-legacy</code> becomes the default.</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>There<span class="w"> </span>are<span class="w"> </span><span class="m">2</span><span class="w"> </span>choices<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>alternative<span class="w"> </span>iptables<span class="w"> </span><span class="o">(</span>providing<span class="w"> </span>/usr/sbin/iptables<span class="o">)</span>.
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span>Selection<span class="w">    </span>Path<span class="w">                       </span>Priority<span class="w">   </span>Status
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>------------------------------------------------------------
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>*<span class="w"> </span><span class="m">0</span><span class="w">            </span>/usr/sbin/iptables-nft<span class="w">      </span><span class="m">20</span><span class="w">        </span>auto<span class="w"> </span>mode
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">  </span><span class="m">1</span><span class="w">            </span>/usr/sbin/iptables-legacy<span class="w">   </span><span class="m">10</span><span class="w">        </span>manual<span class="w"> </span>mode
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">  </span><span class="m">2</span><span class="w">            </span>/usr/sbin/iptables-nft<span class="w">      </span><span class="m">20</span><span class="w">        </span>manual<span class="w"> </span>mode
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>Enter<span class="w"> </span>to<span class="w"> </span>keep<span class="w"> </span>the<span class="w"> </span>current<span class="w"> </span>selection<span class="o">[</span>+<span class="o">]</span>,<span class="w"> </span>or<span class="w"> </span><span class="nb">type</span><span class="w"> </span>selection<span class="w"> </span>number:<span class="w"> </span><span class="m">1</span>
+</span></code></pre></div>
 </div>
 </div>
 </div>
 <p><br></p>
 <p>You can confirm your changes by running the command:</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>iptables<span class="w"> </span>-V
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>iptables<span class="w"> </span>-V
 </span></code></pre></div>
 <p><br></p>
 <p>Which should return:</p>
-<div class="language-console highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="gp">$ </span>iptables<span class="w"> </span>-V
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="go">iptables v1.8.7 (legacy)</span>
+<div class="language-console highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="gp">$ </span>iptables<span class="w"> </span>-V
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="go">iptables v1.8.7 (legacy)</span>
 </span></code></pre></div>
 <p><br></p>
 <p>You can also run:</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--display<span class="w"> </span>iptables
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--display<span class="w"> </span>iptables
 </span></code></pre></div>
 <p><br></p>
 <p>Which should output:</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>link<span class="w"> </span>currently<span class="w"> </span>points<span class="w"> </span>to<span class="w"> </span>/usr/sbin/iptables-legacy
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>iptables<span class="w"> </span>-<span class="w"> </span>manual<span class="w"> </span>mode
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>link<span class="w"> </span>currently<span class="w"> </span>points<span class="w"> </span>to<span class="w"> </span>/usr/sbin/iptables-legacy
 </span></code></pre></div>
 <p><br></p>
 <p>You can always switch back to <code>iptables-nft</code> by running:</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--set<span class="w"> </span>iptables<span class="w"> </span>/usr/sbin/iptables-nft
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--set<span class="w"> </span>iptables<span class="w"> </span>/usr/sbin/iptables-nft
 </span></code></pre></div>
 <p><br></p>
 <hr>
@@ -1725,20 +1850,14 @@
 <div class="grid cards">
 <ul>
 <li>
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 9V3.5L18.5 9M6 2c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6Z"></path></svg></span> &nbsp; <strong><a href="../webui/">Enable Web Interface (Optional)</a></strong></p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 9V3.5L18.5 9M6 2c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6Z"></path></svg></span> &nbsp; <strong><a href="../install/#generic">Install (Generic)</a></strong></p>
 <hr>
-<p>In the next section, we’ll demonstrate how to enable the <strong>ConfigServer 
-Firewall (<abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>) web interface</strong>, which provides a graphical user 
-interface to help you manage your firewall.  </p>
-<p>Enabling the web interface is entirely <strong>optional</strong>. If you prefer not 
-to enable it, you can still manage <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> using terminal commands.</p>
+<p>Choose this step if you wish to install <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> using the generic installer. This is good for users who are installing <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> on a bare metal machine with no existing control panels such as <abbr title="A Linux-based control panel used to manage your web hosting.">cPanel</abbr>, DirectAdmin, etc.</p>
 </li>
 <li>
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 9V3.5L18.5 9M6 2c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6Z"></path></svg></span> &nbsp; <strong><a href="../webui/">Configuring <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr></a></strong></p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 9V3.5L18.5 9M6 2c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6Z"></path></svg></span> &nbsp; <strong><a href="../install/#cpanel-and-whm">Install (<abbr title="A Linux-based control panel used to manage your web hosting.">cPanel</abbr>)</a></strong></p>
 <hr>
-<p>Now that you have <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> up and running, you can proceed to our guide 
-which explains how to use <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> for the first time, and covers some
-of the settings that you can adjust.</p>
+<p>Choose this step if you wish to install <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> on a server which already has <abbr title="A Linux-based control panel used to manage your web hosting.">cPanel</abbr> and <abbr title="WebHost Manager; an app from the same developers as cPanel used to manage web servers through a control panel.">WHM</abbr> installed. This will allow <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> to be integrated into <abbr title="WebHost Manager; an app from the same developers as cPanel used to manage web servers through a control panel.">WHM</abbr> and will be listed under <abbr title="WebHost Manager; an app from the same developers as cPanel used to manage web servers through a control panel.">WHM</abbr>'s <strong>Plugins</strong> category.</p>
 </li>
 </ul>
 </div>
@@ -1762,7 +1881,7 @@ of the settings that you can adjust.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 15, 2025 13:47:58 UTC"><span class="timeago" datetime="2025-09-15T13:47:58+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 15, 2025 13:47:58 UTC">2025-09-15</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 16, 2025 01:36:50 UTC"><span class="timeago" datetime="2025-09-16T01:36:50+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 16, 2025 01:36:50 UTC">2025-09-16</span>
   </span>
 
     
@@ -1836,7 +1955,7 @@ of the settings that you can adjust.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer">
         
           
-          <a href="../install/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 2. Download &amp; Install">
+          <a href="../download/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 2. Download">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
@@ -1846,20 +1965,20 @@ of the settings that you can adjust.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                2. Download &amp; Install
+                2. Download
               </div>
             </div>
           </a>
         
         
           
-          <a href="../webui/" class="md-footer__link md-footer__link--next" aria-label="Next: 4. Enable Web Interface">
+          <a href="../install/" class="md-footer__link md-footer__link--next" aria-label="Next: 4. Install">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                4. Enable Web Interface
+                4. Install
               </div>
             </div>
             <div class="md-footer__button md-icon">
