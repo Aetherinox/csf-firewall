@@ -894,6 +894,11 @@ h4:has(.twemoji) .twemoji
     color: #e7af13;
 }
 
+.icon-clr-green
+{
+    color: #77ac59;
+}
+
 .icon-clr-redhat
 {
     color: #e71348;
@@ -913,6 +918,16 @@ h4:has(.twemoji) .twemoji
     padding-right: 5px;
     margin-left: -4px;
 }
+
+/*
+    Tabbed content within tabbed content
+*/
+
+.tabbed-content .tabbed-block .tabbed-content
+{
+    background-color: #161618;
+}
+
 
 /*
     Badge > Header Padding
