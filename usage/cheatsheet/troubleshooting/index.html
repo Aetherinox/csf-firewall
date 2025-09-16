@@ -7,24 +7,24 @@
         <meta name="author" content="Aetherinox">
       
       
-        <link rel="canonical" href="https://Aetherinox.github.io/csf-firewall/csf/install/">
+        <link rel="canonical" href="https://Aetherinox.github.io/csf-firewall/usage/cheatsheet/troubleshooting/">
       
       
       
       
-      <link rel="icon" href="../../assets/favicon.png">
+      <link rel="icon" href="../../../assets/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.20">
     
     
       
-        <title>Install CSF - CSF Firewall</title>
+        <title>Cheatsheet: Troubleshooting - CSF Firewall</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.e53b48f4.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.e53b48f4.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -43,20 +43,20 @@
       
     
     
-      <link rel="stylesheet" href="../../css/timeago.css">
+      <link rel="stylesheet" href="../../../css/timeago.css">
     
-      <link rel="stylesheet" href="../../stylesheets/extra.css?v1.000">
+      <link rel="stylesheet" href="../../../stylesheets/extra.css?v1.000">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
     
     
     
-  <link rel="stylesheet" href="../../assets/stylesheets/custom.00c04c01.min.css">
+  <link rel="stylesheet" href="../../../assets/stylesheets/custom.00c04c01.min.css">
 
-  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+  <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
             html.glightbox-open { overflow: initial; height: 100%; }
             .gslide-title { margin-top: 0px; user-select: text; }
             .gslide-desc { color: #666; user-select: text; }
@@ -86,7 +86,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#install-csf" class="md-skip">
+        <a href="#cheatsheet-troubleshooting" class="md-skip">
           Skip to content
         </a>
       
@@ -118,12 +118,12 @@
             <div class="md-banner__inner md-grid md-typeset">
               
   You're not viewing the latest version.
-  <a href="../../.."> 
+  <a href="../../../.."> 
     <strong>Click here to go to latest.</strong>
   </a>
 
             </div>
-            <script>var el=document.querySelector("[data-md-component=outdated]"),base=new URL("../.."),outdated=__md_get("__outdated",sessionStorage,base);!0===outdated&&el&&(el.hidden=!1)</script>
+            <script>var el=document.querySelector("[data-md-component=outdated]"),base=new URL("../../.."),outdated=__md_get("__outdated",sessionStorage,base);!0===outdated&&el&&(el.hidden=!1)</script>
           </aside>
         
       </div>
@@ -133,7 +133,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="CSF Firewall" class="md-header__button md-logo" aria-label="CSF Firewall" data-md-component="logo">
+    <a href="../../.." title="CSF Firewall" class="md-header__button md-logo" aria-label="CSF Firewall" data-md-component="logo">
       
   
   <svg id="svgtest" width="100%" height="100%"><g id="transformGroup" transform="scale(1) translate(0 0) rotate(0)"><svg viewBox="0 0 512 512" id="svgContainer" xmlns="http://www.w3.org/2000/svg"><path d="M 153.171 309.301 C 148.062 327.815, 138.987 342.266, 119.133 363.500 C 109.551 373.749, 107.194 376.959, 102.985 385.500 C 100.275 391, 97.535 397.965, 96.897 400.979 C 95.424 407.931, 96.292 425.010, 98.416 430.876 C 100.650 437.047, 100.462 439.887, 97.750 440.926 C 95.766 441.686, 96.504 442.273, 104 445.893 C 132.088 459.458, 175.989 459.768, 204.481 446.604 C 210.886 443.645, 212.098 442.722, 211.493 441.263 C 210.463 438.780, 210.501 438.470, 212.999 429.045 C 214.880 421.949, 215.157 418.895, 214.727 410.045 C 213.852 392.089, 209.622 383.465, 192.358 364.444 C 173.286 343.430, 166.546 332.810, 160.138 313.672 C 157.960 307.167, 156.010 301.677, 155.806 301.472 C 155.601 301.268, 154.415 304.791, 153.171 309.301" stroke="none" fill="#ffffff" fill-rule="evenodd"></path>
@@ -155,7 +155,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Install CSF
+              Cheatsheet: Troubleshooting
             
           </span>
         </div>
@@ -273,7 +273,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../home/" class="md-tabs__link">
+      <a href="../../../home/" class="md-tabs__link">
         
   
   
@@ -294,7 +294,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../about/csf/" class="md-tabs__link">
+        <a href="../../../about/csf/" class="md-tabs__link">
           
   
   
@@ -316,7 +316,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../install/dependencies/" class="md-tabs__link">
+        <a href="../../../install/dependencies/" class="md-tabs__link">
           
   
   
@@ -338,7 +338,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../usage/getting-started/" class="md-tabs__link">
+        <a href="../../getting-started/" class="md-tabs__link">
           
   
   
@@ -367,7 +367,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../extras/download.md" class="md-tabs__link">
+        <a href="../../../extras/download.md" class="md-tabs__link">
           
   
   
@@ -390,7 +390,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../about/changelog/" class="md-tabs__link">
+      <a href="../../../about/changelog/" class="md-tabs__link">
         
   
   
@@ -425,7 +425,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="CSF Firewall" class="md-nav__button md-logo" aria-label="CSF Firewall" data-md-component="logo">
+    <a href="../../.." title="CSF Firewall" class="md-nav__button md-logo" aria-label="CSF Firewall" data-md-component="logo">
       
   
   <svg id="svgtest" width="100%" height="100%"><g id="transformGroup" transform="scale(1) translate(0 0) rotate(0)"><svg viewBox="0 0 512 512" id="svgContainer" xmlns="http://www.w3.org/2000/svg"><path d="M 153.171 309.301 C 148.062 327.815, 138.987 342.266, 119.133 363.500 C 109.551 373.749, 107.194 376.959, 102.985 385.500 C 100.275 391, 97.535 397.965, 96.897 400.979 C 95.424 407.931, 96.292 425.010, 98.416 430.876 C 100.650 437.047, 100.462 439.887, 97.750 440.926 C 95.766 441.686, 96.504 442.273, 104 445.893 C 132.088 459.458, 175.989 459.768, 204.481 446.604 C 210.886 443.645, 212.098 442.722, 211.493 441.263 C 210.463 438.780, 210.501 438.470, 212.999 429.045 C 214.880 421.949, 215.157 418.895, 214.727 410.045 C 213.852 392.089, 209.622 383.465, 192.358 364.444 C 173.286 343.430, 166.546 332.810, 160.138 313.672 C 157.960 307.167, 156.010 301.677, 155.806 301.472 C 155.601 301.268, 154.415 304.791, 153.171 309.301" stroke="none" fill="#ffffff" fill-rule="evenodd"></path>
@@ -457,7 +457,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../home/" class="md-nav__link">
+      <a href="../../../home/" class="md-nav__link">
         
   
   
@@ -532,7 +532,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../about/csf/" class="md-nav__link">
+      <a href="../../../about/csf/" class="md-nav__link">
         
   
   
@@ -555,7 +555,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../about/contributing/" class="md-nav__link">
+      <a href="../../../about/contributing/" class="md-nav__link">
         
   
   
@@ -578,7 +578,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../about/license/" class="md-nav__link">
+      <a href="../../../about/license/" class="md-nav__link">
         
   
   
@@ -650,7 +650,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../about/conventions/" class="md-nav__link">
+      <a href="../../../about/conventions/" class="md-nav__link">
         
   
   
@@ -673,7 +673,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../about/tags/" class="md-nav__link">
+      <a href="../../../about/tags/" class="md-nav__link">
         
   
   
@@ -766,7 +766,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../install/dependencies/" class="md-nav__link">
+      <a href="../../../install/dependencies/" class="md-nav__link">
         
   
   
@@ -789,7 +789,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../install/download/" class="md-nav__link">
+      <a href="../../../install/download/" class="md-nav__link">
         
   
   
@@ -812,7 +812,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../install/tests/" class="md-nav__link">
+      <a href="../../../install/tests/" class="md-nav__link">
         
   
   
@@ -835,7 +835,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../install/install/" class="md-nav__link">
+      <a href="../../../install/install/" class="md-nav__link">
         
   
   
@@ -858,7 +858,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../install/webui/" class="md-nav__link">
+      <a href="../../../install/webui/" class="md-nav__link">
         
   
   
@@ -937,7 +937,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/getting-started/" class="md-nav__link">
+      <a href="../../getting-started/" class="md-nav__link">
         
   
   
@@ -1013,7 +1013,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/cheatsheet/home/" class="md-nav__link">
+      <a href="../home/" class="md-nav__link">
         
   
   
@@ -1036,7 +1036,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/cheatsheet/structure/" class="md-nav__link">
+      <a href="../structure/" class="md-nav__link">
         
   
   
@@ -1059,7 +1059,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/cheatsheet/commands/" class="md-nav__link">
+      <a href="../commands/" class="md-nav__link">
         
   
   
@@ -1082,7 +1082,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/cheatsheet/conf/" class="md-nav__link">
+      <a href="../conf/" class="md-nav__link">
         
   
   
@@ -1218,7 +1218,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../extras/download.md" class="md-nav__link">
+      <a href="../../../extras/download.md" class="md-nav__link">
         
   
   
@@ -1241,7 +1241,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../extras/configure.md" class="md-nav__link">
+      <a href="../../../extras/configure.md" class="md-nav__link">
         
   
   
@@ -1323,7 +1323,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tutorials/geographical/" class="md-nav__link">
+      <a href="../../../csf/tutorials/geographical/" class="md-nav__link">
         
   
   
@@ -1346,7 +1346,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tutorials/traefik/" class="md-nav__link">
+      <a href="../../../csf/tutorials/traefik/" class="md-nav__link">
         
   
   
@@ -1369,7 +1369,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tutorials/authentik/" class="md-nav__link">
+      <a href="../../../csf/tutorials/authentik/" class="md-nav__link">
         
   
   
@@ -1407,7 +1407,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../about/changelog/" class="md-nav__link">
+      <a href="../../../about/changelog/" class="md-nav__link">
         
   
   
@@ -1449,51 +1449,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#install-using-patch" class="md-nav__link">
+  <a href="#cant-locate-object-method-new-via-package-cryptcbc-at-usrsbincsf-line" class="md-nav__link">
     <span class="md-ellipsis">
-      Install: Using Patch
+      Can't locate object method "new" via package "Crypt::CBC" at /usr/sbin/csf line ***
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#install-manually" class="md-nav__link">
+  <a href="#csf46313-open3-exec-of-sbinipset-flush-failed-no-such-file-or-directory-at-usrsbincsf-line" class="md-nav__link">
     <span class="md-ellipsis">
-      Install: Manually
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Install: Manually">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
-    <span class="md-ellipsis">
-      Prerequisites
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#download-and-install-csf" class="md-nav__link">
-    <span class="md-ellipsis">
-      Download and Install CSF
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#next-steps" class="md-nav__link">
-    <span class="md-ellipsis">
-      Next Steps
+      csf[46313]: open3: exec of /sbin/ipset flush failed: No such file or directory at /usr/sbin/csf line ****.
     </span>
   </a>
   
@@ -1521,14 +1488,23 @@
         
       
       
-        <a href="../../about/tags/#tag:install" class="md-tag md-tag-icon">install</a>
+        <a href="../../../about/tags/#tag:cheatsheet" class="md-tag md-tag-icon">cheatsheet</a>
+      
+    
+      
+      
+        
+        
+      
+      
+        <a href="../../../about/tags/#tag:configure" class="md-tag md-tag-icon">configure</a>
       
     
   </nav>
 
 
   
-    <a href="https://github.com/Aetherinox/csf-firewall/edit/main/docs/docs/csf/install.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/Aetherinox/csf-firewall/edit/main/docs/docs/usage/cheatsheet/troubleshooting.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"></path></svg>
     </a>
@@ -1537,102 +1513,45 @@
     
       
     
-    <a href="https://github.com/Aetherinox/csf-firewall/raw/main/docs/docs/csf/install.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/Aetherinox/csf-firewall/raw/main/docs/docs/usage/cheatsheet/troubleshooting.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"></path></svg>
     </a>
   
 
 
-<h1 id="install-csf">Install <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> <!-- omit from toc --><a class="headerlink" href="#install-csf" title="Permanent link">¶</a></h1>
-<p>These steps explain how to install <abbr title="ConfigServer Security &amp; Firewall Security">ConfigServer Firewall</abbr> on your system. There are two possible ways to install <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> which are listed below: </p>
-<ul>
-<li><a href="#install-using-patch">Install: Using Patch</a></li>
-<li><a href="#install-manually">Install: Manually</a></li>
-</ul>
+<h1 id="cheatsheet-troubleshooting">Cheatsheet: Troubleshooting<a class="headerlink" href="#cheatsheet-troubleshooting" title="Permanent link">¶</a></h1>
+<p>The information below is a list of errors you may receive within <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>, and steps on how to correct each issue.</p>
 <p><br></p>
-<p>The <a href="#install-using-patch">Patch</a> method attempts to take much of the work out of installing <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>. It installs all prerequisites automatically, and sets <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> to start with <code>TESTING MODE</code> disabled. After <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> is installed using the patcher; then the <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> and OpenVPN patches will automatically be installed next.</p>
-<p>The <a href="#install-manually">Manual</a> method requires you to manually install all prerequisites using your OS package manager, and then manually downloading the latest copy of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> and extracting / installing it on your system. You will have to run the patcher after you have installed <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>.</p>
+<h2 id="cant-locate-object-method-new-via-package-cryptcbc-at-usrsbincsf-line">Can't locate object method "new" via package "Crypt::CBC" at /usr/sbin/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr> line ***<a class="headerlink" href="#cant-locate-object-method-new-via-package-cryptcbc-at-usrsbincsf-line" title="Permanent link">¶</a></h2>
+<p>This error occurs when <strong>Crypt::CBC</strong> cannot be found. It is sometimes seen when executing commands such as <code>sudo csf -cp</code>.</p>
+<p><br></p>
+<p>To correct the issue, open the file <code>/usr/sbin/csf</code> in a text editor.</p>
+<p>Locate the lines:
+</p><div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>use ConfigServer::Sendmail;
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>use ConfigServer::LookUpIP qw(iplookup);
+</span></code></pre></div><p></p>
+<p>Add a new line with <code>use Crypt::CBC</code> as shown below:
+</p><div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>use ConfigServer::Sendmail;
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>use ConfigServer::LookUpIP qw(iplookup);
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="hll">use Crypt::CBC
+</span></span></code></pre></div><p></p>
+<p><br></p>
+<p>Save the file, and re-execute your previous command which caused the error.</p>
 <p><br></p>
 <hr>
 <p><br></p>
-<h2 id="install-using-patch">Install: Using Patch<a class="headerlink" href="#install-using-patch" title="Permanent link">¶</a></h2>
-<p>If you would like to install <abbr title="ConfigServer Security &amp; Firewall Security">ConfigServer Firewall</abbr> using this repo's patcher; download the patch:
-</p><div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/Aetherinox/csf-firewall.git
-</span></code></pre></div><p></p>
+<h2 id="csf46313-open3-exec-of-sbinipset-flush-failed-no-such-file-or-directory-at-usrsbincsf-line"><abbr title="ConfigServer Security &amp; Firewall">csf</abbr>[46313]: open3: exec of /sbin/ipset flush failed: No such file or directory at /usr/sbin/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr> line ****.<a class="headerlink" href="#csf46313-open3-exec-of-sbinipset-flush-failed-no-such-file-or-directory-at-usrsbincsf-line" title="Permanent link">¶</a></h2>
+<p>This error occurs when you are missing the package <code>ipset</code>. Install it with the following commands:</p>
 <p><br></p>
-<p>Set the permissions for the <code>install.sh</code> file:
-</p><div class="language-shell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>chmod<span class="w"> </span>+x<span class="w"> </span>/csf-firewall/patch/install.sh
-</span></code></pre></div><p></p>
-<p><br></p>
-<p>Run the script:
-</p><div class="language-shell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>./csf-firewall/patch/install.sh
-</span></code></pre></div><p></p>
-<p><br></p>
-<p>If <abbr title="ConfigServer Security &amp; Firewall Security">ConfigServer Firewall</abbr> is not already installed on your system; you should see:
-</p><div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>  Installing package iptables
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>  Installing package ipset
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>  Installing package ConfigServer Firewall
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>  Patch installer will now start ...
-</span></code></pre></div><p></p>
-<p><br></p>
-<p>After the patcher has installed <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>; it will then automatically install the <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> and OpenVPN patches. All you will need to do after; is ensure <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> is up and running.</p>
-<p>Please proceed to the section <a href="../../configure/start/">Configure &amp; Start <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr></a></p>
-<p><br></p>
-<hr>
-<p><br></p>
-<h2 id="install-manually">Install: Manually<a class="headerlink" href="#install-manually" title="Permanent link">¶</a></h2>
-<h3 id="prerequisites">Prerequisites <!-- omit from toc --><a class="headerlink" href="#prerequisites" title="Permanent link">¶</a></h3>
-<ul>
-<li>A Linux server running CentOS, Debian, Ubuntu, or any other compatible Linux distribution. </li>
-<li>Root access or a user account with sudo privileges.</li>
-<li>Perl installed on your server. If Perl is not installed, you can install it by running the following commands:</li>
-<li>
-<p>For <strong>CentOS/RHEL</strong>:
-    </p><div class="language-shell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>yum<span class="w"> </span>install<span class="w"> </span>perl<span class="w"> </span>ipset
-</span></code></pre></div><p></p>
-</li>
-<li>
-<p>For <strong>Debian/Ubuntu</strong>:</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>update<span class="w"> </span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>perl<span class="w"> </span>ipset
+<p><strong>Debian based systems:</strong></p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>ipset
 </span></code></pre></div>
-</li>
-</ul>
-<p><br></p>
-<h3 id="download-and-install-csf">Download and Install <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> <!-- omit from toc --><a class="headerlink" href="#download-and-install-csf" title="Permanent link">¶</a></h3>
-<p>To download and install <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>, follow these steps:</p>
-<ul>
-<li>Log in to your server via SSH. </li>
-<li>Download the latest version of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> using the wget command:
-    <div class="language-shell highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>wget<span class="w"> </span>https://download.configserver.com/csf.tgz
-</span></code></pre></div></li>
-<li>Extract the downloaded archive:
-    <div class="language-shell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>tar<span class="w"> </span>-xzf<span class="w"> </span>csf.tgz
-</span></code></pre></div></li>
-<li>Navigate to the extracted directory:
-    <div class="language-shell highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nb">cd</span><span class="w"> </span>csf
-</span></code></pre></div></li>
-<li>Run the installation script:
-    <div class="language-shell highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>sudo<span class="w"> </span>sh<span class="w"> </span>install.sh
-</span></code></pre></div></li>
-</ul>
-<p><br></p>
-<p><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> will now be installed on your server, along with its Web UI (<abbr title="A security suite for Linux servers that provides firewall management, intrusion detection, and login failure monitoring.">ConfigServer Firewall &amp; Security</abbr>) if you have a control panel like <abbr title="A Linux-based control panel used to manage your web hosting.">cPanel</abbr> or DirectAdmin installed.</p>
-<p><br></p>
-<hr>
-<p><br></p>
-<h2 id="next-steps">Next Steps <!-- omit from toc --><a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>url:            ../configure
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>name:           Next: How to Configure &amp; Start CSF
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>desc:           Instructions for editing the CSF config file and starting CSF for the first time
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>image:          https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjXOa4WN-mW3gXnIo_hEY6uAwoi2v_e02eG3TCHxSwIY70Y_OzErdaeaepXFoRa2sYx8M&amp;usqp=CAU
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>favicon:        https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjXOa4WN-mW3gXnIo_hEY6uAwoi2v_e02eG3TCHxSwIY70Y_OzErdaeaepXFoRa2sYx8M&amp;usqp=CAU
-</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>favicon_size:   25
-</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>target:         same
-</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>accent:         a40547E0
-</span></code></pre></div>
+<p><strong>Redhat based systems:</strong>
+</p><div class="language-shell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudo<span class="w"> </span>yum<span class="w"> </span>check-update
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>sudo<span class="w"> </span>yum<span class="w"> </span>install<span class="w"> </span>ipset
+</span></code></pre></div><p></p>
 <p><br></p>
 <hr>
 <p><br></p>
@@ -1656,7 +1575,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="February 16, 2025 00:09:11 UTC"><span class="timeago" datetime="2025-02-16T00:09:11+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="February 16, 2025 00:09:11 UTC">2025-02-16</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 16, 2025 01:36:50 UTC"><span class="timeago" datetime="2025-09-16T01:36:50+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 16, 2025 01:36:50 UTC">2025-09-16</span>
   </span>
 
     
@@ -1690,9 +1609,9 @@
     
     <nav>
       
-        <a href="https://github.com/apps/github-actions" class="md-author" title="@github-actions[bot]">
+        <a href="https://github.com/Aetherinox" class="md-author" title="@Aetherinox">
           
-          <img src="https://avatars.githubusercontent.com/in/15368?v=4&amp;size=72" alt="github-actions[bot]">
+          <img src="https://avatars.githubusercontent.com/u/118329232?v=4&amp;size=72" alt="Aetherinox">
         </a>
       
       
@@ -1829,24 +1748,24 @@
     
     
       
-      <script id="__config" type="application/json">{"base": "../..", "features": ["announce.dismiss", "toc.follow", "content.action.edit", "content.action.view", "content.tooltips", "search.highlight", "search.share", "search.suggest", "content.code.annotate", "content.code.select", "content.code.copy", "navigation.tabs", "navigation.sections", "navigation.footer", "navigation.indexes", "navigation.instant", "navigation.instant.progress", "navigation.instant.prefetch", "navigation.instant.preview", "navigation.tracking", "navigation.path", "navigation.top"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": {"CSS": "css", "HTML5": "html", "JavaScript": "js"}, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"alias": true, "default": "latest", "provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "toc.follow", "content.action.edit", "content.action.view", "content.tooltips", "search.highlight", "search.share", "search.suggest", "content.code.annotate", "content.code.select", "content.code.copy", "navigation.tabs", "navigation.sections", "navigation.footer", "navigation.indexes", "navigation.instant", "navigation.instant.progress", "navigation.instant.prefetch", "navigation.instant.preview", "navigation.tracking", "navigation.path", "navigation.top"], "search": "../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": {"CSS": "css", "HTML5": "html", "JavaScript": "js"}, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"alias": true, "default": "latest", "provider": "mike"}}</script>
     
     
   
-      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
-        <script src="../../js/timeago.min.js"></script>
+        <script src="../../../js/timeago.min.js"></script>
       
-        <script src="../../js/timeago_mkdocs_material.js"></script>
+        <script src="../../../js/timeago_mkdocs_material.js"></script>
       
         <script src="https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js"></script>
       
-        <script src="../../javascripts/tablesort.js"></script>
+        <script src="../../../javascripts/tablesort.js"></script>
       
-        <script src="../../javascripts/all.js?v7.000"></script>
+        <script src="../../../javascripts/all.js?v7.000"></script>
       
     
-  <script src="../../assets/javascripts/custom.129bd6ad.min.js"></script>
+  <script src="../../../assets/javascripts/custom.129bd6ad.min.js"></script>
 
   
 <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": false, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
