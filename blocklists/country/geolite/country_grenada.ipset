@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_grenada_ipset
 #   @uuid           e9560a79-3344-34a9-a11e-edfc2ec214df
-#   @updated        Sun 14 Sep 2025 01:03:53 AM UTC
-#   @entries        39,485 ips
-#                   222 subnets
-#                   222 lines
+#   @updated        Wed 17 Sep 2025 01:02:56 AM UTC
+#   @entries        39,491 ips
+#                   224 subnets
+#                   224 lines
 #   @country        Grenada (GD)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -73,6 +73,9 @@
 104.28.126.82/31
 104.28.145.50/32
 104.28.153.50/32
+104.28.187.219/32
+104.28.187.220/30
+104.28.187.224/32
 104.28.220.20/30
 104.28.220.24/31
 104.28.252.20/30
@@ -201,7 +204,6 @@
 2a04:1d45:c600::/40
 2a04:1d46:c600::/40
 2a04:1d47:c600::/40
-2a04:4e41:a:1300::/56
 2a04:4e41:3013::/48
 2a04:4e41:361a::/48
 2a04:4e41:3a1f::/48

@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_tonga_ipset
 #   @uuid           d9320a31-63f1-311a-a69d-451468a3d754
-#   @updated        Sun 14 Sep 2025 01:05:31 AM UTC
-#   @entries        15,331 ips
-#                   160 subnets
-#                   160 lines
+#   @updated        Wed 17 Sep 2025 01:04:26 AM UTC
+#   @entries        15,337 ips
+#                   162 subnets
+#                   162 lines
 #   @country        Tonga (TO)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -43,6 +43,8 @@
 104.28.35.96/31
 104.28.90.82/31
 104.28.125.90/31
+104.28.186.118/31
+104.28.186.120/30
 104.28.218.171/32
 104.28.218.172/30
 104.28.218.176/32

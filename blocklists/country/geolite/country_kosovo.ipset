@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_kosovo_ipset
 #   @uuid           b356dc5e-c550-3ba8-95ad-049b1236b1a0
-#   @updated        Sun 14 Sep 2025 01:05:59 AM UTC
+#   @updated        Wed 17 Sep 2025 01:04:52 AM UTC
 #   @entries        158,805 ips
-#                   87 subnets
-#                   87 lines
+#                   89 subnets
+#                   89 lines
 #   @country        Kosovo (XK)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -87,6 +87,8 @@
 2001:470:19:6eb::/64
 2001:470:19:d73::/64
 2001:470:24:416::/64
+2001:470:24:554::/64
+2001:470:24:596::/64
 2001:470:36:295::/64
 2001:470:36:2bd::/64
 2001:470:ed2e::/48
