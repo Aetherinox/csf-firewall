@@ -17,9 +17,12 @@
 #                       secrets.PYPI_API_TEST_TOKEN                                 self Pypi API token (test site) - https://test.pypi.org/
 #                       secrets.SELF_DOCKERHUB_TOKEN                                self Dockerhub token
 #                       secrets.CODECOV_TOKEN                                       codecov upload token for nodejs projects
-#                       secrets.MAXMIND_GELITE_TOKEN                                maxmind API token
+#                       secrets.API_GEOLITE2_KEY                                    maxmind API token
 #                       secrets.CF_ACCOUNT_ID                                       cloudflare account id
 #                       secrets.CF_ACCOUNT_TOKEN                                    cloudflare account token
+#                       secrets.ARTIFACTS_DOMAIN                                    github artifacts domain name
+#                       secrets.ARTIFACTS_PORT                                      github artifacts port
+#                       secrets.ARTIFACTS_GITHUB_SSH_PRIVATE_KEY                    github artifacts server ssh private key
 #                       secrets.ORG_TOKEN                                           org github personal access token (fine-grained)
 #                       secrets.ORG_TOKEN_CL                                        org github personal access token (classic)
 #                       secrets.ORG_DOCKERHUB_TOKEN                                 org dockerhub secret
