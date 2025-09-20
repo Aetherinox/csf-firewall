@@ -5,10 +5,10 @@
 #   @source         None
 #   @id             isp_cox_communications_ipset
 #   @uuid           f49f16d6-6f3c-3f66-8c2c-97667aa69669
-#   @updated        Fri 19 Sep 2025 12:30:34 PM UTC
-#   @entries        24,063,456 ips
-#                   6,320 subnets
-#                   6,318 lines
+#   @updated        Sat 20 Sep 2025 11:52:35 AM UTC
+#   @entries        24,063,968 ips
+#                   6,321 subnets
+#                   6,319 lines
 #   @asn            
 #                   AS31771, AS22773, AS13432, 
 #                   AS6298, AS12064, AS13493, 
@@ -4600,6 +4600,7 @@
 207.90.212.0/22
 207.162.128.0/19
 207.162.129.0/24
+207.162.138.0/23
 207.162.153.0/24
 207.188.48.0/20
 207.189.148.0/24
