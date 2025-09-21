@@ -1,10 +1,19 @@
 {
     "icons": {
-      "base": "https://raw.githubusercontent.com/squidfunk/mkdocs-material/main/material/overrides/.icons/",
+      "base": "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/material/overrides/.icons/",
       "data": {
         "aetherx-axb-debian": "aetherx/axb/debian.svg",
         "aetherx-axb-git": "aetherx/axb/git.svg",
         "aetherx-axb-git-alt": "aetherx/axb/git-alt.svg",
+        "aetherx-axb-github": "aetherx/axb/github.svg",
+        "aetherx-axb-github-alt": "aetherx/axb/github-alt.svg",
+        "aetherx-axb-gitkraken": "aetherx/axb/gitkraken.svg",
+        "aetherx-axb-gitlab": "aetherx/axb/gitlab.svg",
+        "aetherx-axb-gitter": "aetherx/axb/gitter.svg",
+        "aetherx-axb-linux": "aetherx/axb/linux.svg",
+        "aetherx-axb-redhat": "aetherx/axb/redhat.svg",
+        "aetherx-axb-ubuntu": "aetherx/axb/ubuntu.svg",
+        "aetherx-axb-windows": "aetherx/axb/windows.svg",
         "fontawesome-brands-42-group": "fontawesome/brands/42-group.svg",
         "fontawesome-brands-500px": "fontawesome/brands/500px.svg",
         "fontawesome-brands-accessible-icon": "fontawesome/brands/accessible-icon.svg",
