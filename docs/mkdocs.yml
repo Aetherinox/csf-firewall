@@ -243,7 +243,8 @@ nav:
           - 2. Download: 'install/download.md'
           - 3. Diagnostic Tests: 'install/tests.md'
           - 4. Install: 'install/install.md'
-          - 5. Enable Web Interface: 'install/webui.md'
+          - 5. Start Services: 'install/services.md'
+          - 6. Enable Web Interface: 'install/webui.md'
     - Usage:
           - 1. Getting Started: 'usage/getting-started.md'
           - Cheatsheet:
