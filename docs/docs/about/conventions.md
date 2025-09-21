@@ -357,6 +357,70 @@ This is an example setting.
     This is an example setting.
     ```
 
+<br />
+<br />
+
+---
+
+<br />
+
+## Emoji in Tooltips
+
+You can display an emoji / icon search bar which can be called from a codeblock tooltip as shown below.
+
+``` html
+<span class="twemoji">
+    {% include ".icons/aetherx/axs/csf-logo-1.svg" %} <!-- (1)! -->
+</span>
+```
+
+1.  Enter a few keywords to find the perfect icon using our [icon search] and
+    click on the shortcode to copy it to your clipboard:
+
+    <div class="mdx-iconsearch" data-mdx-component="iconsearch">
+      <input class="md-input md-input--stretch mdx-iconsearch__input" placeholder="Search icon" data-mdx-component="iconsearch-query" value="aetherx csf" />
+      <div class="mdx-iconsearch-result" data-mdx-component="iconsearch-result" data-mdx-mode="file">
+        <div class="mdx-iconsearch-result__meta"></div>
+        <ol class="mdx-iconsearch-result__list"></ol>
+      </div>
+    </div>
+
+<br />
+<br />
+
+---
+
+<br />
+
+## Icon Search
+
+Use the following to search our database for a specific icon which is available through our documentation.
+
+<div class="mdx-iconsearch" data-mdx-component="iconsearch">
+  <input
+    class="md-input md-input--stretch mdx-iconsearch__input"
+    placeholder="Search the icon and emoji database"
+    data-mdx-component="iconsearch-query"
+  />
+  <div class="mdx-iconsearch-result" data-mdx-component="iconsearch-result">
+    <select
+      class="mdx-iconsearch-result__select"
+      data-mdx-component="iconsearch-select"
+    >
+      <option value="all" selected>All</option>
+      <option value="icons">Icons</option>
+      <option value="emojis">Emojis</option>
+    </select>
+    <div class="mdx-iconsearch-result__meta"></div>
+    <ol class="mdx-iconsearch-result__list"></ol>
+  </div>
+</div>
+<small>
+  :octicons-light-bulb-16:
+  **Tip:** Enter some keywords to find icons and emojis and click on the
+  shortcode to copy it to your clipboard.
+</small>
+
 
 <br />
 <br />
