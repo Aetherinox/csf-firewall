@@ -120,8 +120,8 @@ theme:
         quote: fontawesome/solid/quote-left
         annotation: material/arrow-right-circle
         hi: aetherx/axs/clock
-        csf1: aetherx/axs/csf-logo
-        csf2: aetherx/axs/csf-logo-alt
+        csf1: aetherx/axs/csf-logo-1
+        csf2: aetherx/axs/csf-logo-2
         tag:
             html: fontawesome/brands/html5
             js: fontawesome/brands/js
