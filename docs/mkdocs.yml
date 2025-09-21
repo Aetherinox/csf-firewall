@@ -285,14 +285,14 @@ plugins:
           authors_file: .authors.yml
     - encryptcontent:
           title_prefix: '[🔒]'
-          summary: 'Access Restricted'
+          summary: 'Restricted Access'
           placeholder: 'Authentication Code'
           placeholder_user: User
           password_button: True
           password_button_text: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" fill="currentColor" width="16px" height="16px"><!--! Font Awesome Pro 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><defs><style>.fa-secondary{opacity:.4}</style></defs><path class="fa-primary" d="M384 160L224 0V128c0 17.7 14.3 32 32 32H384zm80 80c17.7 0 32 14.3 32 32v48H432V272c0-17.7 14.3-32 32-32zm-80 32v48c-17.7 0-32 14.3-32 32V480c0 17.7 14.3 32 32 32H544c17.7 0 32-14.3 32-32V352c0-17.7-14.3-32-32-32V272c0-44.2-35.8-80-80-80s-80 35.8-80 80z"></path><path class="fa-secondary" d="M0 64C0 28.7 28.7 0 64 0H224V128c0 17.7 14.3 32 32 32H384v33.6c-19.8 20.2-32 47.9-32 78.4v24.6c-19.1 11.1-32 31.7-32 55.4V480c0 11.4 3 22.2 8.3 31.5c-2.7 .3-5.5 .5-8.3 .5H64c-35.3 0-64-28.7-64-64V64z"></path></svg>'
         # input_class: 'w3-input' # CSS class used for input username and password
         # button_class: 'w3-button w3-theme-l1 w3-hover-theme' # CSS class for password_button
-          decryption_failure_message: 'Authentication code not correct.'
+          decryption_failure_message: 'Authentication not correct.'
           encryption_info_message: "This information is restricted to certain users with access."
           password_inventory:
               classified:
