@@ -370,7 +370,7 @@ You can display an emoji / icon search bar which can be called from a codeblock 
 
 ``` html
 <span class="twemoji">
-    {% include ".icons/aetherx/axs/csf-logo-1.svg" %} <!-- (1)! -->
+    <img src="/.icons/aetherx/axs/csf-logo-1.svg" alt="CSF Logo" width="32"> <!-- (1)! -->
 </span>
 ```
 
