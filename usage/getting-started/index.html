@@ -1545,7 +1545,46 @@
 
 <h1 id="usage-getting-started">Usage › Getting Started<a class="headerlink" href="#usage-getting-started" title="Permanent link">¶</a></h1>
 <p>In the previous chapter, <a href="../../install/dependencies/">Installation</a>, we covered how to install both the depenencies and <strong><abbr title="A security suite for Linux servers that provides firewall management, intrusion detection, and login failure monitoring.">ConfigServer Firewall &amp; Security</abbr> (<abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>)</strong> itself on your server. This chapter covers the fundamentals of configuring <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> and understanding how it operates. </p>
-<p>If you are looking for straight-forward information such as commands, folder and file structure, or configuration examples, check out the <a href="../cheatsheet/home/">Cheatsheet</a>.</p>
+<p>If you are looking for straight-forward information such as commands, folder and file structure, or configuration examples, check out the <a href="../cheatsheet/home/">Cheatsheet</a> guides listed below.</p>
+<mark class="critic block">
+<p>Cheatsheet</p>
+</mark>
+<div class="grid cards">
+<ul>
+<li>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M48 24C48 10.7 37.3 0 24 0S0 10.7 0 24L0 392c0 30.9 25.1 56 56 56l184 0 0-48-184 0c-4.4 0-8-3.6-8-8l0-232 192 0 0-48-192 0 0-88zM336 224l192 0c26.5 0 48-21.5 48-48l0-96c0-26.5-21.5-48-48-48l-82.7 0c-8.5 0-16.6-3.4-22.6-9.4l-8.6-8.6c-9-9-21.2-14.1-33.9-14.1L336 0c-26.5 0-48 21.5-48 48l0 128c0 26.5 21.5 48 48 48zm0 288l192 0c26.5 0 48-21.5 48-48l0-96c0-26.5-21.5-48-48-48l-82.7 0c-8.5 0-16.6-3.4-22.6-9.4l-8.6-8.6c-9-9-21.2-14.1-33.9-14.1L336 288c-26.5 0-48 21.5-48 48l0 128c0 26.5 21.5 48 48 48z"></path></svg></span> &nbsp; <strong><a href="../cheatsheet/structure/">Structure</a></strong></p>
+<hr>
+<p>Explains the general file structure set up of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>. 
+It helps you identify where specific files for 
+<abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> are within your syste, including configs and 
+firewall whitelists and blacklists.</p>
+</li>
+<li>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> &nbsp; <strong><a href="../cheatsheet/commands/">Commands</a></strong></p>
+<hr>
+<p>Lists all of the commands available within <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>, 
+along with descriptions for each command, and 
+usage examples which can help explain how each
+command functions.</p>
+</li>
+<li>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-277.5c0-17-6.7-33.3-18.7-45.3L258.7 18.7C246.7 6.7 230.5 0 213.5 0L64 0C28.7 0 0 28.7 0 64zM69.8 320.4l48-56c8.6-10.1 23.8-11.2 33.8-2.6s11.2 23.8 2.6 33.8l-34.6 40.4 34.6 40.4c8.6 10.1 7.5 25.2-2.6 33.8s-25.2 7.5-33.8-2.6l-48-56c-7.7-9-7.7-22.2 0-31.2zM208 58.5L325.5 176 232 176c-13.3 0-24-10.7-24-24l0-93.5zm21.8 237.1c-8.6-10.1-7.5-25.2 2.6-33.8s25.2-7.5 33.8 2.6l48 56c7.7 9 7.7 22.2 0 31.2l-48 56c-8.6 10.1-23.8 11.2-33.8 2.6s-11.2-23.8-2.6-33.8l34.6-40.4-34.6-40.4z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M151.6 261.8c10.1 8.6 11.2 23.8 2.6 33.8l-34.6 40.4 34.6 40.4c8.6 10.1 7.5 25.2-2.6 33.8s-25.2 7.5-33.8-2.6l-48-56c-7.7-9-7.7-22.2 0-31.2l48-56c8.6-10.1 23.8-11.2 33.8-2.6zm80.8 0c10.1-8.6 25.2-7.5 33.8 2.6l48 56c7.7 9 7.7 22.2 0 31.2l-48 56c-8.6 10.1-23.8 11.2-33.8 2.6s-11.2-23.8-2.6-33.8l34.6-40.4-34.6-40.4c-8.6-10.1-7.5-25.2 2.6-33.8z"></path></svg></span> &nbsp; <strong><a href="../cheatsheet/conf/">Example Configs</a></strong></p>
+<hr>
+<p>Provides the user with example configuration 
+files which can help when configuring <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> for
+the first time. Includes a full and a minimal
+config.</p>
+</li>
+<li>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-277.5c0-17-6.7-33.3-18.7-45.3L258.7 18.7C246.7 6.7 230.5 0 213.5 0L64 0C28.7 0 0 28.7 0 64zM69.8 320.4l48-56c8.6-10.1 23.8-11.2 33.8-2.6s11.2 23.8 2.6 33.8l-34.6 40.4 34.6 40.4c8.6 10.1 7.5 25.2-2.6 33.8s-25.2 7.5-33.8-2.6l-48-56c-7.7-9-7.7-22.2 0-31.2zM208 58.5L325.5 176 232 176c-13.3 0-24-10.7-24-24l0-93.5zm21.8 237.1c-8.6-10.1-7.5-25.2 2.6-33.8s25.2-7.5 33.8 2.6l48 56c7.7 9 7.7 22.2 0 31.2l-48 56c-8.6 10.1-23.8 11.2-33.8 2.6s-11.2-23.8-2.6-33.8l34.6-40.4-34.6-40.4z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M151.6 261.8c10.1 8.6 11.2 23.8 2.6 33.8l-34.6 40.4 34.6 40.4c8.6 10.1 7.5 25.2-2.6 33.8s-25.2 7.5-33.8-2.6l-48-56c-7.7-9-7.7-22.2 0-31.2l48-56c8.6-10.1 23.8-11.2 33.8-2.6zm80.8 0c10.1-8.6 25.2-7.5 33.8 2.6l48 56c7.7 9 7.7 22.2 0 31.2l-48 56c-8.6 10.1-23.8 11.2-33.8 2.6s-11.2-23.8-2.6-33.8l34.6-40.4-34.6-40.4c-8.6-10.1-7.5-25.2 2.6-33.8z"></path></svg></span> &nbsp; <strong><a href="./">Usage Getting Started</a></strong></p>
+<hr>
+<p>Select this option if you would like to start 
+using <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> to manage your server. This section
+will introduce you to the basic features and
+how you can configure the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> and <abbr title="Login Failure Daemon">LFD</abbr> <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr>.</p>
+</li>
+</ul>
+</div>
 <p><br></p>
 <hr>
 <p><br></p>
@@ -1569,7 +1608,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 16, 2025 01:36:50 UTC"><span class="timeago" datetime="2025-09-16T01:36:50+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 16, 2025 01:36:50 UTC">2025-09-16</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 21, 2025 18:43:43 UTC"><span class="timeago" datetime="2025-09-21T18:43:43+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 21, 2025 18:43:43 UTC">2025-09-21</span>
   </span>
 
     
