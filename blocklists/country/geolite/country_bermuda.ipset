@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_bermuda_ipset
 #   @uuid           92a5451d-b60e-3201-837b-9fcc4e892886
-#   @updated        Wed 17 Sep 2025 01:02:17 AM UTC
+#   @updated        Sun 21 Sep 2025 01:03:29 AM UTC
 #   @entries        129,782 ips
 #                   261 subnets
 #                   261 lines
