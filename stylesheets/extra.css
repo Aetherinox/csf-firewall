@@ -1918,7 +1918,7 @@ figure img
   background:var(--md-default-bg-color);
   box-shadow:none
 }
-[data-md-color-scheme=slate] .md-typeset .mdx-iconsearch .md-input {
+[data-md-color-scheme=main] .md-typeset .mdx-iconsearch .md-input {
   background:var(--md-code-bg-color)
 }
 .md-typeset .mdx-iconsearch-result {
@@ -2009,9 +2009,22 @@ figure img
   height:.9rem;
   width:.9rem
 }
-[data-md-color-scheme=slate] .md-typeset .mdx-iconsearch-result__item img[src*=squidfunk] {
-  filter:invert(1)
+
+/*
+    twoemoji search box
+        flip icon color on dark theme
+*/
+
+[data-md-color-scheme=slate] .md-typeset .mdx-iconsearch-result__item img[src*=squidfunk]
+{
+    filter:invert(1)
 }
+
+[data-md-color-scheme=main] .md-typeset .mdx-iconsearch-result__item img[src*=Aetherinox]
+{
+    filter:invert(1)
+}
+
 .md-typeset .mdx-premium p {
   margin:2em 0;
   text-align:center
