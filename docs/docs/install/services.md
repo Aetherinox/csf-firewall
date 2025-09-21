@@ -14,6 +14,21 @@ After you have installed CSF, we can now start the services required for CSF and
 
 ## Testing Mode
 
+Testing mode is a feature built into CSF and LFD which does the following when **TESTING** is enabled:
+
+- Allows safe configuration of CSF without enforcing firewall rules or banning IPs.
+- Reads configuration files like `/etc/ssh/sshd_config` to detect service ports. Detected ports (SSH, IPv6, TCP/UDP) are added to CSF config variables such as `TCP_IN`, `TCP6_IN`, `UDP_IN` in `/etc/csf/csf.conf`.
+- LFD does not run as a daemon.
+- Adds a cron job to periodically reload CSF rules for testing, but no actual blocking occurs.
+- IPs in `csf.allow` and `csf.deny` are processed for testing but **not enforced**.
+- Displays currently listening ports to sysadmin; helps safely configure CSF before enabling enforcement.
+
+??? warning "Testing Mode Disables LFD"
+
+    If you plan to utilize our `LFD` service; you **MUST** disable `TESTING MODE`.
+
+<br />
+
 Out of box, CSF enables `TESTING MODE`. If this mode is enabled, the LFD daemon service will not start.  To disable testing mode, we need to open `/etc/csf/csf.conf` and locate the following:
 
 ```bash title="/etc/csf/csf.conf"
@@ -49,7 +64,17 @@ Flip the value of `TESTING` from `1` to `0`:
 
 <br />
 
-After disabling `TESTING` mode, you can now start the services up. Proceed to the section [Enable & Disable Services](#enable-and-disable-services).
+If you already skipped ahead and started CSF up, you'll need to perform a restart of the services with the command:
+
+=== ":aetherx-axd-command: Command"
+
+      ```shell
+      $ sudo csf -ra
+      ```
+
+<br />
+
+After disabling `TESTING` mode, you can now start the services up. Proceed to the section [Enable & Disable CSF](#enable-and-disable-csf).
 
 <br />
 <br />
@@ -59,25 +84,25 @@ After disabling `TESTING` mode, you can now start the services up. Proceed to th
 <br />
 <br />
 
-## Enable and Disable Services
+## Enable and Disable CSF
 
-CSF and LFD can be set to either the status `enabled` or `disabled`. Once you complete this section and enable csf, you can then confirm that [CSF](#csf-service) and [LFD](#lfd-service) are running.
+CSF and LFD can be set to `enabled` or `disabled`. Once you complete this section and enable csf, you can then confirm that [CSF](#csf-service) and [LFD](#lfd-service) are running.
 
 <br />
 
-<!-- md:option enabled -->
+<!-- md:option enable -->
 
 :   <!-- md:control toggle_on -->
-    Both CSF and LFD can be enabled.
+    Enable csf and lfd if previously disabled
 
     ``` shell
     sudo csf --enable
     ```
 
-<!-- md:option disabled -->
+<!-- md:option disable -->
 
 :   <!-- md:control toggle_off -->
-    CSF can be enabled, but LFD will fail to start.
+    Disable csf and lfd completely
 
     ``` shell
     sudo csf --disable
@@ -95,7 +120,7 @@ CSF and LFD can be set to either the status `enabled` or `disabled`. Once you co
 
 This section outlines how to ensure the CSF service is operating correctly. First, let's start up the CSF service:
 
-=== ":aetherx-axs-square-terminal: Terminal"
+=== ":aetherx-axd-command: Command"
 
       ```shell
       $ sudo systemctl start csf
@@ -106,11 +131,15 @@ This section outlines how to ensure the CSF service is operating correctly. Firs
 
 Check the current status of CSF by running the command:
 
-=== ":aetherx-axs-square-terminal: Terminal"
+=== ":aetherx-axd-command: Command"
 
       ```shell
       $ sudo systemctl status csf
+      ```
 
+=== ":aetherx-axs-square-terminal: Output"
+
+      ```shell
       ● csf.service - ConfigServer Firewall & Security - csf
           Loaded: loaded (/lib/systemd/system/csf.service; enabled; vendor preset: enabled)
           Active: active (exited) since Mon 2025-09-15 23:45:04 UTC; 14 seconds ago
@@ -124,11 +153,15 @@ Check the current status of CSF by running the command:
 
 If you notice that CSF is not running or has the status `inactive (dead)` like the following:
 
-=== ":aetherx-axs-square-terminal: Terminal"
+=== ":aetherx-axd-command: Command"
 
       ```shell
       $ sudo systemctl status csf
+      ```
 
+=== ":aetherx-axs-square-terminal: Output"
+
+      ```shell
       ○ csf.service - ConfigServer Firewall & Security - csf
           Loaded: loaded (/usr/lib/systemd/system/csf.service; enabled; preset: enabled)
           Active: inactive (dead)
@@ -138,7 +171,7 @@ If you notice that CSF is not running or has the status `inactive (dead)` like t
 
 We must enable the services to ensure they are running. Execute the three commands below in your terminal:
 
-=== ":aetherx-axs-square-terminal: Terminal"
+=== ":aetherx-axd-command: Command"
 
       ```shell
       $ sudo systemctl start csf
@@ -149,11 +182,15 @@ We must enable the services to ensure they are running. Execute the three comman
 
 Confirm now that the service is up and running:
 
-=== ":aetherx-axs-square-terminal: Terminal"
+=== ":aetherx-axd-command: Command"
 
       ```shell
       $ sudo systemctl status csf
+      ```
 
+=== ":aetherx-axs-square-terminal: Output"
+
+      ```shell
       ● csf.service - ConfigServer Firewall & Security - csf
           Loaded: loaded (/usr/lib/systemd/system/csf.service; enabled; preset: enabled)
           Active: active (exited) since Sun 2025-09-21 01:35:45 UTC; 4s ago
@@ -178,7 +215,7 @@ After you have confirmed that the CSF service is running, now we need to ensure 
 
 This section outlines how to ensure the LFD service is operating correctly. First, let's start up the LFD service:
 
-=== ":aetherx-axs-square-terminal: Terminal"
+=== ":aetherx-axd-command: Command"
 
       ```shell
       $ sudo systemctl start lfd
@@ -189,11 +226,15 @@ This section outlines how to ensure the LFD service is operating correctly. Firs
 
 Check the current status of LFD by running the command:
 
-=== ":aetherx-axs-square-terminal: Terminal"
+=== ":aetherx-axd-command: Command"
 
       ```shell
       $ sudo systemctl status lfd
+      ```
 
+=== ":aetherx-axs-square-terminal: Output"
+
+      ```shell
       ● lfd.service - ConfigServer Firewall & Security - lfd
           Loaded: loaded (/usr/lib/systemd/system/lfd.service; enabled; preset: enabled)
           Active: active (running) since Sun 2025-09-21 01:11:21 UTC; 1min 17s ago
@@ -210,11 +251,15 @@ Check the current status of LFD by running the command:
 
 If you see the status `failed` like the following example, this could be for any number of reasons. We will review below:
 
-=== ":aetherx-axs-square-terminal: Terminal"
+=== ":aetherx-axd-command: Command"
 
       ```shell
       $ sudo systemctl status lfd
+      ```
 
+=== ":aetherx-axs-square-terminal: Output"
+
+      ```shell
       × lfd.service - ConfigServer Firewall & Security - lfd
           Loaded: loaded (/usr/lib/systemd/system/lfd.service; enabled; preset: enabled)
           Active: failed (Result: signal) since Sun 2025-09-21 01:52:34 UTC; 20min ago
@@ -226,7 +271,7 @@ If you see the status `failed` like the following example, this could be for any
 
 Ensure CSF and LFD are both enabled:
 
-=== ":aetherx-axs-square-terminal: Terminal"
+=== ":aetherx-axd-command: Command"
 
       ```shell
       $ sudo csf -e
@@ -236,11 +281,15 @@ Ensure CSF and LFD are both enabled:
 
 Another option to check the reason for the failure is to read out the lfd logs located at `/var/log/lfd.log`:
 
-=== ":aetherx-axs-square-terminal: Terminal"
+=== ":aetherx-axd-command: Command"
 
       ```shell
       sudo tail -n 50 /var/log/lfd.log
+      ```
 
+=== ":aetherx-axs-square-terminal: Output"
+
+      ```shell
       Sep 21 01:44:34 server lfd[99819]: *Error* lfd will not run with TESTING enabled in /etc/csf/csf.conf, at line 98
       Sep 21 01:44:34 server lfd[99819]: daemon stopped
       Sep 21 01:47:24 server lfd[105308]: *Error* lfd will not run with TESTING enabled in /etc/csf/csf.conf, at line 98
@@ -277,7 +326,7 @@ As our logs above show, it is complaining that `TESTIN` mode is enabled. You mus
 
 Attempt to start LFD again:
 
-=== ":aetherx-axs-square-terminal: Terminal"
+=== ":aetherx-axd-command: Command"
 
       ```shell
       $ sudo systemctl start lfd
@@ -288,11 +337,15 @@ Attempt to start LFD again:
 
 You should now be able to confirm that LFD is running:
 
-=== ":aetherx-axs-square-terminal: Terminal"
+=== ":aetherx-axd-command: Command"
 
       ```shell
       $ sudo systemctl status lfd
+      ```
 
+=== ":aetherx-axs-square-terminal: Output"
+
+      ```shell
       ● lfd.service - ConfigServer Firewall & Security - lfd
           Loaded: loaded (/usr/lib/systemd/system/lfd.service; enabled; preset: enabled)
           Active: active (running) since Sun 2025-09-21 01:44:00 UTC; 53min ago
@@ -323,24 +376,30 @@ Refer to the following troubleshooting tips if you have issues with installing a
 
 First, let's ensure `TESTING` mode is not enabled. Run the following `tail` command to look at the lfd logs located in `/var/log/lfd.log`:
 
-```console
-sudo tail -n 50 /var/log/lfd.log
+=== ":aetherx-axd-command: Command"
 
-Sep 21 01:44:34 server lfd[99819]: *Error* lfd will not run with TESTING enabled in /etc/csf/csf.conf, at line 98
-Sep 21 01:44:34 server lfd[99819]: daemon stopped
-Sep 21 01:47:24 server lfd[105308]: *Error* lfd will not run with TESTING enabled in /etc/csf/csf.conf, at line 98
-Sep 21 01:47:24 server lfd[105308]: daemon stopped
-Sep 21 01:47:56 server lfd[101396]: *Error* lfd will not run with TESTING enabled in /etc/csf/csf.conf, at line 98
-Sep 21 01:47:56 server lfd[101396]: daemon stopped
-Sep 21 01:50:39 server lfd[111685]: *Error* lfd will not run with TESTING enabled in /etc/csf/csf.conf, at line 98
-Sep 21 01:50:39 server lfd[111685]: daemon stopped
-Sep 21 01:52:07 server lfd[114496]: *Error* lfd will not run with TESTING enabled in /etc/csf/csf.conf, at line 98
-Sep 21 01:52:07 server lfd[114496]: daemon stopped
-Sep 21 01:52:34 server lfd[115504]: *Error* lfd will not run with TESTING enabled in /etc/csf/csf.conf, at line 98
-Sep 21 01:52:34 server lfd[115504]: daemon stopped
-Sep 21 01:55:17 server lfd[120584]: *Error* lfd will not run with TESTING enabled in /etc/csf/csf.conf, at line 98
-Sep 21 01:55:17 server lfd[120584]: daemon stopped
-```
+      ```shell
+      sudo tail -n 50 /var/log/lfd.log
+      ```
+
+=== ":aetherx-axs-square-terminal: Output"
+
+      ```shell
+      Sep 21 01:44:34 server lfd[99819]: *Error* lfd will not run with TESTING enabled in /etc/csf/csf.conf, at line 98
+      Sep 21 01:44:34 server lfd[99819]: daemon stopped
+      Sep 21 01:47:24 server lfd[105308]: *Error* lfd will not run with TESTING enabled in /etc/csf/csf.conf, at line 98
+      Sep 21 01:47:24 server lfd[105308]: daemon stopped
+      Sep 21 01:47:56 server lfd[101396]: *Error* lfd will not run with TESTING enabled in /etc/csf/csf.conf, at line 98
+      Sep 21 01:47:56 server lfd[101396]: daemon stopped
+      Sep 21 01:50:39 server lfd[111685]: *Error* lfd will not run with TESTING enabled in /etc/csf/csf.conf, at line 98
+      Sep 21 01:50:39 server lfd[111685]: daemon stopped
+      Sep 21 01:52:07 server lfd[114496]: *Error* lfd will not run with TESTING enabled in /etc/csf/csf.conf, at line 98
+      Sep 21 01:52:07 server lfd[114496]: daemon stopped
+      Sep 21 01:52:34 server lfd[115504]: *Error* lfd will not run with TESTING enabled in /etc/csf/csf.conf, at line 98
+      Sep 21 01:52:34 server lfd[115504]: daemon stopped
+      Sep 21 01:55:17 server lfd[120584]: *Error* lfd will not run with TESTING enabled in /etc/csf/csf.conf, at line 98
+      Sep 21 01:55:17 server lfd[120584]: daemon stopped
+      ```
 
 <br />
 
@@ -388,7 +447,9 @@ You can also try to run LFD with `strace`:
 
 <br />
 
-Sometimes `strace` will give you hints as to what went wrong. In the example above, lfd is exiting with `error code 0`, which means “success / no error”. The program is choosing to shut itself down and telling the OS “I finished cleanly.”. This tells us that it's not due to something failing. When a daemon exits cleanly (exit code 0), you usually have to look inside lfd's own logs, not just systemd’s.
+Sometimes `strace` will give you hints as to what went wrong. In the example above, lfd is exiting with `error code 0`, which means “success / no error”. The program is choosing to shut itself down and telling the OS “I finished cleanly.”. This tells us that it's not due to something failing. 
+
+When a daemon exits cleanly (exit code 0), you usually have to look inside lfd's own logs, not just systemd’s.
 
 In our example above, we clearly see in the `/var/log/lfd.log` log file that it was due to us having `TESTING` enabled.
 
