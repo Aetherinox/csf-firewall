@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_ghana_ipset
 #   @uuid           ea54933d-a319-3359-a553-f8ecf1e68b3d
-#   @updated        Wed 17 Sep 2025 01:02:58 AM UTC
-#   @entries        2,209,818 ips
-#                   569 subnets
-#                   569 lines
+#   @updated        Sun 21 Sep 2025 01:04:10 AM UTC
+#   @entries        2,210,330 ips
+#                   570 subnets
+#                   570 lines
 #   @country        Ghana (GH)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -257,6 +257,7 @@
 159.26.127.52/30
 160.119.108.0/22
 160.119.204.0/22
+160.225.2.0/23
 160.226.179.0/24
 162.120.204.73/32
 162.120.210.7/32
