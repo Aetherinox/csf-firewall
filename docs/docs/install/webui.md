@@ -902,6 +902,16 @@ In the code blocks above, we attached multiple Traefik **middlewares** to `route
 - [Geoblocking](https://plugins.traefik.io/plugins/62d6ce04832ba9805374d62c/geo-block)
     - Restrict access based on Geographical location
 
+<br />
+<br />
+
+### Restart Traefik
+
+Once you configure these changes in Traefik, you can restart your Traefik docker container. The command for that depends on how you set up the container. If you used docker-compose.yml, you can cd into the folder with the `docker-compose.yml` file and then execute:
+
+```shell
+docker compose down && docker compose up -d
+```
 
 <br />
 <br />
@@ -913,6 +923,33 @@ Once you configure these changes in Traefik, you can restart your Traefik docker
 ```shell
 docker compose down && docker compose up -d
 ```
+
+<br />
+
+---
+
+<br />
+
+## Next Steps <!-- omit from toc -->
+
+{==
+
+Select what documentation you would like to proceed with next ...
+
+==}
+
+<div class="grid cards" markdown>
+
+-   :material-file: &nbsp; __[Usage Getting Started](../usage/getting-started.md)__
+
+    ---
+
+    Select this option if you would like to start 
+    using CSF to manage your server. This section
+    will introduce you to the basic features and
+    how you can configure the CSF and LFD services.
+
+</div>
 
 
 

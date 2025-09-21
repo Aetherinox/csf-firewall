@@ -1,109 +1,363 @@
 # Conventions
-This documentation use some symbols for illustration purposes. Before you read
-on, please make sure you've made yourself familiar with the following list of
-conventions:
+
+This documentation use some symbols for illustration purposes. Before you read on, please make sure you've made yourself familiar 
+with the following list of conventions on this page, as they are used quite frequently.
 
 <br />
 
-### <!-- md:version --> Release Type { data-toc-label="Version" }
+## General Badges
 
-The tag symbol in conjunction with a version number denotes when a specific feature or behavior was added. Make sure you're at least on this version if you want to use it.
-
-:   <!-- md:version stable- --> stable
-:   <!-- md:version beta- --> beta
+The badges in this section are for general use.
 
 <br />
 
-### <!-- md:control --> Controls { #default data-toc-label="Control" }
+### <!-- md:flag -->  Flags { #flags data-toc-label="Flags" }
 
-These icons define what type of control a specified setting uses.
+=== "Description"
 
-:   <!-- md:control toggle --> toggle
-:   <!-- md:control textbox --> textbox
-:   <!-- md:control dropdown --> dropdown
-:   <!-- md:control button --> button
-:   <!-- md:control slider --> slider
-:   <!-- md:control color --> color wheel
+    These icons denote / mark a particular item with a specific category type. Use these to indicate that a feature or service is `experimental`, 
+    `dangerous`, `setting`, or `required`.
 
-<br />
+    `Examples`
 
-### <!-- md:default --> – Default Value { #default data-toc-label="Default value" }
+    :   <!-- md:flag --> Default  `<!-- @md:flag -->`
+    :   <!-- md:flag experimental --> Experimental  `<!-- @md:flag experimental -->`
+    :   <!-- md:flag required --> Required  `<!-- @md:flag required -->`
+    :   <!-- md:flag customization --> Customization  `<!-- @md:flag customization -->`
+    :   <!-- md:flag metadata --> Metadata  `<!-- @md:flag metadata -->`
+    :   <!-- md:flag dangerous --> Dangerous  `<!-- @md:flag dangerous -->`
+    :   <!-- md:flag multiple --> Multiple  `<!-- @md:flag multiple -->`
+    :   <!-- md:flag setting --> Setting  `<!-- @md:flag setting -->`
 
-This defines what the default value for a setting is.
 
-:   <!-- md:default --> Specified setting has a default value
-:   <!-- md:default none --> Specified setting has no default value and is empty
-:   <!-- md:default computed --> Specified setting is automatically computed by the app
-
-<br />
-
-### <!-- md:command --> – Command { #command data-toc-label="Command" }
-
-This defines a command
-
-:   <!-- md:command --> Specified setting has a default value
 
 <br />
 
-### <!-- md:flag experimental --> – Experimental { data-toc-label="Experimental" }
 
-Anything listed with this icon are features or functionality that are still in development and may change in future versions.
 
-<br />
+### <!-- md:control --> Controls { #control data-toc-label="Controls" }
 
-### <!-- md:flag required --> – Required value { #required data-toc-label="Required value" }
+=== "Description"
 
-Items listed with this symbol indicate that they are required to be set.
+    These icons deonote what type of control a specified setting uses if the settings are controlled by a graphical user interface.
 
-<br />
+    `Examples`
 
-### <!-- md:flag customization --> – Customization { #customization data-toc-label="Customization" }
+    :   <!-- md:control --> default  `<!-- @md:control -->`
+    :   <!-- md:control toggle --> toggle  `<!-- @md:control toggle -->`
+    :   <!-- md:control toggle_on --> toggle on  `<!-- @md:control toggle_on -->`
+    :   <!-- md:control toggle_off --> toggle off  `<!-- @md:control toggle_off -->`
+    :   <!-- md:control textbox --> textbox  `<!-- @md:control textbox -->`
+    :   <!-- md:control dropdown --> dropdown  `<!-- @md:control dropdown -->`
+    :   <!-- md:control button --> button  `<!-- @md:control button -->`
+    :   <!-- md:control slider --> slider  `<!-- @md:control slider -->`
+    :   <!-- md:control volume --> docker volume  `<!-- @md:control volume -->`
+    :   <!-- md:control env --> env variable  `<!-- @md:control env -->`
+    :   <!-- md:control color #E5E5E5 #121315 -->  `<!-- @md:control color #E5E5E5 #121315 -->`
 
-This symbol denotes that the item described is a customization which affects the overall look of the app.
 
-<br />
-
-### <!-- md:3rdparty --> – 3rd Party { data-toc-label="3rd Party" }
-
-This symbol denotes that the item described is classified as something that changes the overall functionality of the plugin.
-
-<br />
-
-### <!-- md:flag metadata --> – Metadata property { #metadata data-toc-label="Metadata property" }
-
-This symbol denotes that the item described is a metadata property, which can
-be used in Markdown documents as part of the front matter definition.
 
 <br />
 
-### <!-- md:flag setting --> – Configurable Setting { #setting data-toc-label="Configurable Setting" }
 
-This symbol denotes that an item is configurable by the user
+
+### <!-- md:version --> Release Type { #version data-toc-label="Versions" }
+
+=== "Description"
+
+    The tag symbol in conjunction with a version number denotes when a specific feature or functionality was added. Make sure 
+    you're at least on this version if you want to use the specified feature or functionality.
+
+    `Examples`
+
+    :   <!-- md:version --> default  `<!-- @md:version -->`
+    :   <!-- md:version stable- --> stable  `<!-- @md:version stable -->`
+    :   <!-- md:version development- --> development  `<!-- @md:version development -->`
+    :   <!-- md:version 1.6.1 -->  `<!-- @md:version 1.6.1 -->`
+    :   <!-- md:version stable-1.6.1 -->  `<!-- @md:version stable-1.6.1 -->`
+    :   <!-- md:version development-1.6.1 -->  `<!-- @md:version development-1.6.1 -->`
+
+
 
 <br />
 
-### <!-- md:flag multiple --> – Multiple instances { #multiple-instances data-toc-label="Multiple instances" }
 
-This symbol denotes that the plugin supports multiple instances, i.e, that it
-can be used multiple times in the `plugins` setting in `mkdocs.yml`.
+### <!-- md:default -->  Default Value { #default data-toc-label="Default Values" }
+
+=== "Description"
+
+    Denotes what the default value is for a particular setting. If you ever change a setting and wish to revert back to the
+    default value; this is the value you should use.
+
+    `Examples`
+
+    :   <!-- md:default --> Specified setting has a default value  `<!-- @md:default -->`
+    :   <!-- md:default none --> Specified setting has no default value and is empty  `<!-- @md:default none -->`
+    :   <!-- md:default computed --> Specified setting is automatically computed by the app  `<!-- @md:default computed -->`
+    :   <!-- md:default `false` --> Default value is false  `<!-- @md:default false -->`
+
+
 
 <br />
 
-### <!-- md:feature --> – Optional feature { #feature data-toc-label="Optional feature" }
 
-Most of the features are hidden behind feature flags, which means they must
-be explicitly enabled via `mkdocs.yml`. This allows for the existence of
-potentially orthogonal features.
+
+### <!-- md:command -->  Command { #command data-toc-label="Commands" }
+
+=== "Description"
+
+    Denotes that this item is a command which can be executed via a terminal, command prompt or some other console.
+
+    `Examples`
+
+    :   <!-- md:command --> Specified setting has a default value  `<!-- @md:command -->`
+    :   <!-- md:command `-s,  --start` --> Specified setting has a default value  `<!-- @md:command -s, --start -->`
+
+
 
 <br />
 
-### <!-- md:backers --> – Backers only { data-toc-label="Backers only" }
 
-The pumping heart symbol denotes that a specific feature or behavior is only
-available to backers. Normal users will not have access to this particular item.
+
+### <!-- md:3rdparty -->  3rd Party { #3rdparty data-toc-label="3rd Party" }
+
+=== "Description"
+
+    Denotes that this item is provided by a 3rd party service or app which is not directly associated with this application.
+
+    `Examples`
+
+    :   <!-- md:3rdparty -->  `<!-- @md:3rdparty -->`
+    :   <!-- md:3rdparty mike -->  `<!-- @md:3rdparty mike -->`
+
+
+
+<br />
+
+
+
+### <!-- md:plugin -->  Plugin { #plugin data-toc-label="Plugins" }
+
+=== "Description"
+
+    Denotes that this item requires a specific plugin in order to function.
+
+    `Examples`
+
+    :   <!-- md:plugin -->  `<!-- @md:plugin -->`
+    :   <!-- md:plugin name -->  `<!-- @md:plugin name -->`
+    :   <!-- md:plugin [typeset] – built-in --> With Details  `<!-- @md:plugin [typeset] – built-in -->`
+
+
+
+<br />
+<br />
+
+
+
+### <!-- md:feature -->  Feature { #feature data-toc-label="Features" }
+
+=== "Description"
+
+    Denotes a feature available within the app.
+
+    `Examples`
+
+    :   <!-- md:feature -->  `<!-- @md:feature -->`
+    :   <!-- md:feature name -->  `<!-- @md:feature name -->`
+
+
+
+<br />
+<br />
+
+
+### <!-- md:requires -->  Requires File { #requires data-toc-label="Requires" }
+
+=== "Description"
+
+    Denotes that a particular feature or functionality looks for, or requires a specific file on your system.
+
+    `Examples`
+
+    :   <!-- md:requires -->  `<!-- @md:requires -->`
+    :   <!-- md:requires /etc/csf/csf.conf -->  `<!-- @md:requires /etc/csf/csf.conf -->`
+
+
+
+<br />
+<br />
+
+
+### <!-- md:source -->  Source File { #source data-toc-label="Source" }
+
+=== "Description"
+
+    Denotes a feature available within the app.
+
+    `Examples`
+
+    :   <!-- md:source -->  `<!-- @md:source -->`
+    :   <!-- md:source /etc/csf/csf.conf -->  `<!-- @md:source /etc/csf/csf.conf -->`
+
+
+<br />
+<br />
+
+
+
+### <!-- md:flag setting -->  Configurable Settings { #setting data-toc-label="Configurable Setting" }
+
+=== "Description"
+
+    Denotes that this item is a configurable setting. Using this requires that you place it within a heading, typically `h4`
+
+    `Examples`
+
+    :   #### <!-- md:setting config.archive -->
+
+=== "Usage"
+
+    ```markdown
+    #### <!-- @md:setting config.archive -->
+    ```
+
+
+
+
+<br />
+
+
+### <!-- md:markdown -->  Markdown extension { data-toc-label="Markdown" #extension }
+
+=== "Description"
+
+    This symbol denotes that the thing described is a Markdown element. When adding links, ensure you create a reference-style link
+
+    `Examples`
+
+    :   <!-- md:markdown -->  `<!-- @md:markdown -->`
+    :   <!-- md:markdown [admonition][Admonition] -->  `<!-- @md:markdown [admonition][Admonition] -->`
+
+    [Admonition]: https://python-markdown.github.io/extensions/admonition/
+
+=== "Usage"
+
+    ```markdown
+    :   <!-- @md:markdown [admonition][Admonition] -->
+
+    [Admonition]: https://python-markdown.github.io/extensions/admonition/
+    ```
+
+
+<br />
+<br />
+
+
+
+### <!-- md:file -->  File Preview { #file-preview data-toc-label="File Preview" }
+
+=== "Description"
+
+    Creates a badge which allows a user to download a file. Badges will contain three sections:
+
+    1. View Example
+    2. Download Example
+    3. .ext filename extension
+
+    `Examples`
+
+    :   <!-- md:file --> Icon Only <!-- @md:file --> 
+    :   <!-- md:file something.rar left --> Left Aligned
+    :   Right Aligned <!-- md:file something.rar right -->
+    :   `<!-- @md:file something.rar -->` Right Aligned
+    :   `<!-- @md:file something.rar left` --> Left Aligned
+    :   `<!-- @md:file something.rar right` --> Right Aligned
+
+
+
+<br />
+<br />
+
+
+### <!-- md:backers -->  Backers Only { #backers data-toc-label="Backers Only" }
+
+=== "Description"
+
+    The pumping heart symbol denotes that a specific feature or behavior is only available to backers. 
+    Normal users will not have access to this particular item.
+
+    `Examples`
+
+    :   <!-- md:backers --> Backer <!-- @md:backers --> 
+
+
+<br />
+<br />
 
 <br />
 
 ---
 
 <br />
+
+## Options
+
+Options are another form of setting which lists what the option does, and then examples of how it works.
+
+<!-- md:option rss.enabled -->
+
+:   <!-- md:default `true` --> This option specifies whether
+    the plugin is enabled when building your project. If you want to speed up
+    local builds, you can use an [environment variable][mkdocs.env]:
+
+    ``` yaml
+    plugins:
+      - rss:
+          enabled: !ENV [CI, false]
+    ```
+
+<!-- md:option rss.match_path -->
+
+:   <!-- md:default `.*` --> This option specifies which
+    pages should be included in the feed. For example, to only include blog
+    posts in the feed, use the following regular expression:
+
+    ``` yaml
+    plugins:
+      - rss:
+          match_path: blog/posts/.*
+    ```
+
+
+<br />
+<br />
+
+---
+
+<br />
+
+## General Examples
+
+These are just generic examples with no specific purpose. They demonstrate how badges can be used.
+
+<br />
+
+#### <!-- md:flag setting --> DEBUG_ENABLED 
+<!-- md:version stable-2.0.0 --> <!-- md:default `false` --> <!-- md:flag required --> <!-- md:file test.zip -->
+
+This is an example setting.
+
+=== "example.md"
+
+    ```markdown
+    #### <!-- @md:flag setting --> DEBUG_ENABLED 
+    <!-- @md:version stable-2.0.0 --> <!-- @md:default `false` --> <!-- @md:flag required --> <!-- @md:file test.zip -->
+
+    This is an example setting.
+    ```
+
+
+<br />
+<br />
+
