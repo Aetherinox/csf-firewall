@@ -150,7 +150,7 @@ theme:
         code: Roboto Mono
     favicon: assets/favicon.png
     icon:
-        logo: /aetherx/axs/csf-logo
+        logo: /aetherx/axs/csf-logo-1
     features:
         - announce.dismiss
         - toc.follow
@@ -335,6 +335,7 @@ plugins:
           redirect_maps:
               docs/settings/summary.md: settings/summary.md
     - external-markdown
+    # - macros
 
 copyright: >
   Copyright &copy; 2025 - Aetherinox
