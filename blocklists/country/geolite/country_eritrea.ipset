@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_eritrea_ipset
 #   @uuid           02460c55-934a-3b46-bf18-26c0c2aab948
-#   @updated        Wed 17 Sep 2025 01:02:44 AM UTC
+#   @updated        Sun 21 Sep 2025 01:03:57 AM UTC
 #   @entries        7,432 ips
 #                   163 subnets
 #                   163 lines
