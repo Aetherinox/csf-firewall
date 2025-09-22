@@ -247,6 +247,7 @@ nav:
           - 6. Enable Web Interface: 'install/webui.md'
     - Usage:
           - 1. Getting Started: 'usage/getting-started.md'
+          - 5. Geographical Blocks: 'usage/geoip.md'
           - Cheatsheet:
                 - Home: 'usage/cheatsheet/home.md'
                 - Structure: 'usage/cheatsheet/structure.md'
