@@ -11,6 +11,9 @@ In the previous [Installation](../install/dependencies.md) chapter, we covered h
 
 If you are looking for straight-forward information such as commands, folder and file structure, or configuration examples, check out the [Cheatsheet](./cheatsheet/home.md) guides listed below.
 
+<br />
+<br />
+
 {==
 
 Cheatsheet Guides
@@ -46,7 +49,7 @@ Cheatsheet Guides
     the first time. Includes a full and a minimal
     config {==/etc/csf/csf.conf==}
 
--   :aetherx-axd-file-code: &nbsp; __[Usage Getting Started](../usage/getting-started.md)__
+-   :aetherx-axd-file-code: &nbsp; __[Usage › Getting Started](../usage/getting-started.md)__
 
     ---
 

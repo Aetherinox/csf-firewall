@@ -205,6 +205,7 @@ After you have created the above config; you need to launch the `geoipupdate` ap
 <br />
 
 ## Using db-ip, ipdeny, iptoasn
+
 This is the second option you can pick within CSF for Geographical blocking. When initially tried, it worked right out of box. It required no modifications, no packages to be installed, and no license keys.
 
 <br />
@@ -224,6 +225,7 @@ Pick your preferred method:
 <br />
 
 ### Manage with csf.conf
+
 Open up your `csf.conf` file in a text editor and locate the following settings:
 
 - `CC_DENY`
@@ -265,6 +267,7 @@ Our rules above mean:
 <br />
 
 ### Manage with CSF WebUI
+
 Sign into the [ConfigServer WebUI](../../webui/). 
 
 Select the tab **CSF**, scroll down and select **Firewall Configuration**, and then in the top dropdown box in the middle of the page, select **Country Code Lists and Settings**.
@@ -282,7 +285,10 @@ CC_ALLOW = "US,GB,DE"
 
 Below is an animated gif showing the steps.
 
-<p align="center"><img src="https://github.com/user-attachments/assets/19af3001-5cd5-479f-80e4-dbcbd28de748" width="660"></p>
+<figure markdown="span">
+    ![CSF Geo Configuration](https://github.com/user-attachments/assets/19af3001-5cd5-479f-80e4-dbcbd28de748){ width="300" }
+    <figcaption>CSF Geo Configuration</figcaption>
+</figure>
 
 <br />
 
@@ -295,6 +301,7 @@ Once you have modified your country values; scroll to the very bottom and press 
 <br />
 
 ## Restart CSF
+
 After you have whitelisted / blacklisted your desired countries; give CSF a restart:
 
 <br />
