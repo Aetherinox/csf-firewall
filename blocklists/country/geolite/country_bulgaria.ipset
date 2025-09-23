@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_bulgaria_ipset
 #   @uuid           98c29942-0ab1-3489-9eec-bb712af8154b
-#   @updated        Sun 21 Sep 2025 01:03:27 AM UTC
+#   @updated        Tue 23 Sep 2025 12:58:30 AM UTC
 #   @entries        4,292,230 ips
 #                   3,191 subnets
 #                   3,191 lines
