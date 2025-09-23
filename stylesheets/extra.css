@@ -5,15 +5,73 @@
 [ data-md-color-scheme="default" ]
 {
 
-    --md-accent-fg-color--transparent:  #1b1b1b2f;
-    --md-typeset-a-color:               #568afa;
-    --md-badge-icon-color:              #2b2b2b;
+    --md-primary-fg-color:              #4051b5;
+    --md-default-bg-color:              #ffffff;
+    --md-table-head-bg-color:           #4051b5;
+    --md-table-head-text-color:         #FFF;
+    --md-table-body-text-color:         rgb(43, 43, 43);
+
+    --md-navigation-header-link:        #0000008a;
+
+    --md-header-tabs-bg:                #4051b5;
+
+    --md-tooltip-width:                 400px;
+    --glow-color:                       hsl(186 100% 69%);
+
+    --md-loglevel-error-color:          #f06090;
+    --md-loglevel-warn-color:           #e6695b;
+    --md-loglevel-notice-color:         #e2d55e;
+    --md-loglevel-info-color:           #6791e0;
+    --md-loglevel-debug-color:          #c973d9;
+    --md-loglevel-trace-color:          hsla(225deg,15%,90%,0.56);
+
+    --md-default-fg-color:              hsla(0, 0%, 0%, 1);
+    --md-code-fg-color:                 #f02370;
+    --md-code-bg-color:                 #FFFFFF;                         /* Codeblock background color */
+    --md-code-hl-color:                 #2977ff;
+    --md-code-hl-color--light:          #2977ff1a;
+    --md-code-hl-number-color:          #e6695b;
+    --md-code-hl-special-color:         #f06090;
+    --md-code-hl-function-color:        #c973d9;
+    --md-code-hl-constant-color:        #9383e2;
+    --md-code-hl-keyword-color:         #6791e0;
+    --md-code-hl-string-color:          #2fb170;
+    --md-code-hl-name-color:            var(--md-code-fg-color);
+    --md-code-hl-operator-color:        var(--md-default-fg-color--light);
+    --md-code-hl-punctuation-color:     var(--md-default-fg-color--light);
+    --md-code-hl-comment-color:         var(--md-default-fg-color--light);
+    --md-code-hl-generic-color:         var(--md-default-fg-color--light);
+    --md-code-hl-variable-color:        var(--md-default-fg-color--light);
+    --md-typeset-color:                 var(--md-default-fg-color);
+    --md-typeset-a-color:               #f91d5b;
+    --md-badge-icon-color:              #d0d0d0;
     --md-badge-icon-hover-color:        #568afa;
-    --md-badge-bg-color--transparent:   #1b1b1b2f;
-    --md-badge-bg-hover-color:          #1b1b1b2f;
-    --md-table-head-bg-color:           #597dd2;
-    --md-table-body-bg-color:           rgb(221, 221, 221);
-    --md-table-body-text-color:         rgb(20, 20, 20);
+    --md-badge-bg-color--transparent:   #ffffff1c;
+    --md-badge-bg-hover-color:          #FFFFFF2E;
+    --md-typeset-kbd-color:             hsla(var(--md-hue),15%,90%,0.12);
+    --md-typeset-kbd-accent-color:      hsla(var(--md-hue),15%,90%,0.2);
+    --md-typeset-kbd-border-color:      hsla(var(--md-hue),15%,14%,1);
+    --md-typeset-mark-color:            #4287ff4d;
+    --md-typeset-table-color:           hsla(0%, 0%, 40%, 0.12);
+    --md-typeset-table-color--light:    hsla(var(--md-hue),15%,95%,0.035);
+    --md-admonition-fg-color:           var(--md-default-fg-color);
+    --md-admonition-bg-color:           var(--md-default-bg-color);
+    --md-footer-bg-color:               rgba( 17, 17, 17, 1 );
+    --md-footer-bg-color--dark:         rgba( 13, 13, 13, 1 );
+    --md-shadow-z1:                     0 0.2rem 0.5rem #0000000d,0 0 0.05rem #0000001a;
+    --md-shadow-z2:                     0 0.2rem 0.5rem #00000040,0 0 0.05rem #00000040;
+    --md-shadow-z3:                     0 0.2rem 0.5rem #0006,0 0 0.05rem #00000059;
+    --md-accent-fg-color--transparent:  #FFFFFF2E;
+    --md-admonition-icon--pied-piper:   url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M244 246c-3.2-2-6.3-2.9-10.1-2.9-6.6 0-12.6 3.2-19.3 3.7l1.7 4.9zm135.9 197.9c-19 0-64.1 9.5-79.9 19.8l6.9 45.1c35.7 6.1 70.1 3.6 106-9.8-4.8-10-23.5-55.1-33-55.1zM340.8 177c6.6 2.8 11.5 9.2 22.7 22.1 2-1.4 7.5-5.2 7.5-8.6 0-4.9-11.8-13.2-13.2-23 11.2-5.7 25.2-6 37.6-8.9 68.1-16.4 116.3-52.9 146.8-116.7C548.3 29.3 554 16.1 554.6 2l-2 2.6c-28.4 50-33 63.2-81.3 100-31.9 24.4-69.2 40.2-106.6 54.6l-6.3-.3v-21.8c-19.6 1.6-19.7-14.6-31.6-23-18.7 20.6-31.6 40.8-58.9 51.1-12.7 4.8-19.6 10-25.9 21.8 34.9-16.4 91.2-13.5 98.8-10zM555.5 0l-.6 1.1-.3.9.6-.6zm-59.2 382.1c-33.9-56.9-75.3-118.4-150-115.5l-.3-6c-1.1-13.5 32.8 3.2 35.1-31l-14.4 7.2c-19.8-45.7-8.6-54.3-65.5-54.3-14.7 0-26.7 1.7-41.4 4.6 2.9 18.6 2.2 36.7-10.9 50.3l19.5 5.5c-1.7 3.2-2.9 6.3-2.9 9.8 0 21 42.8 2.9 42.8 33.6 0 18.4-36.8 60.1-54.9 60.1-8 0-53.7-50-53.4-60.1l.3-4.6 52.3-11.5c13-2.6 12.3-22.7-2.9-22.7-3.7 0-43.1 9.2-49.4 10.6-2-5.2-7.5-14.1-13.8-14.1-3.2 0-6.3 3.2-9.5 4-9.2 2.6-31 2.9-21.5 20.1L15.9 298.5c-5.5 1.1-8.9 6.3-8.9 11.8 0 6 5.5 10.9 11.5 10.9 8 0 131.3-28.4 147.4-32.2 2.6 3.2 4.6 6.3 7.8 8.6 20.1 14.4 59.8 85.9 76.4 85.9 24.1 0 58-22.4 71.3-41.9 3.2-4.3 6.9-7.5 12.4-6.9.6 13.8-31.6 34.2-33 43.7-1.4 10.2-1 35.2-.3 41.1 26.7 8.1 52-3.6 77.9-2.9 4.3-21 10.6-41.9 9.8-63.5l-.3-9.5c-1.4-34.2-10.9-38.5-34.8-58.6-1.1-1.1-2.6-2.6-3.7-4 2.2-1.4 1.1-1 4.6-1.7 88.5 0 56.3 183.6 111.5 229.9 33.1-15 72.5-27.9 103.5-47.2-29-25.6-52.6-45.7-72.7-79.9zm-196.2 46.1v27.2l11.8-3.4-2.9-23.8zm-68.7-150.4l24.1 61.2 21-13.8-31.3-50.9zm84.4 154.9l2 12.4c9-1.5 58.4-6.6 58.4-14.1 0-1.4-.6-3.2-.9-4.6-26.8 0-36.9 3.8-59.5 6.3z"/></svg>');
+
+    /*
+        Top Header
+    */
+
+    .md-header
+    {
+        background-color: #495cca;
+    }
 
     /*
         Top-left logo
@@ -42,6 +100,28 @@
     }
 
     /*
+        AX Icons (Inline)
+    */
+
+    .svg-inline--ax
+    {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        vertical-align: middle;
+        fill: currentColor;
+    }
+
+    /* Optional: spacing between icon and text */
+    .svg-inline--ax + span,
+    .svg-inline--ax + a,
+    .svg-inline--ax + i
+    {
+        margin-left: 0.7em;
+        vertical-align: middle;
+    }
+
+    /*
         Badge icons (if using fontawesome .js file instead of .css
     */
 
@@ -52,6 +132,271 @@
         display: inline-block;
         vertical-align: middle;
         fill: currentColor;
+    }
+
+    /*
+        Navigation > Tabs
+    */
+
+    .md-tabs
+    {
+        background-color: var(--md-header-tabs-bg);
+        color: var(--md-primary-bg-color);
+        display: block;
+        line-height: 1.3;
+        overflow: auto;
+        width: 100%;
+        z-index: 3;
+    }
+
+    /*
+        Navigation Text
+    */
+
+    .md-nav
+    {
+        font-size: .7rem;
+        line-height: 1.4;
+    }
+
+    .mdx-container
+    {
+        background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1123 258'><path d='M1124,2c0,0 0,256 0,256l-1125,0l0,-48c0,0 16,5 55,5c116,0 197,-92 325,-92c121,0 114,46 254,46c140,0 214,-167 572,-166Z' style='fill: hsla(140, 0%, 5%, 1)' /></svg>") no-repeat bottom,linear-gradient(to bottom,var(--md-primary-fg-color),#101010 100%,var(--md-default-bg-color) 100%);
+        padding-top: 1rem;
+    }
+
+    /*
+        Page Main Background
+    */
+
+    .md-main
+    {
+        background-color: #f1f1f1 !important;
+    }
+
+    .md-main__inner
+    {
+        display: flex;
+        height: 100%;
+    }
+
+    /*
+        Table > Most background
+            This does NOT show iff you have alternating row colors.
+    */
+
+    .md-typeset table:not([ class ] ) tbody tr
+    {
+        background-color: rgb(226, 226, 226);
+    }
+
+    /*
+        Codeblock 
+            RRemove gap between tabs and codeblock
+    */
+
+    .md-typeset pre
+    {
+        display: flow-root;
+        line-height: 1.4;
+        position: relative;
+    }
+
+    /*
+        Codeblock
+            remove border, remove top margin
+    */
+
+    .md-typeset .admonition, .md-typeset details
+    {
+        background-color: var(--md-admonition-bg-color);
+        border-radius: .2rem;
+        box-shadow: var(--md-shadow-z1);
+        color: var(--md-admonition-fg-color);
+        display: flow-root;
+        font-size: .64rem;
+        page-break-inside: avoid;
+        transition: box-shadow 125ms;
+    }
+
+    /*
+        admonition > Warning
+    */
+
+    .md-typeset .warning > .admonition-title, .md-typeset .warning > summary
+    {
+        background-color: #ff9555;
+        color: #FFF;
+    }
+
+    .md-typeset .warning > .admonition-title::before, .md-typeset .warning > summary::before
+    {
+        background-color: #fff;
+    }
+
+    .md-typeset .warning > .admonition-title::after, .md-typeset .warning > summary::after
+    {
+        color: #FFF;
+    }
+
+    .md-typeset .admonition.warning, .md-typeset details.warning
+    {
+        border-color: #ff9555;
+    }
+
+    /*
+        admonition > Info
+    */
+
+    .md-typeset .info > .admonition-title, .md-typeset .info > summary
+    {
+        background-color: #4368b9;
+        color: #FFF;
+    }
+
+    .md-typeset .info > .admonition-title::before, .md-typeset .info > summary::before
+    {
+        background-color: #fff;
+    }
+
+    .md-typeset .info > .admonition-title::after, .md-typeset .info > summary::after
+    {
+        color: #FFF;
+    }
+
+    .md-typeset .admonition.info, .md-typeset details.info
+    {
+        border-color: #ddd;
+    }
+
+    /*
+        Background color for top tabs
+    */
+
+    .md-typeset .tabbed-labels
+    {
+        background-color: #e6e6e6;
+        border-radius: 4px;
+    }
+
+    /*
+    .tabbed-labels a
+    {
+        color: #FFF !important;
+    }
+    */
+
+    .md-typeset .tabbed-block > .highlight:first-child > pre > code, .md-typeset .tabbed-block > pre:first-child > code
+    {
+        border-radius: 6px;
+    }
+
+    .tabbed-labels::before
+    {
+        background: hsla(343.1, 87.9%, 51.6%, 0.82);
+        bottom: 0;
+        content: "";
+        display: block;
+        height: 2px;
+        left: 0;
+        position: absolute;
+        transform: translateX(var(--md-indicator-x));
+        transition: width 225ms,background-color .25s,transform .25s;
+        transition-timing-function: ease, ease, ease;
+        transition-timing-function: cubic-bezier(.4,0,.2,1);
+        width: var(--md-indicator-width);
+    }
+
+    /*
+        Clipboard
+    */
+    
+    .md-clipboard
+    {
+        color: #bebebe;
+    }
+
+    .md-clipboard:focus, .md-clipboard:hover
+    {
+        color: #526cfe !important;
+    }
+
+    /*
+        Tabs > Body
+            the body div of tab contens
+    */
+
+    .md-typeset .tabbed-content 
+    {
+        width: 100%;
+        background-color: rgb(224, 224, 224);
+        padding: 15px;
+    }
+
+    /*
+        Tabs > Body > Code Blocks
+            only changes the background if the codeblock is within tabs
+    */
+
+    .md-typeset .tabbed-content code
+    {
+        background-color: #FFF;
+    }
+
+    /*
+        Should ensure that only inline code blocks don't wrap code on multiple lines.
+    */
+
+    p code
+    {
+        white-space: nowrap;
+    }
+
+    /*
+        Table Colors
+    */
+
+    .md-typeset__table > table
+    {
+        background-color: var(--md-footer-bg-color);
+    }
+
+    .md-typeset table:not([class])
+    {
+        background-color: var(--md-default-bg-color);
+        border: .05rem solid var(--md-typeset-table-color);
+        border-radius: .1rem;
+        display: inline-block;
+        font-size: .64rem;
+        max-width: 100%;
+        overflow: auto;
+        touch-action: auto;
+    }
+
+    .md-typeset table:not([class]) td
+    {
+        border-top: none;
+        padding-top: 10px;
+        padding-left: 15px;
+        padding-bottom: 10px;
+    }
+
+    /* 
+        Table > Even rows 
+    */
+
+    .md-typeset table:not([class]) tr:nth-child(even) td
+    {
+        background-color: #ebebeb;
+    }
+
+    /* 
+        Table > Odd rows 
+    */
+
+    .md-typeset table:not([class]) tr:nth-child(odd) td
+    {
+        background-color: rgb(227, 227, 227);
     }
 
     /*
@@ -66,142 +411,6 @@
         vertical-align: middle;
         fill: currentColor;
     }
-    
-    /* Optional: spacing between icon and text */
-    .i + span, .axs + span
-    {
-        margin-left: 0.3em;
-    }
-
-    /*
-        Tag > Background Color
-    */
-
-    .md-typeset .md-tag
-    {
-        background-color: #d7d7d7;
-    }
-
-    /*
-        Navigation Text
-    */
-
-    .md-nav
-    {
-        font-size: .6rem;
-        line-height: 1.3;
-    }
-
-    /*
-        Badges > Right Box
-    */
-
-    .mdx-badge__text
-    {
-        background-color: var(--md-accent-fg-color);
-    }
-
-    /*
-        Badge > Text
-    */
-
-    .mdx-badge__text > code, .mdx-badge__text > a
-    {
-        background-color: transparent;
-        color: #FFF;
-    }
-
-    /*
-        Make <small>text</small> opaque. used for changelog to show date
-    */
-
-    h3 > small
-    {
-        opacity: 0.4 !important;
-        padding-left: 10px;
-        margin-bottom: 28px;
-    }
-
-    /*
-        Badge > H3
-
-        These are for badges that show in h3 headers
-    */
-
-    h3 .mdx-badge__icon
-    {
-        font-size: 14px;
-        margin-inline-end: 5px;
-    }
-
-    /*
-        Control > Color Box
-    */
-
-    .color-box
-    {
-        float: left;
-        height: 25px;
-        width: 25px;
-        border: 1px solid rgba( 255, 255, 255, 0.2 );
-        clear: both;
-    }
-
-    .color-container
-    {
-        display: inline-block;
-        padding-left: 5px;
-        margin-block-end: -7px;
-    }
-
-    .md-typeset .mdx-badge a[title^="Requires"]svg:hover
-    {
-        padding-top: 2px;
-        padding-left: 4px;
-    }
-
-    /*
-        Table > Outter Border / Background
-    */
-
-    .md-typeset__table > table
-    {
-
-    }
-
-    .md-typeset table:not([class]) td
-    {
-        border-top: 2px solid var(--md-typeset-table-color);
-        padding: .9375em 1.25em;
-            padding-top: 0.9375em;
-            padding-bottom: 0.9375em;
-            padding-left: 1.25em;
-        vertical-align: top;
-        line-height: 20px;
-    }
-
-    /*
-        Table > Outter Border / Background
-    */
-
-    .md-typeset__table > table
-    {
-
-    }
-
-    .md-typeset table:not([class]) th
-    {
-        padding-top:10px;
-        padding-bottom: 10px;
-        padding-left: 15px;
-    }
-
-    .md-typeset table:not([class]) td
-    {
-        padding-left: 15px;
-        padding-top: 5px;
-        padding-bottom: 5px;
-    }
 
     /*
         Table > Left Row
@@ -210,6 +419,7 @@
     .md-typeset__table > table > tbody > tr > td:first-child
     {
         white-space: nowrap;
+        vertical-align: middle;
         /*background-color: var(--md-code-bg-color);*/
     }
 
@@ -232,19 +442,284 @@
         display: table;
     }
 
+    .md-typeset__table
+    {
+        min-width: 100%;
+    }
+
     /*
-        Background color for top tabs
+        Navigation > Opened
+        issue with this is that the animation gets jerky when used
     */
 
-    .md-typeset .tabbed-labels
+    li.md-nav__item--nested > nav.md-nav[aria-expanded="true"]
     {
-        background-color: #e9e9e9;
+        /*padding-bottom: 10px;*/
     }
-}
 
-[dir="ltr"] .md-typeset table th[role="columnheader"]::after
-{
-    margin-left: 5px;
+    a.md-nav__link--active
+    {
+        color: #ff4592;
+    }
+
+    /*
+        Center align buttons
+    */
+
+    .btn-aln-center
+    {
+        text-align: center;
+    }
+
+    p > a.btn-aln-center
+    {
+        display: block;
+        width: fit-content;
+        margin: 0 auto;
+    }
+
+    .md-typeset .md-button
+    {
+        color: #4051b5;
+        text-align: center;
+    }
+
+    .md-typeset .md-button:focus, .md-typeset .md-button:hover
+    {
+        color: #FFF;
+        background-color: #4051b5;
+        border-color: #4051b5;
+    }
+
+    button#mkdocs-decrypt-button svg
+    {
+        color: #FFFFFF;
+    }
+
+    form#mkdocs-decrypt-form > input#mkdocs-content-password + a
+    {
+        padding-bottom: 10px;
+    }
+
+    #mkdocs-decrypt-form > input
+    {
+        background-color: #171a20;
+        width: 100%;
+    }
+
+    .md-typeset .md-input
+    {
+        border-bottom: 1px solid #5875f8;
+    }
+
+    .md-typeset .admonition.pied-piper,
+    .md-typeset details.pied-piper
+    {
+        border-color: rgb(43, 155, 70);
+    }
+
+    .md-typeset .pied-piper > .admonition-title,
+    .md-typeset .pied-piper > summary
+    {
+        background-color: rgba(43, 155, 70, 0.1);
+    }
+
+    .md-typeset .pied-piper > .admonition-title::before,
+    .md-typeset .pied-piper > summary::before
+    {
+        background-color: rgb(43, 155, 70);
+        -webkit-mask-image: var(--md-admonition-icon--pied-piper);
+        mask-image: var(--md-admonition-icon--pied-piper);
+    }
+
+    .md-typeset figcaption
+    {
+        font-size: 9pt;
+        color: #707070;
+    }
+
+    /*
+        Make <small>text</small> opaque. used for changelog to show date
+    */
+
+    h3 > small
+    {
+        opacity: 0.4 !important;
+        padding-left: 10px;
+        margin-bottom: 28px;
+    }
+
+    /*
+        Badge > H3
+
+        These are for badges that show in h3 headers
+    */
+
+    h3 .mdx-badge__icon
+    {
+        margin-inline-end: 5px;
+    }
+
+    h3 .mdx-badge svg
+    {
+        padding-left: 0px;
+    }
+
+    /*
+        Badges > Right Box
+    */
+
+    .mdx-badge__text
+    {
+        background-color: #40568e;
+    }
+
+    .md-typeset .mdx-badge__text
+    {
+        box-shadow: none;;
+        padding: .2rem .3rem;
+    }
+
+    /*
+        Badge border
+    */
+
+    [dir="ltr"] .md-typeset .mdx-badge__icon 
+    {
+        border-bottom-left-radius: .1rem;
+        border-right: 1px solid #202020;
+    }
+
+    .md-typeset .mdx-badge__icon 
+    {
+        background: #526cfe;
+        padding-left: 6px;
+        padding-right: 5px;
+    }
+
+    .mdx-badge--command .mdx-badge__text
+    {
+        background-color: #e3e3e3;
+    }
+
+    /*
+        Inline Code Block
+    */
+
+    .md-typeset code
+    {
+        background-color: #dfdfdf;
+        border: 1px solid #D5D5D5;
+    }
+
+    table code
+    {
+        background-color: #FFF !important;
+    }
+
+    /*
+        Clipboard Icons
+    */
+
+    .md-typeset .md-content__button
+    {
+        color: #a8a8a852;
+    }
+
+    /*
+        Badge > Text
+    */
+
+    .mdx-badge__text > code, .mdx-badge__text > a
+    {
+        background-color: transparent;
+        color: #313131;
+    }
+
+    /*
+        File Preview > Right Align
+    */
+
+    .mdx-badge--files-group-right
+    {
+        float: right;
+        clear: both;
+        justify-content: flex-end; /* same as left, shrink-wrap */
+        gap: 0.35em;
+        vertical-align: middle;
+    }
+
+    /*
+        File Preview > Left Align
+    */
+
+    .mdx-badge--files-group-left
+    {
+        display: inline-flex;
+        justify-content: flex-start;
+        gap: 0.35em;
+        vertical-align: middle;
+    }
+
+    /*
+        File Preview > Right Align > Files View
+            add padding to the right of the file view icon
+    */
+
+    .mdx-badge--files-group-right .mdx-badge.mdx-badge--files-view
+    {
+        padding-right: 5px;
+    }
+
+    /*
+        Table > Header
+    */
+
+    .md-typeset__table table thead, .md-typeset__table > table
+    {
+        background-color: var(--md-table-head-bg-color);
+        color: var(--md-table-head-text-color);
+    }
+
+    .md-typeset table:not([class]) tbody tr
+    {
+        background-color: var(--md-table-body-bg-color);
+        color: var(--md-table-body-text-color);
+    }
+
+    /*
+        Tags
+    */
+
+    .md-typeset .md-tag
+    {
+        background-color: #d7d7d7;
+    }
+
+    /*
+        Codeblock background
+    */
+
+    .md-typeset .md-code__content
+    {
+        display: grid;
+        background-color: #E1E1E1;
+        border-radius: 6px;
+    }
+
+    .highlight .hll
+    {
+        box-shadow: 2px 0 0 0 #e80b54 inset;
+        display: block;
+        margin: 0 -1.1764705882em;
+        padding: 0 1.1764705882em;
+        background: linear-gradient( 90deg, #FF7EA833 70%, transparent 100%), #e3e3e3 !important;
+    }
+
+    .highlight .na, .highlight .nv, .highlight .vc, .highlight .vg, .highlight .vi
+    {
+
+    }
 }
 
 /*
@@ -256,6 +731,14 @@
 
     --md-primary-fg-color:              #7b1234;
     --md-default-bg-color:              #151515;
+    --md-table-head-bg-color:           #860038;
+    --md-table-head-text-color:         #FFF;
+    --md-table-body-text-color:         rgb(231, 231, 231);
+
+    --md-navigation-header-link:        #ffffff59;
+
+    --md-header-tabs-bg:                #860038;
+
     --md-tooltip-width:                 400px;
     --glow-color:                       hsl(186 100% 69%);
 
@@ -309,10 +792,17 @@
     --md-shadow-z1:                     0 0.2rem 0.5rem #0000000d,0 0 0.05rem #0000001a;
     --md-shadow-z2:                     0 0.2rem 0.5rem #00000040,0 0 0.05rem #00000040;
     --md-shadow-z3:                     0 0.2rem 0.5rem #0006,0 0 0.05rem #00000059;
-    --md-table-head-bg-color:           #860038;
-    --md-table-body-text-color:         rgb(231, 231, 231);
     --md-accent-fg-color--transparent:  #FFFFFF2E;
     --md-admonition-icon--pied-piper:   url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M244 246c-3.2-2-6.3-2.9-10.1-2.9-6.6 0-12.6 3.2-19.3 3.7l1.7 4.9zm135.9 197.9c-19 0-64.1 9.5-79.9 19.8l6.9 45.1c35.7 6.1 70.1 3.6 106-9.8-4.8-10-23.5-55.1-33-55.1zM340.8 177c6.6 2.8 11.5 9.2 22.7 22.1 2-1.4 7.5-5.2 7.5-8.6 0-4.9-11.8-13.2-13.2-23 11.2-5.7 25.2-6 37.6-8.9 68.1-16.4 116.3-52.9 146.8-116.7C548.3 29.3 554 16.1 554.6 2l-2 2.6c-28.4 50-33 63.2-81.3 100-31.9 24.4-69.2 40.2-106.6 54.6l-6.3-.3v-21.8c-19.6 1.6-19.7-14.6-31.6-23-18.7 20.6-31.6 40.8-58.9 51.1-12.7 4.8-19.6 10-25.9 21.8 34.9-16.4 91.2-13.5 98.8-10zM555.5 0l-.6 1.1-.3.9.6-.6zm-59.2 382.1c-33.9-56.9-75.3-118.4-150-115.5l-.3-6c-1.1-13.5 32.8 3.2 35.1-31l-14.4 7.2c-19.8-45.7-8.6-54.3-65.5-54.3-14.7 0-26.7 1.7-41.4 4.6 2.9 18.6 2.2 36.7-10.9 50.3l19.5 5.5c-1.7 3.2-2.9 6.3-2.9 9.8 0 21 42.8 2.9 42.8 33.6 0 18.4-36.8 60.1-54.9 60.1-8 0-53.7-50-53.4-60.1l.3-4.6 52.3-11.5c13-2.6 12.3-22.7-2.9-22.7-3.7 0-43.1 9.2-49.4 10.6-2-5.2-7.5-14.1-13.8-14.1-3.2 0-6.3 3.2-9.5 4-9.2 2.6-31 2.9-21.5 20.1L15.9 298.5c-5.5 1.1-8.9 6.3-8.9 11.8 0 6 5.5 10.9 11.5 10.9 8 0 131.3-28.4 147.4-32.2 2.6 3.2 4.6 6.3 7.8 8.6 20.1 14.4 59.8 85.9 76.4 85.9 24.1 0 58-22.4 71.3-41.9 3.2-4.3 6.9-7.5 12.4-6.9.6 13.8-31.6 34.2-33 43.7-1.4 10.2-1 35.2-.3 41.1 26.7 8.1 52-3.6 77.9-2.9 4.3-21 10.6-41.9 9.8-63.5l-.3-9.5c-1.4-34.2-10.9-38.5-34.8-58.6-1.1-1.1-2.6-2.6-3.7-4 2.2-1.4 1.1-1 4.6-1.7 88.5 0 56.3 183.6 111.5 229.9 33.1-15 72.5-27.9 103.5-47.2-29-25.6-52.6-45.7-72.7-79.9zm-196.2 46.1v27.2l11.8-3.4-2.9-23.8zm-68.7-150.4l24.1 61.2 21-13.8-31.3-50.9zm84.4 154.9l2 12.4c9-1.5 58.4-6.6 58.4-14.1 0-1.4-.6-3.2-.9-4.6-26.8 0-36.9 3.8-59.5 6.3z"/></svg>');
+
+    /*
+        Top Header
+    */
+
+    .md-header
+    {
+        background-color: #99143f;
+    }
 
     /*
         Top-left logo
@@ -341,7 +831,7 @@
     }
 
     /*
-        AX Icons
+        AX Icons (Inline)
     */
 
     .svg-inline--ax
@@ -381,7 +871,7 @@
 
     .md-tabs
     {
-        background-color: #860038;
+        background-color: var(--md-header-tabs-bg);
         color: var(--md-primary-bg-color);
         display: block;
         line-height: 1.3;
@@ -405,6 +895,10 @@
         background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1123 258'><path d='M1124,2c0,0 0,256 0,256l-1125,0l0,-48c0,0 16,5 55,5c116,0 197,-92 325,-92c121,0 114,46 254,46c140,0 214,-167 572,-166Z' style='fill: hsla(140, 0%, 5%, 1)' /></svg>") no-repeat bottom,linear-gradient(to bottom,var(--md-primary-fg-color),#101010 100%,var(--md-default-bg-color) 100%);
         padding-top: 1rem;
     }
+
+    /*
+        Page Main Background
+    */
 
     .md-main
     {
@@ -444,7 +938,6 @@
             remove border, remove top margin
     */
 
-    
     .md-typeset .admonition, .md-typeset details
     {
         background-color: var(--md-admonition-bg-color);
@@ -453,9 +946,28 @@
         color: var(--md-admonition-fg-color);
         display: flow-root;
         font-size: .64rem;
-        margin: 1.5625em 0;
         page-break-inside: avoid;
         transition: box-shadow 125ms;
+    }
+
+    /*
+        admonition > Info
+    */
+
+    .md-typeset .admonition.info, .md-typeset details.info
+    {
+        border: .075rem solid #448aff;
+    }
+
+    .md-typeset .info > .admonition-title::after, .md-typeset .info > summary::after
+    {
+        color: #448aff;;
+        background-color: #448aff;
+    }
+
+    .md-typeset .info > .admonition-title::before, .md-typeset .info > summary::before
+    {
+        background-color: #448aff;
     }
 
     /*
@@ -465,11 +977,19 @@
     .md-typeset .tabbed-labels
     {
         background-color: #2f4373;
-        border-top-left-radius: 4px;
-        border-left: 1px solid #242735;
-        border-top: 1px solid #242735;
-        border-right: 1px solid #242735;
-        border-top-right-radius: 4px;
+        border-radius: 4px;
+    }
+    
+    /*
+    .tabbed-labels a
+    {
+        color: #FFF !important;
+    }
+    */
+
+    .md-typeset .tabbed-block > .highlight:first-child > pre > code, .md-typeset .tabbed-block > pre:first-child > code
+    {
+        border-radius: 6px;
     }
 
     .tabbed-labels::before
@@ -486,6 +1006,20 @@
         transition-timing-function: ease, ease, ease;
         transition-timing-function: cubic-bezier(.4,0,.2,1);
         width: var(--md-indicator-width);
+    }
+
+    /*
+        Clipboard
+    */
+    
+    .md-clipboard
+    {
+        color: #818181;
+    }
+
+    .md-clipboard:focus, .md-clipboard:hover
+    {
+        color: #526cfe !important;
     }
 
     /*
@@ -528,8 +1062,21 @@
         background-color: var(--md-footer-bg-color);
     }
 
+    .md-typeset table:not([class])
+    {
+        background-color: var(--md-default-bg-color);
+        border: .05rem solid var(--md-typeset-table-color);
+        border-radius: .1rem;
+        display: inline-block;
+        font-size: .64rem;
+        max-width: 100%;
+        overflow: auto;
+        touch-action: auto;
+    }
+
     .md-typeset table:not([class]) td
     {
+        border-top: none;
         padding-top: 10px;
         padding-left: 15px;
         padding-bottom: 10px;
@@ -543,7 +1090,7 @@
     {
         background-color: #1a1c26;
     }
-    
+
     /* 
         Table > Odd rows 
     */
@@ -551,6 +1098,19 @@
     .md-typeset table:not([class]) tr:nth-child(odd) td
     {
         background-color: #21232f;
+    }
+
+    /*
+        AX Icons
+    */
+
+    .i, .axs
+    {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        vertical-align: middle;
+        fill: currentColor;
     }
 
     /*
@@ -563,25 +1123,6 @@
         vertical-align: middle;
         /*background-color: var(--md-code-bg-color);*/
     }
-
-    /*
-        Make sure block-level children inside td also align
-    */
-    [data-md-color-scheme="main"] .md-typeset table:not([class]) td > *
-    {
-        margin: 0;
-        vertical-align: middle;
-        display: inline-block !important;
-    }
-
-    [data-md-color-scheme="main"] .md-typeset table:not([class]) td
-    {
-        padding-left: 15px;
-        padding-top: 5px;
-        padding-bottom: 5px;
-        vertical-align: middle;
-    }
-
 
     /*
         First row of table nowrap
@@ -620,6 +1161,35 @@
     a.md-nav__link--active
     {
         color: #ff4592;
+    }
+
+    /*
+        Center align buttons
+    */
+
+    .btn-aln-center
+    {
+        text-align: center;
+    }
+
+    p > a.btn-aln-center
+    {
+        display: block;
+        width: fit-content;
+        margin: 0 auto;
+    }
+
+    .md-typeset .md-button
+    {
+        color: #c43563;
+        text-align: center;
+    }
+
+    .md-typeset .md-button:focus, .md-typeset .md-button:hover
+    {
+        color: #FFF;
+        background-color: #841a3c;
+        border-color: #ac4444fa;
     }
 
     button#mkdocs-decrypt-button svg
@@ -728,6 +1298,34 @@
         padding-right: 5px;
     }
 
+    .mdx-badge--command .mdx-badge__text
+    {
+        background-color: #464646;
+    }
+
+    /*
+        Inline Code Block
+    */
+
+    .md-typeset code
+    {
+        background-color: var( --md-code-bg-color );
+    }
+
+    table .md-typeset code
+    {
+        background-color: var( --md-code-bg-color );
+    }
+
+    /*
+        Clipboard Icons
+    */
+
+    .md-typeset .md-content__button
+    {
+        color: var(--md-default-fg-color--lighter);
+    }
+
     /*
         Badge > Text
     */
@@ -773,6 +1371,55 @@
         padding-right: 5px;
     }
 
+    /*
+        Table > Header
+    */
+
+    .md-typeset__table table thead, .md-typeset__table > table
+    {
+        background-color: var(--md-table-head-bg-color);
+        color: var(--md-table-head-text-color);
+    }
+
+    .md-typeset table:not([class]) tbody tr
+    {
+        background-color: var(--md-table-body-bg-color);
+        color: var(--md-table-body-text-color);
+    }
+
+    /*
+        Tags
+    */
+
+    .md-typeset .md-tag
+    {
+        background-color: #7b1234;
+    }
+
+    /*
+        Codeblock background
+    */
+
+    .md-typeset .md-code__content
+    {
+        display: grid;
+        background-color: var( --md-code-bg-color );
+        border-radius: 6px;
+    }
+
+    .highlight .hll
+    {
+        box-shadow: 2px 0 0 0 #f20733 inset;
+        display: block;
+        margin: 0 -1.1764705882em;
+        padding: 0 1.1764705882em;
+        background: linear-gradient( 90deg, #A6063AAD 70%, transparent 100%), #242735 !important;
+    }
+
+    .highlight .na, .highlight .nv, .highlight .vc, .highlight .vg, .highlight .vi
+    {
+
+    }
 }
 
 /*
@@ -1071,11 +1718,6 @@ h4:has(.twemoji) .twemoji
     font-size: 8pt !important;
 }
 
-.mdx-badge--command .mdx-badge__text
-{
-    background-color: #464646;
-}
-
 /*
     Badges > Overall icon and text size
 */
@@ -1122,22 +1764,6 @@ h2:has(.mdx-badge) > .mdx-badge svg
 
 }
 
-/*
-    Table > Header
-*/
-
-.md-typeset__table table thead, .md-typeset__table > table
-{
-    background-color: var(--md-table-head-bg-color);
-    color: #FFF;
-}
-
-.md-typeset table:not([class]) tbody tr
-{
-    background-color: var(--md-table-body-bg-color);
-    color: var(--md-table-body-text-color);
-}
-
 .mdx-badge__text a
 {
     padding-top: 2px;
@@ -1173,7 +1799,12 @@ small
 
 label.md-nav__link
 {
-    color: #ffffff59 !important;
+    color: var( --md-navigation-header-link ) !important;
+}
+
+.md-nav__title
+{
+    color: var( --md-navigation-header-link ) !important;
 }
 
 label.md-nav__link::before
@@ -1857,6 +2488,17 @@ figure img
 .mkde-left-s2 > a, a.item-title-link:hover, a.item-link:hover
 {
     color: var(--md-accent-fg-color);
+}
+
+/*
+    Footer
+*/
+
+.md-banner
+{
+    background-color: var(--md-footer-bg-color);
+    color: var(--md-footer-fg-color);
+    overflow: auto;
 }
 
 /*
