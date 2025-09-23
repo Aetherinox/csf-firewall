@@ -51,7 +51,7 @@
     --md-typeset-kbd-color:             hsla(var(--md-hue),15%,90%,0.12);
     --md-typeset-kbd-accent-color:      hsla(var(--md-hue),15%,90%,0.2);
     --md-typeset-kbd-border-color:      hsla(var(--md-hue),15%,14%,1);
-    --md-typeset-mark-color:            #4287ff4d;
+    --md-typeset-mark-color:            #4287ffb6;
     --md-typeset-table-color:           hsla(0%, 0%, 40%, 0.12);
     --md-typeset-table-color--light:    hsla(var(--md-hue),15%,95%,0.035);
     --md-admonition-fg-color:           var(--md-default-fg-color);
@@ -220,6 +220,31 @@
     }
 
     /*
+        admonition > Danger
+    */
+
+    .md-typeset .danger > .admonition-title, .md-typeset .danger > summary
+    {
+        background-color: #cc405c;
+        color: #FFF;
+    }
+
+    .md-typeset .danger > .admonition-title::before, .md-typeset .danger > summary::before
+    {
+        background-color: #fff;
+    }
+
+    .md-typeset .danger > .admonition-title::after, .md-typeset .danger > summary::after
+    {
+        color: #FFF;
+    }
+
+    .md-typeset .admonition.danger, .md-typeset details.danger
+    {
+        border-color: #cc405c;
+    }
+
+    /*
         admonition > Warning
     */
 
@@ -267,6 +292,31 @@
     .md-typeset .admonition.info, .md-typeset details.info
     {
         border-color: #ddd;
+    }
+
+    /*
+        admonition > Danger
+    */
+
+    .md-typeset .note > .admonition-title, .md-typeset .note > summary
+    {
+        background-color: #53aaa9;
+        color: #FFF;
+    }
+
+    .md-typeset .note > .admonition-title::before, .md-typeset .note > summary::before
+    {
+        background-color: #fff;
+    }
+
+    .md-typeset .note > .admonition-title::after, .md-typeset .note > summary::after
+    {
+        color: #FFF;
+    }
+
+    .md-typeset .admonition.note, .md-typeset details.note
+    {
+        border-color: #53aaa9;
     }
 
     /*
@@ -720,6 +770,14 @@
     {
 
     }
+
+    .md-typeset mark
+    {
+        background-color: #2a59aab5;
+        color: #FFF;
+        border-radius: 6px;
+        white-space: nowrap;
+    }
 }
 
 /*
@@ -968,6 +1026,26 @@
     .md-typeset .info > .admonition-title::before, .md-typeset .info > summary::before
     {
         background-color: #448aff;
+    }
+
+    /*
+        admonition > Note
+    */
+
+    .md-typeset .admonition.note, .md-typeset details.note
+    {
+        border: .075rem solid #53aaa9;
+    }
+
+    .md-typeset .note > .admonition-title::after, .md-typeset .note > summary::after
+    {
+        color: #53aaa9;;
+        background-color: #53aaa9;
+    }
+
+    .md-typeset .note > .admonition-title::before, .md-typeset .note > summary::before
+    {
+        background-color: #53aaa9;
     }
 
     /*
@@ -1419,6 +1497,14 @@
     .highlight .na, .highlight .nv, .highlight .vc, .highlight .vg, .highlight .vi
     {
 
+    }
+
+    .md-typeset mark
+    {
+        background-color: #2a59aab5;
+        color: #FFF;
+        border-radius: 6px;
+        white-space: nowrap;
     }
 }
 
