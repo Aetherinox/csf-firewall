@@ -361,6 +361,42 @@ These commands let you add a **range of IP addresses** to either your whitelist 
 <br />
 <br />
 
+#### Check IP in List
+
+These commands allow you to confirm whether or not an IP already exists in one of your lists. It will return one of two responses:
+
+1. `192.0.2.15` is in set `my_whitelist`
+2. `192.0.2.11` is NOT in set `my_whitelist`
+
+=== ":aetherx-axs-check:{ .icon-clr-green } Whitelist"
+
+
+      ```shell
+      sudo ipset test my_whitelist 192.0.2.15
+      ```
+
+=== ":aetherx-axs-ban:{ .icon-clr-red } Blacklist"
+
+      ```shell
+      sudo ipset test my_blacklist 203.0.113.42
+      ```
+
+<br />
+
+You can also use a more complex command to search for an IP in any list. Change `1.2.3.4` to the IP you are looking for.
+
+=== ":aetherx-axd-command: Command"
+
+      The below command will return `IP in set: my_listname` if it exists
+
+      ```shell
+      for s in $(sudo ipset list -n); do sudo ipset test "$s" 203.0.113.42 2>/dev/null && echo "IP in set: $s"; done
+      ```
+
+<br />
+<br />
+<br />
+
 #### Show List
 
 Once you have your lists created, you can print information about the lists or the number of IP addresses within the list by list name.  To list all of your IPSET lists, run the command:
@@ -472,6 +508,7 @@ Once you have your IPSET list created and have populated it with the addresses y
       sudo iptables -I INPUT -m set --match-set my_blacklist src -j DROP
       sudo iptables -I FORWARD -m set --match-set my_blacklist src -j DROP
       ```
+  
       <br />
 
       If you want to **remove** the rules and stop enforcing your whitelist, run the same command with the `-D` flag:
@@ -487,6 +524,26 @@ From this point forward, your IPSET lists will be enforced.
 
 - If a user with the IP `192.0.2.15` tries to access your server; :aetherx-axs-check:{ .icon-clr-green } allow them
 - If a user with the IP `203.0.113.42` tries to access your server; :aetherx-axs-ban:{ .icon-clr-red } deny them
+
+<br />
+<br />
+<br />
+
+#### Delete IP from List
+
+If you decide to remove an IP from your whitelist or blacklist, you can use the following commands:
+
+=== ":aetherx-axs-check:{ .icon-clr-green } Whitelist"
+
+      ```shell
+      sudo ipset del my_whitelist 198.51.100.0/24
+      ```
+
+=== ":aetherx-axs-ban:{ .icon-clr-red } Blacklist"
+
+      ```shell
+      sudo ipset del my_blacklist 203.0.113.0/24
+      ```
 
 <br />
 <br />
@@ -531,6 +588,114 @@ After deleting the iptables rule, we can delete the IPSET list:
       ```
 
 <br />
+<br />
+<br />
+
+#### Save List
+
+You can save your entire IPSET list to a file which allows you to back it up and restore it later.
+
+=== ":aetherx-axs-check:{ .icon-clr-green } Whitelist"
+
+      ```shell
+      sudo ipset save my_whitelist > whitelist.ipset
+      ```
+
+=== ":aetherx-axs-ban:{ .icon-clr-red } Blacklist"
+
+      ```shell
+      sudo ipset save my_blacklist > blacklist.ipset
+      ```
+
+<br />
+<br />
+<br />
+
+#### Restore List
+
+If you would like to restore a backed up IPSET list, you can do so with the following commands:
+
+=== ":aetherx-axs-check:{ .icon-clr-green } Whitelist"
+
+      ```shell
+      sudo ipset restore < whitelist.ipset
+      ```
+
+=== ":aetherx-axs-ban:{ .icon-clr-red } Blacklist"
+
+      ```shell
+      sudo ipset restore < blacklist.ipset
+      ```
+
+<br />
+
+??? warning "Overwriting Existing Rules"
+
+    If you attempt to import white or blacklisted IPs which are already in a list; the import will fail. The list must first be destroyed, or the IP must be deleted from the list before the import of that rule will be successful.
+
+    If you have an existing list that needs to be destroyed first and then import the list again; run the commands:
+
+    === ":aetherx-axd-command: Command"
+
+          ```shell
+          # Destroy original blacklist
+          sudo ipset destroy my_blacklist
+
+          # Restore blacklist from file
+          sudo ipset restore < blacklist.ipset
+          ```
+
+<br />
+
+You can also restore, but ignore any errors that occur and continue importing the rest of the list. This means that duplicate IPs that already exist will be skipped, but any new IPs in the restore file that you may not already have, will be restored and added to the IPSET.
+
+=== ":aetherx-axd-command: Command"
+
+      ```shell
+      sudo ipset restore -! < blacklist.ipset
+      ```
+
+<br />
+<br />
+<br />
+
+#### Flush List
+
+Flushing an IPSET list differs from [deleting](#delete-list). When you delete a list, you destroy the entire list and all IPs in the list. Flushing a list deletes all IPs in the list, but keeps the list itself intact so that you can add more IPs later. To flush a list:
+
+=== ":aetherx-axs-check:{ .icon-clr-green } Whitelist"
+
+      ```shell
+      sudo ipset flush my_whitelist
+      ```
+
+=== ":aetherx-axs-ban:{ .icon-clr-red } Blacklist"
+
+      ```shell
+      sudo ipset flush my_blacklist
+      ```
+
+<br />
+<br />
+<br />
+
+#### Rename List
+
+You can change the name of a list with the following commands:
+
+=== ":aetherx-axs-check:{ .icon-clr-green } Whitelist"
+
+      ```shell
+      sudo ipset rename my_whitelist my_new_whitelist
+      ```
+
+=== ":aetherx-axs-ban:{ .icon-clr-red } Blacklist"
+
+      ```shell
+      sudo ipset rename my_blacklist my_new_blacklist
+      ```
+
+<br />
 
 ---
 
@@ -540,6 +705,30 @@ After deleting the iptables rule, we can delete the IPSET list:
 
 The following are a list of common issues or errors, and potential solutions for correcting these issues.
 
+<br />
+
+### open3: exec of /sbin/ipset flush failed: No such file or directory at /usr/sbin/csf
+
+This error means that you have enabled IPSET within CSF, but do not have the package itself installed. Open terminal and run the command:
+
+=== ":aetherx-axb-debian: Debian/Ubuntu (apt-get)"
+
+    ```bash
+    sudo apt-get update
+    sudo apt-get install ipset
+    ```
+
+=== ":aetherx-axb-redhat: CentOS/RHEL (yum/dnf)"
+
+    ```bash
+    # using yum
+    sudo yum install ipset
+
+    #Using dnf
+    sudo dnf install ipset
+    ```
+
+<br />
 <br />
 
 ### Set cannot be destroyed: it is in use by a kernel component
