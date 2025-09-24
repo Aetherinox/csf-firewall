@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_paraguay_ipset
 #   @uuid           0de65af8-075d-36bc-ac14-d57829ca1364
-#   @updated        Tue 23 Sep 2025 01:00:21 AM UTC
+#   @updated        Wed 24 Sep 2025 01:02:08 AM UTC
 #   @entries        1,266,615 ips
 #                   681 subnets
 #                   681 lines
