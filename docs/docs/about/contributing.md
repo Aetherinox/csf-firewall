@@ -16,7 +16,7 @@ tags:
 [![Downloads][github-downloads-img]][github-downloads-uri]
 [![Size][github-size-img]][github-size-img]
 [![Last Commit][github-commit-img]][github-commit-img]
-[![Contributors][contribs-all-img]](#contributors)
+[![Contributors][contribs-all-img]](#)
 <!-- prettier-ignore-end -->
 
 </p>
