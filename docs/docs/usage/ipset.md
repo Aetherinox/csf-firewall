@@ -769,12 +769,12 @@ Select what documentation you would like to proceed with next ...
     ---
 
     Third-party blocklists help you automatically
-    block known malicious IP addresses, keeping 
+    block known malicious IP addresses, keeping Geographical
     your server safe from bad actors. This 
     chapter explains how to configure and use 
     these lists within CSF.
 
--   :aetherx-axs-network-wired: &nbsp; __[Geographicsl Blocks](../usage/geoip.md)__
+-   :aetherx-axs-network-wired: &nbsp; __[Geographical Blocks](../usage/geoip.md)__
 
     ---
 
