@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_united_states_minor_outlying_islands_ipset
 #   @uuid           0b97f4e5-fdb7-3d9b-b787-7b74fae9bdc2
-#   @updated        Tue 23 Sep 2025 01:00:50 AM UTC
+#   @updated        Wed 24 Sep 2025 01:02:45 AM UTC
 #   @entries        183 ips
-#                   145 subnets
-#                   145 lines
+#                   138 subnets
+#                   138 lines
 #   @country        United States Minor Outlying Islands (UM)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -76,12 +76,8 @@
 2001:470:d:228::/64
 2001:470:d:3e1::/64
 2001:470:d:ce9::/64
-2001:470:19:534::/64
-2001:470:19:e62::/64
 2001:470:1d:158::/64
 2001:470:24:30f::/64
-2001:470:24:476::/64
-2001:470:24:921::/64
 2001:470:28:66::/64
 2001:470:36:8e7::/64
 2001:470:6f:512::/64
@@ -96,7 +92,6 @@
 2001:470:1f0b:1ea::/64
 2001:470:1f0b:2b7::/64
 2001:470:1f0b:4fd::/64
-2001:470:1f15:32c::/64
 2001:470:1f19:28::/64
 2001:470:1f19:1d8::/64
 2001:470:1f1d:3b::/64
@@ -108,11 +103,9 @@
 2001:470:8d4f::/48
 2001:470:dc34::/48
 2001:470:f33e::/48
-2001:470:fa7b::/48
 2001:470:fe7e::/48
 2001:4b28:f700::/40
 2600:70ff:a40e::/48
-2600:70ff:a9d8::/48
 2604:ca00:105::/48
 2604:ca00:115::/48
 2604:ca00:125::/48
