@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_nauru_ipset
 #   @uuid           5f7b9b68-4b02-35ad-afb5-0ef3d2f170a1
-#   @updated        Tue 23 Sep 2025 01:00:10 AM UTC
+#   @updated        Wed 24 Sep 2025 01:01:50 AM UTC
 #   @entries        13,259 ips
-#                   162 subnets
-#                   162 lines
+#                   160 subnets
+#                   160 lines
 #   @country        Nauru (NR)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -84,7 +84,6 @@
 203.98.224.0/19
 203.190.216.0/24
 2001:470:d:121::/64
-2001:470:19:5be::/64
 2001:470:24:ef::/64
 2001:470:24:4b6::/64
 2001:470:36:15c::/64
@@ -96,7 +95,6 @@
 2001:470:6303::/48
 2001:470:7601::/48
 2001:470:f117::/48
-2001:470:fadb::/48
 2001:470:fd6f::/48
 2001:4b28:3500::/40
 2403:ae80::/32

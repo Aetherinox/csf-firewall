@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_brunei_darussalam_ipset
 #   @uuid           c95ecf65-3850-3ffa-95cf-f26def7119a7
-#   @updated        Tue 23 Sep 2025 12:58:33 AM UTC
-#   @entries        224,016 ips
-#                   238 subnets
-#                   238 lines
+#   @updated        Wed 24 Sep 2025 12:59:44 AM UTC
+#   @entries        223,760 ips
+#                   234 subnets
+#                   234 lines
 #   @country        Brunei Darussalam (BN)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -120,7 +120,7 @@
 157.5.112.66/31
 158.161.0.0/16
 160.224.187.0/24
-160.224.188.0/23
+160.224.189.0/24
 163.116.193.154/31
 163.116.210.96/31
 163.116.223.105/32
@@ -158,15 +158,11 @@
 2001:470:d:8ef::/64
 2001:470:d:106d::/64
 2001:470:24:528::/64
-2001:470:24:900::/64
 2001:470:36:188::/64
-2001:470:36:29c::/64
 2001:470:36:50f::/64
-2001:470:71:6ed::/64
 2001:470:1864::/48
 2001:470:1f13:f1c::/64
 2001:470:1f1d:189::/64
-2001:470:ed06::/48
 2001:470:ef77::/48
 2001:470:f584::/48
 2001:df1:ba00::/48
