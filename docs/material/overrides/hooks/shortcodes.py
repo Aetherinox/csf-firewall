@@ -229,7 +229,7 @@ def badgeFlag( args: str, page: Page, files: Files ):
 
 def newControlDefault( page: Page, files: Files ):
     icon = "aetherx-axs-hand-pointer"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files )
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#controls", page, files )
 
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
@@ -289,7 +289,7 @@ def badgeVersionDefault( text: str, page: Page, files: Files ):
 
     # Return badge
     icon = "aetherx-axs-box"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#version", page, files )
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#release-types", page, files )
 
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
@@ -313,7 +313,7 @@ def badgeVersionStable( text: str, page: Page, files: Files ):
 
     # Return badge
     icon    = "aetherx-axs-tag"
-    href    = _resolve_path( f"{PAGE_CONVENTIONS}#version-stable", page, files )
+    href    = _resolve_path( f"{PAGE_CONVENTIONS}#release-types", page, files )
     output  = ""
 
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
@@ -344,7 +344,7 @@ def badgeVersionDev( text: str, page: Page, files: Files ):
 
     # Return badge
     icon    = "aetherx-axs-code"
-    href    = _resolve_path( f"{PAGE_CONVENTIONS}#version-development", page, files )
+    href    = _resolve_path( f"{PAGE_CONVENTIONS}#release-types", page, files )
     output  = ""
 
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
@@ -586,12 +586,12 @@ def badgePlugin( text: str, page: Page, files: Files ):
 
 def badgeMarkdown( text: str, page: Page, files: Files ):
     icon = "material-language-markdown"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#markdown", page, files )
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#markdown-extension", page, files )
 
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     return badgeCreate(
-        icon = f"[:{icon}:]({href} 'Markdown functionality')",
+        icon = f"[:{icon}:]({href} 'Markdown extension')",
         text = text
     )
 
@@ -1004,7 +1004,7 @@ def badgeFlagSetting( page: Page, files: Files ):
 
 def newControlTextbox( page: Page, files: Files ):
     icon = "aetherx-axs-input-text"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files )
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#controls", page, files )
 
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
@@ -1023,7 +1023,7 @@ def newControlTextbox( page: Page, files: Files ):
 
 def newControlToggle( page: Page, files: Files ):
     icon = "aetherx-axs-toggle-large-on"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files )
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#controls", page, files )
 
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
@@ -1033,7 +1033,7 @@ def newControlToggle( page: Page, files: Files ):
 
 def newControlToggleOn( page: Page, files: Files ):
     icon = "aetherx-axd-toggle-on"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files )
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#controls", page, files )
 
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
@@ -1043,7 +1043,7 @@ def newControlToggleOn( page: Page, files: Files ):
 
 def newControlToggleOff( page: Page, files: Files ):
     icon = "aetherx-axd-toggle-off"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files )
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#controls", page, files )
 
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
@@ -1060,7 +1060,7 @@ def newControlToggleOff( page: Page, files: Files ):
 
 def newControlDropdown( page: Page, files: Files ):
     icon = "aetherx-axs-square-caret-down"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files )
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#controls", page, files )
 
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
@@ -1077,7 +1077,7 @@ def newControlDropdown( page: Page, files: Files ):
 
 def newControlButton( page: Page, files: Files ):
     icon = "material-button-pointer"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files )
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#controls", page, files )
 
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
@@ -1094,7 +1094,7 @@ def newControlButton( page: Page, files: Files ):
 
 def newControlSlider( page: Page, files: Files ):
     icon = "aetherx-axd-sliders-simple"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files )
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#controls", page, files )
 
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
@@ -1111,7 +1111,7 @@ def newControlSlider( page: Page, files: Files ):
 
 def newControlColor( text: str, page: Page, files: Files ):
     icon = "aetherx-axs-palette"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files )
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#controls", page, files )
 
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
@@ -1129,7 +1129,7 @@ def newControlColor( text: str, page: Page, files: Files ):
 
 def newControlEnvVar( page: Page, files: Files ):
     icon = "aetherx-axd-puzzle-piece"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files )
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#controls", page, files )
 
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
@@ -1147,7 +1147,7 @@ def newControlEnvVar( page: Page, files: Files ):
 
 def newControlVolume( page: Page, files: Files ):
     icon = "aetherx-axd-volume"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#control", page, files )
+    href = _resolve_path( f"{PAGE_CONVENTIONS}#controls", page, files )
 
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 

@@ -34,7 +34,7 @@ The badges in this section are for general use.
 
 
 
-### <!-- md:control --> Controls { #control data-toc-label="Controls" }
+### <!-- md:control --> Controls { #controls data-toc-label="Controls" }
 
 === "Description"
 
@@ -54,13 +54,9 @@ The badges in this section are for general use.
     :   <!-- md:control env --> env variable  `<!-- @md:control env -->`
     :   <!-- md:control color #E5E5E5 #121315 -->  `<!-- @md:control color #E5E5E5 #121315 -->`
 
-
-
 <br />
 
-
-
-### <!-- md:version --> Release Type { #version data-toc-label="Versions" }
+### <!-- md:version --> Release Type { #release-types data-toc-label="Release Types" }
 
 === "Description"
 
@@ -227,7 +223,7 @@ The badges in this section are for general use.
 <br />
 
 
-### <!-- md:markdown -->  Markdown extension { data-toc-label="Markdown" #extension }
+### <!-- md:markdown -->  Markdown Extension { #markdown-extension data-toc-label="Markdown Extension" }
 
 === "Description"
 
