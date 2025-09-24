@@ -1099,11 +1099,7 @@ ENV TZ="Etc/UTC"
 Then you may call your new environment variable within the Javascript code; and ensure you define a default value to correct any user misconfigurations:
 
 ```javascript
-const envUrlRepo = process.env.URL_REPO || 'https://git.binaryninja.net/binaryninja';
-const envStreamQuality = process.env.STREAM_QUALITY || 'hd';
-const envFileM3U = process.env.FILE_PLAYLIST || 'playlist.m3u8';
-const envFileXML = process.env.FILE_EPG || 'xmltv.xml';
-const envFileTAR = process.env.FILE_TAR || 'xmltv.xml.gz';
+const envUrlRepo = process.env.URL_REPO || 'https://github.com/Aetherinox/csf-firewall';
 ```
 
 <br />
@@ -1175,11 +1171,11 @@ const envFileTAR = process.env.FILE_TAR || 'xmltv.xml.gz';
 
 <!-- BADGE > Gitea > Docker Image > SELFHOSTED BADGES -->
   [gitea-docker-version-img]: https://badges-ghcr.onrender.com/aetherinox/csf-firewall/latest_tag?color=%233d9e18&ignore=latest&label=version&trim=
-  [gitea-docker-version-uri]: https://git.binaryninja.net/BinaryNinja/csf-firewall
+  [gitea-docker-version-uri]: https://git.csfirewall.net/Aetherinox/csf-firewall
 
 <!-- BADGE > Gitea 2 > Docker Image -->
-  [gitea2-docker-version-img]: https://img.shields.io/gitea/v/release/binaryninja/csf-firewall?gitea_url=https%3A%2F%2Fgit.binaryninja.net
-  [gitea2-docker-version-uri]: https://git.binaryninja.net/BinaryNinja/-/packages/container/csf-firewall/latest
+  [gitea2-docker-version-img]: https://img.shields.io/gitea/v/release/Aetherinox/csf-firewall?gitea_url=https%3A%2F%2Fgit.csfirewall.net
+  [gitea2-docker-version-uri]: https://git.csfirewall.net/Aetherinox/-/packages/container/csf-firewall/latest
 
 <!-- BADGE > BUTTON > SUBMIT ISSUES -->
   [btn-github-submit-img]: https://img.shields.io/badge/submit%20new%20issue-de1f5c?style=for-the-badge&logo=github&logoColor=FFFFFF

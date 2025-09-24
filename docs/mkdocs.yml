@@ -257,6 +257,7 @@ nav:
           - Enable Web Interface: 'install/webui.md'
           - Traefik Integration: 'install/traefik.md'
           - Authentik Integration: 'install/authentik.md'
+          - Uninstall: 'install/uninstall.md'
     - Usage:
           - Getting Started: 'usage/getting-started.md'
           - Configuration: 'usage/configuration.md'
