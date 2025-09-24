@@ -507,7 +507,7 @@ Select what documentation you would like to proceed with next ...
 
 <div class="grid cards" markdown>
 
--   :aetherx-axs-network-wired: &nbsp; __[Geographicsl Blocks](../usage/geoip.md)__
+-   :aetherx-axs-network-wired: &nbsp; __[Geographical Blocks](../usage/geoip.md)__
 
     ---
 
