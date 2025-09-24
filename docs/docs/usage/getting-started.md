@@ -9,9 +9,42 @@ tags:
 
 In the previous [Installation](../install/dependencies.md) chapter, we covered how to install both the depenencies and **ConfigServer Firewall & Security (CSF)** itself on your server. This chapter covers the fundamentals of configuring CSF and understanding how it operates. 
 
-If you are looking for straight-forward information such as commands, folder and file structure, or configuration examples, check out the [Cheatsheet](./cheatsheet/home.md) guides listed below.
+<br />
+
+---
 
 <br />
+
+## Section: Usage
+
+By this point, you should have CSF installed and an operational copy running on your server. This chapter will cover the more advanced settings for CSF and how to fine-tune it to fit your needs.
+
+{==
+
+Continue to the configuration section of this guide
+
+==}
+
+<div class="grid cards" markdown>
+
+-   :aetherx-axd-gear: &nbsp; __[Configuration](../usage/configuration.md)__
+
+    ---
+
+    The next section covers how to configure CSF by editing its main configuration file at `/etc/csf/csf.conf`. We’ll highlight the key settings you should know, explain how to enable and manage blocklists, show the advantages of using IPSETs, and walk through other important options to help tailor CSF to your needs.
+
+</div>
+
+<br />
+
+---
+
+<br />
+
+## Section: Cheatsheet
+
+If you are looking for straight-forward information such as commands, folder and file structure, or configuration examples, check out the [Cheatsheet](./cheatsheet/home.md) guides listed below.
+
 <br />
 
 {==
@@ -48,15 +81,6 @@ Cheatsheet Guides
     files which can help when configuring CSF for
     the first time. Includes a full and a minimal
     config {==/etc/csf/csf.conf==}
-
--   :aetherx-axd-file-code: &nbsp; __[Usage › Getting Started](../usage/getting-started.md)__
-
-    ---
-
-    Select this option if you would like to start 
-    using CSF to manage your server. This section
-    will introduce you to the basic features and
-    how you can configure the CSF and LFD services.
 
 </div>
 
