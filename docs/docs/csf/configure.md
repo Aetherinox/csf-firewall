@@ -1,15 +1,17 @@
 ---
-title: "Configure & Startup"
+title: Configure & Startup
 tags:
-  - configure
+    - configure
 ---
 
 # Configure & Startup
+
 After you have installed ConfigServer Firewall in the previous chapter; you can start configuring it to suit your server’s requirements.
 
 <br />
 
 ## Configure
+
 The main configuration file for CSF is located at `/etc/csf/csf.conf`. You can use your preferred text editor to modify the file, such as nano or vim:
 
 ```shell
@@ -44,6 +46,7 @@ Two **csf.conf** configuration files have been provided as examples; a full vers
 <br />
 
 ## Start ConfigServer
+
 After you have set your config file to its desired values; you can now start up or restart the CSF service to apply the configurations. Open Terminal and run:
 
 <br />

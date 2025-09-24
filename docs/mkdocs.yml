@@ -102,6 +102,7 @@ theme:
         - typescript
         - javascript
         - lua
+        - ini
         - python
         - bash
         - shell
@@ -202,9 +203,18 @@ extra_javascript:
 
 # #
 #   Section › Extras
+#   
+#   extra:
+#     status:         requires you to add new status to extras.css file
+#                     pre-defined status:
+#                         - new
+#                         - deprecated
 # #
 
 extra:
+    status:
+        important: Important
+        new: New Addition
     social:
         - icon: fontawesome/brands/github
           link: https://github.com/Aetherinox/csf-firewall
@@ -239,17 +249,20 @@ nav:
                 - Conventions: 'about/conventions.md'
                 - Tags: 'about/tags.md'
     - Install:
-          - 1. Dependencies: 'install/dependencies.md'
-          - 2. Download: 'install/download.md'
-          - 3. Diagnostic Tests: 'install/tests.md'
-          - 4. Install: 'install/install.md'
-          - 5. Start Services: 'install/services.md'
-          - 6. Enable Web Interface: 'install/webui.md'
+          - Dependencies: 'install/dependencies.md'
+          - Download: 'install/download.md'
+          - Diagnostic Tests: 'install/tests.md'
+          - Install: 'install/install.md'
+          - Start Services: 'install/services.md'
+          - Enable Web Interface: 'install/webui.md'
+          - Traefik Integration: 'install/traefik.md'
+          - Authentik Integration: 'install/authentik.md'
     - Usage:
-          - 1. Getting Started: 'usage/getting-started.md'
-          - 4. Traefik Integration: 'usage/traefik.md'
-          - 5. Authentik Integration: 'usage/authentik.md'
-          - 6. Geographical Blocks: 'usage/geoip.md'
+          - Getting Started: 'usage/getting-started.md'
+          - Configuration: 'usage/configuration.md'
+          - Ipsets: 'usage/ipset.md'
+          - Blocklists: 'usage/blocklists.md'
+          - Geographical Blocks: 'usage/geoip.md'
           - Cheatsheet:
                 - Home: 'usage/cheatsheet/home.md'
                 - Structure: 'usage/cheatsheet/structure.md'
