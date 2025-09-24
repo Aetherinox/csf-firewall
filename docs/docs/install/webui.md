@@ -323,6 +323,21 @@ Select what documentation you would like to proceed with next ...
 
 <div class="grid cards" markdown>
 
+-   :material-file: &nbsp; __[Usage › Getting Started](../usage/getting-started.md)__
+
+    ---
+
+    If you don’t plan to set up Traefik or Authentik 
+    integration with the CSF web interface, you can skip 
+    ahead to the [Usage](../usage/getting-started.md) section. 
+    
+    The next chapter covers the core features of CSF along
+    with instructions for basic configuration, list of the 
+    available commands, application folder structure, and 
+    many other aspects of starting to use CSF.
+
+
+
 -   :aetherx-axb-traefikproxy: &nbsp; __[Traefik Integration](../usage/traefik.md)__
 
     ---

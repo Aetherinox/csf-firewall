@@ -144,6 +144,9 @@ def on_page_markdown(markdown: str, *, page: Page, config: MkDocsConfig, files: 
         elif type == "markdown":        return badgeMarkdown(args, page, files )
         elif type == "3rdparty":        return badge3rdParty(args, page, files )
         elif type == "file":            return badgeFile(args, page, files )
+        elif type == "fileDownload":    return badgeFileSingleDownload(args, page, files )
+        elif type == "fileView":        return badgeFileSingleView(args, page, files )
+        elif type == "fileView":        return badgeFileView(args, page, files )
         elif type == "source":          return badgeFileSource(args, page, files )
         elif type == "requires":        return badgeFileRequires(args, page, files )
         elif type == "default":
@@ -593,7 +596,7 @@ def badgeMarkdown( text: str, page: Page, files: Files ):
     )
 
 # #
-#   Badge › File Preview & Download
+#   Badge › File › Preview & Download
 #   
 #   Creates a badge which allows a user to download or view a file.
 #   
@@ -609,22 +612,24 @@ def badgeMarkdown( text: str, page: Page, files: Files ):
 #   
 #   Normal Badges:
 #       <!-- md:file -->                            Icon Only
-#       <!-- md:file something.rar -->              Right Aligned
-#       <!-- md:file something.rar left -->         Left Aligned
-#       <!-- md:file something.rar right -->        Right Aligned
-#       <!-- md:file something.rar l -->            Left Aligned
-#       <!-- md:file something.rar r -->            Right Aligned
+#       <!-- md:file something.rar https://fileDownload -->              Right Aligned
+#       <!-- md:file something.rar https://fileDownload left -->         Left Aligned
+#       <!-- md:file something.rar https://fileDownload right -->        Right Aligned
+#       <!-- md:file something.rar https://fileDownload l -->            Left Aligned
+#       <!-- md:file something.rar https://fileDownload r -->            Right Aligned
 # #
 
-def badgeFile( text: str, page: Page, files: Files ):
+def badgeFile(text: str, page: Page, files: Files):
 
     # #
-    #   Parse arguments: "filename [alignment]"
+    #   Parse arguments: "filenameView filenameDownload [alignment]"
     # #
 
-    parts = text.strip( ).split( )
-    filename = parts[ 0 ] if len(parts) > 0 else ""
-    align_arg = parts[1].lower( ) if len(parts) > 1 else "right"
+    parts = text.strip().split()
+
+    filenameView = parts[0] if len(parts) > 0 else ""
+    filenameDownload = parts[1] if len(parts) > 1 else ""
+    align_arg = parts[2].lower() if len(parts) > 2 else "right"
 
     # #
     #   Normalize alignment argument
@@ -636,57 +641,129 @@ def badgeFile( text: str, page: Page, files: Files ):
         align_class = "mdx-badge--files-group-right"
 
     # #
-    #   If no filename -> just show a generic file icon
+    #   If no filenameView -> just show a generic file icon
     # #
 
-    if not filename:
+    if not filenameView:
         icon = "material-file"
-        href = _resolve_path( f"{PAGE_CONVENTIONS}#file", page, files )
+        href = _resolve_path(f"{PAGE_CONVENTIONS}#file", page, files)
         return badgeCreate(
             icon=f"[:{icon}:]({href} 'File reference')"
         )
 
     # #
-    #   Otherwise, return both badges together inside chosen-alignment container
+    #   Otherwise, return both badges inside chosen-alignment container
     # #
 
     return (
         f'<span class="mdx-badge {align_class}">'
-        f'{badgeFileView( filename, page, files )}'
-        f'{badgeFileDownload( filename, page, files )}'
+        f'{badgeFileView(filenameView, page, files)}'
+        f'{badgeFileDownload(filenameDownload, page, files)}'
         f'</span>'
     )
 
-def badgeFileView( text: str, page: Page, files: Files ):
+def badgeFileView(text: str, page: Page, files: Files):
     icon = "material-folder-eye"
-    href = f"https://github.com/Aetherinox/csf-firewall/{text}/"
+    href = f"{text}"
 
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW +
-          inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' +
+          inspect.stack()[0][3] + clr.WHITE + ' for page ' +
           clr.GREY + str(href) + clr.WHITE)
 
     return badgeCreate(
-        icon=f"[:{icon}:]({href} 'View' )",
+        icon=f"[:{icon}:]({href} 'View'){{: target=\"_blank\" }}",
         type="files-view"
     )
 
-def badgeFileDownload( text: str, page: Page, files: Files ):
+
+def badgeFileDownload(text: str, page: Page, files: Files):
     icon = "material-folder-download"
 
-    # split filename into (basename, extension)
     basename, ext = os.path.splitext(text)
-
-    # build href (leave .zip or whatever was passed in place)
-    href = f"https://github.com/Aetherinox/csf-firewall/{text}"
+    href = f"{text}"
 
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW +
-          inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' +
+          inspect.stack()[0][3] + clr.WHITE + ' for page ' +
           clr.GREY + str(href) + clr.WHITE)
 
     return badgeCreate(
-        icon=f"[:{icon}:]({href} 'Download' )",
-        text=f"[`{ext}`]({href})",   # show `.zip`, `.tar.gz`, `.json`, etc.
+        icon=f"[:{icon}:]({href} 'Download'){{: target=\"_blank\" }}",
+        text=f"[`{ext}`]({href}){{: target=\"_blank\" }}",
         type="files-download"
+    )
+
+# #
+#   Badge › File › Download › Single
+#   
+#   Normal Badges:
+#       <!-- md:fileDownload https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf -->
+# #
+
+def badgeFileSingleDownload(text: str, page: Page, files: Files):
+
+    # #
+    #   Parse arguments: "filenameDownload [alignment]"
+    # #
+
+    parts = text.strip().split()
+
+    filenameDownload = parts[0] if len(parts) > 0 else ""
+    align_arg = parts[1].lower() if len(parts) > 1 else "right"
+
+    # #
+    #   Normalize alignment argument
+    # #
+
+    if align_arg in ("l", "left"):
+        align_class = "mdx-badge--files-group-left"
+    else:
+        align_class = "mdx-badge--files-group-right"
+
+    # #
+    #   Otherwise, return both badges inside chosen-alignment container
+    # #
+
+    return (
+        f'<span class="mdx-badge {align_class}">'
+        f'{badgeFileDownload(filenameDownload, page, files)}'
+        f'</span>'
+    )
+
+# #
+#   Badge › File › View › Single
+#   
+#   Normal Badges:
+#       <!-- md:fileView https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf -->
+# #
+
+def badgeFileSingleView(text: str, page: Page, files: Files):
+
+    # #
+    #   Parse arguments: "filenameView [alignment]"
+    # #
+
+    parts = text.strip().split()
+
+    filenameView = parts[0] if len(parts) > 0 else ""
+    align_arg = parts[1].lower() if len(parts) > 1 else "right"
+
+    # #
+    #   Normalize alignment argument
+    # #
+
+    if align_arg in ("l", "left"):
+        align_class = "mdx-badge--files-group-left"
+    else:
+        align_class = "mdx-badge--files-group-right"
+
+    # #
+    #   Otherwise, return both badges inside chosen-alignment container
+    # #
+
+    return (
+        f'<span class="mdx-badge {align_class}">'
+        f'{badgeFileView(filenameView, page, files)}'
+        f'</span>'
     )
 
 # #
