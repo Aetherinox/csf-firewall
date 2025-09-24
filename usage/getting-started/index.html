@@ -10,10 +10,10 @@
         <link rel="canonical" href="https://Aetherinox.github.io/csf-firewall/usage/getting-started/">
       
       
-        <link rel="prev" href="../../install/webui/">
+        <link rel="prev" href="../../install/authentik/">
       
       
-        <link rel="next" href="../traefik/">
+        <link rel="next" href="../configuration/">
       
       
       <link rel="icon" href="../../assets/favicon.png">
@@ -735,6 +735,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -783,7 +787,7 @@
   
   
   <span class="md-ellipsis">
-    1. Dependencies
+    Dependencies
     
   </span>
   
@@ -806,7 +810,7 @@
   
   
   <span class="md-ellipsis">
-    2. Download
+    Download
     
   </span>
   
@@ -829,7 +833,7 @@
   
   
   <span class="md-ellipsis">
-    3. Diagnostic Tests
+    Diagnostic Tests
     
   </span>
   
@@ -852,7 +856,7 @@
   
   
   <span class="md-ellipsis">
-    4. Install
+    Install
     
   </span>
   
@@ -875,7 +879,7 @@
   
   
   <span class="md-ellipsis">
-    5. Start Services
+    Start Services
     
   </span>
   
@@ -898,7 +902,53 @@
   
   
   <span class="md-ellipsis">
-    6. Enable Web Interface
+    Enable Web Interface
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/traefik/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Traefik Integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/authentik/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Authentik Integration
     
   </span>
   
@@ -926,6 +976,8 @@
   
     
     
+      
+        
       
         
       
@@ -992,17 +1044,67 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
   <span class="md-ellipsis">
-    1. Getting Started
+    Getting Started
     
   </span>
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#section-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Section: Usage
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#section-cheatsheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      Section: Cheatsheet
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1016,12 +1118,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../traefik/" class="md-nav__link">
+      <a href="../configuration/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    4. Traefik Integration
+    Configuration
     
   </span>
   
@@ -1039,14 +1141,53 @@
   
   
     <li class="md-nav__item">
-      <a href="../authentik/" class="md-nav__link">
+      <a href="../ipset/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    5. Authentik Integration
+    Ipsets
     
   </span>
+  
+    
+  
+  
+    <span class="md-status md-status--new" title="New Addition">
+    </span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../blocklists/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Blocklists
+    
+  </span>
+  
+    
+  
+  
+    <span class="md-status md-status--new" title="New Addition">
+    </span>
+  
+
   
 
       </a>
@@ -1067,7 +1208,7 @@
   
   
   <span class="md-ellipsis">
-    6. Geographical Blocks
+    Geographical Blocks
     
   </span>
   
@@ -1111,10 +1252,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_6">
         
           
-          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="">
             
   
   
@@ -1127,8 +1268,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_5">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_6">
             <span class="md-nav__icon md-icon"></span>
             Cheatsheet
           </label>
@@ -1570,6 +1711,32 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#section-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Section: Usage
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#section-cheatsheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      Section: Cheatsheet
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1624,16 +1791,36 @@
 
 <h1 id="usage-getting-started">Usage › Getting Started<a class="headerlink" href="#usage-getting-started" title="Permanent link">¶</a></h1>
 <p>In the previous <a href="../../install/dependencies/">Installation</a> chapter, we covered how to install both the depenencies and <strong><abbr title="A security suite for Linux servers that provides firewall management, intrusion detection, and login failure monitoring.">ConfigServer Firewall &amp; Security</abbr> (<abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>)</strong> itself on your server. This chapter covers the fundamentals of configuring <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> and understanding how it operates. </p>
+<p><br></p>
+<hr>
+<p><br></p>
+<h2 id="section-usage">Section: Usage<a class="headerlink" href="#section-usage" title="Permanent link">¶</a></h2>
+<p>By this point, you should have <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> installed and an operational copy running on your server. This chapter will cover the more advanced settings for <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> and how to fine-tune it to fit your needs.</p>
+<mark class="critic block">
+<p>Continue to the configuration section of this guide</p>
+</mark>
+<div class="grid cards">
+<ul>
+<li>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M208.3 256a47.7 47.7 0 1 0 95.4 0 47.7 47.7 0 1 0 -95.4 0z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M195.1 9.5C198.1-5.3 211.2-16 226.4-16l59.8 0c15.2 0 28.3 10.7 31.3 25.5L332 79.5c14.1 6 27.3 13.7 39.3 22.8l67.8-22.5c14.4-4.8 30.2 1.2 37.8 14.4l29.9 51.8c7.6 13.2 4.9 29.8-6.5 39.9L447 233.3c.9 7.4 1.3 15 1.3 22.7s-.5 15.3-1.3 22.7l53.4 47.5c11.4 10.1 14 26.8 6.5 39.9l-29.9 51.8c-7.6 13.1-23.4 19.2-37.8 14.4l-67.8-22.5c-12.1 9.1-25.3 16.7-39.3 22.8l-14.4 69.9c-3.1 14.9-16.2 25.5-31.3 25.5l-59.8 0c-15.2 0-28.3-10.7-31.3-25.5l-14.4-69.9c-14.1-6-27.2-13.7-39.3-22.8L73.5 432.3c-14.4 4.8-30.2-1.2-37.8-14.4L5.8 366.1c-7.6-13.2-4.9-29.8 6.5-39.9l53.4-47.5c-.9-7.4-1.3-15-1.3-22.7s.5-15.3 1.3-22.7L12.3 185.8c-11.4-10.1-14-26.8-6.5-39.9L35.7 94.1c7.6-13.2 23.4-19.2 37.8-14.4l67.8 22.5c12.1-9.1 25.3-16.7 39.3-22.8L195.1 9.5zM256.3 352a96 96 0 1 0 -.6-192 96 96 0 1 0 .6 192z"></path></svg></span> &nbsp; <strong><a href="../configuration/">Configuration</a></strong></p>
+<hr>
+<p>The next section covers how to configure <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> by editing its main configuration file at <code>/etc/csf/csf.conf</code>. We’ll highlight the key settings you should know, explain how to enable and manage blocklists, show the advantages of using IPSETs, and walk through other important options to help tailor <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> to your needs.</p>
+</li>
+</ul>
+</div>
+<p><br></p>
+<hr>
+<p><br></p>
+<h2 id="section-cheatsheet">Section: Cheatsheet<a class="headerlink" href="#section-cheatsheet" title="Permanent link">¶</a></h2>
 <p>If you are looking for straight-forward information such as commands, folder and file structure, or configuration examples, check out the <a href="../cheatsheet/home/">Cheatsheet</a> guides listed below.</p>
-<p><br>
-<br></p>
+<p><br></p>
 <mark class="critic block">
 <p>Cheatsheet Guides</p>
 </mark>
 <div class="grid cards">
 <ul>
 <li>
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M48 24C48 10.7 37.3 0 24 0S0 10.7 0 24L0 392c0 30.9 25.1 56 56 56l184 0 0-48-184 0c-4.4 0-8-3.6-8-8l0-232 192 0 0-48-192 0 0-88zM336 224l192 0c26.5 0 48-21.5 48-48l0-96c0-26.5-21.5-48-48-48l-82.7 0c-8.5 0-16.6-3.4-22.6-9.4l-8.6-8.6c-9-9-21.2-14.1-33.9-14.1L336 0c-26.5 0-48 21.5-48 48l0 128c0 26.5 21.5 48 48 48zm0 288l192 0c26.5 0 48-21.5 48-48l0-96c0-26.5-21.5-48-48-48l-82.7 0c-8.5 0-16.6-3.4-22.6-9.4l-8.6-8.6c-9-9-21.2-14.1-33.9-14.1L336 288c-26.5 0-48 21.5-48 48l0 128c0 26.5 21.5 48 48 48z"></path></svg></span> &nbsp; <strong><a href="../cheatsheet/structure/">Structure</a></strong></p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 24L0 392c0 30.9 25.1 56 56 56l184 0 0-48-184 0c-4.4 0-8-3.6-8-8l0-232 192 0 0-48-192 0 0-88C48 10.7 37.3 0 24 0S0 10.7 0 24z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M288 48l0 128c0 26.5 21.5 48 48 48l192 0c26.5 0 48-21.5 48-48l0-96c0-26.5-21.5-48-48-48l-82.7 0c-8.5 0-16.6-3.4-22.6-9.4l-8.6-8.6c-9-9-21.2-14.1-33.9-14.1L336 0c-26.5 0-48 21.5-48 48zm0 288l0 128c0 26.5 21.5 48 48 48l192 0c26.5 0 48-21.5 48-48l0-96c0-26.5-21.5-48-48-48l-82.7 0c-8.5 0-16.6-3.4-22.6-9.4l-8.6-8.6c-9-9-21.2-14.1-33.9-14.1L336 288c-26.5 0-48 21.5-48 48z"></path></svg></span> &nbsp; <strong><a href="../cheatsheet/structure/">Structure</a></strong></p>
 <hr>
 <p>Explains the general file structure set up of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>. 
 It helps you identify where specific files for 
@@ -1655,14 +1842,6 @@ command functions.</p>
 files which can help when configuring <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> for
 the first time. Includes a full and a minimal
 config <mark class="critic">/etc/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>/<abbr title="The default csf config file, usually in <pre>/etc/csf/csf.conf</pre>">csf.conf</abbr></mark></p>
-</li>
-<li>
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-277.5c0-17-6.7-33.3-18.7-45.3L258.7 18.7C246.7 6.7 230.5 0 213.5 0L64 0C28.7 0 0 28.7 0 64zM69.8 320.4l48-56c8.6-10.1 23.8-11.2 33.8-2.6s11.2 23.8 2.6 33.8l-34.6 40.4 34.6 40.4c8.6 10.1 7.5 25.2-2.6 33.8s-25.2 7.5-33.8-2.6l-48-56c-7.7-9-7.7-22.2 0-31.2zM208 58.5L325.5 176 232 176c-13.3 0-24-10.7-24-24l0-93.5zm21.8 237.1c-8.6-10.1-7.5-25.2 2.6-33.8s25.2-7.5 33.8 2.6l48 56c7.7 9 7.7 22.2 0 31.2l-48 56c-8.6 10.1-23.8 11.2-33.8 2.6s-11.2-23.8-2.6-33.8l34.6-40.4-34.6-40.4z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M151.6 261.8c10.1 8.6 11.2 23.8 2.6 33.8l-34.6 40.4 34.6 40.4c8.6 10.1 7.5 25.2-2.6 33.8s-25.2 7.5-33.8-2.6l-48-56c-7.7-9-7.7-22.2 0-31.2l48-56c8.6-10.1 23.8-11.2 33.8-2.6zm80.8 0c10.1-8.6 25.2-7.5 33.8 2.6l48 56c7.7 9 7.7 22.2 0 31.2l-48 56c-8.6 10.1-23.8 11.2-33.8 2.6s-11.2-23.8-2.6-33.8l34.6-40.4-34.6-40.4c-8.6-10.1-7.5-25.2 2.6-33.8z"></path></svg></span> &nbsp; <strong><a href="./">Usage › Getting Started</a></strong></p>
-<hr>
-<p>Select this option if you would like to start 
-using <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> to manage your server. This section
-will introduce you to the basic features and
-how you can configure the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> and <abbr title="Login Failure Daemon">LFD</abbr> <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr>.</p>
 </li>
 </ul>
 </div>
@@ -1689,7 +1868,7 @@ how you can configure the <abbr title="ConfigServer Security &amp; Firewall">CSF
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 23, 2025 04:18:29 UTC"><span class="timeago" datetime="2025-09-23T04:18:29+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 23, 2025 04:18:29 UTC">2025-09-23</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 24, 2025 07:11:44 UTC"><span class="timeago" datetime="2025-09-24T07:11:44+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 24, 2025 07:11:44 UTC">2025-09-24</span>
   </span>
 
     
@@ -1763,7 +1942,7 @@ how you can configure the <abbr title="ConfigServer Security &amp; Firewall">CSF
       <nav class="md-footer__inner md-grid" aria-label="Footer">
         
           
-          <a href="../../install/webui/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 6. Enable Web Interface">
+          <a href="../../install/authentik/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Authentik Integration">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
@@ -1773,20 +1952,20 @@ how you can configure the <abbr title="ConfigServer Security &amp; Firewall">CSF
                 Previous
               </span>
               <div class="md-ellipsis">
-                6. Enable Web Interface
+                Authentik Integration
               </div>
             </div>
           </a>
         
         
           
-          <a href="../traefik/" class="md-footer__link md-footer__link--next" aria-label="Next: 4. Traefik Integration">
+          <a href="../configuration/" class="md-footer__link md-footer__link--next" aria-label="Next: Configuration">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                4. Traefik Integration
+                Configuration
               </div>
             </div>
             <div class="md-footer__button md-icon">

@@ -13,7 +13,7 @@
         <link rel="prev" href="../services/">
       
       
-        <link rel="next" href="../../usage/getting-started/">
+        <link rel="next" href="../traefik/">
       
       
       <link rel="icon" href="../../assets/favicon.png">
@@ -737,6 +737,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -788,7 +792,7 @@
   
   
   <span class="md-ellipsis">
-    1. Dependencies
+    Dependencies
     
   </span>
   
@@ -811,7 +815,7 @@
   
   
   <span class="md-ellipsis">
-    2. Download
+    Download
     
   </span>
   
@@ -834,7 +838,7 @@
   
   
   <span class="md-ellipsis">
-    3. Diagnostic Tests
+    Diagnostic Tests
     
   </span>
   
@@ -857,7 +861,7 @@
   
   
   <span class="md-ellipsis">
-    4. Install
+    Install
     
   </span>
   
@@ -880,7 +884,7 @@
   
   
   <span class="md-ellipsis">
-    5. Start Services
+    Start Services
     
   </span>
   
@@ -912,7 +916,7 @@
   
   
   <span class="md-ellipsis">
-    6. Enable Web Interface
+    Enable Web Interface
     
   </span>
   
@@ -925,7 +929,7 @@
   
   
   <span class="md-ellipsis">
-    6. Enable Web Interface
+    Enable Web Interface
     
   </span>
   
@@ -1016,6 +1020,52 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../traefik/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Traefik Integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../authentik/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Authentik Integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -1031,6 +1081,8 @@
   
     
     
+      
+        
       
         
       
@@ -1090,7 +1142,7 @@
   
   
   <span class="md-ellipsis">
-    1. Getting Started
+    Getting Started
     
   </span>
   
@@ -1108,12 +1160,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/traefik/" class="md-nav__link">
+      <a href="../../usage/configuration/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    4. Traefik Integration
+    Configuration
     
   </span>
   
@@ -1131,14 +1183,53 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/authentik/" class="md-nav__link">
+      <a href="../../usage/ipset/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    5. Authentik Integration
+    Ipsets
     
   </span>
+  
+    
+  
+  
+    <span class="md-status md-status--new" title="New Addition">
+    </span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/blocklists/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Blocklists
+    
+  </span>
+  
+    
+  
+  
+    <span class="md-status md-status--new" title="New Addition">
+    </span>
+  
+
   
 
       </a>
@@ -1159,7 +1250,7 @@
   
   
   <span class="md-ellipsis">
-    6. Geographical Blocks
+    Geographical Blocks
     
   </span>
   
@@ -1200,10 +1291,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_6">
         
           
-          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="0">
             
   
   
@@ -1216,8 +1307,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_5">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_6">
             <span class="md-nav__icon md-icon"></span>
             Cheatsheet
           </label>
@@ -2019,7 +2110,18 @@ set <code>UI_USER</code> and <code>UI_PASS</code></p>
 <div class="grid cards">
 <ul>
 <li>
-<p><span class="twemoji"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Traefik Proxy</title><path d="M12 1.19c1.088 0 2.056.768 2.056 1.714 0 .947-.921 1.715-2.056 1.715-.13 0-.3-.022-.509-.064a.685.685 0 0 0-.475.076l-7.37 4.195a.344.344 0 0 0 .001.597l7.99 4.49c.208.116.461.116.669 0l8.034-4.468a.343.343 0 0 0 .003-.598l-2.507-1.424a.683.683 0 0 0-.67-.003l-2.647 1.468a.234.234 0 0 0-.119.18l-.001.025c0 .946-.921 1.714-2.056 1.714s-2.056-.768-2.056-1.714c0-.947.921-1.715 2.056-1.715.042 0 .09.002.145.007l.087.008.096.013a.685.685 0 0 0 .425-.08l3.913-2.173c.3-.166.662-.171.965-.017l.04.023 5.465 3.104c.686.39.693 1.368.03 1.773l-.037.021-3.656 2.033a.343.343 0 0 0 .007.604l3.62 1.906c.72.378.736 1.402.03 1.804l-10.995 6.272a1.03 1.03 0 0 1-1.019 0L.526 16.43a1.03 1.03 0 0 1 .034-1.806l3.66-1.911a.343.343 0 0 0 .01-.603L.524 10.029a1.03 1.03 0 0 1-.041-1.77l.036-.021L9.618 3.06a.688.688 0 0 0 .308-.369l.011-.036c.32-.952 1.046-1.466 2.063-1.466Zm5.076 12.63-4.492 2.586-.041.022c-.306.158-.671.152-.973-.018l-4.478-2.527a.682.682 0 0 0-.65-.01L3.86 15.224a.343.343 0 0 0-.012.602l7.887 4.515c.21.12.467.121.677 0l7.956-4.547a.343.343 0 0 0-.01-.602l-2.623-1.384a.683.683 0 0 0-.659.012z"></path></svg></span> &nbsp; <strong><a href="../../usage/traefik/"><abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr> Integration</a></strong></p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 9V3.5L18.5 9M6 2c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6Z"></path></svg></span> &nbsp; <strong><a href="../../usage/getting-started/">Usage › Getting Started</a></strong></p>
+<hr>
+<p>If you don’t plan to set up <abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr> or <abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> 
+integration with the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface, you can skip 
+ahead to the <a href="../../usage/getting-started/">Usage</a> section. </p>
+<p>The next chapter covers the core features of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> along
+with instructions for basic configuration, list of the 
+available commands, application folder structure, and 
+many other aspects of starting to use <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>.</p>
+</li>
+<li>
+<p><span class="twemoji"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Traefik Proxy</title><path d="M12 1.19c1.088 0 2.056.768 2.056 1.714 0 .947-.921 1.715-2.056 1.715-.13 0-.3-.022-.509-.064a.685.685 0 0 0-.475.076l-7.37 4.195a.344.344 0 0 0 .001.597l7.99 4.49c.208.116.461.116.669 0l8.034-4.468a.343.343 0 0 0 .003-.598l-2.507-1.424a.683.683 0 0 0-.67-.003l-2.647 1.468a.234.234 0 0 0-.119.18l-.001.025c0 .946-.921 1.714-2.056 1.714s-2.056-.768-2.056-1.714c0-.947.921-1.715 2.056-1.715.042 0 .09.002.145.007l.087.008.096.013a.685.685 0 0 0 .425-.08l3.913-2.173c.3-.166.662-.171.965-.017l.04.023 5.465 3.104c.686.39.693 1.368.03 1.773l-.037.021-3.656 2.033a.343.343 0 0 0 .007.604l3.62 1.906c.72.378.736 1.402.03 1.804l-10.995 6.272a1.03 1.03 0 0 1-1.019 0L.526 16.43a1.03 1.03 0 0 1 .034-1.806l3.66-1.911a.343.343 0 0 0 .01-.603L.524 10.029a1.03 1.03 0 0 1-.041-1.77l.036-.021L9.618 3.06a.688.688 0 0 0 .308-.369l.011-.036c.32-.952 1.046-1.466 2.063-1.466Zm5.076 12.63-4.492 2.586-.041.022c-.306.158-.671.152-.973-.018l-4.478-2.527a.682.682 0 0 0-.65-.01L3.86 15.224a.343.343 0 0 0-.012.602l7.887 4.515c.21.12.467.121.677 0l7.956-4.547a.343.343 0 0 0-.01-.602l-2.623-1.384a.683.683 0 0 0-.659.012z"></path></svg></span> &nbsp; <strong><a href="../usage/traefik.md"><abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr> Integration</a></strong></p>
 <hr>
 <p>Protect your <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> installation by placing it behind a 
 <abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr> reverse proxy. This configuration allows you
@@ -2035,7 +2137,7 @@ specific countries. </p>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300">
   <path fill="currentColor" d="M 110.517 35.585 C 91.004 38.863, 77.219 51.033, 71.612 69.932 C 70.290 74.387, 70 80.632, 70 104.682 C 70 120.807, 69.739 134, 69.420 134 C 69.101 134, 66.236 131.412, 63.053 128.250 C 59.870 125.088, 54.635 120.925, 51.421 119 C 45.877 115.680, 45.136 115.507, 37.038 115.645 C 30.246 115.760, 27.312 116.316, 22.692 118.365 C 15.449 121.577, 7.234 129.787, 3.354 137.689 C 0.764 142.962, 0.500 144.472, 0.505 154 C 0.509 163.142, 0.819 165.082, 2.899 169 C 8.112 178.817, 13.499 184.540, 21.500 188.758 C 25.907 191.081, 27.686 191.400, 36.500 191.447 C 45.771 191.496, 46.865 191.288, 51.500 188.597 C 59.645 183.869, 70.267 172.217, 74.936 162.888 C 77.171 158.422, 79 154.209, 79 153.525 C 79 152.841, 77.656 149.631, 76.013 146.391 C 74.370 143.151, 73.020 140.393, 73.013 140.262 C 73.006 140.131, 89.987 139.906, 110.750 139.762 L 148.500 139.500 148.769 116.750 L 149.038 94 156.519 94 L 164 94 164 103.552 L 164 113.105 169.250 112.802 L 174.500 112.500 174.788 103.250 L 175.075 94 183.038 94 L 191 94 191 99.500 L 191 105 196.481 105 C 201.515 105, 202.014 104.793, 202.599 102.463 C 202.949 101.068, 202.969 98.593, 202.643 96.963 L 202.050 94 211.525 94 L 221 94 221 134.500 L 221 175 145.500 175 L 70 175 70 199.818 C 70 219.729, 70.319 225.711, 71.612 230.068 C 74.239 238.923, 77.914 245.124, 84.155 251.231 C 94.162 261.023, 104.084 264.811, 122.057 265.703 C 139.288 266.558, 138 268.516, 138 241.465 L 138 219 185 219 L 232 219 232 240.929 C 232 260.228, 232.204 263.061, 233.699 264.556 C 235.169 266.026, 237.021 266.189, 247.449 265.765 C 274.087 264.681, 290.217 253.971, 297.914 232.254 C 300.125 226.015, 300.127 225.925, 300.106 150.254 C 300.086 78.629, 299.982 74.189, 298.191 68.794 C 292.029 50.226, 277.958 38.369, 258.582 35.419 C 245.757 33.466, 122.306 33.604, 110.517 35.585 M 30.754 131.599 C 19.002 135.213, 11.993 149.859, 16.156 162.101 C 18.888 170.134, 27.549 177, 34.950 177 C 43.909 177, 53.387 170.391, 59.858 159.630 L 63.217 154.045 60.428 149.273 C 55.937 141.585, 47.474 133.350, 42.229 131.562 C 36.826 129.721, 36.860 129.721, 30.754 131.599 M 0.355 153.500 C 0.352 158.450, 0.521 160.601, 0.731 158.280 C 0.940 155.959, 0.943 151.909, 0.736 149.280 C 0.530 146.651, 0.358 148.550, 0.355 153.500"></path>
 </svg>
-</span> &nbsp; <strong><a href="../../usage/authentik/"><abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> Integration</a></strong></p>
+</span> &nbsp; <strong><a href="../usage/authentik.md"><abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> Integration</a></strong></p>
 <hr>
 <p>Enhance the security of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> by placing it 
 behind the <abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> identity provider using a 
@@ -2072,7 +2174,7 @@ two-factor authentication (2FA), or passkeys. </p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 23, 2025 04:18:29 UTC"><span class="timeago" datetime="2025-09-23T04:18:29+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 23, 2025 04:18:29 UTC">2025-09-23</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 24, 2025 07:11:44 UTC"><span class="timeago" datetime="2025-09-24T07:11:44+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 24, 2025 07:11:44 UTC">2025-09-24</span>
   </span>
 
     
@@ -2146,7 +2248,7 @@ two-factor authentication (2FA), or passkeys. </p>
       <nav class="md-footer__inner md-grid" aria-label="Footer">
         
           
-          <a href="../services/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 5. Start Services">
+          <a href="../services/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Start Services">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
@@ -2156,20 +2258,20 @@ two-factor authentication (2FA), or passkeys. </p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                5. Start Services
+                Start Services
               </div>
             </div>
           </a>
         
         
           
-          <a href="../../usage/getting-started/" class="md-footer__link md-footer__link--next" aria-label="Next: 1. Getting Started">
+          <a href="../traefik/" class="md-footer__link md-footer__link--next" aria-label="Next: Traefik Integration">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                1. Getting Started
+                Traefik Integration
               </div>
             </div>
             <div class="md-footer__button md-icon">
