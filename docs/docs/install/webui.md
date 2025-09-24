@@ -338,7 +338,7 @@ Select what documentation you would like to proceed with next ...
 
 
 
--   :aetherx-axb-traefikproxy: &nbsp; __[Traefik Integration](../usage/traefik.md)__
+-   :aetherx-axb-traefikproxy: &nbsp; __[Traefik Integration](../install/traefik.md)__
 
     ---
 
@@ -353,7 +353,7 @@ Select what documentation you would like to proceed with next ...
     restrictions to block or allow traffic from 
     specific countries. 
 
--   :aetherx-axb-authentik: &nbsp; __[Authentik Integration](../usage/authentik.md)__
+-   :aetherx-axb-authentik: &nbsp; __[Authentik Integration](../install/authentik.md)__
 
     ---
 
