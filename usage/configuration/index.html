@@ -7,13 +7,13 @@
         <meta name="author" content="Aetherinox">
       
       
-        <link rel="canonical" href="https://Aetherinox.github.io/csf-firewall/usage/authentik/">
+        <link rel="canonical" href="https://Aetherinox.github.io/csf-firewall/usage/configuration/">
       
       
-        <link rel="prev" href="../traefik/">
+        <link rel="prev" href="../getting-started/">
       
       
-        <link rel="next" href="../geoip/">
+        <link rel="next" href="../ipset/">
       
       
       <link rel="icon" href="../../assets/favicon.png">
@@ -21,7 +21,7 @@
     
     
       
-        <title>Usage › Authentik Integration - CSF Firewall</title>
+        <title>Usage › Configuration - CSF Firewall</title>
       
     
     
@@ -90,7 +90,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#authentik-integration" class="md-skip">
+        <a href="#usage-configuration" class="md-skip">
           Skip to content
         </a>
       
@@ -161,7 +161,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Usage › Authentik Integration
+              Usage › Configuration
             
           </span>
         </div>
@@ -735,6 +735,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -783,7 +787,7 @@
   
   
   <span class="md-ellipsis">
-    1. Dependencies
+    Dependencies
     
   </span>
   
@@ -806,7 +810,7 @@
   
   
   <span class="md-ellipsis">
-    2. Download
+    Download
     
   </span>
   
@@ -829,7 +833,7 @@
   
   
   <span class="md-ellipsis">
-    3. Diagnostic Tests
+    Diagnostic Tests
     
   </span>
   
@@ -852,7 +856,7 @@
   
   
   <span class="md-ellipsis">
-    4. Install
+    Install
     
   </span>
   
@@ -875,7 +879,7 @@
   
   
   <span class="md-ellipsis">
-    5. Start Services
+    Start Services
     
   </span>
   
@@ -898,7 +902,53 @@
   
   
   <span class="md-ellipsis">
-    6. Enable Web Interface
+    Enable Web Interface
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/traefik/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Traefik Integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/authentik/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Authentik Integration
     
   </span>
   
@@ -926,6 +976,8 @@
   
     
     
+      
+        
       
         
       
@@ -988,30 +1040,7 @@
   
   
   <span class="md-ellipsis">
-    1. Getting Started
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../traefik/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    4. Traefik Integration
+    Getting Started
     
   </span>
   
@@ -1043,7 +1072,7 @@
   
   
   <span class="md-ellipsis">
-    5. Authentik Integration
+    Configuration
     
   </span>
   
@@ -1056,7 +1085,7 @@
   
   
   <span class="md-ellipsis">
-    5. Authentik Integration
+    Configuration
     
   </span>
   
@@ -1077,6 +1106,75 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#location" class="md-nav__link">
+    <span class="md-ellipsis">
+      Location
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#essential-config-properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      Essential Config Properties
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Essential Config Properties">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      TESTING
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tcp_in-tcp_out" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCP_IN, TCP_OUT
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#udp_in-udp_out" class="md-nav__link">
+    <span class="md-ellipsis">
+      UDP_IN, UDP_OUT
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deny_ip_limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      DENY_IP_LIMIT
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ct_limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      CT_LIMIT
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#next-steps" class="md-nav__link">
@@ -1103,12 +1201,74 @@
   
   
     <li class="md-nav__item">
+      <a href="../ipset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Ipsets
+    
+  </span>
+  
+    
+  
+  
+    <span class="md-status md-status--new" title="New Addition">
+    </span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../blocklists/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Blocklists
+    
+  </span>
+  
+    
+  
+  
+    <span class="md-status md-status--new" title="New Addition">
+    </span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../geoip/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    6. Geographical Blocks
+    Geographical Blocks
     
   </span>
   
@@ -1152,10 +1312,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_6">
         
           
-          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="">
             
   
   
@@ -1168,8 +1328,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_5">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_6">
             <span class="md-nav__icon md-icon"></span>
             Cheatsheet
           </label>
@@ -1618,6 +1778,75 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#location" class="md-nav__link">
+    <span class="md-ellipsis">
+      Location
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#essential-config-properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      Essential Config Properties
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Essential Config Properties">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      TESTING
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tcp_in-tcp_out" class="md-nav__link">
+    <span class="md-ellipsis">
+      TCP_IN, TCP_OUT
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#udp_in-udp_out" class="md-nav__link">
+    <span class="md-ellipsis">
+      UDP_IN, UDP_OUT
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deny_ip_limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      DENY_IP_LIMIT
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ct_limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      CT_LIMIT
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#next-steps" class="md-nav__link">
     <span class="md-ellipsis">
       Next Steps
@@ -1657,14 +1886,14 @@
         
       
       
-        <a href="../../about/tags/#tag:tutorials" class="md-tag md-tag-icon">tutorials</a>
+        <a href="../../about/tags/#tag:usage" class="md-tag md-tag-icon">usage</a>
       
     
   </nav>
 
 
   
-    <a href="https://github.com/Aetherinox/csf-firewall/edit/main/docs/docs/usage/authentik.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/Aetherinox/csf-firewall/edit/main/docs/docs/usage/configuration.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"></path></svg>
     </a>
@@ -1673,106 +1902,305 @@
     
       
     
-    <a href="https://github.com/Aetherinox/csf-firewall/raw/main/docs/docs/usage/authentik.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/Aetherinox/csf-firewall/raw/main/docs/docs/usage/configuration.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"></path></svg>
     </a>
   
 
 
-<h1 id="authentik-integration"><abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> Integration<a class="headerlink" href="#authentik-integration" title="Permanent link">¶</a></h1>
-<p>This section explains how to add <abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> as a <strong><abbr title="A component in Traefik that modifies requests or responses before they reach a service or client.">middleware</abbr></strong> through <a href="../traefik/"><abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr></a> so that you can secure the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface behind an authentication server.</p>
+<h1 id="usage-configuration">Usage › Configuration<a class="headerlink" href="#usage-configuration" title="Permanent link">¶</a></h1>
+<p>This section introduces the main <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> configuration file, which controls how <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> operates and determines which features are active on your server.</p>
 <p><br></p>
-<p>If you are adding <a href="https://goauthentik.io/"><abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr></a> as <abbr title="A component in Traefik that modifies requests or responses before they reach a service or client.">middleware</abbr> in the steps above; the last thing you must do is log in to your <abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> admin panel and add a new <strong>Provider</strong> so that we can access the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface via your domain.</p>
+<hr>
 <p><br></p>
-<p>Once you sign into the <abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> admin panel, go to the left-side navigation, select <strong>Applications</strong> › <strong>Providers</strong>.</p>
+<h2 id="location">Location<a class="headerlink" href="#location" title="Permanent link">¶</a></h2>
+<p>The main configuration file for <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> is located in <code>/etc/csf/csf.conf</code>. You can use your preferred text editor to modify the file, such as nano or vim:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="location-command" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="location-command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> Command</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo nano /etc/csf/csf.conf
+</span></code></pre></div>
+</div>
+</div>
+</div>
 <p><br></p>
-<figure>
-    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="https://github.com/user-attachments/assets/8fe1dfc8-bbdc-4c8c-bc5a-be5b103e7404" data-desc-position="bottom"><img alt="Authentik › Menu › Applications › Providers" src="https://github.com/user-attachments/assets/8fe1dfc8-bbdc-4c8c-bc5a-be5b103e7404" width="300"></a>
-    <figcaption><abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> › Menu › Applications › Providers</figcaption>
-</figure>
+<hr>
 <p><br></p>
-<p>Then at the top of the new page, click <strong>Create</strong>.</p>
+<h2 id="essential-config-properties">Essential Config Properties<a class="headerlink" href="#essential-config-properties" title="Permanent link">¶</a></h2>
+<p>This section outlines some of the most important settings that you may want to review. Each one is listed below:</p>
 <p><br></p>
-<figure>
-    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="https://github.com/user-attachments/assets/82e3f027-b058-4b3c-86db-bdc4505a4e4e" data-desc-position="bottom"><img alt="Authentik › Create New Provider" src="https://github.com/user-attachments/assets/82e3f027-b058-4b3c-86db-bdc4505a4e4e" width="450"></a>
-    <figcaption><abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> › Create New Provider</figcaption>
-</figure>
+<h3 id="testing">TESTING<a class="headerlink" href="#testing" title="Permanent link">¶</a></h3>
+<p><span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#required" title="Required value"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14h-2V9h2m0 9h-2v-2h2M1 21h22L12 2 1 21Z"></path></svg></span></a></span></span> <span class="mdx-badge mdx-badge--files-group-right"><span class="mdx-badge mdx-badge--files-view"><span class="mdx-badge__icon"><a href="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf" target="_blank" title="View"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.3 20H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2h6l2 2h8c1.1 0 2 .9 2 2v6.6c-1.4-1-3.1-1.6-5-1.6-3.5 0-6.6 2.1-7.9 5.3l-.3.7.3.7c.1.1.1.2.2.3M23 19c-.9 2.3-3.3 4-6 4s-5.1-1.7-6-4c.9-2.3 3.3-4 6-4s5.1 1.7 6 4m-3.5 0c0-1.4-1.1-2.5-2.5-2.5s-2.5 1.1-2.5 2.5 1.1 2.5 2.5 2.5 2.5-1.1 2.5-2.5M17 18c-.6 0-1 .4-1 1s.4 1 1 1 1-.4 1-1-.4-1-1-1"></path></svg></span></a></span></span><span class="mdx-badge mdx-badge--files-download"><span class="mdx-badge__icon"><a href="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf" target="_blank" title="Download"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 6a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6c0-1.11.89-2 2-2h6l2 2h8m-.75 7H16V9h-2v4h-3.25L15 17.25"></path></svg></span></a></span><span class="mdx-badge__text"><a href="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf" target="_blank"><code>.conf</code></a></span></span></span> <span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#source" title="This setting can be found in the file <pre>/etc/csf/csf.conf</pre>"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0C28.7 0 0 28.7 0 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M224 0c15.4 0 30.1 6.1 41 17L367 119c10.9 10.9 17 25.6 17 41l-128 0c-17.7 0-32-14.3-32-32L224 0z"></path></svg></span></a></span><span class="mdx-badge__text">/etc/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>/<abbr title="The default csf config file, usually in <pre>/etc/csf/csf.conf</pre>">csf.conf</abbr></span></span> <span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#default" title="Default value"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a6 6 0 0 1-6-6c0-4 6-10.75 6-10.75S18 10 18 14a6 6 0 0 1-6 6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>1</code></span></span></p>
 <p><br></p>
-<p>For the <strong>provider</strong>, select <code>Proxy Provider</code>.</p>
-<p><br></p>
-<figure>
-    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="https://github.com/user-attachments/assets/086ae998-964f-45e3-8606-ae8a36ecf82c" data-desc-position="bottom"><img alt="Authentik › New Provider › Proxy Provider" src="https://github.com/user-attachments/assets/086ae998-964f-45e3-8606-ae8a36ecf82c" width="450"></a>
-    <figcaption><abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> › New Provider › Proxy Provider</figcaption>
-</figure>
-<p><br></p>
-<p>Add the following provider values:</p>
+<p>Testing mode is a feature built into <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> and <abbr title="Login Failure Daemon">LFD</abbr> which does the following when enabled:</p>
 <ul>
-<li>Name: <code>CSF ForwardAuth</code></li>
-<li>Authentication Flow: <code>default-source-authentication (Welcome to authentik!)</code></li>
-<li>Authorization Flow: <code>default-provider-authorization-implicit-consent (Authorize Application)</code></li>
+<li>Allows safe configuration of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> without enforcing firewall rules or banning IPs.</li>
+<li>Reads configuration files like <code>/etc/ssh/sshd_config</code> to detect service ports. Detected ports (SSH, IPv6, TCP/UDP) are added to <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> config variables such as <code>TCP_IN</code>, <code>TCP6_IN</code>, <code>UDP_IN</code> in <code>/etc/csf/csf.conf</code>.</li>
+<li><abbr title="Login Failure Daemon">LFD</abbr> does not run as a daemon.</li>
+<li>Adds a cron job to periodically reload <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> rules for testing, but no actual blocking occurs.</li>
+<li>IPs in <code>csf.allow</code> and <code>csf.deny</code> are processed for testing but <strong>not enforced</strong>.</li>
+<li>Displays currently listening ports to sysadmin; helps safely configure <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> before enabling enforcement.</li>
 </ul>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># #</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1">#   Testing flag - enables a CRON job that clears iptables incase of</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1">#   configuration problems when you start csf. This should be enabled until you</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1">#   are sure that the firewall works - i.e. incase you get locked out of your</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1">#   server! Then do remember to set it to 0 and restart csf when you're sure</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="c1">#   everything is OK. Stopping csf will remove the line from /etc/crontab</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1">#   </span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="c1">#   lfd will not start while this is enabled</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="c1"># #</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="na">TESTING</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"0"</span>
+</span></code></pre></div>
+<p><br>
+<br></p>
+<h3 id="tcp_in-tcp_out">TCP_IN, TCP_OUT<a class="headerlink" href="#tcp_in-tcp_out" title="Permanent link">¶</a></h3>
+<p><span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#required" title="Required value"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14h-2V9h2m0 9h-2v-2h2M1 21h22L12 2 1 21Z"></path></svg></span></a></span></span> <span class="mdx-badge mdx-badge--files-group-right"><span class="mdx-badge mdx-badge--files-view"><span class="mdx-badge__icon"><a href="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf" target="_blank" title="View"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.3 20H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2h6l2 2h8c1.1 0 2 .9 2 2v6.6c-1.4-1-3.1-1.6-5-1.6-3.5 0-6.6 2.1-7.9 5.3l-.3.7.3.7c.1.1.1.2.2.3M23 19c-.9 2.3-3.3 4-6 4s-5.1-1.7-6-4c.9-2.3 3.3-4 6-4s5.1 1.7 6 4m-3.5 0c0-1.4-1.1-2.5-2.5-2.5s-2.5 1.1-2.5 2.5 1.1 2.5 2.5 2.5 2.5-1.1 2.5-2.5M17 18c-.6 0-1 .4-1 1s.4 1 1 1 1-.4 1-1-.4-1-1-1"></path></svg></span></a></span></span><span class="mdx-badge mdx-badge--files-download"><span class="mdx-badge__icon"><a href="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf" target="_blank" title="Download"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 6a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6c0-1.11.89-2 2-2h6l2 2h8m-.75 7H16V9h-2v4h-3.25L15 17.25"></path></svg></span></a></span><span class="mdx-badge__text"><a href="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf" target="_blank"><code>.conf</code></a></span></span></span> <span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#source" title="This setting can be found in the file <pre>/etc/csf/csf.conf</pre>"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0C28.7 0 0 28.7 0 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M224 0c15.4 0 30.1 6.1 41 17L367 119c10.9 10.9 17 25.6 17 41l-128 0c-17.7 0-32-14.3-32-32L224 0z"></path></svg></span></a></span><span class="mdx-badge__text">/etc/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>/<abbr title="The default csf config file, usually in <pre>/etc/csf/csf.conf</pre>">csf.conf</abbr></span></span> <span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#default" title="Default value"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a6 6 0 0 1-6-6c0-4 6-10.75 6-10.75S18 10 18 14a6 6 0 0 1-6 6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>22,53,80,110,143,443,465,587,993,995</code></span></span></p>
 <p><br></p>
-<p>Select <strong>Forward Auth (single application)</strong>:</p>
-<ul>
-<li>External Host: <code>https://csf.domain.com</code></li>
-</ul>
+<p>Define the allowed incoming and outgoing TCP ports, respectively. Add or remove ports as required, separated by commas.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="tcp_in-tcp_out-config" name="__tabbed_2" type="radio"><input id="tcp_in-tcp_out-common-ports" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="tcp_in-tcp_out-config"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-277.5c0-17-6.7-33.3-18.7-45.3L258.7 18.7C246.7 6.7 230.5 0 213.5 0L64 0zM325.5 176L232 176c-13.3 0-24-10.7-24-24L208 58.5 325.5 176z"></path></svg></span> Config</label><label for="tcp_in-tcp_out-common-ports"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zM96 288a32 32 0 1 0 0-64 32 32 0 1 0 0 64zm32-144a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zM96 400a32 32 0 1 0 0-64 32 32 0 1 0 0 64zm96-280c-13.3 0-24 10.7-24 24s10.7 24 24 24l160 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-160 0zm0 112c-13.3 0-24 10.7-24 24s10.7 24 24 24l160 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-160 0zm0 112c-13.3 0-24 10.7-24 24s10.7 24 24 24l160 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-160 0z"></path></svg></span> Common Ports</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Allow incoming TCP ports</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="na">TCP_IN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"22,53,80,110,143,443,465,587,993,995"</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># Allow outgoing TCP ports</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="na">TCP_OUT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"22,53,80,110,143,443,465,587,993,995"</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>The following are a list of the most common ports that you may find useful allowing traffic through.</p>
+<table>
+<thead>
+<tr>
+<th>Port</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>20</td>
+<td>FTP data transfer (active mode)</td>
+</tr>
+<tr>
+<td>21</td>
+<td>FTP control/commands</td>
+</tr>
+<tr>
+<td>22</td>
+<td>SSH / SFTP (secure shell and file transfer)</td>
+</tr>
+<tr>
+<td>25</td>
+<td>SMTP (sending email between mail servers)</td>
+</tr>
+<tr>
+<td>53</td>
+<td>DNS (Domain Name System queries)</td>
+</tr>
+<tr>
+<td>80</td>
+<td>HTTP (web traffic, insecure)</td>
+</tr>
+<tr>
+<td>110</td>
+<td>POP3 (downloading emails, insecure)</td>
+</tr>
+<tr>
+<td>113</td>
+<td>Ident / AUTH (rarely used identification service)</td>
+</tr>
+<tr>
+<td>143</td>
+<td>IMAP (retrieving/syncing emails, insecure)</td>
+</tr>
+<tr>
+<td>443</td>
+<td>HTTPS (secure web traffic)</td>
+</tr>
+<tr>
+<td>465</td>
+<td>SMTP over SSL (secure sending of emails)</td>
+</tr>
+<tr>
+<td>587</td>
+<td>SMTP submission (secure client-to-server email sending)</td>
+</tr>
+<tr>
+<td>853</td>
+<td>DNS over TLS (secure DNS queries)</td>
+</tr>
+<tr>
+<td>993</td>
+<td>IMAP over SSL (secure email retrieval)</td>
+</tr>
+<tr>
+<td>995</td>
+<td>POP3 over SSL (secure email download)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p><br>
+<br></p>
+<h3 id="udp_in-udp_out">UDP_IN, UDP_OUT<a class="headerlink" href="#udp_in-udp_out" title="Permanent link">¶</a></h3>
+<p><span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#required" title="Required value"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14h-2V9h2m0 9h-2v-2h2M1 21h22L12 2 1 21Z"></path></svg></span></a></span></span> <span class="mdx-badge mdx-badge--files-group-right"><span class="mdx-badge mdx-badge--files-download"><span class="mdx-badge__icon"><a href="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf" target="_blank" title="Download"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 6a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6c0-1.11.89-2 2-2h6l2 2h8m-.75 7H16V9h-2v4h-3.25L15 17.25"></path></svg></span></a></span><span class="mdx-badge__text"><a href="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf" target="_blank"><code>.conf</code></a></span></span></span> <span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#source" title="This setting can be found in the file <pre>/etc/csf/csf.conf</pre>"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0C28.7 0 0 28.7 0 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M224 0c15.4 0 30.1 6.1 41 17L367 119c10.9 10.9 17 25.6 17 41l-128 0c-17.7 0-32-14.3-32-32L224 0z"></path></svg></span></a></span><span class="mdx-badge__text">/etc/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>/<abbr title="The default csf config file, usually in <pre>/etc/csf/csf.conf</pre>">csf.conf</abbr></span></span> <span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#default" title="Default value"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a6 6 0 0 1-6-6c0-4 6-10.75 6-10.75S18 10 18 14a6 6 0 0 1-6 6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>20,21,53,853,80,443</code></span></span></p>
 <p><br></p>
-<figure>
-    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="https://github.com/user-attachments/assets/b1d6258a-f53e-4225-a4e9-9f9b5b69b191" data-desc-position="bottom"><img alt="Authentik › New Provider › Settings" src="https://github.com/user-attachments/assets/b1d6258a-f53e-4225-a4e9-9f9b5b69b191" width="450"></a>
-    <figcaption><abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> › New Provider › Settings</figcaption>
-</figure>
+<p>Define the allowed incoming and outgoing UDP ports, respectively. Add or remove ports as required, separated by commas.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="udp_in-udp_out-config" name="__tabbed_3" type="radio"><input id="udp_in-udp_out-common-ports" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="udp_in-udp_out-config"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-277.5c0-17-6.7-33.3-18.7-45.3L258.7 18.7C246.7 6.7 230.5 0 213.5 0L64 0zM325.5 176L232 176c-13.3 0-24-10.7-24-24L208 58.5 325.5 176z"></path></svg></span> Config</label><label for="udp_in-udp_out-common-ports"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zM96 288a32 32 0 1 0 0-64 32 32 0 1 0 0 64zm32-144a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zM96 400a32 32 0 1 0 0-64 32 32 0 1 0 0 64zm96-280c-13.3 0-24 10.7-24 24s10.7 24 24 24l160 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-160 0zm0 112c-13.3 0-24 10.7-24 24s10.7 24 24 24l160 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-160 0zm0 112c-13.3 0-24 10.7-24 24s10.7 24 24 24l160 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-160 0z"></path></svg></span> Common Ports</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Allow incoming UDP ports</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="na">UDP_IN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"20,21,53,853,80,443"</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># Allow outgoing UDP ports</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># To allow outgoing traceroute add 33434:33523 to this list </span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="na">UDP_OUT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"20,21,53,853,113,123"</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>The following are a list of the most common ports that you may find useful allowing traffic through.</p>
+<table>
+<thead>
+<tr>
+<th>Port</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>20</td>
+<td>FTP data transfer (rarely UDP, mostly TCP)</td>
+</tr>
+<tr>
+<td>21</td>
+<td>FTP control/commands (rarely UDP, mostly TCP)</td>
+</tr>
+<tr>
+<td>53</td>
+<td>DNS queries (UDP is standard; TCP fallback for large responses)</td>
+</tr>
+<tr>
+<td>80</td>
+<td>HTTP (UDP not standard; TCP is primary)</td>
+</tr>
+<tr>
+<td>113</td>
+<td>Ident / AUTH (rarely used)</td>
+</tr>
+<tr>
+<td>123</td>
+<td>NTP (Network Time Protocol)</td>
+</tr>
+<tr>
+<td>443</td>
+<td>HTTPS (UDP can be used with QUIC protocol)</td>
+</tr>
+<tr>
+<td>853</td>
+<td>DNS over TLS (UDP fallback possible)</td>
+</tr>
+<tr>
+<td>67</td>
+<td>DHCP server (receives client requests)</td>
+</tr>
+<tr>
+<td>68</td>
+<td>DHCP client (receives server responses)</td>
+</tr>
+<tr>
+<td>161</td>
+<td>SNMP (Simple Network Management Protocol)</td>
+</tr>
+<tr>
+<td>162</td>
+<td>SNMP traps (from agents to manager)</td>
+</tr>
+<tr>
+<td>500</td>
+<td>IKE (IPsec key exchange)</td>
+</tr>
+<tr>
+<td>514</td>
+<td>Syslog (UDP logging)</td>
+</tr>
+<tr>
+<td>1900</td>
+<td>SSDP (Simple Service Discovery Protocol, used in UPnP)</td>
+</tr>
+<tr>
+<td>4500</td>
+<td>IPsec NAT traversal</td>
+</tr>
+<tr>
+<td>33434–33523</td>
+<td>Traceroute / ICMP UDP probe ports</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p><br>
+<br></p>
+<h3 id="deny_ip_limit">DENY_IP_LIMIT<a class="headerlink" href="#deny_ip_limit" title="Permanent link">¶</a></h3>
+<p><span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#required" title="Required value"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14h-2V9h2m0 9h-2v-2h2M1 21h22L12 2 1 21Z"></path></svg></span></a></span></span> <span class="mdx-badge mdx-badge--files-group-right"><span class="mdx-badge mdx-badge--files-download"><span class="mdx-badge__icon"><a href="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf" target="_blank" title="Download"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 6a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6c0-1.11.89-2 2-2h6l2 2h8m-.75 7H16V9h-2v4h-3.25L15 17.25"></path></svg></span></a></span><span class="mdx-badge__text"><a href="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf" target="_blank"><code>.conf</code></a></span></span></span> <span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#source" title="This setting can be found in the file <pre>/etc/csf/csf.conf</pre>"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0C28.7 0 0 28.7 0 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M224 0c15.4 0 30.1 6.1 41 17L367 119c10.9 10.9 17 25.6 17 41l-128 0c-17.7 0-32-14.3-32-32L224 0z"></path></svg></span></a></span><span class="mdx-badge__text">/etc/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>/<abbr title="The default csf config file, usually in <pre>/etc/csf/csf.conf</pre>">csf.conf</abbr></span></span> <span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#default" title="Default value"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a6 6 0 0 1-6-6c0-4 6-10.75 6-10.75S18 10 18 14a6 6 0 0 1-6 6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>200</code></span></span></p>
 <p><br></p>
-<p>Once finished, click <strong>Create</strong>. Then on the left-side menu, select <strong>Applications</strong> › <strong>Applications</strong>.</p>
+<p>This setting controls the <strong>maximum number of IP addresses</strong> that can be listed in the <code>/etc/csf/csf.deny</code> file. You can increase or decrease this limit depending on your server’s needs.  </p>
+<p>Keep in mind that raising the limit on servers with low memory (such as Virtuozzo or OpenVZ) may cause network slowdowns if thousands of rules are loaded.  </p>
+<p>When the limit is reached, <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> will automatically rotate the entries; meaning that the oldest entries (at the top of the file) are removed, and the newest ones are added. This check only happens when using <code>csf -d</code>, which is also what <code>lfd</code> relies on. Setting this value to <code>0</code> disables the limit entirely.  </p>
+<p>If you need to allow a much larger number of blocked IPs or CIDRs, it’s recommended to use <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>'s <a href="../ipset/">IPSETs</a> integration instead for better performance.</p>
+<div class="language-cfg highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># #</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1">#   Limit the number of IP's kept in the /etc/csf/csf.deny file</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1">#   </span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1">#   Care should be taken when increasing this value on servers with low memory</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="c1">#   resources or hard limits (such as Virtuozzo/OpenVZ) as too many rules (in the</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="c1">#   thousands) can sometimes cause network slowdown</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="c1">#   </span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="c1">#   The value set here is the maximum number of IPs/CIDRs allowed</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="c1">#   if the limit is reached, the entries will be rotated so that the oldest</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="c1">#   entries (i.e. the ones at the top) will be removed and the latest is added.</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="c1">#   The limit is only checked when using csf -d (which is what lfd also uses)</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="c1">#   Set to 0 to disable limiting</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="c1">#   </span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="c1">#   For implementations wishing to set this value significantly higher, we</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="c1">#   recommend using the IPSET option</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="c1"># #</span>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="na">DENY_IP_LIMIT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"200"</span>
+</span></code></pre></div>
+<p><br>
+<br></p>
+<h3 id="ct_limit">CT_LIMIT<a class="headerlink" href="#ct_limit" title="Permanent link">¶</a></h3>
+<p><span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#required" title="Required value"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14h-2V9h2m0 9h-2v-2h2M1 21h22L12 2 1 21Z"></path></svg></span></a></span></span> <span class="mdx-badge mdx-badge--files-group-right"><span class="mdx-badge mdx-badge--files-download"><span class="mdx-badge__icon"><a href="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf" target="_blank" title="Download"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 6a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6c0-1.11.89-2 2-2h6l2 2h8m-.75 7H16V9h-2v4h-3.25L15 17.25"></path></svg></span></a></span><span class="mdx-badge__text"><a href="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf" target="_blank"><code>.conf</code></a></span></span></span> <span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#source" title="This setting can be found in the file <pre>/etc/csf/csf.conf</pre>"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0C28.7 0 0 28.7 0 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M224 0c15.4 0 30.1 6.1 41 17L367 119c10.9 10.9 17 25.6 17 41l-128 0c-17.7 0-32-14.3-32-32L224 0z"></path></svg></span></a></span><span class="mdx-badge__text">/etc/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>/<abbr title="The default csf config file, usually in <pre>/etc/csf/csf.conf</pre>">csf.conf</abbr></span></span> <span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#default" title="Default value"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a6 6 0 0 1-6-6c0-4 6-10.75 6-10.75S18 10 18 14a6 6 0 0 1-6 6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>0</code></span></span></p>
 <p><br></p>
-<figure>
-    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="https://github.com/user-attachments/assets/405fb566-0384-4345-8f07-ad52b9af9358" data-desc-position="bottom"><img alt="Authentik › Menu › Applications › Applications" src="https://github.com/user-attachments/assets/405fb566-0384-4345-8f07-ad52b9af9358" width="300"></a>
-    <figcaption><abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> › Menu › Applications › Applications</figcaption>
-</figure>
-<p><br></p>
-<p>Then at the top of the new page, click <strong>Create</strong>.</p>
-<p><br></p>
-<figure>
-    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="https://github.com/user-attachments/assets/82e3f027-b058-4b3c-86db-bdc4505a4e4e" data-desc-position="bottom"><img alt="Authentik › Create New App" src="https://github.com/user-attachments/assets/82e3f027-b058-4b3c-86db-bdc4505a4e4e" width="450"></a>
-    <figcaption><abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> › Create New App</figcaption>
-</figure>
-<p><br></p>
-<p>Add the following parameters:</p>
-<ul>
-<li>Name: <code>CSF (ConfigServer Firewall)</code></li>
-<li>Slug: <code>csf</code></li>
-<li>Group: <code>Administrative</code></li>
-<li>Provider: <code>CSF ForwardAuth</code></li>
-<li>Backchannel Providers: <code>None</code></li>
-<li>Policy Engine Mode: <code>any</code></li>
-</ul>
-<p><br></p>
-<figure>
-    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="https://github.com/user-attachments/assets/11425a7a-f049-4434-a232-3ea2847145d7" data-desc-position="bottom"><img alt="Authentik › Menu › Applications › Create" src="https://github.com/user-attachments/assets/11425a7a-f049-4434-a232-3ea2847145d7" width="450"></a>
-    <figcaption><abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> › Menu › Applications › Create</figcaption>
-</figure>
-<p><br></p>
-<p>Save, and then on the left-side menu, select <strong>Applications</strong> › <strong>Outposts</strong>:</p>
-<p><br></p>
-<figure>
-    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="https://github.com/user-attachments/assets/cb975af4-d167-44c5-8587-b366aa591716" data-desc-position="bottom"><img alt="Authentik › Menu › Applications › Outposts" src="https://github.com/user-attachments/assets/cb975af4-d167-44c5-8587-b366aa591716" width="450"></a>
-    <figcaption><abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> › Menu › Applications › Outposts</figcaption>
-</figure>
-<p><br></p>
-<p>Find your <strong>Outpost</strong> and edit it.</p>
-<figure>
-    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="https://github.com/user-attachments/assets/a349423f-6db5-431d-888e-8ba658053b2c" data-desc-position="bottom"><img alt="Authentik › Outposts › Edit" src="https://github.com/user-attachments/assets/a349423f-6db5-431d-888e-8ba658053b2c" width="450"></a>
-    <figcaption><abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> › Outposts › Edit</figcaption>
-</figure>
-<p><br></p>
-<p>Move <code>CSF (ConfigServer Firewall)</code> to the right side <strong>Selected Applications</strong> box.</p>
-<p><br></p>
-<figure>
-    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="https://github.com/user-attachments/assets/b4b882d4-8f41-4af9-b788-cef649a48d24" data-desc-position="bottom"><img alt="Authentik › Outposts › Update" src="https://github.com/user-attachments/assets/b4b882d4-8f41-4af9-b788-cef649a48d24" width="450"></a>
-    <figcaption><abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> › Outposts › Update</figcaption>
-</figure>
-<p><br></p>
-<p>You should be able to access <code>csf.domain.com</code> and be prompted now to authenticate with <abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr>.</p>
+<p><strong>Connection Tracking</strong> lets the firewall keep track of how many connections each IP address makes to your server. If an IP opens more connections than the set limit, it will be automatically blocked. This can help protect against certain types of DoS (Denial of Service) attacks.  </p>
+<p>Be cautious when enabling this option. Some <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> like <strong>FTP</strong>, <strong>IMAP</strong>, and <strong>HTTP</strong> naturally create many connections, including ones left in <code>TIME_WAIT</code>, which can lead to false positives. On busy servers, it’s easy for legitimate traffic to hit the limit. For servers at higher risk of DoS attacks, however, this feature can be very useful. A practical starting value is usually around <code>300</code> connections.</p>
+<p>To disable this feature, set this to 0</p>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># #</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="c1">#   Connection Tracking. This option enables tracking of all connections from IP</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="c1">#   addresses to the server. If the total number of connections is greater than</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1">#   this value then the offending IP address is blocked. This can be used to help</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="c1">#   prevent some types of DOS attack.</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="c1">#</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c1">#   Care should be taken with this option. It's entirely possible that you will</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="c1">#   see false-positives. Some protocols can be connection hungry, e.g. FTP, IMAPD</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="c1">#   and HTTP so it could be quite easy to trigger, especially with a lot of</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="c1">#   closed connections in TIME_WAIT. However, for a server that is prone to DOS</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="c1">#   attacks this may be very useful. A reasonable setting for this option might</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="c1">#   be around 300.</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="c1">#   </span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="c1">#   To disable this feature, set this to 0</span>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="c1"># #</span>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="na">CT_LIMIT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"0"</span>
+</span></code></pre></div>
+<p><br>
+<br></p>
 <p><br></p>
 <hr>
 <p><br></p>
@@ -1783,13 +2211,21 @@
 <div class="grid cards">
 <ul>
 <li>
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 256c0 141.4 114.6 256 256 256 5.4 0 10.7-.2 16-.5l0-34.3c0-25-20.3-45.3-45.3-45.3-12 0-23.5-4.8-32-13.3l-16-16c-12-12-18.7-28.3-18.7-45.3l0-3.2c0-21.4 10.7-41.4 28.5-53.3 9.1-6.1 18.3-12.2 27.4-18.3 10.5-7 22.9-10.7 35.5-10.7l20.9 0c15.3 0 30 5.5 41.6 15.4l26.6 22.8c7.4 6.3 16.8 9.8 26.6 9.8 10.8 0 21.2 4.3 28.9 12l4 4c10.2 10.2 24.1 16 38.6 16l54.8 0c4.2-10.3 7.7-21 10.5-32l-57.3 0c-14.5 0-28.4-5.8-38.6-16l-18.3-18.3C386 282 384 277.1 384 272s2-10 5.7-13.7c2.5-2.5 5-5 7.5-7.5 1.8-1.8 2.8-4.3 2.8-6.8s-1-5-2.8-6.8c-2.2-2.2-4.4-4.4-6.5-6.5-4.2-4.2-10-6.6-16-6.6-3.8 0-7.5 0-11.3 0-6.2 0-11.3-5.1-11.3-11.3 0-3 1.2-5.9 3.3-8 1.6-1.6 3.1-3.1 4.7-4.7 5.1-5.1 12.1-8 19.3-8 6.9 0 13.8 0 20.7 0 8.8 0 16-7.2 16-16s-7.2-16-16-16c-9.8 0-19.6 0-29.4 0-10.3 0-18.6 8.3-18.6 18.6 0 8-5.1 15.1-12.7 17.6-7.1 2.4-14.1 4.7-21.2 7.1-7.5 2.5-11 11-7.5 18 .4 .8 .8 1.5 1.1 2.3 3.8 7.5-1.7 16.4-10.1 16.4-3.6 0-6.9-1.7-9.1-4.5-5.4-7.2-10.9-14.5-16.3-21.7-2.7-3.6-6.9-5.7-11.4-5.7-5.4 0-10.4 3.1-12.8 7.9-1.3 2.7-2.7 5.4-4 8.1-4.9 9.8-15.1 16-26.1 16-16.4 0-29.9-13.3-29.9-29.7l0-4.3c0-9 3.6-17.6 9.9-24 6-6 12-12 17.9-17.9 2.6-2.6 4.1-6.2 4.1-10 0-6.1 3.9-11.5 9.6-13.4 8.8-2.9 17.7-5.9 26.5-8.8 7.8-2.6 14.9-7 20.7-12.8 6.6-6.6 13.2-13.2 19.9-19.9 2.1-2.1 3.3-5 3.3-8 0-6.2-5.1-11.3-11.3-11.3-.2 0-.3 0-.5 0-3 0-5.3 .7-7.3 2.1-13.9 9.3-27.9 18.6-41.8 27.9-2 1.3-4.4 2.1-6.8 2.1-6.8 0-12.3-5.5-12.3-12.3l0-8.6c0-7 3.5-13.5 9.3-17.3 31.7-21.1 63.4-42.3 95.1-63.4-23-6.8-47.3-10.4-72.4-10.4-141.4 0-256 114.6-256 256zM132.7 132.7c10.7-10.7 21.3-21.3 32-32 6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6c-10.7 10.7-21.3 21.3-32 32-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M192 210.3l0-4.3c0-9 3.6-17.6 9.9-24l17.9-17.9c2.6-2.6 4.1-6.2 4.1-10 0-6.1 3.9-11.5 9.6-13.4l26.5-8.8c7.8-2.6 14.9-7 20.7-12.8l19.9-19.9c2.1-2.1 3.3-5 3.3-8 0-6.2-5.1-11.3-11.3-11.3l-1 0c-2.4 0-4.8 .7-6.8 2.1l-41.8 27.9c-2 1.3-4.4 2.1-6.8 2.1-6.8 0-12.3-5.5-12.3-12.3l0-8.6c0-7 3.5-13.5 9.3-17.3l95.1-63.4c106.1 31.2 183.6 129.4 183.6 245.6 0 22.1-2.8 43.5-8.1 64l-57.3 0c-14.5 0-28.4-5.8-38.6-16l-18.3-18.3C386 282 384 277.1 384 272s2-10 5.7-13.7l7.5-7.5c1.8-1.8 2.8-4.3 2.8-6.8s-1-5-2.8-6.8l-6.5-6.5c-4.2-4.2-10-6.6-16-6.6l-11.3 0c-6.2 0-11.3-5.1-11.3-11.3 0-3 1.2-5.9 3.3-8L360 200c5.1-5.1 12.1-8 19.3-8l20.7 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-29.4 0c-10.3 0-18.6 8.3-18.6 18.6 0 8-5.1 15.1-12.7 17.6l-21.2 7.1c-7.5 2.5-11 11-7.5 18l1.1 2.3c3.8 7.5-1.7 16.4-10.1 16.4-3.6 0-6.9-1.7-9.1-4.5l-16.3-21.7c-2.7-3.6-6.9-5.7-11.4-5.7-5.4 0-10.4 3.1-12.8 7.9l-4 8.1c-4.9 9.8-15.1 16-26.1 16-16.4 0-29.9-13.3-29.9-29.7zM493.4 352C457.3 441.1 372.5 505.3 272 511.5l0-34.3c0-25-20.3-45.3-45.3-45.3-12 0-23.5-4.8-32-13.3l-16-16c-12-12-18.7-28.3-18.7-45.3l0-3.2c0-21.4 10.7-41.4 28.5-53.3l27.4-18.2c10.5-7 22.9-10.7 35.5-10.7l20.9 0c15.3 0 30 5.5 41.6 15.4l26.6 22.8c7.4 6.3 16.8 9.8 26.6 9.8 10.8 0 21.2 4.3 28.9 12l4 4c10.2 10.2 24.1 16 38.6 16l54.8 0zM187.3 100.7c6.2 6.2 6.2 16.4 0 22.6l-32 32c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l32-32c6.2-6.2 16.4-6.2 22.6 0z"></path></svg></span> &nbsp; <strong><a href="../geoip/">Geographical Restrictions</a></strong></p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M248 88l80 0 0 48-80 0 0-48zm-8-56c-26.5 0-48 21.5-48 48l0 64c0 26.5 21.5 48 48 48l16 0 0 32-224 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l96 0 0 32-16 0c-26.5 0-48 21.5-48 48l0 64c0 26.5 21.5 48 48 48l96 0c26.5 0 48-21.5 48-48l0-64c0-26.5-21.5-48-48-48l-16 0 0-32 192 0 0 32-16 0c-26.5 0-48 21.5-48 48l0 64c0 26.5 21.5 48 48 48l96 0c26.5 0 48-21.5 48-48l0-64c0-26.5-21.5-48-48-48l-16 0 0-32 96 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-224 0 0-32 16 0c26.5 0 48-21.5 48-48l0-64c0-26.5-21.5-48-48-48l-96 0zM448 376l8 0 0 48-80 0 0-48 72 0zm-256 0l8 0 0 48-80 0 0-48 72 0z"></path></svg></span> &nbsp; <strong><a href="../ipset/">IPSETs</a></strong></p>
 <hr>
-<p>This section provides instructions for configuring
-geographical restrictions in <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>, allowing you to 
-whitelist or blacklist specific regions of the 
-world from accessing your server.  </p>
-<p>Supports MaxMind, db-ip, ipdeny, and iptoasn.</p>
+<p>Explains the purpose of using IPSETs with <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> to 
+manage large IP lists, significantly improving 
+performance and efficiency when handling 
+thousands of addresses.</p>
+</li>
+<li>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M367.2 412.5L99.5 144.8c-22.4 31.4-35.5 69.8-35.5 111.2 0 106 86 192 192 192 41.5 0 79.9-13.1 111.2-35.5zm45.3-45.3c22.4-31.4 35.5-69.8 35.5-111.2 0-106-86-192-192-192-41.5 0-79.9 13.1-111.2 35.5L412.5 367.2zM0 256a256 256 0 1 1 512 0 256 256 0 1 1 -512 0z"></path></svg></span> &nbsp; <strong><a href="../blocklists/">Blocklists</a></strong></p>
+<hr>
+<p>Third-party blocklists help you automatically
+block known malicious IP addresses, keeping 
+your server safe from bad actors. This 
+chapter explains how to configure and use 
+these lists within <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>.</p>
 </li>
 </ul>
 </div>
@@ -1815,7 +2251,7 @@ world from accessing your server.  </p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 23, 2025 04:18:29 UTC"><span class="timeago" datetime="2025-09-23T04:18:29+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 23, 2025 04:18:29 UTC">2025-09-23</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 24, 2025 07:11:44 UTC"><span class="timeago" datetime="2025-09-24T07:11:44+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 24, 2025 07:11:44 UTC">2025-09-24</span>
   </span>
 
     
@@ -1889,7 +2325,7 @@ world from accessing your server.  </p>
       <nav class="md-footer__inner md-grid" aria-label="Footer">
         
           
-          <a href="../traefik/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 4. Traefik Integration">
+          <a href="../getting-started/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Getting Started">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
@@ -1899,20 +2335,20 @@ world from accessing your server.  </p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                4. Traefik Integration
+                Getting Started
               </div>
             </div>
           </a>
         
         
           
-          <a href="../geoip/" class="md-footer__link md-footer__link--next" aria-label="Next: 6. Geographical Blocks">
+          <a href="../ipset/" class="md-footer__link md-footer__link--next" aria-label="Next: Ipsets">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                6. Geographical Blocks
+                Ipsets
               </div>
             </div>
             <div class="md-footer__button md-icon">
