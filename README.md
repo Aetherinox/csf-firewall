@@ -117,7 +117,6 @@ In August 2025, the original developer of ConfigServer Firewall ceased operation
   - [Run Patch](#run-patch-1)
   - [Manual Run](#manual-run-1)
   - [Advanced Logs](#advanced-logs-1)
-- [Install Dark Theme](#install-dark-theme)
 - [Traefik Integration with CSF WebUI](#traefik-integration-with-csf-webui)
   - [Adding Authentik Provider](#adding-authentik-provider)
 - [IP Sets / Blocklist](#ip-sets--blocklist)
@@ -1233,37 +1232,6 @@ All steps performed by the script will be displayed in terminal:
 
 <br />
 
-## Install Dark Theme
-The dark theme is an unofficial theme not available in the official install of ConfigServer firewall. You may use the files provided in this repository to switch your copy of CSF over to the dark theme.
-
-<br />
-
-<p align="center">
-  <img style="padding-right:15px;" src="https://raw.githubusercontent.com/Aetherinox/csf-firewall/refs/heads/main/docs/images/readme/7.gif" width="400" />
-  <img src="https://raw.githubusercontent.com/Aetherinox/csf-firewall/refs/heads/main/docs/images/readme/8.gif" width="400" /> 
-</p>
-
-<p align="center"><img style="width: 80%;text-align: center;" src="https://raw.githubusercontent.com/Aetherinox/csf-firewall/refs/heads/main/docs/images/readme/9.png"></p>
-
-<br />
-
-Head over to the [Releases](https://github.com/Aetherinox/csf-firewall/releases) page and download the dark theme zip file:
-
-- `*-theme-dark.zip`
-
-<br />
-
-Extract the files from the zip to the same paths as they are shown in the zip. You should have the following files:
-
-- `/etc/csf/ui/images/*.css`
-- `/usr/local/csf/lib/ConfigServer/*.pm`
-- `/usr/sbin/lfd`
-
-<br />
-
----
-
-<br />
 
 ## Traefik Integration with CSF WebUI
 
@@ -2105,7 +2073,7 @@ _Yes. This repository will continue to release updates to Config Server Firewall
 
 <br />
 
-_The dark theme was officially integrated into ConfigServer Firewall. It will release with `v15.10` with a theme selector._
+_The dark theme was officially integrated into ConfigServer Firewall. It will release with `v` with a theme selector._
 
 </details>
 
