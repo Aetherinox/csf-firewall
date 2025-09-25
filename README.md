@@ -76,10 +76,15 @@ In August 2025, the original developer of ConfigServer Firewall ceased operation
 - [Summary](#summary)
   - [Releases](#releases)
   - [Folders](#folders)
-- [ConfigServer Firewall Features](#configserver-firewall-features)
+- [Features](#features)
+  - [Firewall \& Network Security](#firewall--network-security)
+  - [Login \& User Monitoring](#login--user-monitoring)
+  - [Alerts \& Notifications](#alerts--notifications)
+  - [Intrusion Detection \& Exploit Protection](#intrusion-detection--exploit-protection)
+  - [Management \& Control](#management--control)
 - [How 📁 Extras/Scripts Works](#how--extrasscripts-works)
-- [Install ConfigServer Firewall](#install-configserver-firewall)
-  - [Install Using Patcher](#install-using-patcher)
+- [Install](#install)
+  - [Using Patcher](#using-patcher)
   - [Install Manually](#install-manually)
     - [Step 1: Prerequisites](#step-1-prerequisites)
     - [Step 2: Download and Install CSF](#step-2-download-and-install-csf)
@@ -87,24 +92,7 @@ In August 2025, the original developer of ConfigServer Firewall ceased operation
 - [Configuring CSF](#configuring-csf)
 - [Enabling CSF Firewall](#enabling-csf-firewall)
 - [Managing the Firewall](#managing-the-firewall)
-  - [Enable CSF \& LFD](#enable-csf--lfd)
-  - [Disable CSF \& LFD](#disable-csf--lfd)
-  - [Start Firewall](#start-firewall)
-  - [Stop Firewall](#stop-firewall)
-  - [Restart CSF](#restart-csf)
-  - [Restart CSF \& LFD](#restart-csf--lfd)
-  - [List Firewall Rules](#list-firewall-rules)
-  - [Add IP to Allow List](#add-ip-to-allow-list)
-  - [Remove IP to Allow List](#remove-ip-to-allow-list)
-  - [Add IP to Deny List](#add-ip-to-deny-list)
-  - [Remove IP from Deny List](#remove-ip-from-deny-list)
-  - [Add Temp Block IP](#add-temp-block-ip)
-  - [Remove Temp Block IP](#remove-temp-block-ip)
-- [Uninstalling CSF](#uninstalling-csf)
 - [Enable CSF Firewall Web UI](#enable-csf-firewall-web-ui)
-  - [Step 1: Install Required Perl Modules:](#step-1-install-required-perl-modules)
-  - [Step 2: Enable CSF Firewall Web UI:](#step-2-enable-csf-firewall-web-ui)
-  - [Step 3: Access and Use Web UI:](#step-3-access-and-use-web-ui)
 - [Install Docker Patch](#install-docker-patch)
   - [Clone](#clone)
   - [Configure](#configure)
@@ -123,7 +111,6 @@ In August 2025, the original developer of ConfigServer Firewall ceased operation
   - [Spam Lists](#spam-lists)
   - [Geographical (Continents \& Countries)](#geographical-continents--countries)
   - [Transmission (BitTorrent Client)](#transmission-bittorrent-client)
-- [Download ConfigServer Firewall](#download-configserver-firewall)
 - [Notes](#notes)
   - [CSF to Iptable Commands](#csf-to-iptable-commands)
     - [Default Policy](#default-policy)
@@ -191,74 +178,88 @@ This repository contains several folders:
 
 <br />
 
-## ConfigServer Firewall Features
+## Features
 
-Thinking of using ConfigServer Firewall? Check out our features:
+
+Interested in Config Server Firewall & Security? Check out a partial list of the included features below:
 
 <br />
 
-- Dark & Light theme
-- Straight-forward SPI iptables firewall script
-- Daemon process that checks for login authentication failures for:
-    - Courier imap, Dovecot, uw-imap, Kerio
-    - OpenSSH
-    - cPanel, WHM, Webmail (cPanel servers only)
-    - Pure-ftpd, vsftpd, Proftpd
-    - Password protected web pages (htpasswd)
-    - Mod_security failures (v1 and v2)
-    - Suhosin failures
-    - Exim SMTP AUTH
-    - Custom login failures with separate log file and regular expression matching
-- POP3/IMAP login tracking to enforce logins per hour
-- SSH login notification
-- SU login notification
-- Excessive connection blocking
-- UI Integration for cPanel, DirectAdmin, InterWorx, CentOS Web Panel (CWP), VestaCP, CyberPanel - and Webmin
-- Easy upgrade between versions from within the control panel
-- Easy upgrade between versions from shell
-- Pre-configured to work on a cPanel server with all the standard cPanel ports open
-- Pre-configured to work on a DirectAdmin server with all the standard DirectAdmin ports open
-- Auto-configures the SSH port if it’s non-standard on installation
-- Block traffic on unused server IP addresses – helps reduce the risk to your server
-- Alert when end-user scripts sending excessive emails per hour – for identifying spamming scripts
-- Suspicious process reporting – reports potential exploits running on the server
-- Excessive user processes reporting
-- Excessive user process usage reporting and optional termination
-- Suspicious file reporting – reports potential exploit files in /tmp and similar directories
-- Directory and file watching – reports if a watched directory or a file changes
-- Block traffic on a variety of Block Lists including DShield Block List and Spamhaus DROP List
+### Firewall & Network Security
+
+- Easy-to-use SPI firewall powered by iptables/nftables
+- Pre-configured for cPanel and DirectAdmin (standard ports open by default)
+- Auto-detects non-standard SSH ports during installation
+- Works with multiple network interfaces
+- Supports IPv6 via ip6tables
+- Block traffic on unused server IPs to reduce attack surface
+- Country-based access control (allow/deny by ISO Country Code)
+- Protection against:
+    - SYN floods
+    - Ping of Death
+    - Port scans
+    - Connection flooding (per IP/per port detection)
+- Permanent or temporary IP blocking (with TTL support)
+- Integration with blocklists like DShield and Spamhaus DROP
 - BOGON packet protection
-- Pre-configured settings for Low, Medium or High firewall security (cPanel servers only)
-- Works with multiple ethernet devices
-- Server Security Check – Performs a basic security and settings check on the server (via cPanel/- DirectAdmin/Webmin UI)
-- Allow Dynamic DNS IP addresses – always allow your IP address even if it changes whenever you connect to the internet
-- Alert sent if server load average remains high for a specified length of time
-- mod_security log reporting (if installed)
-- Email relay tracking – tracks all email sent through the server and issues alerts for excessive usage (cPanel servers only)
-- IDS (Intrusion Detection System) – the last line of detection alerts you to changes to system and application binaries
-- SYN Flood protection
-- Ping of death protection
-- Port Scan tracking and blocking
-- Permanent and Temporary (with TTL) IP blocking
-- Exploit checks
-- Account modification tracking – sends alerts if an account entry is modified, e.g. if the password is changed or the login shell
-- Shared syslog aware
-- Messenger Service – Allows you to redirect connection requests from blocked IP addresses to pre-configured text and html pages to inform the visitor that they have been blocked in the firewall. This can be particularly useful for those with a large user base and help process support requests more efficiently
-- Country Code blocking – Allows you to deny or allow access by ISO Country Code
-- Port Flooding Detection – Per IP, per Port connection flooding detection and mitigation to help block DOS attacks
-- WHM root access notification (cPanel servers only)
-- lfd Clustering – allows IP address blocks to be automatically propagated around a group of servers running lfd. It allows allows cluster-wide allows, removals and configuration changes
-- Quick start csf – deferred startup by lfd for servers with large block and/or allow lists
-- Distributed Login Failure Attack detection
+
+<br />
+
+### Login & User Monitoring
+
+- Login Failure Daemon (LFD): detects repeated login failures (brute force protection)
+- Monitors authentication for:
+    - SSH (OpenSSH)
+    - FTP (Pure-ftpd, vsftpd, Proftpd)
+    - Mail (Courier IMAP, Dovecot, Kerio, Exim SMTP AUTH, POP3/IMAP)
+    - Web (cPanel/WHM, Webmail, htpasswd-protected pages)
+    - ModSecurity (v1 & v2)
+    - Suhosin
+    - Custom services via regex and log file matching
+- POP3/IMAP login tracking (limit logins per hour)
+- Distributed attack detection (across multiple servers)
+- LFD clustering – share blocks/whitelists across a server group
 - Temporary IP allows (with TTL)
-- IPv6 Support with ip6tables
-- Integrated UI – no need for a separate Control Panel or Apache to use the csf configuration
-- Integrated support for cse within the Integrated UI
-- cPanel Reseller access to per reseller configurable options Unblock, Deny, Allow and Search IP address blocks
-- System Statistics – Basic graphs showing the performance of the server, e.g. Load Averages, CPU Usage, Memory Usage, etc
-- ipset support for large IP lists
-- Integrated with the CloudFlare Firewall
-- …lots more!
+
+<br />
+
+### Alerts & Notifications
+
+- SSH and su login notifications
+- Root access notifications (WHM)
+- Alerts for:
+    - High server load average
+    - Excessive email sending per hour (spamming detection)
+    - Suspicious processes running
+    - Abnormal file activity in /tmp and similar directories
+    - Excessive user processes or resource usage
+    - Account changes (password updates, shell changes, etc.)
+
+<br />
+
+### Intrusion Detection & Exploit Protection
+
+- Intrusion Detection System (IDS) – monitors system/application binaries
+- Suspicious process and file reporting
+- Exploit checks
+- Directory and file integrity monitoring
+- ModSecurity log reporting
+- Messenger Service – optionally redirect blocked users to a custom page explaining why access is denied
+
+<br />
+
+### Management & Control
+
+- Integrated UI for major control panels:
+    - cPanel, DirectAdmin, InterWorx, CWP, VestaCP, CyberPanel, Webmin
+- cPanel reseller access (per-reseller firewall controls: Allow, Deny, Unblock, Search)
+- Integrated with CloudFlare Firewall
+- Upgrade firewall directly from control panel or shell
+- Quick start mode for servers with large allow/deny lists
+- Easy Dynamic DNS support (auto-allow your changing home IP)
+- System statistics & graphs (CPU, load, memory, etc.)
+- ipset support for handling large IP lists efficiently
+- Integrated support for cse within the UI
 
 <br />
 
@@ -324,7 +325,7 @@ Even if you were to completely wipe your iptable rules, as soon as you restart t
 
 <br />
 
-## Install ConfigServer Firewall
+## Install
 
 You can install ConfigServer Firewall and all prerequisites one of two ways:
 
@@ -333,7 +334,7 @@ You can install ConfigServer Firewall and all prerequisites one of two ways:
 
 <br />
 
-### Install Using Patcher
+### Using Patcher
 
 If you would like to install ConfigServer Firewall using this repo's patcher; download the patch:
 ```shell
@@ -498,147 +499,9 @@ This command will restart the CSF and LFD (Login Failure Daemon) services, apply
 
 ## Managing the Firewall
 
-CSF provides several commands to manage the firewall, such as:
+For a list of commands associated to CSF which help you manage your firewall, please refer to our documentation at:
 
-<br />
-
-### Enable CSF & LFD
-
-```shell
-sudo csf -e
-```
-
-<br />
-
-### Disable CSF & LFD
-
-```shell
-sudo csf -x
-```
-
-<br />
-
-### Start Firewall
-
-```shell
-sudo csf -s
-```
-
-<br />
-
-### Stop Firewall
-
-```shell
-sudo csf -f
-```
-
-<br />
-
-### Restart CSF
-
-```shell
-sudo csf -r
-```
-
-<br />
-
-### Restart CSF & LFD
-
-```shell
-sudo csf -ra
-```
-
-<br />
-
-### List Firewall Rules
-
-```shell
-# show IPv4 rules
-sudo csf -l
-
-# Show IPv6 rules
-sudo csf -l6
-```
-
-<br />
-
-### Add IP to Allow List
-
-```shell
-sudo csf -a IP_ADDRESS
-```
-
-<br />
-
-### Remove IP to Allow List
-
-```shell
-sudo csf -ar IP_ADDRESS
-```
-
-<br />
-
-### Add IP to Deny List
-
-```shell
-sudo csf -d IP_ADDRESS
-```
-
-<br />
-
-### Remove IP from Deny List
-
-```shell
-sudo csf -dr IP_ADDRESS
-```
-
-<br />
-
-### Add Temp Block IP
-
-```shell
-sudo csf -td IP_ADDRESS
-```
-
-<br />
-
-### Remove Temp Block IP
-
-```shell
-sudo csf -tr IP_ADDRESS
-```
-
-<br />
-
-These commands can help you manage your server’s security and monitor incoming and outgoing traffic.
-
-<br />
-
----
-
-<br />
-
-## Uninstalling CSF
-
-If you decide to uninstall CSF for any reason, follow these steps:
-
-<br />
-
-1. Navigate to the CSF directory:
-    ```shell
-    cd /etc/csf
-    ```
-
-<br />
-
-2. Run the uninstallation script:
-    ```shell
-    sudo sh uninstall.sh
-    ```
-
-<br />
-
-The script will remove CSF and its associated files from your server.
+- https://aetherinox.github.io/csf-firewall/usage/cheatsheet/commands/
 
 <br />
 
@@ -648,195 +511,9 @@ The script will remove CSF and its associated files from your server.
 
 ## Enable CSF Firewall Web UI
 
-ConfigServer Firewall offers a WebUI for the managing firewall from the web interface. This section explains how to install the WebUI.
+ConfigServer Firewall offers a web interface for the your firewall from a web browser. To enable and access the CSF web interface, please follow the documentation at:
 
-<br />
-
-### Step 1: Install Required Perl Modules:
-
-CSF UI required some of Perl modules to be installed on your system. Use the following commands to install required modules as per your operating system.
-
-<br />
-
-**Debian based systems:**
-
-```shell
-sudo apt-get install libio-socket-ssl-perl libcrypt-ssleay-perl \
-                    libnet-libidn-perl libio-socket-inet6-perl libsocket6-perl
-```
-
-<br />
-
-**Redhat based systems:**
-
-```shell
-sudo yum install perl-IO-Socket-SSL.noarch perl-Net-SSLeay perl-Net-LibIDN \
-               perl-IO-Socket-INET6 perl-Socket6
-```
-
-<br />
-<br />
-
-### Step 2: Enable CSF Firewall Web UI:
-
-To enable CSF web UI edit /etc/csf/csf.conf file in your favorite text editor and update the following values.
-
-```shell
-sudo vim /etc/csf/csf.conf
-```
-
-```conf
-# 1 to enable, 0 to disable web ui 
-UI = "1"
-
-# Set port for web UI. The default port is 6666, but
-# I change this to 1025 to easy access. Default port create some issue
-# with popular chrome and firefox browser (in my case) 
-
-UI_PORT = "1025"
-
-# Leave blank to bind to all IP addresses on the server 
-UI_IP = ""
-
-# Set username for authetnication 
-UI_USER = "admin"
-
-# Set a strong password for authetnication 
-UI_PASS = "admin"
-```
-
-<br />
-
-Change the following values to your own:
-- `UI_PORT`
-- `UI_USER`
-- `UI_PASS`
-
-<br />
-
-After making changes, edit `/etc/csf/ui/ui.allow` configuration file and add your public IP to allow access to CSF UI. Change `YOUR_PUBLIC_IP_ADDRESS` with your public IP address.
-
-```shell
-sudo echo "YOUR_PUBLIC_IP_ADDRESS" >>  /etc/csf/ui/ui.allow
-```
-
-<br />
-
-Web UI works under lfd daemon. So restart the lfd daemon on your system using the following command.
-
-```shell
-sudo service lfd restart
-```
-
-<br />
-
-In order to gain access to the online admin panel; you must ensure lfd and csf are running. You can check by running the commands:
-
-```shell ignore
-sudo service lfd status
-```
-
-<br />
-
-You should see the `lfd` service running:
-
-```
-● lfd.service - ConfigServer Firewall & Security - lfd
-     Loaded: loaded (/lib/systemd/system/lfd.service; enabled; preset: enabled)
-     Active: active (running) since Mon 2024-08-05 11:59:38 MST; 1s ago
-    Process: 46393 ExecStart=/usr/sbin/lfd (code=exited, status=0/SUCCESS)
-   Main PID: 46407 (lfd - sleeping)
-      Tasks: 8 (limit: 4613)
-     Memory: 121.7M
-        CPU: 2.180s
-     CGroup: /system.slice/lfd.service
-```
-
-<br />
-
-Next, confirm `csf` service is also running:
-
-```shell ignore
-sudo service csf status
-```
-
-<br />
-
-Check the output for errors on service `csf`. You should see no errors:
-
-```shell
-● csf.service - ConfigServer Firewall & Security - csf
-     Loaded: loaded (/lib/systemd/system/csf.service; enabled; preset: enabled)
-     Active: active (exited) since Mon 2024-08-05 12:04:09 MST; 1s ago
-    Process: 46916 ExecStart=/usr/sbin/csf --initup (code=exited, status=0/SUCCESS)
-   Main PID: 46916 (code=exited, status=0/SUCCESS)
-        CPU: 12.692s
-```
-
-<br />
-
-If you see the following error when running `csf status`:
-
-```
-csf[46313]: open3: exec of /sbin/ipset flush failed: No such file or directory at /usr/sbin/csf line 5650.
-```
-
-<br />
-
-You must install `ipset`:
-
-```shell ignore
-sudo apt-get update 
-sudo apt-get install ipset
-```
-
-<br />
-<br />
-
-### Step 3: Access and Use Web UI:
-
-Now, access CSF UI on your browser with the specified port. For this tutorial; we used 1025 port and accessed the CSF admin panel by opening our browser and going to:
-
-```
-https://127.0.0.1:1025
-```
-
-<br />
-
-When prompted for the username and password; the default is:
-
-| Field | Value |
-| --- | --- |
-| Username | `admin` |
-| Password | `admin` |
-
-<br />
-
-<p align="center"><img style="width: 80%;text-align: center;" src="https://github.com/user-attachments/assets/c23e9de8-69a9-4a92-810b-791c72f5793a"></p>
-
-<br />
-
-After successful login, you will find the screen like below.
-
-<p align="center"><img style="width: 80%;text-align: center;" src="https://github.com/user-attachments/assets/2b1a0c5b-d21d-456b-a07d-69c2acdf3888"></p>
-
-<br />
-
-**Allow IP Address**: You can use below option to allow any IP quickly. This action adds the entry to the `/etc/csf/csf.allow` file.
-
-<p align="center"><img style="width: 80%;text-align: center;" src="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/docs/images/csf-quick-allow.png"></p>
-
-<br />
-
-**Deny IP Address**: You can use below option to deny any IP quickly. This action adds the entry to the `/etc/csf/csf.deny` file.
-
-<p align="center"><img style="width: 80%;text-align: center;" src="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/docs/images/csf-quick-deny.png"></p>
-
-<br />
-
-**Unblock IP Address**: You can use below option to quickly unblocked any IP which is already blocked by CSF.
-
-<p align="center"><img style="width: 80%;text-align: center;" src="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/docs/images/csf-unblock-ip.png"></p>
+- https://aetherinox.github.io/csf-firewall/install/webui/
 
 <br />
 
@@ -1240,110 +917,6 @@ CSF_HIGHRISK|43200|0|https://raw.githubusercontent.com/Aetherinox/csf-firewall/m
 ```
 
 <br />
-
-The format for the above lines are `NAME|INTERVAL|MAX_IPS|URL`
-
-- **NAME**: List name with all uppercase alphabetic characters with no spaces and a maximum of 25 characters - this will be used as the iptables chain name
-- **INTERVAL**: Refresh interval to download the list, must be a minimum of 3600 seconds (an hour).
-  - `43200`: 12 hours
-  - `86400`: 24 hours
-- **MAX_IPS**: This is the maximum number of IP addresses to use from the list, a value of 0 means all IPs _(see note below)_. 
-  - If you add an ipset with 50,000 IPs, and you set this value to 20,000; then you will only block the first 20,000.
-- **URL**: The URL to download the ipset from
-
-<br />
-
-> [!NOTE]
-> If you have not modified the settings of ConfigServer Firewall; the `MAX_IPS` value is limited by the setting `LF_IPSET_MAXELEM` which has a maximum value of loading `65536` IPs; even if you set the value in your lists above to 0, or anything above 65536.
->
-> To allow for higher numbers of blocked IPs in an ipset to be loaded; you must edit your CSF config file in `/etc/csf/csf.conf` and change the setting `LF_IPSET_MAXELEM` to something higher than `65536`
-> 
-> ```ini
-> # old value
-> # LF_IPSET_MAXELEM = "65536"
-> 
-> # new value
-> LF_IPSET_MAXELEM = "4000000"
-> ```
->
-> This setting can also be modified through the ConfigServer Firewall Admin WebUI if you have it installed.
-
-<br />
-
-Once you have added the line(s) above; you will need to give ConfigServer Firewall and LFD a restart.
-
-```shell
-sudo csf -ra
-```
-
-<br />
-
-You can confirm that the ipset is installed by running the command:
-
-```shell
-sudo ipset --list -n
-```
-
-<br />
-
-The above command will list all existing ipsets running on your firewall:
-
-```console
-chain_DENY
-chain_6_DENY
-chain_ALLOW
-chain_6_ALLOW
-bl_CSF_HIGHRISK
-bl_6_CSF_HIGHRISK
-bl_CSF_MASTER
-bl_6_CSF_MASTER
-```
-
-<br />
-
-As you can see in the list above; we have the following ipsets loaded from this repository:
-
-- `bl_CSF_HIGHRISK`
-- `bl_6_CSF_HIGHRISK`
-- `bl_CSF_MASTER`
-- `bl_6_CSF_MASTER`
-
-<br />
-
-To view all of the IPs in a specified ipset / list, run:
-
-```shell
-$ sudo ipset --list bl_CSF_HIGHRISK
-
-Name: bl_CSF_HIGHRISK
-Type: hash:net
-Revision: 7
-Header: family inet hashsize 1024 maxelem 4000000 bucketsize 12 initval 0x5f263e28
-Size in memory: 24024
-References: 1
-Number of entries: 630
-Members:
-XX.XX.XX.XXX
-XX.XX.XX.XXX
-[ ... ]
-```
-
-<br />
-
-If you modified the ConfigServer Firewall setting `LF_IPSET_MAXELEM` _(explained in the note above)_, you will see the new max limit value listed next to `maxelem`.
-
-```shell
-Header: family inet hashsize 1024 maxelem 4000000 
-```
-
-<br />
-
-> [!NOTE]
-> If you decide to use the blocklist `master.ipset`, you must ensure you increase the value of the setting `LF_IPSET_MAXELEM` in the file `/etc/csf/csf.conf` to at least `400000`.
-> 
-> On average, the `master.ipset` list normally contains `392,000` blocked IP addresses.
-
-<br />
 <br />
 
 ### Main Lists
@@ -1447,18 +1020,6 @@ This section includes blocklists which you can import into the [bittorrent clien
 | Set | Description | Severity | View | Website |
 | --- | --- | --- | --- | --- |
 | `bt-transmission` | <sub>A large blocklist for the BitTorrent client [Transmission](https://transmissionbt.com/)</sub> | ★★★★★ | [view](https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/blocklists/transmission/blocklist.ipset) | [view](https://transmissionbt.com/) |
-
-
-<br />
-
----
-
-<br />
-
-## Download ConfigServer Firewall
-
-The latest version of csf can be downloaded from:
-- https://download.configserver.com/csf.tgz
 
 <br />
 
