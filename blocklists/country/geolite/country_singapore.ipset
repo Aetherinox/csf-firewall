@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_singapore_ipset
 #   @uuid           469ed76b-28d8-3aac-b006-b1f4e21062b4
-#   @updated        Wed 24 Sep 2025 01:02:21 AM UTC
+#   @updated        Thu 25 Sep 2025 01:00:40 AM UTC
 #   @entries        27,225,829 ips
 #                   15,697 subnets
 #                   15,697 lines

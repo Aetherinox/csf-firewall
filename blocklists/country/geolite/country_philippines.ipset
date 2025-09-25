@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_philippines_ipset
 #   @uuid           d0ff69cc-a4d8-3afd-974c-904ff5140b09
-#   @updated        Wed 24 Sep 2025 01:01:59 AM UTC
+#   @updated        Thu 25 Sep 2025 01:00:25 AM UTC
 #   @entries        6,614,632 ips
 #                   3,190 subnets
 #                   3,190 lines
