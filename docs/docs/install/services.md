@@ -12,7 +12,7 @@ After you have installed CSF, we can now start the services required for CSF and
 <br />
 <br />
 
-## Testing Mode
+## Disable Testing Mode
 
 Testing mode is a feature built into CSF and LFD which does the following when **TESTING** is enabled:
 
@@ -169,7 +169,7 @@ If you notice that CSF is not running or has the status `inactive (dead)` like t
 
 <br />
 
-We must enable the services to ensure they are running. Execute the three commands below in your terminal:
+We must enable the services to ensure they are running. Execute the commands below in your terminal:
 
 === ":aetherx-axd-command: Command"
 
@@ -180,7 +180,7 @@ We must enable the services to ensure they are running. Execute the three comman
 
 <br />
 
-Confirm now that the service is up and running:
+Confirm that the service is up and running:
 
 === ":aetherx-axd-command: Command"
 
@@ -201,7 +201,7 @@ Confirm now that the service is up and running:
 
 <br />
 
-After you have confirmed that the CSF service is running, now we need to ensure that the [LFD](#lfd-service) is also operating normally.
+After you have confirmed that the CSF service is running, we need to ensure that the [LFD](#lfd-service) is also operating normally.
 
 <br />
 <br />
@@ -374,7 +374,7 @@ Refer to the following troubleshooting tips if you have issues with installing a
 
 ### lfd.service will not start (inactive (dead))
 
-First, let's ensure `TESTING` mode is not enabled. Run the following `tail` command to look at the lfd logs located in `/var/log/lfd.log`:
+First, let's ensure `TESTING` mode is **disabled**. Run the following `tail` command to look at the lfd logs located in `/var/log/lfd.log`:
 
 === ":aetherx-axd-command: Command"
 
@@ -451,7 +451,7 @@ Sometimes `strace` will give you hints as to what went wrong. In the example abo
 
 When a daemon exits cleanly (exit code 0), you usually have to look inside lfd's own logs, not just systemd’s.
 
-In our example above, we clearly see in the `/var/log/lfd.log` log file that it was due to us having `TESTING` enabled.
+In our example above, we clearly see in the `/var/log/lfd.log` file that it was due to us having `TESTING` enabled.
 
 <br />
 
