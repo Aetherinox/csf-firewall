@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_mali_ipset
 #   @uuid           fed0fb03-3c9f-3e5f-9398-a3971cd09107
-#   @updated        Wed 24 Sep 2025 01:01:30 AM UTC
+#   @updated        Thu 25 Sep 2025 01:00:04 AM UTC
 #   @entries        97,166 ips
 #                   176 subnets
 #                   176 lines
