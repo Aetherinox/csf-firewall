@@ -12,80 +12,18 @@ In the previous section, we covered how to install the required dependencies for
 If your tests were successful, you are now ready to install CSF on your server and begin configuring your new firewall. This section focuses on the **basic installation process** — detailed configuration will be covered in a later chapter.
 
 <br />
-<br />
 
-
-## Installer Script Summary
-
-The installation process for CSF is handled through a main script that triggers several sub-installer scripts.  
-You will run the `install.sh` script, which automatically detects your platform and then executes the appropriate sub-script.  
-
-Each sub-script follows the naming scheme `install.<PLATFORM>.sh`. We have provided a list of the files below:
-
-| File                            | Requires                              | Platform                                                                                                                                  |
-| ------------------------------- | ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `install.sh`                    |                                       | Main installer script, detects your platform and re-reroutes your installation request to the correct installer sub-script listed below   |
-| `install.generic.sh`            |                                       | Baremetal                                                                                                                                 |
-| `install.cpanel.sh`             | `/usr/local/cpanel/version`           | cPanel / WHM                                                                                                                              |
-| `install.cwp.sh`                | `/usr/local/cwpsrv`                   | CentOS Web Panel (CWP)                                                                                                                    |
-| `install.cyberpanel.sh`         | `/usr/local/CyberCP`                  | CyberPanel                                                                                                                                |
-| `install.directadmin.sh`        | `/usr/local/directadmin/directadmin`  | DirectAdmin                                                                                                                               |
-| `install.interworx.sh`          | `/usr/local/interworx`                | Interworx                                                                                                                                 |
-| `install.vesta.sh`              | `/usr/local/vesta`                    | VestaCP                                                                                                                                   |
+---
 
 <br />
 
-### install.sh
+## Before You Begin
 
-The `install.sh` script serves as a launcher that directs you to the appropriate installation script for your platform. It can be run on any system, automatically detects your environment, and executes the correct installer from the files listed above. Before running it, make sure the script is executable by running `chmod +x install.sh`. We’ll cover this in the steps below.
+This page includes installation instructions for numerous control panels, however, the install script has been developed to be automatic in how it detects what distro you are on, and if you are using any control panels such as cPanel / WHM, VestaCP, etc.
 
-<br />
+Typically, all users are going to run the same `install.sh` file, and then the installation wizard will detect if it needs to do anything extra. However, individual platforms instructions have been provided on this page.
 
-### install.generic.sh
-
-This is the generic bare-metal installer for CSF. You should use this script when installing CSF on a server that does not have WHM, cPanel, DirectAdmin, or other control panels installed. If you run `install.sh`  and it does not detect any supported control panels, it will automatically start `install.generic.sh` to begin the installation.
-
-<br />
-
-### install.cpanel.sh
-<!-- md:requires `/usr/local/cpanel/version` -->
-
-The `install.cpanel.sh` script is ran in order to integrate CSF with an existing cPanel/WHM installation. This file triggers if you run `install.sh`, which checks to see if your server has the file `/usr/local/cpanel/version`. 
-
-<br />
-
-### install.cwp.sh
-<!-- md:requires `/usr/local/cwpsrv` -->
-
-The `install.cwp.sh` script is ran in order to integrate CSF with an existing copy of [CentOS Web Panel (CWP)](https://centos-webpanel.com/). This file triggers when you run `install.sh`, which checks to see if your server has the file `/usr/local/cwpsrv`.
-
-<br />
-
-### install.cyberpanel.sh
-<!-- md:requires `/usr/local/CyberCP` -->
-
-The `install.cyberpanel.sh` script is ran in order to integrate CSF with an existing copy of [Cyber Panel](https://cyberpanel.net/). This file triggers when you run `install.sh`, which checks to see if your server has the file `/usr/local/CyberCP`.
-
-<br />
-
-### install.directadmin.sh
-<!-- md:requires `/usr/local/directadmin/directadmin` -->
-
-The `install.directadmin.sh` script is ran in order to integrate CSF with an existing copy of [DirectAdmin](https://directadmin.com/). This file triggers when you run `install.sh`, which checks to see if your server has the file `/usr/local/directadmin/directadmin`.
-
-<br />
-
-### install.interworx.sh
-<!-- md:requires `/usr/local/interworx` -->
-
-The `install.interworx.sh` script is ran in order to integrate CSF with an existing copy of [Interworx](https://interworx.com/). This file triggers when you run `install.sh`, which checks to see if your server has the file `/usr/local/interworx`.
-
-<br />
-
-### install.vesta.sh
-<!-- md:requires `/usr/local/vesta` -->
-
-The `install.vesta.sh` script is ran in order to integrate CSF with an existing copy of [VestaCP](https://vestacp.com/). This file triggers when you run `install.sh`, which checks to see if your server has the file `/usr/local/vesta`.
+If your distro or control panel is not mentioned here, follow the [Install: Generic](#install-generic) instructions, and CSF will automatically detect anything extra that it needs to do.
 
 <br />
 
@@ -93,7 +31,7 @@ The `install.vesta.sh` script is ran in order to integrate CSF with an existing 
 
 <br />
 
-## Generic
+## Install: Generic
 
 In the previous [download](download.md) step; you were instructed to download a copy of CSF which comes in the form of a zip archive. You then extracted that zip to `/tmp/csf`, and set `+x` executable permissions on the `install.sh` file. 
 
@@ -191,9 +129,9 @@ If you recieve the correct response, you can skip the rest of this page and proc
 <br />
 <br />
 
-## cPanel and WHM
+## Install: cPanel and WHM
 
-Installing CSF for WHM is almost the same process outlined in the [Generic](#generic) steps, just with different extraction paths, and how you will access the CSF web interface.
+Installing CSF for WHM is almost the same process outlined in the [Install: Generic](#install-generic) steps, just with different extraction paths, and how you will access the CSF web interface.
 
 <br />
 
@@ -213,7 +151,7 @@ If you have not yet logged into your server, log in as the `root` user via SSH.
 
 <br />
 
-Next, you must ensure that your server does not have `firewalld` installed, as CSF and firewalld cannot function together.
+Next, ensure that your server does not have `firewalld` installed; CSF and firewalld cannot function together.
 
 === ":aetherx-axb-debian: Debian/Ubuntu (apt-get)"
 
@@ -229,7 +167,11 @@ Next, you must ensure that your server does not have `firewalld` installed, as C
 
 <br />
 
-Finally, run the installation script. You can either execute `/root/csf/install.sh` or `/root/csf/install.cpanel.sh`. Pick one of the run options below. 
+Finally, run the installation script. You can either execute `/root/csf/install.sh` or `/root/csf/install.cpanel.sh`. We recommend `install.sh`. 
+
+<br />
+
+Pick one of the run options below. 
 
 :   :aetherx-axd-circle-1: Runs `install.sh` :aetherx-axd-dot: uses shebang interpreter :aetherx-axd-dot: requires executable `+x` permission
 :   :aetherx-axd-circle-2: Runs `install.sh` :aetherx-axd-dot: uses `sh` shell :aetherx-axd-dot: executable permission not required
@@ -264,7 +206,7 @@ Finally, run the installation script. You can either execute `/root/csf/install.
 
 <br />
 
-When you run the installer script, initially it will execute the code inside `/root/csf/install.sh`, however, it will then be passed off to the correct sub-script. For cPanel, it will run the sub-script `/root/csf/install.cpanel.sh`.
+When you run the installer script `install.sh`, initially it will execute the code inside `/root/csf/install.sh`, however, it will then be passed off to the correct sub-script. For cPanel, it will run the sub-script `/root/csf/install.cpanel.sh`.
 
 Follow the instructions on-screen. If you are prompted for any additional information, enter it when asked. For the most part, the installation wizard is automated.
 
@@ -274,7 +216,89 @@ Once the installation is complete, you can access CSF through the WHM control pa
 
 <br />
 
-If you see ConfigServer Security & Firewall within WHM, you can skip the rest of this page and proceed to the section [Next Steps](#next-steps). A more detailed explanation of how to configure and use CSF will be explained in the next chapter of this guide.
+If you see ConfigServer Security & Firewall within WHM, you can skip the rest of this page and proceed to the section [Next Steps](#next-steps). A more detailed explanation of how to configure and use CSF will be explained in the [Usage](../usage/getting-started.md) chapter.
+
+<br />
+<br />
+
+---
+
+<br />
+<br />
+
+## Installer File Summary
+
+This section provides a list of the installer scripts included with CSF and what their role plays in the installation process. This is available within our docs for more advanced users who wish to understand the process.
+
+The installation process for CSF is handled through a main script that triggers several sub-installer scripts.  
+You will run the `install.sh` script, which automatically detects your platform and then executes the appropriate sub-script.  
+
+Each sub-script follows the naming scheme `install.<PLATFORM>.sh`. We have provided a list of the files below:
+
+| File                            | Requires                              | Platform                                                                                                                                  |
+| ------------------------------- | ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `install.sh`                    |                                       | Main installer script, detects your platform and re-reroutes your installation request to the correct installer sub-script listed below   |
+| `install.generic.sh`            |                                       | Baremetal                                                                                                                                 |
+| `install.cpanel.sh`             | `/usr/local/cpanel/version`           | cPanel / WHM                                                                                                                              |
+| `install.cwp.sh`                | `/usr/local/cwpsrv`                   | CentOS Web Panel (CWP)                                                                                                                    |
+| `install.cyberpanel.sh`         | `/usr/local/CyberCP`                  | CyberPanel                                                                                                                                |
+| `install.directadmin.sh`        | `/usr/local/directadmin/directadmin`  | DirectAdmin                                                                                                                               |
+| `install.interworx.sh`          | `/usr/local/interworx`                | Interworx                                                                                                                                 |
+| `install.vesta.sh`              | `/usr/local/vesta`                    | VestaCP                                                                                                                                   |
+
+<br />
+
+### install.sh
+
+The `install.sh` script serves as a launcher that directs you to the appropriate installation script for your platform. It can be run on any system, automatically detects your environment, and executes the correct installer from the files listed above. Before running it, make sure the script is executable by running `chmod +x install.sh`. We’ll cover this in the steps below.
+
+<br />
+
+### install.generic.sh
+
+This is the generic bare-metal installer for CSF. You should use this script when installing CSF on a server that does not have WHM, cPanel, DirectAdmin, or other control panels installed. If you run `install.sh`  and it does not detect any supported control panels, it will automatically start `install.generic.sh` to begin the installation.
+
+<br />
+
+### install.cpanel.sh
+<!-- md:requires `/usr/local/cpanel/version` -->
+
+The `install.cpanel.sh` script is ran in order to integrate CSF with an existing cPanel/WHM installation. This file triggers if you run `install.sh`, which checks to see if your server has the file `/usr/local/cpanel/version`. 
+
+<br />
+
+### install.cwp.sh
+<!-- md:requires `/usr/local/cwpsrv` -->
+
+The `install.cwp.sh` script is ran in order to integrate CSF with an existing copy of [CentOS Web Panel (CWP)](https://centos-webpanel.com/). This file triggers when you run `install.sh`, which checks to see if your server has the file `/usr/local/cwpsrv`.
+
+<br />
+
+### install.cyberpanel.sh
+<!-- md:requires `/usr/local/CyberCP` -->
+
+The `install.cyberpanel.sh` script is ran in order to integrate CSF with an existing copy of [Cyber Panel](https://cyberpanel.net/). This file triggers when you run `install.sh`, which checks to see if your server has the file `/usr/local/CyberCP`.
+
+<br />
+
+### install.directadmin.sh
+<!-- md:requires `/usr/local/directadmin/directadmin` -->
+
+The `install.directadmin.sh` script is ran in order to integrate CSF with an existing copy of [DirectAdmin](https://directadmin.com/). This file triggers when you run `install.sh`, which checks to see if your server has the file `/usr/local/directadmin/directadmin`.
+
+<br />
+
+### install.interworx.sh
+<!-- md:requires `/usr/local/interworx` -->
+
+The `install.interworx.sh` script is ran in order to integrate CSF with an existing copy of [Interworx](https://interworx.com/). This file triggers when you run `install.sh`, which checks to see if your server has the file `/usr/local/interworx`.
+
+<br />
+
+### install.vesta.sh
+<!-- md:requires `/usr/local/vesta` -->
+
+The `install.vesta.sh` script is ran in order to integrate CSF with an existing copy of [VestaCP](https://vestacp.com/). This file triggers when you run `install.sh`, which checks to see if your server has the file `/usr/local/vesta`.
 
 <br />
 
@@ -292,25 +316,28 @@ Select what documentation you would like to proceed with next ...
 
 <div class="grid cards" markdown>
 
--   :material-file: &nbsp; __[Enable Web Interface](webui.md)__
+-   :aetherx-axs-gear-complex: &nbsp; __[Start System Services](../install/services.md)__
 
     ---
 
-    Enable and access the CSF web interface via your 
-    browser.
+    Starting CSF requires disabling testing mode and enabling the firewall so it
+    runs normally.  
 
-    This is an optional step and is not required in
-    order to use CSF.
+    This chapter explains how to start both CSF and LFD services and ensure they
+    launch on boot.  
 
--   :material-file: &nbsp; __[Run Diagnostic Tests](tests.md)__
+    You’ll also find troubleshooting tips for common startup errors and how to
+    fix them quickly.  
+
+-   :aetherx-axs-browser: &nbsp; __[Enable Web Interface](../install/webui.md)__
 
     ---
 
-    Select this option to see documentation on how
-    to run diagnostic tests for your install of CSF. 
-    
-    Tests will confirm whether or not CSF is running
-    properly on your server.
+    The web interface lets you manage your firewall through a browser instead
+    of a command line.  
+
+    This chapter covers installation of dependencies, enabling the interface,
+    and whitelisting your IP for security.  
 
 </div>
 

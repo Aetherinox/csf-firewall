@@ -1,8 +1,13 @@
 ---
-title: "Usage › Authentik Integration"
+title: Usage › Authentik Integration
 tags:
-  - configure
-  - tutorials
+    - usage
+    - configure
+    - integration
+    - authentik
+    - authentication
+    - 2fa
+    - passkey
 ---
 
 # Authentik Integration
@@ -10,6 +15,45 @@ tags:
 This section explains how to add Authentik as a **middleware** through [Traefik](../traefik/) so that you can secure the CSF web interface behind an authentication server.
 
 <br />
+
+---
+
+<br />
+
+## What is Authentik?
+
+[Authentik](https://goauthentik.io/) is an open-source identity provider that helps you manage authentication and access control for your applications. It acts as a centralized system for securely verifying the identity of users before they can access your services. By using Authentik, you can enforce consistent security policies across all the software you manage, rather than relying on separate logins for each service.
+
+With Authentik, you can protect your applications using traditional passwords, implement two-factor authentication (2FA), or even leverage modern passkey solutions. This includes hardware keys such as YubiKey, or software-based passkeys stored in password managers like KeePassXC or Vaultwarden.
+
+Using Authentik adds an extra layer of security and simplifies access management, ensuring that only authorized users can reach sensitive applications like the CSF web interface. It can also integrate with middleware to enforce access policies without exposing your services to the public internet.
+
+<br />
+
+---
+
+<br />
+
+## Before You Begin
+
+Currently, CSF does not have built-in functionality to detect if your system is protected by an authentication service such as [Authentik](https://goauthentik.io/) or [Authelia](https://authelia.com/).
+
+If you choose to put CSF behind Authentik, you will encounter two authentication prompts when accessing the CSF web interface:
+
+1. The Authentik sign-in screen
+2. CSF’s native login interface
+
+<br />
+
+We are working on a feature that will allow CSF to disable its built-in login system and rely entirely on a third-party authentication app. When this is implemented, you will only see a single login screen.
+
+<br />
+
+---
+
+<br />
+
+## Setup
 
 If you are adding [Authentik](https://goauthentik.io/) as middleware in the steps above; the last thing you must do is log in to your Authentik admin panel and add a new **Provider** so that we can access the CSF web interface via your domain.
 
@@ -114,7 +158,7 @@ Save, and then on the left-side menu, select **Applications** › **Outposts**:
 <br />
 
 <figure markdown="span">
-    ![Authentik › Menu › Applications › Outposts](https://github.com/user-attachments/assets/cb975af4-d167-44c5-8587-b366aa591716){ width="450" }
+    ![Authentik › Menu › Applications › Outposts](https://github.com/user-attachments/assets/cb975af4-d167-44c5-8587-b366aa591716){ width="350" }
     <figcaption>Authentik › Menu › Applications › Outposts</figcaption>
 </figure>
 
@@ -148,6 +192,26 @@ You should be able to access `csf.domain.com` and be prompted now to authenticat
 
 <br />
 
+## Authentication Types
+
+When CSF is placed behind Authentik, you will be prompted to log in through Authentik to access the CSF web interface. The method of login depends on your Authentik configuration. Common authentication types include:
+
+- [Username + password](https://docs.goauthentik.io/users-sources/user/user_basic_operations/)
+- [Username + password + secondary authentication (2FA)](https://docs.goauthentik.io/users-sources/user/user_basic_operations/)
+- [Passkey (SSO / FIDO2)](https://docs.goauthentik.io/add-secure-apps/flows-stages/stages/authenticator_webauthn/) / [Passwordless Login](https://youtube.com/watch?v=aEpT2fYGwLw)
+- [Duo Authentication](https://docs.goauthentik.io/add-secure-apps/flows-stages/stages/authenticator_duo/)
+- [Email](https://docs.goauthentik.io/add-secure-apps/flows-stages/stages/authenticator_email/)
+
+<br />
+
+This guide does not cover the full setup of Authentik, as that is outside the scope of CSF. However, there are many tutorials and video guides available online that explain the process in detail.
+
+<br />
+
+---
+
+<br />
+
 ## Next Steps <!-- omit from toc -->
 
 {==
@@ -158,16 +222,18 @@ Select what documentation you would like to proceed with next ...
 
 <div class="grid cards" markdown>
 
--   :aetherx-axd-earth-europe: &nbsp; __[Geographical Restrictions](../usage/geoip.md)__
+-   :aetherx-axd-earth-europe: &nbsp; __[Geographical IP Block Integration](../usage/geoip.md)__
 
     ---
 
-    This section provides instructions for configuring
-    geographical restrictions in CSF, allowing you to 
-    whitelist or blacklist specific regions of the 
-    world from accessing your server.  
-
-    Supports MaxMind, db-ip, ipdeny, and iptoasn.
+    Configure geographical restrictions in CSF to whitelist or blacklist specific
+    regions from accessing your server.
+    
+    This chapter covers enabling the GeoIP blocklist feature using third-party
+    services such as MaxMind (requires an API key), db-ip, ipdeny, or iptoasn.
+    
+    These services allow you to control access based on location while keeping
+    your server secure.
 
 </div>
 

@@ -87,15 +87,18 @@ If you wish to utilize option :aetherx-axd-2: and enable IPSET, please review ou
 
 <div class="grid cards" markdown>
 
--   :aetherx-axs-network-wired: &nbsp; __[Setup IPSET](../usage/ipset.md)__
+-   :aetherx-axs-network-wired: &nbsp; __[Introduction to IPSETs](../usage/ipset.md)__
 
     ---
 
-    Provides instructions on how to install, configure, and use
-    the IPSET package within your server.
+    Improve firewall efficiency in CSF by enabling IPSET integration to manage
+    large blocklists.  
 
-    Explains how to enable IPSET integration with CSF for managing 
-    larger blocklists more effeciently.
+    This chapter covers installing the IPSET package and configuring CSF to use
+    it for handling blocklists.  
+
+    Using IPSET allows CSF to group IP addresses into sets, reducing the number
+    of iptables rules and improving overall performance.
 
 </div>
 
@@ -507,16 +510,18 @@ Select what documentation you would like to proceed with next ...
 
 <div class="grid cards" markdown>
 
--   :aetherx-axs-network-wired: &nbsp; __[Geographical Blocks](../usage/geoip.md)__
+-   :aetherx-axd-earth-europe: &nbsp; __[Geographical IP Block Integration](../usage/geoip.md)__
 
     ---
 
-    This section provides instructions for configuring
-    geographical restrictions in CSF, allowing you to 
-    whitelist or blacklist specific regions of the 
-    world from accessing your server.
-
-    Supports MaxMind, db-ip, ipdeny, and iptoasn.
+    Configure geographical restrictions in CSF to whitelist or blacklist specific
+    regions from accessing your server.
+    
+    This chapter covers enabling the GeoIP blocklist feature using third-party
+    services such as MaxMind (requires an API key), db-ip, ipdeny, or iptoasn.
+    
+    These services allow you to control access based on location while keeping
+    your server secure.
 
 </div>
 

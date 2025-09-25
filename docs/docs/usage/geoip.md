@@ -1,11 +1,12 @@
 ---
-title: "Usage › Enable GeoIP Blocking"
+title: Usage › Enable GeoIP Blocking
 tags:
   - configure
   - tutorials
+  - geoip
 ---
 
-# Enable Geographical (GeoIP) Blocks
+# Geographical IP Block Integration
 
 Geographical blocks allow you to blacklist / whitelist one or more countries from accessing your services from within CSF. 
 

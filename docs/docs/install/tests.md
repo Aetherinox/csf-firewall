@@ -215,7 +215,7 @@ If you see `link currently points to /usr/sbin/iptables-nft`, you need to change
 
 <br />
 
-You can confirm your changes by running the command:
+Confirm your changes by running the command:
 
 ```shell
 iptables -V
@@ -271,13 +271,13 @@ Select what documentation you would like to proceed with next ...
 
 <div class="grid cards" markdown>
 
--   :material-file: &nbsp; __[Install (Generic)](./install.md#generic)__
+-   :aetherx-axs-box-isometric: &nbsp; __[Install (Generic)](./install.md#install-generic)__
 
     ---
 
     Choose this step if you wish to install CSF using the generic installer. This is good for users who are installing CSF on a bare metal machine with no existing control panels such as cPanel, DirectAdmin, etc.
 
--   :material-file: &nbsp; __[Install (cPanel)](./install.md#cpanel-and-whm)__
+-   :aetherx-axb-cpanel: &nbsp; __[Install (cPanel)](./install.md#install-cpanel-and-whm)__
 
     ---
 

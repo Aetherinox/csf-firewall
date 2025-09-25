@@ -1,14 +1,34 @@
 ---
 title: "Usage › Traefik Integration"
 tags:
-  - configure
-  - tutorials
+    - usage
+    - configure
+    - integration
+    - traefik
 ---
 
 
 # Traefik Integration
 
-This section of the guide explains how to set up CSF along with Traefik reverse proxy integration.
+This section of the guide covers setting up CSF with Traefik as a reverse proxy. It explains your options for using a public domain or a private unofficial pseudo-domain such as `.local`/`.lan` which is accessible only to you. We’ll also provide resources for generating and managing your own SSL certificates.
+
+<br />
+
+---
+
+<br />
+
+## What is Traefik?
+
+Traefik is a modern reverse proxy and load balancer that makes it easier to manage how traffic flows to your applications and services. Instead of exposing each service directly to the internet, Traefik acts as a gateway, routing requests securely and efficiently to the correct destination. This setup is especially useful for servers running multiple web-based tools or dashboards, since Traefik helps organize and protect all of them under one entry point.
+
+One of the biggest advantages of Traefik is its support for middleware. Middleware are modular features you can “attach” to your routes. For example, you can use IP whitelisting middleware to ensure only trusted addresses can access your CSF web interface. You could also add geo-blocking rules to limit access based on country, or integrate with external identity providers like [Authentik](../install/authentik.md) to require secure authentication before anyone can reach your [firewall web interface / dashboard](../install/webui.md).
+
+With Traefik handling these protections, you don’t need to open sensitive ports directly to the outside world. Instead, Traefik listens on your chosen ports (like 80 or 443) and enforces the security rules you define before traffic ever reaches your applications. This layered approach not only reduces your attack surface, but also gives you fine-grained control over who can connect, from where, and under what conditions.
+
+<br />
+
+---
 
 <br />
 
@@ -67,9 +87,10 @@ Once you get your domain purchased, you'll need to set up the domain name to poi
 
 Generating an SSL certificate for a purchased domain is extremely simple, and you have a few options:
 
-1. You can create a [Cloudflare](https://cloudflare.com) account, link your domain with Cloudflare, and get a free SSL certificate
-2. Your domain name may include a free 1-year SSL certificate
-3. When you set up your domain to run with Traefik, there are settings which allow you to have Traefik automatically generate an SSL certificate free of charge.
+1. Create a [Cloudflare](https://cloudflare.com) account, link your domain with Cloudflare, and get a free SSL certificate
+2. Your purchased domain name may include a free 1-year SSL certificate (check with your domain registrar).
+3. When you set up your domain to run with Traefik, there are settings which allow you to have Traefik automatically generate an SSL certificate free of charge through [Let's Encrypt](https://doc.traefik.io/traefik/reference/install-configuration/tls/certificate-resolvers/acme/).
+4. Generate a free SSL certificate using [certbot](https://certbot.eff.org/instructions)
 
 <br />
 <br />
@@ -643,28 +664,27 @@ Select what documentation you would like to proceed with next ...
 
     ---
 
-    Enhance the security of CSF by placing it 
-    behind the Authentik identity provider using a 
-    Forward Proxy. This ensures that all 
-    traffic to the CSF web interface passes through 
-    Authentik, giving you centralized control over 
-    authentication and access management.  
+    Enhance the security of CSF by placing it behind the **Authentik** identity 
+    provider using a forward proxy. 
+    
+    This ensures that all traffic to the CSF web interface passes through Authentik, 
+    giving you centralized control over authentication and access.
+    
+    With this setup, CSF is protected by modern authentication methods such as
+    passwords, two-factor authentication (2FA), or passkeys.
 
-    With this configuration, CSF is protected by 
-    modern authentication methods such as passwords, 
-    two-factor authentication (2FA), or passkeys. 
-
--   :aetherx-axd-earth-europe: &nbsp; __[Geographical Restrictions](../usage/geoip.md)__
+-   :aetherx-axd-earth-europe: &nbsp; __[Geographical IP Block Integration](../usage/geoip.md)__
 
     ---
 
-    Configure geographical restrictions within CSF,
-    allowing you to whitelist or blacklist specific
-    regions of the  world from accessing your server.  
-
-    Includes numerous free services such as MaxMind's
-    GeoIP Lite databases (requires API key), db-ip, 
-    ipdeny, and iptoasn.
+    Configure geographical restrictions in CSF to whitelist or blacklist specific
+    regions from accessing your server.
+    
+    This chapter covers enabling the GeoIP blocklist feature using third-party
+    services such as MaxMind (requires an API key), db-ip, ipdeny, or iptoasn.
+    
+    These services allow you to control access based on location while keeping
+    your server secure.
 
 </div>
 

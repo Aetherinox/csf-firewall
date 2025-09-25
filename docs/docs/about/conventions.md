@@ -188,7 +188,7 @@ The badges in this section are for general use.
 
 === "Description"
 
-    Denotes a feature available within the app.
+    Denotes a feature's source file location. This explains what file the feature or setting can be found in.
 
     `Examples`
 

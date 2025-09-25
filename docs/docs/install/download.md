@@ -3,6 +3,7 @@ title: "Install › Download CSF"
 tags:
   - install
   - setup
+  - download
 ---
 
 # Download CSF <!-- omit from toc -->
@@ -191,6 +192,12 @@ At this point, we have CSF downloaded to your system and ready to install. Howev
 
 <br />
 
+---
+
+<br />
+
+## Next Steps <!-- omit from toc -->
+
 {==
 
 Select what documentation you would like to proceed with next ...
@@ -199,7 +206,7 @@ Select what documentation you would like to proceed with next ...
 
 <div class="grid cards" markdown>
 
--   :material-file: &nbsp; __[Run Diagnostic Tests](tests.md)__
+-   :aetherx-axs-stethoscope: &nbsp; __[Run Diagnostic Tests](tests.md)__
 
     ---
 

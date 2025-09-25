@@ -249,24 +249,31 @@ Select what documentation you would like to proceed with next ...
 
 <div class="grid cards" markdown>
 
--   :aetherx-axs-network-wired: &nbsp; __[IPSETs](../usage/ipset.md)__
+-   :aetherx-axs-network-wired: &nbsp; __[Introduction to IPSETs](../usage/ipset.md)__
 
     ---
 
-    Explains the purpose of using IPSETs with CSF to 
-    manage large IP lists, significantly improving 
-    performance and efficiency when handling 
-    thousands of addresses.
+    Improve firewall efficiency in CSF by enabling IPSET integration to manage
+    large blocklists.  
 
--   :aetherx-axs-ban: &nbsp; __[Blocklists](../usage/blocklists.md)__
+    This chapter covers installing the IPSET package and configuring CSF to use
+    it for handling blocklists.  
+
+    Using IPSET allows CSF to group IP addresses into sets, reducing the number
+    of iptables rules and improving overall performance.
+
+-   :aetherx-axs-ban: &nbsp; __[Setting Up Blocklists](../usage/blocklists.md)__
 
     ---
 
-    Third-party blocklists help you automatically
-    block known malicious IP addresses, keeping 
-    your server safe from bad actors. This 
-    chapter explains how to configure and use 
-    these lists within CSF.
+    Blocklists in CSF allow you to automatically block connections from known
+    malicious IP addresses, helping to protect your server from abusive traffic.  
+
+    This chapter explains how to configure and use blocklists, including CSF’s
+    official blocklist and third-party sources.  
+
+    You’ll also learn how to enable blocklists with or without IPSET, ensuring
+    they work efficiently no matter the size of the list.
 
 </div>
 

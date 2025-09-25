@@ -198,13 +198,18 @@ For instructions on using official CSF blocklists or custom external blocklists 
 
 <div class="grid cards" markdown>
 
--   :aetherx-axd-ban: &nbsp; __[Section: Enabling and Using Blocklists](../usage/blocklists.md)__
+-   :aetherx-axs-ban: &nbsp; __[Setting Up Blocklists](../usage/blocklists.md)__
 
     ---
 
-    Blocklists allow you to automatically block connections from known malicious IP addresses or networks. They protect your server from brute-force attempts, spam, scanning, and other suspicious activity without needing to manage each IP manually.
+    Blocklists in CSF allow you to automatically block connections from known
+    malicious IP addresses, helping to protect your server from abusive traffic.  
 
-    You can use the official CSF-maintained blocklists or choose from trusted third-party vendors, both of which are regularly updated with the latest threat data.
+    This chapter explains how to configure and use blocklists, including CSF’s
+    official blocklist and third-party sources.  
+
+    You’ll also learn how to enable blocklists with or without IPSET, ensuring
+    they work efficiently no matter the size of the list.
 
 </div>
 
@@ -764,26 +769,31 @@ Select what documentation you would like to proceed with next ...
 
 <div class="grid cards" markdown>
 
--   :aetherx-axs-ban: &nbsp; __[Blocklists](../usage/blocklists.md)__
+-   :aetherx-axs-ban: &nbsp; __[Setting Up Blocklists](../usage/blocklists.md)__
 
     ---
 
-    Third-party blocklists help you automatically
-    block known malicious IP addresses, keeping Geographical
-    your server safe from bad actors. This 
-    chapter explains how to configure and use 
-    these lists within CSF.
+    Blocklists in CSF allow you to automatically block connections from known
+    malicious IP addresses, helping to protect your server from abusive traffic.  
 
--   :aetherx-axs-network-wired: &nbsp; __[Geographical Blocks](../usage/geoip.md)__
+    This chapter explains how to configure and use blocklists, including CSF’s
+    official blocklist and third-party sources.  
+
+    You’ll also learn how to enable blocklists with or without IPSET, ensuring
+    they work efficiently no matter the size of the list.
+
+-   :aetherx-axd-earth-europe: &nbsp; __[Geographical IP Block Integration](../usage/geoip.md)__
 
     ---
 
-    This section provides instructions for configuring
-    geographical restrictions in CSF, allowing you to 
-    whitelist or blacklist specific regions of the 
-    world from accessing your server.
-
-    Supports MaxMind, db-ip, ipdeny, and iptoasn.
+    Configure geographical restrictions in CSF to whitelist or blacklist specific
+    regions from accessing your server.
+    
+    This chapter covers enabling the GeoIP blocklist feature using third-party
+    services such as MaxMind (requires an API key), db-ip, ipdeny, or iptoasn.
+    
+    These services allow you to control access based on location while keeping
+    your server secure.
 
 </div>
 

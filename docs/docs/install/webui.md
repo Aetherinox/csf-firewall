@@ -23,13 +23,42 @@ This section covers the initial setup of the CSF web interface with only the ess
 
 ### Step 1: Install Perl Modules
 
-To get the CSF web interface functioning on your server, you must first ensure that you have a few perl modules installed. If you followed our [dependencies](./dependencies.md) guide, you should already have these [dependencies](./dependencies.md) satisfied. If you have not yet installed them, run one of the following commands in your server's terminal:
+CSF's web interface requires several Perl modules. If you followed our [dependencies](./dependencies.md) guide, these modules may already be installed. If not, run one of the commands below on your server.
+
+<br />
+
+#### Installation Options
+
+You only need to **choose one** of the methods below. We provide multiple options for your convenience:
+
+- :aetherx-axb-debian: **Debian/Ubuntu** › using `apt-get`
+- :aetherx-axb-redhat: **CentOS/RHEL** › using `yum` or `dnf`
+- :aetherx-axs-onion: **Perl CPAN** › using the stock `cpan` client
+- :aetherx-axs-onion: **Perl CPANM** › using `cpanm` (recommended for faster, non-interactive installs)
+
+<br />
+
+#### Dependency Levels
+
+Each installation method below provides two options:
+
+<!-- md:option Full Dependencies -->
+: Installs **all modules** required to run every aspect of CSF.
+
+<!-- md:option Minimum Dependencies -->
+: Installs only the **core modules** needed for the web interface to function.
+
+<br />
 
 === ":aetherx-axb-debian: Debian/Ubuntu (apt-get)"
 
     ```bash
-    apt-get update
-    apt-get install -y perl \
+    # #
+    #   Full Dependencies
+    # #
+
+    sudo apt-get update && sudo apt-get install -y \
+      perl \
       libio-socket-ssl-perl \
       libwww-perl \
       libjson-perl \
@@ -45,40 +74,143 @@ To get the CSF web interface functioning on your server, you must first ensure t
       dnsutils \
       unzip \
       wget
+
+    # #
+    #   Minimum Dependencies
+    # #
+
+    sudo apt-get update && sudo apt-get install -y \
+      libio-socket-ssl-perl \
+      libcrypt-ssleay-perl \
+      libnet-libidn-perl \
+      libio-socket-inet6-perl \
+      libsocket6-perl
     ```
 
 === ":aetherx-axb-redhat: CentOS/RHEL (yum/dnf)"
 
     ```bash
-    yum install -y perl \
-      perl-libwww-perl \
+    # #
+    #   Full Dependencies
+    # #
+
+    sudo yum install -y \
+      perl \
       perl-IO-Socket-SSL.noarch \
-      perl-JSON \
       perl-Net-SSLeay \
       perl-Net-LibIDN \
+      perl-IO-Socket-Inet6 \
+      perl-Socket6 \
+      perl-libwww-perl \
+      perl-JSON \
       perl-Crypt-SSLeay \
       perl-LWP-Protocol-https.noarch \
       perl-GDGraph \
       perl-Math-BigInt \
       perl-Time-HiRes \
       perl-Socket \
-      perl-Socket6 \
-      perl-IO-Socket-Inet6 \
-      wget \
-      unzip \
       net-tools \
       ipset \
-      bind-utils
+      bind-utils \
+      wget \
+      unzip
+
+    # #
+    #   Minimum Dependencies
+    # #
+
+    sudo yum makecache && sudo yum install -y \
+      perl-IO-Socket-SSL.noarch \
+      perl-Net-SSLeay \
+      perl-Net-LibIDN \
+      perl-IO-Socket-INET6 \
+      perl-Socket6
     ```
 
 === ":aetherx-axs-onion: Perl (CPAN)"
 
     ```bash
-    perl -MCPAN -eshell
-    cpan> install IO::Socket::SSL IO::Socket::INET6 Socket6 Net::LibIDN \
-    LWP LWP::Protocol::https LWP::UserAgent JSON Net::SSLeay \
-    Crypt::SSLeay Digest::MD5 Digest::SHA Email::Valid \
-    GD::Graph Time::HiRes Socket
+    # #
+    #   Full Dependencies
+    # #
+
+    sudo cpan -i \
+      IO::Socket::SSL \
+      IO::Socket::INET6 \
+      Socket6 \
+      Net::LibIDN \
+      LWP \
+      LWP::Protocol::https \
+      LWP::UserAgent \
+      JSON \
+      Net::SSLeay \
+      Crypt::SSLeay \
+      Digest::MD5 \
+      Digest::SHA \
+      Email::Valid \
+      GD::Graph \
+      Time::HiRes \
+      Socket
+
+    # #
+    #   Minimum Dependencies
+    # #
+
+    sudo cpan -i \
+      IO::Socket::SSL \
+      Net::SSLeay \
+      Net::LibIDN \
+      IO::Socket::INET6 \
+      Socket6
+    ```
+
+=== ":aetherx-axs-onion: Perl (CPANMINUS)"
+
+    ```bash
+    # #
+    #   Debian/Ubuntu
+    # #
+
+    sudo apt-get update && sudo apt-get install -y cpanminus
+
+    # #
+    #   CentOS/RHEL
+    # #
+
+    sudo yum makecache && sudo yum install -y perl-App-cpanminus
+
+    # #
+    #   Full Dependencies
+    # #
+
+    sudo cpanm \
+      IO::Socket::SSL \
+      IO::Socket::INET6 \
+      Socket6 \
+      Net::LibIDN \
+      LWP \
+      LWP::Protocol::https \
+      LWP::UserAgent \
+      JSON \
+      Net::SSLeay \
+      Crypt::SSLeay \
+      Digest::MD5 \
+      Digest::SHA \
+      Email::Valid \
+      GD::Graph \
+      Time::HiRes \
+      Socket
+
+    # #
+    #   Minimum Dependencies
+    # #
+
+    sudo cpanm \
+      IO::Socket::SSL \
+      Net::SSLeay \
+      Net::LibIDN \
+      IO::Socket::INET6 \
+      Socket6
     ```
 
 <br />
@@ -86,7 +218,7 @@ To get the CSF web interface functioning on your server, you must first ensure t
 
 ### Step 2: Enable Web UI
 
-To enable CSF web interface, edit the file `/etc/csf/csf.conf` in your favorite text editor:
+To enable CSF web interface, edit the file `/etc/csf/csf.conf` in a text editor:
 
 ```shell
 sudo nano /etc/csf/csf.conf
@@ -118,13 +250,13 @@ UI_PORT = "1025" # (2)!
 UI_IP = "" # (3)!
 
 # #
-#   Set username for authetnication 
+#   Set username for authentication 
 # #
 
 UI_USER = "admin" # (4)!
 
 # #
-#   Set a strong password for authetnication 
+#   Set a strong password for authentication 
 # #
 
 UI_PASS = "admin" # (5)!
@@ -150,13 +282,15 @@ UI_PASS = "admin" # (5)!
 5.  :aetherx-axdr-lightbulb:{ .pulsate .icon-clr-yellow } Defines the password that will be required in order to
     sign into the CSF web interface. This should alphabetic, numerical, or special characters.
     <div class='red right'><small>Required</small></div>
-    <div class='yellow right'><small'>Values: `A-Z,a-z,0-9`</small></div>
+    <div class='yellow right'><small'>Values: `A-Z,a-z,0-9,!@#$%^&*()-_=+`</small></div>
 
 <br />
 
-Once you have edited the file, save and exit. Next, open the file `/etc/csf/ui/ui.allow` and add your public IP to allow access to the CSF web interface. Ensure you only add one IP address per line:
+Save and exit. Then open the file `/etc/csf/ui/ui.allow` and add your client IP to allow access to the CSF web interface. Ensure you only add one IP address per line:
 
 === ":material-file: /etc/csf/ui/ui.allow"
+
+    This is an example of how your `ui.allow` file should look.
 
     ```shell
     10.10.0.6           # example LAN ip
@@ -165,14 +299,15 @@ Once you have edited the file, save and exit. Next, open the file `/etc/csf/ui/u
 
 === ":aetherx-axs-square-terminal: Command"
 
-    ```shell
-    sudo echo "YOUR_PUBLIC_IP_ADDRESS" >>  /etc/csf/ui/ui.allow
-    ```
+    If you want to add a new IP without having to open `ui.allow`, run the following:
 
+    ```shell
+    echo "YOUR_PUBLIC_IP_ADDRESS" | sudo tee -a /etc/csf/ui/ui.allow
+    ```
 
 <br />
 
-The CSF web interface works under the `lfd daemon _LFD_`. We need to restart the LFD on your system using the following command:
+The CSF web interface works under the `lfd daemon` _LFD_. We need to restart the LFD on your system using the command:
 
 ```shell
 sudo service lfd restart
@@ -217,7 +352,7 @@ Check the output for any errors; which there should be none.
 ```console
 ● csf.service - ConfigServer Firewall & Security - csf
      Loaded: loaded (/lib/systemd/system/csf.service; enabled; preset: enabled)
-     Active: active (exited) since Mon 2024-08-05 12:04:09 MST; 1s ago
+     Active: active (exited) since Mon 2024-08-05 12:04:09 UTC; 1s ago
     Process: 46916 ExecStart=/usr/sbin/csf --initup (code=exited, status=0/SUCCESS)
    Main PID: 46916 (code=exited, status=0/SUCCESS)
         CPU: 12.692s
@@ -260,7 +395,7 @@ sudo csf -ra
 
 ### Step 3: Access Web UI
 
-Now, access the CSF interface in your browser with the specified port. For this tutorial; we used 1025 port and accessed the CSF admin panel by opening our browser and going to:
+Access the CSF interface in your browser with the specified IP and port. For these docs; we used port `1025`. 
 
 ```shell
 http://127.0.0.1:1025
@@ -268,24 +403,25 @@ http://127.0.0.1:1025
 
 <br />
 
-??? danger "Default Username & Password"
+??? danger "Default Web Interface Username & Password"
 
-    If you did not change the default username and password in `/etc/csf/csf.conf`, you will get an error about the default credentials not being changed. You need to go back to the `/etc/csf/csf.conf` 
-    set `UI_USER` and `UI_PASS`
+    You cannot keep the web interface username and password defaulted to `admin`; you will get an error that the credentials must be changed within `/etc/csf/csf.conf`.
+
+    Ggo back to the `/etc/csf/csf.conf` set `UI_USER` and `UI_PASS` to something else.
 
 <br />
 
 <figure markdown="span">
-    ![Image title](../assets/images/install/webui/1.png){ width="700" }
+    ![CSF Login Interface](../assets/images/install/webui/1.png){ width="700" }
     <figcaption>CSF Login Interface</figcaption>
 </figure>
 
 <br />
 
-After successful login, you will find the screen like below.
+After successful login, you should see the following:
 
 <figure markdown="span">
-    ![Image title](../assets/images/install/webui/2.png){ width="700" }
+    ![CSF Main Dashboard](../assets/images/install/webui/2.png){ width="700" }
     <figcaption>CSF Main Dashboard</figcaption>
 </figure>
 
@@ -299,13 +435,18 @@ We will cover how to actually use the CSF web interface in another section. As o
 
 <br />
 
-## Restart Traefik
+## Conclusion
 
-Once you configure these changes in Traefik, you can restart your Traefik docker container. The command for that depends on how you set up the container. If you used docker-compose.yml, you can cd into the folder with the `docker-compose.yml` file and then execute:
+By this point in the guide, you should have:
 
-```shell
-docker compose down && docker compose up -d
-```
+- CSF installed and functioning
+- Access to the CSF web interface via an IP and port
+
+---
+
+The next section will show you how to put the CSF web interface behind third-party apps such as [Traefik Reverse Proxy](../install/traefik.md) and secure it with [Authentik](../install/authentik.md).  
+
+These steps are **optional**. They enhance the security of your web interface and help prevent unauthorized access, but you do not need to perform them to continue using CSF.
 
 <br />
 
@@ -323,51 +464,45 @@ Select what documentation you would like to proceed with next ...
 
 <div class="grid cards" markdown>
 
--   :material-file: &nbsp; __[Usage › Getting Started](../usage/getting-started.md)__
-
-    ---
-
-    If you don’t plan to set up Traefik or Authentik 
-    integration with the CSF web interface, you can skip 
-    ahead to the [Usage](../usage/getting-started.md) section. 
-    
-    The next chapter covers the core features of CSF along
-    with instructions for basic configuration, list of the 
-    available commands, application folder structure, and 
-    many other aspects of starting to use CSF.
-
-
-
 -   :aetherx-axb-traefikproxy: &nbsp; __[Traefik Integration](../install/traefik.md)__
 
     ---
 
-    Protect your CSF installation by placing it behind a 
-    Traefik reverse proxy. This configuration allows you
-    to filter and control the traffic reaching the CSF
-    web interface while taking advantage of Traefik’s
-    middleware features. 
+    Protect your CSF installation by placing it behind a **Traefik Reverse Proxy**.
     
-    With middleware, you can whitelist your own IP 
-    address for secure access and enforce geographic 
-    restrictions to block or allow traffic from 
-    specific countries. 
+    This setup lets you filter and control traffic to the CSF web interface using
+    Traefik’s middleware, all with the added bonus that you do not need to expose
+    or open the ports to your server.
+    
+    With middleware, you can whitelist your own IP for secure access and enforce
+    geographic restrictions to allow or block traffic from specific countries.
 
 -   :aetherx-axb-authentik: &nbsp; __[Authentik Integration](../install/authentik.md)__
 
     ---
 
-    Enhance the security of CSF by placing it 
-    behind the Authentik identity provider using a 
-    Forward Proxy. This ensures that all 
-    traffic to the CSF web interface passes through 
-    Authentik, giving you centralized control over 
-    authentication and access management.  
-
-    With this configuration, CSF is protected by 
-    modern authentication methods such as passwords, 
-    two-factor authentication (2FA), or passkeys. 
+    Enhance the security of CSF by placing it behind the **Authentik** identity 
+    provider using a forward proxy. 
     
+    This ensures that all traffic to the CSF web interface passes through Authentik, 
+    giving you centralized control over authentication and access.
+    
+    With this setup, CSF is protected by modern authentication methods such as
+    passwords, two-factor authentication (2FA), or passkeys.
+
+-   :material-file: &nbsp; __[Usage Introduction](../usage/getting-started.md)__
+
+    ---
+
+    If you don’t plan to set up Traefik or Authentik with the CSF web interface, 
+    you can skip ahead to the [Usage](../usage/getting-started.md) section. 
+    
+    The next chapter covers CSF’s core features, basic configuration, available
+    commands, folder structure, and everything you need to get started.
+
+    You will be taken on a more detailed dive of how CSF can benefit you and
+    what options you have for securing your server.
+
 </div>
 
 
