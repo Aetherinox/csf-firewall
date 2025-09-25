@@ -16,7 +16,7 @@ This section of the guide explains how to uninstall ConfigServer Firewall and th
 
 ## Uninstall
 
-If you have decided that you'd like to part ways with CSF, uninstalling the application is extremely easy as it only requires you to run the uninstall. Pick **one** of the two options listed below to run the uninstall script.
+If you have decided that you'd like to part ways with CSF, uninstalling the application is extremely easy as it only requires you to run the uninstall script. Pick **one** of the two options listed below:
 
 :   :aetherx-axd-circle-1: Runs `uninstall.sh` :aetherx-axd-dot: uses shebang interpreter :aetherx-axd-dot: requires executable `+x` permission
 :   :aetherx-axd-circle-2: Runs `uninstall.sh` :aetherx-axd-dot: uses `sh` shell :aetherx-axd-dot: executable permission not required
@@ -54,7 +54,7 @@ This will perform a series of actions including:
 - :aetherx-axd-trash:{ .icon-clr-red } Delete the service files within `/usr/lib/systemd/system/`
 - :aetherx-axd-arrows-rotate:{ .icon-clr-green } Reload the systemctl daemon
 - :aetherx-axd-trash:{ .icon-clr-red } Delete binaries stored in `/usr/sbin/`
-- :aetherx-axd-trash:{ .icon-clr-red } Delete delete main folder `/etc/csf`
+- :aetherx-axd-trash:{ .icon-clr-red } Delete main folder `/etc/csf`
 - :aetherx-axd-trash:{ .icon-clr-red } Delete pre and post scripts from `/usr/local/csf` and `/usr/local/include/csf`
 - :aetherx-axd-trash:{ .icon-clr-red } Delete temp allow/ban lists from `/var/lib/csf`
 - :aetherx-axd-trash:{ .icon-clr-red } Delete man pages from `/usr/local/man/`
@@ -101,8 +101,7 @@ An optional step is to verify that your iptables chains are not restricting inco
 
 ??? danger "Danger! This will leave your server exposed"
 
-    Setting all three primary iptable chains to `ACCEPT` will **remove all firewall protection from your server**.  
-    Only do this if you fully understand the risks and truly intend to leave your server unprotected.
+    Setting all three primary iptable chains to `ACCEPT` will **remove all firewall protection from your server**. Only do this if you fully understand the risks and truly intend to leave your server unprotected.
 
     Even if you’ve removed CSF from your system, you still have the option of using iptables as a standalone firewall.  
 
@@ -115,7 +114,7 @@ sudo iptables -P OUTPUT ACCEPT
 
 <br />
 
-You can now confirm if your iptables are empty and your chains have the default policy:
+You can now confirm if your iptables are empty and your chains have the default policy `ACCEPT`:
 
 ```shell
 sudo iptables -L -n -v
@@ -138,7 +137,7 @@ Chain OUTPUT (policy ACCEPT 0 packets, 0 bytes)
 
 <br />
 
-No IP addresses should be listed under each chain, and you should see `policy ACCEPT` to the right of each chain name.
+No IP addresses should be listed under each chain, and you should see `policy: ACCEPT` to the right of each chain name.
 
 <br />
 
