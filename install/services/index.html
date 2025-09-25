@@ -1890,7 +1890,25 @@
         
       
       
+        <a href="../../about/tags/#tag:service" class="md-tag md-tag-icon">service</a>
+      
+    
+      
+      
+        
+        
+      
+      
         <a href="../../about/tags/#tag:setup" class="md-tag md-tag-icon">setup</a>
+      
+    
+      
+      
+        
+        
+      
+      
+        <a href="../../about/tags/#tag:systemctl" class="md-tag md-tag-icon">systemctl</a>
       
     
   </nav>
@@ -2333,20 +2351,24 @@ Disable <abbr title="ConfigServer Security &amp; Firewall">csf</abbr> and <abbr 
 <div class="grid cards">
 <ul>
 <li>
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 9V3.5L18.5 9M6 2c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6Z"></path></svg></span> &nbsp; <strong><a href="../webui/">Enable Web Interface</a></strong></p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 128C0 92.7 28.7 64 64 64l384 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64L64 448c-35.3 0-64-28.7-64-64L0 128zm128 32a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zm56-24c-13.3 0-24 10.7-24 24s10.7 24 24 24l240 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-240 0z"></path></svg></span> &nbsp; <strong><a href="../webui/">Enable Web Interface</a></strong></p>
 <hr>
-<p>Enable and access the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface via your 
-browser.</p>
-<p>This is an optional step and is not required in
-order to use <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>.</p>
+<p>The web interface lets you manage your firewall through a browser instead
+of a command line.  </p>
+<p>This chapter covers installation of <abbr title="A list of packages required for CSF to function properly">dependencies</abbr>, enabling the interface,
+and whitelisting your IP for security.  </p>
+<p>You’ll also learn how to access the interface safely and protect it from
+unauthorized users.  </p>
 </li>
 <li>
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 9V3.5L18.5 9M6 2c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6Z"></path></svg></span> &nbsp; <strong><a href="../../usage/getting-started/">Usage Getting Started</a></strong></p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 9V3.5L18.5 9M6 2c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6Z"></path></svg></span> &nbsp; <strong><a href="../../usage/getting-started/">Usage Introduction</a></strong></p>
 <hr>
-<p>Select this option if you would like to start 
-using <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> to manage your server. This section
-will introduce you to the basic features and
-how you can configure the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> and <abbr title="Login Failure Daemon">LFD</abbr> <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr>.</p>
+<p>If you don’t plan to set up <abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr> or <abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> with the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface, 
+you can skip ahead to the <a href="../../usage/getting-started/">Usage</a> section. </p>
+<p>The next chapter covers <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>’s core features, basic configuration, available
+commands, folder structure, and everything you need to get started.</p>
+<p>You will be taken on a more detailed dive of how <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> can benefit you and
+what options you have for securing your server.</p>
 </li>
 </ul>
 </div>
@@ -2372,7 +2394,7 @@ how you can configure the <abbr title="ConfigServer Security &amp; Firewall">CSF
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 25, 2025 00:16:48 UTC"><span class="timeago" datetime="2025-09-25T00:16:48+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 25, 2025 00:16:48 UTC">2025-09-25</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 25, 2025 12:50:03 UTC"><span class="timeago" datetime="2025-09-25T12:50:03+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 25, 2025 12:50:03 UTC">2025-09-25</span>
   </span>
 
     
