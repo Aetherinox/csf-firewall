@@ -37,6 +37,8 @@ The following are a list of the minimal dependencies required for CSF to functio
     # #
 
     sudo apt-get update && sudo apt-get install -y \
+      perl \
+      libwww-perl \
       libio-socket-ssl-perl \
       libcrypt-ssleay-perl \
       libnet-libidn-perl \
@@ -52,7 +54,9 @@ The following are a list of the minimal dependencies required for CSF to functio
     # #
 
     sudo yum makecache && sudo yum install -y \
-      perl-IO-Socket-SSL.noarch \
+      perl \
+      perl-libwww-perl \
+      perl-IO-Socket-SSL \
       perl-Net-SSLeay \
       perl-Net-LibIDN \
       perl-IO-Socket-INET6 \
@@ -63,10 +67,23 @@ The following are a list of the minimal dependencies required for CSF to functio
 
     ```bash
     # #
+    #   Debian/Ubuntu
+    # #
+
+    sudo apt-get update && sudo apt-get install -y perl
+
+    # #
+    #   CentOS/RHEL
+    # #
+
+    sudo yum makecache && sudo yum install -y perl
+
+    # #
     #   Minimum Dependencies
     # #
 
     sudo cpan -i \
+      LWP \
       IO::Socket::SSL \
       Net::SSLeay \
       Net::LibIDN \
@@ -81,26 +98,26 @@ The following are a list of the minimal dependencies required for CSF to functio
     #   Debian/Ubuntu
     # #
 
-    sudo apt-get update && sudo apt-get install -y cpanminus
+    sudo apt-get update && sudo apt-get install -y perl cpanminus
 
     # #
     #   CentOS/RHEL
     # #
 
-    sudo yum makecache && sudo yum install -y perl-App-cpanminus
+    sudo yum makecache && sudo yum install -y perl perl-App-cpanminus
 
     # #
     #   Minimum Dependencies
     # #
 
     sudo cpanm \
+      LWP \
       IO::Socket::SSL \
       Net::SSLeay \
       Net::LibIDN \
       IO::Socket::INET6 \
       Socket6
     ```
-
 
 <br />
 
@@ -132,7 +149,7 @@ This set of dependencies also includes `sendmail` to make use of CSF's mailing f
       libsocket6-perl \
       libnet-libidn-perl \
       libtime-hires-perl \
-      sendmail-bin \
+      sendmail \
       dnsutils \
       unzip \
       wget
@@ -154,13 +171,13 @@ This set of dependencies also includes `sendmail` to make use of CSF's mailing f
       perl-Socket6 \
       perl-libwww-perl \
       perl-JSON \
-      perl-Crypt-SSLeay \
       perl-LWP-Protocol-https.noarch \
       perl-GDGraph \
       perl-Math-BigInt \
       perl-Time-HiRes \
       perl-Socket \
       net-tools \
+      sendmail \
       ipset \
       bind-utils \
       wget \
@@ -175,20 +192,33 @@ This set of dependencies also includes `sendmail` to make use of CSF's mailing f
     * RHEL/CentOS: `sudo yum install -y gd-devel`
 
     ```bash
+
+    # #
+    #   Debian/Ubuntu
+    # #
+
+    sudo apt-get update && sudo apt-get install -y perl libgd-dev
+
+    # #
+    #   CentOS/RHEL
+    # #
+
+    sudo yum makecache && sudo yum install -y epel-release perl gd-devel
+
     # #
     #   Full Dependencies
     # #
 
     sudo cpan -i \
+      LWP \
       IO::Socket::SSL \
+      Net::SSLeay \
+      Net::LibIDN \
       IO::Socket::INET6 \
       Socket6 \
-      Net::LibIDN \
-      LWP \
       LWP::Protocol::https \
       LWP::UserAgent \
       JSON \
-      Net::SSLeay \
       Crypt::SSLeay \
       Digest::MD5 \
       Digest::SHA \
@@ -210,28 +240,28 @@ This set of dependencies also includes `sendmail` to make use of CSF's mailing f
     #   Debian/Ubuntu
     # #
 
-    sudo apt-get update && sudo apt-get install -y cpanminus
+    sudo apt-get update && sudo apt-get install -y perl libgd-dev cpanminus
 
     # #
     #   CentOS/RHEL
     # #
 
-    sudo yum makecache && sudo yum install -y perl-App-cpanminus
+    sudo yum makecache && sudo yum install -y perl gd-devel perl-App-cpanminus
 
     # #
     #   Full Dependencies
     # #
 
     sudo cpanm \
+      LWP \
       IO::Socket::SSL \
+      Net::SSLeay \
+      Net::LibIDN \
       IO::Socket::INET6 \
       Socket6 \
-      Net::LibIDN \
-      LWP \
       LWP::Protocol::https \
       LWP::UserAgent \
       JSON \
-      Net::SSLeay \
       Crypt::SSLeay \
       Digest::MD5 \
       Digest::SHA \
@@ -240,7 +270,6 @@ This set of dependencies also includes `sendmail` to make use of CSF's mailing f
       Time::HiRes \
       Socket
     ```
-
 
 <br />
 
@@ -271,7 +300,7 @@ CSF can send email alerts for blocked IPs, login failures, or other events. To e
 === ":aetherx-axb-debian: Debian/Ubuntu (apt-get)"
 
     ```bash
-    sudo apt-get update && sudo apt-get install -y sendmail-bin
+    sudo apt-get update && sudo apt-get install -y sendmail
     ```
 
 === ":aetherx-axb-redhat: CentOS/RHEL (yum/dnf)"
