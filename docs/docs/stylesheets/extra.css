@@ -1649,32 +1649,9 @@
     }
 }
 
-/*
-    Badges in H4 will be right-aligned
-*/
-
-h4:has(.mdx-badge:nth-child(1)) > .mdx-badge
-{
-
-}
-
 & .md-typeset h4 .mdx-badge__icon
 {
-    background-color: transparent !important;
-}
-
-h4:has(.twemoji) .twemoji
-{
-    font-size: 1.9em;
-    padding-top: 10px;
-    margin-block-start: -7px;
-    margin-left: -7px;
-
-    /*
-        Bigger icon for h4
-        font-size: 2.1em;
-        width: 25px !important;
-    */
+    /* background-color: transparent !important; */
 }
 
 /* Apply styles only inside badges */
@@ -1780,6 +1757,16 @@ h4:has(.twemoji) .twemoji
 .icon-clr-redhat
 {
     color: #e71348;
+}
+
+.icon-clr-raspberry 
+{
+    color: #f50c66;
+}
+
+.icon-clr-purple
+{
+    color: #9242c0;
 }
 
 /*

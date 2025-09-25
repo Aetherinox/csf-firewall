@@ -2,7 +2,7 @@
 title: "Cheatsheet › Commands"
 tags:
   - cheatsheet
-  - configure
+  - commands
 ---
 
 # Cheatsheet › Commands <!-- omit from toc -->

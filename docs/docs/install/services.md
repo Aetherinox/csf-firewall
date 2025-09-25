@@ -3,6 +3,8 @@ title: "Install › Start Services"
 tags:
   - install
   - setup
+  - service
+  - systemctl
 ---
 
 # Start Services <!-- omit from toc -->
@@ -493,24 +495,31 @@ Select what documentation you would like to proceed with next ...
 
 <div class="grid cards" markdown>
 
--   :material-file: &nbsp; __[Enable Web Interface](webui.md)__
+-   :aetherx-axs-browser: &nbsp; __[Enable Web Interface](../install/webui.md)__
 
     ---
 
-    Enable and access the CSF web interface via your 
-    browser.
+    The web interface lets you manage your firewall through a browser instead
+    of a command line.  
 
-    This is an optional step and is not required in
-    order to use CSF.
+    This chapter covers installation of dependencies, enabling the interface,
+    and whitelisting your IP for security.  
 
--   :material-file: &nbsp; __[Usage Getting Started](../usage/getting-started.md)__
+    You’ll also learn how to access the interface safely and protect it from
+    unauthorized users.  
+
+-   :material-file: &nbsp; __[Usage Introduction](../usage/getting-started.md)__
 
     ---
 
-    Select this option if you would like to start 
-    using CSF to manage your server. This section
-    will introduce you to the basic features and
-    how you can configure the CSF and LFD services.
+    If you don’t plan to set up Traefik or Authentik with the CSF web interface, 
+    you can skip ahead to the [Usage](../usage/getting-started.md) section. 
+    
+    The next chapter covers CSF’s core features, basic configuration, available
+    commands, folder structure, and everything you need to get started.
+
+    You will be taken on a more detailed dive of how CSF can benefit you and
+    what options you have for securing your server.
 
 </div>
 
