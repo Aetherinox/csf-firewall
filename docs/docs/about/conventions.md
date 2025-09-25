@@ -359,6 +359,25 @@ This is an example setting.
 
 <br />
 
+## Icons
+
+Some parts of this documentation may also display icons in one of two ways
+
+1.  Using HTML
+    ```
+    <i class="axd ax-file axd-xs"></i> [View Raw Version](https://license.md/wp-content/uploads/2022/06/gpl-3.0.txt)
+    ```
+2.  Using Markdown
+    ```
+    :aetherx-axd-file:
+    ```
+
+<br />
+
+---
+
+<br />
+
 ## Emoji in Tooltips
 
 You can display an emoji / icon search bar which can be called from a codeblock tooltip as shown below.
