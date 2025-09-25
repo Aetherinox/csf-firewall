@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_kyrgyzstan_ipset
 #   @uuid           cbc4fb31-31df-32c3-a90c-4d7855db448d
-#   @updated        Wed 24 Sep 2025 01:01:07 AM UTC
+#   @updated        Thu 25 Sep 2025 12:59:46 AM UTC
 #   @entries        288,873 ips
 #                   369 subnets
 #                   369 lines

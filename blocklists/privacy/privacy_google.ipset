@@ -5,10 +5,10 @@
 #   @source         https://developers.google.com/static/search/apis/ipranges/googlebot.json
 #   @id             privacy_google_ipset
 #   @uuid           ffadb25f-c1da-3844-93c3-f67e573b7ce8
-#   @updated        Wed 24 Sep 2025 12:53:41 AM UTC
-#   @entries        4,928 ips
-#                   307 subnets
-#                   307 lines
+#   @updated        Thu 25 Sep 2025 12:52:58 AM UTC
+#   @entries        4,896 ips
+#                   305 subnets
+#                   305 lines
 #   @expires        6 hours
 #   @category       Privacy
 #
@@ -153,7 +153,6 @@
 66.249.79.0/27
 66.249.79.32/27
 66.249.79.64/27
-66.249.79.96/27
 66.249.79.128/27
 66.249.79.160/27
 66.249.79.192/27
@@ -271,7 +270,6 @@
 2001:4860:4801:40::/64
 2001:4860:4801:41::/64
 2001:4860:4801:42::/64
-2001:4860:4801:43::/64
 2001:4860:4801:44::/64
 2001:4860:4801:45::/64
 2001:4860:4801:46::/64
