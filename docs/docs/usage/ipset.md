@@ -430,7 +430,7 @@ You can also show all of the IPs associated with a specific list, or return the 
       #   List all IPs in a specific set
       # #
 
-      $ sudo ipset list my_whitelist
+      sudo ipset list my_whitelist
 
       Name: my_whitelist
       Type: hash:ip
@@ -446,7 +446,7 @@ You can also show all of the IPs associated with a specific list, or return the 
       #   Count entries
       # #
 
-      $ sudo ipset list my_whitelist -o save | awk '/add/ {print $3}' | wc -l
+      sudo ipset list my_whitelist -o save | awk '/add/ {print $3}' | wc -l
 
       1
       ```
@@ -458,7 +458,7 @@ You can also show all of the IPs associated with a specific list, or return the 
       #   List all IPs in a specific set
       # #
   
-      $ sudo ipset list my_blacklist
+      sudo ipset list my_blacklist
 
       Name: my_blacklist
       Type: hash:ip
@@ -474,7 +474,7 @@ You can also show all of the IPs associated with a specific list, or return the 
       #   Count entries
       # #
 
-      $ sudo ipset list my_blacklist -o save | awk '/add/ {print $3}' | wc -l
+      sudo ipset list my_blacklist -o save | awk '/add/ {print $3}' | wc -l
 
       1
       ```
