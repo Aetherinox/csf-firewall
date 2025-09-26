@@ -1780,6 +1780,32 @@
 }
 
 /*
+    Icons in single row which dim when hovered and part the seas
+*/
+
+.icon-dim
+{
+    opacity: 0.8;
+    display: inline-block;
+    color: currentColor;
+    transition: 
+        transform 0.4s ease, 
+        opacity 0.4s ease, 
+        padding 0.4s ease, 
+        color 0.4s ease !important;
+}
+
+.icon-dim:hover
+{
+    transform: scale(1.2);
+    opacity: 1;
+    cursor: pointer;
+    z-index: 1;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/*
     Icons in Tabbed Menus
         makes icon slightly larger
 */
