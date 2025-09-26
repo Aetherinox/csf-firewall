@@ -47,10 +47,12 @@ my $slurpreg = ConfigServer::Slurp->slurpreg;
 my $cleanreg = ConfigServer::Slurp->cleanreg;
 my $configfile = "/etc/csf/csf.conf";
 
-# end main
-###############################################################################
-# start loadconfig
-sub loadconfig {
+# #
+#	load config
+# #
+
+sub loadconfig
+{
 	my $class = shift;
 	my $self = {};
 	bless $self,$class;
@@ -460,7 +462,16 @@ sub getdownloadserver
 	
 		foreach my $line (@data) 
 		{
-			if ($line =~ /^(?:raw|download|cdn|csf|updates)\./) 
+			# #
+			#	whitelist of acceptable subdomains
+			#		raw.github.com
+			#		download.configserver.dev
+			#		cdn.configserver.dev
+			#		csf.configserver.dev
+			#		update.configserver.dev
+			# #
+
+			if ($line =~ /^(?:raw|download|cdn|csf|update)\./) 
 			{
 				push @servers, $line;
 			}
@@ -484,7 +495,7 @@ sub getdownloadserver
 
 	if ($chosen eq "")
 	{
-		$chosen = "raw.githubusercontent.com/Aetherinox/csf-firewall/main/api/download/versions"
+		$chosen = "download.configserver.dev"
 	}
 
 	return $chosen;
