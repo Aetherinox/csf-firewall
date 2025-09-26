@@ -71,7 +71,7 @@ If you already skipped ahead and started CSF up, you'll need to perform a restar
 === ":aetherx-axd-command: Command"
 
       ```shell
-      $ sudo csf -ra
+      sudo csf -ra
       ```
 
 <br />
@@ -125,8 +125,8 @@ This section outlines how to ensure the CSF service is operating correctly. Firs
 === ":aetherx-axd-command: Command"
 
       ```shell
-      $ sudo systemctl start csf
-      $ sudo csf -ra
+      sudo systemctl start csf
+      sudo csf -ra
       ```
 
 <br />
@@ -136,7 +136,7 @@ Check the current status of CSF by running the command:
 === ":aetherx-axd-command: Command"
 
       ```shell
-      $ sudo systemctl status csf
+      sudo systemctl status csf
       ```
 
 === ":aetherx-axs-square-terminal: Output"
@@ -158,7 +158,7 @@ If you notice that CSF is not running or has the status `inactive (dead)` like t
 === ":aetherx-axd-command: Command"
 
       ```shell
-      $ sudo systemctl status csf
+      sudo systemctl status csf
       ```
 
 === ":aetherx-axs-square-terminal: Output"
@@ -176,8 +176,8 @@ We must enable the services to ensure they are running. Execute the commands bel
 === ":aetherx-axd-command: Command"
 
       ```shell
-      $ sudo systemctl start csf
-      $ sudo csf -ra
+      sudo systemctl start csf
+      sudo csf -ra
       ```
 
 <br />
@@ -187,7 +187,7 @@ Confirm that the service is up and running:
 === ":aetherx-axd-command: Command"
 
       ```shell
-      $ sudo systemctl status csf
+      sudo systemctl status csf
       ```
 
 === ":aetherx-axs-square-terminal: Output"
@@ -220,8 +220,8 @@ This section outlines how to ensure the LFD service is operating correctly. Firs
 === ":aetherx-axd-command: Command"
 
       ```shell
-      $ sudo systemctl start lfd
-      $ sudo csf -ra
+      sudo systemctl start lfd
+      sudo csf -ra
       ```
 
 <br />
@@ -231,7 +231,7 @@ Check the current status of LFD by running the command:
 === ":aetherx-axd-command: Command"
 
       ```shell
-      $ sudo systemctl status lfd
+      sudo systemctl status lfd
       ```
 
 === ":aetherx-axs-square-terminal: Output"
@@ -253,12 +253,6 @@ Check the current status of LFD by running the command:
 
 If you see the status `failed` like the following example, this could be for any number of reasons. We will review below:
 
-=== ":aetherx-axd-command: Command"
-
-      ```shell
-      $ sudo systemctl status lfd
-      ```
-
 === ":aetherx-axs-square-terminal: Output"
 
       ```shell
@@ -276,7 +270,7 @@ Ensure CSF and LFD are both enabled:
 === ":aetherx-axd-command: Command"
 
       ```shell
-      $ sudo csf -e
+      sudo csf -e
       ```
 
 <br />
@@ -331,8 +325,8 @@ Attempt to start LFD again:
 === ":aetherx-axd-command: Command"
 
       ```shell
-      $ sudo systemctl start lfd
-      $ sudo csf -ra
+      sudo systemctl start lfd
+      sudo csf -ra
       ```
 
 <br />
@@ -342,7 +336,7 @@ You should now be able to confirm that LFD is running:
 === ":aetherx-axd-command: Command"
 
       ```shell
-      $ sudo systemctl status lfd
+      sudo systemctl status lfd
       ```
 
 === ":aetherx-axs-square-terminal: Output"
