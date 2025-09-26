@@ -98,6 +98,7 @@ argDryrun="false"
 argInstaller=""
 argDev="false"
 argStatus="downloaded"
+argOriginalName="false"
 
 # #
 #   define › files
@@ -201,13 +202,13 @@ while [ "$#" -gt 0 ]; do
             printf '%-31s %-65s\n' "  ${bluel} STATUS ${end}" \
                 "${greym} cleaning existing files and folders ${end}"
 
-            rm -rf "./$folder_extract" "./$file_release"*.zip
+            rm -rf "./$folder_extract" "./$file_release"*.zip "./$file_release"*-tgz
 
             # #
             #   Verify cleanup / deletion
             # #
 
-            if [ ! -d "./$folder_extract" ] && [ ! -e "./$file_release"*.zip ]; then
+            if [ ! -d "./$folder_extract" ] && [ ! -e "./$file_release"*.zip ] && [ ! -e "./$file_release"*-tgz ]; then
                 printf '%-31s %-65s\n' "  ${greenl} SUCCESS ${end}" \
                     "${greym} all files and folders removed ${end}"
             else
@@ -223,6 +224,9 @@ while [ "$#" -gt 0 ]; do
             else
                 argInstaller="--dryrun"
             fi
+            ;;
+        -o|--original-name)
+            argOriginalName="true"
             ;;
         -v|--version|/v)
             echo
@@ -286,29 +290,50 @@ else
 fi
 
 # #
-#   extract download URL for the main zip
+#   extract download URL for latest release, detect zip or tgz
 # #
 
 DOWNLOAD_URL=$(echo "$release_json" \
     | grep '"browser_download_url"' \
     | awk -F'"' '{print $4}' \
-    | grep "$file_release$tag_latest\.zip" \
+    | grep "$file_release$tag_latest" \
+    | grep -E '\.zip$|\.tgz$|\.tar\.gz$|-tgz$' \
+    | grep -vE 'helpers|theme' \
     | head -n1)
 
 if [ -z "$DOWNLOAD_URL" ]; then
-    printf '%-28s %-65s\n' "  ${redl} ERROR ${end}" "${greym} could not find download url for latest release tag. Aborting ${end}"
+    printf '%-28s %-65s\n' "  ${redl} ERROR ${end}" "${greym} could not find download url for latest release tag (zip or tgz). Aborting ${end}"
     exit 1
 fi
 
 # #
-#   get latest release filename
+#   get latest release filename from URL
 # #
 
-FILENAME=$(basename "$DOWNLOAD_URL")
+ORIG_FILENAME=$(basename "$DOWNLOAD_URL")
 
 # #
-#   download latest release
-#   should not be ran if we've provided -o, --installOnly
+#   normalize filename to csf.zip / csf.tgz unless --original-name provided
+# #
+
+if [ "$argOriginalName" = "false" ]; then
+    case "$ORIG_FILENAME" in
+        *.zip)
+            FILENAME="csf.zip"
+            ;;
+        *.tar.gz|*.tgz|*-tgz)
+            FILENAME="csf.tgz"
+            ;;
+        *)
+            FILENAME="$ORIG_FILENAME"
+            ;;
+    esac
+else
+    FILENAME="$ORIG_FILENAME"
+fi
+
+# #
+#   download latest release unless --installOnly
 # #
 
 if [ "$argInstallOnly" = "false" ]; then
