@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_ukraine_ipset
 #   @uuid           8e849cfe-7380-3fbe-9d27-c3c3d1e10cb0
-#   @updated        Thu 25 Sep 2025 01:01:00 AM UTC
+#   @updated        Fri 26 Sep 2025 01:01:17 AM UTC
 #   @entries        9,509,274 ips
 #                   7,684 subnets
 #                   7,684 lines
