@@ -298,7 +298,7 @@ To install the latest version of CSF manually, run the following commands:
       libnet-libidn-perl \
       libio-socket-inet6-perl \
       libsocket6-perl \
-      ipset
+      ipsets
     ```
 
 <br />
@@ -350,10 +350,10 @@ To download the latest version of CSF using our [get.sh](https://get.configserve
 
 ```shell
 # Using wget
-bash <(wget -qO - https://get.configserver.dev) && . ~/.bashrc
+bash <(wget -qO - https://get.configserver.dev)
 
 # Using curl
-bash <(curl -sL https://get.configserver.dev) && . ~/.bashrc
+bash <(curl -sL https://get.configserver.dev)
 ```
 
 <br />
