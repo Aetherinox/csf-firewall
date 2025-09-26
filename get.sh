@@ -99,6 +99,7 @@ argInstaller=""
 argDev="false"
 argStatus="downloaded"
 argOriginalName="false"
+argFolder="$folder_extract"
 
 # #
 #   define › files
@@ -166,7 +167,9 @@ opt_usage()
     printf '  %-5s %-40s\n' "${greyd}Options:${end}" "" 1>&2
     printf '  %-5s %-81s %-40s\n' "    " "${blued}-e${greyd},${blued}  --extract ${yellowd}${end}                    " "download, extract latest version of csf ${navy}<default> ${peach}$argExtract ${end}" 1>&2
     printf '  %-5s %-81s %-40s\n' "    " "${blued}-i${greyd},${blued}  --install ${yellowd}${end}                    " "download, extract, and install latest version of csf ${end} ${navy}<default> ${peach}$argInstall ${end}" 1>&2
-    printf '  %-5s %-81s %-40s\n' "    " "${blued}-I${greyd},${blued}  --installOnly ${yellowd}${end}                " "no download, no extract, only install existing archive, requires existing source archive ${navy}<default> ${peach}$argInstallOnly ${end}" 1>&2
+    printf '  %-5s %-81s %-40s\n' "    " "${blued}-I${greyd},${blued}  --install-only ${yellowd}${end}               " "no download, no extract, installs csf from existing folder ${navy}<default> ${peach}$argInstallOnly ${end}" 1>&2
+    printf '  %-5s %-81s %-40s\n' "    " "${blued}-p${greyd},${blued}  --preserve-name ${yellowd}${end}              " "preserves original filename, skips rename to csf.zip ${navy}<default> ${peach}$argOriginalName ${end}" 1>&2
+    printf '  %-5s %-81s %-40s\n' "    " "${blued}-f${greyd},${blued}  --folder ${yellowd}<string>${end}             " "override default folder where csf is extracted ${navy}<default> ${peach}$argFolder ${end}" 1>&2
     printf '  %-5s %-81s %-40s\n' "    " "${blued}-c${greyd},${blued}  --clean ${yellowd}${end}                      " "cleans up lingering archive and tmp folders and exits ${end}" 1>&2
     printf '  %-5s %-81s %-40s\n' "    " "${blued}-D${greyd},${blued}  --dryrun ${yellowd}${end}                     " "pass dryrun to csf installer script, does not install csf ${end} ${navy}<default> ${peach}$argDryrun ${end}" 1>&2
     printf '  %-5s %-81s %-40s\n' "    " "${blued}-V${greyd},${blued}  --version ${yellowd}${end}                    " "current version of this utilty${end}" 1>&2
@@ -194,7 +197,13 @@ while [ "$#" -gt 0 ]; do
             argInstall="true"
             argStatus="installed"
             ;;
-        -I|--installOnly)
+        -f|--folder|--install-folder)
+            case "$1" in
+                *=*) argFolder="${1#*=}" ;;
+                *) shift; argFolder="$1" ;;
+            esac
+            ;;
+        -I|--installOnly|--install-only|--install-local)
             argInstallOnly="true"
             argStatus="installed local"
             ;;
@@ -202,13 +211,13 @@ while [ "$#" -gt 0 ]; do
             printf '%-31s %-65s\n' "  ${bluel} STATUS ${end}" \
                 "${greym} cleaning existing files and folders ${end}"
 
-            rm -rf "./$folder_extract" "./$file_release"*.zip "./$file_release"*-tgz
+            rm -rf "./$argFolder" "./$file_release"*.zip "./$file_release"*-tgz
 
             # #
             #   Verify cleanup / deletion
             # #
 
-            if [ ! -d "./$folder_extract" ] && [ ! -e "./$file_release"*.zip ] && [ ! -e "./$file_release"*-tgz ]; then
+            if [ ! -d "./$argFolder" ] && [ ! -e "./$file_release"*.zip ] && [ ! -e "./$file_release"*-tgz ]; then
                 printf '%-31s %-65s\n' "  ${greenl} SUCCESS ${end}" \
                     "${greym} all files and folders removed ${end}"
             else
@@ -225,7 +234,7 @@ while [ "$#" -gt 0 ]; do
                 argInstaller="--dryrun"
             fi
             ;;
-        -o|--original-name)
+        -o|-p|--original-name|--preserve-name|--preserve-filename)
             argOriginalName="true"
             ;;
         -v|--version|/v)
@@ -360,14 +369,14 @@ fi
 
 if [ "$argExtract" = "true" ] || [ "$argInstall" = "true" ]; then
     printf '%-31s %-65s\n' "  ${bluel} STATUS ${end}" "${greym} extracting file ${bluel}$FILENAME ${end}"
-    [ ! -d $folder_extract ] && mkdir $folder_extract
+    [ ! -d $argFolder ] && mkdir $argFolder
 
     case "$FILENAME" in
         *.zip)
-            unzip -oq "$FILENAME" -d "$folder_extract"
+            unzip -oq "$FILENAME" -d "$argFolder"
             ;;
         *.tar.gz|*.tgz)
-            tar -xzf "$FILENAME" -C "$folder_extract"
+            tar -xzf "$FILENAME" -C "$argFolder"
             ;;
         *)
             printf '%-28s %-65s\n' "  ${redl} ERROR ${end}" "${greym} unknown archive format for file ${redl}$FILENAME${greym}. Aborting${end}"
@@ -375,7 +384,7 @@ if [ "$argExtract" = "true" ] || [ "$argInstall" = "true" ]; then
             ;;
     esac
 
-    printf '%-31s %-65s\n' "  ${greenl} OK ${end}" "${greym} extracted to ${greenl}./$folder_extract/ ${end}"
+    printf '%-31s %-65s\n' "  ${greenl} OK ${end}" "${greym} extracted to ${greenl}./$argFolder/ ${end}"
 fi
 
 # #
@@ -383,7 +392,7 @@ fi
 # #
 
 if [ "$argInstall" = "true" ] || [ "$argInstallOnly" = "true" ]; then
-    path_installer="./$folder_extract/$file_installer"
+    path_installer="./$argFolder/$file_installer"
     if [ ! -f "$path_installer" ]; then
         printf '%-28s %-65s\n' "  ${redl} ERROR ${end}" "${greym} install script not found at ${redl}$path_installer${greym}. Aborting${end}"
         exit 1
