@@ -1769,6 +1769,16 @@
     color: #9242c0;
 }
 
+.icon-size-32
+{
+    font-size: 32pt;
+}
+
+.icon-size-48
+{
+    font-size: 48pt;
+}
+
 /*
     Icons in Tabbed Menus
         makes icon slightly larger
