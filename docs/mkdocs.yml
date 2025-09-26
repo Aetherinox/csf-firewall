@@ -269,14 +269,13 @@ nav:
                 - Structure: 'usage/cheatsheet/structure.md'
                 - Commands: 'usage/cheatsheet/commands.md'
                 - Example Configs: 'usage/cheatsheet/conf.md'
-    - Extras:
+    - Advanced:
+          - Services:
+                - get.configserver.dev: 'advanced/services/get.configserver.md'
+                - download.configserver.dev: 'advanced/services/download.configserver.md'
           - Patcher:
                 - Download: 'extras/download.md'
                 - Configure: 'extras/configure.md'
-          - Tutorials:
-                - Geo Blocking: 'csf/tutorials/geographical.md'
-                - Traefik Integration: 'csf/tutorials/traefik.md'
-                - Authentik Integration: 'csf/tutorials/authentik.md'
     - Changelog: 'about/changelog.md'
 
 # #
