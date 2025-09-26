@@ -47,14 +47,10 @@ All downloads from this service are delivered with the filename `csf`, making it
 
 ### Using CLI  <!-- omit from toc -->
 
-Our download service also supports the use of command-line tools such as `wget` and `curl`. Read both sections below, as we offer two ways to use curl and wget to obtain the latest version of CSF.
+Our download service also supports the use of command-line tools such as `wget` and `curl`. Read both sections below, as we offer two ways to use curl and wget to obtain the latest version of CSF. If you want to download the latest version of CSF in the easiest manner, utilize the method [With Filename](#with-filename).
 
 - [With Filename](#with-filename)
 - [Without Filename](#without-filename)
-
-<br />
-
-If you want to download the latest version of CSF in the easiest manner, utilize the method [With Filename](#with-filename).
 
 <br />
 
@@ -104,3 +100,74 @@ If you don’t use these options, the tools won’t know the intended filename a
     curl -JLO https://download.configserver.dev/
     ```
 
+<br />
+
+---
+
+<br />
+
+## Advanced Options
+
+Our download service includes a few advanced features that may interest certain users.
+
+<br />
+
+### JSON Output
+
+Our API provides a structured JSON response, which can be used in your own scripts to retrieve information about the latest release. Below are some examples of how to use this feature. 
+
+<br />
+
+#### Return JSON
+
+To get a JSON api response from your query, simply append `?output=json` to the end of your URL such as:
+
+- https://download.configserver.dev/?output=json
+
+<br />
+
+#### Fetch Latest Release File
+
+You can use the API to download the latest CSF release directly in your scripts. This command retrieves the download URL and filename from the JSON output, then downloads the file with the correct name.
+
+=== ":aetherx-axs-box: curl"
+
+    ``` shell
+    curl -s "https://download.configserver.dev/?output=json" \
+      | jq -r '.download_url + " " + .file_name' \
+      | xargs -n2 sh -c 'curl -L -o "$1" "$0"'
+    ```
+
+=== ":aetherx-axs-box: wget + curl"
+
+    ``` shell
+    eval $(curl -s "https://download.configserver.dev/?output=json" | \
+      jq -r '"wget -O \(.file_name) \(.download_url)"') 
+    ```
+
+<br />
+
+#### Retrieve Only the Download URL
+
+If you just need the direct URL for the latest release, you can pull it from the JSON response. This will output the URL as a plain string, without downloading the file.
+
+=== ":aetherx-axs-box: curl"
+
+    ``` shell
+    curl -s "https://download.configserver.dev/?output=json" | jq -r '.download_url'
+    ```
+
+<br />
+<br />
+<br />
+
+#### Preserve Filename
+
+Out of box, our download service gets the latest release of CSF and then re-names the file `csf.zip` or `csf.tgz`. However, you can preserve the release filename and have it sent to you as its original name which is `csf-firewall-vXX.XX.zip` or `csf-firewall-vXX.XX.tar`.
+
+To preserve the filename, append `?name=preserve` to your url, such as:
+
+- https://download.configserver.dev/?name=preserve
+
+<br />
+<br />
