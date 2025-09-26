@@ -21,26 +21,28 @@ The main difference comes **after installation** — the way you access and mana
 <br />
 <br />
 
-Download the latest version of CSF. Two methods are provided below, and you can pick either one. Most users will want to opt for the :aetherx-axs-box: `Direct Download`.
+Download the latest version of CSF. You can either download a specific version, or download the repositories' current version.
 
-=== ":aetherx-axs-box: Direct Download"
+??? note "Finding the Latest Version"
+
+    You can find out what the latest version of CSF is by visiting our [Github Releases](https://github.com/Aetherinox/csf-firewall/releases) page. 
+
+=== ":aetherx-axs-box: Download Specific Version"
 
     ```shell
-    # Using wget
-    wget https://download.configserver.dev/csf.zip
-
-    # Using curl
-    curl -O https://download.configserver.dev/csf.zip
+    wget -O /tmp/csf-firewall-latest.zip \
+      https://github.com/Aetherinox/csf-firewall/releases/download/15.00/csf-firewall-v15.00.zip
     ```
 
-=== ":aetherx-axs-box: Get.sh"
+=== ":aetherx-axs-box-arrow-down-magnifying-glass: Download Latest Version"
 
     ```shell
-    # Using wget
-    bash <(wget -qO - https://get.configserver.dev) && . ~/.bashrc
-
-    # Using curl
-    bash <(curl -sL https://get.configserver.dev) && . ~/.bashrc
+    wget -O /tmp/csf-firewall-latest.zip "$(
+      curl -s https://api.github.com/repos/Aetherinox/csf-firewall/releases/latest \
+        | grep 'browser_download_url.*csf-firewall-v[0-9]\+\.[0-9]\+\.zip"' \
+        | grep -v 'helpers' \
+        | cut -d '"' -f 4
+    )"
     ```
 
 <br />
@@ -50,22 +52,31 @@ Next, we need to extract the `.zip` to a folder on our server. We are going to u
 === ":aetherx-axs-file-zip: .zip"
 
     ```bash
-    unzip csf.zip -d /tmp/csf
+    unzip /tmp/csf-firewall-latest.zip \
+      -d /tmp/csf
     ```
 
 === ":aetherx-axs-file-zipper: .tgz"
 
     ```bash
-    tar -xzf csf.tgz -C /tmp/csf
+    tar -xzf /tmp/csf-firewall-latest.tgz \
+      -C /tmp/csf
     ```
-
 
 <br />
 
-After you extract the `.zip` or `.tgz`, you can now change over to the folder where the extracted CSF files are located:
+After you extract the `.zip`, you can now change over to the folder where the extracted CSF files are located:
 
 ```shell
 cd /tmp/csf
+```
+
+<br />
+
+Set the `install.sh` script to have `+x` executable permissions by running the command:
+
+```shell
+sudo chmod +x /tmp/csf/install.sh
 ```
 
 <br />
@@ -121,26 +132,24 @@ First, log in to your server as the `root` user via SSH.
 
 <br />
 
-Download the latest version of CSF. Two methods are provided below, and you can pick either one. Most users will want to opt for the :aetherx-axs-box: `Direct Download`.
+You will need to download the latest version of CSF. You can either download a specific version, or download the repositories' current version.
 
-=== ":aetherx-axs-box: Direct Download"
+=== ":aetherx-axs-box: Download Specific Version"
 
     ```shell
-    # Using wget
-    wget https://download.configserver.dev/csf.zip
-
-    # Using curl
-    curl -O https://download.configserver.dev/csf.zip
+    wget -O /root/csf-firewall-latest.zip \
+      https://github.com/Aetherinox/csf-firewall/releases/download/15.00/csf-firewall-v15.00.zip
     ```
 
-=== ":aetherx-axs-box: Get.sh"
+=== ":aetherx-axs-box-arrow-down-magnifying-glass: Download Latest Version"
 
     ```shell
-    # Using wget
-    bash <(wget -qO - https://get.configserver.dev) && . ~/.bashrc
-
-    # Using curl
-    bash <(curl -sL https://get.configserver.dev) && . ~/.bashrc
+    wget -O /root/csf-firewall-latest.zip "$(
+      curl -s https://api.github.com/repos/Aetherinox/csf-firewall/releases/latest \
+        | grep 'browser_download_url.*csf-firewall-v[0-9]\+\.[0-9]\+\.zip"' \
+        | grep -v 'helpers' \
+        | cut -d '"' -f 4
+    )"
     ```
 
 <br />
@@ -150,21 +159,31 @@ Unzip / decompress the downloaded file to your server. We have provided instruct
 === ":aetherx-axs-file-zip: .zip"
 
     ```bash
-    unzip csf.zip -d /root/csf
+    unzip /root/csf-firewall-latest.zip \
+      -d /root/csf
     ```
 
 === ":aetherx-axs-file-zipper: .tgz"
 
     ```bash
-    tar -xzf csf.tgz -C /root/csf
+    tar -xzf /root/csf-firewall-latest.tgz \
+      -C /root/csf
     ```
 
 <br />
 
-After you extract the `.zip` or `.tgz`, you can now change over to the folder where the extracted CSF files are located:
+After you extract the `.zip`, you can now change over to the folder where the extracted CSF files are located:
 
 ```shell
 cd /root/csf
+```
+
+<br />
+
+Set the `install.sh` script to have `+x` executable permissions by running the command:
+
+```shell
+sudo chmod +x /root/csf/install.sh
 ```
 
 <br />
