@@ -2981,3 +2981,16 @@ figure img
     -webkit-animation: pulsate 3s ease-out infinite;
     animation: pulsate 3s ease-out infinite;
 }
+
+/*
+    Force markdown table to wrap text.
+    used for tables with long inline code blocks
+
+        advanced/services/get.configserver/#usage
+*/
+
+.table-nowrap td
+{
+    white-space: wrap !important;
+    font-size: 8pt !important;
+}
