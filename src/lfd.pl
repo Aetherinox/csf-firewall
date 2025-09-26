@@ -400,7 +400,7 @@ if ($cxsreputation and -e "/etc/cxs/cxs.blocklists") {
 		$line =~ s/$cleanreg//g;
 		if ($line =~ /^(\s|\#|$)/) {next}
 		my ($name,$interval,$max,$url) = split(/\|/,$line);
-		$url =~ s/download\.configserver\.com/$config{DOWNLOADSERVER}/g;
+		$url =~ s/download\.configserver\.dev/$config{DOWNLOADSERVER}/g;
 		if ($all and $name ne "CXS_ALL") {next}
 		if ($name =~ /^\w+$/) {
 			$name = substr(uc $name, 0, 25);
@@ -4981,7 +4981,7 @@ sub blocklist {
 			my $getlist = 0;
 			my $verbose = 1;
 
-			if ($name =~ /^CXS_/ and $blocklists{$name}{url} =~ /download\.configserver\.com/) {
+			if ($name =~ /^CXS_/ and $blocklists{$name}{url} =~ /download\.configserver\.dev/) {
 				$blocklists{$name}{interval} = 600;
 				$verbose = 0;
 			}
