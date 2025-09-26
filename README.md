@@ -19,7 +19,7 @@
 [![Last Commit][github-commit-img]][github-commit-img]
 [![Contributors][contribs-all-img]](#contributors-)
 
-[![Built with Material for MkDocs](https://img.shields.io/badge/Powered_by_Material_for_MkDocs-526CFE?style=for-the-badge&logo=MaterialForMkDocs&logoColor=white)](https://aetherinox.github.io/csf-firewall/)
+[![Built with Material for MkDocs](https://img.shields.io/badge/View_Official_Documentation-526CFE?style=for-the-badge&logo=MaterialForMkDocs&logoColor=white)](https://aetherinox.github.io/csf-firewall/)
 <!-- prettier-ignore-end -->
 
 <br />
@@ -74,15 +74,17 @@
     - [Step 4: Install](#step-4-install)
     - [Step 5: Disable Testing Mode](#step-5-disable-testing-mode)
     - [Step 6: Enable and Start Services](#step-6-enable-and-start-services)
-- [Configure](#configure)
-- [Manage Firewall](#manage-firewall)
-- [Enable Firewall Web Interface](#enable-firewall-web-interface)
+- [Documentation](#documentation)
+  - [📕 Main Chapters](#-main-chapters)
+  - [📗 Cheatsheets](#-cheatsheets)
 - [IP Sets / Blocklist](#ip-sets--blocklist)
-  - [Main Lists](#main-lists)
-  - [Privacy Lists](#privacy-lists)
-  - [Spam Lists](#spam-lists)
-  - [Geographical (Continents \& Countries)](#geographical-continents--countries)
-  - [Transmission (BitTorrent Client)](#transmission-bittorrent-client)
+  - [Official Blocklists](#official-blocklists)
+    - [Main Lists](#main-lists)
+    - [Privacy Lists](#privacy-lists)
+    - [Spam Lists](#spam-lists)
+    - [Geographical (Continents \& Countries)](#geographical-continents--countries)
+    - [Transmission (BitTorrent Client)](#transmission-bittorrent-client)
+  - [3rd-party Blocklists](#3rd-party-blocklists)
 - [Notes](#notes)
   - [CSF to Iptable Commands](#csf-to-iptable-commands)
     - [Default Policy](#default-policy)
@@ -441,40 +443,42 @@ At this point, CSF and LFD should be up and running, with minimal configuration.
 
 <br />
 
-## Configure
+## Documentation
 
-ConfigServer Firewall & Security includes a large config file located at `/etc/csf/csf.conf`. To view the most important list of settings you should review and change, read our [Configuration Chapter](https://aetherinox.github.io/csf-firewall/usage/configuration/) within our official documentation.
-
-- https://aetherinox.github.io/csf-firewall/usage/configuration/
-
+This README only covers basic installation of CSF. In order to keep all information in one place, all other guides are located in our [official documentation](https://docs.configserver.dev). We have provided some useful links below.
 
 <br />
 
----
+### 📕 Main Chapters
+
+Review the following chapters to learn more about setting up CSF and making use of its included features:
 
 <br />
 
-## Manage Firewall
-
-For a list of commands associated to CSF which help you manage your firewall, please refer to our documentation at:
-
-- https://aetherinox.github.io/csf-firewall/usage/cheatsheet/commands/
-
-<br />
-
----
-
-<br />
-
-## Enable Firewall Web Interface
-
-ConfigServer Firewall offers a feature-rich web interface which you can access via your browser. This allows you to manage your firewall using a graphical user interface, instead of by using commands. 
+| Chapter | Description | View Docs |
+| --- | --- | --- |
+| Enable Web Interface | How to enable and set up CSF web interface | [View](https://aetherinox.github.io/csf-firewall/install/webui/) |
+| Configuration | Configuring CSF for the first time | [View](https://aetherinox.github.io/csf-firewall/usage/configuration/) |
+| Enable IPSETs | Manage large blocklists without performance impacts | [View](https://aetherinox.github.io/csf-firewall/usage/ipset/) |
+| Blocklists | Deny access to abusive IPs with 3rd party blocklists | [View](https://aetherinox.github.io/csf-firewall/usage/blocklists/) |
+| GeoIP Blocks | Block access to geographical locations | [View](https://aetherinox.github.io/csf-firewall/usage/geoip/) |
+| Traefik Integration | CSF behind Traefik Reverse Proxy | [View](https://aetherinox.github.io/csf-firewall/install/traefik/) |
+| Authentik Integration | Secure CSF behind Authentik for authentication | [View](https://aetherinox.github.io/csf-firewall/install/authentik/) |
+| Uninstall | Uninstall CSF from your server | [View](https://aetherinox.github.io/csf-firewall/install/uninstall/) | 
 
 <br />
 
-For a full set of instructions, visit the documentation below:
+### 📗 Cheatsheets
 
-- https://aetherinox.github.io/csf-firewall/install/webui/
+These are quick-guides which explain very specific features in detail.
+
+<br />
+
+| Chapter | Description | View Docs |
+| --- | --- | --- |
+| Folder Structure | Explains every file and folder within CSF and its purpose | [View](https://aetherinox.github.io/csf-firewall/usage/cheatsheet/structure/) |
+| Commands | Detailed overview of the commands that come with CSF | [View](https://aetherinox.github.io/csf-firewall/usage/cheatsheet/commands/) |
+| Sample Configs | Default and example config files / templates for CSF | [View](https://aetherinox.github.io/csf-firewall/usage/cheatsheet/conf/) |
 
 <br />
 
@@ -484,7 +488,20 @@ For a full set of instructions, visit the documentation below:
 
 ## IP Sets / Blocklist
 
-This repository contains a set of ipsets which are automatically updated every `6 hours`. You may add these sets to your ConfigServer Firewall `/etc/csf/csf.blocklists` with the following new line:
+CSF supports the use of blocklists to help protect your server from malicious IP addresses and unwanted network traffic. Blocklists are essentially collections of IPs or networks that are known to be associated with spammers, hackers, botnets, or other abusive behavior. When CSF is configured to use blocklists, it can automatically deny or restrict connections from these IPs, reducing the risk of compromise, brute-force attacks, and other forms of network abuse. By proactively filtering traffic, blocklists help maintain server security and improve overall system reliability.
+
+Blocklists can come from a variety of third-party vendors, each maintaining their own lists based on threat intelligence and community reporting. Examples of well-known blocklist providers include Spamhaus, DShield, TOR Exit Node lists, BOGON networks, Project Honey Pot, and MaxMind’s anonymous proxies, among others. These lists are continuously updated and can be integrated into CSF to provide real-time protection against emerging threats.
+
+In addition to third-party lists, CSF offers its own official blocklist and IPSET service, maintained in the Official CSF Repository
+. Users can choose to use the CSF official blocklist alone or combine it with other vendors’ lists for more comprehensive coverage. Using multiple blocklists in conjunction ensures a layered defense, helping administrators mitigate attacks and maintain control over who can access their server while minimizing false positives.
+
+By leveraging blocklists, CSF empowers users to proactively defend their infrastructure, reduce malicious traffic, and maintain a more secure hosting environment without manual monitoring of each incoming IP.
+
+<br />
+
+### Official Blocklists
+
+CSF hosts our own set of blocklists which are are automatically updated every `6 hours`. You may add these sets to your ConfigServer Firewall `/etc/csf/csf.blocklists` with the following new lines:
 
 ```
 CSF_MASTER|43200|400000|https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/blocklists/master.ipset
@@ -494,9 +511,9 @@ CSF_HIGHRISK|43200|0|https://raw.githubusercontent.com/Aetherinox/csf-firewall/m
 <br />
 <br />
 
-### Main Lists
+#### Main Lists
 
-These are the primary lists that most people will be interested in. They contain a large list of IP addresses which have been reported recently for abusive behavior. These statistics are gathered from numerous websites such as [AbuseIPDB](https://www.abuseipdb.com/) and [IPThreat](https://ipthreat.net/). IPs on this list have a 100% confidene level, which means you should get no false-positives from any of the IPs in these lists. IP addresses in these lists have been flagged for engaging in the following:
+These are the primary lists that most people will be interested in. They contain a large list of IP addresses which have been reported recently for abusive behavior. These statistics are gathered from numerous websites such as [AbuseIPDB](https://abuseipdb.com/) and [IPThreat](https://ipthreat.net/). IPs on this list have a 100% confidene level, which means you should get no false-positives from any of the IPs in these lists. IP addresses in these lists have been flagged for engaging in the following:
 
 - SSH Bruteforcing
 - Port Scanning
@@ -518,7 +535,7 @@ For the majority of people, using the blocklists `master.ipset` and `highrisk.ip
 <br />
 <br />
 
-### Privacy Lists
+#### Privacy Lists
 
 These blocklists give you more control over what 3rd party services can access your server, and allows you to remove bad actors or services hosting such services.
 
@@ -526,7 +543,7 @@ These blocklists give you more control over what 3rd party services can access y
 
 | Set | Description | Severity | View |
 | --- | --- | --- | --- |
-| `privacy_general.ipset` | <sub>Servers which scan ports for data collection and research purposes. List includes [Censys](https://censys.io), [Shodan](https://www.shodan.io/), [Project25499](https://blogproject25499.wordpress.com/), [InternetArchive](https://archive.org/), [Cyber Resilience](https://cyberresilience.io), [Internet Measurement](https://internet-measurement.com), [probe.onyphe.net](https://onyphe.net), [Security Trails](https://securitytrails.com) </sub> | ★★★★⚝ | [view](https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/blocklists/privacy/privacy_general.ipset) |
+| `privacy_general.ipset` | <sub>Servers which scan ports for data collection and research purposes. List includes [Censys](https://censys.io), [Shodan](https://shodan.io/), [Project25499](https://blogproject25499.wordpress.com/), [InternetArchive](https://archive.org/), [Cyber Resilience](https://cyberresilience.io), [Internet Measurement](https://internet-measurement.com), [probe.onyphe.net](https://onyphe.net), [Security Trails](https://securitytrails.com) </sub> | ★★★★⚝ | [view](https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/blocklists/privacy/privacy_general.ipset) |
 | `privacy_ahrefs.ipset` | <sub>Ahrefs SEO and services</sub> | ★★⚝⚝⚝ | [view](https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/blocklists/privacy/privacy_ahrefs.ipset) |
 | `privacy_amazon_aws.ipset` | <sub>Amazon AWS</sub> | ★★⚝⚝⚝ | [view](https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/blocklists/privacy/privacy_amazon_aws.ipset) |
 | `privacy_amazon_ec2.ipset` | <sub>Amazon EC2</sub> | ★★⚝⚝⚝ | [view](https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/blocklists/privacy/privacy_amazon_ec2.ipset) |
@@ -551,7 +568,7 @@ These blocklists give you more control over what 3rd party services can access y
 <br />
 <br />
 
-### Spam Lists
+#### Spam Lists
 
 These blocklists allow you to remove the possibility of spam sources accessing your server.
 
@@ -565,7 +582,7 @@ These blocklists allow you to remove the possibility of spam sources accessing y
 <br />
 <br />
 
-### Geographical (Continents & Countries)
+#### Geographical (Continents & Countries)
 These blocklists allow you to determine what geographical locations can access your server. These can be used as either a whitelist or a blacklist. Includes both **continents** and **countries**.
 
 <br />
@@ -578,7 +595,7 @@ These blocklists allow you to determine what geographical locations can access y
 <br />
 <br />
 
-### Transmission (BitTorrent Client)
+#### Transmission (BitTorrent Client)
 
 This section includes blocklists which you can import into the [bittorrent client Transmission](https://transmissionbt.com/).
 
@@ -595,6 +612,30 @@ This section includes blocklists which you can import into the [bittorrent clien
 | Set | Description | Severity | View | Website |
 | --- | --- | --- | --- | --- |
 | `bt-transmission` | <sub>A large blocklist for the BitTorrent client [Transmission](https://transmissionbt.com/)</sub> | ★★★★★ | [view](https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/blocklists/transmission/blocklist.ipset) | [view](https://transmissionbt.com/) |
+
+<br />
+<br />
+<br />
+
+### 3rd-party Blocklists
+
+There are many vendors that also host their own blocklists. You can find these vendors within the file `/etc/csf/csf.blocklists`. Vendors included are:
+
+- [Spamhaus](http://spamhaus.org/drop/drop.txt)
+- [DShield](https://dshield.org/block.txt)
+- [TOR Exit Nodes](https://trac.torproject.org/projects/tor/wiki/doc/TorDNSExitList)
+- [BOGON](http://team-cymru.org/Services/Bogons/)
+- [Project Honey Pot](http://projecthoneypot.org)
+- [C.I. Army Malicious IP List](http://ciarmy.com)
+- [BruteForceBlocker](http://danger.rulez.sk/index.php/bruteforceblocker/)
+- [MaxMind GeoIP Anonymous Proxies](https://maxmind.com/en/anonymous_proxies)
+- [Blocklist.de](https://blocklist.de)
+- [Stop Forum Spam](http://stopforumspam.com/downloads/)
+- [GreenSnow Hack List](https://greensnow.co)
+
+<br />
+
+For more information on blocklists, visit our official documentation and read the [Chapter: Blocklists](https://aetherinox.github.io/csf-firewall/usage/blocklists/). Our documentation includes how to enable blocklists, and more information on what they do.
 
 <br />
 
