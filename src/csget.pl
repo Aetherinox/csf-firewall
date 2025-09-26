@@ -110,11 +110,28 @@ my $cmd;
 my $GET;
 
 # #
-#   download servers
+#   download servers / structure
+#   
+#   https://download.configserver.dev
+#       csf
+#           changelog.txt
+#           install.txt
+#           license.txt
+#           readme.txt
+#           version.txt
+#   
+#   https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/api/templates/versions
+#       csf
+#           changelog.txt
+#           install.txt
+#           license.txt
+#           readme.txt
+#           version.txt
 # #
 
 my @downloadservers = (
-    "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/api/templates/versions"
+        "https://download.configserver.dev"
+    #   "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/api/templates/versions"
     # , "https://download.configserver.com"
 );
 
