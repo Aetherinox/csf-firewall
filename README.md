@@ -29,23 +29,6 @@
 
 <br />
 
-<p>
-
-ConfigServer Firewall (CSF) is a robust and widely used firewall for Linux servers, offering an intuitive graphical interface that lets you manage your own firewall rules and supports both iptables and nftables.
-
-<br />
-
-In August 2025, the original developer of ConfigServer Firewall ceased operations. Since then, this repository has continued actively maintaining CSF, releasing updates as they become available. In addition to ConfigServer Firewall, we also provide:
-
-- A free IPSET blocklist service (fully compatible with CSF)
-  - Ipsets include lists from [AbuseIPDB](https://abuseipdb.com/) and [IPThreat](https://ipthreat.net/).
-  - For information on how to use these sets, read the section [IP Rulesets & Blocklists](#ip-sets--blocklist).
-- Addon scripts to enhance CSF with OpenVPN and Docker support
-
-</p>
-
-<br />
-
 <div align="center">
 
 <br />
@@ -74,34 +57,35 @@ In August 2025, the original developer of ConfigServer Firewall ceased operation
 <br />
 
 - [Summary](#summary)
-  - [Releases](#releases)
-  - [Folders](#folders)
 - [Features](#features)
   - [Firewall \& Network Security](#firewall--network-security)
   - [Login \& User Monitoring](#login--user-monitoring)
   - [Alerts \& Notifications](#alerts--notifications)
   - [Intrusion Detection \& Exploit Protection](#intrusion-detection--exploit-protection)
   - [Management \& Control](#management--control)
-- [How 📁 Extras/Scripts Works](#how--extrasscripts-works)
 - [Install](#install)
-  - [Using Patcher](#using-patcher)
-  - [Install Manually](#install-manually)
-    - [Step 1: Prerequisites](#step-1-prerequisites)
-    - [Step 2: Download and Install CSF](#step-2-download-and-install-csf)
-- [Testing the Firewall](#testing-the-firewall)
-- [Configuring CSF](#configuring-csf)
-- [Enabling CSF Firewall](#enabling-csf-firewall)
-- [Managing the Firewall](#managing-the-firewall)
-- [Enable CSF Firewall Web UI](#enable-csf-firewall-web-ui)
+  - [Requirements](#requirements)
+  - [Install](#install-1)
+    - [Step 1: Dependencies](#step-1-dependencies)
+    - [Step 2: Download](#step-2-download)
+      - [Download Direct](#download-direct)
+      - [Download Get.sh](#download-getsh)
+    - [Step 3: Run Pre-install Tests](#step-3-run-pre-install-tests)
+    - [Step 4: Install](#step-4-install)
+    - [Step 5: Disable Testing Mode](#step-5-disable-testing-mode)
+    - [Step 6: Enable and Start Services](#step-6-enable-and-start-services)
+- [Configure](#configure)
+- [Manage Firewall](#manage-firewall)
+- [Enable Firewall Web Interface](#enable-firewall-web-interface)
 - [Install Docker Patch](#install-docker-patch)
   - [Clone](#clone)
-  - [Configure](#configure)
+  - [Configure](#configure-1)
   - [Run Patch](#run-patch)
   - [Manual Run](#manual-run)
   - [Advanced Logs](#advanced-logs)
 - [Install OpenVPN Patch](#install-openvpn-patch)
   - [Clone](#clone-1)
-  - [Configure](#configure-1)
+  - [Configure](#configure-2)
   - [Run Patch](#run-patch-1)
   - [Manual Run](#manual-run-1)
   - [Advanced Logs](#advanced-logs-1)
@@ -131,46 +115,14 @@ In August 2025, the original developer of ConfigServer Firewall ceased operation
 
 ## Summary
 
-In August 2025, the original developer, Way to the Web Ltd, discontinued development of ConfigServer Firewall. This repository has since taken over, continuing its development by adding new features and providing ongoing bug fixes.
+ConfigServer Firewall & Security, also known as CSF, is a Stateful Packet Inspection (SPI) firewall and Login/Intrusion Detection and Security application for Linux servers which started back in 2005. CSF works as a front-end to iptables or nftables, configuring your server’s firewall rules to lock down public access to services while allowing only approved connections.
+
+This provides better security for your server while giving you an advanced, easy-to-use interface for managing firewall settings. With CSF in place, you can safely permit activities such as logging in via FTP or SSH, checking email, and loading websites, while unauthorized access attempts are blocked.
 
 <br />
-<br />
 
-### Releases
-
-Each release posted on the [Releases Page](https://github.com/Aetherinox/csf-firewall/releases) contains several `.zip` files:
-- `csf-firewall-vxx.xx.zip`
-  - Latest official version of ConfigServer Firewall. You do not need this if you already have CSF installed on your system.
-- `csf-firewall-vx.x.x-scripts.zip`
-  - These files are optional patches maintained by this repository. They assist with setting up and configuring OpenVPN and Docker with your copy of CSF. The script files include:
-    - 📄 install.sh
-    - 📄 csfpost.sh
-    - 📄 csfpre.sh
-    - 📄 docker.sh
-    - 📄 openvpn.sh
-
-<br />
-<br />
-
-### Folders
-
-This repository contains several folders:
-- 📁 `src`
-  - Source code related to ConfigServer Firewall
-- 📁 `blocklists` 
-  - Free ipset blocklist service
-  - List of IP addresses which have been reported for ssh brute-force attempts, port scanning, etc.
-  - 100% Confidence, powered by services such as [AbuseIPDB](https://abuseipdb.com/)
-  - IPs are no older than 90 days old _(updated daily)_, and also contain blocks to protect your privacy from certain online services
-  - Add to `csf.blocklists`
-- 📁 `extras/example_configs`
-  - Ready-to-use CSF config files
-    - 📄 `extras/example_configs/etc/csf/csf.conf` (full version)
-    - 📄 `extras/example_configs/etc/csf/csf.conf.clean` (clean version)
-    - 📄 `extras/example_configs/etc/GeoIP.conf` GeoIP Config File for [MaxMind geo-blocking](https://www.maxmind.com/en/home)
-- 📁 `extras/scripts`
-  - Docker patch which allows CSF and Docker to work together
-  - OpenVPN integration patch
+> [!NOTE] 
+> In August 2025, the original developer, Way to the Web Ltd, discontinued development of ConfigServer Firewall. This repository has since taken over, continuing its development by adding new features and providing ongoing bug fixes.
 
 <br />
 
@@ -179,7 +131,6 @@ This repository contains several folders:
 <br />
 
 ## Features
-
 
 Interested in Config Server Firewall & Security? Check out a partial list of the included features below:
 
@@ -267,178 +218,249 @@ Interested in Config Server Firewall & Security? Check out a partial list of the
 
 <br />
 
-## How 📁 Extras/Scripts Works
-
-You can read this if you want, or skip it. It outlines exactly how the patches work:
-  - Download all the files in the `/patch` folder to your system.
-  - Set the `install.sh` file to be executable.
-    - `sudo chmod +x install.sh`
-  - Run the `install.sh` script
-    - `sudo ./install.sh`
-    - The script will first check to see if you have ConfigServer Firewall and all of its prerequisites installed. It will install them if they are not installed. This includes:
-      - ConfigServer Firewall
-      - ipset package
-      - iptables / ip6tables package
-    - Two new files will be added:
-      - `/usr/local/csf/bin/csfpre.sh`
-      - `/usr/local/csf/bin/csfpost.sh`
-    - The patches will then be moved onto your system in the locations:
-      - `/usr/local/include/csf/post.d/docker.sh`
-      - `/usr/local/include/csf/post.d/openvpn.sh`
-    - The `Docker` patch will first check to ensure you have the following:
-      - **Must** have Docker installed
-        - This script will **NOT** install docker. You must do that.
-      - **Must** have a valid docker network adapter named `docker*` or `br-*`
-    - The `OpenVPN` patch will first check to ensure you have the following:
-      - **Must** have OpenVPN Server installed
-      - **Must** have a valid network tunnel named `tun*` (tun0, tun1, etc)
-      - **Must** have an outside network adapter named either `eth*` or `enp*`
-      - If any of the checks above are not true, OpenVPN patcher will skip
-        - You can check your list of network adapters using any of the commands below:
-          - `ip link show`
-          - `ifconfig`
-        - You can check if OpenVPN server is installed by using the commmand:
-          - `openvpn --version`
-  
-<br />
-
-  - If you attempt to run the `install.sh` any time after the initial setup:
-    - The script will check if ConfigServer Firewall and all prerequisites are installed.
-      - **If they are not installed**; they will be installed.
-      - **If they are already installed**; nothing will happen. The script does **NOT** update your packages. It installs the latest version of each package from the time that you run the script and do not already have ConfigServer Firewall installed.
-    - The script will look at all of the files it added the first time and check the MD5 hash.
-      - If the `csfpre`, `csfpost`, or patch files do not exist; they will be re-added to your system.
-      - **If the patch files are different** from the one the patcher comes with, you will be prompted / asked if you wish to overwrite your already installed copy
-      - **If the patch files are the same** as the ones which comes with the patcher; nothing will be done and it will skip that step.
-
-<br />
-
-When you start up the CSF service, the `csfpost.sh` file will loop through every patch / file added to the `post.d` folder, and run the code inside of those files. The code inside each patch contains iptable / firewall rules which allow that app to communicate between your system and the outside world.
-
-<br />
-
-Even if you were to completely wipe your iptable rules, as soon as you restart the CSF service; those rules will be added right back.
-
-<br />
-
----
-
-<br />
-
 ## Install
 
-You can install ConfigServer Firewall and all prerequisites one of two ways:
-
-1. [Install Using Patcher](#install-using-patcher)
-2. [Install Manually](#install-manually)
+To install ConfigServer Firewall & Security, follow these instructions. We also provide a full and detailed [Installation Guide](https://aetherinox.github.io/csf-firewall/install/dependencies/) within our official documentation. These docs go into much more detail than our README. However, if you're looking for a quick setup, read below:
 
 <br />
 
-### Using Patcher
+### Requirements
 
-If you would like to install ConfigServer Firewall using this repo's patcher; download the patch:
+Installing CSF on your server requires the following:
+
+- Linux server running `CentOS`, `Debian`, `Ubuntu`, or any other compatible Linux distribution. 
+- Root access or user account with `sudo` privileges.
+- `Perl` installed on your server.
+
+<br />
+
+### Install
+
+Use these instructions if you wish to manually install CSF on your server. 
+
+<br />
+
+#### Step 1: Dependencies
+
+To install the latest version of CSF manually, run the following commands:
+
+<br />
+
+  - For **Debian/Ubuntu**:
+
+    ```shell
+    sudo apt-get update && sudo apt-get install -y \
+      perl \
+      libwww-perl \
+      libio-socket-ssl-perl \
+      libcrypt-ssleay-perl \
+      libnet-libidn-perl \
+      libio-socket-inet6-perl \
+      libsocket6-perl \
+      ipset
+    ```
+
+  - For **CentOS/RHEL**:
+
+    ```shell
+    sudo yum makecache && sudo yum install -y \
+      perl \
+      perl-libwww-perl \
+      perl-IO-Socket-SSL \
+      perl-Net-SSLeay \
+      perl-Net-LibIDN \
+      perl-IO-Socket-INET6 \
+      perl-Socket6 \
+      ipsets
+    ```
+
+<br />
+<br />
+<br />
+
+#### Step 2: Download
+
+To download and install CSF, you have two options. 
+
+1. Download .zip directly using wget or curl
+2. Download .zip using our [get.sh](https://get.configserver.dev) script
+
+<br />
+
+##### Download Direct
+
+To download the latest CSF release, run one of the commands below:
+
 ```shell
-git clone https://github.com/aetherinox/csf-firewall.git .
+# Using wget
+wget https://download.configserver.dev/csf.zip
+
+# Using curl
+curl -O https://download.configserver.dev/csf.zip
 ```
 
 <br />
 
-Set the permissions for the `install.sh` file:
+##### Download Get.sh
+
+To download the latest version of CSF using our [get.sh](https://get.configserver.dev) script, run one of the commands below. This will simply give you the zip file in the folder you run the command from.
 
 ```shell
-sudo chmod +x ./patch/install.sh
+# Using wget
+bash <(wget -qO - https://get.configserver.dev) && . ~/.bashrc
+
+# Using curl
+bash <(curl -sL https://get.configserver.dev) && . ~/.bashrc
 ```
 
 <br />
+<br />
+<br />
 
-Run the script:
+The CSF archive should be on your server; extract it to a subfolder called `./csf`:
 
 ```shell
-sudo ./patch/install.sh
+# .zip filename
+unzip -oq "csf.zip" -d "csf"
+
+# .tgz filename
+tar -xzf "csf.tgz" -C "csf"
 ```
 
 <br />
 
-If ConfigServer Firewall is not already installed on your system; you should see:
-
-```
-  Installing package iptables
-  Installing package ipset
-  Installing package ConfigServer Firewall
-
-  Docker patch will now start ...
-```
-<br />
-
-### Install Manually
-
-These steps explain how to install ConfigServer Firewall manually.
-
-<br />
-
-#### Step 1: Prerequisites
-
-- A Linux server running CentOS, Debian, Ubuntu, or any other compatible Linux distribution. 
-- Root access or a user account with sudo privileges.
-- Perl installed on your server. If Perl is not installed, you can install it by running the following commands:
-  - For CentOS/RHEL:
-    ```shell
-    sudo yum install perl ipset
-    ```
-
-  - For Debian/Ubuntu:
-
-    ```shell
-    sudo apt-get update 
-    sudo apt-get install perl ipset
-    ```
+You should now have CSF downloaded and extracted to your system. Next we will [Run Pre-install Tests](#step-3-run-pre-install-tests) to ensure your server has all of the [Dependencies](#step-1-dependencies).
 
 <br />
 <br />
-
-#### Step 2: Download and Install CSF
-
-To download and install CSF, follow these steps:
-
 <br />
 
-- Log in to your server via SSH. 
-- Download the latest version of CSF using the wget command:
-    ```shell
-    wget https://download.configserver.com/csf.tgz
-    ```
-- Extract the downloaded archive:
-    ```shell
-    tar -xzf csf.tgz
-    ```
-- Navigate to the extracted directory:
-    ```shell
-    cd csf
-    ```
-- Run the installation script:
-    ```shell
-    sudo sh install.sh
-    ```
-
-<br />
-
-CSF will now be installed on your server, along with its Web UI (ConfigServer Firewall & Security) if you have a control panel like cPanel or DirectAdmin installed.
-
-<br />
-
----
-
-<br />
-
-## Testing the Firewall
+#### Step 3: Run Pre-install Tests
 
 Before enabling and configuring CSF, it is crucial to test whether it is compatible with your server. Run the following command to initiate the test:
 
 ```shell
-sudo perl /usr/local/csf/bin/csftest.pl
+sudo perl csf/csftest.pl
 ```
 
-The test will check for any potential issues or conflicts. If the test completes successfully, you will see the message “RESULT: csf should function on this server.” If there are any problems, the test will provide information on how to resolve them.
+<br />
+
+The test will check for any potential issues or conflicts. If the test completes successfully, you will see the message `RESULT: csf should function on this server`.
+
+If there are any problems, the test will provide information on how to resolve them.
+
+<br />
+<br />
+<br />
+
+#### Step 4: Install
+
+After completing [Step 3: Run Pre-install Tests](#step-3-run-pre-install-tests), Navigate to the extracted directory:
+
+```shell
+cd csf
+```
+
+<br />
+
+Run the installation script:
+
+```shell
+sudo sh install.sh
+```
+
+<br />
+
+This will install CSF to your server, no matter which control panel you are running, or if you do not have a control panel and are running a baremetal install.
+
+After installation, you must [Disable Testing Mode](#step-5-disable-testing-mode).
+
+<br />
+<br />
+<br />
+
+#### Step 5: Disable Testing Mode
+
+In order for the LFD service to be started, you must disable `TESTING` mode. Open your csf config file at `/etc/csf/csf.conf` and change `TESTING = "1"` to:
+
+```shell
+TESTING = "0"
+```
+
+<br />
+
+You are now ready to [enable and start the services](#step-6-enable-and-start-services).
+
+<br />
+<br />
+
+#### Step 6: Enable and Start Services
+
+After doing all of the above, confirm that CSF and LFD are now running on your server. First, we will enable CSF with the following command:
+
+```shell
+sudo csf --enable
+```
+
+<br />
+
+Then start the service:
+
+```shell
+sudo systemctl start csf
+sudo systemctl start lfd
+sudo csf -ra
+```
+
+<br />
+
+Confirm that the CSF service is up and running:
+
+```shell
+sudo systemctl status csf
+```
+
+<br />
+
+You should see:
+
+```shell
+● csf.service - ConfigServer Firewall & Security - csf
+    Loaded: loaded (/usr/lib/systemd/system/csf.service; enabled; preset: enabled)
+    Active: active (exited) since Sun 2025-09-21 01:35:45 UTC; 4s ago
+    Process: 449564 ExecStart=/usr/sbin/csf --initup (code=exited, status=0/SUCCESS)
+  Main PID: 449564 (code=exited, status=0/SUCCESS)
+        CPU: 621ms
+```
+
+<br />
+
+Now check the LFD service for the same status:
+
+```shell
+sudo systemctl status lfd
+```
+
+<br />
+
+You should see:
+
+```shell
+● lfd.service - ConfigServer Firewall & Security - lfd
+    Loaded: loaded (/usr/lib/systemd/system/lfd.service; enabled; preset: enabled)
+    Active: active (running) since Sun 2025-09-21 01:44:00 UTC; 53min ago
+    Process: 335736 ExecStart=/usr/sbin/lfd (code=exited, status=0/SUCCESS)
+  Main PID: 335770 (lfd - sleeping)
+      Tasks: 1 (limit: 4546)
+    Memory: 39.2M (peak: 63.3M)
+        CPU: 15.090s
+    CGroup: /system.slice/lfd.service
+            └─335770 "lfd - sleeping"
+```
+
+<br />
+
+At this point, CSF and LFD should be up and running, with minimal configuration. We highly recommend going to our official documentation for a more in-depth tutorial on how to install and configure CSF. These docs are available in our [Install Chapter](https://aetherinox.github.io/csf-firewall/install/dependencies/).
 
 <br />
 
@@ -446,7 +468,7 @@ The test will check for any potential issues or conflicts. If the test completes
 
 <br />
 
-## Configuring CSF
+## Configure
 
 Now that CSF is installed, you can start configuring it to suit your server’s requirements. The main configuration file for CSF is located at /etc/csf/csf.conf. You can use your preferred text editor to modify the file, such as nano or vim:
 
@@ -479,25 +501,7 @@ These are just a few of the numerous configuration options available in CSF. Mak
 
 <br />
 
-## Enabling CSF Firewall
-
-Once you have configured the CSF firewall, it is time to enable it. To do so, run the following command:
-
-```shell
-sudo csf -e
-```
-
-<br />
-
-This command will restart the CSF and LFD (Login Failure Daemon) services, applying your configuration changes and activating the firewall.
-
-<br />
-
----
-
-<br />
-
-## Managing the Firewall
+## Manage Firewall
 
 For a list of commands associated to CSF which help you manage your firewall, please refer to our documentation at:
 
@@ -509,9 +513,13 @@ For a list of commands associated to CSF which help you manage your firewall, pl
 
 <br />
 
-## Enable CSF Firewall Web UI
+## Enable Firewall Web Interface
 
-ConfigServer Firewall offers a web interface for the your firewall from a web browser. To enable and access the CSF web interface, please follow the documentation at:
+ConfigServer Firewall offers a feature-rich web interface which you can access via your browser. This allows you to manage your firewall using a graphical user interface, instead of by using commands. 
+
+<br />
+
+For a full set of instructions, visit the documentation below:
 
 - https://aetherinox.github.io/csf-firewall/install/webui/
 
