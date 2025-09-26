@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_trinidad_tobago_ipset
 #   @uuid           c5bbe7f4-f40f-3dbf-9d41-9b0fd878b811
-#   @updated        Thu 25 Sep 2025 01:00:57 AM UTC
+#   @updated        Fri 26 Sep 2025 01:01:15 AM UTC
 #   @entries        556,084 ips
 #                   337 subnets
 #                   337 lines
