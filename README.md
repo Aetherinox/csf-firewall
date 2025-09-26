@@ -19,7 +19,7 @@
 [![Last Commit][github-commit-img]][github-commit-img]
 [![Contributors][contribs-all-img]](#contributors-)
 
-[![Built with Material for MkDocs](https://img.shields.io/badge/View_Official_Documentation-526CFE?style=for-the-badge&logo=MaterialForMkDocs&logoColor=white)](https://aetherinox.github.io/csf-firewall/)
+[![View Official Documentation](https://img.shields.io/badge/View_Official_Documentation-526CFE?style=for-the-badge&logo=MaterialForMkDocs&logoColor=white)](https://docs.configserver.dev)
 <!-- prettier-ignore-end -->
 
 <br />
@@ -63,6 +63,9 @@
   - [Alerts \& Notifications](#alerts--notifications)
   - [Intrusion Detection \& Exploit Protection](#intrusion-detection--exploit-protection)
   - [Management \& Control](#management--control)
+- [Documentation](#documentation)
+  - [📕 Main Chapters](#-main-chapters)
+  - [📗 Cheatsheets](#-cheatsheets)
 - [Install](#install)
   - [Requirements](#requirements)
   - [Install](#install-1)
@@ -74,9 +77,6 @@
     - [Step 4: Install](#step-4-install)
     - [Step 5: Disable Testing Mode](#step-5-disable-testing-mode)
     - [Step 6: Enable and Start Services](#step-6-enable-and-start-services)
-- [Documentation](#documentation)
-  - [📕 Main Chapters](#-main-chapters)
-  - [📗 Cheatsheets](#-cheatsheets)
 - [IP Sets / Blocklist](#ip-sets--blocklist)
   - [Official Blocklists](#official-blocklists)
     - [Main Lists](#main-lists)
@@ -208,9 +208,60 @@ Interested in Config Server Firewall & Security? Check out a partial list of the
 
 <br />
 
+## Documentation
+
+This README only covers basic installation of CSF. In order to keep all information in one place, all other guides are located in our [official documentation](https://docs.configserver.dev). We have provided some useful links below.
+
+<br />
+
+<div align="center">
+
+[![View Official Documentation](https://img.shields.io/badge/View_Official_Documentation-526CFE?style=for-the-badge&logo=MaterialForMkDocs&logoColor=white)](https://docs.configserver.dev)
+
+</div>
+
+<br />
+
+### 📕 Main Chapters
+
+Review the following chapters to learn more about setting up CSF and making use of its included features:
+
+<br />
+
+| Chapter | Description | View Docs |
+| --- | --- | --- |
+| Enable Web Interface | How to enable and set up CSF web interface | [View](https://aetherinox.github.io/csf-firewall/install/webui/) |
+| Configuration | Configuring CSF for the first time | [View](https://aetherinox.github.io/csf-firewall/usage/configuration/) |
+| Enable IPSETs | Manage large blocklists without performance impacts | [View](https://aetherinox.github.io/csf-firewall/usage/ipset/) |
+| Blocklists | Deny access to abusive IPs with 3rd party blocklists | [View](https://aetherinox.github.io/csf-firewall/usage/blocklists/) |
+| GeoIP Blocks | Block access to geographical locations | [View](https://aetherinox.github.io/csf-firewall/usage/geoip/) |
+| Traefik Integration | CSF behind Traefik Reverse Proxy | [View](https://aetherinox.github.io/csf-firewall/install/traefik/) |
+| Authentik Integration | Secure CSF behind Authentik for authentication | [View](https://aetherinox.github.io/csf-firewall/install/authentik/) |
+| Uninstall | Uninstall CSF from your server | [View](https://aetherinox.github.io/csf-firewall/install/uninstall/) | 
+
+<br />
+
+### 📗 Cheatsheets
+
+These are quick-guides which explain very specific features in detail.
+
+<br />
+
+| Chapter | Description | View Docs |
+| --- | --- | --- |
+| Folder Structure | Explains every file and folder within CSF and its purpose | [View](https://aetherinox.github.io/csf-firewall/usage/cheatsheet/structure/) |
+| Commands | Detailed overview of the commands that come with CSF | [View](https://aetherinox.github.io/csf-firewall/usage/cheatsheet/commands/) |
+| Sample Configs | Default and example config files / templates for CSF | [View](https://aetherinox.github.io/csf-firewall/usage/cheatsheet/conf/) |
+
+<br />
+
+---
+
+<br />
+
 ## Install
 
-To install ConfigServer Firewall & Security, follow these instructions. We also provide a full and detailed [Installation Guide](https://aetherinox.github.io/csf-firewall/install/dependencies/) within our official documentation. These docs go into much more detail than our README. However, if you're looking for a quick setup, read below:
+This section will explain how to install ConfigServer Firewall in very simple terms, without a lot of extra detail. We also provide a full and detailed [Installation Guide](https://aetherinox.github.io/csf-firewall/install/dependencies/) within our official documentation. These docs go into much more detail than our README. However, if you're looking for a quick setup, read below:
 
 <br />
 
@@ -436,49 +487,6 @@ You should see:
 <br />
 
 At this point, CSF and LFD should be up and running, with minimal configuration. We highly recommend going to our official documentation for a more in-depth tutorial on how to install and configure CSF. These docs are available in our [Install Chapter](https://aetherinox.github.io/csf-firewall/install/dependencies/).
-
-<br />
-
----
-
-<br />
-
-## Documentation
-
-This README only covers basic installation of CSF. In order to keep all information in one place, all other guides are located in our [official documentation](https://docs.configserver.dev). We have provided some useful links below.
-
-<br />
-
-### 📕 Main Chapters
-
-Review the following chapters to learn more about setting up CSF and making use of its included features:
-
-<br />
-
-| Chapter | Description | View Docs |
-| --- | --- | --- |
-| Enable Web Interface | How to enable and set up CSF web interface | [View](https://aetherinox.github.io/csf-firewall/install/webui/) |
-| Configuration | Configuring CSF for the first time | [View](https://aetherinox.github.io/csf-firewall/usage/configuration/) |
-| Enable IPSETs | Manage large blocklists without performance impacts | [View](https://aetherinox.github.io/csf-firewall/usage/ipset/) |
-| Blocklists | Deny access to abusive IPs with 3rd party blocklists | [View](https://aetherinox.github.io/csf-firewall/usage/blocklists/) |
-| GeoIP Blocks | Block access to geographical locations | [View](https://aetherinox.github.io/csf-firewall/usage/geoip/) |
-| Traefik Integration | CSF behind Traefik Reverse Proxy | [View](https://aetherinox.github.io/csf-firewall/install/traefik/) |
-| Authentik Integration | Secure CSF behind Authentik for authentication | [View](https://aetherinox.github.io/csf-firewall/install/authentik/) |
-| Uninstall | Uninstall CSF from your server | [View](https://aetherinox.github.io/csf-firewall/install/uninstall/) | 
-
-<br />
-
-### 📗 Cheatsheets
-
-These are quick-guides which explain very specific features in detail.
-
-<br />
-
-| Chapter | Description | View Docs |
-| --- | --- | --- |
-| Folder Structure | Explains every file and folder within CSF and its purpose | [View](https://aetherinox.github.io/csf-firewall/usage/cheatsheet/structure/) |
-| Commands | Detailed overview of the commands that come with CSF | [View](https://aetherinox.github.io/csf-firewall/usage/cheatsheet/commands/) |
-| Sample Configs | Default and example config files / templates for CSF | [View](https://aetherinox.github.io/csf-firewall/usage/cheatsheet/conf/) |
 
 <br />
 
