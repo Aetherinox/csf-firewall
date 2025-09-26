@@ -246,7 +246,7 @@ This set of dependencies also includes `sendmail` to make use of CSF's mailing f
     #   CentOS/RHEL
     # #
 
-    sudo yum makecache && sudo yum install -y perl gd-devel perl-App-cpanminus
+    sudo yum makecache && sudo yum install -y epel-release perl gd-devel perl-App-cpanminus
 
     # #
     #   Full Dependencies

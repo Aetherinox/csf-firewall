@@ -35,53 +35,74 @@ If your distro or control panel is not mentioned here, follow the [Install: Gene
 
 In the previous [download](download.md) step; you were instructed to download a copy of CSF which comes in the form of a zip archive. You then extracted that zip to `/tmp/csf`, and set `+x` executable permissions on the `install.sh` file. 
 
-Next, you must ensure that your server does not have `firewalld` installed, as CSF and firewalld cannot function together.
+We need to ensure that we don't have any existing firewalls that need to be disabled. Run the commands below to ensure they are disabled:
 
-=== ":aetherx-axb-debian: Debian/Ubuntu (apt-get)"
+=== ":aetherx-axs-block-brick-fire: UFW"
+
+    Stop and disable `ufw`
 
     ```bash
-    sudo apt remove --purge firewalld -y
+    sudo systemctl stop ufw
+    sudo systemctl disable ufw
     ```
 
-=== ":aetherx-axb-redhat: CentOS/RHEL (yum/dnf)"
+    Confirm `ufw` is disabled with:
 
     ```bash
-    sudo yum remove firewalld -y
+    sudo systemctl status ufw
+    ```
+
+=== ":aetherx-axs-block-brick-fire: Firewalld"
+
+    Stop and disable `firewalld`
+
+    ```bash
+    sudo systemctl stop firewalld
+    sudo systemctl disable firewalld
+    ```
+
+    Confirm `firewalld` is disabled with:
+
+    ```bash
+    sudo systemctl status firewalld
     ```
 
 <br />
 
-Finally, run the installation script. You can either execute `/tmp/csf/install.sh` or `/tmp/csf/install.generic.sh`. Pick one of the run options below. 
-
-:   :aetherx-axd-circle-1: Runs `install.sh` :aetherx-axd-dot: uses shebang interpreter :aetherx-axd-dot: requires executable `+x` permission
-:   :aetherx-axd-circle-2: Runs `install.sh` :aetherx-axd-dot: uses `sh` shell :aetherx-axd-dot: executable permission not required
-:   :aetherx-axd-circle-3: Runs `install.generic.sh` :aetherx-axd-dot: uses shebang interpreter :aetherx-axd-dot: requires executable `+x` permission
-:   :aetherx-axd-circle-4: Runs `install.generic.sh` :aetherx-axd-dot: uses `sh` shell :aetherx-axd-dot: executable permission not required
+Finally, run the installation script. You can either execute `/tmp/csf/install.sh` or `/tmp/csf/install.generic.sh`. Pick one of the run options below. Most users will use :aetherx-axd-circle-1:
 
 === ":aetherx-axd-circle-1: Option 1"
+
+    :aetherx-axd-circle-1: Runs `install.sh` :aetherx-axd-dot: uses `sh` shell :aetherx-axd-dot: executable permission not required
+
+    ```bash
+    sudo sh /tmp/csf/install.sh
+    ```
+
+=== ":aetherx-axd-circle-2: Option 2"
+
+    :aetherx-axd-circle-2: Runs `install.sh` :aetherx-axd-dot: uses shebang interpreter :aetherx-axd-dot: requires executable `+x` permission
 
     ```bash
     sudo chmod +x /tmp/csf/install.sh
     /tmp/csf/install.sh
     ```
 
-=== ":aetherx-axd-circle-2: Option 2"
-
-    ```bash
-    sh /tmp/csf/install.sh
-    ```
-
 === ":aetherx-axd-circle-3: Option 3"
 
+    :aetherx-axd-circle-3: Runs `install.generic.sh` :aetherx-axd-dot: uses `sh` shell :aetherx-axd-dot: executable permission not required
+
     ```bash
-    sudo chmod +x /tmp/csf/install.generic.sh
-    /tmp/csf/install.generic.sh
+    sudo sh /tmp/csf/install.generic.sh
     ```
 
 === ":aetherx-axd-circle-4: Option 4"
 
+    :aetherx-axd-circle-4: Runs `install.generic.sh` :aetherx-axd-dot: uses shebang interpreter :aetherx-axd-dot: requires executable `+x` permission
+
     ```bash
-    sh /tmp/csf/install.generic.sh
+    sudo chmod +x /tmp/csf/install.generic.sh
+    /tmp/csf/install.generic.sh
     ```
 
 <br />
@@ -92,10 +113,15 @@ Follow the instructions on-screen. If you are prompted for any additional inform
 
 Once the wizard completes, you can confirm if CSF is installed and functioning by accessing your server via SSH, and running the CSF version command:
 
-=== ":aetherx-axs-square-terminal: Terminal"
+=== ":aetherx-axd-command: Command"
 
       ```shell
-      $ sudo csf -v
+      sudo csf -v
+      ```
+
+=== ":aetherx-axs-square-terminal: Output"
+
+      ```shell
       csf: v15.10 (generic)
       ```
 
@@ -103,11 +129,15 @@ Once the wizard completes, you can confirm if CSF is installed and functioning b
 
 You can also confirm the status of `csf` and `lfd` by running:
 
-=== ":aetherx-axs-square-terminal: Terminal"
+=== ":aetherx-axd-command: Command"
 
       ```shell
-      $ sudo systemctl status csf
+      sudo systemctl status csf
+      ```
 
+=== ":aetherx-axs-square-terminal: Output"
+
+      ```shell
       ● csf.service - ConfigServer Firewall & Security - csf
           Loaded: loaded (/lib/systemd/system/csf.service; enabled; vendor preset: enabled)
           Active: active (exited) since Mon 2025-09-15 23:45:04 UTC; 14 seconds ago
@@ -151,57 +181,78 @@ If you have not yet logged into your server, log in as the `root` user via SSH.
 
 <br />
 
-Next, ensure that your server does not have `firewalld` installed; CSF and firewalld cannot function together.
+We need to ensure that we don't have any existing firewalls that need to be disabled. Run the commands below to ensure they are disabled:
 
-=== ":aetherx-axb-debian: Debian/Ubuntu (apt-get)"
+=== ":aetherx-axs-block-brick-fire: UFW"
+
+    Stop and disable `ufw`
 
     ```bash
-    sudo apt remove --purge firewalld -y
+    sudo systemctl stop ufw
+    sudo systemctl disable ufw
     ```
 
-=== ":aetherx-axb-redhat: CentOS/RHEL (yum/dnf)"
+    Confirm `ufw` is disabled with:
 
     ```bash
-    sudo yum remove firewalld -y
+    sudo systemctl status ufw
+    ```
+
+=== ":aetherx-axs-block-brick-fire: Firewalld"
+
+    Stop and disable `firewalld`
+
+    ```bash
+    sudo systemctl stop firewalld
+    sudo systemctl disable firewalld
+    ```
+
+    Confirm `firewalld` is disabled with:
+
+    ```bash
+    sudo systemctl status firewalld
     ```
 
 <br />
 
-Finally, run the installation script. You can either execute `/root/csf/install.sh` or `/root/csf/install.cpanel.sh`. We recommend `install.sh`. 
+Finally, run the installation script. You can either execute `/root/csf/install.sh` or `/root/csf/install.cpanel.sh`. We recommend `install.sh`. Most users will use :aetherx-axd-circle-1:
 
 <br />
 
 Pick one of the run options below. 
 
-:   :aetherx-axd-circle-1: Runs `install.sh` :aetherx-axd-dot: uses shebang interpreter :aetherx-axd-dot: requires executable `+x` permission
-:   :aetherx-axd-circle-2: Runs `install.sh` :aetherx-axd-dot: uses `sh` shell :aetherx-axd-dot: executable permission not required
-:   :aetherx-axd-circle-3: Runs `install.cpanel.sh` :aetherx-axd-dot: uses shebang interpreter :aetherx-axd-dot: requires executable `+x` permission
-:   :aetherx-axd-circle-4: Runs `install.cpanel.sh` :aetherx-axd-dot: uses `sh` shell :aetherx-axd-dot: executable permission not required
-
 === ":aetherx-axd-circle-1: Option 1"
+
+    :aetherx-axd-circle-1: Runs `install.sh` :aetherx-axd-dot: uses `sh` shell :aetherx-axd-dot: executable permission not required
+
+    ```bash
+    sudo sh /root/csf/install.sh
+    ```
+
+=== ":aetherx-axd-circle-2: Option 2"
+
+    :aetherx-axd-circle-2: Runs `install.sh` :aetherx-axd-dot: uses shebang interpreter :aetherx-axd-dot: requires executable `+x` permission
 
     ```bash
     sudo chmod +x /root/csf/install.sh
     /root/csf/install.sh
     ```
 
-=== ":aetherx-axd-circle-2: Option 2"
-
-    ```bash
-    sh /root/csf/install.sh
-    ```
-
 === ":aetherx-axd-circle-3: Option 3"
 
+    :aetherx-axd-circle-3: Runs `install.cpanel.sh` :aetherx-axd-dot: uses `sh` shell :aetherx-axd-dot: executable permission not required
+
     ```bash
-    sudo chmod +x /root/csf/install.cpanel.sh
-    /root/csf/install.cpanel.sh
+    sudo sh /root/csf/install.cpanel.sh
     ```
 
 === ":aetherx-axd-circle-4: Option 4"
 
+    :aetherx-axd-circle-4: Runs `install.cpanel.sh` :aetherx-axd-dot: uses shebang interpreter :aetherx-axd-dot: requires executable `+x` permission
+
     ```bash
-    sh /root/csf/install.cpanel.sh
+    sudo chmod +x /root/csf/install.cpanel.sh
+    /root/csf/install.cpanel.sh
     ```
 
 <br />
