@@ -18,6 +18,17 @@ This mirrors the service originally offered by the CSF developers, which was the
 This section explains how to utilize the CSF download service.
 
 <br />
+<br />
+
+<div align="center" markdown>
+
+:aetherx-axb-chrome:{ .icon-size-48 } 
+:aetherx-axb-brave:{ .icon-size-48 } 
+:aetherx-axb-firefox-browser:{ .icon-size-48 } 
+:aetherx-axb-opera:{ .icon-size-48 } 
+:aetherx-axb-edge:{ .icon-size-48 }
+
+</div>
 
 ### Using Browser  <!-- omit from toc -->
 
@@ -26,6 +37,13 @@ The simplest way to use this service is through your web browser. Just open Fire
 All downloads from this service are delivered with the filename `csf`, making it easy to integrate into your own scripts without needing to determine the latest version name. If you do need the exact version, you can open the downloaded archive and check the `version.txt` file inside.
 
 <br />
+<br />
+
+<div align="center" markdown>
+
+:aetherx-axs-square-terminal:{ .icon-size-48 } 
+
+</div>
 
 ### Using CLI  <!-- omit from toc -->
 
