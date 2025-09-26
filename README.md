@@ -77,18 +77,6 @@
 - [Configure](#configure)
 - [Manage Firewall](#manage-firewall)
 - [Enable Firewall Web Interface](#enable-firewall-web-interface)
-- [Install Docker Patch](#install-docker-patch)
-  - [Clone](#clone)
-  - [Configure](#configure-1)
-  - [Run Patch](#run-patch)
-  - [Manual Run](#manual-run)
-  - [Advanced Logs](#advanced-logs)
-- [Install OpenVPN Patch](#install-openvpn-patch)
-  - [Clone](#clone-1)
-  - [Configure](#configure-2)
-  - [Run Patch](#run-patch-1)
-  - [Manual Run](#manual-run-1)
-  - [Advanced Logs](#advanced-logs-1)
 - [IP Sets / Blocklist](#ip-sets--blocklist)
   - [Main Lists](#main-lists)
   - [Privacy Lists](#privacy-lists)
@@ -260,6 +248,8 @@ To install the latest version of CSF manually, run the following commands:
       ipset
     ```
 
+<br />
+
   - For **CentOS/RHEL**:
 
     ```shell
@@ -280,16 +270,16 @@ To install the latest version of CSF manually, run the following commands:
 
 #### Step 2: Download
 
-To download and install CSF, you have two options. 
+To download and install CSF, you have two options. Both options give you the latest version of our CSF archive. 
 
-1. Download .zip directly using wget or curl
-2. Download .zip using our [get.sh](https://get.configserver.dev) script
+1. [Download .zip using wget or curl](#download-direct)
+2. [Download .zip using get.sh script](#download-getsh)
 
 <br />
 
 ##### Download Direct
 
-To download the latest CSF release, run one of the commands below:
+To download the latest CSF release, run one of the commands:
 
 ```shell
 # Using wget
@@ -328,26 +318,18 @@ tar -xzf "csf.tgz" -C "csf"
 ```
 
 <br />
-
-You should now have CSF downloaded and extracted to your system. Next we will [Run Pre-install Tests](#step-3-run-pre-install-tests) to ensure your server has all of the [Dependencies](#step-1-dependencies).
-
-<br />
 <br />
 <br />
 
 #### Step 3: Run Pre-install Tests
 
-Before enabling and configuring CSF, it is crucial to test whether it is compatible with your server. Run the following command to initiate the test:
+Before enabling and configuring CSF, it is crucial to test whether it is compatible with your server. Run the following command to initiate the test. 
+
+If the test completes successfully, you will see `RESULT: csf should function on this server`. If there are any problems, the test will provide information on how to resolve them.
 
 ```shell
 sudo perl csf/csftest.pl
 ```
-
-<br />
-
-The test will check for any potential issues or conflicts. If the test completes successfully, you will see the message `RESULT: csf should function on this server`.
-
-If there are any problems, the test will provide information on how to resolve them.
 
 <br />
 <br />
@@ -363,17 +345,11 @@ cd csf
 
 <br />
 
-Run the installation script:
+Run the installation script. After installation, you must [Disable Testing Mode](#step-5-disable-testing-mode).
 
 ```shell
 sudo sh install.sh
 ```
-
-<br />
-
-This will install CSF to your server, no matter which control panel you are running, or if you do not have a control panel and are running a baremetal install.
-
-After installation, you must [Disable Testing Mode](#step-5-disable-testing-mode).
 
 <br />
 <br />
@@ -381,16 +357,13 @@ After installation, you must [Disable Testing Mode](#step-5-disable-testing-mode
 
 #### Step 5: Disable Testing Mode
 
-In order for the LFD service to be started, you must disable `TESTING` mode. Open your csf config file at `/etc/csf/csf.conf` and change `TESTING = "1"` to:
+In order for the LFD service to be started, you must disable `TESTING` mode. Open your csf config file at `/etc/csf/csf.conf` and change `TESTING = "1"` to `0`.
 
 ```shell
 TESTING = "0"
 ```
 
 <br />
-
-You are now ready to [enable and start the services](#step-6-enable-and-start-services).
-
 <br />
 <br />
 
@@ -470,30 +443,10 @@ At this point, CSF and LFD should be up and running, with minimal configuration.
 
 ## Configure
 
-Now that CSF is installed, you can start configuring it to suit your server’s requirements. The main configuration file for CSF is located at /etc/csf/csf.conf. You can use your preferred text editor to modify the file, such as nano or vim:
+ConfigServer Firewall & Security includes a large config file located at `/etc/csf/csf.conf`. To view the most important list of settings you should review and change, read our [Configuration Chapter](https://aetherinox.github.io/csf-firewall/usage/configuration/) within our official documentation.
 
-```shell
-sudo nano /etc/csf/csf.conf
-```
+- https://aetherinox.github.io/csf-firewall/usage/configuration/
 
-<br />
-
-Some essential settings you may want to modify include:
-
-> [!NOTE]
-> When you run the patcher `install.sh`; **TESTING MODE** will automatically be disabled after everything as successfully completed.
-
-<br />
-
-- `TESTING`: Set this value to 0 to disable testing mode and activate the firewall.
-- `TCP_IN` and `TCP_OUT`: These settings define the allowed incoming and outgoing TCP ports, respectively. Add or remove ports as required, separated by commas.
-- `UDP_IN` and `UDP_OUT`: These settings define the allowed incoming and outgoing UDP ports, respectively. Add or remove ports as required, separated by commas.
-- `DENY_IP_LIMIT`: This setting defines the maximum number of IP addresses that can be listed in the /etc/csf/csf.deny file. Adjust this limit as needed.
-- `CT_LIMIT`: This setting controls the number of connections from a single IP address that are allowed before the IP is temporarily blocked. Adjust this value according to your server’s requirements.
-
-<br />
-
-These are just a few of the numerous configuration options available in CSF. Make sure to review the configuration file and adjust the settings to suit your server’s needs. After making changes to the configuration file, save and exit the text editor.
 
 <br />
 
@@ -522,392 +475,6 @@ ConfigServer Firewall offers a feature-rich web interface which you can access v
 For a full set of instructions, visit the documentation below:
 
 - https://aetherinox.github.io/csf-firewall/install/webui/
-
-<br />
-
----
-
-<br />
-
-## Install Docker Patch
-
-After you have installed CSF, the WebUI, and enabled both `lfd` and `csf` services; it's now time to run the docker patcher. The docker patch will check your docker configuration, and add a series of iptable rules so that docker can communicate with the outside world and users can access your containers.
-
-<br />
-
-The docker patch does several things:
-
-- Allows for you to restart CSF without having to restart your docker containers.
-- Scans every container you have set up in docker and adds a whitelist firewall rule
-
-<br />
-
-### Clone
-
-Within your server, change to whatever directory where you want to download everything (including patch):
-
-```shell
-cd $HOME/Documents
-```
-
-<br />
-
-Clone the repo
-
-```shell
-git clone https://github.com/aetherinox/csf-firewall.git .
-```
-
-<br />
-<br />
-
-### Configure
-
-The `/patch/docker.sh` file has a few configs you can adjust. Open it in a text editor and change the values to your preference.
-
-```bash
-docker0_eth="docker0"
-file_csf_allow="/etc/csf/csf.allow"
-csf_comment="Docker container whitelist"
-containers_ip_cidr=(
-    '172.17.0.0/16'
-)
-```
-
-<br />
-
-Each setting is defined below:
-
-| Setting | Default | Description |
-| --- | --- | --- |
-| `docker0_eth` | `docker0` | <br>main docker network interface <br><br> |
-| `file_csf_allow` | `/etc/csf/csf.allow` | <br>Path to your `csf.allow` file <br><br> |
-| `csf_comment` | `Docker container whitelist` | <br>comment added to each new whitelisted docker ip in the file `/etc/csf/csf.allow` <br><br> |
-| `containers_ip_cidr` | `172.17.0.0/16` | <br>list of ip address blocks you will be using for your docker setup. these blocks will be whitelisted through ConfigServer Firewall <br><br> |
-| `cfg_dev_enabled` | `false` | <br>debug mode <br><br> |
-
-<br />
-<br />
-
-### Run Patch
-
-Set the permissions (if needed)
-
-```shell
-sudo chmod +x /patch/install.sh
-```
-
-<br />
-
-Run the script:
-
-```shell
-cd /patch/
-sudo ./install.sh
-```
-
-<br />
-
-On certain distros of Linux, you may need to use the following instead to run the patcher:
-
-```shell
-sudo sh install.sh
-```
-
-<br />
-
-The `docker.sh` file will be installed to `/usr/local/include/csf/post.d`
-
-<br />
-<br />
-
-### Manual Run
-
-You can manually run the `docker.sh` script. It will also allow you to specify arguments such as `--dev` to get more detailed logging as the firewall is set up. This should only be done if you know what you're doing.
-
-```shell ignore
-sudo chmod +x /patch/docker.sh
-sudo /patch/docker.sh
-```
-
-<br />
-
-You can call arguments by running the file using:
-
-```shell ignore
-sudo /patch/docker.sh --dev
-```
-
-<br />
-
-You can also find out what version you are running by appending `--version` to either the `install.sh` or `docker.sh` file:
-
-```shell ignore
-./patch/install.sh --version
-```
-
-<br />
-
-```shell ignore
-  ┌────────────────────────────────────────────────────────────────────────────────────────┐
-
-     ConfigServer Firewall - Installer Script (v14.24.0)
-
-     Installs Docker and OpenVPN patches into your existing CSF setup.
-     This script requires that you have iptables installed on your system. 
-     The required packages will be installed if you do not have them.
-
-     @repo        https://github.com/Aetherinox/csf-firewall
-     @system      Ubuntu | 24.04
-     @notice      Before running this script, open /path/to/dock.sh
-                  and edit the settings at the top of the file.
-
-  └────────────────────────────────────────────────────────────────────────────────────────┘
-```
-
-<br />
-
-```shell ignore
-sudo /patch/docker.sh --version
-```
-
-<br />
-
-```shell ignore
-  ┌────────────────────────────────────────────────────────────────────────────────────────┐
-
-     ConfigServer Firewall - Docker Patch (v14.24.0)
-
-     Sets up your firewall rules to work with Docker and Traefik. 
-     This script requires that you have iptables installed on your system. 
-     The required packages will be installed if you do not have them.
-
-     @repo        https://github.com/Aetherinox/csf-firewall
-     @system      Ubuntu | 24.04
-     @notice      Before running this script, open /path/to/dock.sh
-                  and edit the settings at the top of the file.
-
-  └────────────────────────────────────────────────────────────────────────────────────────┘
-```
-
-<br />
-<br />
-
-### Advanced Logs
-
-This script includes debugging prints / logs. To view these, restart `csf.service` by running the following command in terminal:
-
-```shell ignore
-sudo csf -r
-```
-
-<br />
-
-All steps performed by the script will be displayed in terminal:
-
-```shell ignore
-  + POSTROUTING   Adding IPs from primary IP list
-                  + 172.17.0.0/16
-                  + RULE:                  -t nat -A POSTROUTING ! -o docker0 -s 172.17.0.0/16 -j MASQUERADE
-                  + RULE:                  -t nat -A POSTROUTING -s 172.17.0.0/16 ! -o docker0 -j MASQUERADE
-
- ---------------------------------------------------------------------------------------------------
-
-  + BRIDGES       Configuring network bridges
-
-                  BRIDGE                   e8a57188323a                          
-                  DOCKER INTERFACE         docker0                               
-                  SUBNET                   172.17.0.0/16                         
-                  + RULE:                  -t nat -A POSTROUTING -s 172.17.0.0/16 ! -o docker0 -j MASQUERADE
-                  + RULE:                  -t nat -A DOCKER -i docker0 -j RETURN
-                  + RULE:                  -A DOCKER-ISOLATION-STAGE-1 -i docker0 ! -o docker0 -j DOCKER-ISOLATION-STAGE-2
-                  + RULE:                  -A DOCKER-ISOLATION-STAGE-2 -o docker0 -j DROP
-```
-
-<br />
-
----
-
-<br />
-
-## Install OpenVPN Patch
-
-This repo includes an OpenVPN patch which automatically sets up ConfigServer Firewall to accept connections from your OpenVPN server; while still restricting other incoming and outgoing connections you may not want going through.
-
-<br />
-
-### Clone
-
-Within your server, change to whatever directory where you want to download everything (including patch):
-
-```shell
-cd $HOME/Documents
-```
-
-<br />
-
-Clone the repo
-
-```shell
-git clone https://github.com/aetherinox/csf-firewall.git .
-```
-
-<br />
-<br />
-
-### Configure
-
-The `/patch/openvpn.sh` file has a few configs you can adjust. Open it in a text editor and change the values to your preference.
-
-```bash
-ETH_ADAPTER=$(ip route | grep default | sed -e "s/^.*dev.//" -e "s/.proto.*//")
-TUN_ADAPTER=$(ip -br l | awk '$1 ~ "^tun[0-9]" { print $1}')
-IP_PUBLIC=$(curl ipinfo.io/ip)
-DEBUG_ENABLED="false"
-IP_POOL=(
-    '10.8.0.0/24'
-)
-```
-
-<br />
-
-Each setting is defined below:
-
-| Setting | Description |
-| --- | --- |
-| `ETH_ADAPTER` | <br>primary network adapter on host machine <br><br> |
-| `TUN_ADAPTER` | <br>openvpn tunnel adapter, usually `tun0` <br><br> |
-| `IP_PUBLIC` | <br>server's public ip address <br><br> |
-| `DEBUG_ENABLED` | <br>debugging / better logs <br><br> |
-| `IP_POOL` | <br>openvpn ip pool <br><br> |
-
-<br />
-
-The script tries to automatically detect the values specified above, however, you can manually specify your own values. 
-
-<br />
-
-As an example, instead of automatically detecting your server's public IP address or ethernet adapters, you can specify your own by changing the following:
-
-```bash
-# old code
-ETH_ADAPTER=$(ip route | grep default | sed -e "s/^.*dev.//" -e "s/.proto.*//")
-TUN_ADAPTER=$(ip -br l | awk '$1 ~ "^tun[0-9]" { print $1}')
-IP_PUBLIC=$(curl ipinfo.io/ip)
-
-# manually specified ip
-ETH_ADAPTER="eth0"
-TUN_ADAPTER="tun0"
-IP_PUBLIC="216.55.100.5"
-```
-
-<br />
-<br />
-
-### Run Patch
-
-Set the permissions:
-
-```shell
-sudo chmod +x /patch/install.sh
-```
-
-<br />
-
-Run the script:
-
-```shell
-cd /patch/
-sudo ./install.sh
-```
-
-<br />
-
-On certain distros of Linux, you may need to use the following instead to run the patcher:
-
-```shell
-sudo sh install.sh
-```
-
-<br />
-
-The `openvpn.sh` file will be installed to `/usr/local/include/csf/post.d`
-
-<br />
-<br />
-
-### Manual Run
-
-You can manually run the `openvpn.sh` script. It will also allow you to specify arguments such as `--dev` to get more detailed logging as the firewall is set up. This should only be done if you know what you're doing.
-
-```shell ignore
-sudo chmod +x /patch/openvpn.sh
-sudo /patch/openvpn.sh
-```
-
-<br />
-
-You can call arguments by running the file using:
-
-```shell ignore
-sudo /patch/openvpn.sh --dev
-```
-
-<br />
-
-You can also find out what version you are running by appending `--version` to either the `install.sh` or `openvpn.sh` file:
-
-```shell ignore
-./patch/install.sh --version
-```
-
-<br />
-
-```shell ignore
-ConfigServer Firewall Configuration - v2.0.0.0
-https://github.com/Aetherinox/csf-firewall
-Ubuntu | 24.04
-```
-
-<br />
-
-```shell ignore
-sudo /patch/openvpn.sh --version
-```
-
-<br />
-
-```shell ignore
-ConfigServer Firewall OpenVPN Patch - v2.0.0.0
-https://github.com/Aetherinox/csf-firewall
-Ubuntu | 24.04
-```
-
-<br />
-<br />
-
-### Advanced Logs
-
-This script includes debugging prints / logs. To view these, restart `csf.service` by running the following command in terminal:
-```shell ignore
-sudo csf -ra
-```
-
-<br />
-
-All steps performed by the script will be displayed in terminal:
-```shell ignore
-  + OPENVPN       Adding OpenVPN Rules
-
-                  + RULE                   -A INPUT -i tun+ -j ACCEPT            
-                  + RULE                   -A FORWARD -i tun+ -j ACCEPT          
-                  + RULE                   -A FORWARD -o tun0 -j ACCEPT
-                  + RULE                   -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
-                  + RULE                   -A FORWARD -i tun+ -o enp0s3 -m state --state RELATED,ESTABLISHED -j ACCEPT
-                  + RULE                   -A FORWARD -i enp0s3 -o tun+ -m state --state RELATED,ESTABLISHED -j ACCEPT
-                  + RULE                   -t nat -A POSTROUTING -j SNAT --to-source XX.XXX.XXX.XXX
-                  + RULE                   -t nat -A POSTROUTING -s 10.8.0.0/24 -o enp0s3 -j MASQUERADE
-```
 
 <br />
 
