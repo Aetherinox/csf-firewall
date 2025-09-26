@@ -1585,6 +1585,72 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#advanced-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced Options
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#json-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      JSON Output
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="JSON Output">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#return-json" class="md-nav__link">
+    <span class="md-ellipsis">
+      Return JSON
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fetch-latest-release-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fetch Latest Release File
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#retrieve-only-the-download-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      Retrieve Only the Download URL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#preserve-filename" class="md-nav__link">
+    <span class="md-ellipsis">
+      Preserve Filename
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1820,6 +1886,72 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#advanced-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced Options
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advanced Options">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#json-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      JSON Output
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="JSON Output">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#return-json" class="md-nav__link">
+    <span class="md-ellipsis">
+      Return JSON
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fetch-latest-release-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fetch Latest Release File
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#retrieve-only-the-download-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      Retrieve Only the Download URL
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#preserve-filename" class="md-nav__link">
+    <span class="md-ellipsis">
+      Preserve Filename
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1898,13 +2030,11 @@
 <p><span class="twemoji icon-size-48"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> </p>
 </div>
 <h3 id="using-cli">Using CLI  <!-- omit from toc --><a class="headerlink" href="#using-cli" title="Permanent link">¶</a></h3>
-<p>Our download service also supports the use of command-line tools such as <code>wget</code> and <code>curl</code>. Read both sections below, as we offer two ways to use curl and wget to obtain the latest version of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>.</p>
+<p>Our download service also supports the use of command-line tools such as <code>wget</code> and <code>curl</code>. Read both sections below, as we offer two ways to use curl and wget to obtain the latest version of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>. If you want to download the latest version of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> in the easiest manner, utilize the method <a href="#with-filename">With Filename</a>.</p>
 <ul>
 <li><a href="#with-filename">With Filename</a></li>
 <li><a href="#without-filename">Without Filename</a></li>
 </ul>
-<p><br></p>
-<p>If you want to download the latest version of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> in the easiest manner, utilize the method <a href="#with-filename">With Filename</a>.</p>
 <p><br></p>
 <h4 id="with-filename">With Filename<a class="headerlink" href="#with-filename" title="Permanent link">¶</a></h4>
 <p>If you add <code>csf.zip</code> or <code>csf.tgz</code> to the end of the url, it is pretty straight-forward when downloading the newest version of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>. It functions the same way the original download servers did.</p>
@@ -1944,6 +2074,60 @@
 </div>
 </div>
 </div>
+<p><br></p>
+<hr>
+<p><br></p>
+<h2 id="advanced-options">Advanced Options<a class="headerlink" href="#advanced-options" title="Permanent link">¶</a></h2>
+<p>Our download service includes a few advanced features that may interest certain users.</p>
+<p><br></p>
+<h3 id="json-output">JSON Output<a class="headerlink" href="#json-output" title="Permanent link">¶</a></h3>
+<p>Our API provides a structured JSON response, which can be used in your own scripts to retrieve information about the latest release. Below are some examples of how to use this feature. </p>
+<p><br></p>
+<h4 id="return-json">Return JSON<a class="headerlink" href="#return-json" title="Permanent link">¶</a></h4>
+<p>To get a JSON api response from your query, simply append <code>?output=json</code> to the end of your URL such as:</p>
+<ul>
+<li><a href="https://download.configserver.dev/?output=json">https://download.configserver.dev/?output=json</a></li>
+</ul>
+<p><br></p>
+<h4 id="fetch-latest-release-file">Fetch Latest Release File<a class="headerlink" href="#fetch-latest-release-file" title="Permanent link">¶</a></h4>
+<p>You can use the API to download the latest <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> release directly in your scripts. This command retrieves the download URL and filename from the JSON output, then downloads the file with the correct name.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="fetch-latest-release-file-curl" name="__tabbed_3" type="radio"><input id="fetch-latest-release-file-wget--curl" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="fetch-latest-release-file-curl"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M369.4 128l-34.3-48-222.1 0-34.3 48 290.7 0zM0 148.5c0-13.3 4.2-26.3 11.9-37.2L60.9 42.8C72.9 26 92.3 16 112.9 16l222.1 0c20.7 0 40.1 10 52.1 26.8l48.9 68.5c7.8 10.9 11.9 23.9 11.9 37.2L448 416c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 148.5z"></path></svg></span> curl</label><label for="fetch-latest-release-file-wget--curl"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M369.4 128l-34.3-48-222.1 0-34.3 48 290.7 0zM0 148.5c0-13.3 4.2-26.3 11.9-37.2L60.9 42.8C72.9 26 92.3 16 112.9 16l222.1 0c20.7 0 40.1 10 52.1 26.8l48.9 68.5c7.8 10.9 11.9 23.9 11.9 37.2L448 416c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 148.5z"></path></svg></span> wget + curl</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>curl<span class="w"> </span>-s<span class="w"> </span><span class="s2">"https://download.configserver.dev/?output=json"</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">'.download_url + " " + .file_name'</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>-n2<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">'curl -L -o "$1" "$0"'</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">eval</span><span class="w"> </span><span class="k">$(</span>curl<span class="w"> </span>-s<span class="w"> </span><span class="s2">"https://download.configserver.dev/?output=json"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">'"wget -O \(.file_name) \(.download_url)"'</span><span class="k">)</span><span class="w"> </span>
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<h4 id="retrieve-only-the-download-url">Retrieve Only the Download URL<a class="headerlink" href="#retrieve-only-the-download-url" title="Permanent link">¶</a></h4>
+<p>If you just need the direct URL for the latest release, you can pull it from the JSON response. This will output the URL as a plain string, without downloading the file.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:1"><input checked="checked" id="retrieve-only-the-download-url-curl" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="retrieve-only-the-download-url-curl"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M369.4 128l-34.3-48-222.1 0-34.3 48 290.7 0zM0 148.5c0-13.3 4.2-26.3 11.9-37.2L60.9 42.8C72.9 26 92.3 16 112.9 16l222.1 0c20.7 0 40.1 10 52.1 26.8l48.9 68.5c7.8 10.9 11.9 23.9 11.9 37.2L448 416c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 148.5z"></path></svg></span> curl</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>curl<span class="w"> </span>-s<span class="w"> </span><span class="s2">"https://download.configserver.dev/?output=json"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">'.download_url'</span>
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><br>
+<br>
+<br></p>
+<h4 id="preserve-filename">Preserve Filename<a class="headerlink" href="#preserve-filename" title="Permanent link">¶</a></h4>
+<p>Out of box, our download service gets the latest release of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> and then re-names the file <code>csf.zip</code> or <code>csf.tgz</code>. However, you can preserve the release filename and have it sent to you as its original name which is <code>csf-firewall-vXX.XX.zip</code> or <code>csf-firewall-vXX.XX.tar</code>.</p>
+<p>To preserve the filename, append <code>?name=preserve</code> to your url, such as:</p>
+<ul>
+<li><a href="https://download.configserver.dev/?name=preserve">https://download.configserver.dev/?name=preserve</a></li>
+</ul>
+<p><br>
+<br></p>
 
 
 
@@ -1964,7 +2148,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 26, 2025 11:59:24 UTC"><span class="timeago" datetime="2025-09-26T11:59:24+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 26, 2025 11:59:24 UTC">2025-09-26</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 26, 2025 17:21:04 UTC"><span class="timeago" datetime="2025-09-26T17:21:04+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 26, 2025 17:21:04 UTC">2025-09-26</span>
   </span>
 
     
