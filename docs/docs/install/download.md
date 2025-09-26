@@ -37,10 +37,10 @@ Download the latest version of CSF. Two methods are provided below, and you can 
 
     ```shell
     # Using wget
-    bash <(wget -qO - https://get.configserver.dev) && . ~/.bashrc
+    bash <(wget -qO - https://get.configserver.dev)
 
     # Using curl
-    bash <(curl -sL https://get.configserver.dev) && . ~/.bashrc
+    bash <(curl -sL https://get.configserver.dev)
     ```
 
 <br />
@@ -137,10 +137,10 @@ Download the latest version of CSF. Two methods are provided below, and you can 
 
     ```shell
     # Using wget
-    bash <(wget -qO - https://get.configserver.dev) && . ~/.bashrc
+    bash <(wget -qO - https://get.configserver.dev)
 
     # Using curl
-    bash <(curl -sL https://get.configserver.dev) && . ~/.bashrc
+    bash <(curl -sL https://get.configserver.dev)
     ```
 
 <br />
