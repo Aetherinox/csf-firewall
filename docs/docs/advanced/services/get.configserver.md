@@ -12,6 +12,14 @@ The subdomain [get.configserver.dev](https://get.configserver.dev) provides a si
 
 By default, running the script downloads the latest CSF release to the current directory. Optional arguments allow you to extend its functionality, including automatically extracting the archive and installing CSF immediately after download.
 
+??? note "`.zip` vs `.tgz` format"
+
+    Our documentation frequently mentions both `.zip` and `.tgz` releases of CSF. 
+
+    When we initially developed addons for CSF, we pushed all of our releases in a `.zip` archive. 
+    
+    However, after taking over full development of CSF, we opted to migrate back to the `.tgz` format to keep conformity with how the original developer packaged releases. This is why our scripts mention both extensions, and why our scripts look for both.
+
 <br />
 
 ## Usage
