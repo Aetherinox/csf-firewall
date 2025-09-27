@@ -7,13 +7,13 @@
         <meta name="author" content="Aetherinox">
       
       
-        <link rel="canonical" href="https://Aetherinox.github.io/csf-firewall/advanced/services/download.configserver/">
+        <link rel="canonical" href="https://Aetherinox.github.io/csf-firewall/advanced/services/blocklist.configserver/">
       
       
-        <link rel="prev" href="../blocklist.configserver/">
+        <link rel="prev" href="../../../usage/cheatsheet/conf/">
       
       
-        <link rel="next" href="../get.configserver/">
+        <link rel="next" href="../download.configserver/">
       
       
       <link rel="icon" href="../../../assets/favicon.png">
@@ -21,7 +21,7 @@
     
     
       
-        <title>Advanced › Services › download.configserver.dev - CSF Firewall</title>
+        <title>Advanced › Services › blocklist.configserver.dev - CSF Firewall</title>
       
     
     
@@ -90,7 +90,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#downloadconfigserverdev" class="md-skip">
+        <a href="#blocklistconfigserverdev" class="md-skip">
           Skip to content
         </a>
       
@@ -161,7 +161,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Advanced › Services › download.configserver.dev
+              Advanced › Services › blocklist.configserver.dev
             
           </span>
         </div>
@@ -377,7 +377,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../blocklist.configserver/" class="md-tabs__link">
+        <a href="./" class="md-tabs__link">
           
   
   
@@ -1455,29 +1455,6 @@
                 
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../blocklist.configserver/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    blocklist.configserver.dev
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
     
   
   
@@ -1495,7 +1472,7 @@
   
   
   <span class="md-ellipsis">
-    download.configserver.dev
+    blocklist.configserver.dev
     
   </span>
   
@@ -1508,7 +1485,7 @@
   
   
   <span class="md-ellipsis">
-    download.configserver.dev
+    blocklist.configserver.dev
     
   </span>
   
@@ -1531,6 +1508,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#about-blocklists" class="md-nav__link">
+    <span class="md-ellipsis">
+      About Blocklists
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#usage" class="md-nav__link">
     <span class="md-ellipsis">
       Usage
@@ -1541,44 +1527,20 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#using-browser" class="md-nav__link">
+  <a href="#basic" class="md-nav__link">
     <span class="md-ellipsis">
-      Using Browser
+      Basic
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#using-cli" class="md-nav__link">
+  <a href="#advanced" class="md-nav__link">
     <span class="md-ellipsis">
-      Using CLI
+      Advanced
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Using CLI">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#with-filename" class="md-nav__link">
-    <span class="md-ellipsis">
-      With Filename
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#without-filename" class="md-nav__link">
-    <span class="md-ellipsis">
-      Without Filename
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -1588,61 +1550,82 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#advanced-options" class="md-nav__link">
+  <a href="#add-blocklists-to-csf" class="md-nav__link">
     <span class="md-ellipsis">
-      Advanced Options
+      Add Blocklists to CSF
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Advanced Options">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#blocklists" class="md-nav__link">
+    <span class="md-ellipsis">
+      Blocklists
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Blocklists">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#download-api" class="md-nav__link">
+  <a href="#main-lists" class="md-nav__link">
     <span class="md-ellipsis">
-      Download API
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Download API">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#fetch-json-response" class="md-nav__link">
-    <span class="md-ellipsis">
-      Fetch JSON Response
+      Main Lists
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#fetch-latest-release-file" class="md-nav__link">
+  <a href="#privacy" class="md-nav__link">
     <span class="md-ellipsis">
-      Fetch Latest Release File
+      Privacy
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#retrieve-only-the-download-url" class="md-nav__link">
+  <a href="#spam" class="md-nav__link">
     <span class="md-ellipsis">
-      Retrieve Only the Download URL
+      Spam
     </span>
   </a>
   
 </li>
         
-      </ul>
-    </nav>
+          <li class="md-nav__item">
+  <a href="#internet-service-providers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internet Service Providers
+    </span>
+  </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#preserve-filename" class="md-nav__link">
+  <a href="#transmission-bittorrent-client" class="md-nav__link">
     <span class="md-ellipsis">
-      Preserve Filename
+      Transmission (BitTorrent Client)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#continents-geolite2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Continents (GeoLite2)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#countries-geolite2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Countries (GeoLite2)
     </span>
   </a>
   
@@ -1657,6 +1640,29 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../download.configserver/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    download.configserver.dev
+    
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -1855,6 +1861,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#about-blocklists" class="md-nav__link">
+    <span class="md-ellipsis">
+      About Blocklists
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#usage" class="md-nav__link">
     <span class="md-ellipsis">
       Usage
@@ -1865,44 +1880,20 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#using-browser" class="md-nav__link">
+  <a href="#basic" class="md-nav__link">
     <span class="md-ellipsis">
-      Using Browser
+      Basic
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#using-cli" class="md-nav__link">
+  <a href="#advanced" class="md-nav__link">
     <span class="md-ellipsis">
-      Using CLI
+      Advanced
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Using CLI">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#with-filename" class="md-nav__link">
-    <span class="md-ellipsis">
-      With Filename
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#without-filename" class="md-nav__link">
-    <span class="md-ellipsis">
-      Without Filename
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -1912,61 +1903,82 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#advanced-options" class="md-nav__link">
+  <a href="#add-blocklists-to-csf" class="md-nav__link">
     <span class="md-ellipsis">
-      Advanced Options
+      Add Blocklists to CSF
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Advanced Options">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#blocklists" class="md-nav__link">
+    <span class="md-ellipsis">
+      Blocklists
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Blocklists">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#download-api" class="md-nav__link">
+  <a href="#main-lists" class="md-nav__link">
     <span class="md-ellipsis">
-      Download API
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Download API">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#fetch-json-response" class="md-nav__link">
-    <span class="md-ellipsis">
-      Fetch JSON Response
+      Main Lists
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#fetch-latest-release-file" class="md-nav__link">
+  <a href="#privacy" class="md-nav__link">
     <span class="md-ellipsis">
-      Fetch Latest Release File
+      Privacy
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#retrieve-only-the-download-url" class="md-nav__link">
+  <a href="#spam" class="md-nav__link">
     <span class="md-ellipsis">
-      Retrieve Only the Download URL
+      Spam
     </span>
   </a>
   
 </li>
         
-      </ul>
-    </nav>
+          <li class="md-nav__item">
+  <a href="#internet-service-providers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internet Service Providers
+    </span>
+  </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#preserve-filename" class="md-nav__link">
+  <a href="#transmission-bittorrent-client" class="md-nav__link">
     <span class="md-ellipsis">
-      Preserve Filename
+      Transmission (BitTorrent Client)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#continents-geolite2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Continents (GeoLite2)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#countries-geolite2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Countries (GeoLite2)
     </span>
   </a>
   
@@ -1999,7 +2011,7 @@
         
       
       
-        <a href="../../../about/tags/#tag:downloadconfigserverdev" class="md-tag md-tag-icon">download.configserver.dev</a>
+        <a href="../../../about/tags/#tag:blocklistconfigserverdev" class="md-tag md-tag-icon">blocklist.configserver.dev</a>
       
     
       
@@ -2015,7 +2027,7 @@
 
 
   
-    <a href="https://github.com/Aetherinox/csf-firewall/edit/main/docs/docs/advanced/services/download.configserver.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/Aetherinox/csf-firewall/edit/main/docs/docs/advanced/services/blocklist.configserver.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"></path></svg>
     </a>
@@ -2024,162 +2036,1465 @@
     
       
     
-    <a href="https://github.com/Aetherinox/csf-firewall/raw/main/docs/docs/advanced/services/download.configserver.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/Aetherinox/csf-firewall/raw/main/docs/docs/advanced/services/blocklist.configserver.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"></path></svg>
     </a>
   
 
 
-<h1 id="downloadconfigserverdev">download.configserver.dev <!-- omit from toc --><a class="headerlink" href="#downloadconfigserverdev" title="Permanent link">¶</a></h1>
-<p>The subdomain <a href="https://download.configserver.dev">download.configserver.dev</a> provides a convenient way to download the latest version of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> without needing to look up the name of the current release. Downloads can be accessed directly through your web browser, or from the command line using tools such as <code>wget</code> or <code>curl</code>. Below, we outline the basic usage to help you quickly obtain the latest version of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>.</p>
-<p>This mirrors the service originally offered by the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> developers, which was the standard method of obtaining fresh copies of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> for many years. Our version works the same way, with a few additional features that are described in the <a href="#advanced-options">Advanced</a> section.</p>
-<details class="note">
-<summary><code>.zip</code> vs <code>.tgz</code> format</summary>
-<p>Our documentation frequently mentions both <code>.zip</code> and <code>.tgz</code> releases of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>. </p>
-<p>When we initially developed addons for <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>, we pushed all of our releases in a <code>.zip</code> archive. </p>
-<p>However, after taking over full development of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>, we opted to migrate back to the <code>.tgz</code> format to keep conformity with how the original developer packaged releases. This is why our scripts mention both extensions, and why our scripts look for both.</p>
-</details>
-<p><br></p>
-<h2 id="usage">Usage  <!-- omit from toc --><a class="headerlink" href="#usage" title="Permanent link">¶</a></h2>
-<p>This section explains how to utilize the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> download service.</p>
-<p><br>
-<br></p>
-<div align="center" class="icon-container">
-<p><a class="icon-size-48 icon-dim" href="https://google.com/chrome/" target="_blank"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 256c0-46.6 12.5-90.4 34.3-128.9L144.1 318.3c21.9 39.2 63.8 65.7 111.9 65.7 14.3 0 27.1-2.3 40.8-6.6L220.5 509.6C95.9 492.3 0 385.3 0 256zm365.1 65.6c12.3-19.2 18.9-42.5 18.9-65.6 0-38.2-16.8-72.5-43.3-96l152.7 0c12 29.6 18.6 62.1 18.6 96 0 141.4-114.6 255.1-256 256L365.1 321.6zM477.8 128L256 128c-62.9 0-113.7 44.1-125.5 102.7L54.2 98.5C101 38.5 174 0 256 0 350.8 0 433.5 51.5 477.8 128zM344 256a88 88 0 1 1 -176 0 88 88 0 1 1 176 0z"></path></svg></span></a>
-  <a class="icon-size-48 icon-dim" href="https://brave.com/download" target="_blank"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M145.6 0l157 0 44.7 50.8s39.3-10.9 57.8 7.6 33.8 34.9 33.8 34.9l-12 29.5 15.3 43.7s-44.9 170.2-50.1 191c-10.4 40.9-17.4 56.8-46.9 77.5s-82.9 56.8-91.6 62.2c-1.9 1.2-3.9 2.5-5.9 3.9-7.5 5.1-15.8 10.8-23.5 10.8s-16.1-5.7-23.5-10.8c-2-1.4-4-2.8-5.9-3.9-8.7-5.5-62.1-41.5-91.6-62.2s-36.5-36.6-46.9-77.5c-5.3-20.8-50.1-191-50.1-191L21.5 122.8 9.3 93.3s15.3-16.4 33.8-34.9 57.8-7.6 57.8-7.6L145.6 0zm78.5 407.6c3.7 0 8.9-4.7 13-8.4 .6-.5 1.2-1.1 1.7-1.5 4.2-3.7 47.8-37.5 51-39.8s5.4-6.5 1.9-8.7c-2.8-1.7-10-5.5-20.3-10.8-3-1.6-6.3-3.2-9.7-5-15.4-8-34.5-14.7-37.5-14.7s-22.1 6.8-37.5 14.7c-3.5 1.8-6.7 3.5-9.7 5-10.3 5.3-17.6 9.1-20.3 10.8-3.6 2.2-1.4 6.4 1.9 8.7s46.8 36.1 51 39.8c.5 .5 1.1 1 1.7 1.5 4.1 3.7 9.3 8.4 13 8.4l-.2 0zm0-165.7c4.7 0 17.6-3 26.4-5l2-.5c7.8-1.8 7.3-6.3 6.4-13-.1-.8-.2-1.6-.3-2.4-.6-6.1-5.8-33.1-9.1-50.3-1.1-5.8-2-10.5-2.4-12.9-1.5-8.1-.6-9.4 .7-11.3 .2-.3 .5-.7 .7-1.1 1.4-2.3 16-6.2 27.9-9.5 2.5-.7 4.8-1.3 6.9-1.9 10.6-3 32.4-.6 44.2 .6 1.8 .2 3.4 .4 4.7 .5 9.6 .9 10.4 2.3 7.2 3.8-2.3 1.1-16.2 6.3-28.7 10.9-4.7 1.8-9.2 3.5-12.8 4.8-1.5 .5-3 1.1-4.5 1.7-12.5 4.6-27.2 10-28.9 19.4-1.5 8.3 5.2 19.9 11.3 30.3 1.6 2.8 3.2 5.5 4.6 8.1 6.3 11.9 6.5 13.3 6.1 18.1-.4 3.9-14.5 12.7-22.4 17.6-1.8 1.1-3.3 2.1-4.2 2.7-.8 .5-2.1 1.4-3.8 2.4-8.6 5.2-26.3 16-26.3 22.5 0 7.8 24.6 28.1 32.4 33.2s28.9 16.1 37.9 17.8 23-8.5 31.2-23.8c7.7-14.4 1.7-28.5-3.2-40l-.9-2.2c-4.5-10.6 1.9-17 6.2-21.3 .5-.5 1-1 1.4-1.4l43-45.7c1.3-1.3 2.5-2.6 3.7-3.8 5.8-5.7 10.8-10.5 10.8-22.8 0-14.9-57.5-84.5-57.5-84.5s-48.5 9.3-55.1 9.3c-5.2 0-15.3-3.5-25.8-7.1-2.7-.9-5.4-1.9-8-2.7-13-4.3-21.8-4.4-21.8-4.4s-8.7 0-21.8 4.4c-2.7 .9-5.4 1.8-8 2.7-10.5 3.6-20.6 7.1-25.8 7.1-6.5 0-55.1-9.3-55.1-9.3s-57.5 69.6-57.5 84.5c0 12.3 4.9 17.1 10.8 22.8 1.2 1.2 2.5 2.4 3.7 3.8l43.1 45.8c.4 .5 .9 .9 1.4 1.4 4.3 4.3 10.6 10.7 6.2 21.3l-.9 2.2c-4.9 11.5-11 25.6-3.2 40 8.2 15.3 22.2 25.5 31.2 23.8s30.1-12.7 37.9-17.8 32.4-25.4 32.4-33.2c0-6.5-17.7-17.3-26.3-22.5-1.7-1-3.1-1.9-3.8-2.4-.9-.6-2.4-1.5-4.2-2.7-7.9-4.9-22-13.7-22.4-17.6-.4-4.8-.3-6.2 6.1-18.1 1.3-2.5 2.9-5.3 4.6-8.1 6-10.4 12.8-22 11.3-30.3-1.7-9.4-16.4-14.8-28.9-19.4-1.6-.6-3.1-1.1-4.5-1.7-3.6-1.4-8.1-3.1-12.8-4.8l-.1 0c-12.5-4.7-26.4-9.9-28.7-10.9-3.2-1.5-2.3-2.8 7.2-3.8 1.3-.1 2.9-.3 4.7-.5 11.8-1.3 33.6-3.6 44.2-.6 2.1 .6 4.4 1.2 6.9 1.9 11.9 3.2 26.5 7.2 27.9 9.5 .2 .4 .5 .7 .7 1.1 1.3 1.9 2.2 3.2 .7 11.3-.4 2.4-1.3 7.1-2.4 12.9-3.3 17.2-8.5 44.2-9.1 50.3-.1 .8-.2 1.7-.3 2.4-.8 6.7-1.4 11.2 6.4 13l2 .5c8.8 2 21.8 5 26.4 5l0-.1z"></path></svg></span></a>
-  <a class="icon-size-48 icon-dim" href="https://mozilla.org/firefox/download/" target="_blank"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M130.2 127.5l0 0zm351.4 45.4c-10.6-25.5-32.1-53-48.9-61.7 13.7 26.9 21.7 53.9 24.7 74 0 .1 0 .3 .1 .4-27.6-68.8-74.4-96.5-112.6-156.8-15-23.7-10.9-25.2-13.1-24.7l-.1 .1c-46.7 26-75.3 78.4-82.6 122.7-16.6 .9-32.9 5-47.9 12.1-1.4 .6-2.5 1.7-3.1 3s-.9 2.8-.6 4.3c.2 .8 .6 1.6 1.1 2.3s1.2 1.3 1.9 1.7 1.6 .7 2.4 .8 1.7 0 2.5-.3l.5-.2c15.5-7.3 32.4-11.2 49.5-11.3 62.8-.6 97.2 44 107.6 62.3-13-9.2-36.4-18.2-58.8-14.3 87.7 43.9 64.2 194.5-57.4 189.2-59.5-2.6-97.1-51-100.5-90.8 0 0 11.2-41.9 80.6-41.9 7.5 0 28.9-20.9 29.3-27-.1-2-42.5-18.9-59.1-35.2-8.8-8.7-13.1-12.9-16.8-16.1-2-1.7-4.1-3.3-6.3-4.8-5.6-19.5-5.8-40-.7-59.6-25.1 11.4-44.6 29.4-58.7 45.4l-.1 0c-9.7-12.2-9-52.6-8.4-61.1-.1-.5-7.2 3.7-8.2 4.3-8.6 6.1-16.5 12.9-23.8 20.4-16.3 16.6-44.1 50.2-55.5 101.2-4.5 20.4-6.8 44.4-6.8 52.3 0 134.7 109.2 243.9 243.9 243.9 120.6 0 223-87.2 240.4-202.6 11.6-76.7-14.7-131.1-14.7-132z"></path></svg></span></a>
-  <a class="icon-size-48 icon-dim" href="https://opera.com/download" target="_blank"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M321.9 32.7c-170.2 0-252.6 223.8-147.5 355.1 36.5 45.4 88.6 75.6 147.5 75.6 36.3 0 70.3-11.1 99.4-30.4-43.8 39.2-101.9 63-165.3 63-3.9 0-8 0-11.9-.3-131.5-6.1-236.1-114.6-236.1-247.7 0-137 111-248 248-248l.8 0c63.1 .3 120.7 24.1 164.4 63.1-29-19.4-63.1-30.4-99.3-30.4zM423.7 430.4c-40.9 24.7-90.7 23.6-132-5.8 56.2-20.5 97.7-91.6 97.7-176.6 0-84.7-41.2-155.8-97.4-176.6 41.8-29.2 91.2-30.3 132.9-5 105.9 98.7 105.5 265.7-1.2 364z"></path></svg></span></a>
-  <a class="icon-size-48 icon-dim" href="https://microsoft.com/edge" target="_blank"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M120.1 37.4c41-25.2 87.6-38.2 134.9-37.4 168 0 257 123.8 257 219.5-.1 32.7-13 63.9-35.9 87.2-22.9 23.2-54 36.5-86.7 37-75.2 0-91.5-23.1-91.5-32 0-3.8 1.2-6.2 4.8-9.4l1-1.2 .4-1.6c10.5-11.5 15.9-26.2 15.9-41.6 0-78.7-82.2-142.7-184-142.7-37.5-.3-74.5 8.9-107.5 26.9 27-57.5 82.7-97.6 91.3-103.8 .8-.6 .3-.8 .3-.8zm15.6 318.1c-1.4 30 4.6 60 16.4 87.2 13.6 26.4 32.7 51 56.5 69.3-59.5-11.5-111.5-43.9-149.4-89.3-38.1-46.4-59.2-104.3-59.2-164.8 0-51.2 62.4-94.4 136-94.4 36.6-.6 72.4 10.9 101.8 32.7l-3.6 1.2c-51.5 17.6-98.5 90.7-98.5 158.1zM469.8 400l-.7 .1c-11.8 18.8-25.9 35.1-42.2 49.5-30.8 28-68.1 45.5-108.8 49.9-18.6 .3-36.8-3.2-53.8-11.4-25.6-10.3-47.1-30-61.6-53-14.4-23.9-21.1-51.7-19-79.6-.6-20.1 5.4-40.3 15-58.2 13.9 33.1 37.5 61.3 67.6 80.8s65.5 29.5 101.4 28.6c31 .3 62.1-6.7 90.2-20.5l1.9-.9c3.9-2.3 7.7-3.9 11.6 0 4.5 4.9 1.8 9.2-1.2 14-.2 .2-.3 .5-.4 .7z"></path></svg></span></a></p>
-</div>
-<h3 id="using-browser">Using Browser  <!-- omit from toc --><a class="headerlink" href="#using-browser" title="Permanent link">¶</a></h3>
-<p>The simplest way to use this service is via your browser. Visit <a href="https://download.configserver.dev"><abbr title="Hypertext Transfer Protocol Secure, the encrypted version of HTTP.">https</abbr>://download.configserver.dev</a> to download the latest <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> as a <code>.zip</code> or <code>.tgz</code>, depending on the release.</p>
-<p>By default, all downloads are named <code>csf.ext</code>, making them easy to use in scripts without worrying about the version number.  </p>
-<p>If you do need the exact version of the release you downloaded:</p>
-<ul>
-<li>Open the downloaded archive and check the <code>version.txt</code> file, OR;</li>
-<li>Append <code>?name=preserve</code> to the URL, for example: <a href="https://download.configserver.dev?name=preserve"><abbr title="Hypertext Transfer Protocol Secure, the encrypted version of HTTP.">https</abbr>://download.configserver.dev?name=preserve</a>, OR;</li>
-<li>Query our api, and get a json response which contains the latest version number by using <code>https://download.configserver.dev/?output=json</code></li>
-</ul>
-<p><br>
-<br></p>
-<div align="center">
-<p><span class="twemoji icon-size-48"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> </p>
-</div>
-<h3 id="using-cli">Using CLI  <!-- omit from toc --><a class="headerlink" href="#using-cli" title="Permanent link">¶</a></h3>
-<p>You can use command-line tools like <code>wget</code> or <code>curl</code> to fetch the latest <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> release. For the simplest download method, see <a href="#with-filename">With Filename</a>.</p>
-<ul>
-<li><a href="#with-filename">With Filename</a></li>
-<li><a href="#without-filename">Without Filename</a></li>
-</ul>
-<p><br></p>
-<h4 id="with-filename">With Filename<a class="headerlink" href="#with-filename" title="Permanent link">¶</a></h4>
-<p>When downloading <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> from the CLI, you can append <code>csf.zip</code> or <code>csf.tgz</code> to the URL. This works just like the original download servers.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="with-filename-wget" name="__tabbed_1" type="radio"><input id="with-filename-curl" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="with-filename-wget"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M369.4 128l-34.3-48-222.1 0-34.3 48 290.7 0zM0 148.5c0-13.3 4.2-26.3 11.9-37.2L60.9 42.8C72.9 26 92.3 16 112.9 16l222.1 0c20.7 0 40.1 10 52.1 26.8l48.9 68.5c7.8 10.9 11.9 23.9 11.9 37.2L448 416c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 148.5z"></path></svg></span> wget</label><label for="with-filename-curl"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M369.4 128l-34.3-48-222.1 0-34.3 48 290.7 0zM0 148.5c0-13.3 4.2-26.3 11.9-37.2L60.9 42.8C72.9 26 92.3 16 112.9 16l222.1 0c20.7 0 40.1 10 52.1 26.8l48.9 68.5c7.8 10.9 11.9 23.9 11.9 37.2L448 416c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 148.5z"></path></svg></span> curl</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>wget<span class="w"> </span>https://download.configserver.dev/csf.zip
-</span></code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>curl<span class="w"> </span>-O<span class="w"> </span>https://download.configserver.dev/csf.zip
-</span></code></pre></div>
-</div>
-</div>
-</div>
-<p><br></p>
-<h4 id="without-filename">Without Filename<a class="headerlink" href="#without-filename" title="Permanent link">¶</a></h4>
-<p>You can also use <code>wget</code> or <code>curl</code> without adding a filename. In this mode, the server automatically selects <code>.zip</code> or <code>.tgz</code>, but your commands must support <code>content-disposition</code>. See the note below for details.</p>
-<details class="note">
-<summary>Get latest version from CLI without filename</summary>
-<p>If you want to use curl or wget to download the latest version of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>, but <strong>not</strong> place the filename on the end of the url; please read these notes.</p>
-<p>When using <code>wget</code> or <code>curl</code> with our download service without explicitly including a filename (for example, <a href="https://download.configserver.dev/">https://download.configserver.dev/</a> instead of <a href="https://download.configserver.dev/csf.zip">https://download.configserver.dev/csf.zip</a>), the server decides which file to serve from the latest release. To help users, it automatically provides the correct archive (.zip or .tgz) and sends a <code>Content-Disposition</code> header with the proper filename.</p>
-<p>By default, <code>wget</code> will ignore this header unless you pass <code>--content-disposition</code>. Without it, the file is saved under a generic name like <code>index.html</code>, even though the correct archive was downloaded. </p>
-<p>Similarly, <code>curl</code> requires the flags <code>-JLO</code>:</p>
-<ul>
-<li><code>-J</code> tells curl to respect the server’s Content-Disposition header.</li>
-<li><code>-L</code> follows redirects until it reaches the actual file.</li>
-<li><code>-O</code> writes the file using the server-provided name instead of dumping it to stdout.</li>
-</ul>
-<p>If you don’t use these options, the tools won’t know the intended filename and will either mislabel the file or refuse to save it. This is why <strong>wget</strong> <code>--content-disposition</code> and <strong>curl</strong> <code>-JLO</code> are the recommended ways to pull the latest <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> package without specifying the filename directly.</p>
-</details>
-<p><br></p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="without-filename-wget" name="__tabbed_2" type="radio"><input id="without-filename-curl" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="without-filename-wget"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M369.4 128l-34.3-48-222.1 0-34.3 48 290.7 0zM0 148.5c0-13.3 4.2-26.3 11.9-37.2L60.9 42.8C72.9 26 92.3 16 112.9 16l222.1 0c20.7 0 40.1 10 52.1 26.8l48.9 68.5c7.8 10.9 11.9 23.9 11.9 37.2L448 416c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 148.5z"></path></svg></span> wget</label><label for="without-filename-curl"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M369.4 128l-34.3-48-222.1 0-34.3 48 290.7 0zM0 148.5c0-13.3 4.2-26.3 11.9-37.2L60.9 42.8C72.9 26 92.3 16 112.9 16l222.1 0c20.7 0 40.1 10 52.1 26.8l48.9 68.5c7.8 10.9 11.9 23.9 11.9 37.2L448 416c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 148.5z"></path></svg></span> curl</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>wget<span class="w"> </span>--content-disposition<span class="w"> </span>https://download.configserver.dev/
-</span></code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>curl<span class="w"> </span>-JLO<span class="w"> </span>https://download.configserver.dev/
-</span></code></pre></div>
-</div>
-</div>
-</div>
+<h1 id="blocklistconfigserverdev">blocklist.configserver.dev <!-- omit from toc --><a class="headerlink" href="#blocklistconfigserverdev" title="Permanent link">¶</a></h1>
+<p><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>'s <a href="https://blocklist.configserver.dev">blocklist.configserver.dev</a> provides short, stable URLs for <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>’s official blocklists and other repo-hosted IPSETs. Accessing a URL returns the raw ipset file (one IP or CIDR per line), making it easy to consume and implement with <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>'s blocklist feature. A JSON API is also available for statistical data, showing counts and metadata, while by default the plain text lists are served for direct consumption by tools.</p>
+<p>IPSET files are formatted one entry per line (IP or CIDR), fully compatible with <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>. Administrators can add the URLs to <code>/etc/csf/csf.blocklists</code> or <code>/etc/csf/csf.deny</code>, allowing <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> to automatically apply the entries as <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> rules or via IPSET. The raw format is also easy to script against, mirror, or integrate into firewall automation workflows.</p>
+<p>The blocklists aggregate trusted sources, including high-confidence feeds like AbusiveIPDB top offenders, known brute-force ranges, port scanners, and botnets. While built for <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>, the lists can also be used with Fail2Ban, FireHOL, pfSense, Shorewall, and other compatible firewall tools.</p>
+<p>Read the chapter <a href="../../../usage/blocklists/">Blocklists</a> for more information about this feature and service.</p>
 <p><br></p>
 <hr>
 <p><br></p>
-<h2 id="advanced-options">Advanced Options<a class="headerlink" href="#advanced-options" title="Permanent link">¶</a></h2>
-<p>Our download service includes a few advanced features that may interest certain users.</p>
+<h2 id="about-blocklists">About Blocklists<a class="headerlink" href="#about-blocklists" title="Permanent link">¶</a></h2>
+<p>A blocklist is a collection of IP addresses or entire networks (CIDRs) that you don’t want accessing your server. When an IP on the blocklist attempts to connect, <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> blocks the request, helping to protect your system from unwanted or malicious traffic.</p>
+<p>Blocklists are powerful because they let you deny connections from known bad actors automatically. This includes IPs flagged for brute-force attacks, spam, port scanning, or other suspicious activity. Instead of manually adding rules for each offender, <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> can apply a list of rules that you maintain or import from external sources.</p>
+<p>Many blocklists are published and maintained by security organizations that track malicious activity worldwide. By subscribing to these maintained blocklists, you can keep your server automatically protected from known threats without the need for constant manual intervention.</p>
 <p><br></p>
-<h3 id="download-api">Download API<a class="headerlink" href="#download-api" title="Permanent link">¶</a></h3>
-<p>Our API provides a structured JSON response, which can be used in your own scripts to retrieve information about the latest release. Below are some examples of how to use this feature. </p>
+<hr>
 <p><br></p>
-<h4 id="fetch-json-response">Fetch JSON Response<a class="headerlink" href="#fetch-json-response" title="Permanent link">¶</a></h4>
-<p>To request a JSON response from our API, append <code>?output=json</code> to the end of your URL, for example:</p>
+<h2 id="usage">Usage  <!-- omit from toc --><a class="headerlink" href="#usage" title="Permanent link">¶</a></h2>
+<p>This section explains the different ways you can access and work with our blocklist service.  </p>
+<p><br></p>
+<h3 id="basic">Basic<a class="headerlink" href="#basic" title="Permanent link">¶</a></h3>
+<p>By default, each blocklist is served as a plain text file containing IP addresses and CIDR ranges.<br>
+All lists are available as <code>.ipset</code> files and can be retrieved directly over HTTP.  </p>
+<p>For example, you can open the following URL in your browser or use <code>curl</code> to download the master blocklist:</p>
+<div class="grid cards">
 <ul>
-<li><a href="https://download.configserver.dev/?output=json">https://download.configserver.dev/?output=json</a></li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M55.7 199.7l30.9 30.9c6 6 14.1 9.4 22.6 9.4l21.5 0c8.5 0 16.6 3.4 22.6 9.4l29.3 29.3c6 6 9.4 14.1 9.4 22.6l0 37.5c0 8.5 3.4 16.6 9.4 22.6l13.3 13.3c6 6 9.4 14.1 9.4 22.6l0 18.7c0 17.7 14.3 32 32 32s32-14.3 32-32l0-2.7c0-8.5 3.4-16.6 9.4-22.6l45.3-45.3c6-6 9.4-14.1 9.4-22.6l0-34.7c0-17.7-14.3-32-32-32l-82.7 0c-8.5 0-16.6-3.4-22.6-9.4l-16-16c-4.2-4.2-6.6-10-6.6-16 0-12.5 10.1-22.6 22.6-22.6l34.7 0c12.5 0 22.6-10.1 22.6-22.6 0-6-2.4-11.8-6.6-16l-19.7-19.7C242 130 240 125.1 240 120s2-10 5.7-13.7l17.3-17.3c5.8-5.8 9.1-13.7 9.1-21.9 0-7.2-2.4-13.7-6.4-18.9-3.2-.1-6.4-.2-9.6-.2-95.4 0-175.7 64.2-200.3 151.7zM464 256c0-34.6-8.4-67.2-23.4-95.8-6.4 .9-12.7 3.9-17.9 9.1l-13.4 13.4c-6 6-9.4 14.1-9.4 22.6l0 34.7c0 17.7 14.3 32 32 32l24.1 0c2.5 0 5-.3 7.3-.8 .4-5 .5-10.1 .5-15.2zM0 256a256 256 0 1 1 512 0 256 256 0 1 1 -512 0z"></path></svg></span> &nbsp; <a href="https://blocklist.configserver.dev/master.ipset"><strong>IPSET</strong> › <abbr title="Hypertext Transfer Protocol Secure, the encrypted version of HTTP.">https</abbr>://blocklist.configserver.dev/master.ipset</a></li>
+</ul>
+</div>
+<p>This file can then be imported into <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>, FireHOL, or any firewall, security tool, or monitoring system that supports ipsets.  </p>
+<p><br></p>
+<h3 id="advanced">Advanced  <!-- omit from toc --><a class="headerlink" href="#advanced" title="Permanent link">¶</a></h3>
+<p>Beyond simple blocklist retrieval, the service also provides an API with a statistics endpoint.<br>
+By appending the query parameter <code>?stats=true</code> to any <code>.ipset</code> file, the server will return metadata instead of the raw list.  </p>
+<p>The statistics response is provided in JSON format and includes details such as the list name, source, number of entries, size, and timestamps.  </p>
+<p>Example response:</p>
+<div class="language-json highlight"><span class="filename">http://blocklist.configserver.dev/master.ipset</span><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Master Blocklist"</span><span class="p">,</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"master_ipset"</span><span class="p">,</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="nt">"filename"</span><span class="p">:</span><span class="w"> </span><span class="s2">"master.ipset"</span><span class="p">,</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Master"</span><span class="p">,</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">  </span><span class="nt">"uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ae40fa01-270d-3a98-98eb-249207584724"</span><span class="p">,</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/blocklists/master.ipset"</span><span class="p">,</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/blocklists/master.ipset"</span><span class="p">,</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">  </span><span class="nt">"subnets"</span><span class="p">:</span><span class="w"> </span><span class="mi">5387</span><span class="p">,</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">  </span><span class="nt">"ips_single"</span><span class="p">:</span><span class="w"> </span><span class="mi">425310</span><span class="p">,</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">  </span><span class="nt">"ips_total"</span><span class="p">:</span><span class="w"> </span><span class="mi">612962028</span><span class="p">,</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">  </span><span class="nt">"client_ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"127.0.0.1"</span><span class="p">,</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">  </span><span class="nt">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-09-27T15:36:37.954Z"</span><span class="p">,</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">  </span><span class="nt">"date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"09-27-2025 08:36:38"</span><span class="p">,</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">  </span><span class="nt">"took"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0m 02s"</span><span class="p">,</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">  </span><span class="nt">"took_ms"</span><span class="p">:</span><span class="w"> </span><span class="mi">2001</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><br></p>
+<hr>
+<p><br></p>
+<h2 id="add-blocklists-to-csf">Add Blocklists to <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>  <!-- omit from toc --><a class="headerlink" href="#add-blocklists-to-csf" title="Permanent link">¶</a></h2>
+<p>To use our <a href="https://blocklist.configserver.dev">blocklist.configserver.dev</a> service, select the lists you want to add to <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> from the <a href="#blocklists">blocklists</a> section below.  </p>
+<p>For example, you might add the lists <code>master.ipset</code> and <code>highrisk.ipset</code>.</p>
+<p>Open your <code>/etc/csf/csf.blocklists</code> and add the following:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a># #
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>#   @blocklist              Official CSF Blocklists
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>#   @details:               https://aetherinox.github.io/csf-firewall/usage/blocklists/#official-blocklists
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>#                           https://aetherinox.github.io/csf-firewall/advanced/services/blocklist.configserver
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>#   
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>#   The official CSF blocklists contain a large number of IPs which range from various 
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>#   different services, including AbuseIPDB (100% confidency).
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>#   
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>#   You can also use our blocklist service:
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>#       http://blocklist.configserver.dev/master.ipset
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>#       http://blocklist.configserver.dev/highrisk.ipset
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>#   
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>#   We offer many others, but these two are the primary ones.
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>#   
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>#   Requires you to edit /etc/csf/csf.conf setting:
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>#       LF_IPSET_MAXELEM = "4000000"
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a># #
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>CSF_MASTER   | 43200 | 0      | http://blocklist.configserver.dev/master.ipset
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>CSF_HIGHRISK | 43200 | 0      | http://blocklist.configserver.dev/highrisk.ipset
+</span></code></pre></div>
+<p><br></p>
+<hr>
+<p><br></p>
+<h2 id="blocklists">Blocklists  <!-- omit from toc --><a class="headerlink" href="#blocklists" title="Permanent link">¶</a></h2>
+<p>The following lists outline the blocklists that are available to use with our blocklist service</p>
+<p><br></p>
+<h3 id="main-lists">Main Lists<a class="headerlink" href="#main-lists" title="Permanent link">¶</a></h3>
+<p>These are the primary IPSETs that most people will be interested in. They contain a large number of IP addresses that have been reported recently for abusive behavior. These statistics are gathered from multiple sources, such as <a href="https://abuseipdb.com/">AbuseIPDB</a> and <a href="https://ipthreat.net/">IPThreat</a>. IPs on this list have a 100% confidence level, meaning you should encounter no false positives from any of the IPs included.  </p>
+<p>IP addresses in these lists have been flagged for engaging in activities such as:</p>
+<ul>
+<li>SSH Bruteforcing</li>
+<li>Port Scanning</li>
+<li>DDoS Attacks</li>
+<li>IoT Targeting</li>
+<li>Phishing</li>
 </ul>
 <p><br></p>
-<h4 id="fetch-latest-release-file">Fetch Latest Release File<a class="headerlink" href="#fetch-latest-release-file" title="Permanent link">¶</a></h4>
-<p>You can use our API to download the latest <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> release directly. This command retrieves the download URL and filename from the JSON response, and then downloads the file with the correct name.</p>
-<ol>
-<li>Gets the latest <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> release info from the API in JSON.</li>
-<li>Extracts the download URL and filename.</li>
-<li>Downloads the file using the URL and saves it as the correct filename.</li>
-</ol>
-<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="fetch-latest-release-file-curl" name="__tabbed_3" type="radio"><input id="fetch-latest-release-file-wget--curl" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="fetch-latest-release-file-curl"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M369.4 128l-34.3-48-222.1 0-34.3 48 290.7 0zM0 148.5c0-13.3 4.2-26.3 11.9-37.2L60.9 42.8C72.9 26 92.3 16 112.9 16l222.1 0c20.7 0 40.1 10 52.1 26.8l48.9 68.5c7.8 10.9 11.9 23.9 11.9 37.2L448 416c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 148.5z"></path></svg></span> curl</label><label for="fetch-latest-release-file-wget--curl"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M369.4 128l-34.3-48-222.1 0-34.3 48 290.7 0zM0 148.5c0-13.3 4.2-26.3 11.9-37.2L60.9 42.8C72.9 26 92.3 16 112.9 16l222.1 0c20.7 0 40.1 10 52.1 26.8l48.9 68.5c7.8 10.9 11.9 23.9 11.9 37.2L448 416c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 148.5z"></path></svg></span> wget + curl</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>curl<span class="w"> </span>-s<span class="w"> </span><span class="s2">"https://download.configserver.dev/?output=json"</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">'.download_url + " " + .file_name'</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="p">|</span><span class="w"> </span>xargs<span class="w"> </span>-n2<span class="w"> </span>sh<span class="w"> </span>-c<span class="w"> </span><span class="s1">'curl -L -o "$1" "$0"'</span>
-</span></code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">eval</span><span class="w"> </span><span class="k">$(</span>curl<span class="w"> </span>-s<span class="w"> </span><span class="s2">"https://download.configserver.dev/?output=json"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">'"wget -O \(.file_name) \(.download_url)"'</span><span class="k">)</span><span class="w"> </span>
-</span></code></pre></div>
-</div>
-</div>
-</div>
+<p>For most users, the blocklists <code>master.ipset</code> and <code>highrisk.ipset</code> are all you need. They contain a massive collection of IP addresses, all with a 100% confidence level, meaning you should encounter none or minimal false positives.</p>
+<table>
+<thead>
+<tr>
+<th>Filename</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>master.ipset</code></td>
+<td>Abusive IPs reported for port scanning and SSH brute-forcing. HIGHLY recommended. <br> <span class="text-sm-9">Includes <a href="https://www.abuseipdb.com/">AbuseIPDB</a>, <a href="https://ipthreat.net/">IPThreat</a>, <a href="https://cinsscore.com">CinsScore</a>, <a href="https://blocklist.greensnow.co/greensnow.txt">GreensNow</a></span></td>
+</tr>
+<tr>
+<td><code>highrisk.ipset</code></td>
+<td>IPs with highest risk to your network and have a possibility that the activity which comes from them are going to be fraudulent.</td>
+</tr>
+</tbody>
+</table>
 <p><br></p>
-<h4 id="retrieve-only-the-download-url">Retrieve Only the Download URL<a class="headerlink" href="#retrieve-only-the-download-url" title="Permanent link">¶</a></h4>
-<p>If you just need the direct URL for the latest release, you can pull it from the JSON response. This will output the URL as a plain string, without downloading the file.</p>
-<ol>
-<li>Gets the latest <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> release info from the API in JSON.</li>
-<li>Extracts the download URL and returns the string in terminal.</li>
-</ol>
-<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="retrieve-only-the-download-url-command" name="__tabbed_4" type="radio"><input id="retrieve-only-the-download-url-output" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="retrieve-only-the-download-url-command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> Command</label><label for="retrieve-only-the-download-url-output"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Output</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>curl<span class="w"> </span>-s<span class="w"> </span><span class="s2">"https://download.configserver.dev/?output=json"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">'.download_url'</span>
-</span></code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>https://github.com/Aetherinox/csf-firewall/releases/download/15.00/csf-firewall-v15.00.zip
-</span></code></pre></div>
-</div>
-</div>
-</div>
+<h3 id="privacy">Privacy<a class="headerlink" href="#privacy" title="Permanent link">¶</a></h3>
+<p>These blocklists help you control which third-party <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> can access your server, allowing you to block bad actors or unwanted service providers.</p>
+<p><br></p>
+<table>
+<thead>
+<tr>
+<th>Filename</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>privacy_general.ipset</code></td>
+<td>Servers which scan ports for data collection and research purposes. <span class="text-sm-9">List includes <a href="https://censys.io">Censys</a>, <a href="https://shodan.io/">Shodan</a>, <a href="https://blogproject25499.wordpress.com/">Project25499</a>, <a href="https://archive.org/">InternetArchive</a>, <a href="https://cyberresilience.io">Cyber Resilience</a>, <a href="https://internet-measurement.com">Internet Measurement</a>, <a href="https://onyphe.net">probe.onyphe.net</a>, <a href="https://securitytrails.com">Security Trails</a></span></td>
+</tr>
+<tr>
+<td><code>privacy_activision.ipset</code></td>
+<td>IPs used by Activision <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> and bots</td>
+</tr>
+<tr>
+<td><code>privacy_ahrefs.ipset</code></td>
+<td>IPs from Ahrefs crawler and data collectors</td>
+</tr>
+<tr>
+<td><code>privacy_amazon_aws.ipset</code></td>
+<td>Amazon AWS infrastructure IPs</td>
+</tr>
+<tr>
+<td><code>privacy_amazon_ec2.ipset</code></td>
+<td>Amazon EC2 instances</td>
+</tr>
+<tr>
+<td><code>privacy_applebot.ipset</code></td>
+<td>Applebot crawler IPs</td>
+</tr>
+<tr>
+<td><code>privacy_bing.ipset</code></td>
+<td>Microsoft Bing crawler IPs</td>
+</tr>
+<tr>
+<td><code>privacy_blizzard.ipset</code></td>
+<td>Blizzard <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> and game IPs</td>
+</tr>
+<tr>
+<td><code>privacy_bunnycdn.ipset</code></td>
+<td>BunnyCDN infrastructure IPs</td>
+</tr>
+<tr>
+<td><code>privacy_cloudflarecdn.ipset</code></td>
+<td><abbr title="A web infrastructure and security company providing CDN, DNS, and DDoS protection services.">Cloudflare</abbr> CDN and network IPs</td>
+</tr>
+<tr>
+<td><code>privacy_cloudfront.ipset</code></td>
+<td>AWS CloudFront IP ranges</td>
+</tr>
+<tr>
+<td><code>privacy_duckduckgo.ipset</code></td>
+<td>DuckDuckGo crawler IPs</td>
+</tr>
+<tr>
+<td><code>privacy_electronicarts_ign.ipset</code></td>
+<td>EA / IGN related <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> and IPs</td>
+</tr>
+<tr>
+<td><code>privacy_facebook.ipset</code></td>
+<td>Facebook service IPs</td>
+</tr>
+<tr>
+<td><code>privacy_fastly.ipset</code></td>
+<td>Fastly CDN network IPs</td>
+</tr>
+<tr>
+<td><code>privacy_google.ipset</code></td>
+<td>Google crawler and <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> IPs</td>
+</tr>
+<tr>
+<td><code>privacy_nintendo.ipset</code></td>
+<td>Nintendo <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> IPs</td>
+</tr>
+<tr>
+<td><code>privacy_pandora.ipset</code></td>
+<td>Pandora network IPs</td>
+</tr>
+<tr>
+<td><code>privacy_pingdom.ipset</code></td>
+<td>Pingdom monitoring service IPs</td>
+</tr>
+<tr>
+<td><code>privacy_piratebay.ipset</code></td>
+<td>PirateBay-related IPs</td>
+</tr>
+<tr>
+<td><code>privacy_punkbuster.ipset</code></td>
+<td>PunkBuster anti-cheat service IPs</td>
+</tr>
+<tr>
+<td><code>privacy_riot_games.ipset</code></td>
+<td>Riot Games IPs</td>
+</tr>
+<tr>
+<td><code>privacy_rssapi.ipset</code></td>
+<td>RSS API service IPs</td>
+</tr>
+<tr>
+<td><code>privacy_sony.ipset</code></td>
+<td>Sony <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> and network IPs</td>
+</tr>
+<tr>
+<td><code>privacy_steam.ipset</code></td>
+<td>Steam service IPs</td>
+</tr>
+<tr>
+<td><code>privacy_stripe_api.ipset</code></td>
+<td>Stripe API endpoints</td>
+</tr>
+<tr>
+<td><code>privacy_stripe_armada_gator.ipset</code></td>
+<td>Stripe-related monitoring IPs</td>
+</tr>
+<tr>
+<td><code>privacy_stripe_webhooks.ipset</code></td>
+<td>Stripe webhook IPs</td>
+</tr>
+<tr>
+<td><code>privacy_telegram.ipset</code></td>
+<td>Telegram service IPs</td>
+</tr>
+<tr>
+<td><code>privacy_ubisoft.ipset</code></td>
+<td>Ubisoft network IPs</td>
+</tr>
+<tr>
+<td><code>privacy_uptimerobot.ipset</code></td>
+<td>UptimeRobot monitoring IPs</td>
+</tr>
+<tr>
+<td><code>privacy_webpagetest.ipset</code></td>
+<td>WebPageTest infrastructure IPs</td>
+</tr>
+<tr>
+<td><code>privacy_xfire.ipset</code></td>
+<td>Xfire service IPs</td>
+</tr>
+</tbody>
+</table>
 <p><br>
 <br>
 <br></p>
-<h3 id="preserve-filename">Preserve Filename<a class="headerlink" href="#preserve-filename" title="Permanent link">¶</a></h3>
-<p>By default, the download service fetches the latest <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> release and renames it to <code>csf.zip</code> or <code>csf.tgz</code>.  If you prefer, you can keep the original release name, such as <code>csf-firewall-vXX.XX.zip</code> or <code>csf-firewall-vXX.XX.tar</code> by appending <code>?name=preserve</code> to your url, such as:</p>
+<h3 id="spam">Spam<a class="headerlink" href="#spam" title="Permanent link">¶</a></h3>
+<p>These blocklists help prevent known spam sources from accessing your server. They include IPs identified by <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> like Spamhaus as well as spammers targeting forums and other online platforms.</p>
+<p><br></p>
+<table>
+<thead>
+<tr>
+<th>Filename</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>spam_forums.ipset</code></td>
+<td>IPs associated with forum spam</td>
+</tr>
+<tr>
+<td><code>spam_spamhaus.ipset</code></td>
+<td>Spamhaus blocklist IPs</td>
+</tr>
+</tbody>
+</table>
+<p><br>
+<br>
+<br></p>
+<h3 id="internet-service-providers">Internet Service Providers<a class="headerlink" href="#internet-service-providers" title="Permanent link">¶</a></h3>
+<p>These blocklists allow you to filter traffic based on Internet Service Providers (ISPs). They can be used to block or restrict access from specific networks or providers.</p>
+<p><br></p>
+<table>
+<thead>
+<tr>
+<th>Filename</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>isp_aol.ipset</code></td>
+<td>AOL Internet Service Provider IPs</td>
+</tr>
+<tr>
+<td><code>isp_att.ipset</code></td>
+<td>AT&amp;T Internet Service Provider IPs</td>
+</tr>
+<tr>
+<td><code>isp_cablevision.ipset</code></td>
+<td>Cablevision / Optimum ISP IPs</td>
+</tr>
+<tr>
+<td><code>isp_charter_spectrum_timewarnercable.ipset</code></td>
+<td>Charter/Spectrum/TWC ISP IPs</td>
+</tr>
+<tr>
+<td><code>isp_comcast.ipset</code></td>
+<td>Comcast / Xfinity ISP IPs</td>
+</tr>
+<tr>
+<td><code>isp_cox_communications.ipset</code></td>
+<td>Cox Communications ISP IPs</td>
+</tr>
+<tr>
+<td><code>isp_embarq.ipset</code></td>
+<td>Embarq / CenturyLink ISP IPs</td>
+</tr>
+<tr>
+<td><code>isp_frontier_communications.ipset</code></td>
+<td>Frontier Communications ISP IPs</td>
+</tr>
+<tr>
+<td><code>isp_qwest.ipset</code></td>
+<td>Qwest / CenturyLink ISP IPs</td>
+</tr>
+<tr>
+<td><code>isp_spacex_starlink.ipset</code></td>
+<td>SpaceX Starlink satellite ISP IPs</td>
+</tr>
+<tr>
+<td><code>isp_sprint.ipset</code></td>
+<td>Sprint ISP IPs</td>
+</tr>
+<tr>
+<td><code>isp_suddenlink_altice_optimum.ipset</code></td>
+<td>Suddenlink / Altice / Optimum ISP IPs</td>
+</tr>
+<tr>
+<td><code>isp_verizon.ipset</code></td>
+<td>Verizon ISP IPs</td>
+</tr>
+</tbody>
+</table>
+<p><br>
+<br>
+<br></p>
+<h3 id="transmission-bittorrent-client">Transmission (BitTorrent Client)<a class="headerlink" href="#transmission-bittorrent-client" title="Permanent link">¶</a></h3>
+<p>This section includes blocklists which you can import into the <a href="https://transmissionbt.com/">bittorrent client Transmission</a>.</p>
+<p><br></p>
 <ul>
-<li><a href="https://download.configserver.dev/?name=preserve">https://download.configserver.dev/?name=preserve</a></li>
+<li>In this repo, copy the direct URL to the Transmission blocklist, provided below:<ul>
+<li><a href="https://github.com/Aetherinox/csf-firewall/raw/main/blocklists/transmission/blocklist.gz">https://github.com/Aetherinox/csf-firewall/raw/main/blocklists/transmission/blocklist.gz</a></li>
 </ul>
+</li>
+<li>Open your Transmission application; depending on the version you run, do ONE of the follow two choices:<ul>
+<li>Paste the link to <strong>Transmission</strong> › <code>Settings</code> › <code>Peers</code> › <code>Blocklist</code></li>
+<li>Paste the link to <strong>Transmission</strong> › <code>Edit</code> › <code>Preferences</code> › <code>Privacy</code> › <code>Enable Blocklist</code></li>
+</ul>
+</li>
+</ul>
+<p><br></p>
+<table>
+<thead>
+<tr>
+<th>Filename</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>transmission.ipset</code></td>
+<td>IPs related to BitTorrent Transmission clients</td>
+</tr>
+</tbody>
+</table>
+<p><br>
+<br>
+<br></p>
+<h3 id="continents-geolite2">Continents (GeoLite2)<a class="headerlink" href="#continents-geolite2" title="Permanent link">¶</a></h3>
+<p>These blocklists let you control which geographical locations can access your server. They can be used as either a whitelist or a blacklist and include both <strong>continents</strong> and <strong>countries</strong>.  </p>
+<p>All data is sourced directly from the GeoLite2 Database.</p>
+<p><br></p>
+<table>
+<thead>
+<tr>
+<th>Filename</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>continent_africa.ipset</code></td>
+<td>All IPs located in Africa</td>
+</tr>
+<tr>
+<td><code>continent_antartica.ipset</code></td>
+<td>IPs in Antarctica</td>
+</tr>
+<tr>
+<td><code>continent_asia.ipset</code></td>
+<td>All Asian IPs</td>
+</tr>
+<tr>
+<td><code>continent_europe.ipset</code></td>
+<td>European IPs</td>
+</tr>
+<tr>
+<td><code>continent_north_america.ipset</code></td>
+<td>North American IPs</td>
+</tr>
+<tr>
+<td><code>continent_oceania.ipset</code></td>
+<td>Oceania IPs</td>
+</tr>
+<tr>
+<td><code>continent_south_america.ipset</code></td>
+<td>South American IPs</td>
+</tr>
+</tbody>
+</table>
+<p><br>
+<br>
+<br></p>
+<h3 id="countries-geolite2">Countries (GeoLite2)<a class="headerlink" href="#countries-geolite2" title="Permanent link">¶</a></h3>
+<p>These blocklists let you control which geographical locations can access your server. They can be used as either a whitelist or a blacklist and include both <strong>continents</strong> and <strong>countries</strong>.  </p>
+<p>All data is sourced directly from the GeoLite2 Database.</p>
+<p><br></p>
+<table>
+<thead>
+<tr>
+<th>Filename</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>country_afghanistan.ipset</code></td>
+<td>IPs located in Afghanistan</td>
+</tr>
+<tr>
+<td><code>country_aland_islands.ipset</code></td>
+<td>IPs in Aland Islands</td>
+</tr>
+<tr>
+<td><code>country_albania.ipset</code></td>
+<td>IPs in Albania</td>
+</tr>
+<tr>
+<td><code>country_algeria.ipset</code></td>
+<td>IPs in Algeria</td>
+</tr>
+<tr>
+<td><code>country_american_samoa.ipset</code></td>
+<td>IPs in American Samoa</td>
+</tr>
+<tr>
+<td><code>country_andorra.ipset</code></td>
+<td>IPs in Andorra</td>
+</tr>
+<tr>
+<td><code>country_angola.ipset</code></td>
+<td>IPs in Angola</td>
+</tr>
+<tr>
+<td><code>country_anguilla.ipset</code></td>
+<td>IPs in Anguilla</td>
+</tr>
+<tr>
+<td><code>country_antarctica.ipset</code></td>
+<td>IPs in Antarctica</td>
+</tr>
+<tr>
+<td><code>country_antigua_barbuda.ipset</code></td>
+<td>IPs in Antigua and Barbuda</td>
+</tr>
+<tr>
+<td><code>country_argentina.ipset</code></td>
+<td>IPs in Argentina</td>
+</tr>
+<tr>
+<td><code>country_armenia.ipset</code></td>
+<td>IPs in Armenia</td>
+</tr>
+<tr>
+<td><code>country_aruba.ipset</code></td>
+<td>IPs in Aruba</td>
+</tr>
+<tr>
+<td><code>country_australia.ipset</code></td>
+<td>IPs in Australia</td>
+</tr>
+<tr>
+<td><code>country_austria.ipset</code></td>
+<td>IPs in Austria</td>
+</tr>
+<tr>
+<td><code>country_azerbaijan.ipset</code></td>
+<td>IPs in Azerbaijan</td>
+</tr>
+<tr>
+<td><code>country_bahamas.ipset</code></td>
+<td>IPs in The Bahamas</td>
+</tr>
+<tr>
+<td><code>country_bahrain.ipset</code></td>
+<td>IPs in Bahrain</td>
+</tr>
+<tr>
+<td><code>country_bangladesh.ipset</code></td>
+<td>IPs in Bangladesh</td>
+</tr>
+<tr>
+<td><code>country_barbados.ipset</code></td>
+<td>IPs in Barbados</td>
+</tr>
+<tr>
+<td><code>country_belarus.ipset</code></td>
+<td>IPs in Belarus</td>
+</tr>
+<tr>
+<td><code>country_belgium.ipset</code></td>
+<td>IPs in Belgium</td>
+</tr>
+<tr>
+<td><code>country_belize.ipset</code></td>
+<td>IPs in Belize</td>
+</tr>
+<tr>
+<td><code>country_benin.ipset</code></td>
+<td>IPs in Benin</td>
+</tr>
+<tr>
+<td><code>country_bermuda.ipset</code></td>
+<td>IPs in Bermuda</td>
+</tr>
+<tr>
+<td><code>country_bhutan.ipset</code></td>
+<td>IPs in Bhutan</td>
+</tr>
+<tr>
+<td><code>country_bolivia.ipset</code></td>
+<td>IPs in Bolivia</td>
+</tr>
+<tr>
+<td><code>country_bonaire_sint_eustatius_saba.ipset</code></td>
+<td>IPs in Bonaire, Sint Eustatius, and Saba</td>
+</tr>
+<tr>
+<td><code>country_bosnia_herzegovina.ipset</code></td>
+<td>IPs in Bosnia and Herzegovina</td>
+</tr>
+<tr>
+<td><code>country_botswana.ipset</code></td>
+<td>IPs in Botswana</td>
+</tr>
+<tr>
+<td><code>country_bouvet_island.ipset</code></td>
+<td>IPs in Bouvet Island</td>
+</tr>
+<tr>
+<td><code>country_brazil.ipset</code></td>
+<td>IPs in Brazil</td>
+</tr>
+<tr>
+<td><code>country_british_indian_ocean_territory.ipset</code></td>
+<td>IPs in British Indian Ocean Territory</td>
+</tr>
+<tr>
+<td><code>country_british_virgin_islands.ipset</code></td>
+<td>IPs in British Virgin Islands</td>
+</tr>
+<tr>
+<td><code>country_brunei_darussalam.ipset</code></td>
+<td>IPs in Brunei</td>
+</tr>
+<tr>
+<td><code>country_bulgaria.ipset</code></td>
+<td>IPs in Bulgaria</td>
+</tr>
+<tr>
+<td><code>country_burkina_faso.ipset</code></td>
+<td>IPs in Burkina Faso</td>
+</tr>
+<tr>
+<td><code>country_burundi.ipset</code></td>
+<td>IPs in Burundi</td>
+</tr>
+<tr>
+<td><code>country_cambodia.ipset</code></td>
+<td>IPs in Cambodia</td>
+</tr>
+<tr>
+<td><code>country_cameroon.ipset</code></td>
+<td>IPs in Cameroon</td>
+</tr>
+<tr>
+<td><code>country_canada.ipset</code></td>
+<td>IPs in Canada</td>
+</tr>
+<tr>
+<td><code>country_cape_verde.ipset</code></td>
+<td>IPs in Cape Verde</td>
+</tr>
+<tr>
+<td><code>country_cayman_islands.ipset</code></td>
+<td>IPs in Cayman Islands</td>
+</tr>
+<tr>
+<td><code>country_cc.ipset</code></td>
+<td>IPs in Cocos (Keeling) Islands</td>
+</tr>
+<tr>
+<td><code>country_central_african_republic.ipset</code></td>
+<td>IPs in Central African Republic</td>
+</tr>
+<tr>
+<td><code>country_chad.ipset</code></td>
+<td>IPs in Chad</td>
+</tr>
+<tr>
+<td><code>country_chile.ipset</code></td>
+<td>IPs in Chile</td>
+</tr>
+<tr>
+<td><code>country_china.ipset</code></td>
+<td>IPs in China</td>
+</tr>
+<tr>
+<td><code>country_christmas_island.ipset</code></td>
+<td>IPs in Christmas Island</td>
+</tr>
+<tr>
+<td><code>country_colombia.ipset</code></td>
+<td>IPs in Colombia</td>
+</tr>
+<tr>
+<td><code>country_comoros.ipset</code></td>
+<td>IPs in Comoros</td>
+</tr>
+<tr>
+<td><code>country_congo.ipset</code></td>
+<td>IPs in Congo</td>
+</tr>
+<tr>
+<td><code>country_cook_islands.ipset</code></td>
+<td>IPs in Cook Islands</td>
+</tr>
+<tr>
+<td><code>country_costa_rica.ipset</code></td>
+<td>IPs in Costa Rica</td>
+</tr>
+<tr>
+<td><code>country_cote_divoire.ipset</code></td>
+<td>IPs in Côte d'Ivoire</td>
+</tr>
+<tr>
+<td><code>country_croatia.ipset</code></td>
+<td>IPs in Croatia</td>
+</tr>
+<tr>
+<td><code>country_cuba.ipset</code></td>
+<td>IPs in Cuba</td>
+</tr>
+<tr>
+<td><code>country_curacao.ipset</code></td>
+<td>IPs in Curaçao</td>
+</tr>
+<tr>
+<td><code>country_cyprus.ipset</code></td>
+<td>IPs in Cyprus</td>
+</tr>
+<tr>
+<td><code>country_czech_republic.ipset</code></td>
+<td>IPs in Czech Republic</td>
+</tr>
+<tr>
+<td><code>country_democratic_republic_congo.ipset</code></td>
+<td>IPs in Democratic Republic of the Congo</td>
+</tr>
+<tr>
+<td><code>country_denmark.ipset</code></td>
+<td>IPs in Denmark</td>
+</tr>
+<tr>
+<td><code>country_djibouti.ipset</code></td>
+<td>IPs in Djibouti</td>
+</tr>
+<tr>
+<td><code>country_dominica.ipset</code></td>
+<td>IPs in Dominica</td>
+</tr>
+<tr>
+<td><code>country_dominican_republic.ipset</code></td>
+<td>IPs in Dominican Republic</td>
+</tr>
+<tr>
+<td><code>country_ecuador.ipset</code></td>
+<td>IPs in Ecuador</td>
+</tr>
+<tr>
+<td><code>country_egypt.ipset</code></td>
+<td>IPs in Egypt</td>
+</tr>
+<tr>
+<td><code>country_el_salvador.ipset</code></td>
+<td>IPs in El Salvador</td>
+</tr>
+<tr>
+<td><code>country_equatorial_guinea.ipset</code></td>
+<td>IPs in Equatorial Guinea</td>
+</tr>
+<tr>
+<td><code>country_eritrea.ipset</code></td>
+<td>IPs in Eritrea</td>
+</tr>
+<tr>
+<td><code>country_estonia.ipset</code></td>
+<td>IPs in Estonia</td>
+</tr>
+<tr>
+<td><code>country_eswatini.ipset</code></td>
+<td>IPs in Eswatini</td>
+</tr>
+<tr>
+<td><code>country_ethiopia.ipset</code></td>
+<td>IPs in Ethiopia</td>
+</tr>
+<tr>
+<td><code>country_europe.ipset</code></td>
+<td>IPs in Europe</td>
+</tr>
+<tr>
+<td><code>country_falkland_islands_malvinas.ipset</code></td>
+<td>IPs in Falkland Islands (Malvinas)</td>
+</tr>
+<tr>
+<td><code>country_faroe_islands.ipset</code></td>
+<td>IPs in Faroe Islands</td>
+</tr>
+<tr>
+<td><code>country_fiji.ipset</code></td>
+<td>IPs in Fiji</td>
+</tr>
+<tr>
+<td><code>country_finland.ipset</code></td>
+<td>IPs in Finland</td>
+</tr>
+<tr>
+<td><code>country_france.ipset</code></td>
+<td>IPs in France</td>
+</tr>
+<tr>
+<td><code>country_french_guiana.ipset</code></td>
+<td>IPs in French Guiana</td>
+</tr>
+<tr>
+<td><code>country_french_polynesia.ipset</code></td>
+<td>IPs in French Polynesia</td>
+</tr>
+<tr>
+<td><code>country_french_southern_territories.ipset</code></td>
+<td>IPs in French Southern Territories</td>
+</tr>
+<tr>
+<td><code>country_gabon.ipset</code></td>
+<td>IPs in Gabon</td>
+</tr>
+<tr>
+<td><code>country_gambia.ipset</code></td>
+<td>IPs in Gambia</td>
+</tr>
+<tr>
+<td><code>country_georgia.ipset</code></td>
+<td>IPs in Georgia</td>
+</tr>
+<tr>
+<td><code>country_germany.ipset</code></td>
+<td>IPs in Germany</td>
+</tr>
+<tr>
+<td><code>country_ghana.ipset</code></td>
+<td>IPs in Ghana</td>
+</tr>
+<tr>
+<td><code>country_gibraltar.ipset</code></td>
+<td>IPs in Gibraltar</td>
+</tr>
+<tr>
+<td><code>country_great_britain.ipset</code></td>
+<td>IPs in Great Britain</td>
+</tr>
+<tr>
+<td><code>country_greece.ipset</code></td>
+<td>IPs in Greece</td>
+</tr>
+<tr>
+<td><code>country_greenland.ipset</code></td>
+<td>IPs in Greenland</td>
+</tr>
+<tr>
+<td><code>country_grenada.ipset</code></td>
+<td>IPs in Grenada</td>
+</tr>
+<tr>
+<td><code>country_guadeloupe.ipset</code></td>
+<td>IPs in Guadeloupe</td>
+</tr>
+<tr>
+<td><code>country_guam.ipset</code></td>
+<td>IPs in Guam</td>
+</tr>
+<tr>
+<td><code>country_guatemala.ipset</code></td>
+<td>IPs in Guatemala</td>
+</tr>
+<tr>
+<td><code>country_guernsey.ipset</code></td>
+<td>IPs in Guernsey</td>
+</tr>
+<tr>
+<td><code>country_guineabissau.ipset</code></td>
+<td>IPs in Guinea-Bissau</td>
+</tr>
+<tr>
+<td><code>country_guinea.ipset</code></td>
+<td>IPs in Guinea</td>
+</tr>
+<tr>
+<td><code>country_guyana.ipset</code></td>
+<td>IPs in Guyana</td>
+</tr>
+<tr>
+<td><code>country_haiti.ipset</code></td>
+<td>IPs in Haiti</td>
+</tr>
+<tr>
+<td><code>country_heard_island_and_mcdonald_islands.ipset</code></td>
+<td>IPs in Heard Island and McDonald Islands</td>
+</tr>
+<tr>
+<td><code>country_honduras.ipset</code></td>
+<td>IPs in Honduras</td>
+</tr>
+<tr>
+<td><code>country_hong_kong.ipset</code></td>
+<td>IPs in Hong Kong</td>
+</tr>
+<tr>
+<td><code>country_hungary.ipset</code></td>
+<td>IPs in Hungary</td>
+</tr>
+<tr>
+<td><code>country_iceland.ipset</code></td>
+<td>IPs in Iceland</td>
+</tr>
+<tr>
+<td><code>country_india.ipset</code></td>
+<td>IPs in India</td>
+</tr>
+<tr>
+<td><code>country_indonesia.ipset</code></td>
+<td>IPs in Indonesia</td>
+</tr>
+<tr>
+<td><code>country_iran.ipset</code></td>
+<td>IPs in Iran</td>
+</tr>
+<tr>
+<td><code>country_iraq.ipset</code></td>
+<td>IPs in Iraq</td>
+</tr>
+<tr>
+<td><code>country_ireland.ipset</code></td>
+<td>IPs in Ireland</td>
+</tr>
+<tr>
+<td><code>country_isle_of_man.ipset</code></td>
+<td>IPs in Isle of Man</td>
+</tr>
+<tr>
+<td><code>country_israel.ipset</code></td>
+<td>IPs in Israel</td>
+</tr>
+<tr>
+<td><code>country_italy.ipset</code></td>
+<td>IPs in Italy</td>
+</tr>
+<tr>
+<td><code>country_jamaica.ipset</code></td>
+<td>IPs in Jamaica</td>
+</tr>
+<tr>
+<td><code>country_japan.ipset</code></td>
+<td>IPs in Japan</td>
+</tr>
+<tr>
+<td><code>country_jersey.ipset</code></td>
+<td>IPs in Jersey</td>
+</tr>
+<tr>
+<td><code>country_jordan.ipset</code></td>
+<td>IPs in Jordan</td>
+</tr>
+<tr>
+<td><code>country_kazakhstan.ipset</code></td>
+<td>IPs in Kazakhstan</td>
+</tr>
+<tr>
+<td><code>country_kenya.ipset</code></td>
+<td>IPs in Kenya</td>
+</tr>
+<tr>
+<td><code>country_kiribati.ipset</code></td>
+<td>IPs in Kiribati</td>
+</tr>
+<tr>
+<td><code>country_kosovo.ipset</code></td>
+<td>IPs in Kosovo</td>
+</tr>
+<tr>
+<td><code>country_kuwait.ipset</code></td>
+<td>IPs in Kuwait</td>
+</tr>
+<tr>
+<td><code>country_kyrgyzstan.ipset</code></td>
+<td>IPs in Kyrgyzstan</td>
+</tr>
+<tr>
+<td><code>country_laos.ipset</code></td>
+<td>IPs in Laos</td>
+</tr>
+<tr>
+<td><code>country_latvia.ipset</code></td>
+<td>IPs in Latvia</td>
+</tr>
+<tr>
+<td><code>country_lebanon.ipset</code></td>
+<td>IPs in Lebanon</td>
+</tr>
+<tr>
+<td><code>country_lesotho.ipset</code></td>
+<td>IPs in Lesotho</td>
+</tr>
+<tr>
+<td><code>country_liberia.ipset</code></td>
+<td>IPs in Liberia</td>
+</tr>
+<tr>
+<td><code>country_libya.ipset</code></td>
+<td>IPs in Libya</td>
+</tr>
+<tr>
+<td><code>country_liechtenstein.ipset</code></td>
+<td>IPs in Liechtenstein</td>
+</tr>
+<tr>
+<td><code>country_lithuania.ipset</code></td>
+<td>IPs in Lithuania</td>
+</tr>
+<tr>
+<td><code>country_luxembourg.ipset</code></td>
+<td>IPs in Luxembourg</td>
+</tr>
+<tr>
+<td><code>country_macao.ipset</code></td>
+<td>IPs in Macao</td>
+</tr>
+<tr>
+<td><code>country_macedonia_republic.ipset</code></td>
+<td>IPs in Macedonia</td>
+</tr>
+<tr>
+<td><code>country_madagascar.ipset</code></td>
+<td>IPs in Madagascar</td>
+</tr>
+<tr>
+<td><code>country_malawi.ipset</code></td>
+<td>IPs in Malawi</td>
+</tr>
+<tr>
+<td><code>country_malaysia.ipset</code></td>
+<td>IPs in Malaysia</td>
+</tr>
+<tr>
+<td><code>country_maldives.ipset</code></td>
+<td>IPs in Maldives</td>
+</tr>
+<tr>
+<td><code>country_mali.ipset</code></td>
+<td>IPs in Mali</td>
+</tr>
+<tr>
+<td><code>country_malta.ipset</code></td>
+<td>IPs in Malta</td>
+</tr>
+<tr>
+<td><code>country_marshall_islands.ipset</code></td>
+<td>IPs in Marshall Islands</td>
+</tr>
+<tr>
+<td><code>country_martinique.ipset</code></td>
+<td>IPs in Martinique</td>
+</tr>
+<tr>
+<td><code>country_mauritania.ipset</code></td>
+<td>IPs in Mauritania</td>
+</tr>
+<tr>
+<td><code>country_mauritius.ipset</code></td>
+<td>IPs in Mauritius</td>
+</tr>
+<tr>
+<td><code>country_mayotte.ipset</code></td>
+<td>IPs in Mayotte</td>
+</tr>
+<tr>
+<td><code>country_mexico.ipset</code></td>
+<td>IPs in Mexico</td>
+</tr>
+<tr>
+<td><code>country_micronesia.ipset</code></td>
+<td>IPs in Micronesia</td>
+</tr>
+<tr>
+<td><code>country_monaco.ipset</code></td>
+<td>IPs in Monaco</td>
+</tr>
+<tr>
+<td><code>country_mongolia.ipset</code></td>
+<td>IPs in Mongolia</td>
+</tr>
+<tr>
+<td><code>country_montenegro.ipset</code></td>
+<td>IPs in Montenegro</td>
+</tr>
+<tr>
+<td><code>country_montserrat.ipset</code></td>
+<td>IPs in Montserrat</td>
+</tr>
+<tr>
+<td><code>country_morocco.ipset</code></td>
+<td>IPs in Morocco</td>
+</tr>
+<tr>
+<td><code>country_mozambique.ipset</code></td>
+<td>IPs in Mozambique</td>
+</tr>
+<tr>
+<td><code>country_myanmar.ipset</code></td>
+<td>IPs in Myanmar</td>
+</tr>
+<tr>
+<td><code>country_namibia.ipset</code></td>
+<td>IPs in Namibia</td>
+</tr>
+<tr>
+<td><code>country_nauru.ipset</code></td>
+<td>IPs in Nauru</td>
+</tr>
+<tr>
+<td><code>country_nepal.ipset</code></td>
+<td>IPs in Nepal</td>
+</tr>
+<tr>
+<td><code>country_netherlands.ipset</code></td>
+<td>IPs in Netherlands</td>
+</tr>
+<tr>
+<td><code>country_new_caledonia.ipset</code></td>
+<td>IPs in New Caledonia</td>
+</tr>
+<tr>
+<td><code>country_new_zealand.ipset</code></td>
+<td>IPs in New Zealand</td>
+</tr>
+<tr>
+<td><code>country_nicaragua.ipset</code></td>
+<td>IPs in Nicaragua</td>
+</tr>
+<tr>
+<td><code>country_nigeria.ipset</code></td>
+<td>IPs in Nigeria</td>
+</tr>
+<tr>
+<td><code>country_niger.ipset</code></td>
+<td>IPs in Niger</td>
+</tr>
+<tr>
+<td><code>country_niue.ipset</code></td>
+<td>IPs in Niue</td>
+</tr>
+<tr>
+<td><code>country_norfolk_island.ipset</code></td>
+<td>IPs in Norfolk Island</td>
+</tr>
+<tr>
+<td><code>country_northern_mariana_islands.ipset</code></td>
+<td>IPs in Northern Mariana Islands</td>
+</tr>
+<tr>
+<td><code>country_north_korea.ipset</code></td>
+<td>IPs in North Korea</td>
+</tr>
+<tr>
+<td><code>country_norway.ipset</code></td>
+<td>IPs in Norway</td>
+</tr>
+<tr>
+<td><code>country_oman.ipset</code></td>
+<td>IPs in Oman</td>
+</tr>
+<tr>
+<td><code>country_pakistan.ipset</code></td>
+<td>IPs in Pakistan</td>
+</tr>
+<tr>
+<td><code>country_palau.ipset</code></td>
+<td>IPs in Palau</td>
+</tr>
+<tr>
+<td><code>country_palestine.ipset</code></td>
+<td>IPs in Palestine</td>
+</tr>
+<tr>
+<td><code>country_panama.ipset</code></td>
+<td>IPs in Panama</td>
+</tr>
+<tr>
+<td><code>country_papua_new_guinea.ipset</code></td>
+<td>IPs in Papua New Guinea</td>
+</tr>
+<tr>
+<td><code>country_paraguay.ipset</code></td>
+<td>IPs in Paraguay</td>
+</tr>
+<tr>
+<td><code>country_peru.ipset</code></td>
+<td>IPs in Peru</td>
+</tr>
+<tr>
+<td><code>country_philippines.ipset</code></td>
+<td>IPs in Philippines</td>
+</tr>
+<tr>
+<td><code>country_pitcairn.ipset</code></td>
+<td>IPs in Pitcairn Islands</td>
+</tr>
+<tr>
+<td><code>country_poland.ipset</code></td>
+<td>IPs in Poland</td>
+</tr>
+<tr>
+<td><code>country_portugal.ipset</code></td>
+<td>IPs in Portugal</td>
+</tr>
+<tr>
+<td><code>country_puerto_rico.ipset</code></td>
+<td>IPs in Puerto Rico</td>
+</tr>
+<tr>
+<td><code>country_qatar.ipset</code></td>
+<td>IPs in Qatar</td>
+</tr>
+<tr>
+<td><code>country_republic_moldova.ipset</code></td>
+<td>IPs in Moldova</td>
+</tr>
+<tr>
+<td><code>country_reunion.ipset</code></td>
+<td>IPs in Réunion</td>
+</tr>
+<tr>
+<td><code>country_romania.ipset</code></td>
+<td>IPs in Romania</td>
+</tr>
+<tr>
+<td><code>country_russia.ipset</code></td>
+<td>IPs in Russia</td>
+</tr>
+<tr>
+<td><code>country_rwanda.ipset</code></td>
+<td>IPs in Rwanda</td>
+</tr>
+<tr>
+<td><code>country_saint_barthelemy.ipset</code></td>
+<td>IPs in Saint Barthélemy</td>
+</tr>
+<tr>
+<td><code>country_saint_helena.ipset</code></td>
+<td>IPs in Saint Helena</td>
+</tr>
+<tr>
+<td><code>country_saint_kitts_nevis.ipset</code></td>
+<td>IPs in Saint Kitts and Nevis</td>
+</tr>
+<tr>
+<td><code>country_saint_lucia.ipset</code></td>
+<td>IPs in Saint Lucia</td>
+</tr>
+<tr>
+<td><code>country_saint_martin_north.ipset</code></td>
+<td>IPs in Saint Martin (North)</td>
+</tr>
+<tr>
+<td><code>country_saint_pierre_miquelon.ipset</code></td>
+<td>IPs in Saint Pierre and Miquelon</td>
+</tr>
+<tr>
+<td><code>country_saint_vincent_grenadines.ipset</code></td>
+<td>IPs in Saint Vincent and the Grenadines</td>
+</tr>
+<tr>
+<td><code>country_samoa.ipset</code></td>
+<td>IPs in Samoa</td>
+</tr>
+<tr>
+<td><code>country_san_marino.ipset</code></td>
+<td>IPs in San Marino</td>
+</tr>
+<tr>
+<td><code>country_sao_tome_principe.ipset</code></td>
+<td>IPs in São Tomé and Príncipe</td>
+</tr>
+<tr>
+<td><code>country_saudi_arabia.ipset</code></td>
+<td>IPs in Saudi Arabia</td>
+</tr>
+<tr>
+<td><code>country_senegal.ipset</code></td>
+<td>IPs in Senegal</td>
+</tr>
+<tr>
+<td><code>country_serbia.ipset</code></td>
+<td>IPs in Serbia</td>
+</tr>
+<tr>
+<td><code>country_seychelles.ipset</code></td>
+<td>IPs in Seychelles</td>
+</tr>
+<tr>
+<td><code>country_sierra_leone.ipset</code></td>
+<td>IPs in Sierra Leone</td>
+</tr>
+<tr>
+<td><code>country_singapore.ipset</code></td>
+<td>IPs in Singapore</td>
+</tr>
+<tr>
+<td><code>country_sint_maarten_south.ipset</code></td>
+<td>IPs in Sint Maarten (South)</td>
+</tr>
+<tr>
+<td><code>country_slovakia.ipset</code></td>
+<td>IPs in Slovakia</td>
+</tr>
+<tr>
+<td><code>country_slovenia.ipset</code></td>
+<td>IPs in Slovenia</td>
+</tr>
+<tr>
+<td><code>country_solomon_islands.ipset</code></td>
+<td>IPs in Solomon Islands</td>
+</tr>
+<tr>
+<td><code>country_somalia.ipset</code></td>
+<td>IPs in Somalia</td>
+</tr>
+<tr>
+<td><code>country_south_africa.ipset</code></td>
+<td>IPs in South Africa</td>
+</tr>
+<tr>
+<td><code>country_south_georgia_and_the_south_sandwich_islands.ipset</code></td>
+<td>IPs in South Georgia and the South Sandwich Islands</td>
+</tr>
+<tr>
+<td><code>country_south_korea.ipset</code></td>
+<td>IPs in South Korea</td>
+</tr>
+<tr>
+<td><code>country_south_sudan.ipset</code></td>
+<td>IPs in South Sudan</td>
+</tr>
+<tr>
+<td><code>country_spain.ipset</code></td>
+<td>IPs in Spain</td>
+</tr>
+<tr>
+<td><code>country_sri_lanka.ipset</code></td>
+<td>IPs in Sri Lanka</td>
+</tr>
+<tr>
+<td><code>country_sudan.ipset</code></td>
+<td>IPs in Sudan</td>
+</tr>
+<tr>
+<td><code>country_suriname.ipset</code></td>
+<td>IPs in Suriname</td>
+</tr>
+<tr>
+<td><code>country_svalbard_jan_mayen.ipset</code></td>
+<td>IPs in Svalbard and Jan Mayen</td>
+</tr>
+<tr>
+<td><code>country_sweden.ipset</code></td>
+<td>IPs in Sweden</td>
+</tr>
+<tr>
+<td><code>country_switzerland.ipset</code></td>
+<td>IPs in Switzerland</td>
+</tr>
+<tr>
+<td><code>country_syria.ipset</code></td>
+<td>IPs in Syria</td>
+</tr>
+<tr>
+<td><code>country_taiwan.ipset</code></td>
+<td>IPs in Taiwan</td>
+</tr>
+<tr>
+<td><code>country_tajikistan.ipset</code></td>
+<td>IPs in Tajikistan</td>
+</tr>
+<tr>
+<td><code>country_tanzania.ipset</code></td>
+<td>IPs in Tanzania</td>
+</tr>
+<tr>
+<td><code>country_thailand.ipset</code></td>
+<td>IPs in Thailand</td>
+</tr>
+<tr>
+<td><code>country_timorleste.ipset</code></td>
+<td>IPs in Timor-Leste</td>
+</tr>
+<tr>
+<td><code>country_togo.ipset</code></td>
+<td>IPs in Togo</td>
+</tr>
+<tr>
+<td><code>country_tokelau.ipset</code></td>
+<td>IPs in Tokelau</td>
+</tr>
+<tr>
+<td><code>country_tonga.ipset</code></td>
+<td>IPs in Tonga</td>
+</tr>
+<tr>
+<td><code>country_trinidad_tobago.ipset</code></td>
+<td>IPs in Trinidad and Tobago</td>
+</tr>
+<tr>
+<td><code>country_tunisia.ipset</code></td>
+<td>IPs in Tunisia</td>
+</tr>
+<tr>
+<td><code>country_turkey.ipset</code></td>
+<td>IPs in Turkey</td>
+</tr>
+<tr>
+<td><code>country_turkmenistan.ipset</code></td>
+<td>IPs in Turkmenistan</td>
+</tr>
+<tr>
+<td><code>country_turks_caicos_islands.ipset</code></td>
+<td>IPs in Turks and Caicos Islands</td>
+</tr>
+<tr>
+<td><code>country_tuvalu.ipset</code></td>
+<td>IPs in Tuvalu</td>
+</tr>
+<tr>
+<td><code>country_uganda.ipset</code></td>
+<td>IPs in Uganda</td>
+</tr>
+<tr>
+<td><code>country_ukraine.ipset</code></td>
+<td>IPs in Ukraine</td>
+</tr>
+<tr>
+<td><code>country_united_arab_emirates.ipset</code></td>
+<td>IPs in United Arab Emirates</td>
+</tr>
+<tr>
+<td><code>country_united_states.ipset</code></td>
+<td>IPs in United States</td>
+</tr>
+<tr>
+<td><code>country_united_states_minor_outlying_islands.ipset</code></td>
+<td>IPs in United States Minor Outlying Islands</td>
+</tr>
+<tr>
+<td><code>country_united_states_virgin_islands.ipset</code></td>
+<td>IPs in United States Virgin Islands</td>
+</tr>
+<tr>
+<td><code>country_uruguay.ipset</code></td>
+<td>IPs in Uruguay</td>
+</tr>
+<tr>
+<td><code>country_uzbekistan.ipset</code></td>
+<td>IPs in Uzbekistan</td>
+</tr>
+<tr>
+<td><code>country_vanuatu.ipset</code></td>
+<td>IPs in Vanuatu</td>
+</tr>
+<tr>
+<td><code>country_vatican_city_holy_see.ipset</code></td>
+<td>IPs in Vatican City / Holy See</td>
+</tr>
+<tr>
+<td><code>country_venezuela.ipset</code></td>
+<td>IPs in Venezuela</td>
+</tr>
+<tr>
+<td><code>country_vietnam.ipset</code></td>
+<td>IPs in Vietnam</td>
+</tr>
+<tr>
+<td><code>country_wallis_futuna.ipset</code></td>
+<td>IPs in Wallis and Futuna</td>
+</tr>
+<tr>
+<td><code>country_western_sahara.ipset</code></td>
+<td>IPs in Western Sahara</td>
+</tr>
+<tr>
+<td><code>country_yemen.ipset</code></td>
+<td>IPs in Yemen</td>
+</tr>
+<tr>
+<td><code>country_zambia.ipset</code></td>
+<td>IPs in Zambia</td>
+</tr>
+<tr>
+<td><code>country_zimbabwe.ipset</code></td>
+<td>IPs in Zimbabwe</td>
+</tr>
+</tbody>
+</table>
 <p><br>
 <br></p>
 
@@ -2202,7 +3517,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 26, 2025 21:50:02 UTC"><span class="timeago" datetime="2025-09-26T21:50:02+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 26, 2025 21:50:02 UTC">2025-09-26</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 27, 2025 16:38:02 UTC"><span class="timeago" datetime="2025-09-27T16:38:02+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 27, 2025 16:38:02 UTC">2025-09-27</span>
   </span>
 
     
@@ -2276,7 +3591,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer">
         
           
-          <a href="../blocklist.configserver/" class="md-footer__link md-footer__link--prev" aria-label="Previous: blocklist.configserver.dev">
+          <a href="../../../usage/cheatsheet/conf/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Example Configs">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
@@ -2286,20 +3601,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                blocklist.configserver.dev
+                Example Configs
               </div>
             </div>
           </a>
         
         
           
-          <a href="../get.configserver/" class="md-footer__link md-footer__link--next" aria-label="Next: get.configserver.dev">
+          <a href="../download.configserver/" class="md-footer__link md-footer__link--next" aria-label="Next: download.configserver.dev">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                get.configserver.dev
+                download.configserver.dev
               </div>
             </div>
             <div class="md-footer__button md-icon">
