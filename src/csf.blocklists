@@ -61,9 +61,14 @@
 # #
 #   @blocklist              Official CSF Blocklists
 #   @details:               https://aetherinox.github.io/csf-firewall/usage/blocklists/#official-blocklists
+#                           https://aetherinox.github.io/csf-firewall/advanced/services/blocklist.configserver
 #   
 #   The official CSF blocklists contain a large number of IPs which range from various 
 #   different services, including AbuseIPDB (100% confidency).
+#   
+#   You can also use our blocklist service:
+#       http://blocklist.configserver.dev/master.ipset
+#       http://blocklist.configserver.dev/highrisk.ipset
 #   
 #   We offer many others, but these two are the primary ones.
 #   
@@ -71,7 +76,7 @@
 #       LF_IPSET_MAXELEM = "4000000"
 # #
 
-#   CSF_MASTER|43200|400000|https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/blocklists/master.ipset
+#   CSF_MASTER|43200|0|https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/blocklists/master.ipset
 #   CSF_HIGHRISK|43200|0|https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/blocklists/highrisk.ipset
 
 # #
