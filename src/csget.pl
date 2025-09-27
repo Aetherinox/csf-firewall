@@ -1,94 +1,96 @@
 #!/usr/bin/perl
 # #
-#   @app                    ConfigServer Firewall & Security (CSF)
-#                           Login Failure Daemon (LFD)
-#   @website                https://configserver.dev
-#   @docs                   https://docs.configserver.dev
-#   @download               https://download.configserver.dev
-#   @repo                   https://github.com/Aetherinox/csf-firewall
-#   @copyright              Copyright (C) 2025-2026 Aetherinox
-#                           Copyright (C) 2006-2025 Jonathan Michaelson
-#                           Copyright (C) 2006-2025 Way to the Web Limited
-#   @license                GPLv3
-#   @updated                09.26.2025
+#   @app                ConfigServer Firewall & Security (CSF)
+#                       Login Failure Daemon (LFD)
+#   @website            https://configserver.dev
+#   @docs               https://docs.configserver.dev
+#   @download           https://download.configserver.dev
+#   @repo               https://github.com/Aetherinox/csf-firewall
+#   @copyright          Copyright (C) 2025-2026 Aetherinox
+#                       Copyright (C) 2006-2025 Jonathan Michaelson
+#                       Copyright (C) 2006-2025 Way to the Web Ltd.
+#   @license            GPLv3
+#   @updated            09.26.2025
 #   
-#   This program is free software; you can redistribute it and/or modify it under
-#   the terms of the GNU General Public License as published by the Free Software
-#   Foundation; either version 3 of the License, or (at your option) any later
-#   version.
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 3 of the License, or (at
+#   your option) any later version.
 #   
-#   This program is distributed in the hope that it will be useful, but WITHOUT
-#   ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-#   FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
-#   details.
+#   This program is distributed in the hope that it will be useful, but
+#   WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+#   General Public License for more details.
 #   
-#   You should have received a copy of the GNU General Public License along with
-#   this program; if not, see <https://www.gnu.org/licenses>.
+#   You should have received a copy of the GNU General Public License
+#   along with this program; if not, see <https://www.gnu.org/licenses>.
 # #
 
 # #
 #   ConfigServer and Firewall › CSGet
 #       Script runs as a cron in:
 #           /etc/cron.daily/csget
-#       By default, the script sleeps for a random number of seconds in fork / daemonization mode:
-#           0 and 6 hours (rand(60*60*6) = up to 21600 seconds).
-#       After sleep; connects to the official github repo and checks the latest version of CSF using the file:
+#       
+#       By default, the script sleeps for a random number of seconds in
+#       fork/daemon mode:
+#           0 to 6 hours (rand(60*60*6) = up to 21600 seconds)
+#       
+#       After sleep, it connects to the official GitHub repo and checks
+#       the latest version of CSF using the file:
 #           https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/api/templates/versions/<APP>/version.txt
 #           https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/api/templates/versions/csf/version.txt
-#       After latest version fetched from @downloadserver; file will be created in `/var/lib/configserver/csf.txt` with:
+#       
+#       After the latest version is fetched from @downloadserver, a file is
+#       created in /var/lib/configserver/csf.txt with contents like:
 #           15.10
-#   
-#       If you run the script using the command:
+#       
+#       If you run the script using:
 #           sudo perl /etc/cron.daily/csget
-#       A process will be created which has a random duration between 0 and 6 hours, you can find it using
+#       A process will be created with a random duration between 0 and 6 hours.
+#       You can find it using:
 #           ps aux | grep Config
 #           root     3830870  0.0  0.1  22280  8980 ?        S    15:41   0:00 ConfigServer Version Check
 #           sudo kill -9 3830870
-#   
-#       If you run the script using the command:
+#       
+#       If you run the script using:
 #           sudo perl -d:Trace /etc/cron.daily/csget --nosleep
-#       The action will be immediately ran with no lingering process.
+#       The action will run immediately with no lingering process.
 #       All output will be logged to /var/log/csf/csget_daemon.log
-#   
-#       If you run the script using the command:
+#       
+#       If you run the script using:
 #           sudo perl -d:Trace /etc/cron.daily/csget --debug
-#       The action will trigger, create a child process, and wait 0 - 6 hours before running.
-#       But logging will be sent to /var/log/csf/csget_debug.log
-#   
+#       The action will trigger, create a child process, and wait 0–6 hours
+#       before running. Logging will be sent to
+#       /var/log/csf/csget_debug.log
+#       
 #   This script contains two log files:
-#       /var/log/csf/csget_daemon.log               logs to this file if --debug mode DISABLED
-#       /var/log/csf/csget_debug.log                logs to this file if --debug mode ENABLED
-#   
+#       /var/log/csf/csget_daemon.log     logs to this file if --debug mode DISABLED
+#       /var/log/csf/csget_debug.log      logs to this file if --debug mode ENABLED
+#       
 #   sudo perl /etc/cron.daily/csget
-#       Plain Perl execution.
-#       Runs the script normally.
-#       No extra warnings, no debugging.
-#       If your script forks (daemonizes), it will fork normally and the parent exits.
-#       STDOUT/STDERR behavior depends on what your script does (in your case, closes them in the fork).
-#   
+#       Runs the script normally, no extra warnings, no debugging.
+#       If the script forks (daemonizes), the parent exits normally.
+#       STDOUT/STDERR behavior depends on the script (e.g., closed in fork).
+#       
 #   sudo perl -w /etc/cron.daily/csget
-#       Enables warnings (-w flag).
-#       Prints warnings for things like uninitialized variables, deprecated features, or risky operations.
-#       Otherwise, behaves exactly like plain Perl.
-#       Fork/daemon behavior is unchanged.
-#       STDOUT/STDERR is unchanged (aside from warnings).
-#   
+#       Enables warnings (-w flag) for uninitialized variables, deprecated
+#       features, or risky operations. Otherwise behaves like plain Perl.
+#       Fork/daemon behavior and STDOUT/STDERR unchanged (aside from warnings).
+#       
 #   sudo perl -d /etc/cron.daily/csget
-#       Runs the Perl debugger (-d).
-#       Stops the script at the first line and waits for debugger commands (like n for next, c for continue).
-#       You can step through lines, inspect variables, set breakpoints, etc.
-#       Important: The debugger expects to control the terminal.
-#       If your script forks (daemonizes), the debugger can interfere, because child processes won’t have the debugger attached.
-#       Script will not behave the same as normal run when it forks.
-#   
+#       Runs the Perl debugger (-d). Stops at the first line and waits for
+#       debugger commands (n=next, c=continue). Can step through lines,
+#       inspect variables, set breakpoints, etc.
+#       Note: If the script forks, child processes won't have the debugger
+#       attached. Script behavior differs from normal run.
+#       
 #   sudo perl -d:Trace /etc/cron.daily/csget
-#       Special debugger module: Trace.
-#       Prints every line executed in real time.
-#       Useful for debugging line-by-line execution.
-#       Still runs in debugger context, so fork/daemonization can behave differently.
-#       Script may exit immediately or behave oddly because the debugger is keeping control of STDOUT/STDERR for trace output.
-#   
-#   Process can be killed with
+#       Special debugger module: Trace. Prints every line executed in real
+#       time. Useful for line-by-line debugging. Fork/daemonization can behave
+#       differently. Script may exit immediately or behave oddly as the
+#       debugger controls STDOUT/STDERR for trace output.
+#       
+#   Process can be killed with:
 #       ps aux | grep csget
 #       sudo pkill -9 -f "sudo perl -w /etc/cron.daily/csget"
 # #
