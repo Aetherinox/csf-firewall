@@ -236,14 +236,43 @@ download_list()
     local fnFileTemp="${2}.tmp"
     local DL_COUNT_TOTAL_IP=0
     local DL_COUNT_TOTAL_SUBNET=0
+    
+    # #
+    #   Create the file if it doesn't exist
+    # #
 
+    if [ ! -f "${fnFileTemp}" ]; then
+        touch "${fnFileTemp}"
+    fi
+   
     echo -e "  🌎 Downloading IP blacklist to ${ORANGE2}${fnFileTemp}${RESET}"
 
-    curl -sSL -A "${CURL_AGENT}" ${fnUrl} -o ${fnFileTemp} >/dev/null 2>&1      # download file
-    sed -i 's/\-.*//' ${fnFileTemp}                                             # remove hyphens for ip ranges
-    sed -i '/[#;]/{s/#.*//;s/;.*//;/^$/d}' ${fnFileTemp}                        # remove # and ; comments
-    sed -i 's/[[:blank:]]*$//' ${fnFileTemp}                                    # remove space / tab from EOL
-    sed -i '/^\s*$/d' ${fnFileTemp}                                             # remove empty lines
+    curl -sSL -k -A "${CURL_AGENT}" ${fnUrl} -o ${fnFileTemp} >/dev/null 2>&1      # download file
+  
+    # remove CR characters
+    sed -i 's/\r$//' "${fnFileTemp}"
+    
+    # remove hyphens from IP ranges
+    sed -i 's/-.*//' "${fnFileTemp}"
+
+    # remove lines that start with # or ; entirely
+    sed -i '/^[#;]/d' "${fnFileTemp}"
+
+    # remove trailing whitespace
+    sed -i 's/[[:space:]]*$//' "${fnFileTemp}"
+
+    # remove empty lines
+    sed -i '/^$/d' "${fnFileTemp}"
+    
+    # #
+    #    print contents of file
+    # #
+
+    # if [ -f "${fnFile}" ]; then
+    #    cat "${fnFile}"
+    # else
+    #    echo "File not found: ${fnFile}"
+    # fi
 
     # #
     #   calculate how many IPs are in a subnet
@@ -308,11 +337,15 @@ download_list()
 
 # #
 #   Download lists
+#   
+#   flips the args around.
+#       - url is first
+#       - file to store ips in second
 # #
 
-for arg in "${@:2}"; do
-    if [[ $arg =~ $REGEX_URL ]]; then
-        download_list ${arg} ${APP_FILE_PERM}
+for url in "${@:2}"; do
+    if [[ $url =~ $REGEX_URL ]]; then
+        download_list ${url} ${APP_FILE_PERM}
         echo -e
     fi
 done
@@ -322,74 +355,83 @@ done
 # #
 
 if [ -d .github/blocks/ ]; then
-	for APP_FILE_TEMP in .github/blocks/bruteforce/*.ipset; do
-		echo -e "  📒 Reading static block ${ORANGE2}${APP_FILE_TEMP}${RESET}"
 
-        # #
-        #   calculate how many IPs are in a subnet
-        #   if you want to calculate the USABLE IP addresses, subtract -2 from any subnet not ending with 31 or 32.
-        #   
-        #   for our purpose, we want to block them all in the event that the network has reconfigured their network / broadcast IPs,
-        #   so we will count every IP in the block.
-        # #
+    # #
+    #   Expand files into an array and ensure the first element exists
+    # #
+    files=( .github/blocks/bruteforce/*.ipset )
 
-        BLOCKS_COUNT_TOTAL_IP=0
-        BLOCKS_COUNT_TOTAL_SUBNET=0
+    if [ -e "${files[0]}" ]; then
+        for APP_FILE_TEMP in "${files[@]}"; do
+            echo -e "  📒 Reading static block ${ORANGE2}${APP_FILE_TEMP}${RESET}"
 
-        echo -e "  📊 Fetching statistics for clean file ${ORANGE2}${APP_FILE_TEMP}${RESET}"
-        for line in $(cat ${APP_FILE_TEMP}); do
+            # #
+            #   calculate how many IPs are in a subnet
+            #   if you want to calculate the USABLE IP addresses, subtract -2 from any subnet not ending with 31 or 32.
+            #
+            #   for our purpose, we want to block them all in the event that the network has reconfigured their network / broadcast IPs,
+            #   so we will count every IP in the block.
+            # #
 
-            # is ipv6
-            if [ "$line" != "${line#*:[0-9a-fA-F]}" ]; then
-                if [[ $line =~ /[0-9]{1,3}$ ]]; then
-                    COUNT_TOTAL_SUBNET=$(( $COUNT_TOTAL_SUBNET + 1 ))                       # GLOBAL count subnet
-                    BLOCKS_COUNT_TOTAL_SUBNET=$(( $BLOCKS_COUNT_TOTAL_SUBNET + 1 ))         # LOCAL count subnet
-                else
-                    COUNT_TOTAL_IP=$(( $COUNT_TOTAL_IP + 1 ))                               # GLOBAL count ip
-                    BLOCKS_COUNT_TOTAL_IP=$(( $BLOCKS_COUNT_TOTAL_IP + 1 ))                 # LOCAL count ip
+            BLOCKS_COUNT_TOTAL_IP=0
+            BLOCKS_COUNT_TOTAL_SUBNET=0
+
+            echo -e "  📊 Fetching statistics for clean file ${ORANGE2}${APP_FILE_TEMP}${RESET}"
+            for line in $(cat ${APP_FILE_TEMP}); do
+
+                # is ipv6
+                if [ "$line" != "${line#*:[0-9a-fA-F]}" ]; then
+                    if [[ $line =~ /[0-9]{1,3}$ ]]; then
+                        COUNT_TOTAL_SUBNET=$(( $COUNT_TOTAL_SUBNET + 1 ))                       # GLOBAL count subnet
+                        BLOCKS_COUNT_TOTAL_SUBNET=$(( $BLOCKS_COUNT_TOTAL_SUBNET + 1 ))         # LOCAL count subnet
+                    else
+                        COUNT_TOTAL_IP=$(( $COUNT_TOTAL_IP + 1 ))                               # GLOBAL count ip
+                        BLOCKS_COUNT_TOTAL_IP=$(( $BLOCKS_COUNT_TOTAL_IP + 1 ))                 # LOCAL count ip
+                    fi
+
+                # is subnet
+                elif [[ $line =~ /[0-9]{1,2}$ ]]; then
+                    ips=$(( 1 << (32 - ${line#*/}) ))
+
+                    if [[ $ips =~ $REGEX_ISNUM ]]; then
+                        # CIDR=$(echo $line | sed 's:.*/::')
+
+                        # uncomment if you want to count ONLY usable IP addresses
+                        # subtract - 2 from any cidr not ending with 31 or 32
+                        # if [[ $CIDR != "31" ]] && [[ $CIDR != "32" ]]; then
+                            # BLOCKS_COUNT_TOTAL_IP=$(( $BLOCKS_COUNT_TOTAL_IP - 2 ))
+                            # COUNT_TOTAL_IP=$(( $COUNT_TOTAL_IP - 2 ))
+                        # fi
+
+                        BLOCKS_COUNT_TOTAL_IP=$(( $BLOCKS_COUNT_TOTAL_IP + $ips ))              # LOCAL count IPs in subnet
+                        BLOCKS_COUNT_TOTAL_SUBNET=$(( $BLOCKS_COUNT_TOTAL_SUBNET + 1 ))         # LOCAL count subnet
+
+                        COUNT_TOTAL_IP=$(( $COUNT_TOTAL_IP + $ips ))                            # GLOBAL count IPs in subnet
+                        COUNT_TOTAL_SUBNET=$(( $COUNT_TOTAL_SUBNET + 1 ))                       # GLOBAL count subnet
+                    fi
+
+                # is normal IP
+                elif [[ $line =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+                    BLOCKS_COUNT_TOTAL_IP=$(( $BLOCKS_COUNT_TOTAL_IP + 1 ))
+                    COUNT_TOTAL_IP=$(( $COUNT_TOTAL_IP + 1 ))
                 fi
+            done
 
-            # is subnet
-            elif [[ $line =~ /[0-9]{1,2}$ ]]; then
-                ips=$(( 1 << (32 - ${line#*/}) ))
+            # #
+            #   Count lines and subnets
+            # #
+            BLOCKS_COUNT_TOTAL_IP=$(printf "%'d" "$BLOCKS_COUNT_TOTAL_IP")                  # LOCAL add commas to thousands
+            BLOCKS_COUNT_TOTAL_SUBNET=$(printf "%'d" "$BLOCKS_COUNT_TOTAL_SUBNET")          # LOCAL add commas to thousands
 
-                if [[ $ips =~ $REGEX_ISNUM ]]; then
-                    # CIDR=$(echo $line | sed 's:.*/::')
+            echo -e "  🚛 Copy static block rules from ${ORANGE2}${APP_FILE_TEMP}${RESET} to ${BLUE2}${APP_FILE_PERM}${RESET}"
+            cat ${APP_FILE_TEMP} >> ${APP_FILE_PERM}                                        # copy .tmp contents to real file
 
-                    # uncomment if you want to count ONLY usable IP addresses
-                    # subtract - 2 from any cidr not ending with 31 or 32
-                    # if [[ $CIDR != "31" ]] && [[ $CIDR != "32" ]]; then
-                        # BLOCKS_COUNT_TOTAL_IP=$(( $BLOCKS_COUNT_TOTAL_IP - 2 ))
-                        # COUNT_TOTAL_IP=$(( $COUNT_TOTAL_IP - 2 ))
-                    # fi
-
-                    BLOCKS_COUNT_TOTAL_IP=$(( $BLOCKS_COUNT_TOTAL_IP + $ips ))              # LOCAL count IPs in subnet
-                    BLOCKS_COUNT_TOTAL_SUBNET=$(( $BLOCKS_COUNT_TOTAL_SUBNET + 1 ))         # LOCAL count subnet
-
-                    COUNT_TOTAL_IP=$(( $COUNT_TOTAL_IP + $ips ))                            # GLOBAL count IPs in subnet
-                    COUNT_TOTAL_SUBNET=$(( $COUNT_TOTAL_SUBNET + 1 ))                       # GLOBAL count subnet
-                fi
-
-            # is normal IP
-            elif [[ $line =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-                BLOCKS_COUNT_TOTAL_IP=$(( $BLOCKS_COUNT_TOTAL_IP + 1 ))
-                COUNT_TOTAL_IP=$(( $COUNT_TOTAL_IP + 1 ))
-            fi
+            echo -e "  ➕ Added ${FUCHSIA2}${BLOCKS_COUNT_TOTAL_IP} IPs${RESET} and ${FUCHSIA2}${BLOCKS_COUNT_TOTAL_SUBNET} Subnets${RESET} to ${BLUE2}${APP_FILE_PERM}${RESET}"
+            echo -e
         done
-
-        # #
-        #   Count lines and subnets
-        # #
-
-        BLOCKS_COUNT_TOTAL_IP=$(printf "%'d" "$BLOCKS_COUNT_TOTAL_IP")                  # LOCAL add commas to thousands
-        BLOCKS_COUNT_TOTAL_SUBNET=$(printf "%'d" "$BLOCKS_COUNT_TOTAL_SUBNET")          # LOCAL add commas to thousands
-
-        echo -e "  🚛 Copy static block rules from ${ORANGE2}${APP_FILE_TEMP}${RESET} to ${BLUE2}${APP_FILE_PERM}${RESET}"
-        cat ${APP_FILE_TEMP} >> ${APP_FILE_PERM}                                        # copy .tmp contents to real file
-
-        echo -e "  ➕ Added ${FUCHSIA2}${BLOCKS_COUNT_TOTAL_IP} IPs${RESET} and ${FUCHSIA2}${BLOCKS_COUNT_TOTAL_SUBNET} Subnets${RESET} to ${BLUE2}${APP_FILE_PERM}${RESET}"
-        echo -e
-	done
+    else
+        echo -e "  ⚠️  No static block files found in .github/blocks/bruteforce/"
+    fi
 fi
 
 # #
