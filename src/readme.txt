@@ -581,8 +581,8 @@ tcp|out|d=80||u=99
 icmp|in|d=ping|s=44.33.22.11
 
 # TCP connections inbound to port 22 from Dynamic DNS address
-# www.configserver.com (for use in csf.dyndns only)
-tcp|in|d=22|s=www.configserver.com
+# www.configserver.dev (for use in csf.dyndns only)
+tcp|in|d=22|s=www.configserver.dev
 
 # TCP connections inbound to port 22,80,443 from IP 44.33.22.11
 d=22,80,443|s=44.33.22.11

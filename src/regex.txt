@@ -71,7 +71,7 @@ May  1 12:43:17 vps vsftpd(pam_unix)[11377]: authentication failure; logname= ui
 2012/08/25 10:07:01 [error] 5866#0: *1 no user/password was provided for basic authentication, client: 196.5.5.6, server: localhost, request: "GET /pma HTTP/1.1", host: "localhost:81" 2012/08/25 10:07:04 [error] 5866#0: *1 user "ajfkla" was not found in "/etc/nginx/htpasswd", client: 127.0.0.1, server: localhost, request: "GET /pma HTTP/1.1", host: "localhost:81"
 2011/08/31 13:01:19 [error] 6541#0: *5 user "bob" was not found in "/etc/nginx/htpasswd", client: 196.5.5.5, server: myserver, request: "GET / HTTP/1.1", host: "myhost"
 
-[Sat May 01 10:52:46 2014] [error] [client 94.41.178.204] ModSecurity: Access denied with code 403 (phase 2). Pattern match "indy library" at REQUEST_HEADERS:User-Agent. [file "/usr/local/apache/conf/modsec/20_asl_useragents.conf"] [line "174"] [id "330036"] [rev "1"] [msg "Atomicorp.com - FREE UNSUPPORTED DELAYED FEED - WAF Rules: Suspicious User agent detected"] [severity "CRITICAL"] [hostname "forum.configserver.com"] [uri "/register.php"] [unique_id "S9v57lUNw@sAAFHNRgAAAAAE"]
+[Sat May 01 10:52:46 2014] [error] [client 94.41.178.204] ModSecurity: Access denied with code 403 (phase 2). Pattern match "indy library" at REQUEST_HEADERS:User-Agent. [file "/usr/local/apache/conf/modsec/20_asl_useragents.conf"] [line "174"] [id "330036"] [rev "1"] [msg "Atomicorp.com - FREE UNSUPPORTED DELAYED FEED - WAF Rules: Suspicious User agent detected"] [severity "CRITICAL"] [hostname "forum.configserver.dev"] [uri "/register.php"] [unique_id "S9v57lUNw@sAAFHNRgAAAAAE"]
 
 [Wed Feb 29 08:25:19 2014] [error] [client 178.137.167.112] ModSecurity: Access denied with code 406 (phase 2). File "/tmp/20140229-082519-T03g71UNwkgAAEH7pVAAAAAO-file-fnVKf3" rejected by the approver script "/etc/cxs/cxscgi.sh": 0 [file "/usr/local/apache/conf/modsec2.user.conf"] [line "6"] [id "1010101"] [severity "CRITICAL"] [hostname "www.kalyr.com"] [uri "/weblog//wp-content/plugins/1-flash-gallery/upload.php"] [unique_id "T03g71UNwkgAAEH7pVAAAAAO"]
 
@@ -134,10 +134,10 @@ Feb 11 12:11:34 hostname postfix/smtpd[113557]: warning: trusted[1.2.3.4]: SASL 
 
 
 [18-Sep-2023 11:01:56 +0000]: IMAP Error: Login failed for martynas from 78.62.57.226. AUTHENTICATE PLAIN: Authentication failed. in /var/www/html/roundcubemail-1.0.2/program/lib/Roundcube/rcube_imap.php on line 184 (POST /roundcube/?_task=login?_task=login&_action=login)
-[18-Sep-2023 11:02:11 +0000]: IMAP Error: Login failed for jonathan@configserver.com from 78.62.57.226. AUTHENTICATE PLAIN: Authentication failed. in /var/www/html/roundcubemail-1.0.2/program/lib/Roundcube/rcube_imap.php on line 184 (POST /roundcube/?_task=login?_task=login&_action=login)
-09/18/2014 11:03:08 [LOGIN_ERROR] jonathan@configserver.com (martynas.it) from 78.62.57.226: Unknown user or password incorrect.
+[18-Sep-2023 11:02:11 +0000]: IMAP Error: Login failed for admin@configserver.dev from 78.62.57.226. AUTHENTICATE PLAIN: Authentication failed. in /var/www/html/roundcubemail-1.0.2/program/lib/Roundcube/rcube_imap.php on line 184 (POST /roundcube/?_task=login?_task=login&_action=login)
+09/18/2014 11:03:08 [LOGIN_ERROR] admin@configserver.dev (martynas.it) from 78.62.57.226: Unknown user or password incorrect.
 Sep 18 11:03:58:: pma auth user='jonathan_whmcs' status='mysql-denied' ip='78.62.57.226'
 
 
-2014-06-04 17:05:35 dovecot_login authenticator failed for chirpy.configserver.com ([192.168.254.4]) [87.194.204.131]:63622: 535 Incorrect authentication data (set_id=sales@waytotheweb.com)
-2014-06-04 17:07:08 [16223] dovecot_plain authenticator failed for chirpy.configserver.com ([192.168.254.4]) [87.194.204.131]:63708 I=[85.13.195.235]:465: 535 Incorrect authentication data (set_id=sales@waytotheweb.com)
+2014-06-04 17:05:35 dovecot_login authenticator failed for chirpy.configserver.dev ([192.168.254.4]) [87.194.204.131]:63622: 535 Incorrect authentication data (set_id=sales@waytotheweb.com)
+2014-06-04 17:07:08 [16223] dovecot_plain authenticator failed for chirpy.configserver.dev ([192.168.254.4]) [87.194.204.131]:63708 I=[85.13.195.235]:465: 535 Incorrect authentication data (set_id=sales@waytotheweb.com)

@@ -132,7 +132,7 @@ EOF
 	else {print "Invalid action"};
 
 	unless ($FORM{do} eq "console") {
-		print "<p>&copy;2006-2023, <a href='http://www.configserver.com' target='_blank'>ConfigServer Services</a> (Jonathan Michaelson)</p>\n";
+		print "<p>&copy;2025, <a href='https://github.com/Aetherinox/csf-firewall' target='_blank'>ConfigServer Firewall</a></p>\n";
 	}
 	print <<EOF;
 </div>
