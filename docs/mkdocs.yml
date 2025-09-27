@@ -271,6 +271,7 @@ nav:
                 - Example Configs: 'usage/cheatsheet/conf.md'
     - Advanced:
           - Services:
+                - blocklist.configserver.dev: 'advanced/services/blocklist.configserver.md'
                 - download.configserver.dev: 'advanced/services/download.configserver.md'
                 - get.configserver.dev: 'advanced/services/get.configserver.md'
           - Patcher:

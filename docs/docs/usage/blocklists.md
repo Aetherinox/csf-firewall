@@ -303,14 +303,25 @@ The primary blocklists can be added to your `/etc/csf/csf.blocklists` file. Open
 
 ``` ini
 # #
-#   Official CSF Blocklists
+#   @blocklist              Official CSF Blocklists
+#   @details:               https://aetherinox.github.io/csf-firewall/usage/blocklists/#official-blocklists
+#                           https://aetherinox.github.io/csf-firewall/advanced/services/blocklist.configserver
 #   
-#   Repository:       https://github.com/Aetherinox/csf-firewall
-#   Documentation:    https://aetherinox.github.io/csf-firewall/usage/ipset/#official-blocklists
+#   The official CSF blocklists contain a large number of IPs which range from various 
+#   different services, including AbuseIPDB (100% confidency).
+#   
+#   You can also use our blocklist service:
+#       http://blocklist.configserver.dev/master.ipset
+#       http://blocklist.configserver.dev/highrisk.ipset
+#   
+#   We offer many others, but these two are the primary ones.
+#   
+#   Requires you to edit /etc/csf/csf.conf setting:
+#       LF_IPSET_MAXELEM = "4000000"
 # #
 
-CSF_MASTER   | 43200 | 0      | https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/blocklists/master.ipset
-CSF_HIGHRISK | 43200 | 0      | https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/blocklists/highrisk.ipset
+CSF_MASTER   | 43200 | 0      | http://blocklist.configserver.dev/master.ipset
+CSF_HIGHRISK | 43200 | 0      | http://blocklist.configserver.dev/highrisk.ipset
 ```
 
 <br />
