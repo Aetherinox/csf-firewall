@@ -2481,7 +2481,7 @@ EOF
 			if (-e "/usr/local/cpanel/version" or $config{DIRECTADMIN} or $config{INTERWORX} or $config{VESTA} or $config{CWP} or $config{CYBERPANEL})
 			{
 				print "<tr><td colspan='2'>\n";
-				print "<div class='bs-callout bs-callout-info h4'>Add server and user data protection against exploits using <a href='https://configserver.com/cp/cxs.html' target='_blank'>ConfigServer eXploit Scanner (cxs)</a></div>\n";
+				print "<div class='bs-callout bs-callout-info h4'>Add server and user data protection against exploits using <a href='https://configserver.dev/cp/cxs.html' target='_blank'>ConfigServer eXploit Scanner (cxs)</a></div>\n";
 				print "</td></tr>\n";
 			}
 		}
@@ -2491,7 +2491,7 @@ EOF
 			if (-e "/usr/local/cpanel/version" or $config{DIRECTADMIN})
 			{
 				print "<tr><td colspan='2'>\n";
-				print "<div class='bs-callout bs-callout-info h4'>Add outgoing spam monitoring and prevention using <a href='https://configserver.com/cp/osm.html' target='_blank'>ConfigServer Outgoing Spam Monitor(osm)</a></div>\n";
+				print "<div class='bs-callout bs-callout-info h4'>Add outgoing spam monitoring and prevention using <a href='https://configserver.dev/cp/osm.html' target='_blank'>ConfigServer Outgoing Spam Monitor(osm)</a></div>\n";
 				print "</td></tr>\n";
 			}
 		}
@@ -2501,7 +2501,7 @@ EOF
 			if (-e "/usr/local/cpanel/version" or $config{DIRECTADMIN})
 			{
 				print "<tr><td colspan='2'>\n";
-				print "<div class='bs-callout bs-callout-info h4'>Add effective incoming virus and spam detection and user level processing using <a href='https://configserver.com/cp/msfe.html' target='_blank'>ConfigServer MailScanner Front-End (msfe)</a></div>\n";
+				print "<div class='bs-callout bs-callout-info h4'>Add effective incoming virus and spam detection and user level processing using <a href='https://configserver.dev/cp/msfe.html' target='_blank'>ConfigServer MailScanner Front-End (msfe)</a></div>\n";
 				print "</td></tr>\n";
 			}
 		}

@@ -1,12 +1,16 @@
 #!/usr/bin/perl
 # #
-#   @app                        ConfigServer Firewall (csf)
-#   @author                     Copyright (C) 2025 Aetherinox
-#                               Copyright (C) 2006-2025 Jonathan Michaelson
-#   @license                    GPLv3
-#   @repo_primary               https://github.com/Aetherinox/csf-firewall
-#   @repo_legacy                https://github.com/waytotheweb/scripts
-#   @updates                    09.10.25
+#   @app                    ConfigServer Firewall & Security (CSF)
+#                           Login Failure Daemon (LFD)
+#   @website                https://configserver.dev
+#   @docs                   https://docs.configserver.dev
+#   @download               https://download.configserver.dev
+#   @repo                   https://github.com/Aetherinox/csf-firewall
+#   @copyright              Copyright (C) 2025-2026 Aetherinox
+#                           Copyright (C) 2006-2025 Jonathan Michaelson
+#                           Copyright (C) 2006-2025 Way to the Web Limited
+#   @license                GPLv3
+#   @updated                09.26.2025
 #   
 #   This program is free software; you can redistribute it and/or modify it under
 #   the terms of the GNU General Public License as published by the Free Software
