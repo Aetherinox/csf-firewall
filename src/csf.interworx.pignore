@@ -1,45 +1,54 @@
-###############################################################################
-# Copyright (C) 2006-2025 Jonathan Michaelson
-#
-# https://github.com/waytotheweb/scripts
-#
-# This program is free software; you can redistribute it and/or modify it under
-# the terms of the GNU General Public License as published by the Free Software
-# Foundation; either version 3 of the License, or (at your option) any later
-# version.
-#
-# This program is distributed in the hope that it will be useful, but WITHOUT
-# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
-# details.
-#
-# You should have received a copy of the GNU General Public License along with
-# this program; if not, see <https://www.gnu.org/licenses>.
-###############################################################################
-# The following is a list of executables (exe) command lines (cmd) and
-# usernames (user) that lfd process tracking will ignore.
-#
-# You must use the following format:
-#
-# exe:/full/path/to/file
-# user:username
-# cmd:command line
-#
-# Or, perl regular expression matching (regex):
-#
-# pexe:/full/path/to/file as a perl regex[*]
-# puser:username as a perl regex[*]
-# pcmd:command line as a perl regex[*]
-#
-# [*]You must remember to escape characters correctly when using regex's, e.g.:
-# pexe:/home/.*/public_html/cgi-bin/script\.cgi
-# puser:bob\d.*
-# pcmd:/home/.*/command\s\to\smatch\s\.pl\s.*
-#
-# It is strongly recommended that you use command line ignores very carefully
-# as any process can change what is reported to the OS.
-#
-# For more information see readme.txt
+# #
+#   @app                ConfigServer Firewall & Security (CSF)
+#                       Login Failure Daemon (LFD)
+#   @website            https://configserver.dev
+#   @docs               https://docs.configserver.dev
+#   @download           https://download.configserver.dev
+#   @repo               https://github.com/Aetherinox/csf-firewall
+#   @copyright          Copyright (C) 2025-2026 Aetherinox
+#                       Copyright (C) 2006-2025 Jonathan Michaelson
+#                       Copyright (C) 2006-2025 Way to the Web Ltd.
+#   @license            GPLv3
+#   @updated            09.26.2025
+#   
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 3 of the License, or (at
+#   your option) any later version.
+#   
+#   This program is distributed in the hope that it will be useful, but
+#   WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+#   General Public License for more details.
+#   
+#   You should have received a copy of the GNU General Public License
+#   along with this program; if not, see <https://www.gnu.org/licenses>.
+# #
+
+# #
+#   The following is a list of executables (exe), command lines (cmd), and
+#   usernames (user) that lfd process tracking will ignore.
+#   
+#   You must use the following format:
+#       exe:/full/path/to/file
+#       user:username
+#       cmd:command line
+#   
+#   Or, perl regular expression matching (regex):
+#       pexe:/full/path/to/file as a perl regex[*]
+#       puser:username as a perl regex[*]
+#       pcmd:command line as a perl regex[*]
+#   
+#   [*] You must remember to escape characters correctly when using regex's, e.g.:
+#       pexe:/home/.*/public_html/cgi-bin/script\.cgi
+#       puser:bob\d.*
+#       pcmd:/home/.*/command\s\to\smatch\s\.pl\s.*
+#   
+#   It is strongly recommended that you use command line ignores very carefully
+#   as any process can change what is reported to the OS.
+#   
+#   For more information see readme.txt
+# #
 
 exe:/bin/dbus-daemon
 exe:/sbin/ntpd
@@ -93,9 +102,11 @@ exe:/usr/local/interworx/bin/httpd/httpd
 exe:/usr/bin/dnscache
 exe:/usr/sbin/mariadbd
 
-# Some additional entries that you might want to ignore on cPanel servers.
-# However, be aware of the security implications under "Process Tracking" in
-# the csf readme.txt when using these:
-#
-#cmd:spamd child
-#cmd:/bin/sh /usr/bin/mysqld_safe --basedir=/usr
+# #
+#   Some additional entries that you might want to ignore on cPanel servers.
+#   However, be aware of the security implications under "Process Tracking" in
+#   the csf readme.txt when using these:
+# #
+
+#   cmd:spamd child
+#   cmd:/bin/sh /usr/bin/mysqld_safe --basedir=/usr
