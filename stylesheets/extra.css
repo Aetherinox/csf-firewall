@@ -1787,7 +1787,7 @@
 {
     opacity: 0.8;
     display: inline-block;
-    color: currentColor;
+    color: #F7F7F7 !important;
     transition: 
         transform 0.4s ease, 
         opacity 0.4s ease, 
