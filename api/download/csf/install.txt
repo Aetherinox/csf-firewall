@@ -1,9 +1,12 @@
-###############################################################################
-# Copyright 2006-2018, Way to the Web Limited
-# URL: http://www.configserver.com
-# Email: sales@waytotheweb.com
-###############################################################################
-
+# #
+#   @app                ConfigServer Firewall & Security
+#   @website            https://configserver.dev
+#   @docs               https://docs.configserver.dev
+#   @repo               https://github.com/Aetherinox/csf-firewall
+#   @copyright          Copyright (C) 2025-2026 Aetherinox
+#                       Copyright (C) 2006-2025 Way to the Web Limited
+#   @license            GPLv3
+# #
 
 Installation
 ============
@@ -11,7 +14,7 @@ Installation is quite straightforward:
 
 cd /usr/src
 rm -fv csf.tgz
-wget https://download.configserver.com/csf.tgz
+wget https://download.configserver.dev/csf.tgz
 tar -xzf csf.tgz
 cd csf
 sh install.sh
