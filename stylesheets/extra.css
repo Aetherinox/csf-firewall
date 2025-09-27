@@ -3019,6 +3019,15 @@ figure img
 }
 
 /*
+    Font Sizes
+*/
+
+.text-sm-9
+{
+    font-size: 8pt;
+}
+
+/*
     Force markdown table to wrap text.
     used for tables with long inline code blocks
 
