@@ -22,7 +22,7 @@ sub content {
 
     my $content = {
         'vendor' => 'Jonathan Michaelson',
-        'url'    => 'www.configserver.com',
+        'url'    => 'www.configserver.dev',
         'name'   => {
             'short'  => 'ConfigServercsf Driver',
             'long'   => 'ConfigServercsf Driver',

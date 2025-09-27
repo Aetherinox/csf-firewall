@@ -286,7 +286,7 @@ sub firewallcheck {
 
 	$status = 0;
 	unless ($config{AUTO_UPDATES}) {$status = 1}
-	&addline($status,"AUTO_UPDATES option check","To keep csf up to date and secure you should enable AUTO_UPDATES. You should also monitor our <a href='http://blog.configserver.com' target='_blank'>blog</a>");
+	&addline($status,"AUTO_UPDATES option check","To keep csf up to date and secure you should enable AUTO_UPDATES. You should also monitor our <a href='https://github.com/Aetherinox/csf-firewall' target='_blank'>repository</a>");
 
 	$status = 0;
 	unless ($config{LF_DAEMON}) {$status = 1}
@@ -541,7 +541,7 @@ sub servercheck
 			$status = 1;
 		}
 
-		&addline($status,"Check for cxs","You should consider using <b><u><a href='http://www.configserver.com/cp/cxs.html' target='_blank'>cxs</a></u></b> to scan web script uploads and user accounts for exploits uploaded to the server");
+		&addline($status,"Check for cxs","You should consider using <b><u><a href='http://www.configserver.dev/cp/cxs.html' target='_blank'>cxs</a></u></b> to scan web script uploads and user accounts for exploits uploaded to the server");
 		$status = 0;
 
 		unless (-e "/etc/osm/osmd.pl")
@@ -549,7 +549,7 @@ sub servercheck
 			$status = 1;
 		}
 
-		&addline($status,"Check for osm","You should consider using <b><u><a href='http://www.configserver.com/cp/osm.html' target='_blank'>osm</a></u></b> to provide protection from spammers exploiting the server");
+		&addline($status,"Check for osm","You should consider using <b><u><a href='http://www.configserver.dev/cp/osm.html' target='_blank'>osm</a></u></b> to provide protection from spammers exploiting the server");
 	}
 
 	unless ($config{IPV6})
