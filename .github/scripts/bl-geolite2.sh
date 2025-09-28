@@ -1116,7 +1116,7 @@ function DB_DOWNLOAD()
         fi
 
         if [[ ! -f ${APP_GEO_IPV6_CSV} ]]; then
-            error "You provided the IPV4 CSV ${RED2}${APP_GEO_LOCS_CSV}${RESET}, but did not provide the other IPv6 CSV file ${RED2}$APP_GEO_IPV6_CSV${RESET} -- Cannot continue${RESET}"
+            error "You provided the IPV4 CSV ${RED2}${APP_GEO_IPV4_CSV}${RESET}, but did not provide the other IPv6 CSV file ${RED2}$APP_GEO_IPV6_CSV${RESET} -- Cannot continue${RESET}"
         fi
     fi
 
