@@ -26,15 +26,15 @@
 #               Download + Extract                          sh get.sh --extract
 #               Download + Extract + Install                sh get.sh --install
 #               Download + Install (Dryrun)                 sh get.sh --install --dryrun
-#               Install Only Existing Archive               sh get.sh --installOnly
-#               Install Only Existing Archive (Dryun)       sh get.sh --installOnly --dryrun
+#               Install Only Existing Archive               sh get.sh --install-only
+#               Install Only Existing Archive (Dryrun)      sh get.sh --install-only --dryrun
 #               Clean existing archive + folder             sh get.sh --clean
 #               Help menu                                   sh get.sh --help
 #               Version information                         sh get.sh --version
 #   
 #   @notes      --install automatically extracts
 #               --dryrun is passed to csf install.sh script
-#               --installOnly requires existing .tar/.zip; 
+#               --install-only requires existing .tar/.zip; 
 #                   will not download new from github.
 #               --clean removes .tar/.zip and csf folder
 # #
@@ -143,7 +143,7 @@ opt_usage()
     printf "  ${bluel}${app_title}${end}\n" 1>&2
     printf "  ${greym}${app_about}${end}\n" 1>&2
     printf "  ${greyd}version:${end} ${greyd}$app_ver${end}\n" 1>&2
-    printf "  ${fuchsiad}$app_file_this${end} ${greyd}[${greym}--help${greyd}]${greyd}  |  ${greyd}[${greym}--version${greyd}]${greyd}  |  ${greyd}[${greym}--clean${greyd}]${greyd}  |  ${greyd}[${greym}--extract${greyd}${end} ${greyd}[${greym}--install${greyd}] ${end}${greyd}[${greym}--dryrun${greyd}]]${greyd}  |  ${greyd}[${greym}--installOnly${greyd} ${greyd}[${greym}--dryrun${greyd}]]${greyd}  |  ${greyd}[${greym}--install${greyd} ${greyd}[${greym}--dryrun${greyd}]]${end}" 1>&2
+    printf "  ${fuchsiad}$app_file_this${end} ${greyd}[${greym}--help${greyd}]${greyd}  |  ${greyd}[${greym}--version${greyd}]${greyd}  |  ${greyd}[${greym}--clean${greyd}]${greyd}  |  ${greyd}[${greym}--extract${greyd}${end} ${greyd}[${greym}--install${greyd}] ${end}${greyd}[${greym}--dryrun${greyd}]]${greyd}  |  ${greyd}[${greym}--install-only${greyd} ${greyd}[${greym}--dryrun${greyd}]]${greyd}  |  ${greyd}[${greym}--install${greyd} ${greyd}[${greym}--dryrun${greyd}]]${end}" 1>&2
     echo
     echo
     printf '  %-5s %-40s\n' "${greyd}Syntax:${end}" "" 1>&2
@@ -160,8 +160,8 @@ opt_usage()
     printf '  %-5s %-30s %-40s\n' "    " "${greyd}${end}                  " "${fuchsiad}$app_file_this${end} ${greym}--extract${yellowd} ${greym}--install${yellowd} ${end}" 1>&2
     printf '  %-5s %-30s %-40s\n' "    " "${greyd}${end}                  " "${fuchsiad}$app_file_this${end} ${greym}--extract${yellowd} ${greym}--install${yellowd} ${greym}--dryrun${yellowd} ${end}" 1>&2
     printf '  %-5s %-30s %-40s\n' "    " "${greyd}${end}                  " "${fuchsiad}$app_file_this${end} ${greym}--install${yellowd} ${greym}--dryrun${yellowd} ${end}" 1>&2
-    printf '  %-5s %-30s %-40s\n' "    " "${greyd}${end}                  " "${fuchsiad}$app_file_this${end} ${greym}--installOnly${yellowd} ${end}" 1>&2
-    printf '  %-5s %-30s %-40s\n' "    " "${greyd}${end}                  " "${fuchsiad}$app_file_this${end} ${greym}--installOnly${yellowd} ${greym}--dryrun${yellowd} ${end}" 1>&2
+    printf '  %-5s %-30s %-40s\n' "    " "${greyd}${end}                  " "${fuchsiad}$app_file_this${end} ${greym}--install-only${yellowd} ${end}" 1>&2
+    printf '  %-5s %-30s %-40s\n' "    " "${greyd}${end}                  " "${fuchsiad}$app_file_this${end} ${greym}--install-only${yellowd} ${greym}--dryrun${yellowd} ${end}" 1>&2
     printf '  %-5s %-30s %-40s\n' "    " "${greyd}${end}                  " "${fuchsiad}$app_file_this${end} ${greyd}[ ${greym}--help${greyd} | ${greym}-h${greyd} | ${greym}/?${greyd} ]${end}" 1>&2
     echo
     printf '  %-5s %-40s\n' "${greyd}Options:${end}" "" 1>&2
@@ -342,7 +342,7 @@ else
 fi
 
 # #
-#   download latest release unless --installOnly
+#   download latest release unless --install-only
 # #
 
 if [ "$argInstallOnly" = "false" ]; then
