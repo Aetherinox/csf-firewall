@@ -38,7 +38,7 @@ Together, these services provide a streamlined way to keep CSF installations up 
 
 </div>
 
-The [blocklist.configserver.dev](https://blocklist.configserver.dev) service provides a streamlined way to access and use curated blocklists designed to enhance security and reduce unwanted traffic. It acts as a lightweight proxy that surfaces blocklists from trusted sources in a consistent, easy-to-use format, making it simple to integrate into existing security tools and workflows.
+The [blocklist.configserver.dev](https://blocklist.configserver.dev/master.ipset) service provides a streamlined way to access and use curated blocklists designed to enhance security and reduce unwanted traffic. It acts as a lightweight proxy that surfaces blocklists from trusted sources in a consistent, easy-to-use format, making it simple to integrate into existing security tools and workflows.
 
 By centralizing access, the service eliminates the complexity of pulling blocklists from multiple vendors, ensuring faster updates and more reliable availability. It can be used alongside other security measures to strengthen protection against abusive IPs, malicious actors, and other unwanted traffic sources.
 
