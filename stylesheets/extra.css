@@ -848,6 +848,27 @@
         background-size: cover;
         background-position: center;
     }
+
+    /*
+        Icons in single row which dim when hovered and part the seas
+    */
+
+    .icon-dim
+    {
+        opacity: 0.8;
+        display: inline-block;
+        color: var(--md-typeset-a-color) !important;
+        transition: 
+            transform 0.4s ease, 
+            opacity 0.4s ease, 
+            padding 0.4s ease, 
+            color 0.4s ease !important;
+    }
+
+    .icon-dim:hover
+    {
+        color: var(--md-accent-fg-color) !important;
+    }
 }
 
 /*
@@ -1647,6 +1668,22 @@
         background-size: cover;
         background-position: center;
     }
+
+    /*
+        Icons in single row which dim when hovered and part the seas
+    */
+
+    .icon-dim
+    {
+        opacity: 0.8;
+        display: inline-block;
+        color: #F7F7F7 !important;
+        transition: 
+            transform 0.4s ease, 
+            opacity 0.4s ease, 
+            padding 0.4s ease, 
+            color 0.4s ease !important;
+    }
 }
 
 & .md-typeset h4 .mdx-badge__icon
@@ -1777,22 +1814,6 @@
 .icon-size-48
 {
     font-size: 48pt;
-}
-
-/*
-    Icons in single row which dim when hovered and part the seas
-*/
-
-.icon-dim
-{
-    opacity: 0.8;
-    display: inline-block;
-    color: #F7F7F7 !important;
-    transition: 
-        transform 0.4s ease, 
-        opacity 0.4s ease, 
-        padding 0.4s ease, 
-        color 0.4s ease !important;
 }
 
 .icon-dim:hover
