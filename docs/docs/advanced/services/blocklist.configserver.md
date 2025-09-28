@@ -177,7 +177,7 @@ IP addresses in these lists have been flagged for engaging in activities such as
 
 For most users, the blocklists `master.ipset` and `highrisk.ipset` are all you need. They contain a massive collection of IP addresses, all with a 100% confidence level, meaning you should encounter none or minimal false positives.
 
-| Set Name | Description | Severity | View |
+| Set Name | Description | Risk | View |
 | --- | --- | --- | --- |
 | `master.ipset` | Abusive IP addresses which have been reported for port scanning and SSH brute-forcing. HIGHLY recommended. <br> <span class="text-sm-9">Includes [AbuseIPDB](https://www.abuseipdb.com/), [IPThreat](https://ipthreat.net/), [CinsScore](https://cinsscore.com), [GreensNow](https://blocklist.greensnow.co/greensnow.txt)</span> | ★★★★★ | [view](https://blocklist.configserver.dev/master.ipset) |
 | `highrisk.ipset` | IPs with highest risk to your network and have a possibility that the activity which comes from them are going to be fraudulent. | ★★★★★ | [view](https://blocklist.configserver.dev/highrisk.ipset) |
@@ -190,7 +190,7 @@ These blocklists help you control which third-party services can access your ser
 
 <br />
 
-| Set | Description | Severity | View |
+| Set | Description | Risk | View |
 | --- | --- | --- | --- |
 | `privacy_general.ipset` | Servers which scan ports for data collection and research purposes. <br> <span class="text-sm-9">List includes [Censys](https://censys.io), [Shodan](https://shodan.io/), [Project25499](https://blogproject25499.wordpress.com/), [InternetArchive](https://archive.org/), [Cyber Resilience](https://cyberresilience.io), [Internet Measurement](https://internet-measurement.com), [probe.onyphe.net](https://onyphe.net), [Security Trails](https://securitytrails.com) | ★★★★⚝ | [view](https://blocklist.configserver.dev/privacy_general.ipset)</span> |
 | `privacy_ahrefs.ipset` | Ahrefs SEO and services | ★★⚝⚝⚝ | [view](https://blocklist.configserver.dev/privacy_ahrefs.ipset) |
@@ -224,7 +224,7 @@ These blocklists help prevent known spam sources from accessing your server. The
 
 <br />
 
-| Set | Description | Severity | View |
+| Set | Description | Risk | View |
 | --- | --- | --- | --- |
 | `spam_forums.ipset` | List of known forum / blog spammers and bots | ★★★⚝⚝ | [view](https://blocklist.configserver.dev/spam_forums.ipset) |
 | `spam_spamhaus.ipset` | Bad actor IP addresses registered with Spamhaus | ★★★★⚝ | [view](https://blocklist.configserver.dev/spam_spamhaus.ipset) |
@@ -239,7 +239,7 @@ These blocklists allow you to filter traffic based on Internet Service Providers
 
 <br />
 
-| Set | Description | Severity | View |
+| Set | Description | Risk | View |
 |----------|------------|------------|------------|
 | `isp_aol.ipset` | AOL Internet Service Provider IPs | ★⚝⚝⚝⚝ | [view](https://blocklist.configserver.dev/isp_aol.ipset) |
 | `isp_att.ipset` | AT&T Internet Service Provider IPs | ★⚝⚝⚝⚝ | [view](https://blocklist.configserver.dev/isp_att.ipset) |
@@ -273,7 +273,7 @@ This section includes blocklists which you can import into the [bittorrent clien
 
 <br />
 
-| Set | Description | Severity | View | Website |
+| Set | Description | Risk | View | Website |
 | --- | --- | --- | --- | --- |
 | `transmission.ipset` | A large blocklist for the BitTorrent client [Transmission](https://transmissionbt.com/) | ★★★★★ | [view](https://blocklist.configserver.dev/transmission.ipset) | [view](https://transmissionbt.com/) |
 
@@ -289,15 +289,15 @@ All data is sourced directly from the GeoLite2 Database.
 
 <br />
 
-| Set | Description | Severity | View |
+| Set | Description | Risk | View |
 |----------|------------|------------|------------|
-| `continent_africa.ipset` | All IPs located in Africa | ★★★★⚝ | [view](https://blocklist.configserver.dev/continent_africa.ipset) |
-| `continent_antartica.ipset` | All IPs located in Antarctica | ★★★★⚝ | [view](https://blocklist.configserver.dev/continent_antartica.ipset) |
+| `continent_africa.ipset` | All IPs located in Africa | ★★★⚝⚝ | [view](https://blocklist.configserver.dev/continent_africa.ipset) |
+| `continent_antartica.ipset` | All IPs located in Antarctica | ⚝⚝⚝⚝⚝ | [view](https://blocklist.configserver.dev/continent_antartica.ipset) |
 | `continent_asia.ipset` | All IPs located in Asia | ★★★★⚝ | [view](https://blocklist.configserver.dev/continent_asia.ipset) |
-| `continent_europe.ipset` | All IPs located in Europe | ★★★★⚝ | [view](https://blocklist.configserver.dev/continent_europe.ipset) |
+| `continent_europe.ipset` | All IPs located in Europe | ★★★⚝⚝ | [view](https://blocklist.configserver.dev/continent_europe.ipset) |
 | `continent_north_america.ipset` | All IPs located in North America | ★★★★⚝ | [view](https://blocklist.configserver.dev/continent_north_america.ipset) |
-| `continent_oceania.ipset` | All IPs located in North Oceania | ★★★★⚝ | [view](https://blocklist.configserver.dev/continent_oceania.ipset) |
-| `continent_south_america.ipset` | All IPs located in South America | ★★★★⚝ | [view](https://blocklist.configserver.dev/continent_south_america.ipset) |
+| `continent_oceania.ipset` | All IPs located in Oceania | ★⚝⚝⚝⚝ | [view](https://blocklist.configserver.dev/continent_oceania.ipset) |
+| `continent_south_america.ipset` | All IPs located in South America | ★★⚝⚝⚝ | [view](https://blocklist.configserver.dev/continent_south_america.ipset) |
 
 <br />
 <br />
@@ -311,7 +311,7 @@ All data is sourced directly from the GeoLite2 Database.
 
 <br />
 
-| Set                                            | Description                              | Severity  | View                                                                                    |
+| Set                                            | Description                              | Risk  | View                                                                                    |
 | ---------------------------------------------- | ---------------------------------------- | --------- | ---------------------------------------------------------------------------------------- |
 | `country_afghanistan.ipset`                    | Afghanistan               | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_afghanistan.ipset)                    |
 | `country_aland_islands.ipset`                  | Aland Islands                     | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_aland_islands.ipset)                  |
