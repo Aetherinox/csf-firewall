@@ -79,6 +79,7 @@
     - [Step 6: Enable and Start Services](#step-6-enable-and-start-services)
 - [IP Sets / Blocklist](#ip-sets--blocklist)
   - [Official Blocklists](#official-blocklists)
+  - [Risk Assessments](#risk-assessments)
     - [Main Lists](#main-lists)
     - [Privacy Lists](#privacy-lists)
     - [Spam Lists](#spam-lists)
@@ -519,6 +520,26 @@ CSF hosts our own set of blocklists which are are automatically updated every `6
 CSF_MASTER|43200|400000|https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/blocklists/master.ipset
 CSF_HIGHRISK|43200|0|https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/blocklists/highrisk.ipset
 ```
+
+<br />
+<br />
+
+### Risk Assessments
+
+The lists in this README use `⚝` and `★` icons to indicate risk levels. More stars mean higher risk. Lists marked as **High** or **Critical** should be added to your CSF blocklist to secure your server. Lower-risk lists are optional and can be added at your discretion.
+
+Our automated CI generates this risk assessment each day.
+
+<br />
+
+| Rating      | Risk            | Description                                      |
+| ----------- | --------------- | ------------------------------------------------ |
+| `⚝⚝⚝⚝⚝`   | No Risk         | IPs pose no real threat, but possibly suspected  |
+| `★⚝⚝⚝⚝`   | Low Risk        | IPs pose minimal threat                          |
+| `★★⚝⚝⚝`   | Moderate Risk   | IPs may cause issues; monitor carefully          |
+| `★★★⚝⚝`   | Elevated Risk   | IPs are risky; consider blocking                 |
+| `★★★★⚝`   | High Risk       | IPs are dangerous; likely to cause harm          |
+| `★★★★★`   | Critical Risk   | IPs are highly dangerous; block immediately      |
 
 <br />
 <br />
