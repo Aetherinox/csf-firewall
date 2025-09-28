@@ -82,7 +82,7 @@
     - [Main Lists](#main-lists)
     - [Privacy Lists](#privacy-lists)
     - [Spam Lists](#spam-lists)
-  - [Internet Service Providers](#internet-service-providers)
+    - [Internet Service Providers](#internet-service-providers)
     - [Geographical Databases](#geographical-databases)
       - [General](#general)
       - [Continents](#continents)
@@ -596,7 +596,7 @@ These blocklists help prevent known spam sources from accessing your server. The
 <br />
 <br />
 
-### Internet Service Providers
+#### Internet Service Providers
 
 These blocklists allow you to filter traffic based on Internet Service Providers (ISPs). They can be used to block or restrict access from specific networks or providers.
 
