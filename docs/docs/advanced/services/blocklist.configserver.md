@@ -294,256 +294,256 @@ All data is sourced directly from the GeoLite2 Database.
 
 | Set                                            | Description                              | Severity  | View                                                                                    |
 | ---------------------------------------------- | ---------------------------------------- | --------- | ---------------------------------------------------------------------------------------- |
-| `country_afghanistan.ipset`                    | IPs located in Afghanistan               | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_afghanistan.ipset)                    |
-| `country_aland_islands.ipset`                  | IPs in Aland Islands                     | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_aland_islands.ipset)                  |
-| `country_albania.ipset`                        | IPs in Albania                           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_albania.ipset)                        |
-| `country_algeria.ipset`                        | IPs in Algeria                           | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_algeria.ipset)                        |
-| `country_american_samoa.ipset`                 | IPs in American Samoa                    | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_american_samoa.ipset)                 |
-| `country_andorra.ipset`                        | IPs in Andorra                           | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_andorra.ipset)                        |
-| `country_angola.ipset`                         | IPs in Angola                            | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_angola.ipset)                         |
-| `country_anguilla.ipset`                       | IPs in Anguilla                          | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_anguilla.ipset)                       |
-| `country_antarctica.ipset`                     | IPs in Antarctica                        | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_antarctica.ipset)                     |
-| `country_antigua_barbuda.ipset`                | IPs in Antigua and Barbuda               | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_antigua_barbuda.ipset)                |
-| `country_argentina.ipset`                      | IPs in Argentina                         | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_argentina.ipset)                      |
-| `country_armenia.ipset`                        | IPs in Armenia                           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_armenia.ipset)                        |
-| `country_aruba.ipset`                          | IPs in Aruba                             | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_aruba.ipset)                          |
-| `country_australia.ipset`                      | IPs in Australia                         | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_australia.ipset)                      |
-| `country_austria.ipset`                        | IPs in Austria                           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_austria.ipset)                        |
-| `country_azerbaijan.ipset`                     | IPs in Azerbaijan                        | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_azerbaijan.ipset)                     |
-| `country_bahamas.ipset`                        | IPs in The Bahamas                       | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_bahamas.ipset)                        |
-| `country_bahrain.ipset`                        | IPs in Bahrain                           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_bahrain.ipset)                        |
-| `country_bangladesh.ipset`                     | IPs in Bangladesh                        | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_bangladesh.ipset)                     |
-| `country_barbados.ipset`                       | IPs in Barbados                          | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_barbados.ipset)                       |
-| `country_belarus.ipset`                        | IPs in Belarus                           | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_belarus.ipset)                        |
-| `country_belgium.ipset`                        | IPs in Belgium                           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_belgium.ipset)                        |
-| `country_belize.ipset`                         | IPs in Belize                            | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_belize.ipset)                         |
-| `country_benin.ipset`                          | IPs in Benin                             | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_benin.ipset)                          |
-| `country_bermuda.ipset`                        | IPs in Bermuda                           | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_bermuda.ipset)                        |
-| `country_bhutan.ipset`                         | IPs in Bhutan                            | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_bhutan.ipset)                         |
-| `country_bolivia.ipset`                        | IPs in Bolivia                           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_bolivia.ipset)                        |
-| `country_bonaire_sint_eustatius_saba.ipset`    | IPs in Bonaire, Sint Eustatius, and Saba | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_bonaire_sint_eustatius_saba.ipset)    |
-| `country_bosnia_herzegovina.ipset`             | IPs in Bosnia and Herzegovina            | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_bosnia_herzegovina.ipset)             |
-| `country_botswana.ipset`                       | IPs in Botswana                          | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_botswana.ipset)                       |
-| `country_bouvet_island.ipset`                  | IPs in Bouvet Island                     | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_bouvet_island.ipset)                  |
-| `country_brazil.ipset`                         | IPs in Brazil                            | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_brazil.ipset)                         |
-| `country_british_indian_ocean_territory.ipset` | IPs in British Indian Ocean Territory    | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_british_indian_ocean_territory.ipset) |
-| `country_british_virgin_islands.ipset`         | IPs in British Virgin Islands            | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_british_virgin_islands.ipset)         |
-| `country_brunei_darussalam.ipset`              | IPs in Brunei                            | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_brunei_darussalam.ipset)              |
-| `country_bulgaria.ipset`                       | IPs in Bulgaria                          | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_bulgaria.ipset)                       |
-| `country_burkina_faso.ipset`                   | IPs in Burkina Faso                      | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_burkina_faso.ipset)                   |
-| `country_burundi.ipset`                        | IPs in Burundi                           | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_burundi.ipset)                        |
-| `country_cambodia.ipset`                       | IPs in Cambodia                          | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_cambodia.ipset)                       |
-| `country_cameroon.ipset`                       | IPs in Cameroon                          | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_cameroon.ipset)                       |
-| `country_canada.ipset`                         | IPs in Canada                            | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_canada.ipset)                         |
-| `country_cape_verde.ipset`                     | IPs in Cape Verde                        | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_cape_verde.ipset)                     |
-| `country_cayman_islands.ipset`                 | IPs in Cayman Islands                    | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_cayman_islands.ipset)                 |
-| `country_cc.ipset`                             | IPs in Cocos (Keeling) Islands           | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_cc.ipset)                             |
-| `country_central_african_republic.ipset`       | IPs in Central African Republic          | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_central_african_republic.ipset)       |
-| `country_chad.ipset`                           | IPs in Chad                              | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_chad.ipset)                           |
-| `country_chile.ipset`                          | IPs in Chile                             | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_chile.ipset)                          |
-| `country_china.ipset`                          | IPs in China                             | ★★★★★    | [view](https://blocklist.configserver.dev/country_china.ipset)                          |
-| `country_christmas_island.ipset`               | IPs in Christmas Island                  | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_christmas_island.ipset)               |
-| `country_colombia.ipset`                       | IPs in Colombia                          | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_colombia.ipset)                       |
-| `country_comoros.ipset`                        | IPs in Comoros                           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_comoros.ipset)                        |
-| `country_congo.ipset`                       | IPs in Congo                            | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_congo.ipset)                       |
-| `country_cook_islands.ipset`                | IPs in Cook Islands                     | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_cook_islands.ipset)                |
-| `country_costa_rica.ipset`                  | IPs in Costa Rica                       | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_costa_rica.ipset)                  |
-| `country_cote_divoire.ipset`                | IPs in Côte d'Ivoire                    | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_cote_divoire.ipset)                |
-| `country_croatia.ipset`                     | IPs in Croatia                          | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_croatia.ipset)                     |
-| `country_cuba.ipset`                        | IPs in Cuba                             | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_cuba.ipset)                        |
-| `country_curacao.ipset`                     | IPs in Curaçao                          | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_curacao.ipset)                     |
-| `country_cyprus.ipset`                      | IPs in Cyprus                           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_cyprus.ipset)                      |
-| `country_czech_republic.ipset`              | IPs in Czech Republic                   | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_czech_republic.ipset)              |
-| `country_democratic_republic_congo.ipset`   | IPs in Democratic Republic of the Congo | ★★★★★    | [view](https://blocklist.configserver.dev/country_democratic_republic_congo.ipset)   |
-| `country_denmark.ipset`                     | IPs in Denmark                          | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_denmark.ipset)                     |
-| `country_djibouti.ipset`                    | IPs in Djibouti                         | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_djibouti.ipset)                    |
-| `country_dominica.ipset`                    | IPs in Dominica                         | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_dominica.ipset)                    |
-| `country_dominican_republic.ipset`          | IPs in Dominican Republic               | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_dominican_republic.ipset)          |
-| `country_ecuador.ipset`                     | IPs in Ecuador                          | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_ecuador.ipset)                     |
-| `country_egypt.ipset`                       | IPs in Egypt                            | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_egypt.ipset)                       |
-| `country_el_salvador.ipset`                 | IPs in El Salvador                      | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_el_salvador.ipset)                 |
-| `country_equatorial_guinea.ipset`           | IPs in Equatorial Guinea                | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_equatorial_guinea.ipset)           |
-| `country_eritrea.ipset`                     | IPs in Eritrea                          | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_eritrea.ipset)                     |
-| `country_estonia.ipset`                     | IPs in Estonia                          | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_estonia.ipset)                     |
-| `country_eswatini.ipset`                    | IPs in Eswatini                         | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_eswatini.ipset)                    |
-| `country_ethiopia.ipset`                    | IPs in Ethiopia                         | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_ethiopia.ipset)                    |
-| `country_europe.ipset`                      | IPs in Europe                           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_europe.ipset)                      |
-| `country_falkland_islands_malvinas.ipset`   | IPs in Falkland Islands (Malvinas)      | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_falkland_islands_malvinas.ipset)   |
-| `country_faroe_islands.ipset`               | IPs in Faroe Islands                    | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_faroe_islands.ipset)               |
-| `country_fiji.ipset`                        | IPs in Fiji                             | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_fiji.ipset)                        |
-| `country_finland.ipset`                     | IPs in Finland                          | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_finland.ipset)                     |
-| `country_france.ipset`                      | IPs in France                           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_france.ipset)                      |
-| `country_french_guiana.ipset`               | IPs in French Guiana                    | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_french_guiana.ipset)               |
-| `country_french_polynesia.ipset`            | IPs in French Polynesia                 | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_french_polynesia.ipset)            |
-| `country_french_southern_territories.ipset` | IPs in French Southern Territories      | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_french_southern_territories.ipset) |
-| `country_gabon.ipset`                       | IPs in Gabon                             | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_gabon.ipset)                             |
-| `country_gambia.ipset`                      | IPs in Gambia                            | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_gambia.ipset)                            |
-| `country_georgia.ipset`                     | IPs in Georgia                           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_georgia.ipset)                           |
-| `country_germany.ipset`                     | IPs in Germany                           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_germany.ipset)                           |
-| `country_ghana.ipset`                       | IPs in Ghana                             | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_ghana.ipset)                             |
-| `country_gibraltar.ipset`                   | IPs in Gibraltar                         | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_gibraltar.ipset)                         |
-| `country_great_britain.ipset`               | IPs in Great Britain                     | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_great_britain.ipset)                     |
-| `country_greece.ipset`                      | IPs in Greece                            | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_greece.ipset)                            |
-| `country_greenland.ipset`                   | IPs in Greenland                         | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_greenland.ipset)                         |
-| `country_grenada.ipset`                     | IPs in Grenada                           | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_grenada.ipset)                           |
-| `country_guadeloupe.ipset`                  | IPs in Guadeloupe                        | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_guadeloupe.ipset)                        |
-| `country_guam.ipset`                        | IPs in Guam                              | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_guam.ipset)                              |
-| `country_guatemala.ipset`                   | IPs in Guatemala                         | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_guatemala.ipset)                         |
-| `country_guernsey.ipset`                    | IPs in Guernsey                          | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_guernsey.ipset)                          |
-| `country_guineabissau.ipset`                | IPs in Guinea-Bissau                     | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_guineabissau.ipset)                      |
-| `country_guinea.ipset`                      | IPs in Guinea                            | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_guinea.ipset)                            |
-| `country_guyana.ipset`                      | IPs in Guyana                            | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_guyana.ipset)                            |
-| `country_haiti.ipset`                       | IPs in Haiti                             | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_haiti.ipset)                             |
-| `country_heard_island_and_mcdonald_islands.ipset` | IPs in Heard Island and McDonald Islands | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_heard_island_and_mcdonald_islands.ipset) |
-| `country_honduras.ipset`                    | IPs in Honduras                          | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_honduras.ipset)                          |
-| `country_hong_kong.ipset`                   | IPs in Hong Kong                         | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_hong_kong.ipset)                         |
-| `country_hungary.ipset`                     | IPs in Hungary                           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_hungary.ipset)                           |
-| `country_iceland.ipset`                     | IPs in Iceland                           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_iceland.ipset)                           |
-| `country_india.ipset`                       | IPs in India                             | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_india.ipset)                             |
-| `country_indonesia.ipset`                   | IPs in Indonesia                         | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_indonesia.ipset)                         |
-| `country_iran.ipset`                        | IPs in Iran                              | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_iran.ipset)                              |
-| `country_iraq.ipset`                        | IPs in Iraq                              | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_iraq.ipset)                              |
-| `country_ireland.ipset`                     | IPs in Ireland                           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_ireland.ipset)                           |
-| `country_isle_of_man.ipset`                 | IPs in Isle of Man                       | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_isle_of_man.ipset)                       |
-| `country_israel.ipset`                      | IPs in Israel                            | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_israel.ipset)                            |
-| `country_italy.ipset`                       | IPs in Italy                             | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_italy.ipset)                             |
-| `country_jamaica.ipset`                     | IPs in Jamaica                           | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_jamaica.ipset)                           |
-| `country_japan.ipset`                       | IPs in Japan                             | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_japan.ipset)                             |
-| `country_jersey.ipset`                      | IPs in Jersey                            | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_jersey.ipset)                            |
-| `country_jordan.ipset`                      | IPs in Jordan                            | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_jordan.ipset)                            |
-| `country_kazakhstan.ipset`                  | IPs in Kazakhstan                        | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_kazakhstan.ipset)                        |
-| `country_kenya.ipset`                       | IPs in Kenya                             | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_kenya.ipset)                             |
-| `country_kiribati.ipset`                    | IPs in Kiribati                          | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_kiribati.ipset)                          |
-| `country_kosovo.ipset`                      | IPs in Kosovo                            | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_kosovo.ipset)                            |
-| `country_kuwait.ipset`                      | IPs in Kuwait                            | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_kuwait.ipset)                            |
-| `country_kyrgyzstan.ipset`                  | IPs in Kyrgyzstan                        | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_kyrgyzstan.ipset)                        |
-| `country_laos.ipset`                        | IPs in Laos                              | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_laos.ipset)                              |
-| `country_latvia.ipset`                      | IPs in Latvia                            | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_latvia.ipset)                            |
-| `country_lebanon.ipset`                     | IPs in Lebanon                           | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_lebanon.ipset)                           |
-| `country_lesotho.ipset`                     | IPs in Lesotho                           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_lesotho.ipset)                           |
-| `country_liberia.ipset`                     | IPs in Liberia                           | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_liberia.ipset)                           |
-| `country_libya.ipset`                       | IPs in Libya                             | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_libya.ipset)                             |
-| `country_liechtenstein.ipset`               | IPs in Liechtenstein                     | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_liechtenstein.ipset)                     |
-| `country_lithuania.ipset`                   | IPs in Lithuania                         | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_lithuania.ipset)                         |
-| `country_luxembourg.ipset`                  | IPs in Luxembourg                        | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_luxembourg.ipset)                        |
-| `country_macedonia_republic.ipset`          | IPs in Macedonia        | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_macedonia_republic.ipset) |
-| `country_madagascar.ipset`                  | IPs in Madagascar       | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_madagascar.ipset)         |
-| `country_malawi.ipset`                      | IPs in Malawi           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_malawi.ipset)             |
-| `country_malaysia.ipset`                    | IPs in Malaysia         | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_malaysia.ipset)           |
-| `country_maldives.ipset`                    | IPs in Maldives         | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_maldives.ipset)           |
-| `country_mali.ipset`                        | IPs in Mali             | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_mali.ipset)               |
-| `country_malta.ipset`                       | IPs in Malta            | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_malta.ipset)              |
-| `country_marshall_islands.ipset`            | IPs in Marshall Islands | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_marshall_islands.ipset)   |
-| `country_martinique.ipset`                  | IPs in Martinique       | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_martinique.ipset)         |
-| `country_mauritania.ipset`                  | IPs in Mauritania       | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_mauritania.ipset)         |
-| `country_mauritius.ipset`                   | IPs in Mauritius        | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_mauritius.ipset)          |
-| `country_mayotte.ipset`                     | IPs in Mayotte          | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_mayotte.ipset)            |
-| `country_mexico.ipset`                      | IPs in Mexico           | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_mexico.ipset)             |
-| `country_micronesia.ipset`                  | IPs in Micronesia       | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_micronesia.ipset)         |
-| `country_monaco.ipset`                      | IPs in Monaco           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_monaco.ipset)             |
-| `country_mongolia.ipset`                    | IPs in Mongolia         | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_mongolia.ipset)           |
-| `country_montenegro.ipset`                  | IPs in Montenegro       | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_montenegro.ipset)         |
-| `country_montserrat.ipset`                  | IPs in Montserrat       | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_montserrat.ipset)         |
-| `country_morocco.ipset`                     | IPs in Morocco          | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_morocco.ipset)            |
-| `country_mozambique.ipset`                  | IPs in Mozambique       | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_mozambique.ipset)         |
-| `country_myanmar.ipset`                     | IPs in Myanmar          | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_myanmar.ipset)            |
-| `country_namibia.ipset`                     | IPs in Namibia          | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_namibia.ipset)            |
-| `country_nauru.ipset`                       | IPs in Nauru            | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_nauru.ipset)              |
-| `country_nepal.ipset`                       | IPs in Nepal            | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_nepal.ipset)              |
-| `country_netherlands.ipset`                 | IPs in Netherlands      | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_netherlands.ipset)        |
-| `country_new_caledonia.ipset`               | IPs in New Caledonia    | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_new_caledonia.ipset)      |
-| `country_new_zealand.ipset`                 | IPs in New Zealand      | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_new_zealand.ipset)        |
-| `country_nicaragua.ipset`                   | IPs in Nicaragua                | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_nicaragua.ipset)                |
-| `country_nigeria.ipset`                     | IPs in Nigeria                  | ★★★★★    | [view](https://blocklist.configserver.dev/country_nigeria.ipset)                  |
-| `country_niger.ipset`                       | IPs in Niger                    | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_niger.ipset)                    |
-| `country_niue.ipset`                        | IPs in Niue                     | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_niue.ipset)                     |
-| `country_norfolk_island.ipset`              | IPs in Norfolk Island           | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_norfolk_island.ipset)           |
-| `country_northern_mariana_islands.ipset`    | IPs in Northern Mariana Islands | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_northern_mariana_islands.ipset) |
-| `country_north_korea.ipset`                 | IPs in North Korea              | ★★★★★    | [view](https://blocklist.configserver.dev/country_north_korea.ipset)              |
-| `country_norway.ipset`                      | IPs in Norway                   | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_norway.ipset)                   |
-| `country_oman.ipset`                        | IPs in Oman                     | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_oman.ipset)                     |
-| `country_pakistan.ipset`                    | IPs in Pakistan                 | ★★★★★    | [view](https://blocklist.configserver.dev/country_pakistan.ipset)                 |
-| `country_palau.ipset`                       | IPs in Palau                    | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_palau.ipset)                    |
-| `country_palestine.ipset`                   | IPs in Palestine                | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_palestine.ipset)                |
-| `country_panama.ipset`                      | IPs in Panama                   | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_panama.ipset)                   |
-| `country_papua_new_guinea.ipset`            | IPs in Papua New Guinea         | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_papua_new_guinea.ipset)         |
-| `country_paraguay.ipset`                    | IPs in Paraguay                 | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_paraguay.ipset)                 |
-| `country_peru.ipset`                        | IPs in Peru                     | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_peru.ipset)                     |
-| `country_philippines.ipset`                 | IPs in Philippines              | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_philippines.ipset)              |
-| `country_pitcairn.ipset`                    | IPs in Pitcairn Islands         | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_pitcairn.ipset)                 |
-| `country_poland.ipset`                      | IPs in Poland                   | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_poland.ipset)                   |
-| `country_portugal.ipset`                    | IPs in Portugal                 | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_portugal.ipset)                 |
-| `country_puerto_rico.ipset`                 | IPs in Puerto Rico              | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_puerto_rico.ipset)              |
-| `country_qatar.ipset`                       | IPs in Qatar                    | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_qatar.ipset)                    |
-| `country_republic_moldova.ipset`            | IPs in Moldova                  | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_republic_moldova.ipset)         |
-| `country_reunion.ipset`                     | IPs in Réunion                  | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_reunion.ipset)                  |
-| `country_romania.ipset`                     | IPs in Romania                  | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_romania.ipset)                  |
-| `country_russia.ipset`                      | IPs in Russia                           | ★★★★★    | [view](https://blocklist.configserver.dev/country_russia.ipset)                   |
-| `country_rwanda.ipset`                      | IPs in Rwanda                           | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_rwanda.ipset)                   |
-| `country_saint_barthelemy.ipset`            | IPs in Saint Barthélemy                 | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_saint_barthelemy.ipset)         |
-| `country_saint_helena.ipset`                | IPs in Saint Helena                     | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_saint_helena.ipset)             |
-| `country_saint_kitts_nevis.ipset`           | IPs in Saint Kitts and Nevis            | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_saint_kitts_nevis.ipset)        |
-| `country_saint_lucia.ipset`                 | IPs in Saint Lucia                      | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_saint_lucia.ipset)              |
-| `country_saint_martin_north.ipset`          | IPs in Saint Martin (North)             | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_saint_martin_north.ipset)       |
-| `country_saint_pierre_miquelon.ipset`       | IPs in Saint Pierre and Miquelon        | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_saint_pierre_miquelon.ipset)    |
-| `country_saint_vincent_grenadines.ipset`    | IPs in Saint Vincent and the Grenadines | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_saint_vincent_grenadines.ipset) |
-| `country_samoa.ipset`                       | IPs in Samoa                            | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_samoa.ipset)                    |
-| `country_san_marino.ipset`                  | IPs in San Marino                       | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_san_marino.ipset)               |
-| `country_sao_tome_principe.ipset`           | IPs in São Tomé and Príncipe            | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_sao_tome_principe.ipset)        |
-| `country_saudi_arabia.ipset`                | IPs in Saudi Arabia                     | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_saudi_arabia.ipset)             |
-| `country_senegal.ipset`                     | IPs in Senegal                          | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_senegal.ipset)                  |
-| `country_serbia.ipset`                      | IPs in Serbia                           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_serbia.ipset)                   |
-| `country_seychelles.ipset`                  | IPs in Seychelles                       | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_seychelles.ipset)               |
-| `country_sierra_leone.ipset`                | IPs in Sierra Leone                     | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_sierra_leone.ipset)             |
-| `country_singapore.ipset`                   | IPs in Singapore                                    | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_singapore.ipset)                                    |
-| `country_sint_maarten_south.ipset`          | IPs in Sint Maarten (South)                         | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_sint_maarten_south.ipset)                           |
-| `country_slovakia.ipset`                    | IPs in Slovakia                                     | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_slovakia.ipset)                                     |
-| `country_slovenia.ipset`                    | IPs in Slovenia                                     | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_slovenia.ipset)                                     |
-| `country_solomon_islands.ipset`             | IPs in Solomon Islands                              | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_solomon_islands.ipset)                              |
-| `country_somalia.ipset`                     | IPs in Somalia                                      | ★★★★★    | [view](https://blocklist.configserver.dev/country_somalia.ipset)                                      |
-| `country_south_africa.ipset`                | IPs in South Africa                                 | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_south_africa.ipset)                                 |
-| `country_south_georgia_and_the_south_sandwich_islands.ipset` | IPs in South Georgia and the South Sandwich Islands | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_south_georgia_and_the_south_sandwich_islands.ipset) |
-| `country_south_korea.ipset`                 | IPs in South Korea                                  | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_south_korea.ipset)                                  |
-| `country_south_sudan.ipset`                 | IPs in South Sudan                                  | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_south_sudan.ipset)                                  |
-| `country_spain.ipset`                       | IPs in Spain                                        | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_spain.ipset)                                        |
-| `country_sri_lanka.ipset`                   | IPs in Sri Lanka                                    | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_sri_lanka.ipset)                                    |
-| `country_sudan.ipset`                       | IPs in Sudan                                        | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_sudan.ipset)                                        |
-| `country_suriname.ipset`                    | IPs in Suriname                                     | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_suriname.ipset)                                     |
-| `country_svalbard_jan_mayen.ipset`          | IPs in Svalbard and Jan Mayen                       | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_svalbard_jan_mayen.ipset)                           |
-| `country_sweden.ipset`                      | IPs in Sweden                                       | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_sweden.ipset)                                       |
-| `country_switzerland.ipset`                 | IPs in Switzerland                                  | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_switzerland.ipset)                                  |
-| `country_syria.ipset`                       | IPs in Syria                                        | ★★★★★    | [view](https://blocklist.configserver.dev/country_syria.ipset)                                        |
-| `country_taiwan.ipset`                      | IPs in Taiwan                                       | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_taiwan.ipset)                                       |
-| `country_tajikistan.ipset`                  | IPs in Tajikistan                                   | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_tajikistan.ipset)                                   |
-| `country_tanzania.ipset`                    | IPs in Tanzania                                     | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_tanzania.ipset)                                     |
-| `country_thailand.ipset`                    | IPs in Thailand                 | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_thailand.ipset)             |
-| `country_timorleste.ipset`                  | IPs in Timor-Leste              | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_timorleste.ipset)           |
-| `country_togo.ipset`                        | IPs in Togo                     | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_togo.ipset)                 |
-| `country_tokelau.ipset`                     | IPs in Tokelau                  | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_tokelau.ipset)              |
-| `country_tonga.ipset`                       | IPs in Tonga                    | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_tonga.ipset)                |
-| `country_trinidad_tobago.ipset`             | IPs in Trinidad and Tobago      | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_trinidad_tobago.ipset)      |
-| `country_tunisia.ipset`                     | IPs in Tunisia                  | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_tunisia.ipset)              |
-| `country_turkey.ipset`                      | IPs in Turkey                   | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_turkey.ipset)               |
-| `country_turkmenistan.ipset`                | IPs in Turkmenistan             | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_turkmenistan.ipset)         |
-| `country_turks_caicos_islands.ipset`        | IPs in Turks and Caicos Islands | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_turks_caicos_islands.ipset) |
-| `country_tuvalu.ipset`                      | IPs in Tuvalu                   | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_tuvalu.ipset)               |
-| `country_uganda.ipset`                      | IPs in Uganda                   | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_uganda.ipset)               |
-| `country_ukraine.ipset`                     | IPs in Ukraine                  | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_ukraine.ipset)              |
-| `country_united_arab_emirates.ipset`        | IPs in United Arab Emirates     | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_united_arab_emirates.ipset) |
-| `country_united_states.ipset`               | IPs in United States            | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_united_states.ipset)        |
-| `country_united_states_minor_outlying_islands.ipset` | IPs in United States Minor Outlying Islands | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_united_states_minor_outlying_islands.ipset) |
-| `country_united_states_virgin_islands.ipset`  | IPs in United States Virgin Islands         | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_united_states_virgin_islands.ipset)         |
-| `country_uruguay.ipset`                     | IPs in Uruguay                              | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_uruguay.ipset)                              |
-| `country_uzbekistan.ipset`                  | IPs in Uzbekistan                           | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_uzbekistan.ipset)                           |
-| `country_vanuatu.ipset`                     | IPs in Vanuatu                              | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_vanuatu.ipset)                              |
-| `country_vatican_city_holy_see.ipset`       | IPs in Vatican City / Holy See              | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_vatican_city_holy_see.ipset)                |
-| `country_venezuela.ipset`                   | IPs in Venezuela                            | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_venezuela.ipset)                            |
-| `country_vietnam.ipset`                     | IPs in Vietnam                              | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_vietnam.ipset)                              |
-| `country_wallis_futuna.ipset`               | IPs in Wallis and Futuna                    | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_wallis_futuna.ipset)                        |
-| `country_western_sahara.ipset`              | IPs in Western Sahara                       | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_western_sahara.ipset)                       |
-| `country_yemen.ipset`                       | IPs in Yemen                                | ★★★★★    | [view](https://blocklist.configserver.dev/country_yemen.ipset)                                |
-| `country_zambia.ipset`                      | IPs in Zambia                               | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_zambia.ipset)                               |
-| `country_zimbabwe.ipset`                    | IPs in Zimbabwe                             | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_zimbabwe.ipset)                             |
+| `country_afghanistan.ipset`                    | Afghanistan               | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_afghanistan.ipset)                    |
+| `country_aland_islands.ipset`                  | Aland Islands                     | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_aland_islands.ipset)                  |
+| `country_albania.ipset`                        | Albania                           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_albania.ipset)                        |
+| `country_algeria.ipset`                        | Algeria                           | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_algeria.ipset)                        |
+| `country_american_samoa.ipset`                 | American Samoa                    | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_american_samoa.ipset)                 |
+| `country_andorra.ipset`                        | Andorra                           | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_andorra.ipset)                        |
+| `country_angola.ipset`                         | Angola                            | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_angola.ipset)                         |
+| `country_anguilla.ipset`                       | Anguilla                          | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_anguilla.ipset)                       |
+| `country_antarctica.ipset`                     | Antarctica                        | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_antarctica.ipset)                     |
+| `country_antigua_barbuda.ipset`                | Antigua and Barbuda               | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_antigua_barbuda.ipset)                |
+| `country_argentina.ipset`                      | Argentina                         | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_argentina.ipset)                      |
+| `country_armenia.ipset`                        | Armenia                           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_armenia.ipset)                        |
+| `country_aruba.ipset`                          | Aruba                             | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_aruba.ipset)                          |
+| `country_australia.ipset`                      | Australia                         | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_australia.ipset)                      |
+| `country_austria.ipset`                        | Austria                           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_austria.ipset)                        |
+| `country_azerbaijan.ipset`                     | Azerbaijan                        | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_azerbaijan.ipset)                     |
+| `country_bahamas.ipset`                        | The Bahamas                       | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_bahamas.ipset)                        |
+| `country_bahrain.ipset`                        | Bahrain                           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_bahrain.ipset)                        |
+| `country_bangladesh.ipset`                     | Bangladesh                        | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_bangladesh.ipset)                     |
+| `country_barbados.ipset`                       | Barbados                          | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_barbados.ipset)                       |
+| `country_belarus.ipset`                        | Belarus                           | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_belarus.ipset)                        |
+| `country_belgium.ipset`                        | Belgium                           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_belgium.ipset)                        |
+| `country_belize.ipset`                         | Belize                            | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_belize.ipset)                         |
+| `country_benin.ipset`                          | Benin                             | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_benin.ipset)                          |
+| `country_bermuda.ipset`                        | Bermuda                           | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_bermuda.ipset)                        |
+| `country_bhutan.ipset`                         | Bhutan                            | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_bhutan.ipset)                         |
+| `country_bolivia.ipset`                        | Bolivia                           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_bolivia.ipset)                        |
+| `country_bonaire_sint_eustatius_saba.ipset`    | Bonaire, Sint Eustatius, and Saba | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_bonaire_sint_eustatius_saba.ipset)    |
+| `country_bosnia_herzegovina.ipset`             | Bosnia and Herzegovina            | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_bosnia_herzegovina.ipset)             |
+| `country_botswana.ipset`                       | Botswana                          | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_botswana.ipset)                       |
+| `country_bouvet_island.ipset`                  | Bouvet Island                     | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_bouvet_island.ipset)                  |
+| `country_brazil.ipset`                         | Brazil                            | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_brazil.ipset)                         |
+| `country_british_indian_ocean_territory.ipset` | British Indian Ocean Territory    | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_british_indian_ocean_territory.ipset) |
+| `country_british_virgin_islands.ipset`         | British Virgin Islands            | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_british_virgin_islands.ipset)         |
+| `country_brunei_darussalam.ipset`              | Brunei                            | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_brunei_darussalam.ipset)              |
+| `country_bulgaria.ipset`                       | Bulgaria                          | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_bulgaria.ipset)                       |
+| `country_burkina_faso.ipset`                   | Burkina Faso                      | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_burkina_faso.ipset)                   |
+| `country_burundi.ipset`                        | Burundi                           | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_burundi.ipset)                        |
+| `country_cambodia.ipset`                       | Cambodia                          | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_cambodia.ipset)                       |
+| `country_cameroon.ipset`                       | Cameroon                          | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_cameroon.ipset)                       |
+| `country_canada.ipset`                         | Canada                            | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_canada.ipset)                         |
+| `country_cape_verde.ipset`                     | Cape Verde                        | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_cape_verde.ipset)                     |
+| `country_cayman_islands.ipset`                 | Cayman Islands                    | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_cayman_islands.ipset)                 |
+| `country_cc.ipset`                             | Cocos (Keeling) Islands           | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_cc.ipset)                             |
+| `country_central_african_republic.ipset`       | Central African Republic          | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_central_african_republic.ipset)       |
+| `country_chad.ipset`                           | Chad                              | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_chad.ipset)                           |
+| `country_chile.ipset`                          | Chile                             | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_chile.ipset)                          |
+| `country_china.ipset`                          | China                             | ★★★★★    | [view](https://blocklist.configserver.dev/country_china.ipset)                          |
+| `country_christmas_island.ipset`               | Christmas Island                  | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_christmas_island.ipset)               |
+| `country_colombia.ipset`                       | Colombia                          | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_colombia.ipset)                       |
+| `country_comoros.ipset`                        | Comoros                           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_comoros.ipset)                        |
+| `country_congo.ipset`                       | Congo                            | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_congo.ipset)                       |
+| `country_cook_islands.ipset`                | Cook Islands                     | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_cook_islands.ipset)                |
+| `country_costa_rica.ipset`                  | Costa Rica                       | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_costa_rica.ipset)                  |
+| `country_cote_divoire.ipset`                | Côte d'Ivoire                    | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_cote_divoire.ipset)                |
+| `country_croatia.ipset`                     | Croatia                          | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_croatia.ipset)                     |
+| `country_cuba.ipset`                        | Cuba                             | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_cuba.ipset)                        |
+| `country_curacao.ipset`                     | Curaçao                          | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_curacao.ipset)                     |
+| `country_cyprus.ipset`                      | Cyprus                           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_cyprus.ipset)                      |
+| `country_czech_republic.ipset`              | Czech Republic                   | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_czech_republic.ipset)              |
+| `country_democratic_republic_congo.ipset`   | Democratic Republic of the Congo | ★★★★★    | [view](https://blocklist.configserver.dev/country_democratic_republic_congo.ipset)   |
+| `country_denmark.ipset`                     | Denmark                          | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_denmark.ipset)                     |
+| `country_djibouti.ipset`                    | Djibouti                         | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_djibouti.ipset)                    |
+| `country_dominica.ipset`                    | Dominica                         | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_dominica.ipset)                    |
+| `country_dominican_republic.ipset`          | Dominican Republic               | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_dominican_republic.ipset)          |
+| `country_ecuador.ipset`                     | Ecuador                          | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_ecuador.ipset)                     |
+| `country_egypt.ipset`                       | Egypt                            | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_egypt.ipset)                       |
+| `country_el_salvador.ipset`                 | El Salvador                      | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_el_salvador.ipset)                 |
+| `country_equatorial_guinea.ipset`           | Equatorial Guinea                | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_equatorial_guinea.ipset)           |
+| `country_eritrea.ipset`                     | Eritrea                          | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_eritrea.ipset)                     |
+| `country_estonia.ipset`                     | Estonia                          | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_estonia.ipset)                     |
+| `country_eswatini.ipset`                    | Eswatini                         | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_eswatini.ipset)                    |
+| `country_ethiopia.ipset`                    | Ethiopia                         | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_ethiopia.ipset)                    |
+| `country_europe.ipset`                      | Europe                           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_europe.ipset)                      |
+| `country_falkland_islands_malvinas.ipset`   | Falkland Islands (Malvinas)      | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_falkland_islands_malvinas.ipset)   |
+| `country_faroe_islands.ipset`               | Faroe Islands                    | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_faroe_islands.ipset)               |
+| `country_fiji.ipset`                        | Fiji                             | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_fiji.ipset)                        |
+| `country_finland.ipset`                     | Finland                          | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_finland.ipset)                     |
+| `country_france.ipset`                      | France                           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_france.ipset)                      |
+| `country_french_guiana.ipset`               | French Guiana                    | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_french_guiana.ipset)               |
+| `country_french_polynesia.ipset`            | French Polynesia                 | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_french_polynesia.ipset)            |
+| `country_french_southern_territories.ipset` | French Southern Territories      | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_french_southern_territories.ipset) |
+| `country_gabon.ipset`                       | Gabon                             | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_gabon.ipset)                             |
+| `country_gambia.ipset`                      | Gambia                            | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_gambia.ipset)                            |
+| `country_georgia.ipset`                     | Georgia                           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_georgia.ipset)                           |
+| `country_germany.ipset`                     | Germany                           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_germany.ipset)                           |
+| `country_ghana.ipset`                       | Ghana                             | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_ghana.ipset)                             |
+| `country_gibraltar.ipset`                   | Gibraltar                         | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_gibraltar.ipset)                         |
+| `country_great_britain.ipset`               | Great Britain                     | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_great_britain.ipset)                     |
+| `country_greece.ipset`                      | Greece                            | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_greece.ipset)                            |
+| `country_greenland.ipset`                   | Greenland                         | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_greenland.ipset)                         |
+| `country_grenada.ipset`                     | Grenada                           | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_grenada.ipset)                           |
+| `country_guadeloupe.ipset`                  | Guadeloupe                        | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_guadeloupe.ipset)                        |
+| `country_guam.ipset`                        | Guam                              | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_guam.ipset)                              |
+| `country_guatemala.ipset`                   | Guatemala                         | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_guatemala.ipset)                         |
+| `country_guernsey.ipset`                    | Guernsey                          | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_guernsey.ipset)                          |
+| `country_guineabissau.ipset`                | Guinea-Bissau                     | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_guineabissau.ipset)                      |
+| `country_guinea.ipset`                      | Guinea                            | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_guinea.ipset)                            |
+| `country_guyana.ipset`                      | Guyana                            | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_guyana.ipset)                            |
+| `country_haiti.ipset`                       | Haiti                             | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_haiti.ipset)                             |
+| `country_heard_island_and_mcdonald_islands.ipset` | Heard Island and McDonald Islands | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_heard_island_and_mcdonald_islands.ipset) |
+| `country_honduras.ipset`                    | Honduras                          | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_honduras.ipset)                          |
+| `country_hong_kong.ipset`                   | Hong Kong                         | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_hong_kong.ipset)                         |
+| `country_hungary.ipset`                     | Hungary                           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_hungary.ipset)                           |
+| `country_iceland.ipset`                     | Iceland                           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_iceland.ipset)                           |
+| `country_india.ipset`                       | India                             | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_india.ipset)                             |
+| `country_indonesia.ipset`                   | Indonesia                         | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_indonesia.ipset)                         |
+| `country_iran.ipset`                        | Iran                              | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_iran.ipset)                              |
+| `country_iraq.ipset`                        | Iraq                              | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_iraq.ipset)                              |
+| `country_ireland.ipset`                     | Ireland                           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_ireland.ipset)                           |
+| `country_isle_of_man.ipset`                 | Isle of Man                       | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_isle_of_man.ipset)                       |
+| `country_israel.ipset`                      | Israel                            | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_israel.ipset)                            |
+| `country_italy.ipset`                       | Italy                             | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_italy.ipset)                             |
+| `country_jamaica.ipset`                     | Jamaica                           | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_jamaica.ipset)                           |
+| `country_japan.ipset`                       | Japan                             | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_japan.ipset)                             |
+| `country_jersey.ipset`                      | Jersey                            | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_jersey.ipset)                            |
+| `country_jordan.ipset`                      | Jordan                            | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_jordan.ipset)                            |
+| `country_kazakhstan.ipset`                  | Kazakhstan                        | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_kazakhstan.ipset)                        |
+| `country_kenya.ipset`                       | Kenya                             | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_kenya.ipset)                             |
+| `country_kiribati.ipset`                    | Kiribati                          | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_kiribati.ipset)                          |
+| `country_kosovo.ipset`                      | Kosovo                            | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_kosovo.ipset)                            |
+| `country_kuwait.ipset`                      | Kuwait                            | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_kuwait.ipset)                            |
+| `country_kyrgyzstan.ipset`                  | Kyrgyzstan                        | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_kyrgyzstan.ipset)                        |
+| `country_laos.ipset`                        | Laos                              | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_laos.ipset)                              |
+| `country_latvia.ipset`                      | Latvia                            | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_latvia.ipset)                            |
+| `country_lebanon.ipset`                     | Lebanon                           | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_lebanon.ipset)                           |
+| `country_lesotho.ipset`                     | Lesotho                           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_lesotho.ipset)                           |
+| `country_liberia.ipset`                     | Liberia                           | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_liberia.ipset)                           |
+| `country_libya.ipset`                       | Libya                             | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_libya.ipset)                             |
+| `country_liechtenstein.ipset`               | Liechtenstein                     | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_liechtenstein.ipset)                     |
+| `country_lithuania.ipset`                   | Lithuania                         | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_lithuania.ipset)                         |
+| `country_luxembourg.ipset`                  | Luxembourg                        | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_luxembourg.ipset)                        |
+| `country_macedonia_republic.ipset`          | Macedonia        | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_macedonia_republic.ipset) |
+| `country_madagascar.ipset`                  | Madagascar       | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_madagascar.ipset)         |
+| `country_malawi.ipset`                      | Malawi           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_malawi.ipset)             |
+| `country_malaysia.ipset`                    | Malaysia         | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_malaysia.ipset)           |
+| `country_maldives.ipset`                    | Maldives         | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_maldives.ipset)           |
+| `country_mali.ipset`                        | Mali             | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_mali.ipset)               |
+| `country_malta.ipset`                       | Malta            | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_malta.ipset)              |
+| `country_marshall_islands.ipset`            | Marshall Islands | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_marshall_islands.ipset)   |
+| `country_martinique.ipset`                  | Martinique       | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_martinique.ipset)         |
+| `country_mauritania.ipset`                  | Mauritania       | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_mauritania.ipset)         |
+| `country_mauritius.ipset`                   | Mauritius        | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_mauritius.ipset)          |
+| `country_mayotte.ipset`                     | Mayotte          | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_mayotte.ipset)            |
+| `country_mexico.ipset`                      | Mexico           | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_mexico.ipset)             |
+| `country_micronesia.ipset`                  | Micronesia       | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_micronesia.ipset)         |
+| `country_monaco.ipset`                      | Monaco           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_monaco.ipset)             |
+| `country_mongolia.ipset`                    | Mongolia         | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_mongolia.ipset)           |
+| `country_montenegro.ipset`                  | Montenegro       | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_montenegro.ipset)         |
+| `country_montserrat.ipset`                  | Montserrat       | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_montserrat.ipset)         |
+| `country_morocco.ipset`                     | Morocco          | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_morocco.ipset)            |
+| `country_mozambique.ipset`                  | Mozambique       | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_mozambique.ipset)         |
+| `country_myanmar.ipset`                     | Myanmar          | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_myanmar.ipset)            |
+| `country_namibia.ipset`                     | Namibia          | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_namibia.ipset)            |
+| `country_nauru.ipset`                       | Nauru            | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_nauru.ipset)              |
+| `country_nepal.ipset`                       | Nepal            | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_nepal.ipset)              |
+| `country_netherlands.ipset`                 | Netherlands      | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_netherlands.ipset)        |
+| `country_new_caledonia.ipset`               | New Caledonia    | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_new_caledonia.ipset)      |
+| `country_new_zealand.ipset`                 | New Zealand      | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_new_zealand.ipset)        |
+| `country_nicaragua.ipset`                   | Nicaragua                | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_nicaragua.ipset)                |
+| `country_nigeria.ipset`                     | Nigeria                  | ★★★★★    | [view](https://blocklist.configserver.dev/country_nigeria.ipset)                  |
+| `country_niger.ipset`                       | Niger                    | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_niger.ipset)                    |
+| `country_niue.ipset`                        | Niue                     | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_niue.ipset)                     |
+| `country_norfolk_island.ipset`              | Norfolk Island           | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_norfolk_island.ipset)           |
+| `country_northern_mariana_islands.ipset`    | Northern Mariana Islands | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_northern_mariana_islands.ipset) |
+| `country_north_korea.ipset`                 | North Korea              | ★★★★★    | [view](https://blocklist.configserver.dev/country_north_korea.ipset)              |
+| `country_norway.ipset`                      | Norway                   | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_norway.ipset)                   |
+| `country_oman.ipset`                        | Oman                     | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_oman.ipset)                     |
+| `country_pakistan.ipset`                    | Pakistan                 | ★★★★★    | [view](https://blocklist.configserver.dev/country_pakistan.ipset)                 |
+| `country_palau.ipset`                       | Palau                    | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_palau.ipset)                    |
+| `country_palestine.ipset`                   | Palestine                | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_palestine.ipset)                |
+| `country_panama.ipset`                      | Panama                   | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_panama.ipset)                   |
+| `country_papua_new_guinea.ipset`            | Papua New Guinea         | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_papua_new_guinea.ipset)         |
+| `country_paraguay.ipset`                    | Paraguay                 | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_paraguay.ipset)                 |
+| `country_peru.ipset`                        | Peru                     | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_peru.ipset)                     |
+| `country_philippines.ipset`                 | Philippines              | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_philippines.ipset)              |
+| `country_pitcairn.ipset`                    | Pitcairn Islands         | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_pitcairn.ipset)                 |
+| `country_poland.ipset`                      | Poland                   | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_poland.ipset)                   |
+| `country_portugal.ipset`                    | Portugal                 | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_portugal.ipset)                 |
+| `country_puerto_rico.ipset`                 | Puerto Rico              | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_puerto_rico.ipset)              |
+| `country_qatar.ipset`                       | Qatar                    | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_qatar.ipset)                    |
+| `country_republic_moldova.ipset`            | Moldova                  | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_republic_moldova.ipset)         |
+| `country_reunion.ipset`                     | Réunion                  | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_reunion.ipset)                  |
+| `country_romania.ipset`                     | Romania                  | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_romania.ipset)                  |
+| `country_russia.ipset`                      | Russia                           | ★★★★★    | [view](https://blocklist.configserver.dev/country_russia.ipset)                   |
+| `country_rwanda.ipset`                      | Rwanda                           | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_rwanda.ipset)                   |
+| `country_saint_barthelemy.ipset`            | Saint Barthélemy                 | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_saint_barthelemy.ipset)         |
+| `country_saint_helena.ipset`                | Saint Helena                     | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_saint_helena.ipset)             |
+| `country_saint_kitts_nevis.ipset`           | Saint Kitts and Nevis            | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_saint_kitts_nevis.ipset)        |
+| `country_saint_lucia.ipset`                 | Saint Lucia                      | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_saint_lucia.ipset)              |
+| `country_saint_martin_north.ipset`          | Saint Martin (North)             | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_saint_martin_north.ipset)       |
+| `country_saint_pierre_miquelon.ipset`       | Saint Pierre and Miquelon        | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_saint_pierre_miquelon.ipset)    |
+| `country_saint_vincent_grenadines.ipset`    | Saint Vincent and the Grenadines | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_saint_vincent_grenadines.ipset) |
+| `country_samoa.ipset`                       | Samoa                            | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_samoa.ipset)                    |
+| `country_san_marino.ipset`                  | San Marino                       | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_san_marino.ipset)               |
+| `country_sao_tome_principe.ipset`           | São Tomé and Príncipe            | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_sao_tome_principe.ipset)        |
+| `country_saudi_arabia.ipset`                | Saudi Arabia                     | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_saudi_arabia.ipset)             |
+| `country_senegal.ipset`                     | Senegal                          | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_senegal.ipset)                  |
+| `country_serbia.ipset`                      | Serbia                           | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_serbia.ipset)                   |
+| `country_seychelles.ipset`                  | Seychelles                       | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_seychelles.ipset)               |
+| `country_sierra_leone.ipset`                | Sierra Leone                     | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_sierra_leone.ipset)             |
+| `country_singapore.ipset`                   | Singapore                                    | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_singapore.ipset)                                    |
+| `country_sint_maarten_south.ipset`          | Sint Maarten (South)                         | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_sint_maarten_south.ipset)                           |
+| `country_slovakia.ipset`                    | Slovakia                                     | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_slovakia.ipset)                                     |
+| `country_slovenia.ipset`                    | Slovenia                                     | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_slovenia.ipset)                                     |
+| `country_solomon_islands.ipset`             | Solomon Islands                              | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_solomon_islands.ipset)                              |
+| `country_somalia.ipset`                     | Somalia                                      | ★★★★★    | [view](https://blocklist.configserver.dev/country_somalia.ipset)                                      |
+| `country_south_africa.ipset`                | South Africa                                 | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_south_africa.ipset)                                 |
+| `country_south_georgia_and_the_south_sandwich_islands.ipset` | South Georgia and the South Sandwich Islands | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_south_georgia_and_the_south_sandwich_islands.ipset) |
+| `country_south_korea.ipset`                 | South Korea                                  | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_south_korea.ipset)                                  |
+| `country_south_sudan.ipset`                 | South Sudan                                  | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_south_sudan.ipset)                                  |
+| `country_spain.ipset`                       | Spain                                        | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_spain.ipset)                                        |
+| `country_sri_lanka.ipset`                   | Sri Lanka                                    | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_sri_lanka.ipset)                                    |
+| `country_sudan.ipset`                       | Sudan                                        | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_sudan.ipset)                                        |
+| `country_suriname.ipset`                    | Suriname                                     | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_suriname.ipset)                                     |
+| `country_svalbard_jan_mayen.ipset`          | Svalbard and Jan Mayen                       | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_svalbard_jan_mayen.ipset)                           |
+| `country_sweden.ipset`                      | Sweden                                       | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_sweden.ipset)                                       |
+| `country_switzerland.ipset`                 | Switzerland                                  | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_switzerland.ipset)                                  |
+| `country_syria.ipset`                       | Syria                                        | ★★★★★    | [view](https://blocklist.configserver.dev/country_syria.ipset)                                        |
+| `country_taiwan.ipset`                      | Taiwan                                       | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_taiwan.ipset)                                       |
+| `country_tajikistan.ipset`                  | Tajikistan                                   | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_tajikistan.ipset)                                   |
+| `country_tanzania.ipset`                    | Tanzania                                     | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_tanzania.ipset)                                     |
+| `country_thailand.ipset`                    | Thailand                 | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_thailand.ipset)             |
+| `country_timorleste.ipset`                  | Timor-Leste              | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_timorleste.ipset)           |
+| `country_togo.ipset`                        | Togo                     | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_togo.ipset)                 |
+| `country_tokelau.ipset`                     | Tokelau                  | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_tokelau.ipset)              |
+| `country_tonga.ipset`                       | Tonga                    | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_tonga.ipset)                |
+| `country_trinidad_tobago.ipset`             | Trinidad and Tobago      | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_trinidad_tobago.ipset)      |
+| `country_tunisia.ipset`                     | Tunisia                  | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_tunisia.ipset)              |
+| `country_turkey.ipset`                      | Turkey                   | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_turkey.ipset)               |
+| `country_turkmenistan.ipset`                | Turkmenistan             | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_turkmenistan.ipset)         |
+| `country_turks_caicos_islands.ipset`        | Turks and Caicos Islands | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_turks_caicos_islands.ipset) |
+| `country_tuvalu.ipset`                      | Tuvalu                   | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_tuvalu.ipset)               |
+| `country_uganda.ipset`                      | Uganda                   | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_uganda.ipset)               |
+| `country_ukraine.ipset`                     | Ukraine                  | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_ukraine.ipset)              |
+| `country_united_arab_emirates.ipset`        | United Arab Emirates     | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_united_arab_emirates.ipset) |
+| `country_united_states.ipset`               | United States            | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_united_states.ipset)        |
+| `country_united_states_minor_outlying_islands.ipset` | US Minor Outlying Islands | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_united_states_minor_outlying_islands.ipset) |
+| `country_united_states_virgin_islands.ipset`  | US Virgin Islands         | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_united_states_virgin_islands.ipset)         |
+| `country_uruguay.ipset`                     | Uruguay                              | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_uruguay.ipset)                              |
+| `country_uzbekistan.ipset`                  | Uzbekistan                           | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_uzbekistan.ipset)                           |
+| `country_vanuatu.ipset`                     | Vanuatu                              | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_vanuatu.ipset)                              |
+| `country_vatican_city_holy_see.ipset`       | Vatican City / Holy See              | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_vatican_city_holy_see.ipset)                |
+| `country_venezuela.ipset`                   | Venezuela                            | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_venezuela.ipset)                            |
+| `country_vietnam.ipset`                     | Vietnam                              | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_vietnam.ipset)                              |
+| `country_wallis_futuna.ipset`               | Wallis and Futuna                    | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_wallis_futuna.ipset)                        |
+| `country_western_sahara.ipset`              | Western Sahara                       | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_western_sahara.ipset)                       |
+| `country_yemen.ipset`                       | Yemen                                | ★★★★★    | [view](https://blocklist.configserver.dev/country_yemen.ipset)                                |
+| `country_zambia.ipset`                      | Zambia                               | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_zambia.ipset)                               |
+| `country_zimbabwe.ipset`                    | Zimbabwe                             | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/country_zimbabwe.ipset)                             |
 
 <br />
 <br />
