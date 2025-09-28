@@ -277,7 +277,10 @@ nav:
           - Patcher:
                 - Download: 'extras/download.md'
                 - Configure: 'extras/configure.md'
+    - Services: 'services.md'
     - Changelog: 'about/changelog.md'
+    - Create Ticket: 'https://tickets.configserver.dev'
+    - Sponsor: 'https://buymeacoffee.com/aetherinox'
 
 # #
 #   Section › Plugins
