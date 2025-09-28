@@ -216,8 +216,21 @@ extra:
         important: Important
         new: New Addition
     social:
+        - icon: aetherx/axs/download
+          link: https://download.configserver.dev
+          name: Download CSF
+        - icon: aetherx/axs/block-brick-fire
+          link: https://blocklist.configserver.dev
+          name: Service › Blocklists
+        - icon: aetherx/axb/github-alt
+          link: https://tickets.configserver.dev
+          name: Submit Issue / Ticket
         - icon: fontawesome/brands/github
           link: https://github.com/Aetherinox/csf-firewall
+          name: View Github Repo
+        - icon: aetherx/axs/heart
+          link: https://buymeacoffee.com/aetherinox
+          name: Sponsor
     tags:
         HTML5: html
         JavaScript: js
