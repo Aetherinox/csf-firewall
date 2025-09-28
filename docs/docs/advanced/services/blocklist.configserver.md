@@ -142,6 +142,25 @@ The following lists outline the blocklists that are available to use with our bl
 
 <br />
 
+### Risk Assessments
+
+The lists in this README use `⚝` and `★` icons to indicate risk levels. More stars mean higher risk. Lists marked as **High** or **Critical** should be added to your CSF blocklist to secure your server. Lower-risk lists are optional and can be added at your discretion.
+
+Our automated CI generates this risk assessment each day.
+
+<br />
+
+| Rating      | Risk            | Description                                      |
+| ----------- | --------------- | ------------------------------------------------ |
+| `⚝⚝⚝⚝⚝`   | No Risk         | IPs pose no real threat, but possibly suspected  |
+| `★⚝⚝⚝⚝`   | Low Risk        | IPs pose minimal threat                          |
+| `★★⚝⚝⚝`   | Moderate Risk   | IPs may cause issues; monitor carefully          |
+| `★★★⚝⚝`   | Elevated Risk   | IPs are risky; consider blocking                 |
+| `★★★★⚝`   | High Risk       | IPs are dangerous; likely to cause harm          |
+| `★★★★★`   | Critical Risk   | IPs are highly dangerous; block immediately      |
+
+<br />
+
 ### Main Lists
 
 These are the primary IPSETs that most people will be interested in. They contain a large number of IP addresses that have been reported recently for abusive behavior. These statistics are gathered from multiple sources, such as [AbuseIPDB](https://abuseipdb.com/) and [IPThreat](https://ipthreat.net/). IPs on this list have a 100% confidence level, meaning you should encounter no false positives from any of the IPs included.  
