@@ -1452,7 +1452,6 @@ function GENERATE_IPv6
 
     done < <(sed -e 1d "${TEMPDIR}/${APP_GEO_IPV6_CSV}")
     IFS=$OIFS
-
 }
 
 # #
