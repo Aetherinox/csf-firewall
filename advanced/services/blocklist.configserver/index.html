@@ -400,6 +400,25 @@
   
   
     <li class="md-tabs__item">
+      <a href="../../../services/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Services
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
       <a href="../../../about/changelog/" class="md-tabs__link">
         
   
@@ -407,6 +426,44 @@
     
   
   Changelog
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://tickets.configserver.dev" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Create Ticket
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://buymeacoffee.com/aetherinox" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Sponsor
 
       </a>
     </li>
@@ -1527,18 +1584,18 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#basic" class="md-nav__link">
+  <a href="#get-ipset" class="md-nav__link">
     <span class="md-ellipsis">
-      Basic
+      Get IPSET
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#advanced" class="md-nav__link">
+  <a href="#get-json-api" class="md-nav__link">
     <span class="md-ellipsis">
-      Advanced
+      Get JSON API
     </span>
   </a>
   
@@ -1819,12 +1876,78 @@
   
   
     <li class="md-nav__item">
+      <a href="../../../services/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Services
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../../about/changelog/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     Changelog
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://tickets.configserver.dev" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Create Ticket
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://buymeacoffee.com/aetherinox" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Sponsor
     
   </span>
   
@@ -1880,18 +2003,18 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#basic" class="md-nav__link">
+  <a href="#get-ipset" class="md-nav__link">
     <span class="md-ellipsis">
-      Basic
+      Get IPSET
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#advanced" class="md-nav__link">
+  <a href="#get-json-api" class="md-nav__link">
     <span class="md-ellipsis">
-      Advanced
+      Get JSON API
     </span>
   </a>
   
@@ -2061,7 +2184,7 @@
 <h2 id="usage">Usage  <!-- omit from toc --><a class="headerlink" href="#usage" title="Permanent link">¶</a></h2>
 <p>This section explains the different ways you can access and work with our blocklist service.  </p>
 <p><br></p>
-<h3 id="basic">Basic<a class="headerlink" href="#basic" title="Permanent link">¶</a></h3>
+<h3 id="get-ipset">Get IPSET<a class="headerlink" href="#get-ipset" title="Permanent link">¶</a></h3>
 <p>By default, each blocklist is served as a plain text file containing IP addresses and CIDR ranges.<br>
 All lists are available as <code>.ipset</code> files and can be retrieved directly over HTTP.  </p>
 <p>For example, you can open the following URL in your browser or use <code>curl</code> to download the master blocklist:</p>
@@ -2072,12 +2195,17 @@ All lists are available as <code>.ipset</code> files and can be retrieved direct
 </div>
 <p>This file can then be imported into <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>, FireHOL, or any firewall, security tool, or monitoring system that supports ipsets.  </p>
 <p><br></p>
-<h3 id="advanced">Advanced  <!-- omit from toc --><a class="headerlink" href="#advanced" title="Permanent link">¶</a></h3>
+<h3 id="get-json-api">Get JSON API  <!-- omit from toc --><a class="headerlink" href="#get-json-api" title="Permanent link">¶</a></h3>
 <p>Beyond simple blocklist retrieval, the service also provides an API with a statistics endpoint.<br>
 By appending the query parameter <code>?stats=true</code> to any <code>.ipset</code> file, the server will return metadata instead of the raw list.  </p>
+<div class="grid cards">
+<ul>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M55.7 199.7l30.9 30.9c6 6 14.1 9.4 22.6 9.4l21.5 0c8.5 0 16.6 3.4 22.6 9.4l29.3 29.3c6 6 9.4 14.1 9.4 22.6l0 37.5c0 8.5 3.4 16.6 9.4 22.6l13.3 13.3c6 6 9.4 14.1 9.4 22.6l0 18.7c0 17.7 14.3 32 32 32s32-14.3 32-32l0-2.7c0-8.5 3.4-16.6 9.4-22.6l45.3-45.3c6-6 9.4-14.1 9.4-22.6l0-34.7c0-17.7-14.3-32-32-32l-82.7 0c-8.5 0-16.6-3.4-22.6-9.4l-16-16c-4.2-4.2-6.6-10-6.6-16 0-12.5 10.1-22.6 22.6-22.6l34.7 0c12.5 0 22.6-10.1 22.6-22.6 0-6-2.4-11.8-6.6-16l-19.7-19.7C242 130 240 125.1 240 120s2-10 5.7-13.7l17.3-17.3c5.8-5.8 9.1-13.7 9.1-21.9 0-7.2-2.4-13.7-6.4-18.9-3.2-.1-6.4-.2-9.6-.2-95.4 0-175.7 64.2-200.3 151.7zM464 256c0-34.6-8.4-67.2-23.4-95.8-6.4 .9-12.7 3.9-17.9 9.1l-13.4 13.4c-6 6-9.4 14.1-9.4 22.6l0 34.7c0 17.7 14.3 32 32 32l24.1 0c2.5 0 5-.3 7.3-.8 .4-5 .5-10.1 .5-15.2zM0 256a256 256 0 1 1 512 0 256 256 0 1 1 -512 0z"></path></svg></span> &nbsp; <a href="https://blocklist.configserver.dev/master.ipset?stats=true"><strong>IPSET</strong> › <abbr title="Hypertext Transfer Protocol Secure, the encrypted version of HTTP.">https</abbr>://blocklist.configserver.dev/master.ipset?stats=true</a></li>
+</ul>
+</div>
 <p>The statistics response is provided in JSON format and includes details such as the list name, source, number of entries, size, and timestamps.  </p>
 <p>Example response:</p>
-<div class="language-json highlight"><span class="filename">http://blocklist.configserver.dev/master.ipset</span><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
+<div class="language-json highlight"><span class="filename">https://blocklist.configserver.dev/master.ipset</span><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Master Blocklist"</span><span class="p">,</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"master_ipset"</span><span class="p">,</span>
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="nt">"filename"</span><span class="p">:</span><span class="w"> </span><span class="s2">"master.ipset"</span><span class="p">,</span>
@@ -2111,8 +2239,8 @@ By appending the query parameter <code>?stats=true</code> to any <code>.ipset</c
 </span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>#   different services, including AbuseIPDB (100% confidency).
 </span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>#   
 </span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>#   You can also use our blocklist service:
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>#       http://blocklist.configserver.dev/master.ipset
-</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>#       http://blocklist.configserver.dev/highrisk.ipset
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>#       https://blocklist.configserver.dev/master.ipset
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>#       https://blocklist.configserver.dev/highrisk.ipset
 </span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>#   
 </span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>#   We offer many others, but these two are the primary ones.
 </span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>#   
@@ -2120,8 +2248,8 @@ By appending the query parameter <code>?stats=true</code> to any <code>.ipset</c
 </span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>#       LF_IPSET_MAXELEM = "4000000"
 </span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a># #
 </span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>
-</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>CSF_MASTER   | 43200 | 0      | http://blocklist.configserver.dev/master.ipset
-</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>CSF_HIGHRISK | 43200 | 0      | http://blocklist.configserver.dev/highrisk.ipset
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>CSF_MASTER   | 43200 | 0      | https://blocklist.configserver.dev/master.ipset
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>CSF_HIGHRISK | 43200 | 0      | https://blocklist.configserver.dev/highrisk.ipset
 </span></code></pre></div>
 <p><br></p>
 <hr>
@@ -2144,18 +2272,24 @@ By appending the query parameter <code>?stats=true</code> to any <code>.ipset</c
 <table>
 <thead>
 <tr>
-<th>Filename</th>
+<th>Set Name</th>
 <th>Description</th>
+<th>Severity</th>
+<th>View</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>master.ipset</code></td>
-<td>Abusive IPs reported for port scanning and SSH brute-forcing. HIGHLY recommended. <br> <span class="text-sm-9">Includes <a href="https://www.abuseipdb.com/">AbuseIPDB</a>, <a href="https://ipthreat.net/">IPThreat</a>, <a href="https://cinsscore.com">CinsScore</a>, <a href="https://blocklist.greensnow.co/greensnow.txt">GreensNow</a></span></td>
+<td>Abusive IP addresses which have been reported for port scanning and SSH brute-forcing. HIGHLY recommended. <br> <span class="text-sm-9">Includes <a href="https://www.abuseipdb.com/">AbuseIPDB</a>, <a href="https://ipthreat.net/">IPThreat</a>, <a href="https://cinsscore.com">CinsScore</a>, <a href="https://blocklist.greensnow.co/greensnow.txt">GreensNow</a></span></td>
+<td>★★★★★</td>
+<td><a href="https://blocklist.configserver.dev/master.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>highrisk.ipset</code></td>
 <td>IPs with highest risk to your network and have a possibility that the activity which comes from them are going to be fraudulent.</td>
+<td>★★★★★</td>
+<td><a href="https://blocklist.configserver.dev/highrisk.ipset">view</a></td>
 </tr>
 </tbody>
 </table>
@@ -2166,142 +2300,138 @@ By appending the query parameter <code>?stats=true</code> to any <code>.ipset</c
 <table>
 <thead>
 <tr>
-<th>Filename</th>
+<th>Set</th>
 <th>Description</th>
+<th>Severity</th>
+<th>View</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>privacy_general.ipset</code></td>
-<td>Servers which scan ports for data collection and research purposes. <span class="text-sm-9">List includes <a href="https://censys.io">Censys</a>, <a href="https://shodan.io/">Shodan</a>, <a href="https://blogproject25499.wordpress.com/">Project25499</a>, <a href="https://archive.org/">InternetArchive</a>, <a href="https://cyberresilience.io">Cyber Resilience</a>, <a href="https://internet-measurement.com">Internet Measurement</a>, <a href="https://onyphe.net">probe.onyphe.net</a>, <a href="https://securitytrails.com">Security Trails</a></span></td>
-</tr>
-<tr>
-<td><code>privacy_activision.ipset</code></td>
-<td>IPs used by Activision <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> and bots</td>
+<td>Servers which scan ports for data collection and research purposes. <br> <span class="text-sm-9">List includes <a href="https://censys.io">Censys</a>, <a href="https://shodan.io/">Shodan</a>, <a href="https://blogproject25499.wordpress.com/">Project25499</a>, <a href="https://archive.org/">InternetArchive</a>, <a href="https://cyberresilience.io">Cyber Resilience</a>, <a href="https://internet-measurement.com">Internet Measurement</a>, <a href="https://onyphe.net">probe.onyphe.net</a>, <a href="https://securitytrails.com">Security Trails</a></span></td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_general.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>privacy_ahrefs.ipset</code></td>
-<td>IPs from Ahrefs crawler and data collectors</td>
+<td>Ahrefs SEO and <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr></td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_ahrefs.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>privacy_amazon_aws.ipset</code></td>
-<td>Amazon AWS infrastructure IPs</td>
+<td>Amazon AWS</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_amazon_aws.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>privacy_amazon_ec2.ipset</code></td>
-<td>Amazon EC2 instances</td>
+<td>Amazon EC2</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_amazon_ec2.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>privacy_applebot.ipset</code></td>
-<td>Applebot crawler IPs</td>
+<td>Apple Bots</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_applebot.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>privacy_bing.ipset</code></td>
-<td>Microsoft Bing crawler IPs</td>
-</tr>
-<tr>
-<td><code>privacy_blizzard.ipset</code></td>
-<td>Blizzard <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> and game IPs</td>
+<td>Microsoft Bind and Bing Crawlers / Bots</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_bing.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>privacy_bunnycdn.ipset</code></td>
-<td>BunnyCDN infrastructure IPs</td>
+<td>Bunny CDN</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_bunnycdn.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>privacy_cloudflarecdn.ipset</code></td>
-<td><abbr title="A web infrastructure and security company providing CDN, DNS, and DDoS protection services.">Cloudflare</abbr> CDN and network IPs</td>
+<td><abbr title="A web infrastructure and security company providing CDN, DNS, and DDoS protection services.">Cloudflare</abbr> CDN</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_cloudflarecdn.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>privacy_cloudfront.ipset</code></td>
-<td>AWS CloudFront IP ranges</td>
+<td>Cloudfront DNS</td>
+<td>★⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_cloudfront.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>privacy_duckduckgo.ipset</code></td>
-<td>DuckDuckGo crawler IPs</td>
-</tr>
-<tr>
-<td><code>privacy_electronicarts_ign.ipset</code></td>
-<td>EA / IGN related <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> and IPs</td>
+<td>DuckDuckGo Web Crawlers / Bots</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_duckduckgo.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>privacy_facebook.ipset</code></td>
-<td>Facebook service IPs</td>
+<td>Facebook Bots &amp; Trackers</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_facebook.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>privacy_fastly.ipset</code></td>
-<td>Fastly CDN network IPs</td>
+<td>Fastly CDN</td>
+<td>★⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_fastly.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>privacy_google.ipset</code></td>
-<td>Google crawler and <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> IPs</td>
-</tr>
-<tr>
-<td><code>privacy_nintendo.ipset</code></td>
-<td>Nintendo <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> IPs</td>
-</tr>
-<tr>
-<td><code>privacy_pandora.ipset</code></td>
-<td>Pandora network IPs</td>
+<td>Google Crawlers</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_google.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>privacy_pingdom.ipset</code></td>
-<td>Pingdom monitoring service IPs</td>
-</tr>
-<tr>
-<td><code>privacy_piratebay.ipset</code></td>
-<td>PirateBay-related IPs</td>
-</tr>
-<tr>
-<td><code>privacy_punkbuster.ipset</code></td>
-<td>PunkBuster anti-cheat service IPs</td>
-</tr>
-<tr>
-<td><code>privacy_riot_games.ipset</code></td>
-<td>Riot Games IPs</td>
+<td>Pingdom Monitoring Service</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_pingdom.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>privacy_rssapi.ipset</code></td>
-<td>RSS API service IPs</td>
-</tr>
-<tr>
-<td><code>privacy_sony.ipset</code></td>
-<td>Sony <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> and network IPs</td>
-</tr>
-<tr>
-<td><code>privacy_steam.ipset</code></td>
-<td>Steam service IPs</td>
+<td>RSS API Reader</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_rssapi.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>privacy_stripe_api.ipset</code></td>
-<td>Stripe API endpoints</td>
+<td>Stripe Payment Gateway API</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_stripe_api.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>privacy_stripe_armada_gator.ipset</code></td>
-<td>Stripe-related monitoring IPs</td>
+<td>Stripe Armada Gator</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_stripe_armada_gator.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>privacy_stripe_webhooks.ipset</code></td>
-<td>Stripe webhook IPs</td>
+<td>Stripe Webhook Service</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_stripe_webhooks.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>privacy_telegram.ipset</code></td>
-<td>Telegram service IPs</td>
-</tr>
-<tr>
-<td><code>privacy_ubisoft.ipset</code></td>
-<td>Ubisoft network IPs</td>
+<td>Telegram Trackers and Crawlers</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_telegram.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>privacy_uptimerobot.ipset</code></td>
-<td>UptimeRobot monitoring IPs</td>
+<td>Uptime Robot Monitoring Service</td>
+<td>★⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_uptimerobot.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>privacy_webpagetest.ipset</code></td>
-<td>WebPageTest infrastructure IPs</td>
-</tr>
-<tr>
-<td><code>privacy_xfire.ipset</code></td>
-<td>Xfire service IPs</td>
+<td>Webpage Test <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">Services</abbr></td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_webpagetest.ipset">view</a></td>
 </tr>
 </tbody>
 </table>
@@ -2314,18 +2444,24 @@ By appending the query parameter <code>?stats=true</code> to any <code>.ipset</c
 <table>
 <thead>
 <tr>
-<th>Filename</th>
+<th>Set</th>
 <th>Description</th>
+<th>Severity</th>
+<th>View</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>spam_forums.ipset</code></td>
-<td>IPs associated with forum spam</td>
+<td>List of known forum / blog spammers and bots</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/spam_forums.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>spam_spamhaus.ipset</code></td>
-<td>Spamhaus blocklist IPs</td>
+<td>Bad actor IP addresses registered with Spamhaus</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/spam_spamhaus.ipset">view</a></td>
 </tr>
 </tbody>
 </table>
@@ -2338,62 +2474,90 @@ By appending the query parameter <code>?stats=true</code> to any <code>.ipset</c
 <table>
 <thead>
 <tr>
-<th>Filename</th>
+<th>Set</th>
 <th>Description</th>
+<th>Severity</th>
+<th>View</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>isp_aol.ipset</code></td>
 <td>AOL Internet Service Provider IPs</td>
+<td>★⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/isp_aol.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>isp_att.ipset</code></td>
 <td>AT&amp;T Internet Service Provider IPs</td>
+<td>★⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/isp_att.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>isp_cablevision.ipset</code></td>
 <td>Cablevision / Optimum ISP IPs</td>
+<td>★⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/isp_cablevision.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>isp_charter_spectrum_timewarnercable.ipset</code></td>
 <td>Charter/Spectrum/TWC ISP IPs</td>
+<td>★⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/isp_charter_spectrum_timewarnercable.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>isp_comcast.ipset</code></td>
 <td>Comcast / Xfinity ISP IPs</td>
+<td>★⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/isp_comcast.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>isp_cox_communications.ipset</code></td>
 <td>Cox Communications ISP IPs</td>
+<td>★⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/isp_cox_communications.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>isp_embarq.ipset</code></td>
 <td>Embarq / CenturyLink ISP IPs</td>
+<td>★⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/isp_embarq.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>isp_frontier_communications.ipset</code></td>
 <td>Frontier Communications ISP IPs</td>
+<td>★⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/isp_frontier_communications.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>isp_qwest.ipset</code></td>
 <td>Qwest / CenturyLink ISP IPs</td>
+<td>★⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/isp_qwest.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>isp_spacex_starlink.ipset</code></td>
 <td>SpaceX Starlink satellite ISP IPs</td>
+<td>★⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/isp_spacex_starlink.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>isp_sprint.ipset</code></td>
 <td>Sprint ISP IPs</td>
+<td>★⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/isp_sprint.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>isp_suddenlink_altice_optimum.ipset</code></td>
 <td>Suddenlink / Altice / Optimum ISP IPs</td>
+<td>★⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/isp_suddenlink_altice_optimum.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>isp_verizon.ipset</code></td>
 <td>Verizon ISP IPs</td>
+<td>★⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/isp_verizon.ipset">view</a></td>
 </tr>
 </tbody>
 </table>
@@ -2418,14 +2582,20 @@ By appending the query parameter <code>?stats=true</code> to any <code>.ipset</c
 <table>
 <thead>
 <tr>
-<th>Filename</th>
+<th>Set</th>
 <th>Description</th>
+<th>Severity</th>
+<th>View</th>
+<th>Website</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>transmission.ipset</code></td>
-<td>IPs related to BitTorrent Transmission clients</td>
+<td>A large blocklist for the BitTorrent client <a href="https://transmissionbt.com/">Transmission</a></td>
+<td>★★★★★</td>
+<td><a href="https://blocklist.configserver.dev/transmission.ipset">view</a></td>
+<td><a href="https://transmissionbt.com/">view</a></td>
 </tr>
 </tbody>
 </table>
@@ -2439,38 +2609,54 @@ By appending the query parameter <code>?stats=true</code> to any <code>.ipset</c
 <table>
 <thead>
 <tr>
-<th>Filename</th>
+<th>Set</th>
 <th>Description</th>
+<th>Severity</th>
+<th>View</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>continent_africa.ipset</code></td>
 <td>All IPs located in Africa</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/continent_africa.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>continent_antartica.ipset</code></td>
-<td>IPs in Antarctica</td>
+<td>All IPs located in Antarctica</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/continent_antartica.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>continent_asia.ipset</code></td>
-<td>All Asian IPs</td>
+<td>All IPs located in Asia</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/continent_asia.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>continent_europe.ipset</code></td>
-<td>European IPs</td>
+<td>All IPs located in Europe</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/continent_europe.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>continent_north_america.ipset</code></td>
-<td>North American IPs</td>
+<td>All IPs located in North America</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/continent_north_america.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>continent_oceania.ipset</code></td>
-<td>Oceania IPs</td>
+<td>All IPs located in North Oceania</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/continent_oceania.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>continent_south_america.ipset</code></td>
-<td>South American IPs</td>
+<td>All IPs located in South America</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/continent_south_america.ipset">view</a></td>
 </tr>
 </tbody>
 </table>
@@ -2484,1014 +2670,1512 @@ By appending the query parameter <code>?stats=true</code> to any <code>.ipset</c
 <table>
 <thead>
 <tr>
-<th>Filename</th>
+<th>Set</th>
 <th>Description</th>
+<th>Severity</th>
+<th>View</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>country_afghanistan.ipset</code></td>
 <td>IPs located in Afghanistan</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_afghanistan.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_aland_islands.ipset</code></td>
 <td>IPs in Aland Islands</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_aland_islands.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_albania.ipset</code></td>
 <td>IPs in Albania</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_albania.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_algeria.ipset</code></td>
 <td>IPs in Algeria</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_algeria.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_american_samoa.ipset</code></td>
 <td>IPs in American Samoa</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_american_samoa.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_andorra.ipset</code></td>
 <td>IPs in Andorra</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_andorra.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_angola.ipset</code></td>
 <td>IPs in Angola</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_angola.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_anguilla.ipset</code></td>
 <td>IPs in Anguilla</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_anguilla.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_antarctica.ipset</code></td>
 <td>IPs in Antarctica</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_antarctica.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_antigua_barbuda.ipset</code></td>
 <td>IPs in Antigua and Barbuda</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_antigua_barbuda.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_argentina.ipset</code></td>
 <td>IPs in Argentina</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_argentina.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_armenia.ipset</code></td>
 <td>IPs in Armenia</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_armenia.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_aruba.ipset</code></td>
 <td>IPs in Aruba</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_aruba.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_australia.ipset</code></td>
 <td>IPs in Australia</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_australia.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_austria.ipset</code></td>
 <td>IPs in Austria</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_austria.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_azerbaijan.ipset</code></td>
 <td>IPs in Azerbaijan</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_azerbaijan.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_bahamas.ipset</code></td>
 <td>IPs in The Bahamas</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_bahamas.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_bahrain.ipset</code></td>
 <td>IPs in Bahrain</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_bahrain.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_bangladesh.ipset</code></td>
 <td>IPs in Bangladesh</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_bangladesh.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_barbados.ipset</code></td>
 <td>IPs in Barbados</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_barbados.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_belarus.ipset</code></td>
 <td>IPs in Belarus</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_belarus.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_belgium.ipset</code></td>
 <td>IPs in Belgium</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_belgium.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_belize.ipset</code></td>
 <td>IPs in Belize</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_belize.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_benin.ipset</code></td>
 <td>IPs in Benin</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_benin.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_bermuda.ipset</code></td>
 <td>IPs in Bermuda</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_bermuda.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_bhutan.ipset</code></td>
 <td>IPs in Bhutan</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_bhutan.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_bolivia.ipset</code></td>
 <td>IPs in Bolivia</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_bolivia.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_bonaire_sint_eustatius_saba.ipset</code></td>
 <td>IPs in Bonaire, Sint Eustatius, and Saba</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_bonaire_sint_eustatius_saba.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_bosnia_herzegovina.ipset</code></td>
 <td>IPs in Bosnia and Herzegovina</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_bosnia_herzegovina.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_botswana.ipset</code></td>
 <td>IPs in Botswana</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_botswana.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_bouvet_island.ipset</code></td>
 <td>IPs in Bouvet Island</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_bouvet_island.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_brazil.ipset</code></td>
 <td>IPs in Brazil</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_brazil.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_british_indian_ocean_territory.ipset</code></td>
 <td>IPs in British Indian Ocean Territory</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_british_indian_ocean_territory.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_british_virgin_islands.ipset</code></td>
 <td>IPs in British Virgin Islands</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_british_virgin_islands.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_brunei_darussalam.ipset</code></td>
 <td>IPs in Brunei</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_brunei_darussalam.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_bulgaria.ipset</code></td>
 <td>IPs in Bulgaria</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_bulgaria.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_burkina_faso.ipset</code></td>
 <td>IPs in Burkina Faso</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_burkina_faso.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_burundi.ipset</code></td>
 <td>IPs in Burundi</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_burundi.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_cambodia.ipset</code></td>
 <td>IPs in Cambodia</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_cambodia.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_cameroon.ipset</code></td>
 <td>IPs in Cameroon</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_cameroon.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_canada.ipset</code></td>
 <td>IPs in Canada</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_canada.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_cape_verde.ipset</code></td>
 <td>IPs in Cape Verde</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_cape_verde.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_cayman_islands.ipset</code></td>
 <td>IPs in Cayman Islands</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_cayman_islands.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_cc.ipset</code></td>
 <td>IPs in Cocos (Keeling) Islands</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_cc.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_central_african_republic.ipset</code></td>
 <td>IPs in Central African Republic</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_central_african_republic.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_chad.ipset</code></td>
 <td>IPs in Chad</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_chad.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_chile.ipset</code></td>
 <td>IPs in Chile</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_chile.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_china.ipset</code></td>
 <td>IPs in China</td>
+<td>★★★★★</td>
+<td><a href="https://blocklist.configserver.dev/country_china.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_christmas_island.ipset</code></td>
 <td>IPs in Christmas Island</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_christmas_island.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_colombia.ipset</code></td>
 <td>IPs in Colombia</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_colombia.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_comoros.ipset</code></td>
 <td>IPs in Comoros</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_comoros.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_congo.ipset</code></td>
 <td>IPs in Congo</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_congo.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_cook_islands.ipset</code></td>
 <td>IPs in Cook Islands</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_cook_islands.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_costa_rica.ipset</code></td>
 <td>IPs in Costa Rica</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_costa_rica.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_cote_divoire.ipset</code></td>
 <td>IPs in Côte d'Ivoire</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_cote_divoire.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_croatia.ipset</code></td>
 <td>IPs in Croatia</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_croatia.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_cuba.ipset</code></td>
 <td>IPs in Cuba</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_cuba.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_curacao.ipset</code></td>
 <td>IPs in Curaçao</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_curacao.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_cyprus.ipset</code></td>
 <td>IPs in Cyprus</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_cyprus.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_czech_republic.ipset</code></td>
 <td>IPs in Czech Republic</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_czech_republic.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_democratic_republic_congo.ipset</code></td>
 <td>IPs in Democratic Republic of the Congo</td>
+<td>★★★★★</td>
+<td><a href="https://blocklist.configserver.dev/country_democratic_republic_congo.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_denmark.ipset</code></td>
 <td>IPs in Denmark</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_denmark.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_djibouti.ipset</code></td>
 <td>IPs in Djibouti</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_djibouti.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_dominica.ipset</code></td>
 <td>IPs in Dominica</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_dominica.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_dominican_republic.ipset</code></td>
 <td>IPs in Dominican Republic</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_dominican_republic.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_ecuador.ipset</code></td>
 <td>IPs in Ecuador</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_ecuador.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_egypt.ipset</code></td>
 <td>IPs in Egypt</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_egypt.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_el_salvador.ipset</code></td>
 <td>IPs in El Salvador</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_el_salvador.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_equatorial_guinea.ipset</code></td>
 <td>IPs in Equatorial Guinea</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_equatorial_guinea.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_eritrea.ipset</code></td>
 <td>IPs in Eritrea</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_eritrea.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_estonia.ipset</code></td>
 <td>IPs in Estonia</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_estonia.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_eswatini.ipset</code></td>
 <td>IPs in Eswatini</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_eswatini.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_ethiopia.ipset</code></td>
 <td>IPs in Ethiopia</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_ethiopia.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_europe.ipset</code></td>
 <td>IPs in Europe</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_europe.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_falkland_islands_malvinas.ipset</code></td>
 <td>IPs in Falkland Islands (Malvinas)</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_falkland_islands_malvinas.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_faroe_islands.ipset</code></td>
 <td>IPs in Faroe Islands</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_faroe_islands.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_fiji.ipset</code></td>
 <td>IPs in Fiji</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_fiji.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_finland.ipset</code></td>
 <td>IPs in Finland</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_finland.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_france.ipset</code></td>
 <td>IPs in France</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_france.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_french_guiana.ipset</code></td>
 <td>IPs in French Guiana</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_french_guiana.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_french_polynesia.ipset</code></td>
 <td>IPs in French Polynesia</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_french_polynesia.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_french_southern_territories.ipset</code></td>
 <td>IPs in French Southern Territories</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_french_southern_territories.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_gabon.ipset</code></td>
 <td>IPs in Gabon</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_gabon.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_gambia.ipset</code></td>
 <td>IPs in Gambia</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_gambia.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_georgia.ipset</code></td>
 <td>IPs in Georgia</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_georgia.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_germany.ipset</code></td>
 <td>IPs in Germany</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_germany.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_ghana.ipset</code></td>
 <td>IPs in Ghana</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_ghana.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_gibraltar.ipset</code></td>
 <td>IPs in Gibraltar</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_gibraltar.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_great_britain.ipset</code></td>
 <td>IPs in Great Britain</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_great_britain.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_greece.ipset</code></td>
 <td>IPs in Greece</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_greece.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_greenland.ipset</code></td>
 <td>IPs in Greenland</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_greenland.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_grenada.ipset</code></td>
 <td>IPs in Grenada</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_grenada.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_guadeloupe.ipset</code></td>
 <td>IPs in Guadeloupe</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_guadeloupe.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_guam.ipset</code></td>
 <td>IPs in Guam</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_guam.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_guatemala.ipset</code></td>
 <td>IPs in Guatemala</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_guatemala.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_guernsey.ipset</code></td>
 <td>IPs in Guernsey</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_guernsey.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_guineabissau.ipset</code></td>
 <td>IPs in Guinea-Bissau</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_guineabissau.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_guinea.ipset</code></td>
 <td>IPs in Guinea</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_guinea.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_guyana.ipset</code></td>
 <td>IPs in Guyana</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_guyana.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_haiti.ipset</code></td>
 <td>IPs in Haiti</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_haiti.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_heard_island_and_mcdonald_islands.ipset</code></td>
 <td>IPs in Heard Island and McDonald Islands</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_heard_island_and_mcdonald_islands.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_honduras.ipset</code></td>
 <td>IPs in Honduras</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_honduras.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_hong_kong.ipset</code></td>
 <td>IPs in Hong Kong</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_hong_kong.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_hungary.ipset</code></td>
 <td>IPs in Hungary</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_hungary.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_iceland.ipset</code></td>
 <td>IPs in Iceland</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_iceland.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_india.ipset</code></td>
 <td>IPs in India</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_india.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_indonesia.ipset</code></td>
 <td>IPs in Indonesia</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_indonesia.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_iran.ipset</code></td>
 <td>IPs in Iran</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_iran.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_iraq.ipset</code></td>
 <td>IPs in Iraq</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_iraq.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_ireland.ipset</code></td>
 <td>IPs in Ireland</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_ireland.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_isle_of_man.ipset</code></td>
 <td>IPs in Isle of Man</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_isle_of_man.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_israel.ipset</code></td>
 <td>IPs in Israel</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_israel.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_italy.ipset</code></td>
 <td>IPs in Italy</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_italy.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_jamaica.ipset</code></td>
 <td>IPs in Jamaica</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_jamaica.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_japan.ipset</code></td>
 <td>IPs in Japan</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_japan.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_jersey.ipset</code></td>
 <td>IPs in Jersey</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_jersey.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_jordan.ipset</code></td>
 <td>IPs in Jordan</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_jordan.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_kazakhstan.ipset</code></td>
 <td>IPs in Kazakhstan</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_kazakhstan.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_kenya.ipset</code></td>
 <td>IPs in Kenya</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_kenya.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_kiribati.ipset</code></td>
 <td>IPs in Kiribati</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_kiribati.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_kosovo.ipset</code></td>
 <td>IPs in Kosovo</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_kosovo.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_kuwait.ipset</code></td>
 <td>IPs in Kuwait</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_kuwait.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_kyrgyzstan.ipset</code></td>
 <td>IPs in Kyrgyzstan</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_kyrgyzstan.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_laos.ipset</code></td>
 <td>IPs in Laos</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_laos.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_latvia.ipset</code></td>
 <td>IPs in Latvia</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_latvia.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_lebanon.ipset</code></td>
 <td>IPs in Lebanon</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_lebanon.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_lesotho.ipset</code></td>
 <td>IPs in Lesotho</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_lesotho.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_liberia.ipset</code></td>
 <td>IPs in Liberia</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_liberia.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_libya.ipset</code></td>
 <td>IPs in Libya</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_libya.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_liechtenstein.ipset</code></td>
 <td>IPs in Liechtenstein</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_liechtenstein.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_lithuania.ipset</code></td>
 <td>IPs in Lithuania</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_lithuania.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_luxembourg.ipset</code></td>
 <td>IPs in Luxembourg</td>
-</tr>
-<tr>
-<td><code>country_macao.ipset</code></td>
-<td>IPs in Macao</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_luxembourg.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_macedonia_republic.ipset</code></td>
 <td>IPs in Macedonia</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_macedonia_republic.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_madagascar.ipset</code></td>
 <td>IPs in Madagascar</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_madagascar.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_malawi.ipset</code></td>
 <td>IPs in Malawi</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_malawi.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_malaysia.ipset</code></td>
 <td>IPs in Malaysia</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_malaysia.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_maldives.ipset</code></td>
 <td>IPs in Maldives</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_maldives.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_mali.ipset</code></td>
 <td>IPs in Mali</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_mali.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_malta.ipset</code></td>
 <td>IPs in Malta</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_malta.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_marshall_islands.ipset</code></td>
 <td>IPs in Marshall Islands</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_marshall_islands.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_martinique.ipset</code></td>
 <td>IPs in Martinique</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_martinique.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_mauritania.ipset</code></td>
 <td>IPs in Mauritania</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_mauritania.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_mauritius.ipset</code></td>
 <td>IPs in Mauritius</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_mauritius.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_mayotte.ipset</code></td>
 <td>IPs in Mayotte</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_mayotte.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_mexico.ipset</code></td>
 <td>IPs in Mexico</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_mexico.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_micronesia.ipset</code></td>
 <td>IPs in Micronesia</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_micronesia.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_monaco.ipset</code></td>
 <td>IPs in Monaco</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_monaco.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_mongolia.ipset</code></td>
 <td>IPs in Mongolia</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_mongolia.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_montenegro.ipset</code></td>
 <td>IPs in Montenegro</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_montenegro.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_montserrat.ipset</code></td>
 <td>IPs in Montserrat</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_montserrat.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_morocco.ipset</code></td>
 <td>IPs in Morocco</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_morocco.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_mozambique.ipset</code></td>
 <td>IPs in Mozambique</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_mozambique.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_myanmar.ipset</code></td>
 <td>IPs in Myanmar</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_myanmar.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_namibia.ipset</code></td>
 <td>IPs in Namibia</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_namibia.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_nauru.ipset</code></td>
 <td>IPs in Nauru</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_nauru.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_nepal.ipset</code></td>
 <td>IPs in Nepal</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_nepal.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_netherlands.ipset</code></td>
 <td>IPs in Netherlands</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_netherlands.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_new_caledonia.ipset</code></td>
 <td>IPs in New Caledonia</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_new_caledonia.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_new_zealand.ipset</code></td>
 <td>IPs in New Zealand</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_new_zealand.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_nicaragua.ipset</code></td>
 <td>IPs in Nicaragua</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_nicaragua.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_nigeria.ipset</code></td>
 <td>IPs in Nigeria</td>
+<td>★★★★★</td>
+<td><a href="https://blocklist.configserver.dev/country_nigeria.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_niger.ipset</code></td>
 <td>IPs in Niger</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_niger.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_niue.ipset</code></td>
 <td>IPs in Niue</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_niue.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_norfolk_island.ipset</code></td>
 <td>IPs in Norfolk Island</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_norfolk_island.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_northern_mariana_islands.ipset</code></td>
 <td>IPs in Northern Mariana Islands</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_northern_mariana_islands.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_north_korea.ipset</code></td>
 <td>IPs in North Korea</td>
+<td>★★★★★</td>
+<td><a href="https://blocklist.configserver.dev/country_north_korea.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_norway.ipset</code></td>
 <td>IPs in Norway</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_norway.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_oman.ipset</code></td>
 <td>IPs in Oman</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_oman.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_pakistan.ipset</code></td>
 <td>IPs in Pakistan</td>
+<td>★★★★★</td>
+<td><a href="https://blocklist.configserver.dev/country_pakistan.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_palau.ipset</code></td>
 <td>IPs in Palau</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_palau.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_palestine.ipset</code></td>
 <td>IPs in Palestine</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_palestine.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_panama.ipset</code></td>
 <td>IPs in Panama</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_panama.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_papua_new_guinea.ipset</code></td>
 <td>IPs in Papua New Guinea</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_papua_new_guinea.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_paraguay.ipset</code></td>
 <td>IPs in Paraguay</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_paraguay.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_peru.ipset</code></td>
 <td>IPs in Peru</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_peru.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_philippines.ipset</code></td>
 <td>IPs in Philippines</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_philippines.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_pitcairn.ipset</code></td>
 <td>IPs in Pitcairn Islands</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_pitcairn.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_poland.ipset</code></td>
 <td>IPs in Poland</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_poland.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_portugal.ipset</code></td>
 <td>IPs in Portugal</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_portugal.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_puerto_rico.ipset</code></td>
 <td>IPs in Puerto Rico</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_puerto_rico.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_qatar.ipset</code></td>
 <td>IPs in Qatar</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_qatar.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_republic_moldova.ipset</code></td>
 <td>IPs in Moldova</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_republic_moldova.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_reunion.ipset</code></td>
 <td>IPs in Réunion</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_reunion.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_romania.ipset</code></td>
 <td>IPs in Romania</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_romania.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_russia.ipset</code></td>
 <td>IPs in Russia</td>
+<td>★★★★★</td>
+<td><a href="https://blocklist.configserver.dev/country_russia.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_rwanda.ipset</code></td>
 <td>IPs in Rwanda</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_rwanda.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_saint_barthelemy.ipset</code></td>
 <td>IPs in Saint Barthélemy</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_saint_barthelemy.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_saint_helena.ipset</code></td>
 <td>IPs in Saint Helena</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_saint_helena.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_saint_kitts_nevis.ipset</code></td>
 <td>IPs in Saint Kitts and Nevis</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_saint_kitts_nevis.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_saint_lucia.ipset</code></td>
 <td>IPs in Saint Lucia</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_saint_lucia.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_saint_martin_north.ipset</code></td>
 <td>IPs in Saint Martin (North)</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_saint_martin_north.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_saint_pierre_miquelon.ipset</code></td>
 <td>IPs in Saint Pierre and Miquelon</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_saint_pierre_miquelon.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_saint_vincent_grenadines.ipset</code></td>
 <td>IPs in Saint Vincent and the Grenadines</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_saint_vincent_grenadines.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_samoa.ipset</code></td>
 <td>IPs in Samoa</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_samoa.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_san_marino.ipset</code></td>
 <td>IPs in San Marino</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_san_marino.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_sao_tome_principe.ipset</code></td>
 <td>IPs in São Tomé and Príncipe</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_sao_tome_principe.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_saudi_arabia.ipset</code></td>
 <td>IPs in Saudi Arabia</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_saudi_arabia.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_senegal.ipset</code></td>
 <td>IPs in Senegal</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_senegal.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_serbia.ipset</code></td>
 <td>IPs in Serbia</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_serbia.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_seychelles.ipset</code></td>
 <td>IPs in Seychelles</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_seychelles.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_sierra_leone.ipset</code></td>
 <td>IPs in Sierra Leone</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_sierra_leone.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_singapore.ipset</code></td>
 <td>IPs in Singapore</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_singapore.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_sint_maarten_south.ipset</code></td>
 <td>IPs in Sint Maarten (South)</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_sint_maarten_south.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_slovakia.ipset</code></td>
 <td>IPs in Slovakia</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_slovakia.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_slovenia.ipset</code></td>
 <td>IPs in Slovenia</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_slovenia.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_solomon_islands.ipset</code></td>
 <td>IPs in Solomon Islands</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_solomon_islands.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_somalia.ipset</code></td>
 <td>IPs in Somalia</td>
+<td>★★★★★</td>
+<td><a href="https://blocklist.configserver.dev/country_somalia.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_south_africa.ipset</code></td>
 <td>IPs in South Africa</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_south_africa.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_south_georgia_and_the_south_sandwich_islands.ipset</code></td>
 <td>IPs in South Georgia and the South Sandwich Islands</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_south_georgia_and_the_south_sandwich_islands.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_south_korea.ipset</code></td>
 <td>IPs in South Korea</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_south_korea.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_south_sudan.ipset</code></td>
 <td>IPs in South Sudan</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_south_sudan.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_spain.ipset</code></td>
 <td>IPs in Spain</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_spain.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_sri_lanka.ipset</code></td>
 <td>IPs in Sri Lanka</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_sri_lanka.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_sudan.ipset</code></td>
 <td>IPs in Sudan</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_sudan.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_suriname.ipset</code></td>
 <td>IPs in Suriname</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_suriname.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_svalbard_jan_mayen.ipset</code></td>
 <td>IPs in Svalbard and Jan Mayen</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_svalbard_jan_mayen.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_sweden.ipset</code></td>
 <td>IPs in Sweden</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_sweden.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_switzerland.ipset</code></td>
 <td>IPs in Switzerland</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_switzerland.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_syria.ipset</code></td>
 <td>IPs in Syria</td>
+<td>★★★★★</td>
+<td><a href="https://blocklist.configserver.dev/country_syria.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_taiwan.ipset</code></td>
 <td>IPs in Taiwan</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_taiwan.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_tajikistan.ipset</code></td>
 <td>IPs in Tajikistan</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_tajikistan.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_tanzania.ipset</code></td>
 <td>IPs in Tanzania</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_tanzania.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_thailand.ipset</code></td>
 <td>IPs in Thailand</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_thailand.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_timorleste.ipset</code></td>
 <td>IPs in Timor-Leste</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_timorleste.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_togo.ipset</code></td>
 <td>IPs in Togo</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_togo.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_tokelau.ipset</code></td>
 <td>IPs in Tokelau</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_tokelau.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_tonga.ipset</code></td>
 <td>IPs in Tonga</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_tonga.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_trinidad_tobago.ipset</code></td>
 <td>IPs in Trinidad and Tobago</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_trinidad_tobago.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_tunisia.ipset</code></td>
 <td>IPs in Tunisia</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_tunisia.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_turkey.ipset</code></td>
 <td>IPs in Turkey</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_turkey.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_turkmenistan.ipset</code></td>
 <td>IPs in Turkmenistan</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_turkmenistan.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_turks_caicos_islands.ipset</code></td>
 <td>IPs in Turks and Caicos Islands</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_turks_caicos_islands.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_tuvalu.ipset</code></td>
 <td>IPs in Tuvalu</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_tuvalu.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_uganda.ipset</code></td>
 <td>IPs in Uganda</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_uganda.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_ukraine.ipset</code></td>
 <td>IPs in Ukraine</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_ukraine.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_united_arab_emirates.ipset</code></td>
 <td>IPs in United Arab Emirates</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_united_arab_emirates.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_united_states.ipset</code></td>
 <td>IPs in United States</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_united_states.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_united_states_minor_outlying_islands.ipset</code></td>
 <td>IPs in United States Minor Outlying Islands</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_united_states_minor_outlying_islands.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_united_states_virgin_islands.ipset</code></td>
 <td>IPs in United States Virgin Islands</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_united_states_virgin_islands.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_uruguay.ipset</code></td>
 <td>IPs in Uruguay</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_uruguay.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_uzbekistan.ipset</code></td>
 <td>IPs in Uzbekistan</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_uzbekistan.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_vanuatu.ipset</code></td>
 <td>IPs in Vanuatu</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_vanuatu.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_vatican_city_holy_see.ipset</code></td>
 <td>IPs in Vatican City / Holy See</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_vatican_city_holy_see.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_venezuela.ipset</code></td>
 <td>IPs in Venezuela</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_venezuela.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_vietnam.ipset</code></td>
 <td>IPs in Vietnam</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_vietnam.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_wallis_futuna.ipset</code></td>
 <td>IPs in Wallis and Futuna</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_wallis_futuna.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_western_sahara.ipset</code></td>
 <td>IPs in Western Sahara</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_western_sahara.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_yemen.ipset</code></td>
 <td>IPs in Yemen</td>
+<td>★★★★★</td>
+<td><a href="https://blocklist.configserver.dev/country_yemen.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_zambia.ipset</code></td>
 <td>IPs in Zambia</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_zambia.ipset">view</a></td>
 </tr>
 <tr>
 <td><code>country_zimbabwe.ipset</code></td>
 <td>IPs in Zimbabwe</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_zimbabwe.ipset">view</a></td>
 </tr>
 </tbody>
 </table>
@@ -3517,7 +4201,7 @@ By appending the query parameter <code>?stats=true</code> to any <code>.ipset</c
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 27, 2025 16:38:02 UTC"><span class="timeago" datetime="2025-09-27T16:38:02+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 27, 2025 16:38:02 UTC">2025-09-27</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 28, 2025 02:10:48 UTC"><span class="timeago" datetime="2025-09-28T02:10:48+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 28, 2025 02:10:48 UTC">2025-09-28</span>
   </span>
 
     
