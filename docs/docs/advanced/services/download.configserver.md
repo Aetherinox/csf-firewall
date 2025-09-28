@@ -55,7 +55,7 @@ If you do need the exact version of the release you downloaded:
 
 <div align="center" markdown>
 
-:aetherx-axs-square-terminal:{ .icon-size-48 } 
+:aetherx-axs-square-terminal:{ .icon-size-48 .icon-dim } 
 
 </div>
 
