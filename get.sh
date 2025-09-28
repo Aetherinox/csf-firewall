@@ -1,42 +1,52 @@
 #!/bin/sh
 
 # #
-#   Copyright (C) 2025 Aetherinox
-#   Copyright (C) 2006-2025 Jonathan Michaelson
+#   @app                ConfigServer Firewall & Security (CSF)
+#                       Login Failure Daemon (LFD)
+#   @service            get.configserver.dev
+#   @script             Bash › Script › Installation
+#   @desc               installation script for csf
+#   @website            https://configserver.dev
+#   @docs               https://docs.configserver.dev
+#   @download           https://download.configserver.dev
+#   @repo               https://github.com/Aetherinox/csf-firewall
+#   @copyright          Copyright (C) 2025-2026 Aetherinox
+#   @license            GPLv3
+#   @updated            09.28.2025
+#
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 3 of the License, or (at
+#   your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful, but
+#   WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+#   General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program; if not, see <https://www.gnu.org/licenses>.
+# #
+
+# #
+#   @usage              Download Only                               sh get.sh
+#                       Download Only (Maintain original filename)  sh get.sh --preserve-name
+#                       Download + Extract                          sh get.sh --extract
+#                       Download + Extract Custom Dir               sh get.sh --extract --folder csftemp
+#                       Download + Extract + Install                sh get.sh --install
+#                       Download + Extract + Install Custom Dir     sh get.sh --install --folder csftemp
+#                       Download + Install (Dryrun)                 sh get.sh --install --dryrun
+#                       Install Only Existing Archive               sh get.sh --install-only
+#                       Install Only Existing Archive (Dryrun)      sh get.sh --install-only --dryrun
+#                       Clean existing archive + folder             sh get.sh --clean
+#                       Help menu                                   sh get.sh --help
+#                       Version information                         sh get.sh --version
 #   
-#   This program is free software; you can redistribute it and/or modify it under
-#   the terms of the GNU General Public License as published by the Free Software
-#   Foundation; either version 3 of the License, or (at your option) any later
-#   version.
-#   
-#   This program is distributed in the hope that it will be useful, but WITHOUT
-#   ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-#   FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
-#   details.
-#   
-#   You should have received a copy of the GNU General Public License along with
-#   this program; if not, see <https://www.gnu.org/licenses>.
-#   
-#   @script     ConfigServer Firewall Downloader
-#   @desc       Fetches the latest version of CSFirewall from github repository to local machine.
-#   @author     Aetherinox
-#   @repo       https://github.com/Aetherinox/csf-firewall
-#   
-#   @usage      Download Only                               sh get.sh
-#               Download + Extract                          sh get.sh --extract
-#               Download + Extract + Install                sh get.sh --install
-#               Download + Install (Dryrun)                 sh get.sh --install --dryrun
-#               Install Only Existing Archive               sh get.sh --install-only
-#               Install Only Existing Archive (Dryrun)      sh get.sh --install-only --dryrun
-#               Clean existing archive + folder             sh get.sh --clean
-#               Help menu                                   sh get.sh --help
-#               Version information                         sh get.sh --version
-#   
-#   @notes      --install automatically extracts
-#               --dryrun is passed to csf install.sh script
-#               --install-only requires existing .tar/.zip; 
-#                   will not download new from github.
-#               --clean removes .tar/.zip and csf folder
+#   @notes              --install                                   automatically extracts
+#                       --dryrun                                    passed to csf install.sh script when used
+#                       --install-only                              requires existing .tar/.zip; 
+#                                                                   will not download new from github.
+#                       --clean                                     removes .tar/.zip and csf folder
 # #
 
 # #
@@ -105,8 +115,8 @@ argFolder="$folder_extract"
 #   define › files
 # #
 
-app_file_this=$(basename "$0")                                                      #  get.sh (with ext)
-app_file_bin="${app_file_this%.*}"                                                  #  get (without ext)
+app_file_this=$(basename "$0")          #  get.sh (with ext)
+app_file_bin="${app_file_this%.*}"      #  get (without ext)
 
 # #
 #   define › folders
@@ -172,9 +182,9 @@ opt_usage()
     printf '  %-5s %-81s %-40s\n' "    " "${blued}-f${greyd},${blued}  --folder ${yellowd}<string>${end}             " "override default folder where csf is extracted ${navy}<default> ${peach}$argFolder ${end}" 1>&2
     printf '  %-5s %-81s %-40s\n' "    " "${blued}-c${greyd},${blued}  --clean ${yellowd}${end}                      " "cleans up lingering archive and tmp folders and exits ${end}" 1>&2
     printf '  %-5s %-81s %-40s\n' "    " "${blued}-D${greyd},${blued}  --dryrun ${yellowd}${end}                     " "pass dryrun to csf installer script, does not install csf ${end} ${navy}<default> ${peach}$argDryrun ${end}" 1>&2
-    printf '  %-5s %-81s %-40s\n' "    " "${blued}-V${greyd},${blued}  --version ${yellowd}${end}                    " "current version of this utilty${end}" 1>&2
-    printf '  %-5s %-81s %-40s\n' "    " "${blued}-d${greyd},${blued}  --dev ${yellowd}${end}                        " "developer mode; verbose logging${end}" 1>&2
-    printf '  %-5s %-81s %-40s\n' "    " "${blued}-h${greyd},${blued}  --help ${yellowd}${end}                       " "show this help menu${end}" 1>&2
+    printf '  %-5s %-81s %-40s\n' "    " "${blued}-V${greyd},${blued}  --version ${yellowd}${end}                    " "current version of this utilty ${end}" 1>&2
+    printf '  %-5s %-81s %-40s\n' "    " "${blued}-d${greyd},${blued}  --dev ${yellowd}${end}                        " "developer mode; verbose logging ${end}" 1>&2
+    printf '  %-5s %-81s %-40s\n' "    " "${blued}-h${greyd},${blued}  --help ${yellowd}${end}                       " "show this help menu ${end}" 1>&2
     echo
     echo
 }
@@ -250,7 +260,7 @@ while [ "$#" -gt 0 ]; do
             return
             ;;
         *)
-            printf '%-28s %-65s\n' "  ${redl} ERROR ${end}" "${greym} Unknown parameter: ${redl}$1 ${greym}. Aborting${end}"
+            printf '%-28s %-65s\n' "  ${redl} ERROR ${end}" "${greym} Unknown parameter:${redl} $1 ${greym}. Aborting ${end}"
             exit 1
             ;;
     esac
@@ -262,12 +272,12 @@ done
 # #
 
 echo
-echo " ${greyd}――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――${end}"
+echo " ${greyd}―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― ${end}"
 printf '%-32s %-65s\n' "  ${greym} App${end}" "${fuchsial} $app_title › Downloader  ${end}"
 printf '%-32s %-65s\n' "  ${greym} Repository${end}" "${fuchsial} ${app_repo}  ${end}"
 printf '%-32s %-65s\n' "  ${greym} Api${end}" "${fuchsial} ${api_url}  ${end}"
 printf '%-32s %-65s\n' "  ${greym} Version${end}" "${fuchsial} v${app_ver}  ${end}"
-echo " ${greyd}――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――${end}"
+echo " ${greyd}―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― ${end}"
 echo
 
 # #
@@ -283,7 +293,7 @@ fi
 #   get json information from latest releases
 # #
 
-printf '%-31s %-65s\n' "  ${bluel} STATUS ${end}" "${greym} fetching latest release info from ${bluel}$api_url ${end}"
+printf '%-31s %-65s\n' "  ${bluel} STATUS ${end}" "${greym} fetching latest release info from${bluel} $api_url ${end}"
 release_json=$(curl -sL "$api_url")
 
 # #
@@ -295,7 +305,7 @@ if [ -z "$tag_latest" ]; then
     printf '%-28s %-65s\n' "  ${redl} ERROR ${end}" "${greym} could not find latest release tag. Aborting ${end}"
     exit 1
 else
-    printf '%-31s %-65s\n' "  ${greenl} OK ${end}" "${greym} found latest release tag ${greenl}$tag_latest ${end}"
+    printf '%-31s %-65s\n' "  ${greenl} OK ${end}" "${greym} found latest release tag${greenl} $tag_latest ${end}"
 fi
 
 # #
@@ -319,26 +329,27 @@ fi
 #   get latest release filename from URL
 # #
 
-ORIG_FILENAME=$(basename "$DOWNLOAD_URL")
+file_name_orig=$(basename "$DOWNLOAD_URL")
+file_name_out="$file_name_orig"
 
 # #
 #   normalize filename to csf.zip / csf.tgz unless --original-name provided
 # #
 
 if [ "$argOriginalName" = "false" ]; then
-    case "$ORIG_FILENAME" in
+    case "$file_name_orig" in
         *.zip)
-            FILENAME="csf.zip"
+            file_name_out="csf.zip"
             ;;
         *.tar.gz|*.tgz|*-tgz)
-            FILENAME="csf.tgz"
+            file_name_out="csf.tgz"
             ;;
         *)
-            FILENAME="$ORIG_FILENAME"
+            file_name_out="$file_name_orig"
             ;;
     esac
 else
-    FILENAME="$ORIG_FILENAME"
+    file_name_out="$file_name_orig"
 fi
 
 # #
@@ -346,9 +357,9 @@ fi
 # #
 
 if [ "$argInstallOnly" = "false" ]; then
-    printf '%-31s %-65s\n' "  ${bluel} STATUS ${end}" "${greym} downloading file ${bluel}$FILENAME${greym} from ${bluel}$DOWNLOAD_URL${end}"
+    printf '%-31s %-65s\n' "  ${bluel} STATUS ${end}" "${greym} downloading file${bluel} $file_name_out ${greym}from${bluel} $DOWNLOAD_URL ${end}"
     echo 
-    curl -L -o "$FILENAME" "$DOWNLOAD_URL"
+    curl -L -o "$file_name_out" "$DOWNLOAD_URL"
     echo 
 fi
 
@@ -356,10 +367,10 @@ fi
 #   check if new release file downloaded / exists
 # #
 
-if [ -f "$FILENAME" ]; then
-    printf '%-31s %-65s\n' "  ${greenl} OK ${end}" "${greym} file ${bluel}$FILENAME${greym} downloaded successfully.${end}"
+if [ -f "$file_name_out" ]; then
+    printf '%-31s %-65s\n' "  ${greenl} OK ${end}" "${greym} file${bluel} $file_name_out ${greym}downloaded successfully. ${end}"
 else
-    printf '%-28s %-65s\n' "  ${redl} ERROR ${end}" "${greym} archive file ${bluel}$FILENAME${greym} missing or not downloaded. Please check the URL or your connection. Aborting ${end}"
+    printf '%-28s %-65s\n' "  ${redl} ERROR ${end}" "${greym} archive file${bluel} $file_name_out ${greym}missing or not downloaded. Please check the URL or your connection. Aborting ${end}"
     exit 1
 fi
 
@@ -368,18 +379,18 @@ fi
 # #
 
 if [ "$argExtract" = "true" ] || [ "$argInstall" = "true" ]; then
-    printf '%-31s %-65s\n' "  ${bluel} STATUS ${end}" "${greym} extracting file ${bluel}$FILENAME ${end}"
+    printf '%-31s %-65s\n' "  ${bluel} STATUS ${end}" "${greym} extracting file${bluel} $file_name_out ${end}"
     [ ! -d $argFolder ] && mkdir $argFolder
 
-    case "$FILENAME" in
+    case "$file_name_out" in
         *.zip)
-            unzip -oq "$FILENAME" -d "$argFolder"
+            unzip -oq "$file_name_out" -d "$argFolder"
             ;;
         *.tar.gz|*.tgz)
-            tar -xzf "$FILENAME" -C "$argFolder"
+            tar -xzf "$file_name_out" -C "$argFolder"
             ;;
         *)
-            printf '%-28s %-65s\n' "  ${redl} ERROR ${end}" "${greym} unknown archive format for file ${redl}$FILENAME${greym}. Aborting${end}"
+            printf '%-28s %-65s\n' "  ${redl} ERROR ${end}" "${greym} unknown archive format for file${redl} $file_name_out ${greym}. Aborting ${end}"
             exit 1
             ;;
     esac
@@ -394,11 +405,11 @@ fi
 if [ "$argInstall" = "true" ] || [ "$argInstallOnly" = "true" ]; then
     path_installer="./$argFolder/$file_installer"
     if [ ! -f "$path_installer" ]; then
-        printf '%-28s %-65s\n' "  ${redl} ERROR ${end}" "${greym} install script not found at ${redl}$path_installer${greym}. Aborting${end}"
+        printf '%-28s %-65s\n' "  ${redl} ERROR ${end}" "${greym} install script not found at${redl} $path_installer ${greym}. Aborting ${end}"
         exit 1
     fi
 
-    printf '%-31s %-65s\n' "  ${bluel} STATUS ${end}" "${greym} running install script ${bluel}$path_installer ${greym} with elevated permissions${end}"
+    printf '%-31s %-65s\n' "  ${bluel} STATUS ${end}" "${greym} running install script${bluel} $path_installer ${greym}with elevated permissions ${end}"
 
     #  sudo check
     if command -v sudo >/dev/null 2>&1; then
@@ -407,7 +418,7 @@ if [ "$argInstall" = "true" ] || [ "$argInstallOnly" = "true" ]; then
         sh "$path_installer" $argInstaller
     fi
 
-    printf '%-31s %-65s\n' "  ${greenl} OK ${end}" "${greym} installation script ${greenl}$path_installer${greym} finished with args ${greenl}$argInstaller ${end}"
+    printf '%-31s %-65s\n' "  ${greenl} OK ${end}" "${greym} installation script ${greenl} $path_installer ${greym}finished with args${greenl} $argInstaller ${end}"
 fi
 
 # #
