@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_saint_kitts_nevis_ipset
 #   @uuid           b88b4106-17a1-3f23-9478-bd9b63dd24e9
-#   @updated        Fri 26 Sep 2025 01:00:03 AM UTC
-#   @entries        35,892 ips
-#                   218 subnets
-#                   218 lines
+#   @updated        Sun 28 Sep 2025 06:35:13 AM UTC
+#   @entries        35,956 ips
+#                   221 subnets
+#                   221 lines
 #   @country        Saint Kitts Nevis (KN)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -30,6 +30,7 @@
 45.138.10.88/30
 57.74.108.0/23
 65.48.156.0/23
+66.96.118.64/26
 67.213.158.0/24
 69.57.238.0/24
 69.57.254.0/23
@@ -168,8 +169,10 @@
 2607:8940:40b1:600::/56
 2607:8940:4143:8700::/56
 2607:8940:4143:8800::/56
+2620:0:876:3100::/56
 2620:18:c000::/48
 2620:6b:2000::/48
+2620:171:b2::/48
 2a01:528:6c00::/40
 2a02:26f7:e8c0:4000::/64
 2a02:26f7:e8c0:cb20::/63
