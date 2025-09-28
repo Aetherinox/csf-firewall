@@ -1126,11 +1126,11 @@ function DB_DOWNLOAD()
 
     if [[ -f ${APP_GEO_IPV6_CSV} ]]; then
         if [[ ! -f ${APP_GEO_LOCS_CSV} ]]; then
-            error "You provided the IPV6 CSV ${RED2}${APP_GEO_IPV4_CSV}${RESET}, the locations file ${RED2}$APP_GEO_LOCS_CSV${RESET} -- Cannot continue${RESET}"
+            error "You provided the IPV6 CSV ${RED2}${APP_GEO_IPV6_CSV}${RESET}, but did not provide the locations file ${RED2}$APP_GEO_LOCS_CSV${RESET} -- Cannot continue${RESET}"
         fi
 
         if [[ ! -f ${APP_GEO_IPV4_CSV} ]]; then
-            error "You provided the IPV6 CSV ${RED2}${APP_GEO_LOCS_CSV}${RESET}, but did not provide the other IPv4 CSV file ${RED2}$APP_GEO_IPV6_CSV${RESET} -- Cannot continue${RESET}"
+            error "You provided the IPV6 CSV ${RED2}${APP_GEO_IPV6_CSV}${RESET}, but did not provide the IPv4 CSV file ${RED2}$APP_GEO_IPV4_CSV${RESET} -- Cannot continue${RESET}"
         fi
     fi
 
