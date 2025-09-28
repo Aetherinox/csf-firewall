@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_new_caledonia_ipset
 #   @uuid           3f4459a8-2032-30af-a8d0-1922d6cd53f8
-#   @updated        Fri 26 Sep 2025 01:00:31 AM UTC
-#   @entries        146,141 ips
-#                   206 subnets
-#                   206 lines
+#   @updated        Sun 28 Sep 2025 06:35:37 AM UTC
+#   @entries        146,143 ips
+#                   208 subnets
+#                   208 lines
 #   @country        New Caledonia (NC)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -72,6 +72,7 @@
 140.248.61.160/32
 140.248.62.160/32
 140.248.63.160/32
+146.75.132.96/31
 146.75.136.14/31
 146.75.160.96/31
 146.75.190.2/31
@@ -191,6 +192,7 @@
 2a04:4e41:420d::/48
 2a04:4e41:5e16::/48
 2a04:4e41:6802::/48
+2a04:4e41:7616::/48
 2a07:d887:9f00::/40
 2a09:bac1:5280::/64
 2a09:bac1:5280:120::/64
