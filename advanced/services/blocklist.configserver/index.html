@@ -1626,6 +1626,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#risk-assessments" class="md-nav__link">
+    <span class="md-ellipsis">
+      Risk Assessments
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#main-lists" class="md-nav__link">
     <span class="md-ellipsis">
       Main Lists
@@ -2045,6 +2054,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#risk-assessments" class="md-nav__link">
+    <span class="md-ellipsis">
+      Risk Assessments
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#main-lists" class="md-nav__link">
     <span class="md-ellipsis">
       Main Lists
@@ -2256,6 +2274,52 @@ By appending the query parameter <code>?stats=true</code> to any <code>.ipset</c
 <p><br></p>
 <h2 id="blocklists">Blocklists  <!-- omit from toc --><a class="headerlink" href="#blocklists" title="Permanent link">¶</a></h2>
 <p>The following lists outline the blocklists that are available to use with our blocklist service</p>
+<p><br></p>
+<h3 id="risk-assessments">Risk Assessments<a class="headerlink" href="#risk-assessments" title="Permanent link">¶</a></h3>
+<p>The lists in this README use <code>⚝</code> and <code>★</code> icons to indicate risk levels. More stars mean higher risk. Lists marked as <strong>High</strong> or <strong>Critical</strong> should be added to your <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> blocklist to secure your server. Lower-risk lists are optional and can be added at your discretion.</p>
+<p>Our automated CI generates this risk assessment each day.</p>
+<p><br></p>
+<table>
+<thead>
+<tr>
+<th>Rating</th>
+<th>Risk</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>⚝⚝⚝⚝⚝</code></td>
+<td>No Risk</td>
+<td>IPs pose no real threat, but possibly suspected</td>
+</tr>
+<tr>
+<td><code>★⚝⚝⚝⚝</code></td>
+<td>Low Risk</td>
+<td>IPs pose minimal threat</td>
+</tr>
+<tr>
+<td><code>★★⚝⚝⚝</code></td>
+<td>Moderate Risk</td>
+<td>IPs may cause issues; monitor carefully</td>
+</tr>
+<tr>
+<td><code>★★★⚝⚝</code></td>
+<td>Elevated Risk</td>
+<td>IPs are risky; consider blocking</td>
+</tr>
+<tr>
+<td><code>★★★★⚝</code></td>
+<td>High Risk</td>
+<td>IPs are dangerous; likely to cause harm</td>
+</tr>
+<tr>
+<td><code>★★★★★</code></td>
+<td>Critical Risk</td>
+<td>IPs are highly dangerous; block immediately</td>
+</tr>
+</tbody>
+</table>
 <p><br></p>
 <h3 id="main-lists">Main Lists<a class="headerlink" href="#main-lists" title="Permanent link">¶</a></h3>
 <p>These are the primary IPSETs that most people will be interested in. They contain a large number of IP addresses that have been reported recently for abusive behavior. These statistics are gathered from multiple sources, such as <a href="https://abuseipdb.com/">AbuseIPDB</a> and <a href="https://ipthreat.net/">IPThreat</a>. IPs on this list have a 100% confidence level, meaning you should encounter no false positives from any of the IPs included.  </p>
@@ -4201,7 +4265,7 @@ By appending the query parameter <code>?stats=true</code> to any <code>.ipset</c
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 28, 2025 02:15:24 UTC"><span class="timeago" datetime="2025-09-28T02:15:24+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 28, 2025 02:15:24 UTC">2025-09-28</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 28, 2025 02:32:20 UTC"><span class="timeago" datetime="2025-09-28T02:32:20+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 28, 2025 02:32:20 UTC">2025-09-28</span>
   </span>
 
     
