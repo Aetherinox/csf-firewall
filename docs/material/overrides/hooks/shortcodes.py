@@ -137,12 +137,13 @@ def on_page_markdown(markdown: str, *, page: Page, config: MkDocsConfig, files: 
         elif type == "flag":            return badgeFlag(args, page, files )
         elif type == "option":          return badgeOption(args)
         elif type == "setting":         return badgeSetting(args)
-        elif type == "backers":         return badgeBackers( page, files )
+        elif type == "support":         return badgeBackers( page, files )
         elif type == "command":         return badgeCommand(args, page, files )
         elif type == "feature":         return badgeFeature(args, page, files )
         elif type == "plugin":          return badgePlugin(args, page, files )
         elif type == "markdown":        return badgeMarkdown(args, page, files )
         elif type == "3rdparty":        return badge3rdParty(args, page, files )
+        elif type == "docs":            return badgeDocs(args, page, files )
         elif type == "file":            return badgeFile(args, page, files )
         elif type == "fileDownload":    return badgeFileSingleDownload(args, page, files )
         elif type == "fileView":        return badgeFileSingleView(args, page, files )
@@ -463,6 +464,69 @@ def badge3rdParty( text: str, page: Page, files: Files ):
     )
 
 # #
+#   Badge › Docs
+#   
+#   This symbol denotes that the user can click the button and view additional documentation elsewhere
+#   
+#   Normal Badges:
+#       <!-- md:docs ../advanced/services/blocklist.configserver/ -->
+#       <!-- md:docs ../advanced/services/blocklist.configserver/ self -->
+# #
+
+def badgeDocs(text: str, page: Page, files: Files):
+
+    # #
+    #   Parse arguments: "href [target]"
+    # #
+
+    parts = text.strip().split()
+
+    href = parts[0] if len(parts) > 0 else ""
+    target_arg = parts[1].lower() if len(parts) > 1 else "blank"
+
+    # #
+    #   Normalize target argument
+    # #
+
+    target_map = {
+        "blank": "_blank",
+        "b": "_blank",
+        "new": "_blank",
+        "n": "_blank",
+        "self": "_self",
+        "s": "_self",
+        "parent": "_parent",
+        "p": "_parent",
+        "top": "_top",
+        "t": "_top"
+    }
+
+    target_attr = target_map.get(target_arg, "_blank")
+
+    # #
+    #   If no href -> just show a generic docs icon
+    # #
+
+    if not href:
+        icon = "aetherx-axs-book-open"
+        href = _resolve_path(f"{PAGE_CONVENTIONS}#docs", page, files)
+        return badgeCreate(
+            icon=f"[:{icon}:]({href} 'View Docs')"
+        )
+
+    # #
+    #   Otherwise, return docs badge with icon + link
+    # #
+
+    icon = "aetherx-axs-book-open"
+    return badgeCreate(
+        icon=f"[:{icon}:]({href} 'View Docs'){{: target=\"{target_attr}\" }}",
+        text=f"[View Docs]({href}){{: target=\"{target_attr}\" }}",
+        type="docs-view"
+    )
+
+
+# #
 #   Badge › Option
 #   
 #   Normal Badges:
@@ -520,9 +584,9 @@ def badgeColorPalette( icon: str, text: str = "", type: str = "" ):
     ])
 
 # #
-#   Badge › Sponsor / Backers
+#   Badge › Supporter / Backers
 #   
-#       In order for the sponsor / backers badge to work, you must have a backers page created in your mkdocs.
+#       In order for the supporter / backers badge to work, you must have a backers page created in your mkdocs.
 #       add a new file; usually about/backers.md
 #       create a new entry in your mkdocs.yml to add the page to your navigation
 #   
@@ -534,8 +598,9 @@ def badgeColorPalette( icon: str, text: str = "", type: str = "" ):
 def badgeBackers( page: Page, files: Files ):
     icon = "material-heart"
     href = _resolve_path( PAGE_BACKERS, page, files )
+
     return badgeCreate(
-        icon = f"[:{icon}:]({href} 'Backers only')",
+        icon = f"[:{icon}:]({href} 'Supporter')",
         type = "heart"
     )
 

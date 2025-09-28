@@ -120,81 +120,108 @@ By default, every list is commented out with a `#` symbol at the beginning of th
 
 ``` ini title="/etc/csf/csf.blocklists"
 # #
-#   Spamhaus Don't Route Or Peer List (DROP)
-#   Details: http://www.spamhaus.org/drop/
+#   @blocklist              Official CSF Blocklists
+#   @details:               https://aetherinox.github.io/csf-firewall/usage/blocklists/#official-blocklists
+#                           https://aetherinox.github.io/csf-firewall/advanced/services/blocklist.configserver
+#   
+#   The official CSF blocklists contain a large number of IPs which range from various 
+#   different services, including AbuseIPDB (100% confidency).
+#   
+#   You can also use our blocklist service:
+#       http://blocklist.configserver.dev/master.ipset
+#       http://blocklist.configserver.dev/highrisk.ipset
+#   
+#   We offer many others, but these two are the primary ones.
+#   
+#   Requires you to edit /etc/csf/csf.conf setting:
+#       LF_IPSET_MAXELEM = "4000000"
+# #
+
+#   CSF_MASTER|43200|0|http://blocklist.configserver.dev/master.ipset
+#   CSF_HIGHRISK|43200|0|http://blocklist.configserver.dev/highrisk.ipset
+
+# #
+#   @blocklist              Spamhaus Don't Route Or Peer List (DROP)
+#   @details:               http://spamhaus.org/drop
 # #
 
 #   SPAMDROP|86400|0|http://www.spamhaus.org/drop/drop.txt
 
 # #
-#   Spamhaus IPv6 Don't Route Or Peer List (DROPv6)
-#   Details: http://www.spamhaus.org/drop/
+#   @blocklist              Spamhaus IPv6 Don't Route Or Peer List (DROPv6)
+#   @details:               http://spamhaus.org/drop
 # #
 
 #   SPAMDROPV6|86400|0|https://www.spamhaus.org/drop/dropv6.txt
 
 # #
-#   Spamhaus Extended DROP List (EDROP)
-#   Details: http://www.spamhaus.org/drop/
+#   @blocklist              Spamhaus Extended DROP List (EDROP)
+#   @details:               http://spamhaus.org/drop
 # #
 
 #   SPAMEDROP|86400|0|http://www.spamhaus.org/drop/edrop.txt
 
 # #
-#   DShield.org Recommended Block List
-#   Details: https://dshield.org
+#   @blocklist              DShield.org Recommended Block List
+#   @details:               https://dshield.org
 # #
 
 #   DSHIELD|86400|0|https://www.dshield.org/block.txt
 
 # #
-#   TOR Exit Nodes List
-#   Set URLGET in csf.conf to use LWP as this list uses an SSL connection
-#   Details: https://trac.torproject.org/projects/tor/wiki/doc/TorDNSExitList
+#   @blocklist              TOR Exit Nodes List
+#   @details:               https://trac.torproject.org/projects/tor/wiki/doc/TorDNSExitList
+#   @notes                  Set URLGET in csf.conf to use LWP as this list
+#                           uses an SSL connection
 # #
 
 #   TOR|86400|0|https://check.torproject.org/cgi-bin/TorBulkExitList.py?ip=1.2.3.4
 
 # #
-#   BOGON list
-#   Details: http://www.team-cymru.org/Services/Bogons/
+#   @blocklist              BOGON list
+#   @details:               http://team-cymru.org/Services/Bogons
 # #
 
 #   BOGON|86400|0|http://www.cymru.com/Documents/bogon-bn-agg.txt
 
 # #
-#   Project Honey Pot Directory of Dictionary Attacker IPs
-#   Details: http://www.projecthoneypot.org
+#   @blocklist              Project Honey Pot Directory of Dictionary Attacker IPs
+#   @details:               http://projecthoneypot.org
 # #
 
 #   HONEYPOT|86400|0|https://www.projecthoneypot.org/list_of_ips.php?t=d&rss=1
 
 # #
-#   C.I. Army Malicious IP List
-#   Details: http://www.ciarmy.com
+#   @blocklist              C.I. Army Malicious IP List
+#   @details:               https://ciarmy.com
 # #
 
 #   CIARMY|86400|0|http://www.ciarmy.com/list/ci-badguys.txt
 
 # #
-#   BruteForceBlocker IP List
-#   Details: http://danger.rulez.sk/index.php/bruteforceblocker/
+#   @blocklist              BruteForceBlocker IP List
+#   @details:               http://danger.rulez.sk/index.php/bruteforceblocker
 # #
 
 #   BFB|86400|0|http://danger.rulez.sk/projects/bruteforceblocker/blist.php
 
 # #
-#   MaxMind GeoIP Anonymous Proxies
-#   Set URLGET in csf.conf to use LWP as this list uses an SSL connection
-#   Details: https://www.maxmind.com/en/anonymous_proxies
+#   @blocklist              MaxMind GeoIP Anonymous Proxies
+#   @details:               https://maxmind.com/en/anonymous_proxies
+#   @notes:                 Set URLGET in csf.conf to use LWP as this list
+#                           uses an SSL connection
+#   
+#   This first list only retrieves the IP addresses added in the last hour
 # #
 
 #   MAXMIND|86400|0|https://www.maxmind.com/en/anonymous_proxies
 
 # #
-#   Blocklist.de
-#   Set URLGET in csf.conf to use LWP as this list uses an SSL connection
-#   Details: https://www.blocklist.de
+#   @blocklist              Blocklist.de
+#   @details:               https://blocklist.de
+#   @notes:                 Set URLGET in csf.conf to use LWP as this list
+#                           uses an SSL connection
+#   
 #   This first list only retrieves the IP addresses added in the last hour
 # #
 
@@ -209,26 +236,28 @@ By default, every list is commented out with a `#` symbol at the beginning of th
 #   BDEALL|86400|0|http://lists.blocklist.de/lists/all.txt
 
 # #
-#   Stop Forum Spam
-#   Details: http://www.stopforumspam.com/downloads/
-#   Many of the lists available contain a vast number of IP addresses so special
-#   care needs to be made when selecting from their lists
+#   @blocklist              Stop Forum Spam
+#   @details:               http://stopforumspam.com/downloads
+#   @notes:                 Many of the lists available contain a vast number of
+#                           IP addresses so special care needs to be made when
+#                           selecting from their lists
 # #
 
 #   STOPFORUMSPAM|86400|0|http://www.stopforumspam.com/downloads/listed_ip_1.zip
 
 # #
-#   Stop Forum Spam IPv6
-#   Details: http://www.stopforumspam.com/downloads/
-#   Many of the lists available contain a vast number of IP addresses so special
-#   care needs to be made when selecting from their lists
+#   @blocklist              Stop Forum Spam IPv6
+#   @details:               http://stopforumspam.com/downloads
+#   @notes:                 Many of the lists available contain a vast number of
+#                           IP addresses so special care needs to be made when
+#                           selecting from their lists
 # #
 
 #   STOPFORUMSPAMV6|86400|0|http://www.stopforumspam.com/downloads/listed_ip_1_ipv6.zip
 
 # #
-#   GreenSnow Hack List
-#   Details: https://greensnow.co
+#   @blocklist              GreenSnow Hack List
+#   @details:               https://greensnow.co
 # #
 
 #   GREENSNOW|86400|0|https://blocklist.greensnow.co/greensnow.txt

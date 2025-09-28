@@ -131,6 +131,23 @@ The badges in this section are for general use.
 
 
 
+### <!-- md:docs -->  Documentation { #docs data-toc-label="View Documentation" }
+
+=== "Description"
+
+    Denotes that this item has additional documentation which the user can click the icon for and be taken to another site / page
+
+    `Examples`
+
+    :   <!-- md:docs -->  `<!-- @md:docs -->`
+    :   <!-- md:docs ../advanced/services/blocklist.configserver/ self --> `<!-- @md:docs ../advanced/services/blocklist.configserver/ self -->`
+    :   <!-- md:docs ../advanced/services/blocklist.configserver/ self --> `<!-- @md:docs ../advanced/services/blocklist.configserver/ new -->`
+
+<br />
+
+
+
+
 ### <!-- md:plugin -->  Plugin { #plugin data-toc-label="Plugins" }
 
 === "Description"
@@ -275,16 +292,16 @@ The badges in this section are for general use.
 <br />
 
 
-### <!-- md:backers -->  Backers Only { #backers data-toc-label="Backers Only" }
+### <!-- md:support -->  Supporter { #supporter data-toc-label="Supporter" }
 
 === "Description"
 
-    The pumping heart symbol denotes that a specific feature or behavior is only available to backers. 
-    Normal users will not have access to this particular item.
+    The pumping heart symbol denotes a person who has been generous enough to support our development
+    through donations.
 
     `Examples`
 
-    :   <!-- md:backers --> Backer <!-- @md:backers --> 
+    :   <!-- md:support --> Backer <!-- @md:support --> 
 
 
 <br />
