@@ -564,7 +564,7 @@ For most users, the blocklists `master.ipset` and `highrisk.ipset` are all you n
 
 | Set Name | Description | Severity | View |
 | --- | --- | --- | --- |
-| `master.ipset` | <sub>Abusive IP addresses which have been reported for port scanning and SSH brute-forcing. HIGHLY recommended. <br> Includes [AbuseIPDB](https://www.abuseipdb.com/), [IPThreat](https://ipthreat.net/), [CinsScore](https://cinsscore.com), [GreensNow](https://blocklist.greensnow.co/greensnow.txt)</sub> | ★★★★★ | [view](https://blocklist.configserver.dev/master.ipset) |
+| `master.ipset` | <sub>Abusive IP addresses which have been reported for port scanning and SSH brute-forcing. HIGHLY recommended. <br> <sub><sup>Includes [AbuseIPDB](https://www.abuseipdb.com/), [IPThreat](https://ipthreat.net/), [CinsScore](https://cinsscore.com), [GreensNow](https://blocklist.greensnow.co/greensnow.txt)</sup></sub> | ★★★★★ | [view](https://blocklist.configserver.dev/master.ipset) |
 | `highrisk.ipset` | <sub>IPs with highest risk to your network and have a possibility that the activity which comes from them are going to be fraudulent.</sub> | ★★★★★ | [view](https://blocklist.configserver.dev/highrisk.ipset) |
 
 <br />
@@ -578,7 +578,7 @@ These blocklists help you control which third-party services can access your ser
 
 | Set | Description | Severity | View |
 | --- | --- | --- | --- |
-| `privacy_general.ipset` | Servers which scan ports for data collection and research purposes. <br> <span class="text-sm-9">List includes [Censys](https://censys.io), [Shodan](https://shodan.io/), [Project25499](https://blogproject25499.wordpress.com/), [InternetArchive](https://archive.org/), [Cyber Resilience](https://cyberresilience.io), [Internet Measurement](https://internet-measurement.com), [probe.onyphe.net](https://onyphe.net), [Security Trails](https://securitytrails.com) | ★★★★⚝ | [view](https://blocklist.configserver.dev/privacy_general.ipset)</span> |
+| `privacy_general.ipset` | Servers which scan ports for data collection and research purposes. <br> <sub><sup>List includes [Censys](https://censys.io), [Shodan](https://shodan.io/), [Project25499](https://blogproject25499.wordpress.com/), [InternetArchive](https://archive.org/), [Cyber Resilience](https://cyberresilience.io), [Internet Measurement](https://internet-measurement.com), [probe.onyphe.net](https://onyphe.net), [Security Trails](https://securitytrails.com) | ★★★★⚝ | [view](https://blocklist.configserver.dev/privacy_general.ipset)</sup></sub> |
 | `privacy_ahrefs.ipset` | Ahrefs SEO and services | ★★⚝⚝⚝ | [view](https://blocklist.configserver.dev/privacy_ahrefs.ipset) |
 | `privacy_amazon_aws.ipset` | Amazon AWS | ★★⚝⚝⚝ | [view](https://blocklist.configserver.dev/privacy_amazon_aws.ipset) |
 | `privacy_amazon_ec2.ipset` | Amazon EC2 | ★★⚝⚝⚝ | [view](https://blocklist.configserver.dev/privacy_amazon_ec2.ipset) |
@@ -663,15 +663,15 @@ These blocklists let you control which geographical locations can access your se
 
 All data is sourced directly from the GeoLite2 Database.
 
-| Set | Description | Severity | View |
+| Set | Description | Risk | View |
 |----------|------------|------------|------------|
-| `continent_africa.ipset` | All IPs located in Africa | ★★★★⚝ | [view](https://blocklist.configserver.dev/continent_africa.ipset) |
-| `continent_antartica.ipset` | All IPs located in Antarctica | ★★★★⚝ | [view](https://blocklist.configserver.dev/continent_antartica.ipset) |
+| `continent_africa.ipset` | All IPs located in Africa | ★★★⚝⚝ | [view](https://blocklist.configserver.dev/continent_africa.ipset) |
+| `continent_antartica.ipset` | All IPs located in Antarctica | ⚝⚝⚝⚝⚝ | [view](https://blocklist.configserver.dev/continent_antartica.ipset) |
 | `continent_asia.ipset` | All IPs located in Asia | ★★★★⚝ | [view](https://blocklist.configserver.dev/continent_asia.ipset) |
-| `continent_europe.ipset` | All IPs located in Europe | ★★★★⚝ | [view](https://blocklist.configserver.dev/continent_europe.ipset) |
+| `continent_europe.ipset` | All IPs located in Europe | ★★★⚝⚝ | [view](https://blocklist.configserver.dev/continent_europe.ipset) |
 | `continent_north_america.ipset` | All IPs located in North America | ★★★★⚝ | [view](https://blocklist.configserver.dev/continent_north_america.ipset) |
-| `continent_oceania.ipset` | All IPs located in North Oceania | ★★★★⚝ | [view](https://blocklist.configserver.dev/continent_oceania.ipset) |
-| `continent_south_america.ipset` | All IPs located in South America | ★★★★⚝ | [view](https://blocklist.configserver.dev/continent_south_america.ipset) |
+| `continent_oceania.ipset` | All IPs located in Oceania | ★⚝⚝⚝⚝ | [view](https://blocklist.configserver.dev/continent_oceania.ipset) |
+| `continent_south_america.ipset` | All IPs located in South America | ★★⚝⚝⚝ | [view](https://blocklist.configserver.dev/continent_south_america.ipset) |
 
 <br />
 
