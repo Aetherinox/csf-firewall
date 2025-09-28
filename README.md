@@ -79,7 +79,7 @@
     - [Step 6: Enable and Start Services](#step-6-enable-and-start-services)
 - [IP Sets / Blocklist](#ip-sets--blocklist)
   - [Official Blocklists](#official-blocklists)
-  - [Risk Assessments](#risk-assessments)
+    - [Risk Assessments](#risk-assessments)
     - [Main Lists](#main-lists)
     - [Privacy Lists](#privacy-lists)
     - [Spam Lists](#spam-lists)
@@ -524,7 +524,7 @@ CSF_HIGHRISK|43200|0|https://raw.githubusercontent.com/Aetherinox/csf-firewall/m
 <br />
 <br />
 
-### Risk Assessments
+#### Risk Assessments
 
 The lists in this README use `⚝` and `★` icons to indicate risk levels. More stars mean higher risk. Lists marked as **High** or **Critical** should be added to your CSF blocklist to secure your server. Lower-risk lists are optional and can be added at your discretion.
 
