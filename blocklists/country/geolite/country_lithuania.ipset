@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_lithuania_ipset
 #   @uuid           f271f2f3-0327-3ac3-b92d-111cf802bbbc
-#   @updated        Sun 28 Sep 2025 06:35:21 AM UTC
+#   @updated        Mon 29 Sep 2025 01:03:43 AM UTC
 #   @entries        3,138,862 ips
 #                   2,524 subnets
 #                   2,524 lines
