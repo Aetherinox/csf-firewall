@@ -3,6 +3,8 @@ ChangeLog:
 15.10 - First version released by Aetherinox
         https://github.com/Aetherinox/csf-firewall
 
+        Registered new domain https://configserver.dev
+
         Added new theme switcher
 
         Added new dedicated javascript library
@@ -13,9 +15,13 @@ ChangeLog:
 
         Added new static footer to web interface
 
-        Integrated dark theme addon into csf with light theme
+        Added new blocklist service at https://blocklist.configserver.dev
 
-        Changed csf update server code to point to new csf github repository
+        Bring new update server online at https://download.configserver.dev
+
+        Changed csf update server code to point to new csf domain
+
+        Integrated dark theme addon into csf with light theme
 
         Migrated css over to template structure and theme variables
 
