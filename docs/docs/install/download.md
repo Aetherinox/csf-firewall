@@ -10,6 +10,16 @@ tags:
 
 In the previous section, we explained how to install all the required dependencies for CSF. Now, we’ll guide you through downloading the latest version of ConfigServer Firewall & Security.
 
+Instructions on this page cover both the `tgz` and `zip archive, see the note below:
+
+??? note "`.zip` vs `.tgz` format"
+
+    Our documentation frequently mentions both `.zip` and `.tgz` releases of CSF. 
+
+    When we initially developed addons for CSF, we pushed all of our releases in a `.zip` archive. 
+    
+    However, after taking over full development of CSF, we opted to migrate back to the `.tgz` format to keep conformity with how the original developer packaged releases. This is why our scripts mention both extensions, and why our scripts look for both.
+
 <br />
 
 ## Generic Environment
@@ -23,13 +33,23 @@ The main difference comes **after installation** — the way you access and mana
 
 Download the latest version of CSF. Two methods are provided below, and you can pick either one. Most users will want to opt for the :aetherx-axs-box: `Direct Download`.
 
-=== ":aetherx-axs-box: Direct Download"
+=== ":aetherx-axs-file-zipper: Direct Download (tgz)"
 
     ```shell
-    # Using wget
+    # Using wget (tgz)
+    wget https://download.configserver.dev/csf.tgz
+
+    # Using curl (tgz)
+    curl -O https://download.configserver.dev/csf.tgz
+    ```
+
+=== ":aetherx-axs-file-zip: Direct Download (zip)"
+
+    ```shell
+    # Using wget (zip)
     wget https://download.configserver.dev/csf.zip
 
-    # Using curl
+    # Using curl (zip)
     curl -O https://download.configserver.dev/csf.zip
     ```
 
@@ -45,13 +65,7 @@ Download the latest version of CSF. Two methods are provided below, and you can 
 
 <br />
 
-Next, we need to extract the `.zip` to a folder on our server. We are going to unzip the CSF zip to `/tmp/csf`:
-
-=== ":aetherx-axs-file-zip: .zip"
-
-    ```bash
-    unzip csf.zip -d /tmp/csf
-    ```
+Decompress / unzip the downloaded file to your server. We have provided instructions for extracting both the `.tgz` and `.zip`
 
 === ":aetherx-axs-file-zipper: .tgz"
 
@@ -59,10 +73,15 @@ Next, we need to extract the `.zip` to a folder on our server. We are going to u
     tar -xzf csf.tgz -C /tmp/csf
     ```
 
+=== ":aetherx-axs-file-zip: .zip"
+
+    ```bash
+    unzip csf.zip -d /tmp/csf
+    ```
 
 <br />
 
-After you extract the `.zip` or `.tgz`, you can now change over to the folder where the extracted CSF files are located:
+After you extract the archive, you can now change over to the folder where the extracted CSF files are located:
 
 ```shell
 cd /tmp/csf
@@ -123,13 +142,23 @@ First, log in to your server as the `root` user via SSH.
 
 Download the latest version of CSF. Two methods are provided below, and you can pick either one. Most users will want to opt for the :aetherx-axs-box: `Direct Download`.
 
-=== ":aetherx-axs-box: Direct Download"
+=== ":aetherx-axs-file-zipper: Direct Download (tgz)"
 
     ```shell
-    # Using wget
+    # Using wget (tgz)
+    wget https://download.configserver.dev/csf.tgz
+
+    # Using curl (tgz)
+    curl -O https://download.configserver.dev/csf.tgz
+    ```
+
+=== ":aetherx-axs-file-zip: Direct Download (zip)"
+
+    ```shell
+    # Using wget (zip)
     wget https://download.configserver.dev/csf.zip
 
-    # Using curl
+    # Using curl (zip)
     curl -O https://download.configserver.dev/csf.zip
     ```
 
@@ -145,13 +174,7 @@ Download the latest version of CSF. Two methods are provided below, and you can 
 
 <br />
 
-Unzip / decompress the downloaded file to your server. We have provided instructions for extracting both the newer `.zip` format, and the older tar `.tgz` format:
-
-=== ":aetherx-axs-file-zip: .zip"
-
-    ```bash
-    unzip csf.zip -d /root/csf
-    ```
+Decompress / unzip the downloaded file to your server. We have provided instructions for extracting both the `.tgz` and `.zip`
 
 === ":aetherx-axs-file-zipper: .tgz"
 
@@ -159,9 +182,15 @@ Unzip / decompress the downloaded file to your server. We have provided instruct
     tar -xzf csf.tgz -C /root/csf
     ```
 
+=== ":aetherx-axs-file-zip: .zip"
+
+    ```bash
+    unzip csf.zip -d /root/csf
+    ```
+
 <br />
 
-After you extract the `.zip` or `.tgz`, you can now change over to the folder where the extracted CSF files are located:
+After you extract the archive, you can now change over to the folder where the extracted CSF files are located:
 
 ```shell
 cd /root/csf
