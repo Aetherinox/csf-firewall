@@ -15,6 +15,47 @@ tags:
 
 </p>
 
+<br />
+
+### <!-- md:version stable- --> 15.10.0 <small>October, 2025</small> { id="15.10.0" }
+
+- `feat`: Register new domain https://configserver.dev
+- `feat`: Added new theme switcher
+- `feat`: Added new dedicated javascript library
+- `feat`: Added new icon font library
+- `feat`: Added new login interface for web interface
+- `feat`: Added new static footer to web interface
+- `feat`: Integrated dark theme addon into csf with light theme
+- `feat`: New blocklist service at https://blocklist.configserver.dev
+- `chore`: Bring new update server online at https://download.configserver.dev
+- `refactor`: Changed csf update server code to point to new csf domain
+- `refactor`: Migrated css over to template structure and theme variables
+- `fix`: `All` tab not properly displaying correct sections in web interface
+- `fix`: Invalid sessions still being able to access backend web interface assets
+
+### <!-- md:version stable- --> 15.0.0 <small>Aug 28, 2025</small> { id="15.0.0" }
+
+- `chore`: Download and update servers taken offline
+- `chore`: Disabled automatic updates within csf
+- `chore`: Added country code validation and warning output
+- `refactor`: Updated regex to extract client ip from logs
+- `docs`: Changed license to GPLv3
+
+<br />
+
+### <!-- md:version stable- --> 14.24.0 <small>Aug 02, 2025</small> { id="14.24.0" }
+
+- `fix`: regression bug in v14.23 "Modified UI HTTP header checks to be case agnostic"
+
+<br />
+
+### <!-- md:version stable- --> 14.23.0 <small>July 21, 2025</small> { id="14.23.0" }
+
+- `change`: Modify Apache regex to detect "remote" or "client" as the IP trigger
+- `change`: Mdified UI HTTP header checks to be case agnostic
+
+<br />
+
 ### <!-- md:version stable- --> 14.22.0 <small>Sep 20, 2024</small> { id="14.22.0" }
 
 - `build`: Updates ConfigServer Firewall to v14.22
