@@ -9625,6 +9625,10 @@ sub ui {
 							exit;
 						}
 					}
+					else
+					{
+						logfile("UI: [ WARNING ] UI_BLOCK_PRIVATE_NET set to 0. Accepting connection to UI through local IP [$peeraddress]");
+					}
 
 					if ($config{"UI_BAN"}) {
 						open (my $UIBAN,"<","/etc/csf/ui/ui.ban");
