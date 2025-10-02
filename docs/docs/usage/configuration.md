@@ -102,8 +102,10 @@ Define the allowed incoming and outgoing TCP ports, respectively. Add or remove 
       | 80   | HTTP (web traffic, insecure) |
       | 110  | POP3 (downloading emails, insecure) |
       | 113  | Ident / AUTH (rarely used identification service) |
+      | 139  | Samba (legacy) (SMB over NetBIOS) |
       | 143  | IMAP (retrieving/syncing emails, insecure) |
       | 443  | HTTPS (secure web traffic) |
+      | 445  | Samba (modern - preferred) (SMB over TCP) |
       | 465  | SMTP over SSL (secure sending of emails) |
       | 587  | SMTP submission (secure client-to-server email sending) |
       | 853  | DNS over TLS (secure DNS queries) |
@@ -149,6 +151,8 @@ Define the allowed incoming and outgoing UDP ports, respectively. Add or remove 
       | 853        | DNS over TLS (UDP fallback possible) |
       | 67         | DHCP server (receives client requests) |
       | 68         | DHCP client (receives server responses) |
+      | 137        | Samba / NetBIOS Name Service (NBNS) |
+      | 138        | Samba / NetBIOS Datagram Service (NBDS) |
       | 161        | SNMP (Simple Network Management Protocol) |
       | 162        | SNMP traps (from agents to manager) |
       | 500        | IKE (IPsec key exchange) |

@@ -293,6 +293,7 @@ Save and exit. Then open the file `/etc/csf/ui/ui.allow` and add your client IP 
     This is an example of how your `ui.allow` file should look.
 
     ```shell
+    127.0.0.1           # localhost
     10.10.0.6           # example LAN ip
     40.159.100.6        # example WAN ip
     ```
@@ -303,6 +304,26 @@ Save and exit. Then open the file `/etc/csf/ui/ui.allow` and add your client IP 
 
     ```shell
     echo "YOUR_PUBLIC_IP_ADDRESS" | sudo tee -a /etc/csf/ui/ui.allow
+    ```
+
+<br />
+
+If you opt to define an IP address to CSF by setting `UI_IP`, you must ensure you whitelist the gateway address in your `/etc/csf/ui/ui.allow`
+
+=== ":material-file: /etc/csf/csf.conf"
+
+    ```shell
+    # #
+    #   Leave blank to bind to all IP addresses on the server 
+    # #
+
+    UI_IP = "::ffff:172.17.0.1"
+    ```
+
+=== ":material-file: /etc/csf/ui/ui.allow"
+
+    ```shell
+    172.17.0.1          # CSF assigned IP
     ```
 
 <br />
@@ -398,7 +419,7 @@ sudo csf -ra
 Access the CSF interface in your browser with the specified IP and port. For these docs; we used port `1025`. 
 
 ```shell
-http://127.0.0.1:1025
+https://127.0.0.1:1025
 ```
 
 <br />
@@ -424,6 +445,33 @@ After successful login, you should see the following:
     ![CSF Main Dashboard](../assets/images/install/webui/2.png){ width="700" }
     <figcaption>CSF Main Dashboard</figcaption>
 </figure>
+
+<br />
+
+If you try to access the CSF web interface in your browser and you get an error similar to the following:
+
+```
+Secure Connection Failed
+
+An error occurred during a connection to 172.17.0.1:1025. PR_CONNECT_RESET_ERROR
+
+Error code: PR_CONNECT_RESET_ERROR
+
+    The page you are trying to view cannot be shown because the authenticity of the received data could not be verified.
+    Please contact the website owners to inform them of this problem.
+```
+
+<br />
+
+Open your lfd logs at `/var/logs/lfd.log` and see if any messages state that you attempted to access the web interface, but were denied access. The message will be similar to the following:
+
+```shell
+Oct  2 02:55:38 configserver lfd[42635]: UI: Access attempt from an IP not in /etc/csf/ui/ui.allow - denied [127.0.0.1]
+```
+
+<br />
+
+An error like above means that you have not whitelisted the correct IP in your `/etc/csf/ui/ui.allow` file. You must whitelist the correct IP before you'll be able to access the web interface.
 
 <br />
 
