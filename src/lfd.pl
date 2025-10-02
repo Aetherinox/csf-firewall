@@ -9602,22 +9602,28 @@ sub ui {
 					}
 					$ENV{REMOTE_ADDR} = $peeraddress; ##no critic
 
-					if ($ips{$peeraddress}) {
-						logfile("UI: Login attempt from local IP address denied [$peeraddress]");
-						if ($config{UI_ALERT} >= 4) {
-							my @message;
-							my $tip = iplookup($peeraddress);
-							foreach my $line (@alert) {
-								$line =~ s/\[ip\]/$tip/ig;
-								$line =~ s/\[alert\]/Login attempt from local IP/ig;
-								$line =~ s/\[text\]/Login attempt from local IP address $tip - denied/ig;
-								push @message, $line;
+					if ($config{UI_BLOCK_PRIVATE_NET} == 1)
+					{
+						if ($ips{$peeraddress})
+						{
+							logfile("UI: Login attempt from local IP address denied [$peeraddress]");
+							if ($config{UI_ALERT} >= 4)
+							{
+								my @message;
+								my $tip = iplookup($peeraddress);
+								foreach my $line (@alert)
+								{
+									$line =~ s/\[ip\]/$tip/ig;
+									$line =~ s/\[alert\]/Login attempt from local IP/ig;
+									$line =~ s/\[text\]/Login attempt from local IP address $tip - denied/ig;
+									push @message, $line;
+								}
+								ConfigServer::Sendmail::relay("", "", @message);
 							}
-							ConfigServer::Sendmail::relay("", "", @message);
+							close ($client);
+							alarm(0);
+							exit;
 						}
-						close ($client);
-						alarm(0);
-						exit;
 					}
 
 					if ($config{"UI_BAN"}) {
