@@ -283,6 +283,12 @@ fi
 if [ ! -e "/usr/local/csf/bin/pt_deleted_action.pl" ]; then
 	cp -avf pt_deleted_action.pl /usr/local/csf/bin/.
 fi
+if [ ! -e "/usr/local/csf/bin/csfpre.sh" ]; then
+	cp -avf csfpre.sh /usr/local/csf/bin/.
+fi
+if [ ! -e "/usr/local/csf/bin/csfpost.sh" ]; then
+	cp -avf csfpost.sh /usr/local/csf/bin/.
+fi
 if [ ! -e "/etc/csf/messenger" ]; then
 	cp -avf messenger /etc/csf/.
 fi
