@@ -20,6 +20,7 @@ tags:
 ### <!-- md:version stable- --> 15.10.0 <small>October, 2025</small> { id="15.10.0" }
 
 - `feat`: Register new domain https://configserver.dev
+- `feat`: Added new pre and post startup scripts
 - `feat`: Added new theme switcher
 - `feat`: Added new dedicated javascript library
 - `feat`: Added new icon font library
