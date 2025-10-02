@@ -1,13 +1,13 @@
 ---
-title: "Usage › Configuration"
+title: "Usage › Pre.d/Post.d Scripts"
 tags:
   - usage
   - configure
 ---
 
-# Usage › Configuration
+# Usage › Pre and Post Scripts
 
-This section introduces the main CSF configuration file, which controls how CSF operates and determines which features are active on your server.
+CSF provides special folders where you can place your own bash scripts to be executed at specific points during the firewall startup process. These scripts make it easy to maintain custom, persistent firewall rules that are automatically applied every time the CSF service is restarted.
 
 <br />
 
@@ -15,16 +15,63 @@ This section introduces the main CSF configuration file, which controls how CSF 
 
 <br />
 
+## Location and Structure
 
-## Location
+This section outlines exactly how the pre and post scriptsare initialized and loaded.
 
-The main configuration file for CSF is located in `/etc/csf/csf.conf`. You can use your preferred text editor to modify the file, such as nano or vim:
+<br />
 
-=== ":aetherx-axd-command: Command"
+### Loader Scripts
 
-      ```
-      sudo nano /etc/csf/csf.conf
-      ```
+When CSF is installed for the first time, two loader files are added to your system. These files are described below:
+
+:aetherx-axd-file: <!-- md:option /usr/local/csf/bin/csfpre.sh -->
+
+:   - This file is responsible for iterating over your `/usr/local/include/csf/pre.d/` folder and loading any scripts located in that directory.
+    - Runs **before** any iptables rules are added by CSF, allowing you to prepare the environment or add rules that must exist prior to CSF’s standard rules.
+
+:aetherx-axd-file: <!-- md:option /usr/local/csf/bin/csfpost.sh -->
+
+:   - This file is responsible for iterating over your `/usr/local/include/csf/post.d/` folder and loading any scripts located in that directory.
+    - Runs **after** all iptables rules are applied, letting you append custom rules that should persist alongside CSF's configuration. 
+
+<br />
+
+### Loader Folders
+
+When the [loader scripts](#loader-scripts) above are run, they will scan their respective folders. These folders are where you should place your custom scripts, allowing you to create persistent firewall rules that are automatically applied each time CSF starts or restarts.
+
+:aetherx-axd-folder: <!-- md:option /usr/local/include/csf/pre.d/ -->
+
+:   - Stores scripts that are executed **before** CSF applies its default iptables rules.
+    - Any scripts placed in this folder will run automatically every time CSF is started or restarted, allowing you to configure custom rules or settings prior to CSF’s standard firewall rules.
+    - Files in this folder are initialized and loaded by the script `/usr/local/csf/bin/csfpre.sh`
+
+:aetherx-axd-folder: <!-- md:option /usr/local/include/csf/post.d/ -->
+
+:   - Stores scripts that are executed **after** CSF applies its default iptables rules.
+    - Any scripts placed in this folder will run automatically every time CSF is started or restarted, allowing you to configure custom rules or settings after to CSF’s standard firewall rules.
+    - Files in this folder are initialized and loaded by script `/usr/local/csf/bin/csfpost.sh`
+
+<br />
+
+We have provided an example structure of how your scripts should be stored. When creating your script files, they can be any name you want.
+
+```
+📁 usr
+   📁 local
+      📁 csf
+         📁 bin
+            📄 csfpre.sh
+            📄 csfpost.sh
+      📁 include
+         📁 csf
+            📁 pre.d
+               📄 my_rules_before.sh
+            📁 post.d
+               📄 my_docker_rules.sh
+               📄 openvpn_rules.sh
+```
 
 <br />
 
@@ -112,25 +159,6 @@ Define the allowed incoming and outgoing TCP ports, respectively. Add or remove 
       | 993  | IMAP over SSL (secure email retrieval) |
       | 995  | POP3 over SSL (secure email download) |
 
-=== ":aetherx-axs-note-sticky: Notes"
-
-      <h3>Samba Users</h3>
-
-      If you wish to access a drive on the server you are running CSF on from another machine, you must add the following ports:
-
-      ``` shell
-      TCP_IN = "445,139"
-      UDP_IN = "137,138"
-      ```
-
-      <br />
-
-      If you need to access a drive from another machine on your server running CSF; you must add the following ports:
-
-      ``` shell
-      TCP_OUT = "445,139"
-      UDP_OUT = "137,138"
-      ```
 
 <br />
 <br />
@@ -179,26 +207,6 @@ Define the allowed incoming and outgoing UDP ports, respectively. Add or remove 
       | 1900       | SSDP (Simple Service Discovery Protocol, used in UPnP) |
       | 4500       | IPsec NAT traversal |
       | 33434–33523 | Traceroute / ICMP UDP probe ports |
-
-=== ":aetherx-axs-note-sticky: Notes"
-
-      <h3>Samba Users</h3>
-
-      If you wish to access a drive on the server you are running CSF on from another machine, you must add the following ports:
-
-      ``` shell
-      TCP_IN = "445,139"
-      UDP_IN = "137,138"
-      ```
-
-      <br />
-
-      If you need to access a drive from another machine on your server running CSF; you must add the following ports:
-
-      ``` shell
-      TCP_OUT = "445,139"
-      UDP_OUT = "137,138"
-      ```
 
 <br />
 <br />
