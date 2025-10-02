@@ -1169,6 +1169,24 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#allow-traefik-container-ip" class="md-nav__link">
+    <span class="md-ellipsis">
+      Allow Traefik Container IP
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#next-steps" class="md-nav__link">
     <span class="md-ellipsis">
       Next Steps
@@ -2124,6 +2142,24 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#allow-traefik-container-ip" class="md-nav__link">
+    <span class="md-ellipsis">
+      Allow Traefik Container IP
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#next-steps" class="md-nav__link">
     <span class="md-ellipsis">
       Next Steps
@@ -2769,14 +2805,15 @@ recommend them because we have been an actual customer for over six years, and h
 </div>
 </div>
 <p><br></p>
-<p>In the code blocks above, we attached multiple <abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr> <strong><abbr title="A component in Traefik that modifies requests or responses before they reach a service or client.">middlewares</abbr></strong> to <code>routers</code>:  </p>
+<p>In the code block above, we attached multiple <abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr> <strong><abbr title="A component in Traefik that modifies requests or responses before they reach a service or client.">middlewares</abbr></strong> <code>routers</code>:  </p>
 <ul>
-<li><a href="https://docs.goauthentik.io/add-secure-apps/providers/proxy/server_traefik/"><abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> <abbr title="A component in Traefik that modifies requests or responses before they reach a service or client.">Middleware</abbr></a><ul>
-<li>Require authentication through <abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> before allowing access.  </li>
+<li><a href="https://doc.traefik.io/traefik/reference/routing-configuration/http/middlewares/ipallowlist/">IP AllowList</a><ul>
+<li>Restrict access to the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface by whitelisted IP addresses.</li>
+<li>This <abbr title="A component in Traefik that modifies requests or responses before they reach a service or client.">middleware</abbr> is included in <abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr>; no additional plugins require being downloaded.</li>
 </ul>
 </li>
-<li><a href="https://doc.traefik.io/traefik/reference/routing-configuration/http/middlewares/ipallowlist/">IP AllowList</a><ul>
-<li>Restrict access to the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface by whitelisted IP addresses.  </li>
+<li><a href="https://docs.goauthentik.io/add-secure-apps/providers/proxy/server_traefik/"><abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> <abbr title="A component in Traefik that modifies requests or responses before they reach a service or client.">Middleware</abbr></a><ul>
+<li>Require authentication through <abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> before allowing access.  </li>
 </ul>
 </li>
 <li><a href="https://plugins.traefik.io/plugins/62d6ce04832ba9805374d62c/geo-block">Geoblocking</a><ul>
@@ -2788,9 +2825,31 @@ recommend them because we have been an actual customer for over six years, and h
 <hr>
 <p><br></p>
 <h2 id="restart-traefik">Restart <abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr><a class="headerlink" href="#restart-traefik" title="Permanent link">¶</a></h2>
-<p>Once you configure these changes in <abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr>, you can restart your <abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr> <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">docker</abbr> container. The command for that depends on how you set up the container. If you used <abbr title="The YAML configuration file that specifies services, networks, and volumes for a Docker Compose application.">docker-compose.yml</abbr>, you can cd into the folder with the <code>docker-compose.yml</code> file and then execute:</p>
+<p>Once you configure these changes in <abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr>, you can restart your <abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr> <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">docker</abbr> container. The command for that depends on how you set up the container. If you used <code>docker-compose.yml</code>, you can cd into the folder with the <code>docker-compose.yml</code> file and then execute:</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>down<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d
 </span></code></pre></div>
+<p><br></p>
+<hr>
+<p><br></p>
+<h2 id="allow-traefik-container-ip">Allow <abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr> Container IP<a class="headerlink" href="#allow-traefik-container-ip" title="Permanent link">¶</a></h2>
+<p>The last step in allowing <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>'s web interface to pass through <abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr> is to add the IP address assigned to your <abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr> container to <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>'s allow file <code>/etc/csf/csf.allow</code>.  </p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="allow-traefik-container-ip-etccsfcsfallow" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="allow-traefik-container-ip-etccsfcsfallow"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-277.5c0-17-6.7-33.3-18.7-45.3L258.7 18.7C246.7 6.7 230.5 0 213.5 0L64 0zM325.5 176L232 176c-13.3 0-24-10.7-24-24L208 58.5 325.5 176z"></path></svg></span> /etc/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>.allow</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="l l-Scalar l-Scalar-Plain">172.18.0.2</span><span class="w">      </span><span class="c1"># Traefik container IP</span>
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>You <strong>MUST</strong> do this, otherwise when you attempt to access the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> admin interface, you will get the browser error:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Gateway Timeout
+</span></code></pre></div>
+<p><br></p>
+<hr>
+<p><br></p>
+<h2 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">¶</a></h2>
+<p>If you do all of the steps above, you should now be able to access the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface through your browser, with the added protection of <abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr>. This will allow you to access the web interface from other locations, implement <abbr title="A component in Traefik that modifies requests or responses before they reach a service or client.">middleware</abbr> such as IP whitelisting, and not expose the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface port to the world. You should <strong>NOT</strong> be allowing any connection to access the web interface, even if they don't have the username and password to sign in.</p>
 <p><br></p>
 <hr>
 <p><br></p>
@@ -2847,7 +2906,7 @@ your server secure.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 25, 2025 12:50:03 UTC"><span class="timeago" datetime="2025-09-25T12:50:03+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 25, 2025 12:50:03 UTC">2025-09-25</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 2, 2025 22:37:32 UTC"><span class="timeago" datetime="2025-10-02T22:37:32+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 2, 2025 22:37:32 UTC">2025-10-02</span>
   </span>
 
     

@@ -77,6 +77,10 @@
          <lastmod>2025-10-02</lastmod>
     </url>
     <url>
+         <loc>https://Aetherinox.github.io/csf-firewall/install/docker/</loc>
+         <lastmod>2025-10-02</lastmod>
+    </url>
+    <url>
          <loc>https://Aetherinox.github.io/csf-firewall/install/download/</loc>
          <lastmod>2025-10-02</lastmod>
     </url>
@@ -130,6 +134,10 @@
     </url>
     <url>
          <loc>https://Aetherinox.github.io/csf-firewall/usage/ipset/</loc>
+         <lastmod>2025-10-02</lastmod>
+    </url>
+    <url>
+         <loc>https://Aetherinox.github.io/csf-firewall/usage/prepost/</loc>
          <lastmod>2025-10-02</lastmod>
     </url>
     <url>
