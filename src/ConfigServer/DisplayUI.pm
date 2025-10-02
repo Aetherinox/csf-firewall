@@ -2480,37 +2480,7 @@ EOF
 		{
 			print "<tr><td><button name='action' value='remapf' type='submit' class='btn btn-default'>Remove APF/BFD</button></td><td style='width:100%'>Remove APF/BFD from the server. You must not run both APF or BFD with csf on the same server</td></tr>\n";
 		}
-	
-		unless (-e "/etc/cxs/cxs.pl")
-		{
-			if (-e "/usr/local/cpanel/version" or $config{DIRECTADMIN} or $config{INTERWORX} or $config{VESTA} or $config{CWP} or $config{CYBERPANEL})
-			{
-				print "<tr><td colspan='2'>\n";
-				print "<div class='bs-callout bs-callout-info h4'>Add server and user data protection against exploits using <a href='https://configserver.dev/cp/cxs.html' target='_blank'>ConfigServer eXploit Scanner (cxs)</a></div>\n";
-				print "</td></tr>\n";
-			}
-		}
-	
-		unless (-e "/etc/osm/osmd.pl")
-		{
-			if (-e "/usr/local/cpanel/version" or $config{DIRECTADMIN})
-			{
-				print "<tr><td colspan='2'>\n";
-				print "<div class='bs-callout bs-callout-info h4'>Add outgoing spam monitoring and prevention using <a href='https://configserver.dev/cp/osm.html' target='_blank'>ConfigServer Outgoing Spam Monitor(osm)</a></div>\n";
-				print "</td></tr>\n";
-			}
-		}
 
-		unless (-e "/usr/msfe/mschange.pl")
-		{
-			if (-e "/usr/local/cpanel/version" or $config{DIRECTADMIN})
-			{
-				print "<tr><td colspan='2'>\n";
-				print "<div class='bs-callout bs-callout-info h4'>Add effective incoming virus and spam detection and user level processing using <a href='https://configserver.dev/cp/msfe.html' target='_blank'>ConfigServer MailScanner Front-End (msfe)</a></div>\n";
-				print "</td></tr>\n";
-			}
-		}
-		
 		print "</table>\n";
 		print "</form>\n";
 		if ($upgrade) {print "<script>\$('\#upgradebs').show();</script>\n"}
