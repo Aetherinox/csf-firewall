@@ -76,8 +76,8 @@
 #       LF_IPSET_MAXELEM = "4000000"
 # #
 
-#   CSF_MASTER|43200|0|https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/blocklists/master.ipset
-#   CSF_HIGHRISK|43200|0|https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/blocklists/highrisk.ipset
+#   CSF_MASTER|43200|0|http://blocklist.configserver.dev/master.ipset
+#   CSF_HIGHRISK|43200|0|http://blocklist.configserver.dev/highrisk.ipset
 
 # #
 #   @blocklist              Spamhaus Don't Route Or Peer List (DROP)
