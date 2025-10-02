@@ -621,12 +621,13 @@ In the two code block tabs below, we give the code that you should add to two im
 
 <br />
 
-In the code blocks above, we attached multiple Traefik **middlewares** to `routers`:  
+In the code block above, we attached multiple Traefik **middlewares** `routers`:  
 
+- [IP AllowList](https://doc.traefik.io/traefik/reference/routing-configuration/http/middlewares/ipallowlist/)
+    - Restrict access to the CSF web interface by whitelisted IP addresses.
+    - This middleware is included in Traefik; no additional plugins require being downloaded.
 - [Authentik Middleware](https://docs.goauthentik.io/add-secure-apps/providers/proxy/server_traefik/)
     - Require authentication through Authentik before allowing access.  
-- [IP AllowList](https://doc.traefik.io/traefik/reference/routing-configuration/http/middlewares/ipallowlist/)
-    - Restrict access to the CSF web interface by whitelisted IP addresses.  
 - [Geoblocking](https://plugins.traefik.io/plugins/62d6ce04832ba9805374d62c/geo-block)
     - Restrict access based on Geographical location
 
@@ -638,11 +639,45 @@ In the code blocks above, we attached multiple Traefik **middlewares** to `route
 
 ## Restart Traefik
 
-Once you configure these changes in Traefik, you can restart your Traefik docker container. The command for that depends on how you set up the container. If you used docker-compose.yml, you can cd into the folder with the `docker-compose.yml` file and then execute:
+Once you configure these changes in Traefik, you can restart your Traefik docker container. The command for that depends on how you set up the container. If you used `docker-compose.yml`, you can cd into the folder with the `docker-compose.yml` file and then execute:
 
 ```shell
 docker compose down && docker compose up -d
 ```
+
+<br />
+
+---
+
+<br />
+
+## Allow Traefik Container IP
+
+The last step in allowing CSF's web interface to pass through Traefik is to add the IP address assigned to your Traefik container to CSF's allow file `/etc/csf/csf.allow`.  
+
+=== ":aetherx-axs-file: /etc/csf/csf.allow"
+
+    ```yaml
+    172.18.0.2      # Traefik container IP
+    ```
+
+<br />
+
+You **MUST** do this, otherwise when you attempt to access the CSF admin interface, you will get the browser error:
+
+```
+Gateway Timeout
+```
+
+<br />
+
+---
+
+<br />
+
+## Conclusion
+
+If you do all of the steps above, you should now be able to access the CSF web interface through your browser, with the added protection of Traefik. This will allow you to access the web interface from other locations, implement middleware such as IP whitelisting, and not expose the CSF web interface port to the world. You should **NOT** be allowing any connection to access the web interface, even if they don't have the username and password to sign in.
 
 <br />
 
