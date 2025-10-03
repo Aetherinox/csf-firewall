@@ -83,7 +83,7 @@ We have provided an example structure of how your scripts should be stored. When
 
 As outlined earlier, the `pre.d` and `post.d` folders allow you to drop your own custom bash scripts inside the folders which will be responsible for any iptable rules you need to add to CSF every time the service is started or restarted. 
 
-We will provide an example script below just to outline what can be done. In our example, we will create `/usr/local/include/csf/post.d/ports-blocklist.sh`. The script will do the following:
+We will provide an example script below just to outline what can be done. In our example, we will create `/usr/local/include/csf/post.d/ports-blacklist.sh`. The script will do the following:
 
 - Defines a list of blacklisted ports using a JSON array in `BLACKLIST_PORTS`. Each entry includes a port number and a comment describing it.
 - Iterates over each port in the blacklist using `jq` to parse the JSON.
@@ -99,7 +99,7 @@ We will provide an example script below just to outline what can be done. In our
 
 <br />
 
-Add the code below to your new file `/usr/local/include/csf/post.d/ports-blocklist.sh` and save.
+Add the code below to your new file `/usr/local/include/csf/post.d/ports-blacklist.sh` and save.
 
 ```bash
 #!/bin/sh
@@ -110,7 +110,7 @@ Add the code below to your new file `/usr/local/include/csf/post.d/ports-blockli
 
 BLACKLIST_PORTS=$(cat <<EOF
 [
-    {"port":"111", "comment":"used by rpcbind, has vulnerabilities"}
+    {"port":"111", "comment":"used by sunrpc/rpcbind, has vulnerabilities"}
 ]
 EOF
 )
@@ -176,7 +176,7 @@ The script itself is very easy to use. We make sure to edit the list `BLACKLIST_
 ``` bash
 BLACKLIST_PORTS=$(cat <<EOF
 [
-    {"port":"111", "comment":"used by rpcbind, has vulnerabilities"},
+    {"port":"111", "comment":"used by sunrpc/rpcbind, has vulnerabilities"}
     {"port":"21", "comment":"insecure ftp"}
 ]
 EOF
@@ -202,11 +202,11 @@ After you edit the list of ports, simply restart CSF's services and the script w
       LOCALOUTPUT  all opt -- in * out !lo  0.0.0.0/0  -> 0.0.0.0/0  
       LOCALINPUT  all opt -- in !lo out *  0.0.0.0/0  -> 0.0.0.0/0  
       Running /usr/local/csf/bin/csfpost.sh
-      Loading post-script: /usr/local/include/csf/post.d/ports-blocklist.sh
+      Loading post-script: /usr/local/include/csf/post.d/ports-blacklist.sh
 
       + RESTRICT      Blacklisting Ports
-                        ├─ Blacklisting 111 (UDP) used by rpcbind, has vulnerabilities
-                        ├─ Blacklisting 111 (TCP) used by rpcbind, has vulnerabilities
+                        ├─ Blacklisting 111 (UDP) used by sunrpc/rpcbind, has vulnerabilities
+                        ├─ Blacklisting 111 (TCP) used by sunrpc/rpcbind, has vulnerabilities
                         ├─ Blacklisting 21 (UDP) insecure ftp
                         ├─ Blacklisting 21 (TCP) insecure ftp
       ```
