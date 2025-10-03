@@ -1,30 +1,101 @@
 /*
-	@author				Aetherinox
-	@app				Config Server Firewall (CSF)
-	@repo 				https://github.com/Aetherinox/csf-firewall
-	@file				configserver.css
+   @app                ConfigServer Firewall & Security (CSF)
+                       Login Failure Daemon (LFD)
+   @website            https://configserver.dev
+   @docs               https://docs.configserver.dev
+   @download           https://download.configserver.dev
+   @repo               https://github.com/Aetherinox/csf-firewall
+   @copyright          Copyright (C) 2025-2026 Aetherinox
+                       Copyright (C) 2006-2025 Jonathan Michaelson
+                       Copyright (C) 2006-2025 Way to the Web Ltd.
+   @license            GPLv3
+   @updated            09.26.2025
+
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 3 of the License, or (at
+   your option) any later version.
+
+   This program is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+   General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, see <https://www.gnu.org/licenses>.
 */
 
 /*
 	Theme › Light
 */
 
-:root 
+:root,
+[data-theme="light"]
 {
+	--scrollbar-background-normal: #888c;
+	--scrollbar-background-active: #900834;
+	--scrollbar-background-hover: #3553c8cc;
+
     --bg-color: #ffffff;
     --text-color: #111111;
 	--app-name-text: #ce2d5a;
     --link-color: #0077cc;
-	--panel-header-box: #dfdfdf;
-	--panel-box-alt: #d5d5d5;
-	--panel-section-background: #c8494e;
-	--panel-section-text: #FFFFFF;
+	--panel-header-box: #e3e3e3;
+	--panel-box-alt: #ddd;
+	--panel-section-background: #d8d8d8;
+	--panel-section-text: #363636;
 	--panel-footer-background: #e1e1e1;
 	--panel-footer-border: #1c1c1c1a;
 	--panel-footer-text: #1c1c1c;
 
 	--button-1-background: #3566c0;
 	--button-1-border: #3566c0;
+
+	--codeblock-text: #ea8c28;
+	--codeblock-background: #f9f2f4;
+
+	--pre-background: #f1f1f1 ;
+	--pre-text-normal: #1d1d1d;
+	--pre-border-normal: #0000001a;
+
+	--mark-background-normal: #f2e523;
+	--mark-text-normal: #1d1d1d;
+
+	--section-background-normal: #ccc;
+	--section-border-normal: #e3e3e31a;
+	--section-text-normal: #363636;
+
+	--settings-button-disabled-active-background-normal: #A81B43;
+	--settings-button-disabled-active-text-normal: #FFFFFF;
+	--settings-button-enabled-active-background-normal: #5a732f;
+	--settings-button-enabled-active-text-normal: #FFF;
+
+	--input-textfield-main-normal-text: #111;
+	--input-textfield-main-normal-background: #e8e8e8;
+	--input-textfield-main-normal-border: #f7f7f7;
+	--input-textfield-main-focus-line: #dabe25;
+	--input-textfield-main-focus-background: #FFFFFF;
+	--input-textfield-main-focus-border: #ffffff;
+	--input-textfield-main-focus-text: #353535;
+	--input-textfield-main-hover-line: #2b62b4;
+
+	--input-textfield-allow-normal-text: #111;
+	--input-textfield-allow-normal-background: #9edbb6;
+	--input-textfield-allow-normal-border: #f7f7f7;
+	--input-textfield-allow-focus-line: #2b7448;
+	--input-textfield-allow-focus-background: #FFFFFF;
+	--input-textfield-allow-focus-border: #c7c7c7;
+	--input-textfield-allow-focus-text: #353535;
+	--input-textfield-allow-hover-line: #62aa7f;
+
+	--input-textfield-deny-normal-text: #ff0062;
+	--input-textfield-deny-normal-background: #f9bfc5;
+	--input-textfield-deny-normal-border: #f7f7f7;
+	--input-textfield-deny-focus-line: #ff0062;
+	--input-textfield-deny-focus-background: #FFFFFF;
+	--input-textfield-deny-focus-border: #c7c7c7;
+	--input-textfield-deny-focus-text: #353535;
+	--input-textfield-deny-hover-line: #ff8b97;
 
 	--tabs-background: #37373700;
 	--tabs-border: #e3e3e31a;
@@ -58,6 +129,10 @@
 
 [data-theme="dark"]
 {
+	--scrollbar-background-normal: #F30C5998;
+	--scrollbar-background-active: #900834;
+	--scrollbar-background-hover: #c00a47;
+
     --bg-color: #1e1d1d;
     --text-color: #ffffff;
 	--app-name-text: #ce2d5a;
@@ -72,6 +147,52 @@
 
 	--button-1-background: #3566c0;
 	--button-1-border: #3566c0;
+
+	--codeblock-text: #ea8c28;
+	--codeblock-background: #1e1e1e;
+
+	--pre-background: #171717;
+	--pre-text-normal: #c9c9c9;
+	--pre-border-normal: #e3e3e31a;
+
+	--mark-background-normal: #8a6610;
+	--mark-text-normal: #fff;
+
+	--section-background-normal: #396852;
+	--section-border-normal: #e3e3e31a;
+	--section-text-normal: #FFFFFF;
+
+	--settings-button-disabled-active-background-normal: #A81B43;
+	--settings-button-disabled-active-text-normal: #FFFFFF;
+	--settings-button-enabled-active-background-normal: #5a732f;
+	--settings-button-enabled-active-text-normal: #FFF;
+
+	--input-textfield-main-normal-text: #adadad;
+	--input-textfield-main-normal-background: #1f2324;
+	--input-textfield-main-normal-border: #5e5e5e;
+	--input-textfield-main-focus-background: #2b2b2b;
+	--input-textfield-main-focus-line: #FFFFFF;
+	--input-textfield-main-focus-border: #d8a91e;
+	--input-textfield-main-focus-text: #FFF;
+	--input-textfield-main-hover-line: #d8a91e;
+
+	--input-textfield-allow-normal-text: #75e6b2;
+	--input-textfield-allow-normal-background: #1f2324;
+	--input-textfield-allow-normal-border: #1b915a;
+	--input-textfield-allow-focus-background: #224233;
+	--input-textfield-allow-focus-line: #FFF;
+	--input-textfield-allow-focus-border: #20af6d;
+	--input-textfield-allow-focus-text: #FFF;
+	--input-textfield-allow-hover-line: #2bcf83;
+
+	--input-textfield-deny-normal-text: #df4655;
+	--input-textfield-deny-normal-background: #1f2324;
+	--input-textfield-deny-normal-border: #bd2330;
+	--input-textfield-deny-focus-line: #FFFFFF;
+	--input-textfield-deny-focus-background: #682128;
+	--input-textfield-deny-focus-border: #dd3e4c;
+	--input-textfield-deny-focus-text: #FFF;
+	--input-textfield-deny-hover-line: #ff8b97;
 
 	--tabs-background: #373737;
 	--tabs-border: #e3e3e31a;
@@ -100,7 +221,67 @@
 }
 
 /*
-	Animations > Scale
+	Animations › Splash
+*/
+
+@-moz-keyframes splash-12
+{
+	40%
+	{
+		background: #866efb;
+		box-shadow: 0 -18px 0 -8px #866efb, 16px -8px 0 -8px #866efb, 16px 8px 0 -8px #866efb, 0 18px 0 -8px #866efb, -16px 8px 0 -8px #866efb, -16px -8px 0 -8px #866efb;
+	}
+	100%
+	{
+		background: #866efb;
+		box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
+	}
+}
+
+@-webkit-keyframes splash-12
+{
+	40%
+	{
+		background: #866efb;
+		box-shadow: 0 -18px 0 -8px #866efb, 16px -8px 0 -8px #866efb, 16px 8px 0 -8px #866efb, 0 18px 0 -8px #866efb, -16px 8px 0 -8px #866efb, -16px -8px 0 -8px #866efb;
+	}
+	100%
+	{
+		background: #866efb;
+		box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
+	}
+}
+
+@-o-keyframes splash-12
+{
+	40%
+	{
+		background: #866efb;
+		box-shadow: 0 -18px 0 -8px #866efb, 16px -8px 0 -8px #866efb, 16px 8px 0 -8px #866efb, 0 18px 0 -8px #866efb, -16px 8px 0 -8px #866efb, -16px -8px 0 -8px #866efb;
+	}
+	100%
+	{
+		background: #866efb;
+		box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
+	}
+}
+
+@keyframes splash-12
+{
+	40%
+	{
+		background: #866efb;
+		box-shadow: 0 -18px 0 -8px #866efb, 16px -8px 0 -8px #866efb, 16px 8px 0 -8px #866efb, 0 18px 0 -8px #866efb, -16px 8px 0 -8px #866efb, -16px -8px 0 -8px #866efb;
+	}
+	100%
+	{
+		background: #866efb;
+		box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
+	}
+}
+
+/*
+	Animations › Scale
 */
 
 @keyframes scale-in
@@ -114,7 +295,7 @@
 }
 
 /*
-	Animations > Fade In
+	Animations › Fade In
 */
 
 @-webkit-keyframes fade-in
@@ -136,6 +317,168 @@
 }
 
 /*
+	Animations › Pulsate
+*/
+
+@-webkit-keyframes pulsate
+{
+    0% { transform: scale(0.8); opacity: 0.5; }
+    50% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(0.8); opacity: 0.5; }
+}
+
+@keyframes pulsate
+{
+    0% { transform: scale(0.8); opacity: 0.5; }
+    50% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(0.8); opacity: 0.5; }
+}
+
+.pulsate
+{
+    -webkit-animation: pulsate 3s ease-out;
+    -webkit-animation-iteration-count: infinite; 
+    animation: pulsate 3s ease-out;
+    animation-iteration-count: infinite;
+    opacity: 0.5;
+}
+
+/*
+	Animations › Health / Heart
+*/
+
+@keyframes health
+{
+    0%, 40%, 80%, 100%
+	{
+        transform: scale(1);
+        color: #FFF;
+        fill: #FFF !important;
+    }
+
+    20%, 60%
+	{
+        transform: scale(1.15);
+        color: #FF6593;
+        fill: #FF6593 !important;
+    }
+}
+
+.heart
+{
+    animation: health 1000ms infinite;
+}
+
+/*
+	Helpers › Mobile
+*/
+
+.mobilecontainer
+{
+	display: none;
+}
+.normalcontainer
+{
+	display: block;
+}
+
+/*
+	Helpers › Transitions
+*/
+
+.no-transition *
+{
+    transition: none !important;
+}
+
+html.theme-transition *
+{
+    transition: all 0.1s ease-in-out;
+}
+
+/*
+	Scrollbar › Chrome, Edge, Safari Support (Hide Scrollbar)
+*/
+
+.csf-container::-webkit-scrollbar
+{
+    display: none;
+}
+
+/*
+	Scrollbar › Firefox Support (Hide Scrollbar)
+*/
+
+.csf-container
+{
+    scrollbar-width: none;
+}
+
+/*
+	Scrollbar › Firefox Support
+*/
+
+*
+{
+    scrollbar-width: auto;
+	scrollbar-color: var( --scrollbar-background-normal );
+}
+
+/*
+	Scrollbar › Base
+*/
+
+.csf-scrollbar
+{
+    position: fixed;
+    top: 0;
+    right: 2px;
+    width: 5px;
+    border-radius: 6px;
+    background: var( --scrollbar-background-normal );
+    cursor: pointer;
+    height: 50px;
+    z-index: 9999;
+    margin: 7px;
+    transition: background 0.4s ease;
+}
+
+/*
+	Scrollbar › Hover
+*/
+
+.csf-scrollbar:hover
+{
+    background: var( --scrollbar-background-hover );
+}
+
+/*
+	Scrollbar › Active (Mousedown
+*/
+
+.csf-scrollbar:active
+{
+    background: var( --scrollbar-background-active );
+}
+
+/*
+	Scrollbar › Container scrolling
+*/
+
+.csf-container
+{
+    height: 100%;
+    overflow-y: scroll;
+    padding-right: 20px;
+    box-sizing: content-box;
+}
+
+.csf-container::-webkit-scrollbar
+{
+	display: none;
+}
+
+/*
 	Main Body
 */
 
@@ -146,6 +489,7 @@ body
     line-height: 1.42857143;
     color: var(--text-color);
     background-color: var(--bg-color);
+	padding-bottom: 100px;
 }
 
 button#CSFpauseID
@@ -159,7 +503,7 @@ button#CSFpauseID
 button#CSFpauseID:hover
 {
 	filter: brightness(120%) !important;
-	transition: all 0.3s;
+	transition: all 0.2s;
 }
 
 #paginatediv2 > .btn-default, #paginatediv > .btn-default
@@ -174,7 +518,7 @@ button#CSFpauseID:hover
 #paginatediv2 > .btn-default:hover, #paginatediv > .btn-default:hover
 {
 	filter: brightness(120%) !important;
-	transition: all 0.3s;
+	transition: all 0.2s;
 }
 
 button:not([class]):not(#fontminus-btn):not(#CSFpauseID):not(#fontplus-btn),
@@ -189,38 +533,7 @@ button.btn.btn-default {
 button:not(button#fontminus-btn):not(button#CSFpauseID):not(button#fontplus-btn):not(.btn-edit):hover
 {
 	filter: brightness(120%);
-	transition: all 0.3s;
-}
-/*
-	Logo
-
-	Live 		: /usr/sbin/lfd
-	Source		: /src/lfd.pl
-*/
-
-img.logo
-{
-	width: 75px;
-	opacity: 0.6;
-}
-
-img.logo:hover
-{
-	animation-name:             fade-in, scale-in;
-	animation-duration:         1s, 0.5s;
-	animation-timing-function:  ease-in, linear;
-	animation-direction:        alternate, alternate;
-	animation-iteration-count:  infinite, 1;
-	transition: all 0.3s;
-	opacity: 0.5;
-	transform: scale(1.1);
-}
-
-img.logo:not(:hover)
-{
-	transition: all 0.3s;
-	opacity: 0.5;
-	transform: scale(1);
+	transition: all 0.2s;
 }
 
 a.app-name
@@ -238,9 +551,47 @@ a.app-name:hover
 
 a.app-name:not(:hover)
 {
-	transition: all 0.3s;
+	transition: all 0.2s;
 	text-decoration: none;
 	color: var(--app-name-text);
+}
+
+/*
+	Input > Default
+*/
+
+input
+{
+    background-color: #FFF;
+    color: var( --input-textfield-main-normal-text );
+    font-size: 11pt;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    background: linear-gradient( var( --input-textfield-main-hover-line ) 0 0) no-repeat var( --input-textfield-main-normal-background );
+    background-position: center bottom;
+    background-size: 0% 2px;
+	border-left: 2px solid var( --input-textfield-main-normal-border );
+	border-top: 2px solid var( --input-textfield-main-normal-border );
+	border-right: 2px solid var( --input-textfield-main-normal-border );
+	border-bottom: 2px solid var( --input-textfield-main-normal-border );
+	font-size: 12pt;
+}
+
+input:hover
+{
+    background-size: calc(100% - 4px) 2px;
+}
+
+input:focus
+{
+	color: var( --input-textfield-main-focus-text );
+    background-image: linear-gradient(var( --input-textfield-main-focus-line ) 0 0);
+    background-color: var( --input-textfield-main-focus-background );
+    background-size: calc(100% - 4px) 2px;
+	border-left: 2px solid var( --input-textfield-main-focus-border );
+	border-top: 2px solid var( --input-textfield-main-focus-border );
+	border-right: 2px solid var( --input-textfield-main-focus-border );
+	border-bottom: 2px solid var( --input-textfield-main-focus-border );
 }
 
 /*
@@ -249,22 +600,36 @@ a.app-name:not(:hover)
 
 .input-allow
 {
-	transition: 0.5s;
-	background-color: #26643db5 !important;
+    background-color: #FFF;
+	color: var( --input-textfield-allow-normal-text );
+    font-size: 11pt;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+	background: linear-gradient( var( --input-textfield-allow-hover-line ) 0 0) no-repeat var( --input-textfield-allow-normal-background );
+    background-position: center bottom;
+    background-size: 0% 2px;
+	border-left: 2px solid var( --input-textfield-allow-normal-border );
+	border-top: 2px solid var( --input-textfield-allow-normal-border );
+	border-right: 2px solid var( --input-textfield-allow-normal-border );
+	border-bottom: 2px solid var( --input-textfield-allow-normal-border );
+	font-size: 12pt;
 }
 
 .input-allow:hover
 {
-	background: linear-gradient(#50b978d5 0 0) bottom / 0% 2px no-repeat #393939;
-	background-size: 100% 2px;
-	transition: all 0.3s;
+    background-size: calc(100% - 4px) 2px;
 }
 
 .input-allow:focus
 {
-	background: linear-gradient(#f8f8f8d5 0 0) bottom / 0% 2px no-repeat #393939;
-	background-size: 100% 2px;
-	transition: all 0.3s;
+	color: var( --input-textfield-allow-focus-text );
+    background-image: linear-gradient(var( --input-textfield-allow-focus-line ) 0 0);
+    background-color: var( --input-textfield-allow-focus-background );
+    background-size: calc(100% - 4px) 2px;
+	border-left: 2px solid var( --input-textfield-allow-focus-border );
+	border-top: 2px solid var( --input-textfield-allow-focus-border );
+	border-right: 2px solid var( --input-textfield-allow-focus-border );
+	border-bottom: 2px solid var( --input-textfield-allow-focus-border );
 }
 
 /*
@@ -273,23 +638,39 @@ a.app-name:not(:hover)
 
 .input-deny
 {
-	transition: 0.5s;
-	background-color: #99244bb5 !important;
+    background-color: #FFF;
+	color: var( --input-textfield-deny-normal-text );
+    font-size: 11pt;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+	background: linear-gradient( var( --input-textfield-deny-hover-line ) 0 0) no-repeat var( --input-textfield-deny-normal-background );
+    background-position: center bottom;
+    background-size: 0% 2px;
+	border-left: 2px solid var( --input-textfield-deny-normal-border );
+	border-top: 2px solid var( --input-textfield-deny-normal-border );
+	border-right: 2px solid var( --input-textfield-deny-normal-border );
+	border-bottom: 2px solid var( --input-textfield-deny-normal-border );
+	font-size: 12pt;
 }
 
 .input-deny:hover
 {
-	background: linear-gradient(#f92574 0 0) bottom / 0% 2px no-repeat #393939;
-	background-size: 100% 2px;
-	transition: all 0.3s;
+    background-size: calc(100% - 4px) 2px;
 }
 
 .input-deny:focus
 {
-	background: linear-gradient(#FFFFFF 0 0) bottom / 0% 2px no-repeat #393939;
-	background-size: 100% 2px;
-	transition: all 0.3s;
+	color: var( --input-textfield-deny-focus-text );
+    background-image: linear-gradient(var( --input-textfield-deny-focus-line ) 0 0);
+    background-color: var( --input-textfield-deny-focus-background );
+    background-size: calc(100% - 4px) 2px;
+	border-left: 2px solid var( --input-textfield-deny-focus-border );
+	border-top: 2px solid var( --input-textfield-deny-focus-border );
+	border-right: 2px solid var( --input-textfield-deny-focus-border );
+	border-bottom: 2px solid var( --input-textfield-deny-focus-border );
 }
+
+
 
 .login-body
 {
@@ -300,15 +681,15 @@ a.app-name:not(:hover)
 .panel
 {
 	margin-bottom: 20px;
-	background-color: #303030;
-	border: 1px solid transparent;
-		border-top-color: transparent;
-		border-right-color: transparent;
-		border-bottom-color: transparent;
-		border-left-color: transparent;
 	border-radius: 4px;
 	-webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
 	box-shadow: 0 1px 1px rgba(0,0,0,.05);
+	background: none;
+}
+
+.panel-default
+{
+	border: none;
 }
 
 .panel img
@@ -329,7 +710,7 @@ a.app-name:not(:hover)
 .btn-allow:hover
 {
 	filter: brightness(120%);
-	transition: all 0.3s;
+	transition: all 0.2s;
 }
 
 /*
@@ -345,7 +726,7 @@ a.app-name:not(:hover)
 .btn-deny:hover
 {
 	filter: brightness(120%);
-	transition: all 0.3s;
+	transition: all 0.2s;
 }
 
 /*
@@ -363,7 +744,7 @@ a.app-name:not(:hover)
 .btn-desktop-view:hover
 {
 	filter: brightness(120%);
-	transition: all 0.3s;
+	transition: all 0.2s;
 }
 
 .mobilecontainer
@@ -395,22 +776,6 @@ a.app-name:not(:hover)
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0),0 0 8px rgba(102, 174, 233, 0);
 }
 
-form input[type=text], form input[type=password]
-{
-	background-color: #393939;
-	border: 1px solid #e3e3e31a;
-	color: #FFF;
-	font-size: 11pt;
-	transition: 0.5s;
-	background: linear-gradient(#ffffff73 0 0) bottom / 0% 1px no-repeat #202020;
-	cursor: pointer;
-}
-
-form input:hover
-{
-	background-size: 100% 1px;
-}
-
 .input-ipaddr
 {
 	margin: 0 auto !important;
@@ -430,11 +795,6 @@ form input:hover
 	cursor: pointer;
 	text-align: center;
 	margin-bottom: 20px !important;
-}
-
-.input-ipaddr:hover
-{
-	background-size: 100% 1px;
 }
 
 .input-ipaddr::placeholder
@@ -472,7 +832,7 @@ form input:hover
 .btn-edit:hover
 {
 	filter: brightness(120%);
-	transition: all 0.3s;
+	transition: all 0.2s;
 }
 
 /*
@@ -491,7 +851,7 @@ form input:hover
 .btn-long:hover
 {
 	filter: brightness(120%);
-	transition: all 0.3s;
+	transition: all 0.2s;
 }
 
 .btn-apply
@@ -508,7 +868,7 @@ form input:hover
 .btn-apply:hover
 {
 	filter: brightness(120%);
-	transition: all 0.3s;
+	transition: all 0.2s;
 }
 
 /*
@@ -527,7 +887,7 @@ form input:hover
 .btn-mobile:hover
 {
 	filter: brightness(120%);
-	transition: all 0.3s;
+	transition: all 0.2s;
 	background-color: #2a7582;
 }
 
@@ -547,7 +907,7 @@ form input:hover
 .glyphicon:hover
 {
 	color: #FFF !important;
-	transition: all 0.3s;
+	transition: all 0.2s;
 }
 
 /*
@@ -556,61 +916,14 @@ form input:hover
 
 .mark, mark
 {
-	padding: .2em;
-	background-color: var(--panel-box-alt);
-	color: #ff7420;
+	background-color: var( --mark-background-normal );
+	color: var( --mark-text-normal );
 	border-radius: 4px;
-}
-
-/*
-select:has(+ .btn-default)
-{
-	background:#3566c0;
-	border-radius:4px;
-	border: 1px solid #3566c0;
-	color: #FFF !important;
-	max-width: 7em;
-}
-*/
-
-/*
-	Button > Logout
-*/
-
-.pull-right > a[href*="csflogout"]
-{
-	background-color: #a81840;
-	color: #FFF;
-	border: 1px solid #FFF0;
-	position: absolute;
-	top: 2.9%;
-	right: 8%;
-	transition: all 0.3s;
-}
-
-.pull-right > a[href*="csflogout"]:after
-{
-	content: '\00bb';
-	position: absolute;
-	opacity: 0;
-	top: 0;
-	right: -20px;
-	transition: 0.5s;
-	padding-top: 6px;
-}
-
-.pull-right > a[href*="csflogout"]:hover:after
-{
-	opacity: 1;
-	right: 0;
-	margin-right: 13px;
-}
-
-.pull-right > a[href*="csflogout"]:hover
-{
-	filter: brightness(120%);
-	transition: all 0.3s;
-	padding-right: 30px;
+	padding-left: 0.4em;
+	padding-right: 0.4em;
+	padding-top: 0.2em;
+	padding-bottom: 0.2em;
+	padding-block: 1px;
 }
 
 .icon-configserver
@@ -629,7 +942,7 @@ select:has(+ .btn-default)
 #fontminus-btn:hover, #fontplus-btn:hover
 {
 	filter: brightness(120%);
-	transition: all 0.3s;
+	transition: all 0.2s;
 }
 
 #fontminus-btn
@@ -640,7 +953,7 @@ select:has(+ .btn-default)
 input.btn-default[type="submit"]
 {
 	background: var(--button-1-background);
-	border-radius: 4px;
+	border-radius: 6px;
 	border: 1px solid var(--button-1-background);
 	color: #FFF !important;
 	max-width: 7em;
@@ -649,27 +962,13 @@ input.btn-default[type="submit"]
 input.btn-default[type="submit"]:hover
 {
 	filter: brightness(120%);
-	transition: all 0.3s;
+	transition: all 0.2s;
 }
 
 .btn-default:hover
 {
 	filter: brightness(120%);
-	transition: all 0.3s;
-}
-
-.btn-csf-config:focus,
-.btn-csf-config:hover,
-.btn-csf-config:active,
-.btn-csf-config.active
-{
-	background-color:#5FA654 !important;
-	-webkit-transition: all 0.30s ease-in-out;
-	-moz-transition: all 0.30s ease-in-out;
-	-ms-transition: all 0.30s ease-in-out;
-	-o-transition: all 0.30s ease-in-out;
-	transition: all 0.30s ease-in-out;
-	color: #FFF;
+	transition: all 0.2s;
 }
 
 /*
@@ -678,7 +977,8 @@ input.btn-default[type="submit"]:hover
 		- lfd restart
 */
 
-:not(select):not(button) + .btn-default:not(button#CSFpauseID):not(a)
+select + .btn-default,
+.btn-group + .btn-default
 {
   	min-width: 13em;
 }
@@ -693,8 +993,8 @@ input.btn-default[type="submit"]:hover
 
 th
 {
+	color: var(--panel-section-text);
 	background: var(--panel-section-background);
-	color: #FFF;
 }
 
 /*
@@ -789,33 +1089,46 @@ textarea
 	font-family: inherit;
 	font-size: inherit;
 	line-height: inherit;
-	background-color: #1e1e1e;
 }
 
 .comment
 {
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px;
-	border: 1px solid #e3e3e31a;
+	border: 2px solid var( --pre-border-normal );
+	background-color: var( --pre-background );
 	padding: 10px;
 	font-family: Courier New, Courier;
-	font-size: 14px;
+	font-size: 12px;
   	min-width: 100%;
 	max-width: 100%;
 }
 
+.console
+{
+	background-color: var( --pre-background );
+	font-family: Courier New, Courier;
+	white-space: pre-wrap;
+	font-size: 12px;
+	width: 100%;
+	min-height: 500px;
+	border: 2px solid var( --pre-border-normal );
+	border-radius: 6px;
+	padding: 10px;
+}
+
 pre
 {
-	background-color: #171717 !important;
+	background-color: var( --pre-background );
 	display: block;
 	padding: 9.5px;
 	margin: 0 0 10px;
 	font-size: 13px;
 	line-height: 1.42857143;
-	color: #c9c9c9;
+	color: var( --pre-text-normal );
 	word-break: break-all;
 	word-wrap: break-word;
-	border: 1px solid #e3e3e31a;
+	border: 2px solid var( --pre-border-normal );
 	border-radius: 4px;
 }
 
@@ -834,11 +1147,6 @@ hr
 	Scrollbar
 */
 
-:root
-{
-	scrollbar-color: #bbbbbb80 #424242b2 !important;
-}
-
 input[type="text"]
 {
 	-webkit-transition: all 0.30s ease-in-out;
@@ -846,56 +1154,36 @@ input[type="text"]
 	-ms-transition: all 0.30s ease-in-out;
 	-o-transition: all 0.30s ease-in-out;
 	transition: all 0.30s ease-in-out;
-	border-radius: 3px;
+	border-radius: 4px;
 	outline: none;
 	padding: 3px 0px 3px 3px;
-	margin: 5px 1px 3px 0px;
-	border: 1px solid #f2f2f238;
-	background-color: #1c1c1c;
+	margin: 3px 3px 3px 3px;
 	padding-left: 10px;
 	padding-right: 10px;
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
 
-input[type="text"], select
+select
 {
-	-webkit-transition: all 0.30s ease-in-out;
-	-moz-transition: all 0.30s ease-in-out;
-	-ms-transition: all 0.30s ease-in-out;
-	-o-transition: all 0.30s ease-in-out;
-	transition: all 0.30s ease-in-out;
-	border-radius: 3px;
-	outline: none;
-	padding: 3px 0px 3px 3px;
-	margin: 5px 1px 3px 0px;
-	border: 1px solid #f2f2f238;
-	background-color: #1c1c1c;
-	padding-left: 10px;
-	padding-right: 10px;
-	padding-top: 5px;
-	padding-bottom: 5px;
+    border: none;
+    outline: none;
+    border-radius: 4px;
+    background-color: var(--bg-color, #222);
+    color: var(--text-color, #fff);
+	border-left: 2px solid var( --input-textfield-main-normal-border );
+	border-top: 2px solid var( --input-textfield-main-normal-border );
+	border-right: 2px solid var( --input-textfield-main-normal-border );
+	border-bottom: 2px solid var( --input-textfield-main-normal-border );
+    padding: 6px 12px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 	cursor: pointer;
+	vertical-align: baseline;
 }
 
-input[type=text]:focus, select:focus
-{
-	-webkit-transition: all 0.30s ease-in-out;
-	-moz-transition: all 0.30s ease-in-out;
-	-ms-transition: all 0.30s ease-in-out;
-	-o-transition: all 0.30s ease-in-out;
-	transition: all 0.30s ease-in-out;
-	border-radius: 3px;
-	outline: none;
-	padding: 3px 0px 3px 3px;
-	margin: 5px 1px 3px 0px;
-	border: 1px solid #f2f2f238;
-	background-color: #1c1c1c;
-	padding-left: 10px;
-	padding-right: 10px;
-	padding-top: 5px;
-	padding-bottom: 5px;
-}
+
 
 .table-bordered
 {
@@ -963,7 +1251,7 @@ tbody
 
 .panel-default > .panel-heading
 {
-	color: #FFF;
+	color: var(--panel-section-text);
 	background-color: var(--panel-section-background);
 	border-color: #e3e3e31a;
 }
@@ -984,8 +1272,8 @@ code
 {
 	padding: 2px 4px;
 	font-size: 90%;
-	color: #ea8c28;
-	background-color: #1e1e1e;
+	color: var( --codeblock-text );
+	background-color: var( --codeblock-background );
 	border-radius: 4px;
 }
 
@@ -1209,13 +1497,15 @@ code
 
 .section
 {
-	background-color: #396852;
+	background-color: var( --section-background-normal );
 	padding: 8px;
 	margin-top: 30px;
 	line-height: 1.42857143;
-	border-bottom: 1px solid #e3e3e31a !important;
+	border-bottom: 1px solid var( --section-border-normal ) !important;
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
+	border-radius: 4px;
+	color: var( --section-text-normal );
 }
 
 .toplink
@@ -1262,15 +1552,188 @@ code
 	clear: both;
 }
 
+/*
+	Header
+*/
+
 .section-header
 {
-	background-color: var(--panel-section-background);
-	padding: 8px;
-	line-height: 1.42857143;
-	border-bottom: 1px solid #e3e3e31a !important;
-	border-top-left-radius: 3px;
-	border-top-right-radius: 3px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: var(--panel-header-box);
+	margin-bottom: 25px;
 }
+
+.section-header .header-left
+{
+    display: flex;
+    align-items: center;
+}
+
+.section-header .header-right .btn-logout
+{
+	background-color: #fd0966;
+	border-color: #fd0966;
+	color: white;
+}
+
+.section-header .header-right a[href*="csflogout"]
+{
+	background-color: #ce2d5a;
+	color: #FFF;
+	border: 1px solid #FFF0;
+	border-radius: 6px;
+	transition: all 0.2s;
+	padding-left: 15px;
+}
+
+.section-header .header-right a[href*="csflogout"]:after
+{
+	content: '\00bb';
+	opacity: 0;
+	transition: 0.5s;
+}
+
+.section-header .header-right a[href*="csflogout"]:hover:after
+{
+	opacity: 1;
+	padding-left: 8px;
+}
+
+.section-header .header-right a[href*="csflogout"]:hover
+{
+	filter: brightness(120%);
+	transition: all 0.2s;
+}
+
+.section-header .header-right
+{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.section-header .header-btn
+{
+    font-size: 14px;
+    border-radius: 6px;
+    border: 1px solid var(--primary-color);
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.section-header .header-btn:hover
+{
+    background-color: var(--secondary-color);
+}
+
+.section-header .header-form form
+{
+    display: flex;
+    align-items: center;
+    margin: 0;
+    gap: 5px;
+}
+
+.section-header .btn-csfapp-dropdown
+{
+	color: #fff;
+	background-color: #282828;
+	border-color: #bd7e25;
+	border-radius: 6px;
+}
+
+.section-header .btn-csfapp-dropdown .caret
+{
+	display: inline-block;
+	width: 0;
+	height: 0;
+	margin-left: 5px !important;
+	vertical-align: middle;
+	border-top: 4px dashed;
+	border-top: 4px solid\9;
+	border-right: 4px solid transparent;
+	border-left: 4px solid transparent;
+  }
+
+/*
+	Header › Doprodnw › Select CSF App
+*/
+
+.section-header form.form-csfapp-dropdown  .dropdown-menu
+{
+	background-color: #181a1b;
+	box-shadow: rgba(0, 0, 0, 0.17);
+	min-width: 60px;
+}
+
+.section-header form.form-csfapp-dropdown .dropdown-menu > li > a
+{
+	color: #d0ccc6;
+}
+
+.section-header form.form-csfapp-dropdown .dropdown-menu > li > a:focus, .dropdown-menu > li > a:hover
+{
+	background-color: #2f3233;
+}
+
+/*
+	Logo
+
+	Live 		: /usr/sbin/lfd
+	Source		: /src/lfd.pl
+*/
+
+img.logo
+{
+	width: 						70px;
+	height: 					auto;
+}
+
+img.logo:hover
+{
+	animation-name:             fade-in, scale-in;
+	animation-duration:         1s, 0.5s;
+	animation-timing-function:  ease-in, linear;
+	animation-direction:        alternate, alternate;
+	animation-iteration-count:  infinite, 1;
+	transition: 				all 0.2s;
+	transform: 					scale(1.1);
+}
+
+img.logo:not(:hover)
+{
+	transition: 				all 0.2s;
+	transform: 					scale(1);
+}
+
+.app-info
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding-top: 16px;
+	padding-left: 13px;
+}
+
+.app-name
+{
+    font-size: 18px;
+    font-weight: 100;
+    color: var(--text-color);
+}
+
+.app-version
+{
+    font-size: 12px;
+    color: var(--text-muted-color);
+}
+
+
 
 .server-check-status-container
 {
@@ -1472,8 +1935,8 @@ code
 
 .btn.btn-default.btn-csf-config.option-disabled.active
 {
-	background-color: #A81B43 !important;
-	color: #FFF;
+	background-color: var( --settings-button-disabled-active-background-normal );
+	color: var( --settings-button-disabled-active-text-normal );
 }
 
 /*
@@ -1493,8 +1956,8 @@ code
 
 .btn.btn-default.btn-csf-config.option-enabled.active
 {
-	background-color: #5a732f  !important;
-	color: #FFF;
+	background-color: var( --settings-button-enabled-active-background-normal );
+	color: var( --settings-button-enabled-active-text-normal );
 }
 
 /*
@@ -1530,28 +1993,74 @@ input[type="checkbox"], input[type="radio"]
 	padding-left: 44px !important;
 }
 
-.footer {
-    position: fixed;
+/*
+	Section ›  Return (Button)
+*/
+
+.section-return
+{
+	padding-top: 15px;
+}
+
+/*
+	Section ›  Footer
+*/
+
+.footer
+{
+    position: fixed;       /* always visible */
     bottom: 0;
     left: 0;
     width: 100%;
+    height: 50px;          /* adjust to match your footer height */
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
+    background-color: var(--panel-footer-background);
+    border-top: 1px solid var(--panel-footer-border);
     color: var(--panel-footer-text);
     font-family: "Noto Sans JP", sans-serif;
     font-size: 14px;
-    background-color: var(--panel-footer-background);
-    border-top: 1px solid var(--panel-footer-border);
+    box-sizing: border-box;
+    z-index: 999;          /* always on top */
 }
 
-.footer-left
+/*
+	Section ›  Footer › Inner Left
+*/
+
+.footer .footer-left
 {
     text-align: left;
 }
 
-.footer-right
+/*
+	Section ›  Footer › Copyright <span>
+*/
+
+.footer .footer-left span.copyright
+{
+	padding-left: 7px;
+}
+
+/*
+	Button › Button › Sponsor
+*/
+
+.footer .footer-left button.btn-sponsor
+{
+    background: none;
+    border: none;
+    color: white;
+    min-width: auto;
+}
+
+/*
+	Section ›  Footer › Inner Right
+*/
+
+.footer .footer-right
 {
     display: flex;
     gap: 7px;
@@ -1561,8 +2070,8 @@ input[type="checkbox"], input[type="radio"]
 	Footer › Standard Button
 */
 
-.footer-right button,
-.footer-right a.btn-footer
+.footer .footer-right button,
+.footer .footer-right a.btn-footer
 {
     padding: 6px 12px;
     border: none;
@@ -1573,7 +2082,7 @@ input[type="checkbox"], input[type="radio"]
 	margin-right: 5px;
 }
 
-.footer-right .btn-footer
+.footer .footer-right .btn-footer
 {
 	min-width: 5px !important;
 }
@@ -1582,7 +2091,7 @@ input[type="checkbox"], input[type="radio"]
 	Button › Button › Theme Switcher
 */
 
-.footer-right button.btn-theme
+.footer .footer-right button.btn-theme
 {
     background-color: var(--button-1-background);
     border-color: var(--button-1-background);
@@ -1594,12 +2103,29 @@ input[type="checkbox"], input[type="radio"]
 	Button › Button › Github
 */
 
-.footer-right button.btn-github
+.footer .footer-right button.btn-github
 {
     background-color: var(--button-1-background);
     border-color: var(--button-1-background);
     color: white;
     min-width: auto;
+}
+
+/*
+	Button › Update
+*/
+
+button.btn-update
+{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #44662d;
+    font-size: 11pt;
+    font-weight: 100;
+    padding: 5pt;
+    border: 1px solid #000;
+    border-radius: 6px;
 }
 
 /*
@@ -1718,60 +2244,4 @@ input[type="checkbox"], input[type="radio"]
 .checkbox-wrapper .cbx input:checked + label + svg path
 {
 	stroke-dashoffset: 0;
-}
-
-@-moz-keyframes splash-12
-{
-	40%
-	{
-		background: #866efb;
-		box-shadow: 0 -18px 0 -8px #866efb, 16px -8px 0 -8px #866efb, 16px 8px 0 -8px #866efb, 0 18px 0 -8px #866efb, -16px 8px 0 -8px #866efb, -16px -8px 0 -8px #866efb;
-	}
-	100%
-	{
-		background: #866efb;
-		box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
-	}
-}
-
-@-webkit-keyframes splash-12
-{
-	40%
-	{
-		background: #866efb;
-		box-shadow: 0 -18px 0 -8px #866efb, 16px -8px 0 -8px #866efb, 16px 8px 0 -8px #866efb, 0 18px 0 -8px #866efb, -16px 8px 0 -8px #866efb, -16px -8px 0 -8px #866efb;
-	}
-	100%
-	{
-		background: #866efb;
-		box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
-	}
-}
-
-@-o-keyframes splash-12
-{
-	40%
-	{
-		background: #866efb;
-		box-shadow: 0 -18px 0 -8px #866efb, 16px -8px 0 -8px #866efb, 16px 8px 0 -8px #866efb, 0 18px 0 -8px #866efb, -16px 8px 0 -8px #866efb, -16px -8px 0 -8px #866efb;
-	}
-	100%
-	{
-		background: #866efb;
-		box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
-	}
-}
-
-@keyframes splash-12
-{
-	40%
-	{
-		background: #866efb;
-		box-shadow: 0 -18px 0 -8px #866efb, 16px -8px 0 -8px #866efb, 16px 8px 0 -8px #866efb, 0 18px 0 -8px #866efb, -16px 8px 0 -8px #866efb, -16px -8px 0 -8px #866efb;
-	}
-	100%
-	{
-		background: #866efb;
-		box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
-	}
 }

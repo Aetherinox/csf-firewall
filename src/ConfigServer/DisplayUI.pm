@@ -60,6 +60,9 @@ our ($chart, $ipscidr6, $ipv6reg, $ipv4reg, %config, %ips, $mobile,
 my $slurpreg = ConfigServer::Slurp->slurpreg;
 my $cleanreg = ConfigServer::Slurp->cleanreg;
 
+my ($year) = (localtime)[5];
+$year += 1900;
+
 # #
 #	Main
 # #
@@ -547,7 +550,7 @@ sub main
 <div>Refresh in <span id="CSFtimer">0</span> <button class='btn btn-default' id="CSFpauseID" onclick="CSFpausetimer()" style="width:80px;">Pause</button> <img src="$images/loader.gif" id="CSFrefreshing" style="display:none" /></div>
 <div class='pull-right btn-group'><button class='btn btn-default' id='fontminus-btn'><strong>a</strong><span class='glyphicon glyphicon-arrow-down icon-configserver'></span></button>
 <button class='btn btn-default' id='fontplus-btn'><strong>A</strong><span class='glyphicon glyphicon-arrow-up icon-configserver'></span></button></div>
-<pre class='comment' id="CSFajax" style="overflow:auto;height:500px;resize:both; white-space: pre-wrap;clear:both"> &nbsp; </pre>
+<pre class='console' id="CSFajax" style="overflow:auto;height:500px;resize:both;clear:both"> &nbsp; </pre>
 
 <script>
 	CSFfrombot = $CSFfrombot;
@@ -2681,7 +2684,8 @@ EOF
 
 		print "<div class='footer'>";
 			print "<div class='footer-left'>";
-				print "© 2025 ConfigServer Firewall - <code>v$myv</code>";
+				print "<button id='btn-sponsor' class='btn-footer btn-sponsor'><i class='axs ax-heart heart'></i></button>";
+				print "<span class='copyright'>&copy; $year ConfigServer Firewall - <code>v$myv</code></span>";
 			print "</div>";
 
 			print "<div class='footer-right'>";
@@ -2986,9 +2990,9 @@ sub editfile
 		print "<input type='hidden' name='action' value='$save'>\n";
 		print "<input type='hidden' name='ace' value='1'>\n";
 		if ($extra) {print "<input type='hidden' name='$extra' value='$FORM{$extra}'>\n";}
-		print "<div id='editor' style='width:100%;height:500px;border: 1px solid #000;display:none;'>";
+		print "<div id='editor' style='display:none;'>";
 		print "Loading...</div>\n";
-		print "<div id='textarea'><textarea class='textarea' name='formdata' id='formdata' style='width:100%;height:500px;border: 1px solid #000;font-family:\"Courier New\", Courier;font-size:14px;line-height:1.1' wrap='off'>";
+		print "<div id='textarea'><textarea class='textarea console' name='formdata' id='formdata' style='height:500px;' wrap='off'>";
 		print "# Do not remove or change this line as it is a safeguard for the UI editor\n";
 		foreach my $line (@confdata) {
 			$line =~ s/\</\&lt\;/g;
@@ -3043,6 +3047,7 @@ sub editfile
 </script>
 EOF
 	} else {
+		print "<br />";
 		if ($config{DIRECTADMIN})
 		{
 			print "<form action='$script?pipe_post=yes' method='post'>\n<div class='panel panel-default'>\n";
@@ -3056,7 +3061,7 @@ EOF
 		print "<div class='panel-body'>\n";
 		print "<input type='hidden' name='action' value='$save'>\n";
 		if ($extra) {print "<input type='hidden' name='$extra' value='$FORM{$extra}'>\n";}
-		print "<textarea class='textarea' name='formdata' style='width:100%;height:500px;border: 1px solid #000;' wrap='off'>";
+		print "<textarea class='textarea console' name='formdata' wrap='off'>";
 
 		foreach my $line (@confdata)
 		{
