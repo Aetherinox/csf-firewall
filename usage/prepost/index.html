@@ -10,6 +10,10 @@
         <link rel="canonical" href="https://Aetherinox.github.io/csf-firewall/usage/prepost/">
       
       
+        <link rel="prev" href="../configuration/">
+      
+      
+        <link rel="next" href="../ipset/">
       
       
       <link rel="icon" href="../../assets/favicon.png">
@@ -336,10 +340,12 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
+      <li class="md-tabs__item md-tabs__item--active">
         <a href="../getting-started/" class="md-tabs__link">
           
   
@@ -792,6 +798,8 @@
       
         
       
+        
+      
     
     
     
@@ -973,6 +981,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../install/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker Integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../install/traefik/" class="md-nav__link">
         
   
@@ -1046,8 +1077,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -1063,23 +1096,28 @@
       
         
       
+        
+      
     
     
     
+      
+        
+        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
             
   
   
@@ -1092,7 +1130,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             Usage
@@ -1140,6 +1178,131 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Pre &amp; Post Scripts
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Pre &amp; Post Scripts
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#location-and-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Location and Structure
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Location and Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#loader-scripts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Loader Scripts
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#loader-folders" class="md-nav__link">
+    <span class="md-ellipsis">
+      Loader Folders
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writing-custom-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      Writing Custom Rules
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusion
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Next Steps
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1253,17 +1416,20 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_6">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_7">
         
           
-          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4_7" id="__nav_4_7_label" tabindex="">
             
   
   
@@ -1276,8 +1442,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4_6">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_7">
             <span class="md-nav__icon md-icon"></span>
             Cheatsheet
           </label>
@@ -1825,62 +1991,20 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#essential-config-properties" class="md-nav__link">
+  <a href="#writing-custom-rules" class="md-nav__link">
     <span class="md-ellipsis">
-      Essential Config Properties
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Essential Config Properties">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#testing" class="md-nav__link">
-    <span class="md-ellipsis">
-      TESTING
+      Writing Custom Rules
     </span>
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#tcp_in-tcp_out" class="md-nav__link">
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
     <span class="md-ellipsis">
-      TCP_IN, TCP_OUT
+      Conclusion
     </span>
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#udp_in-udp_out" class="md-nav__link">
-    <span class="md-ellipsis">
-      UDP_IN, UDP_OUT
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#deny_ip_limit" class="md-nav__link">
-    <span class="md-ellipsis">
-      DENY_IP_LIMIT
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ct_limit" class="md-nav__link">
-    <span class="md-ellipsis">
-      CT_LIMIT
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -2013,296 +2137,174 @@
 <p><br></p>
 <hr>
 <p><br></p>
-<h2 id="essential-config-properties">Essential Config Properties<a class="headerlink" href="#essential-config-properties" title="Permanent link">¶</a></h2>
-<p>This section outlines some of the most important settings that you may want to review. Each one is listed below:</p>
-<p><br></p>
-<h3 id="testing">TESTING<a class="headerlink" href="#testing" title="Permanent link">¶</a></h3>
-<p><span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#required" title="Required value"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14h-2V9h2m0 9h-2v-2h2M1 21h22L12 2 1 21Z"></path></svg></span></a></span></span> <span class="mdx-badge mdx-badge--files-group-right"><span class="mdx-badge mdx-badge--files-view"><span class="mdx-badge__icon"><a href="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf" target="_blank" title="View"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.3 20H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2h6l2 2h8c1.1 0 2 .9 2 2v6.6c-1.4-1-3.1-1.6-5-1.6-3.5 0-6.6 2.1-7.9 5.3l-.3.7.3.7c.1.1.1.2.2.3M23 19c-.9 2.3-3.3 4-6 4s-5.1-1.7-6-4c.9-2.3 3.3-4 6-4s5.1 1.7 6 4m-3.5 0c0-1.4-1.1-2.5-2.5-2.5s-2.5 1.1-2.5 2.5 1.1 2.5 2.5 2.5 2.5-1.1 2.5-2.5M17 18c-.6 0-1 .4-1 1s.4 1 1 1 1-.4 1-1-.4-1-1-1"></path></svg></span></a></span></span><span class="mdx-badge mdx-badge--files-download"><span class="mdx-badge__icon"><a href="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf" target="_blank" title="Download"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 6a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6c0-1.11.89-2 2-2h6l2 2h8m-.75 7H16V9h-2v4h-3.25L15 17.25"></path></svg></span></a></span><span class="mdx-badge__text"><a href="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf" target="_blank"><code>.conf</code></a></span></span></span> <span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#source" title="This setting can be found in the file <pre>/etc/csf/csf.conf</pre>"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0C28.7 0 0 28.7 0 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M224 0c15.4 0 30.1 6.1 41 17L367 119c10.9 10.9 17 25.6 17 41l-128 0c-17.7 0-32-14.3-32-32L224 0z"></path></svg></span></a></span><span class="mdx-badge__text">/etc/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>/<abbr title="The default csf config file, usually in <pre>/etc/csf/csf.conf</pre>">csf.conf</abbr></span></span> <span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#default" title="Default value"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a6 6 0 0 1-6-6c0-4 6-10.75 6-10.75S18 10 18 14a6 6 0 0 1-6 6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>1</code></span></span></p>
-<p><br></p>
-<p>Testing mode is a feature built into <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> and <abbr title="Login Failure Daemon">LFD</abbr> which does the following when enabled:</p>
+<h2 id="writing-custom-rules">Writing Custom Rules<a class="headerlink" href="#writing-custom-rules" title="Permanent link">¶</a></h2>
+<p>As outlined earlier, the <code>pre.d</code> and <code>post.d</code> folders allow you to drop your own custom bash scripts inside the folders which will be responsible for any iptable rules you need to add to <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> every time the service is started or restarted. </p>
+<p>We will provide an example script below just to outline what can be done. In our example, we will create <code>/usr/local/include/csf/post.d/ports-blocklist.sh</code>. The script will do the following:</p>
 <ul>
-<li>Allows safe configuration of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> without enforcing firewall rules or banning IPs.</li>
-<li>Reads configuration files like <code>/etc/ssh/sshd_config</code> to detect service ports. Detected ports (SSH, IPv6, TCP/UDP) are added to <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> config variables such as <code>TCP_IN</code>, <code>TCP6_IN</code>, <code>UDP_IN</code> in <code>/etc/csf/csf.conf</code>.</li>
-<li><abbr title="Login Failure Daemon">LFD</abbr> does not run as a daemon.</li>
-<li>Adds a cron job to periodically reload <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> rules for testing, but no actual blocking occurs.</li>
-<li>IPs in <code>csf.allow</code> and <code>csf.deny</code> are processed for testing but <strong>not enforced</strong>.</li>
-<li>Displays currently listening ports to sysadmin; helps safely configure <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> before enabling enforcement.</li>
+<li>Defines a list of blacklisted ports using a JSON array in <code>BLACKLIST_PORTS</code>. Each entry includes a port number and a comment describing it.</li>
+<li>Iterates over each port in the blacklist using <code>jq</code> to parse the JSON.</li>
+<li>For each port:<ul>
+<li>Extracts the port number <code>ENTRY_PORT</code> and its description/comment <code>ENTRY_COMMENT</code>.</li>
+<li>Checks if a <strong>UDP</strong> rule already exists in <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> for that port:<ul>
+<li>Sets <code>DELETE_INPUT_UDP=1</code> if the rule does not exist.</li>
 </ul>
-<div class="language-ini highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># #</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1">#   Testing flag - enables a CRON job that clears iptables incase of</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1">#   configuration problems when you start csf. This should be enabled until you</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1">#   are sure that the firewall works - i.e. incase you get locked out of your</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1">#   server! Then do remember to set it to 0 and restart csf when you're sure</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="c1">#   everything is OK. Stopping csf will remove the line from /etc/crontab</span>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1">#   </span>
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="c1">#   lfd will not start while this is enabled</span>
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="c1"># #</span>
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
-</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="na">TESTING</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"0"</span>
-</span></code></pre></div>
-<p><br>
-<br></p>
-<h3 id="tcp_in-tcp_out">TCP_IN, TCP_OUT<a class="headerlink" href="#tcp_in-tcp_out" title="Permanent link">¶</a></h3>
-<p><span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#required" title="Required value"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14h-2V9h2m0 9h-2v-2h2M1 21h22L12 2 1 21Z"></path></svg></span></a></span></span> <span class="mdx-badge mdx-badge--files-group-right"><span class="mdx-badge mdx-badge--files-view"><span class="mdx-badge__icon"><a href="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf" target="_blank" title="View"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.3 20H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2h6l2 2h8c1.1 0 2 .9 2 2v6.6c-1.4-1-3.1-1.6-5-1.6-3.5 0-6.6 2.1-7.9 5.3l-.3.7.3.7c.1.1.1.2.2.3M23 19c-.9 2.3-3.3 4-6 4s-5.1-1.7-6-4c.9-2.3 3.3-4 6-4s5.1 1.7 6 4m-3.5 0c0-1.4-1.1-2.5-2.5-2.5s-2.5 1.1-2.5 2.5 1.1 2.5 2.5 2.5 2.5-1.1 2.5-2.5M17 18c-.6 0-1 .4-1 1s.4 1 1 1 1-.4 1-1-.4-1-1-1"></path></svg></span></a></span></span><span class="mdx-badge mdx-badge--files-download"><span class="mdx-badge__icon"><a href="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf" target="_blank" title="Download"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 6a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6c0-1.11.89-2 2-2h6l2 2h8m-.75 7H16V9h-2v4h-3.25L15 17.25"></path></svg></span></a></span><span class="mdx-badge__text"><a href="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf" target="_blank"><code>.conf</code></a></span></span></span> <span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#source" title="This setting can be found in the file <pre>/etc/csf/csf.conf</pre>"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0C28.7 0 0 28.7 0 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M224 0c15.4 0 30.1 6.1 41 17L367 119c10.9 10.9 17 25.6 17 41l-128 0c-17.7 0-32-14.3-32-32L224 0z"></path></svg></span></a></span><span class="mdx-badge__text">/etc/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>/<abbr title="The default csf config file, usually in <pre>/etc/csf/csf.conf</pre>">csf.conf</abbr></span></span> <span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#default" title="Default value"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a6 6 0 0 1-6-6c0-4 6-10.75 6-10.75S18 10 18 14a6 6 0 0 1-6 6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>22,53,80,110,143,443,465,587,993,995</code></span></span></p>
+</li>
+<li>Checks if a <strong>TCP</strong> rule already exists in <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> for that port:<ul>
+<li>Sets <code>DELETE_INPUT_TCP=1</code> if the rule does not exist.</li>
+</ul>
+</li>
+<li>Adds the firewall rules if they are not already present:<ul>
+<li>Inserts a rule to drop <strong>UDP</strong> traffic to the port.</li>
+<li>Inserts a rule to drop <strong>TCP</strong> traffic to the port.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 <p><br></p>
-<p>Define the allowed incoming and outgoing TCP ports, respectively. Add or remove ports as required, separated by commas.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="tcp_in-tcp_out-config" name="__tabbed_1" type="radio"><input id="tcp_in-tcp_out-common-ports" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="tcp_in-tcp_out-config"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-277.5c0-17-6.7-33.3-18.7-45.3L258.7 18.7C246.7 6.7 230.5 0 213.5 0L64 0zM325.5 176L232 176c-13.3 0-24-10.7-24-24L208 58.5 325.5 176z"></path></svg></span> Config</label><label for="tcp_in-tcp_out-common-ports"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zM96 288a32 32 0 1 0 0-64 32 32 0 1 0 0 64zm32-144a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zM96 400a32 32 0 1 0 0-64 32 32 0 1 0 0 64zm96-280c-13.3 0-24 10.7-24 24s10.7 24 24 24l160 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-160 0zm0 112c-13.3 0-24 10.7-24 24s10.7 24 24 24l160 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-160 0zm0 112c-13.3 0-24 10.7-24 24s10.7 24 24 24l160 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-160 0z"></path></svg></span> Common Ports</label></div>
+<p>Add the code below to your new file <code>/usr/local/include/csf/post.d/ports-blocklist.sh</code> and save.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="ch">#!/bin/sh</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1"># #</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1">#   Settings &gt; Ports</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1"># #</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="nv">BLACKLIST_PORTS</span><span class="o">=</span><span class="k">$(</span>cat<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="s">[</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="s">    {"port":"111", "comment":"used by rpcbind, has vulnerabilities"}</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="s">]</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="s">EOF</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="k">)</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="c1"># #</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="c1">#   Define &gt; Iptables</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="c1"># #</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="nv">path_iptables4</span><span class="o">=</span><span class="k">$(</span>which<span class="w"> </span>iptables<span class="k">)</span>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="nv">path_iptables6</span><span class="o">=</span><span class="k">$(</span>which<span class="w"> </span>ip6tables<span class="k">)</span>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="c1"># #</span>
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="c1">#   Loop blacklists, create if missing</span>
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="c1"># #</span>
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>
+</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="nb">printf</span><span class="w"> </span><span class="s2">"\n"</span>
+</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="nb">printf</span><span class="w"> </span><span class="s2">"  + RESTRICT      Blacklisting Ports\n"</span>
+</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>
+</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$BLACKLIST_PORTS</span><span class="s2">"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-c<span class="w"> </span><span class="s1">'.[]'</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="nv">IFS</span><span class="o">=</span><span class="w"> </span><span class="nb">read</span><span class="w"> </span>-r<span class="w"> </span>row<span class="p">;</span><span class="w"> </span><span class="k">do</span>
+</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>
+</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="w">    </span><span class="nv">ENTRY_PORT</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$row</span><span class="s2">"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">'.port'</span><span class="k">)</span>
+</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="w">    </span><span class="nv">ENTRY_COMMENT</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span><span class="w"> </span><span class="s2">"</span><span class="nv">$row</span><span class="s2">"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span><span class="s1">'.comment'</span><span class="k">)</span>
+</span><span id="__span-1-32"><a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a>
+</span><span id="__span-1-33"><a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a><span class="w">    </span><span class="c1"># #</span>
+</span><span id="__span-1-34"><a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="w">    </span><span class="c1">#   See if ports already exist in iptables</span>
+</span><span id="__span-1-35"><a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a><span class="w">    </span><span class="c1"># #</span>
+</span><span id="__span-1-36"><a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a>
+</span><span id="__span-1-37"><a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="w">    </span><span class="nv">DELETE_INPUT_UDP</span><span class="o">=</span><span class="m">0</span>
+</span><span id="__span-1-38"><a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a><span class="w">    </span><span class="nv">DELETE_INPUT_TCP</span><span class="o">=</span><span class="m">0</span>
+</span><span id="__span-1-39"><a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a>
+</span><span id="__span-1-40"><a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a><span class="w">    </span><span class="nv">$path_iptables4</span><span class="w"> </span>-C<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>udp<span class="w"> </span>--dport<span class="w"> </span><span class="s2">"</span><span class="nv">$ENTRY_PORT</span><span class="s2">"</span><span class="w"> </span>-j<span class="w"> </span>DROP<span class="w"> </span>&gt;/dev/null<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nv">DELETE_INPUT_UDP</span><span class="o">=</span><span class="m">1</span>
+</span><span id="__span-1-41"><a id="__codelineno-1-41" name="__codelineno-1-41" href="#__codelineno-1-41"></a><span class="w">    </span><span class="nv">$path_iptables4</span><span class="w"> </span>-C<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>tcp<span class="w"> </span>--dport<span class="w"> </span><span class="s2">"</span><span class="nv">$ENTRY_PORT</span><span class="s2">"</span><span class="w"> </span>-j<span class="w"> </span>DROP<span class="w"> </span>&gt;/dev/null<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nv">DELETE_INPUT_TCP</span><span class="o">=</span><span class="m">1</span>
+</span><span id="__span-1-42"><a id="__codelineno-1-42" name="__codelineno-1-42" href="#__codelineno-1-42"></a>
+</span><span id="__span-1-43"><a id="__codelineno-1-43" name="__codelineno-1-43" href="#__codelineno-1-43"></a><span class="w">    </span><span class="c1"># #</span>
+</span><span id="__span-1-44"><a id="__codelineno-1-44" name="__codelineno-1-44" href="#__codelineno-1-44"></a><span class="w">    </span><span class="c1">#   Drop Port &gt; UDP</span>
+</span><span id="__span-1-45"><a id="__codelineno-1-45" name="__codelineno-1-45" href="#__codelineno-1-45"></a><span class="w">    </span><span class="c1"># #</span>
+</span><span id="__span-1-46"><a id="__codelineno-1-46" name="__codelineno-1-46" href="#__codelineno-1-46"></a>
+</span><span id="__span-1-47"><a id="__codelineno-1-47" name="__codelineno-1-47" href="#__codelineno-1-47"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">"</span><span class="nv">$DELETE_INPUT_UDP</span><span class="s2">"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"0"</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+</span><span id="__span-1-48"><a id="__codelineno-1-48" name="__codelineno-1-48" href="#__codelineno-1-48"></a><span class="w">        </span><span class="nb">printf</span><span class="w"> </span><span class="s2">"                   ✓ Port already blacklisted\n"</span>
+</span><span id="__span-1-49"><a id="__codelineno-1-49" name="__codelineno-1-49" href="#__codelineno-1-49"></a><span class="w">    </span><span class="k">else</span>
+</span><span id="__span-1-50"><a id="__codelineno-1-50" name="__codelineno-1-50" href="#__codelineno-1-50"></a><span class="w">        </span>sudo<span class="w"> </span><span class="nv">$path_iptables4</span><span class="w"> </span>-I<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>udp<span class="w"> </span>--dport<span class="w"> </span><span class="s2">"</span><span class="nv">$ENTRY_PORT</span><span class="s2">"</span><span class="w"> </span>-j<span class="w"> </span>DROP
+</span><span id="__span-1-51"><a id="__codelineno-1-51" name="__codelineno-1-51" href="#__codelineno-1-51"></a><span class="w">        </span><span class="nb">printf</span><span class="w"> </span><span class="s1">'%-17s %-50s %-55s\n'</span><span class="w"> </span><span class="s2">" "</span><span class="w"> </span><span class="s2">"├─ Blacklisting </span><span class="nv">$ENTRY_PORT</span><span class="s2"> (UDP)"</span><span class="w"> </span><span class="s2">"</span><span class="nv">$ENTRY_COMMENT</span><span class="s2">"</span>
+</span><span id="__span-1-52"><a id="__codelineno-1-52" name="__codelineno-1-52" href="#__codelineno-1-52"></a><span class="w">    </span><span class="k">fi</span>
+</span><span id="__span-1-53"><a id="__codelineno-1-53" name="__codelineno-1-53" href="#__codelineno-1-53"></a>
+</span><span id="__span-1-54"><a id="__codelineno-1-54" name="__codelineno-1-54" href="#__codelineno-1-54"></a><span class="w">    </span><span class="c1"># #</span>
+</span><span id="__span-1-55"><a id="__codelineno-1-55" name="__codelineno-1-55" href="#__codelineno-1-55"></a><span class="w">    </span><span class="c1">#   Drop Port &gt; TCP</span>
+</span><span id="__span-1-56"><a id="__codelineno-1-56" name="__codelineno-1-56" href="#__codelineno-1-56"></a><span class="w">    </span><span class="c1"># #</span>
+</span><span id="__span-1-57"><a id="__codelineno-1-57" name="__codelineno-1-57" href="#__codelineno-1-57"></a>
+</span><span id="__span-1-58"><a id="__codelineno-1-58" name="__codelineno-1-58" href="#__codelineno-1-58"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">"</span><span class="nv">$DELETE_INPUT_TCP</span><span class="s2">"</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"0"</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+</span><span id="__span-1-59"><a id="__codelineno-1-59" name="__codelineno-1-59" href="#__codelineno-1-59"></a><span class="w">        </span><span class="nb">printf</span><span class="w"> </span><span class="s2">"                   ✓ Port already blacklisted\n"</span>
+</span><span id="__span-1-60"><a id="__codelineno-1-60" name="__codelineno-1-60" href="#__codelineno-1-60"></a><span class="w">    </span><span class="k">else</span>
+</span><span id="__span-1-61"><a id="__codelineno-1-61" name="__codelineno-1-61" href="#__codelineno-1-61"></a><span class="w">        </span>sudo<span class="w"> </span><span class="nv">$path_iptables4</span><span class="w"> </span>-I<span class="w"> </span>INPUT<span class="w"> </span>-p<span class="w"> </span>tcp<span class="w"> </span>--dport<span class="w"> </span><span class="s2">"</span><span class="nv">$ENTRY_PORT</span><span class="s2">"</span><span class="w"> </span>-j<span class="w"> </span>DROP
+</span><span id="__span-1-62"><a id="__codelineno-1-62" name="__codelineno-1-62" href="#__codelineno-1-62"></a><span class="w">        </span><span class="nb">printf</span><span class="w"> </span><span class="s1">'%-17s %-50s %-55s\n'</span><span class="w"> </span><span class="s2">" "</span><span class="w"> </span><span class="s2">"├─ Blacklisting </span><span class="nv">$ENTRY_PORT</span><span class="s2"> (TCP)"</span><span class="w"> </span><span class="s2">"</span><span class="nv">$ENTRY_COMMENT</span><span class="s2">"</span>
+</span><span id="__span-1-63"><a id="__codelineno-1-63" name="__codelineno-1-63" href="#__codelineno-1-63"></a><span class="w">    </span><span class="k">fi</span>
+</span><span id="__span-1-64"><a id="__codelineno-1-64" name="__codelineno-1-64" href="#__codelineno-1-64"></a>
+</span><span id="__span-1-65"><a id="__codelineno-1-65" name="__codelineno-1-65" href="#__codelineno-1-65"></a><span class="k">done</span>
+</span></code></pre></div>
+<p><br></p>
+<p>The script itself is very easy to use. We make sure to edit the list <code>BLACKLIST_PORTS</code> and populate it with ports we absolutely do not want giving access to:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nv">BLACKLIST_PORTS</span><span class="o">=</span><span class="k">$(</span>cat<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="s">[</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="s">    {"port":"111", "comment":"used by rpcbind, has vulnerabilities"},</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="s">    {"port":"21", "comment":"insecure ftp"}</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="s">]</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="s">EOF</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="k">)</span>
+</span></code></pre></div>
+<p><br></p>
+<p>After you edit the list of ports, simply restart <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>'s <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> and the script will be automatically re-loaded:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="writing-custom-rules-command" name="__tabbed_1" type="radio"><input id="writing-custom-rules-output" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="writing-custom-rules-command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> Command</label><label for="writing-custom-rules-output"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Output</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-ini highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Allow incoming TCP ports</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="na">TCP_IN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"22,53,80,110,143,443,465,587,993,995"</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># Allow outgoing TCP ports</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="na">TCP_OUT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"22,53,80,110,143,443,465,587,993,995"</span>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-ra
 </span></code></pre></div>
 </div>
 <div class="tabbed-block">
-<p>The following are a list of the most common ports that you may find useful allowing traffic through.</p>
-<table>
-<thead>
-<tr>
-<th>Port</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>20</td>
-<td>FTP data transfer (active mode)</td>
-</tr>
-<tr>
-<td>21</td>
-<td>FTP control/commands</td>
-</tr>
-<tr>
-<td>22</td>
-<td>SSH / SFTP (secure shell and file transfer)</td>
-</tr>
-<tr>
-<td>25</td>
-<td>SMTP (sending email between mail servers)</td>
-</tr>
-<tr>
-<td>53</td>
-<td>DNS (Domain Name System queries)</td>
-</tr>
-<tr>
-<td>80</td>
-<td>HTTP (web traffic, insecure)</td>
-</tr>
-<tr>
-<td>110</td>
-<td>POP3 (downloading emails, insecure)</td>
-</tr>
-<tr>
-<td>113</td>
-<td>Ident / AUTH (rarely used identification service)</td>
-</tr>
-<tr>
-<td>139</td>
-<td>Samba (legacy) (SMB over NetBIOS)</td>
-</tr>
-<tr>
-<td>143</td>
-<td>IMAP (retrieving/syncing emails, insecure)</td>
-</tr>
-<tr>
-<td>443</td>
-<td>HTTPS (secure web traffic)</td>
-</tr>
-<tr>
-<td>445</td>
-<td>Samba (modern - preferred) (SMB over TCP)</td>
-</tr>
-<tr>
-<td>465</td>
-<td>SMTP over SSL (secure sending of emails)</td>
-</tr>
-<tr>
-<td>587</td>
-<td>SMTP submission (secure client-to-server email sending)</td>
-</tr>
-<tr>
-<td>853</td>
-<td>DNS over TLS (secure DNS queries)</td>
-</tr>
-<tr>
-<td>993</td>
-<td>IMAP over SSL (secure email retrieval)</td>
-</tr>
-<tr>
-<td>995</td>
-<td>POP3 over SSL (secure email download)</td>
-</tr>
-</tbody>
-</table>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>LOGDROPOUT<span class="w">  </span>all<span class="w"> </span>opt<span class="w"> </span>--<span class="w"> </span><span class="k">in</span><span class="w"> </span>*<span class="w"> </span>out<span class="w"> </span>!lo<span class="w">  </span><span class="m">0</span>.0.0.0/0<span class="w">  </span>-&gt;<span class="w"> </span><span class="m">0</span>.0.0.0/0<span class="w">  </span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>LOGDROPIN<span class="w">  </span>all<span class="w"> </span>opt<span class="w"> </span>--<span class="w"> </span><span class="k">in</span><span class="w"> </span>!lo<span class="w"> </span>out<span class="w"> </span>*<span class="w">  </span><span class="m">0</span>.0.0.0/0<span class="w">  </span>-&gt;<span class="w"> </span><span class="m">0</span>.0.0.0/0<span class="w">  </span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>csf:<span class="w"> </span>FASTSTART<span class="w"> </span>loading<span class="w"> </span>DNS<span class="w"> </span><span class="o">(</span>IPv4<span class="o">)</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>LOCALOUTPUT<span class="w">  </span>all<span class="w"> </span>opt<span class="w"> </span>--<span class="w"> </span><span class="k">in</span><span class="w"> </span>*<span class="w"> </span>out<span class="w"> </span>!lo<span class="w">  </span><span class="m">0</span>.0.0.0/0<span class="w">  </span>-&gt;<span class="w"> </span><span class="m">0</span>.0.0.0/0<span class="w">  </span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>LOCALINPUT<span class="w">  </span>all<span class="w"> </span>opt<span class="w"> </span>--<span class="w"> </span><span class="k">in</span><span class="w"> </span>!lo<span class="w"> </span>out<span class="w"> </span>*<span class="w">  </span><span class="m">0</span>.0.0.0/0<span class="w">  </span>-&gt;<span class="w"> </span><span class="m">0</span>.0.0.0/0<span class="w">  </span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>Running<span class="w"> </span>/usr/local/csf/bin/csfpost.sh
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>Loading<span class="w"> </span>post-script:<span class="w"> </span>/usr/local/include/csf/post.d/ports-blocklist.sh
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>+<span class="w"> </span>RESTRICT<span class="w">      </span>Blacklisting<span class="w"> </span>Ports
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">                  </span>├─<span class="w"> </span>Blacklisting<span class="w"> </span><span class="m">111</span><span class="w"> </span><span class="o">(</span>UDP<span class="o">)</span><span class="w"> </span>used<span class="w"> </span>by<span class="w"> </span>rpcbind,<span class="w"> </span>has<span class="w"> </span>vulnerabilities
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">                  </span>├─<span class="w"> </span>Blacklisting<span class="w"> </span><span class="m">111</span><span class="w"> </span><span class="o">(</span>TCP<span class="o">)</span><span class="w"> </span>used<span class="w"> </span>by<span class="w"> </span>rpcbind,<span class="w"> </span>has<span class="w"> </span>vulnerabilities
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">                  </span>├─<span class="w"> </span>Blacklisting<span class="w"> </span><span class="m">21</span><span class="w"> </span><span class="o">(</span>UDP<span class="o">)</span><span class="w"> </span>insecure<span class="w"> </span>ftp
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">                  </span>├─<span class="w"> </span>Blacklisting<span class="w"> </span><span class="m">21</span><span class="w"> </span><span class="o">(</span>TCP<span class="o">)</span><span class="w"> </span>insecure<span class="w"> </span>ftp
+</span></code></pre></div>
 </div>
 </div>
 </div>
-<p><br>
-<br></p>
-<h3 id="udp_in-udp_out">UDP_IN, UDP_OUT<a class="headerlink" href="#udp_in-udp_out" title="Permanent link">¶</a></h3>
-<p><span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#required" title="Required value"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14h-2V9h2m0 9h-2v-2h2M1 21h22L12 2 1 21Z"></path></svg></span></a></span></span> <span class="mdx-badge mdx-badge--files-group-right"><span class="mdx-badge mdx-badge--files-download"><span class="mdx-badge__icon"><a href="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf" target="_blank" title="Download"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 6a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6c0-1.11.89-2 2-2h6l2 2h8m-.75 7H16V9h-2v4h-3.25L15 17.25"></path></svg></span></a></span><span class="mdx-badge__text"><a href="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf" target="_blank"><code>.conf</code></a></span></span></span> <span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#source" title="This setting can be found in the file <pre>/etc/csf/csf.conf</pre>"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0C28.7 0 0 28.7 0 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M224 0c15.4 0 30.1 6.1 41 17L367 119c10.9 10.9 17 25.6 17 41l-128 0c-17.7 0-32-14.3-32-32L224 0z"></path></svg></span></a></span><span class="mdx-badge__text">/etc/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>/<abbr title="The default csf config file, usually in <pre>/etc/csf/csf.conf</pre>">csf.conf</abbr></span></span> <span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#default" title="Default value"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a6 6 0 0 1-6-6c0-4 6-10.75 6-10.75S18 10 18 14a6 6 0 0 1-6 6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>20,21,53,853,80,443</code></span></span></p>
 <p><br></p>
-<p>Define the allowed incoming and outgoing UDP ports, respectively. Add or remove ports as required, separated by commas.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="udp_in-udp_out-config" name="__tabbed_2" type="radio"><input id="udp_in-udp_out-common-ports" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="udp_in-udp_out-config"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-277.5c0-17-6.7-33.3-18.7-45.3L258.7 18.7C246.7 6.7 230.5 0 213.5 0L64 0zM325.5 176L232 176c-13.3 0-24-10.7-24-24L208 58.5 325.5 176z"></path></svg></span> Config</label><label for="udp_in-udp_out-common-ports"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zM96 288a32 32 0 1 0 0-64 32 32 0 1 0 0 64zm32-144a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zM96 400a32 32 0 1 0 0-64 32 32 0 1 0 0 64zm96-280c-13.3 0-24 10.7-24 24s10.7 24 24 24l160 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-160 0zm0 112c-13.3 0-24 10.7-24 24s10.7 24 24 24l160 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-160 0zm0 112c-13.3 0-24 10.7-24 24s10.7 24 24 24l160 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-160 0z"></path></svg></span> Common Ports</label></div>
+<p>We can now view <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> to confirm our rules were added. Iptables will resolve whatever service is associated with a port, which means port <code>111</code> will show as <code>sunrpc</code>. If you wish to show just the port number, append <code>-n</code> to your <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> command:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="writing-custom-rules-command_1" name="__tabbed_2" type="radio"><input id="writing-custom-rules-output_1" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="writing-custom-rules-command_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> Command</label><label for="writing-custom-rules-output_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Output</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-ini highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Allow incoming UDP ports</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="na">UDP_IN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"20,21,53,853,80,443"</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># Allow outgoing UDP ports</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># To allow outgoing traceroute add 33434:33523 to this list </span>
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="na">UDP_OUT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"20,21,53,853,113,123"</span>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sudo<span class="w"> </span>iptables<span class="w"> </span>-L<span class="w"> </span>-n
 </span></code></pre></div>
 </div>
 <div class="tabbed-block">
-<p>The following are a list of the most common ports that you may find useful allowing traffic through.</p>
-<table>
-<thead>
-<tr>
-<th>Port</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>20</td>
-<td>FTP data transfer (rarely UDP, mostly TCP)</td>
-</tr>
-<tr>
-<td>21</td>
-<td>FTP control/commands (rarely UDP, mostly TCP)</td>
-</tr>
-<tr>
-<td>53</td>
-<td>DNS queries (UDP is standard; TCP fallback for large responses)</td>
-</tr>
-<tr>
-<td>80</td>
-<td>HTTP (UDP not standard; TCP is primary)</td>
-</tr>
-<tr>
-<td>113</td>
-<td>Ident / AUTH (rarely used)</td>
-</tr>
-<tr>
-<td>123</td>
-<td>NTP (Network Time Protocol)</td>
-</tr>
-<tr>
-<td>443</td>
-<td>HTTPS (UDP can be used with QUIC protocol)</td>
-</tr>
-<tr>
-<td>853</td>
-<td>DNS over TLS (UDP fallback possible)</td>
-</tr>
-<tr>
-<td>67</td>
-<td>DHCP server (receives client requests)</td>
-</tr>
-<tr>
-<td>68</td>
-<td>DHCP client (receives server responses)</td>
-</tr>
-<tr>
-<td>137</td>
-<td>Samba / NetBIOS Name Service (NBNS)</td>
-</tr>
-<tr>
-<td>138</td>
-<td>Samba / NetBIOS Datagram Service (NBDS)</td>
-</tr>
-<tr>
-<td>161</td>
-<td>SNMP (Simple Network Management Protocol)</td>
-</tr>
-<tr>
-<td>162</td>
-<td>SNMP traps (from agents to manager)</td>
-</tr>
-<tr>
-<td>500</td>
-<td>IKE (IPsec key exchange)</td>
-</tr>
-<tr>
-<td>514</td>
-<td>Syslog (UDP logging)</td>
-</tr>
-<tr>
-<td>1900</td>
-<td>SSDP (Simple Service Discovery Protocol, used in UPnP)</td>
-</tr>
-<tr>
-<td>4500</td>
-<td>IPsec NAT traversal</td>
-</tr>
-<tr>
-<td>33434–33523</td>
-<td>Traceroute / ICMP UDP probe ports</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<p><br>
-<br></p>
-<h3 id="deny_ip_limit">DENY_IP_LIMIT<a class="headerlink" href="#deny_ip_limit" title="Permanent link">¶</a></h3>
-<p><span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#required" title="Required value"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14h-2V9h2m0 9h-2v-2h2M1 21h22L12 2 1 21Z"></path></svg></span></a></span></span> <span class="mdx-badge mdx-badge--files-group-right"><span class="mdx-badge mdx-badge--files-download"><span class="mdx-badge__icon"><a href="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf" target="_blank" title="Download"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 6a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6c0-1.11.89-2 2-2h6l2 2h8m-.75 7H16V9h-2v4h-3.25L15 17.25"></path></svg></span></a></span><span class="mdx-badge__text"><a href="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf" target="_blank"><code>.conf</code></a></span></span></span> <span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#source" title="This setting can be found in the file <pre>/etc/csf/csf.conf</pre>"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0C28.7 0 0 28.7 0 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M224 0c15.4 0 30.1 6.1 41 17L367 119c10.9 10.9 17 25.6 17 41l-128 0c-17.7 0-32-14.3-32-32L224 0z"></path></svg></span></a></span><span class="mdx-badge__text">/etc/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>/<abbr title="The default csf config file, usually in <pre>/etc/csf/csf.conf</pre>">csf.conf</abbr></span></span> <span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#default" title="Default value"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a6 6 0 0 1-6-6c0-4 6-10.75 6-10.75S18 10 18 14a6 6 0 0 1-6 6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>200</code></span></span></p>
-<p><br></p>
-<p>This setting controls the <strong>maximum number of IP addresses</strong> that can be listed in the <code>/etc/csf/csf.deny</code> file. You can increase or decrease this limit depending on your server’s needs.  </p>
-<p>Keep in mind that raising the limit on servers with low memory (such as Virtuozzo or OpenVZ) may cause network slowdowns if thousands of rules are loaded.  </p>
-<p>When the limit is reached, <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> will automatically rotate the entries; meaning that the oldest entries (at the top of the file) are removed, and the newest ones are added. This check only happens when using <code>csf -d</code>, which is also what <code>lfd</code> relies on. Setting this value to <code>0</code> disables the limit entirely.  </p>
-<p>If you need to allow a much larger number of blocked IPs or CIDRs, it’s recommended to use <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>'s <a href="../ipset/">IPSETs</a> integration instead for better performance.</p>
-<div class="language-cfg highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># #</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1">#   Limit the number of IP's kept in the /etc/csf/csf.deny file</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1">#   </span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1">#   Care should be taken when increasing this value on servers with low memory</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="c1">#   resources or hard limits (such as Virtuozzo/OpenVZ) as too many rules (in the</span>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="c1">#   thousands) can sometimes cause network slowdown</span>
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="c1">#   </span>
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="c1">#   The value set here is the maximum number of IPs/CIDRs allowed</span>
-</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="c1">#   if the limit is reached, the entries will be rotated so that the oldest</span>
-</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="c1">#   entries (i.e. the ones at the top) will be removed and the latest is added.</span>
-</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="c1">#   The limit is only checked when using csf -d (which is what lfd also uses)</span>
-</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="c1">#   Set to 0 to disable limiting</span>
-</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="c1">#   </span>
-</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="c1">#   For implementations wishing to set this value significantly higher, we</span>
-</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="c1">#   recommend using the IPSET option</span>
-</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="c1"># #</span>
-</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>
-</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="na">DENY_IP_LIMIT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"200"</span>
+<p>If you use the command <code>sudo iptables -L</code></p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Chain<span class="w"> </span>INPUT<span class="w"> </span><span class="o">(</span>policy<span class="w"> </span>DROP<span class="o">)</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>target<span class="w">     </span>prot<span class="w"> </span>opt<span class="w"> </span><span class="nb">source</span><span class="w">               </span>destination<span class="w">         </span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>DROP<span class="w">       </span>tcp<span class="w">  </span>--<span class="w">  </span>anywhere<span class="w">             </span>anywhere<span class="w">             </span>tcp<span class="w"> </span>dpt:sunrpc
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>DROP<span class="w">       </span>udp<span class="w">  </span>--<span class="w">  </span>anywhere<span class="w">             </span>anywhere<span class="w">             </span>udp<span class="w"> </span>dpt:sunrpc
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>Chain<span class="w"> </span>LOGDROPIN<span class="w"> </span><span class="o">(</span><span class="m">2</span><span class="w"> </span>references<span class="o">)</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>target<span class="w">     </span>prot<span class="w"> </span>opt<span class="w"> </span><span class="nb">source</span><span class="w">               </span>destination<span class="w">         </span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>DROP<span class="w">       </span>tcp<span class="w">  </span>--<span class="w">  </span>anywhere<span class="w">             </span>anywhere<span class="w">             </span>tcp<span class="w"> </span>dpt:sunrpc
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>DROP<span class="w">       </span>udp<span class="w">  </span>--<span class="w">  </span>anywhere<span class="w">             </span>anywhere<span class="w">             </span>udp<span class="w"> </span>dpt:sunrpc
 </span></code></pre></div>
-<p><br>
-<br></p>
-<h3 id="ct_limit">CT_LIMIT<a class="headerlink" href="#ct_limit" title="Permanent link">¶</a></h3>
-<p><span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#required" title="Required value"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14h-2V9h2m0 9h-2v-2h2M1 21h22L12 2 1 21Z"></path></svg></span></a></span></span> <span class="mdx-badge mdx-badge--files-group-right"><span class="mdx-badge mdx-badge--files-download"><span class="mdx-badge__icon"><a href="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf" target="_blank" title="Download"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 6a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6c0-1.11.89-2 2-2h6l2 2h8m-.75 7H16V9h-2v4h-3.25L15 17.25"></path></svg></span></a></span><span class="mdx-badge__text"><a href="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf" target="_blank"><code>.conf</code></a></span></span></span> <span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#source" title="This setting can be found in the file <pre>/etc/csf/csf.conf</pre>"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0C28.7 0 0 28.7 0 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M224 0c15.4 0 30.1 6.1 41 17L367 119c10.9 10.9 17 25.6 17 41l-128 0c-17.7 0-32-14.3-32-32L224 0z"></path></svg></span></a></span><span class="mdx-badge__text">/etc/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>/<abbr title="The default csf config file, usually in <pre>/etc/csf/csf.conf</pre>">csf.conf</abbr></span></span> <span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#default" title="Default value"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a6 6 0 0 1-6-6c0-4 6-10.75 6-10.75S18 10 18 14a6 6 0 0 1-6 6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>0</code></span></span></p>
 <p><br></p>
-<p><strong>Connection Tracking</strong> lets the firewall keep track of how many connections each IP address makes to your server. If an IP opens more connections than the set limit, it will be automatically blocked. This can help protect against certain types of DoS (Denial of Service) attacks.  </p>
-<p>Be cautious when enabling this option. Some <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> like <strong>FTP</strong>, <strong>IMAP</strong>, and <strong>HTTP</strong> naturally create many connections, including ones left in <code>TIME_WAIT</code>, which can lead to false positives. On busy servers, it’s easy for legitimate traffic to hit the limit. For servers at higher risk of DoS attacks, however, this feature can be very useful. A practical starting value is usually around <code>300</code> connections.</p>
-<p>To disable this feature, set this to 0</p>
-<div class="language-ini highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># #</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="c1">#   Connection Tracking. This option enables tracking of all connections from IP</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="c1">#   addresses to the server. If the total number of connections is greater than</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1">#   this value then the offending IP address is blocked. This can be used to help</span>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="c1">#   prevent some types of DOS attack.</span>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="c1">#</span>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c1">#   Care should be taken with this option. It's entirely possible that you will</span>
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="c1">#   see false-positives. Some protocols can be connection hungry, e.g. FTP, IMAPD</span>
-</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="c1">#   and HTTP so it could be quite easy to trigger, especially with a lot of</span>
-</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="c1">#   closed connections in TIME_WAIT. However, for a server that is prone to DOS</span>
-</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="c1">#   attacks this may be very useful. A reasonable setting for this option might</span>
-</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="c1">#   be around 300.</span>
-</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="c1">#   </span>
-</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="c1">#   To disable this feature, set this to 0</span>
-</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="c1"># #</span>
-</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>
-</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="na">CT_LIMIT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"0"</span>
+<p>If you use the command <code>sudo iptables -L -n</code></p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Chain<span class="w"> </span>INPUT<span class="w"> </span><span class="o">(</span>policy<span class="w"> </span>DROP<span class="o">)</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>target<span class="w">     </span>prot<span class="w"> </span>opt<span class="w"> </span><span class="nb">source</span><span class="w">               </span>destination<span class="w">         </span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>DROP<span class="w">       </span><span class="m">6</span><span class="w">    </span>--<span class="w">  </span><span class="m">0</span>.0.0.0/0<span class="w">            </span><span class="m">0</span>.0.0.0/0<span class="w">            </span>tcp<span class="w"> </span>dpt:111
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>DROP<span class="w">       </span><span class="m">17</span><span class="w">   </span>--<span class="w">  </span><span class="m">0</span>.0.0.0/0<span class="w">            </span><span class="m">0</span>.0.0.0/0<span class="w">            </span>udp<span class="w"> </span>dpt:111
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>Chain<span class="w"> </span>LOGDROPIN<span class="w"> </span><span class="o">(</span><span class="m">2</span><span class="w"> </span>references<span class="o">)</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>target<span class="w">     </span>prot<span class="w"> </span>opt<span class="w"> </span><span class="nb">source</span><span class="w">               </span>destination<span class="w">         </span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>DROP<span class="w">       </span><span class="m">6</span><span class="w">    </span>--<span class="w">  </span><span class="m">0</span>.0.0.0/0<span class="w">            </span><span class="m">0</span>.0.0.0/0<span class="w">            </span>tcp<span class="w"> </span>dpt:111
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>DROP<span class="w">       </span><span class="m">17</span><span class="w">   </span>--<span class="w">  </span><span class="m">0</span>.0.0.0/0<span class="w">            </span><span class="m">0</span>.0.0.0/0<span class="w">            </span>udp<span class="w"> </span>dpt:111
 </span></code></pre></div>
-<p><br>
-<br></p>
+</div>
+</div>
+</div>
+<p><br></p>
+<hr>
+<p><br></p>
+<h2 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">¶</a></h2>
+<p>From this point forward, you can create any number of pre and post scripts for your own firewall setup. Simply drop the scripts in the folders specified in the section <a href="#location-and-structure">Location and Structure</a>.</p>
 <p><br></p>
 <hr>
 <p><br></p>
@@ -2356,7 +2358,7 @@ they work efficiently no matter the size of the list.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 2, 2025 22:37:32 UTC"><span class="timeago" datetime="2025-10-02T22:37:32+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 2, 2025 22:37:32 UTC">2025-10-02</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 3, 2025 00:48:32 UTC"><span class="timeago" datetime="2025-10-03T00:48:32+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 3, 2025 00:48:32 UTC">2025-10-03</span>
   </span>
 
     
@@ -2425,6 +2427,44 @@ they work efficiently no matter the size of the list.</p>
       
         <footer class="md-footer">
   
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="../configuration/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Configuration">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Configuration
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../ipset/" class="md-footer__link md-footer__link--next" aria-label="Next: Ipsets">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Ipsets
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
     
   
   <div class="md-footer-meta md-typeset">
