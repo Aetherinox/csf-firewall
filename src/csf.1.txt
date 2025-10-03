@@ -279,7 +279,7 @@ The system wide configuration file
 .RS
 Detailed information about csf and lfd
 .SH BUGS
-Report bugs on the forums at https://github.com/Aetherinox/csf-firewall/issues
+Report bugs on our repo https://github.com/Aetherinox/csf-firewall/issues
 .SH AUTHOR
 (c)2025, Aetherinox (https://github.com/Aetherinox/csf-firewall)
 .SH LEGACY

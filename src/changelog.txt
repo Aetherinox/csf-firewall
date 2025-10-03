@@ -5,6 +5,8 @@ ChangeLog:
 
         Registered new domain https://configserver.dev
 
+        Added new pre and post startup scripts
+
         Added new theme switcher
 
         Added new dedicated javascript library
