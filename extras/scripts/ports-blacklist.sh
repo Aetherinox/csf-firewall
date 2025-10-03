@@ -257,7 +257,7 @@ fi
 #   Loop blacklists
 # #
 
-status "⭕ Blocking Ports"
+status "⭕ Blacklisting Ports"
 
 echo "$BLACKLIST_PORTS" | jq -c '.[]' | while IFS= read -r row; do
     entry_port=$(echo "$row" | jq -r '.port')
@@ -276,14 +276,14 @@ echo "$BLACKLIST_PORTS" | jq -c '.[]' | while IFS= read -r row; do
         ok "    ✓  Port ${greenl}$entry_port${greym} for protocl ${greenl}UDP${greym} already blocked "
     else
         $path_iptables4 -I INPUT -p udp --dport "$entry_port" -j DROP
-        print  "    ├─ Blocking | port: ${fuchsial}$entry_port${peach} ${fuchsial}UDP${peach} | comment: ${fuchsial}$entry_comment${peach} "
+        print  "    ├─ Blacklisting | port: ${fuchsial}$entry_port${peach} ${fuchsial}UDP${peach} | comment: ${fuchsial}$entry_comment${peach} "
     fi
 
     if [ "$delete_input_tcp" = "0" ]; then
         ok "    ✓  Port ${greenl}$entry_port${greym} for protocl ${greenl}TCP${greym} already blocked "
     else
         $path_iptables4 -I INPUT -p tcp --dport "$entry_port" -j DROP
-        print  "    ├─ Blocking | port: ${fuchsial}$entry_port${peach} ${fuchsial}TCP${peach} | comment: ${fuchsial}$entry_comment${peach} "
+        print  "    ├─ Blacklisting | port: ${fuchsial}$entry_port${peach} ${fuchsial}TCP${peach} | comment: ${fuchsial}$entry_comment${peach} "
     fi
 done
 
