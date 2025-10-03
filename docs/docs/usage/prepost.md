@@ -79,210 +79,189 @@ We have provided an example structure of how your scripts should be stored. When
 
 <br />
 
-## Essential Config Properties
+## Writing Custom Rules
 
-This section outlines some of the most important settings that you may want to review. Each one is listed below:
+As outlined earlier, the `pre.d` and `post.d` folders allow you to drop your own custom bash scripts inside the folders which will be responsible for any iptable rules you need to add to CSF every time the service is started or restarted. 
+
+We will provide an example script below just to outline what can be done. In our example, we will create `/usr/local/include/csf/post.d/ports-blocklist.sh`. The script will do the following:
+
+- Defines a list of blacklisted ports using a JSON array in `BLACKLIST_PORTS`. Each entry includes a port number and a comment describing it.
+- Iterates over each port in the blacklist using `jq` to parse the JSON.
+- For each port:
+    - Extracts the port number `ENTRY_PORT` and its description/comment `ENTRY_COMMENT`.
+    - Checks if a **UDP** rule already exists in iptables for that port:
+        - Sets `DELETE_INPUT_UDP=1` if the rule does not exist.
+    - Checks if a **TCP** rule already exists in iptables for that port:
+        - Sets `DELETE_INPUT_TCP=1` if the rule does not exist.
+    - Adds the firewall rules if they are not already present:
+        - Inserts a rule to drop **UDP** traffic to the port.
+        - Inserts a rule to drop **TCP** traffic to the port.
 
 <br />
 
-### TESTING
+Add the code below to your new file `/usr/local/include/csf/post.d/ports-blocklist.sh` and save.
 
-<!-- md:flag required --> <!-- md:file https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf --> <!-- md:source /etc/csf/csf.conf --> <!-- md:default `1` -->
+```bash
+#!/bin/sh
 
-<br />
-
-Testing mode is a feature built into CSF and LFD which does the following when enabled:
-
-- Allows safe configuration of CSF without enforcing firewall rules or banning IPs.
-- Reads configuration files like `/etc/ssh/sshd_config` to detect service ports. Detected ports (SSH, IPv6, TCP/UDP) are added to CSF config variables such as `TCP_IN`, `TCP6_IN`, `UDP_IN` in `/etc/csf/csf.conf`.
-- LFD does not run as a daemon.
-- Adds a cron job to periodically reload CSF rules for testing, but no actual blocking occurs.
-- IPs in `csf.allow` and `csf.deny` are processed for testing but **not enforced**.
-- Displays currently listening ports to sysadmin; helps safely configure CSF before enabling enforcement.
-
-```ini
 # #
-#   Testing flag - enables a CRON job that clears iptables incase of
-#   configuration problems when you start csf. This should be enabled until you
-#   are sure that the firewall works - i.e. incase you get locked out of your
-#   server! Then do remember to set it to 0 and restart csf when you're sure
-#   everything is OK. Stopping csf will remove the line from /etc/crontab
-#   
-#   lfd will not start while this is enabled
+#   Settings > Ports
 # #
 
-TESTING = "0"
+BLACKLIST_PORTS=$(cat <<EOF
+[
+    {"port":"111", "comment":"used by rpcbind, has vulnerabilities"}
+]
+EOF
+)
+
+# #
+#   Define > Iptables
+# #
+
+path_iptables4=$(which iptables)
+path_iptables6=$(which ip6tables)
+
+# #
+#   Loop blacklists, create if missing
+# #
+
+printf "\n"
+printf "  + RESTRICT      Blacklisting Ports\n"
+
+echo "$BLACKLIST_PORTS" | jq -c '.[]' | while IFS= read -r row; do
+
+    ENTRY_PORT=$(echo "$row" | jq -r '.port')
+    ENTRY_COMMENT=$(echo "$row" | jq -r '.comment')
+
+    # #
+    #   See if ports already exist in iptables
+    # #
+
+    DELETE_INPUT_UDP=0
+    DELETE_INPUT_TCP=0
+
+    $path_iptables4 -C INPUT -p udp --dport "$ENTRY_PORT" -j DROP >/dev/null 2>&1 || DELETE_INPUT_UDP=1
+    $path_iptables4 -C INPUT -p tcp --dport "$ENTRY_PORT" -j DROP >/dev/null 2>&1 || DELETE_INPUT_TCP=1
+
+    # #
+    #   Drop Port > UDP
+    # #
+
+    if [ "$DELETE_INPUT_UDP" = "0" ]; then
+        printf "                   ✓ Port already blacklisted\n"
+    else
+        sudo $path_iptables4 -I INPUT -p udp --dport "$ENTRY_PORT" -j DROP
+        printf '%-17s %-50s %-55s\n' " " "├─ Blacklisting $ENTRY_PORT (UDP)" "$ENTRY_COMMENT"
+    fi
+
+    # #
+    #   Drop Port > TCP
+    # #
+
+    if [ "$DELETE_INPUT_TCP" = "0" ]; then
+        printf "                   ✓ Port already blacklisted\n"
+    else
+        sudo $path_iptables4 -I INPUT -p tcp --dport "$ENTRY_PORT" -j DROP
+        printf '%-17s %-50s %-55s\n' " " "├─ Blacklisting $ENTRY_PORT (TCP)" "$ENTRY_COMMENT"
+    fi
+
+done
 ```
 
 <br />
+
+The script itself is very easy to use. We make sure to edit the list `BLACKLIST_PORTS` and populate it with ports we absolutely do not want giving access to:
+
+``` bash
+BLACKLIST_PORTS=$(cat <<EOF
+[
+    {"port":"111", "comment":"used by rpcbind, has vulnerabilities"},
+    {"port":"21", "comment":"insecure ftp"}
+]
+EOF
+)
+```
+
 <br />
 
-### TCP_IN, TCP_OUT
+After you edit the list of ports, simply restart CSF's services and the script will be automatically re-loaded:
 
-<!-- md:flag required --> <!-- md:file https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf --> <!-- md:source /etc/csf/csf.conf --> <!-- md:default `22,53,80,110,143,443,465,587,993,995` -->
+=== ":aetherx-axd-command: Command"
 
-<br />
-
-Define the allowed incoming and outgoing TCP ports, respectively. Add or remove ports as required, separated by commas.
-
-=== ":aetherx-axs-file: Config"
-
-      ```ini
-      # Allow incoming TCP ports
-      TCP_IN = "22,53,80,110,143,443,465,587,993,995"
-
-      # Allow outgoing TCP ports
-      TCP_OUT = "22,53,80,110,143,443,465,587,993,995"
+      ```shell
+      sudo csf -ra
       ```
 
-=== ":aetherx-axs-square-list: Common Ports"
+=== ":aetherx-axs-square-terminal: Output"
 
-      The following are a list of the most common ports that you may find useful allowing traffic through.
+      ```shell
+      LOGDROPOUT  all opt -- in * out !lo  0.0.0.0/0  -> 0.0.0.0/0  
+      LOGDROPIN  all opt -- in !lo out *  0.0.0.0/0  -> 0.0.0.0/0  
+      csf: FASTSTART loading DNS (IPv4)
+      LOCALOUTPUT  all opt -- in * out !lo  0.0.0.0/0  -> 0.0.0.0/0  
+      LOCALINPUT  all opt -- in !lo out *  0.0.0.0/0  -> 0.0.0.0/0  
+      Running /usr/local/csf/bin/csfpost.sh
+      Loading post-script: /usr/local/include/csf/post.d/ports-blocklist.sh
 
-      | Port | Description |
-      |------|-------------|
-      | 20   | FTP data transfer (active mode) |
-      | 21   | FTP control/commands |
-      | 22   | SSH / SFTP (secure shell and file transfer) |
-      | 25   | SMTP (sending email between mail servers) |
-      | 53   | DNS (Domain Name System queries) |
-      | 80   | HTTP (web traffic, insecure) |
-      | 110  | POP3 (downloading emails, insecure) |
-      | 113  | Ident / AUTH (rarely used identification service) |
-      | 139  | Samba (legacy) (SMB over NetBIOS) |
-      | 143  | IMAP (retrieving/syncing emails, insecure) |
-      | 443  | HTTPS (secure web traffic) |
-      | 445  | Samba (modern - preferred) (SMB over TCP) |
-      | 465  | SMTP over SSL (secure sending of emails) |
-      | 587  | SMTP submission (secure client-to-server email sending) |
-      | 853  | DNS over TLS (secure DNS queries) |
-      | 993  | IMAP over SSL (secure email retrieval) |
-      | 995  | POP3 over SSL (secure email download) |
-
-
-<br />
-<br />
-
-### UDP_IN, UDP_OUT
-
-<!-- md:flag required --> <!-- md:fileDownload https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf --> <!-- md:source /etc/csf/csf.conf --> <!-- md:default `20,21,53,853,80,443` -->
-
-<br />
-
-Define the allowed incoming and outgoing UDP ports, respectively. Add or remove ports as required, separated by commas.
-
-=== ":aetherx-axs-file: Config"
-
-      ```ini
-      # Allow incoming UDP ports
-      UDP_IN = "20,21,53,853,80,443"
-
-      # Allow outgoing UDP ports
-      # To allow outgoing traceroute add 33434:33523 to this list 
-      UDP_OUT = "20,21,53,853,113,123"
+      + RESTRICT      Blacklisting Ports
+                        ├─ Blacklisting 111 (UDP) used by rpcbind, has vulnerabilities
+                        ├─ Blacklisting 111 (TCP) used by rpcbind, has vulnerabilities
+                        ├─ Blacklisting 21 (UDP) insecure ftp
+                        ├─ Blacklisting 21 (TCP) insecure ftp
       ```
 
-=== ":aetherx-axs-square-list: Common Ports"
-
-      The following are a list of the most common ports that you may find useful allowing traffic through.
-
-      | Port        | Description |
-      |------------|-------------|
-      | 20         | FTP data transfer (rarely UDP, mostly TCP) |
-      | 21         | FTP control/commands (rarely UDP, mostly TCP) |
-      | 53         | DNS queries (UDP is standard; TCP fallback for large responses) |
-      | 80         | HTTP (UDP not standard; TCP is primary) |
-      | 113        | Ident / AUTH (rarely used) |
-      | 123        | NTP (Network Time Protocol) |
-      | 443        | HTTPS (UDP can be used with QUIC protocol) |
-      | 853        | DNS over TLS (UDP fallback possible) |
-      | 67         | DHCP server (receives client requests) |
-      | 68         | DHCP client (receives server responses) |
-      | 137        | Samba / NetBIOS Name Service (NBNS) |
-      | 138        | Samba / NetBIOS Datagram Service (NBDS) |
-      | 161        | SNMP (Simple Network Management Protocol) |
-      | 162        | SNMP traps (from agents to manager) |
-      | 500        | IKE (IPsec key exchange) |
-      | 514        | Syslog (UDP logging) |
-      | 1900       | SSDP (Simple Service Discovery Protocol, used in UPnP) |
-      | 4500       | IPsec NAT traversal |
-      | 33434–33523 | Traceroute / ICMP UDP probe ports |
-
-<br />
 <br />
 
-### DENY_IP_LIMIT
+We can now view iptables to confirm our rules were added. Iptables will resolve whatever service is associated with a port, which means port `111` will show as `sunrpc`. If you wish to show just the port number, append `-n` to your iptables command:
 
-<!-- md:flag required --> <!-- md:fileDownload https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf --> <!-- md:source /etc/csf/csf.conf --> <!-- md:default `200` -->
+=== ":aetherx-axd-command: Command"
 
-<br />
+      ```shell
+      sudo iptables -L -n
+      ```
 
-This setting controls the **maximum number of IP addresses** that can be listed in the `/etc/csf/csf.deny` file. You can increase or decrease this limit depending on your server’s needs.  
+=== ":aetherx-axs-square-terminal: Output"
 
-Keep in mind that raising the limit on servers with low memory (such as Virtuozzo or OpenVZ) may cause network slowdowns if thousands of rules are loaded.  
+      If you use the command `sudo iptables -L`
 
-When the limit is reached, CSF will automatically rotate the entries; meaning that the oldest entries (at the top of the file) are removed, and the newest ones are added. This check only happens when using `csf -d`, which is also what `lfd` relies on. Setting this value to `0` disables the limit entirely.  
+      ```shell
+      Chain INPUT (policy DROP)
+      target     prot opt source               destination         
+      DROP       tcp  --  anywhere             anywhere             tcp dpt:sunrpc
+      DROP       udp  --  anywhere             anywhere             udp dpt:sunrpc
 
-If you need to allow a much larger number of blocked IPs or CIDRs, it’s recommended to use CSF's [IPSETs](../usage/ipset.md) integration instead for better performance.
+      Chain LOGDROPIN (2 references)
+      target     prot opt source               destination         
+      DROP       tcp  --  anywhere             anywhere             tcp dpt:sunrpc
+      DROP       udp  --  anywhere             anywhere             udp dpt:sunrpc
+      ```
 
-``` cfg
-# #
-#   Limit the number of IP's kept in the /etc/csf/csf.deny file
-#   
-#   Care should be taken when increasing this value on servers with low memory
-#   resources or hard limits (such as Virtuozzo/OpenVZ) as too many rules (in the
-#   thousands) can sometimes cause network slowdown
-#   
-#   The value set here is the maximum number of IPs/CIDRs allowed
-#   if the limit is reached, the entries will be rotated so that the oldest
-#   entries (i.e. the ones at the top) will be removed and the latest is added.
-#   The limit is only checked when using csf -d (which is what lfd also uses)
-#   Set to 0 to disable limiting
-#   
-#   For implementations wishing to set this value significantly higher, we
-#   recommend using the IPSET option
-# #
+      <br />
 
-DENY_IP_LIMIT = "200"
-```
+      If you use the command `sudo iptables -L -n`
 
-<br />
-<br />
+      ```shell
+      Chain INPUT (policy DROP)
+      target     prot opt source               destination         
+      DROP       6    --  0.0.0.0/0            0.0.0.0/0            tcp dpt:111
+      DROP       17   --  0.0.0.0/0            0.0.0.0/0            udp dpt:111
 
-### CT_LIMIT
-
-<!-- md:flag required --> <!-- md:fileDownload https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf --> <!-- md:source /etc/csf/csf.conf --> <!-- md:default `0` -->
+      Chain LOGDROPIN (2 references)
+      target     prot opt source               destination         
+      DROP       6    --  0.0.0.0/0            0.0.0.0/0            tcp dpt:111
+      DROP       17   --  0.0.0.0/0            0.0.0.0/0            udp dpt:111
+      ```
 
 <br />
 
-**Connection Tracking** lets the firewall keep track of how many connections each IP address makes to your server. If an IP opens more connections than the set limit, it will be automatically blocked. This can help protect against certain types of DoS (Denial of Service) attacks.  
-
-Be cautious when enabling this option. Some services like **FTP**, **IMAP**, and **HTTP** naturally create many connections, including ones left in `TIME_WAIT`, which can lead to false positives. On busy servers, it’s easy for legitimate traffic to hit the limit. For servers at higher risk of DoS attacks, however, this feature can be very useful. A practical starting value is usually around `300` connections.
-
-To disable this feature, set this to 0
-
-```ini
-# #
-#   Connection Tracking. This option enables tracking of all connections from IP
-#   addresses to the server. If the total number of connections is greater than
-#   this value then the offending IP address is blocked. This can be used to help
-#   prevent some types of DOS attack.
-#
-#   Care should be taken with this option. It's entirely possible that you will
-#   see false-positives. Some protocols can be connection hungry, e.g. FTP, IMAPD
-#   and HTTP so it could be quite easy to trigger, especially with a lot of
-#   closed connections in TIME_WAIT. However, for a server that is prone to DOS
-#   attacks this may be very useful. A reasonable setting for this option might
-#   be around 300.
-#   
-#   To disable this feature, set this to 0
-# #
-
-CT_LIMIT = "0"
-```
+---
 
 <br />
-<br />
+
+## Conclusion
+
+From this point forward, you can create any number of pre and post scripts for your own firewall setup. Simply drop the scripts in the folders specified in the section [Location and Structure](#location-and-structure).
 
 <br />
 
