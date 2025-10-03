@@ -419,6 +419,17 @@ fi
 
 rm -fv /etc/csf/csf.spamhaus /etc/csf/csf.dshield /etc/csf/csf.tor /etc/csf/csf.bogon
 
+# #
+#   pre.d/post.d
+# #
+
+mkdir -p /usr/local/include/csf/pre.d/
+mkdir -p /usr/local/include/csf/post.d/
+
+# #
+#   man pages
+# #
+
 mkdir -p /usr/local/man/man1/
 cp -avf csf.1.txt /usr/local/man/man1/csf.1
 cp -avf csf.help /usr/local/csf/lib/
