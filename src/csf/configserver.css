@@ -1,4 +1,4 @@
-/* #
+/*
    @app                ConfigServer Firewall & Security (CSF)
                        Login Failure Daemon (LFD)
    @website            https://configserver.dev
@@ -23,7 +23,7 @@
 
    You should have received a copy of the GNU General Public License
    along with this program; if not, see <https://www.gnu.org/licenses>.
-# */
+*/
 
 /*
 	Theme › Light
@@ -32,14 +32,18 @@
 :root,
 [data-theme="light"]
 {
+	--scrollbar-background-normal: #888c;
+	--scrollbar-background-active: #900834;
+	--scrollbar-background-hover: #3553c8cc;
+
     --bg-color: #ffffff;
     --text-color: #111111;
 	--app-name-text: #ce2d5a;
     --link-color: #0077cc;
-	--panel-header-box: #dfdfdf;
-	--panel-box-alt: #d5d5d5;
-	--panel-section-background: #c8494e;
-	--panel-section-text: #FFFFFF;
+	--panel-header-box: #e3e3e3;
+	--panel-box-alt: #ddd;
+	--panel-section-background: #d8d8d8;
+	--panel-section-text: #363636;
 	--panel-footer-background: #e1e1e1;
 	--panel-footer-border: #1c1c1c1a;
 	--panel-footer-text: #1c1c1c;
@@ -47,27 +51,51 @@
 	--button-1-background: #3566c0;
 	--button-1-border: #3566c0;
 
+	--codeblock-text: #ea8c28;
+	--codeblock-background: #f9f2f4;
+
+	--pre-background: #f1f1f1 ;
+	--pre-text-normal: #1d1d1d;
+	--pre-border-normal: #0000001a;
+
+	--mark-background-normal: #f2e523;
+	--mark-text-normal: #1d1d1d;
+
+	--section-background-normal: #ccc;
+	--section-border-normal: #e3e3e31a;
+	--section-text-normal: #363636;
+
+	--settings-button-disabled-active-background-normal: #A81B43;
+	--settings-button-disabled-active-text-normal: #FFFFFF;
+	--settings-button-enabled-active-background-normal: #5a732f;
+	--settings-button-enabled-active-text-normal: #FFF;
+
+	--input-textfield-main-normal-text: #111;
 	--input-textfield-main-normal-background: #e8e8e8;
 	--input-textfield-main-normal-border: #f7f7f7;
-	--input-textfield-main-normal-text: #111;
-	--input-textfield-main-hover-line: #2b62b4;
+	--input-textfield-main-focus-line: #dabe25;
 	--input-textfield-main-focus-background: #FFFFFF;
-	--input-textfield-main-focus-line: #ff0062;
-	--input-textfield-main-focus-border: #c7c7c7;
+	--input-textfield-main-focus-border: #ffffff;
+	--input-textfield-main-focus-text: #353535;
 	--input-textfield-main-hover-line: #2b62b4;
 
 	--input-textfield-allow-normal-text: #111;
 	--input-textfield-allow-normal-background: #9edbb6;
 	--input-textfield-allow-normal-border: #f7f7f7;
-	--input-textfield-allow-hover-line: #62aa7f;
 	--input-textfield-allow-focus-line: #2b7448;
 	--input-textfield-allow-focus-background: #FFFFFF;
 	--input-textfield-allow-focus-border: #c7c7c7;
+	--input-textfield-allow-focus-text: #353535;
+	--input-textfield-allow-hover-line: #62aa7f;
 
 	--input-textfield-deny-normal-text: #ff0062;
-	--input-textfield-deny-hover-line: #ff8b97;
 	--input-textfield-deny-normal-background: #f9bfc5;
 	--input-textfield-deny-normal-border: #f7f7f7;
+	--input-textfield-deny-focus-line: #ff0062;
+	--input-textfield-deny-focus-background: #FFFFFF;
+	--input-textfield-deny-focus-border: #c7c7c7;
+	--input-textfield-deny-focus-text: #353535;
+	--input-textfield-deny-hover-line: #ff8b97;
 
 	--tabs-background: #37373700;
 	--tabs-border: #e3e3e31a;
@@ -101,6 +129,10 @@
 
 [data-theme="dark"]
 {
+	--scrollbar-background-normal: #F30C5998;
+	--scrollbar-background-active: #900834;
+	--scrollbar-background-hover: #c00a47;
+
     --bg-color: #1e1d1d;
     --text-color: #ffffff;
 	--app-name-text: #ce2d5a;
@@ -116,19 +148,38 @@
 	--button-1-background: #3566c0;
 	--button-1-border: #3566c0;
 
+	--codeblock-text: #ea8c28;
+	--codeblock-background: #1e1e1e;
+
+	--pre-background: #171717;
+	--pre-text-normal: #c9c9c9;
+	--pre-border-normal: #e3e3e31a;
+
+	--mark-background-normal: #8a6610;
+	--mark-text-normal: #fff;
+
+	--section-background-normal: #396852;
+	--section-border-normal: #e3e3e31a;
+	--section-text-normal: #FFFFFF;
+
+	--settings-button-disabled-active-background-normal: #A81B43;
+	--settings-button-disabled-active-text-normal: #FFFFFF;
+	--settings-button-enabled-active-background-normal: #5a732f;
+	--settings-button-enabled-active-text-normal: #FFF;
+
 	--input-textfield-main-normal-text: #adadad;
 	--input-textfield-main-normal-background: #1f2324;
 	--input-textfield-main-normal-border: #5e5e5e;
 	--input-textfield-main-focus-background: #2b2b2b;
 	--input-textfield-main-focus-line: #FFFFFF;
-	--input-textfield-main-focus-border: #b08400;
+	--input-textfield-main-focus-border: #d8a91e;
 	--input-textfield-main-focus-text: #FFF;
-	--input-textfield-main-hover-line: #b08400;
+	--input-textfield-main-hover-line: #d8a91e;
 
 	--input-textfield-allow-normal-text: #75e6b2;
 	--input-textfield-allow-normal-background: #1f2324;
 	--input-textfield-allow-normal-border: #1b915a;
-	--input-textfield-allow-focus-background: #24573f;
+	--input-textfield-allow-focus-background: #224233;
 	--input-textfield-allow-focus-line: #FFF;
 	--input-textfield-allow-focus-border: #20af6d;
 	--input-textfield-allow-focus-text: #FFF;
@@ -138,7 +189,7 @@
 	--input-textfield-deny-normal-background: #1f2324;
 	--input-textfield-deny-normal-border: #bd2330;
 	--input-textfield-deny-focus-line: #FFFFFF;
-	--input-textfield-deny-focus-background: #731720;
+	--input-textfield-deny-focus-background: #682128;
 	--input-textfield-deny-focus-border: #dd3e4c;
 	--input-textfield-deny-focus-text: #FFF;
 	--input-textfield-deny-hover-line: #ff8b97;
@@ -170,7 +221,67 @@
 }
 
 /*
-	Animations > Scale
+	Animations › Splash
+*/
+
+@-moz-keyframes splash-12
+{
+	40%
+	{
+		background: #866efb;
+		box-shadow: 0 -18px 0 -8px #866efb, 16px -8px 0 -8px #866efb, 16px 8px 0 -8px #866efb, 0 18px 0 -8px #866efb, -16px 8px 0 -8px #866efb, -16px -8px 0 -8px #866efb;
+	}
+	100%
+	{
+		background: #866efb;
+		box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
+	}
+}
+
+@-webkit-keyframes splash-12
+{
+	40%
+	{
+		background: #866efb;
+		box-shadow: 0 -18px 0 -8px #866efb, 16px -8px 0 -8px #866efb, 16px 8px 0 -8px #866efb, 0 18px 0 -8px #866efb, -16px 8px 0 -8px #866efb, -16px -8px 0 -8px #866efb;
+	}
+	100%
+	{
+		background: #866efb;
+		box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
+	}
+}
+
+@-o-keyframes splash-12
+{
+	40%
+	{
+		background: #866efb;
+		box-shadow: 0 -18px 0 -8px #866efb, 16px -8px 0 -8px #866efb, 16px 8px 0 -8px #866efb, 0 18px 0 -8px #866efb, -16px 8px 0 -8px #866efb, -16px -8px 0 -8px #866efb;
+	}
+	100%
+	{
+		background: #866efb;
+		box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
+	}
+}
+
+@keyframes splash-12
+{
+	40%
+	{
+		background: #866efb;
+		box-shadow: 0 -18px 0 -8px #866efb, 16px -8px 0 -8px #866efb, 16px 8px 0 -8px #866efb, 0 18px 0 -8px #866efb, -16px 8px 0 -8px #866efb, -16px -8px 0 -8px #866efb;
+	}
+	100%
+	{
+		background: #866efb;
+		box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
+	}
+}
+
+/*
+	Animations › Scale
 */
 
 @keyframes scale-in
@@ -184,7 +295,7 @@
 }
 
 /*
-	Animations > Fade In
+	Animations › Fade In
 */
 
 @-webkit-keyframes fade-in
@@ -206,20 +317,73 @@
 }
 
 /*
-	Helper Containers
+	Animations › Pulsate
+*/
+
+@-webkit-keyframes pulsate
+{
+    0% { transform: scale(0.8); opacity: 0.5; }
+    50% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(0.8); opacity: 0.5; }
+}
+
+@keyframes pulsate
+{
+    0% { transform: scale(0.8); opacity: 0.5; }
+    50% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(0.8); opacity: 0.5; }
+}
+
+.pulsate
+{
+    -webkit-animation: pulsate 3s ease-out;
+    -webkit-animation-iteration-count: infinite; 
+    animation: pulsate 3s ease-out;
+    animation-iteration-count: infinite;
+    opacity: 0.5;
+}
+
+/*
+	Animations › Health / Heart
+*/
+
+@keyframes health
+{
+    0%, 40%, 80%, 100%
+	{
+        transform: scale(1);
+        color: #FFF;
+        fill: #FFF !important;
+    }
+
+    20%, 60%
+	{
+        transform: scale(1.15);
+        color: #FF6593;
+        fill: #FF6593 !important;
+    }
+}
+
+.heart
+{
+    animation: health 1000ms infinite;
+}
+
+/*
+	Helpers › Mobile
 */
 
 .mobilecontainer
 {
-	display:none;
+	display: none;
 }
 .normalcontainer
 {
-	display:block;
+	display: block;
 }
 
 /*
-	Helpers
+	Helpers › Transitions
 */
 
 .no-transition *
@@ -230,6 +394,88 @@
 html.theme-transition *
 {
     transition: all 0.1s ease-in-out;
+}
+
+/*
+	Scrollbar › Chrome, Edge, Safari Support (Hide Scrollbar)
+*/
+
+.csf-container::-webkit-scrollbar
+{
+    display: none;
+}
+
+/*
+	Scrollbar › Firefox Support (Hide Scrollbar)
+*/
+
+.csf-container
+{
+    scrollbar-width: none;
+}
+
+/*
+	Scrollbar › Firefox Support
+*/
+
+*
+{
+    scrollbar-width: auto;
+	scrollbar-color: var( --scrollbar-background-normal );
+}
+
+/*
+	Scrollbar › Base
+*/
+
+.csf-scrollbar
+{
+    position: fixed;
+    top: 0;
+    right: 2px;
+    width: 5px;
+    border-radius: 6px;
+    background: var( --scrollbar-background-normal );
+    cursor: pointer;
+    height: 50px;
+    z-index: 9999;
+    margin: 7px;
+    transition: background 0.4s ease;
+}
+
+/*
+	Scrollbar › Hover
+*/
+
+.csf-scrollbar:hover
+{
+    background: var( --scrollbar-background-hover );
+}
+
+/*
+	Scrollbar › Active (Mousedown
+*/
+
+.csf-scrollbar:active
+{
+    background: var( --scrollbar-background-active );
+}
+
+/*
+	Scrollbar › Container scrolling
+*/
+
+.csf-container
+{
+    height: 100%;
+    overflow-y: scroll;
+    padding-right: 20px;
+    box-sizing: content-box;
+}
+
+.csf-container::-webkit-scrollbar
+{
+	display: none;
 }
 
 /*
@@ -324,10 +570,10 @@ input
     background: linear-gradient( var( --input-textfield-main-hover-line ) 0 0) no-repeat var( --input-textfield-main-normal-background );
     background-position: center bottom;
     background-size: 0% 2px;
-	border-left: 1px solid var( --input-textfield-main-normal-border );
-	border-top: 1px solid var( --input-textfield-main-normal-border );
-	border-right: 1px solid var( --input-textfield-main-normal-border );
-	border-bottom: 1px solid var( --input-textfield-main-normal-border );
+	border-left: 2px solid var( --input-textfield-main-normal-border );
+	border-top: 2px solid var( --input-textfield-main-normal-border );
+	border-right: 2px solid var( --input-textfield-main-normal-border );
+	border-bottom: 2px solid var( --input-textfield-main-normal-border );
 	font-size: 12pt;
 }
 
@@ -342,10 +588,10 @@ input:focus
     background-image: linear-gradient(var( --input-textfield-main-focus-line ) 0 0);
     background-color: var( --input-textfield-main-focus-background );
     background-size: calc(100% - 4px) 2px;
-	border-left: 1px solid var( --input-textfield-main-focus-border );
-	border-top: 1px solid var( --input-textfield-main-focus-border );
-	border-right: 1px solid var( --input-textfield-main-focus-border );
-	border-bottom: 1px solid var( --input-textfield-main-focus-border );
+	border-left: 2px solid var( --input-textfield-main-focus-border );
+	border-top: 2px solid var( --input-textfield-main-focus-border );
+	border-right: 2px solid var( --input-textfield-main-focus-border );
+	border-bottom: 2px solid var( --input-textfield-main-focus-border );
 }
 
 /*
@@ -362,10 +608,10 @@ input:focus
 	background: linear-gradient( var( --input-textfield-allow-hover-line ) 0 0) no-repeat var( --input-textfield-allow-normal-background );
     background-position: center bottom;
     background-size: 0% 2px;
-	border-left: 1px solid var( --input-textfield-allow-normal-border );
-	border-top: 1px solid var( --input-textfield-allow-normal-border );
-	border-right: 1px solid var( --input-textfield-allow-normal-border );
-	border-bottom: 1px solid var( --input-textfield-allow-normal-border );
+	border-left: 2px solid var( --input-textfield-allow-normal-border );
+	border-top: 2px solid var( --input-textfield-allow-normal-border );
+	border-right: 2px solid var( --input-textfield-allow-normal-border );
+	border-bottom: 2px solid var( --input-textfield-allow-normal-border );
 	font-size: 12pt;
 }
 
@@ -380,10 +626,10 @@ input:focus
     background-image: linear-gradient(var( --input-textfield-allow-focus-line ) 0 0);
     background-color: var( --input-textfield-allow-focus-background );
     background-size: calc(100% - 4px) 2px;
-	border-left: 1px solid var( --input-textfield-allow-focus-border );
-	border-top: 1px solid var( --input-textfield-allow-focus-border );
-	border-right: 1px solid var( --input-textfield-allow-focus-border );
-	border-bottom: 1px solid var( --input-textfield-allow-focus-border );
+	border-left: 2px solid var( --input-textfield-allow-focus-border );
+	border-top: 2px solid var( --input-textfield-allow-focus-border );
+	border-right: 2px solid var( --input-textfield-allow-focus-border );
+	border-bottom: 2px solid var( --input-textfield-allow-focus-border );
 }
 
 /*
@@ -400,10 +646,10 @@ input:focus
 	background: linear-gradient( var( --input-textfield-deny-hover-line ) 0 0) no-repeat var( --input-textfield-deny-normal-background );
     background-position: center bottom;
     background-size: 0% 2px;
-	border-left: 1px solid var( --input-textfield-deny-normal-border );
-	border-top: 1px solid var( --input-textfield-deny-normal-border );
-	border-right: 1px solid var( --input-textfield-deny-normal-border );
-	border-bottom: 1px solid var( --input-textfield-deny-normal-border );
+	border-left: 2px solid var( --input-textfield-deny-normal-border );
+	border-top: 2px solid var( --input-textfield-deny-normal-border );
+	border-right: 2px solid var( --input-textfield-deny-normal-border );
+	border-bottom: 2px solid var( --input-textfield-deny-normal-border );
 	font-size: 12pt;
 }
 
@@ -418,10 +664,10 @@ input:focus
     background-image: linear-gradient(var( --input-textfield-deny-focus-line ) 0 0);
     background-color: var( --input-textfield-deny-focus-background );
     background-size: calc(100% - 4px) 2px;
-	border-left: 1px solid var( --input-textfield-deny-focus-border );
-	border-top: 1px solid var( --input-textfield-deny-focus-border );
-	border-right: 1px solid var( --input-textfield-deny-focus-border );
-	border-bottom: 1px solid var( --input-textfield-deny-focus-border );
+	border-left: 2px solid var( --input-textfield-deny-focus-border );
+	border-top: 2px solid var( --input-textfield-deny-focus-border );
+	border-right: 2px solid var( --input-textfield-deny-focus-border );
+	border-bottom: 2px solid var( --input-textfield-deny-focus-border );
 }
 
 
@@ -435,15 +681,15 @@ input:focus
 .panel
 {
 	margin-bottom: 20px;
-	background-color: #303030;
-	border: 1px solid transparent;
-		border-top-color: transparent;
-		border-right-color: transparent;
-		border-bottom-color: transparent;
-		border-left-color: transparent;
 	border-radius: 4px;
 	-webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
 	box-shadow: 0 1px 1px rgba(0,0,0,.05);
+	background: none;
+}
+
+.panel-default
+{
+	border: none;
 }
 
 .panel img
@@ -670,10 +916,14 @@ input:focus
 
 .mark, mark
 {
-	padding: .2em;
-	background-color: var(--panel-box-alt);
-	color: #ff7420;
+	background-color: var( --mark-background-normal );
+	color: var( --mark-text-normal );
 	border-radius: 4px;
+	padding-left: 0.4em;
+	padding-right: 0.4em;
+	padding-top: 0.2em;
+	padding-bottom: 0.2em;
+	padding-block: 1px;
 }
 
 .icon-configserver
@@ -721,20 +971,6 @@ input.btn-default[type="submit"]:hover
 	transition: all 0.2s;
 }
 
-.btn-csf-config:focus,
-.btn-csf-config:hover,
-.btn-csf-config:active,
-.btn-csf-config.active
-{
-	background-color:#5FA654 !important;
-	-webkit-transition: all 0.30s ease-in-out;
-	-moz-transition: all 0.30s ease-in-out;
-	-ms-transition: all 0.30s ease-in-out;
-	-o-transition: all 0.30s ease-in-out;
-	transition: all 0.30s ease-in-out;
-	color: #FFF;
-}
-
 /*
 	Force width on buttons:
 		- lfd status
@@ -757,8 +993,8 @@ select + .btn-default,
 
 th
 {
+	color: var(--panel-section-text);
 	background: var(--panel-section-background);
-	color: #FFF;
 }
 
 /*
@@ -853,33 +1089,46 @@ textarea
 	font-family: inherit;
 	font-size: inherit;
 	line-height: inherit;
-	background-color: #1e1e1e;
 }
 
 .comment
 {
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px;
-	border: 1px solid #e3e3e31a;
+	border: 2px solid var( --pre-border-normal );
+	background-color: var( --pre-background );
 	padding: 10px;
 	font-family: Courier New, Courier;
-	font-size: 14px;
+	font-size: 12px;
   	min-width: 100%;
 	max-width: 100%;
 }
 
+.console
+{
+	background-color: var( --pre-background );
+	font-family: Courier New, Courier;
+	white-space: pre-wrap;
+	font-size: 12px;
+	width: 100%;
+	min-height: 500px;
+	border: 2px solid var( --pre-border-normal );
+	border-radius: 6px;
+	padding: 10px;
+}
+
 pre
 {
-	background-color: #171717 !important;
+	background-color: var( --pre-background );
 	display: block;
 	padding: 9.5px;
 	margin: 0 0 10px;
 	font-size: 13px;
 	line-height: 1.42857143;
-	color: #c9c9c9;
+	color: var( --pre-text-normal );
 	word-break: break-all;
 	word-wrap: break-word;
-	border: 1px solid #e3e3e31a;
+	border: 2px solid var( --pre-border-normal );
 	border-radius: 4px;
 }
 
@@ -898,11 +1147,6 @@ hr
 	Scrollbar
 */
 
-:root
-{
-	scrollbar-color: #bbbbbb80 #424242b2 !important;
-}
-
 input[type="text"]
 {
 	-webkit-transition: all 0.30s ease-in-out;
@@ -910,10 +1154,10 @@ input[type="text"]
 	-ms-transition: all 0.30s ease-in-out;
 	-o-transition: all 0.30s ease-in-out;
 	transition: all 0.30s ease-in-out;
-	border-radius: 3px;
+	border-radius: 4px;
 	outline: none;
 	padding: 3px 0px 3px 3px;
-	margin: 5px 1px 3px 0px;
+	margin: 3px 3px 3px 3px;
 	padding-left: 10px;
 	padding-right: 10px;
 	padding-top: 5px;
@@ -924,14 +1168,19 @@ select
 {
     border: none;
     outline: none;
-    border-radius: 6px;
+    border-radius: 4px;
     background-color: var(--bg-color, #222);
     color: var(--text-color, #fff);
-    padding: 8px 12px;
+	border-left: 2px solid var( --input-textfield-main-normal-border );
+	border-top: 2px solid var( --input-textfield-main-normal-border );
+	border-right: 2px solid var( --input-textfield-main-normal-border );
+	border-bottom: 2px solid var( --input-textfield-main-normal-border );
+    padding: 6px 12px;
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
 	cursor: pointer;
+	vertical-align: baseline;
 }
 
 
@@ -1002,7 +1251,7 @@ tbody
 
 .panel-default > .panel-heading
 {
-	color: #FFF;
+	color: var(--panel-section-text);
 	background-color: var(--panel-section-background);
 	border-color: #e3e3e31a;
 }
@@ -1023,8 +1272,8 @@ code
 {
 	padding: 2px 4px;
 	font-size: 90%;
-	color: #ea8c28;
-	background-color: #1e1e1e;
+	color: var( --codeblock-text );
+	background-color: var( --codeblock-background );
 	border-radius: 4px;
 }
 
@@ -1248,13 +1497,15 @@ code
 
 .section
 {
-	background-color: #396852;
+	background-color: var( --section-background-normal );
 	padding: 8px;
 	margin-top: 30px;
 	line-height: 1.42857143;
-	border-bottom: 1px solid #e3e3e31a !important;
+	border-bottom: 1px solid var( --section-border-normal ) !important;
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
+	border-radius: 4px;
+	color: var( --section-text-normal );
 }
 
 .toplink
@@ -1312,6 +1563,7 @@ code
     align-items: center;
     padding: 10px 20px;
     background-color: var(--panel-header-box);
+	margin-bottom: 25px;
 }
 
 .section-header .header-left
@@ -1683,8 +1935,8 @@ img.logo:not(:hover)
 
 .btn.btn-default.btn-csf-config.option-disabled.active
 {
-	background-color: #A81B43 !important;
-	color: #FFF;
+	background-color: var( --settings-button-disabled-active-background-normal );
+	color: var( --settings-button-disabled-active-text-normal );
 }
 
 /*
@@ -1704,8 +1956,8 @@ img.logo:not(:hover)
 
 .btn.btn-default.btn-csf-config.option-enabled.active
 {
-	background-color: #5a732f  !important;
-	color: #FFF;
+	background-color: var( --settings-button-enabled-active-background-normal );
+	color: var( --settings-button-enabled-active-text-normal );
 }
 
 /*
@@ -1747,7 +1999,7 @@ input[type="checkbox"], input[type="radio"]
 
 .section-return
 {
-	padding-top: 20px;
+	padding-top: 15px;
 }
 
 /*
@@ -1756,35 +2008,59 @@ input[type="checkbox"], input[type="radio"]
 
 .footer
 {
-    position: fixed;
+    position: fixed;       /* always visible */
     bottom: 0;
     left: 0;
     width: 100%;
+    height: 50px;          /* adjust to match your footer height */
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
+    background-color: var(--panel-footer-background);
+    border-top: 1px solid var(--panel-footer-border);
     color: var(--panel-footer-text);
     font-family: "Noto Sans JP", sans-serif;
     font-size: 14px;
-    background-color: var(--panel-footer-background);
-    border-top: 1px solid var(--panel-footer-border);
+    box-sizing: border-box;
+    z-index: 999;          /* always on top */
 }
 
 /*
 	Section ›  Footer › Inner Left
 */
 
-.footer-left
+.footer .footer-left
 {
     text-align: left;
+}
+
+/*
+	Section ›  Footer › Copyright <span>
+*/
+
+.footer .footer-left span.copyright
+{
+	padding-left: 7px;
+}
+
+/*
+	Button › Button › Sponsor
+*/
+
+.footer .footer-left button.btn-sponsor
+{
+    background: none;
+    border: none;
+    color: white;
+    min-width: auto;
 }
 
 /*
 	Section ›  Footer › Inner Right
 */
 
-.footer-right
+.footer .footer-right
 {
     display: flex;
     gap: 7px;
@@ -1794,8 +2070,8 @@ input[type="checkbox"], input[type="radio"]
 	Footer › Standard Button
 */
 
-.footer-right button,
-.footer-right a.btn-footer
+.footer .footer-right button,
+.footer .footer-right a.btn-footer
 {
     padding: 6px 12px;
     border: none;
@@ -1806,7 +2082,7 @@ input[type="checkbox"], input[type="radio"]
 	margin-right: 5px;
 }
 
-.footer-right .btn-footer
+.footer .footer-right .btn-footer
 {
 	min-width: 5px !important;
 }
@@ -1815,7 +2091,7 @@ input[type="checkbox"], input[type="radio"]
 	Button › Button › Theme Switcher
 */
 
-.footer-right button.btn-theme
+.footer .footer-right button.btn-theme
 {
     background-color: var(--button-1-background);
     border-color: var(--button-1-background);
@@ -1827,7 +2103,7 @@ input[type="checkbox"], input[type="radio"]
 	Button › Button › Github
 */
 
-.footer-right button.btn-github
+.footer .footer-right button.btn-github
 {
     background-color: var(--button-1-background);
     border-color: var(--button-1-background);
@@ -1968,60 +2244,4 @@ button.btn-update
 .checkbox-wrapper .cbx input:checked + label + svg path
 {
 	stroke-dashoffset: 0;
-}
-
-@-moz-keyframes splash-12
-{
-	40%
-	{
-		background: #866efb;
-		box-shadow: 0 -18px 0 -8px #866efb, 16px -8px 0 -8px #866efb, 16px 8px 0 -8px #866efb, 0 18px 0 -8px #866efb, -16px 8px 0 -8px #866efb, -16px -8px 0 -8px #866efb;
-	}
-	100%
-	{
-		background: #866efb;
-		box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
-	}
-}
-
-@-webkit-keyframes splash-12
-{
-	40%
-	{
-		background: #866efb;
-		box-shadow: 0 -18px 0 -8px #866efb, 16px -8px 0 -8px #866efb, 16px 8px 0 -8px #866efb, 0 18px 0 -8px #866efb, -16px 8px 0 -8px #866efb, -16px -8px 0 -8px #866efb;
-	}
-	100%
-	{
-		background: #866efb;
-		box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
-	}
-}
-
-@-o-keyframes splash-12
-{
-	40%
-	{
-		background: #866efb;
-		box-shadow: 0 -18px 0 -8px #866efb, 16px -8px 0 -8px #866efb, 16px 8px 0 -8px #866efb, 0 18px 0 -8px #866efb, -16px 8px 0 -8px #866efb, -16px -8px 0 -8px #866efb;
-	}
-	100%
-	{
-		background: #866efb;
-		box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
-	}
-}
-
-@keyframes splash-12
-{
-	40%
-	{
-		background: #866efb;
-		box-shadow: 0 -18px 0 -8px #866efb, 16px -8px 0 -8px #866efb, 16px 8px 0 -8px #866efb, 0 18px 0 -8px #866efb, -16px 8px 0 -8px #866efb, -16px -8px 0 -8px #866efb;
-	}
-	100%
-	{
-		background: #866efb;
-		box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
-	}
 }
