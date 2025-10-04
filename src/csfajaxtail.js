@@ -18,7 +18,7 @@
 //#############################################################################
 
 var CSFscript = '';
-var CSFcountval = 6;
+var CSFcountval = typeof CSFcountval !== 'undefined' ? CSFcountval : 6;
 var CSFlineval = 100;
 var CSFcounter;
 var CSFcount = 1;
