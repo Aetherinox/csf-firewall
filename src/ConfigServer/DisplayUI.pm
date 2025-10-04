@@ -559,7 +559,7 @@ sub main
 		print "<script>\n";
 
 		# Inject Perl values first
-		print "var csfCountVal = $timer_duration;\n";
+		print "var csfDuration = $timer_duration;\n";
 		print "var csfFromBot = $csfFromBot;\n";
 		print "var csfFromRight = $csfFromRight;\n";
 		print "var csfScript = '$script?action=logtailcmd';\n";
