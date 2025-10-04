@@ -134,9 +134,7 @@ sub report {
 	&endoutput;
 	return $output;
 }
-# end report
-###############################################################################
-# start startoutput
+
 sub startoutput
 {
 
@@ -147,9 +145,7 @@ sub startoutput
 
 	return;
 }
-# end startoutput
-###############################################################################
-# start addline
+
 sub addline
 {
 
@@ -161,78 +157,90 @@ sub addline
 
 	if ($status)
 	{
-		$output .= "<div class='server-check-status-container'>\n";
-		$output .= "<div class='server-check-status-check'>$check</div>\n";
-		$output .= "<div class='server-check-status-comment'>$comment</div>\n";
+		$output .= "<div class='server-grading-general-container'>\n";
+		$output .= "	<div class='server-grading-general-test-name'>$check</div>\n";
+		$output .= "	<div class='server-grading-general-test-result'>$comment</div>\n";
 		$output .= "</div>\n";
 		$failures ++;
 		$current++;
 	}
 	elsif ($verbose)
 	{
-		$output .= "<div class='server-check-verbose-container'>\n";
-		$output .= "<div class='server-check-verbose-check'>$check</div>\n";
-		$output .= "<div class='server-check-verbose-comment'>$comment</div>\n";
+		$output .= "<div class='server-grading-verbose-container'>\n";
+		$output .= "	<div class='server-grading-verbose-test-name'>$check</div>\n";
+		$output .= "	<div class='server-grading-verbose-test-result'>$comment</div>\n";
 		$output .= "</div>\n";
 		$current++;
 	}
 
 	return;
 }
-# end addline
-###############################################################################
-# start addtitle
-sub addtitle {
-	my $title = shift;
-	if (defined $current and $current == 0) {
-		$output .= "<div class='server-check-result'>OK</div>\n";
-	}
-	$current = 0;
-	$output .= "<br><div class='section-header' style='clear: both;'><strong>$title</strong></div>\n";
-	return;
-}
-# end addtitle
-###############################################################################
-# start endoutput
-sub endoutput
+
+# #
+#	Grading › Add Category
+# #
+
+sub addCategory
 {
+	my $category = shift;
+	$output .= "<div class='server-grading-section-title' style='clear: both;'>$category</div>\n";
+
 	if (defined $current and $current == 0)
 	{
-		$output .= "<div class='server-check-output'>OK</div>\n";
+		$output .= "<div class='server-grading-status-result server-grading-status-ok'>OK</div>\n";
 	}
+	else
+	{
+		$output .= "<div class='server-grading-status-result server-grading-status-warn'>Found Issues</div>\n";
+	}
+
+	$current = 0;
+
+	return;
+}
+
+
+sub endoutput
+{
 
 	$output .= "<br>\n";
 
 	my $gap = int( ( $total - 3 ) / 4 );
-	my $score = ( $total - $failures );
+	my $score = ( $total - $failures );			# min 0 - max 36
 
 	# #
 	# 	CSS width
-	#	server-check-grade-poor + server-check-grade-ok + server-check-grade-good
+	#	server-grading-score-bar-poor + server-grading-score-bar-ok + server-grading-score-bar-good
 	# #
 
 	my $width = int ( ( 500 / $total ) * $score ) - 4;
 
-	$output .= "<br>\n<table align='center'>\n<tr><td><div class='server-check-score-container'>\n";
-	$output .= "<h4 class='server-check-grade-score' style='text-align:center'>Server Score: <span class='server-check-grade-score-num'>$score/$total</span></h4>\n";
-	$output .= "<div class='server-check-score-bar'>\n";
+	$output .= "<br>\n<table align='center'>\n<tr><td><div class='server-grading-score-container'>\n";
+
+	if (defined $current and $current == 0)
+	{
+		$output .= "<div class='server-grading-status-result server-grading-status-ok'>OK</div>\n";
+	}
+
+	$output .= "<h4 class='server-check-grade-score'><span class='server-check-grade-score-label'>Current score</span><br><span class='server-check-grade-score-num'><span class='server-grading-value-cur'>$score</span> / <span class='server-grading-value-max'>$total</span></span></h4>\n";
+	$output .= "<div class='server-grading-score-bar-container'>\n";
 	$output .= "<table>\n";
 	$output .= "<tr>\n";
-	$output .= "<td nowrap class='server-check-grade-poor'>&nbsp;</td>\n";
-	$output .= "<td nowrap class='server-check-grade-ok'>&nbsp;</td>\n";
-	$output .= "<td nowrap class='server-check-grade-good'>&nbsp;</td>\n";
-	$output .= "<td nowrap class='server-check-grade-great'>&nbsp;</td>\n";
-	$output .= "<td nowrap class='server-check-grade-excellent'>&nbsp;</td>\n";
-	$output .= "<td nowrap style='width:100px; height:30px;'>&nbsp;$total (max)&nbsp;</td>\n";
+	$output .= "<td nowrap class='server-grading-score-bar-poor'>&nbsp;</td>\n";
+	$output .= "<td nowrap class='server-grading-score-bar-ok'>&nbsp;</td>\n";
+	$output .= "<td nowrap class='server-grading-score-bar-good'>&nbsp;</td>\n";
+	$output .= "<td nowrap class='server-grading-score-bar-great'>&nbsp;</td>\n";
+	$output .= "<td nowrap class='server-grading-score-bar-excellent'>&nbsp;</td>\n";
+	$output .= "<td nowrap class='server-check-grade-max'>$total (max)</td>\n";
 	$output .= "</tr>\n";
 	$output .= "</table>\n";
 	$output .= "</div>\n";
-	$output .= "<div class='server-check-score-bar'>\n";
+	$output .= "<div class='server-grading-score-bar-container'>\n";
 	$output .= "<table>\n";
 	$output .= "<tr class='server-check-grade-container'>\n";
 	$output .= "<td nowrap style='width:${width}px; height:30px;'>&nbsp;</td>\n";
-	$output .= "<td nowrap class='server-check-grade'>&nbsp;</td>\n";
-	$output .= "<td class='server-check-grade-text' nowrap>&nbsp;$score (you)</td>\n";
+	$output .= "<td nowrap class='server-check-grade fade'>&nbsp;</td>\n";
+	$output .= "<td class='server-check-grade-text fade' nowrap>&nbsp;$score (you)</td>\n";
 	$output .= "</tr>\n";
 	$output .= "</table>\n";
 	$output .= "</div>\n";
@@ -244,7 +252,7 @@ sub endoutput
 ###############################################################################
 # start firewallcheck
 sub firewallcheck {
-	&addtitle("Firewall Check");
+	&addCategory("Firewall Check");
 	my $status = 0;
 	open (my $IN, "<", "/etc/csf/csf.conf");
 	flock ($IN, LOCK_SH);
@@ -385,7 +393,7 @@ sub firewallcheck {
 # start servercheck
 sub servercheck
 {
-	&addtitle("Server Check");
+	&addCategory("Server Check");
 	my $status = 0;
 
 	my ($dev,$ino,$mode,$nlink,$uid,$gid,$rdev,$size,$atime,$mtime,$ctime,$blksize,$blocks) = stat("/tmp");
@@ -689,7 +697,7 @@ sub servercheck
 sub whmcheck
 {
 	my $status = 0;
-	&addtitle("WHM Settings Check");
+	&addCategory("WHM Settings Check");
 
 	$status = 0;
 	unless ($cpconf->{alwaysredirecttossl}) {$status = 1}
@@ -1067,7 +1075,7 @@ sub whmcheck
 # start dacheck
 sub dacheck {
 	my $status = 0;
-	&addtitle("DirectAdmin Settings Check");
+	&addCategory("DirectAdmin Settings Check");
 
 	$status = 0;
 	unless ($daconfig{ssl}) {$status = 1}
@@ -1154,7 +1162,7 @@ sub dacheck {
 ###############################################################################
 # start mailcheck
 sub mailcheck {
-	&addtitle("Mail Check");
+	&addCategory("Mail Check");
 
 	my $status = 0;
 	unless ($config{DIRECTADMIN}) {
@@ -1400,7 +1408,7 @@ sub mailcheck {
 ###############################################################################
 # start phpcheck
 sub phpcheck {
-	&addtitle("PHP Check");
+	&addCategory("PHP Check");
 	my %phpbinaries;
 	my %phpinis;
 
@@ -1554,7 +1562,7 @@ sub phpcheck {
 ###############################################################################
 # start apachecheck
 sub apachecheck {
-	&addtitle("Apache Check");
+	&addCategory("Apache Check");
 
 	my $status = 0;
 	my $mypid;
@@ -1735,7 +1743,7 @@ sub apachecheck {
 # start sshtelnetcheck
 sub sshtelnetcheck {
 	my $status = 0;
-	&addtitle("SSH/Telnet Check");
+	&addCategory("SSH/Telnet Check");
 
 	if (-e "/etc/ssh/sshd_config") {
 		open (my $IN, "<", "/etc/ssh/sshd_config");
@@ -1827,7 +1835,7 @@ sub servicescheck {
 	if (-e "/bin/systemctl") {$systemctl = "/bin/systemctl"}
 	if (-e "/usr/sbin/chkconfig") {$chkconfig = "/usr/sbin/chkconfig"}
 	if (-e "/usr/sbin/service") {$servicebin = "/usr/sbin/service"}
-	&addtitle("Server Services Check");
+	&addCategory("Server Services Check");
 	my @services = ("abrt-xorg", "abrtd", "alsa-state", "anacron", "avahi-daemon", "avahi-dnsconfd", "bluetooth", "bolt", "canna", "colord", "cups", "cups-config-daemon", "cupsd", "firewalld", "FreeWnn", "gdm", "gpm", "gssproxy", "hidd", "iiim", "ksmtuned", "mDNSResponder", "ModemManager", "nfslock", "nifd", "packagekit", "pcscd", "portreserve", "pulseaudio", "qpidd", "rpcbind", "rpcidmapd", "saslauthd", "sbadm", "wpa_supplicant", "xfs", "xinetd");
 
 	my $disable;

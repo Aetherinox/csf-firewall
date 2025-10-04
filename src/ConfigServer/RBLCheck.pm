@@ -167,7 +167,7 @@ sub report {
 					unless ($hits)
 					{
 						my $text;
-						$text .= "<div class='server-check-result'>OK</div>\n";
+						$text .= "<div class='server-grading-status-result'>OK</div>\n";
 						if ($ui) {print $text} else {$output .= $text}
 						$ipresult .= $text;
 					}
@@ -180,7 +180,7 @@ sub report {
 				{
 					&addtitle("New $ip ($type)");
 					my $text;
-					$text .= "<div class='server-check-result'>Not Checked</div>\n";
+					$text .= "<div class='server-grading-status-result'>Not Checked</div>\n";
 					if ($ui) {print $text} else {$output .= $text}
 				}
 			}
@@ -188,7 +188,7 @@ sub report {
 			if ($verbose == 2) {
 				&addtitle("Skipping $ip ($type)");
 				my $text;
-				$text .= "<div class='server-check-result'>OK</div>\n";
+				$text .= "<div class='server-grading-status-result'>OK</div>\n";
 				if ($ui) {print $text} else {$output .= $text}
 			}
 		}
@@ -218,18 +218,18 @@ sub addline
 
 	if ($status)
 	{
-		$text .= "<div class='server-check-status-container'>\n";
-		$text .= "<div class='server-check-status-check'>$check</div>\n";
-		$text .= "<div class='server-check-status-comment'>$comment</div>\n";
+		$text .= "<div class='server-grading-general-container'>\n";
+		$text .= "<div class='server-grading-general-test-name'>$check</div>\n";
+		$text .= "<div class='server-grading-general-test-result'>$comment</div>\n";
 		$text .= "</div>\n";
 		$failures ++;
 		$ipresult .= $text;
 	}
 	elsif ($verbose)
 	{
-		$text .= "<div class='server-check-verbose-container'>\n";
-		$text .= "<div class='server-check-verbose-check'>$check</div>\n";
-		$text .= "<div class='server-check-verbose-comment'>$comment</div>\n";
+		$text .= "<div class='server-grading-verbose-container'>\n";
+		$text .= "<div class='server-grading-verbose-test-name'>$check</div>\n";
+		$text .= "<div class='server-grading-verbose-test-result'>$comment</div>\n";
 		$text .= "</div>\n";
 	}
 	if ($ui) {print $text} else {$output .= $text}
