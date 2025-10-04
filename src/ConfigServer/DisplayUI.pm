@@ -537,7 +537,18 @@ sub main
 			}
 		}
 		$options .= "</select>\n";
-		
+
+		my $timer_duration = $config{UI_LOGS_REFRESH_TIME} || 6;
+
+		print "<script>\n";
+
+		# Inject Perl values first
+		print "var csfCountVal = $timer_duration;\n";
+		print "var csfFromBot = $csfFromBot;\n";
+		print "var csfFromRight = $csfFromRight;\n";
+		print "var csfScript = '$script?action=logtailcmd';\n";
+
+		# Now include the JS file
 		open (my $AJAX, "<", "/usr/local/csf/lib/csfajaxtail.js");
 		flock ($AJAX, LOCK_SH);
 		my @jsdata = <$AJAX>;
