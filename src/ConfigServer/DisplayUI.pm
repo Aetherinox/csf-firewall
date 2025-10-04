@@ -495,12 +495,13 @@ sub main
 		$FORM{lines} =~ s/\D//g;
 		if ($FORM{lines} eq "" or $FORM{lines} == 0) {$FORM{lines} = 30}
 		my $script_safe = $script;
-		my $CSFfrombot = 120;
-		my $CSFfromright = 10;
-		if ($config{DIRECTADMIN}) {
+		my $csfFromBot = 120;
+		my $csfFromRight = 10;
+		if ($config{DIRECTADMIN})
+		{
 			$script = $script_da;
-			$CSFfrombot = 400;
-			$CSFfromright = 150;
+			$csfFromBot = 400;
+			$csfFromRight = 150;
 		}
 
 		my @data = slurp("/etc/csf/csf.syslogs");
@@ -514,20 +515,35 @@ sub main
 		}
 
 		@data = sort @data;
-		my $options = "<select id='CSFlognum' onchange='CSFrefreshtimer()'>\n";
+		my $options = "<select id='csfLogNum' onchange='csfTimerRefresh()'>\n";
 		my $cnt = 0;
 		foreach my $file (@data)
 		{
 			$file =~ s/$cleanreg//g;
-			if ($file eq "") {next}
-			if ($file =~ /^\s*\#|Include/) {next}
-			my @globfiles;
-			if ($file =~ /\*|\?|\[/) {
-				foreach my $log (glob $file) {push @globfiles, $log}
-			} else {push @globfiles, $file}
+			if ($file eq "")
+			{
+				next
+			}
 
-			foreach my $globfile (@globfiles) {
-				if (-f $globfile) {
+			if ($file =~ /^\s*\#|Include/)
+			{
+				next
+			}
+
+			my @globfiles;
+			if ($file =~ /\*|\?|\[/)
+			{
+				foreach my $log (glob $file) {push @globfiles, $log}
+			}
+			else
+			{
+				push @globfiles, $file
+			}
+
+			foreach my $globfile (@globfiles)
+			{
+				if (-f $globfile)
+				{
 					my $size = int((stat($globfile))[7]/1024);
 					$options .= "<option value='$cnt'";
 					if ($globfile eq "/var/log/lfd.log") {$options .= " selected"}
@@ -538,7 +554,7 @@ sub main
 		}
 		$options .= "</select>\n";
 
-		my $timer_duration = $config{UI_LOGS_REFRESH_TIME} || 6;
+		my $timer_duration = $config{UI_LOGS_REFRESH_TIME} || 7;
 
 		print "<script>\n";
 
@@ -553,32 +569,43 @@ sub main
 		flock ($AJAX, LOCK_SH);
 		my @jsdata = <$AJAX>;
 		close ($AJAX);
-		print "<script>\n";
 		print @jsdata;
+
 		print "</script>\n";
+
 		print <<EOF;
-<div>$options Lines:<input type='text' id="CSFlines" value="100" size='4'>&nbsp;&nbsp;<button class='btn btn-default' onclick="CSFrefreshtimer()">Refresh Now</button></div>
-<div>Refresh in <span id="CSFtimer">0</span> <button class='btn btn-default' id="CSFpauseID" onclick="CSFpausetimer()" style="width:80px;">Pause</button> <img src="$images/loader.gif" id="CSFrefreshing" style="display:none" /></div>
-<div class='pull-right btn-group'><button class='btn btn-default' id='fontminus-btn'><strong>a</strong><span class='glyphicon glyphicon-arrow-down icon-configserver'></span></button>
-<button class='btn btn-default' id='fontplus-btn'><strong>A</strong><span class='glyphicon glyphicon-arrow-up icon-configserver'></span></button></div>
-<pre class='console' id="CSFajax" style="overflow:auto;height:500px;resize:both;clear:both"> &nbsp; </pre>
+<div class='refresh-controls-container'>
+	$options Lines: <input type='text' id="csfLines" value="200" size='4'>&nbsp;&nbsp;
+	<button class='btn-settings-base btn-ok' onclick="csfTimerRefresh()">Refresh Now</button>
+	<button class='btn-settings-base btn-ok' id="csfPauseId" onclick="csfTimerPause()">Pause</button>
+</div>
+
+<div class='refresh-timer-container'>
+	<span class='refresh-timer-label'>Next refresh</span> <code><span class='refresh-timer-count' id="csfTimer">0</span></code>
+	<img src="$images/loader.gif" id="csfRefreshing" style="display:none" />
+</div>
+
+
+<pre class='console' id="csfAjax" style="overflow:auto;height:500px;resize:both;clear:both"> &nbsp; </pre>
 
 <script>
-	CSFfrombot = $CSFfrombot;
-	CSFfromright = $CSFfromright;
-	CSFscript = '$script?action=logtailcmd';
-	CSFtimer();
+	csfFromBot = $csfFromBot;
+	csfFromRight = $csfFromRight;
+	csfScript = '$script?action=logtailcmd';
+	csfTimerInitialize();
 
 	var myFont = 14;
-	\$("#fontplus-btn").on('click', function () {
+	\$("#fontplus-btn").on('click', function ()
+	{
 		myFont++;
-		if (myFont > 20) {myFont = 20}
-		\$('#CSFajax').css("font-size",myFont+"px");
+		if (myFont > 22) {myFont = 22}
+		\$('#csfAjax').css("font-size",myFont+"px");
 	});
-	\$("#fontminus-btn").on('click', function () {
+	\$("#fontminus-btn").on('click', function ()
+	{
 		myFont--;
-		if (myFont < 12) {myFont = 12}
-		\$('#CSFajax').css("font-size",myFont+"px");
+		if (myFont < 10) {myFont = 10}
+		\$('#csfAjax').css("font-size",myFont+"px");
 	});
 </script>
 EOF
@@ -658,12 +685,12 @@ EOF
 		$FORM{lines} =~ s/\D//g;
 		if ($FORM{lines} eq "" or $FORM{lines} == 0) {$FORM{lines} = 30}
 		my $script_safe = $script;
-		my $CSFfrombot = 120;
-		my $CSFfromright = 10;
+		my $csfFromBot = 120;
+		my $csfFromRight = 10;
 		if ($config{DIRECTADMIN}) {
 			$script = $script_da;
-			$CSFfrombot = 400;
-			$CSFfromright = 150;
+			$csfFromBot = 400;
+			$csfFromRight = 150;
 		}
 
 		my @data = slurp("/etc/csf/csf.syslogs");
@@ -677,7 +704,7 @@ EOF
 		}
 		@data = sort @data;
 
-		my $options = "<select id='CSFlognum'>\n";
+		my $options = "<select id='csfLogNum'>\n";
 		my $cnt = 0;
 		foreach my $file (@data) {
 			$file =~ s/$cleanreg//g;
@@ -709,15 +736,15 @@ EOF
 		print "</script>\n";
 		print <<EOF;
 <div>Log: $options</div>
-<div style='white-space: nowrap;'>Text: <input type='text' size="30" id="CSFgrep" onClick="this.select()">&nbsp;
+<div style='white-space: nowrap;'>Text: <input type='text' size="30" id="csfGrep" onClick="this.select()">&nbsp;
 <input type="checkbox" id="CSFgrep_i" value="1">-i&nbsp;
 <input type="checkbox" id="CSFgrep_E" value="1">-E&nbsp;
 <input type="checkbox" id="CSFgrep_Z" value="1"> wildcard&nbsp;
-<button class='btn btn-default' onClick="CSFgrep()">Search</button>&nbsp;
-<img src="$images/loader.gif" id="CSFrefreshing" style="display:none" /></div>
-<div class='pull-right btn-group'><button class='btn btn-default' id='fontminus-btn'><strong>a</strong><span class='glyphicon glyphicon-arrow-down icon-configserver'></span></button>
-<button class='btn btn-default' id='fontplus-btn'><strong>A</strong><span class='glyphicon glyphicon-arrow-up icon-configserver'></span></button></div>
-<pre class='comment' id="CSFajax" style="overflow:auto;height:500px;resize:both; white-space: pre-wrap;clear: both">
+<button class='btn-settings-base btn-ok strict-width-settings' onClick="csfGrep()">Search</button>&nbsp;
+<img src="$images/loader.gif" id="csfRefreshing" style="display:none" /></div>
+<div class='pull-right btn-group'><button class='btn-settings-base btn-ok' id='fontminus-btn'><strong>a</strong><span class='glyphicon glyphicon-arrow-down icon-configserver'></span></button>
+<button class='btn-settings-base btn-ok' id='fontplus-btn'><strong>A</strong><span class='glyphicon glyphicon-arrow-up icon-configserver'></span></button></div>
+<pre class='comment' id="csfAjax" style="overflow:auto;height:500px;resize:both; white-space: pre-wrap;clear: both">
 Please Note:
 
  1. Searches use $config{GREP}/$config{ZGREP} if wildcard is used), so the search text/regex must be syntactically correct
@@ -730,20 +757,22 @@ Please Note:
 </pre>
 
 <script>
-	CSFfrombot = $CSFfrombot;
-	CSFfromright = $CSFfromright;
-	CSFscript = '$script?action=loggrepcmd';
+	csfFromBot = $csfFromBot;
+	csfFromRight = $csfFromRight;
+	csfScript = '$script?action=loggrepcmd';
 
 	var myFont = 14;
-	\$("#fontplus-btn").on('click', function () {
+	\$("#fontplus-btn").on('click', function ()
+	{
 		myFont++;
 		if (myFont > 20) {myFont = 20}
-		\$('#CSFajax').css("font-size",myFont+"px");
+		\$('#csfAjax').css("font-size",myFont+"px");
 	});
-	\$("#fontminus-btn").on('click', function () {
+	\$("#fontminus-btn").on('click', function ()
+	{
 		myFont--;
 		if (myFont < 12) {myFont = 12}
-		\$('#CSFajax').css("font-size",myFont+"px");
+		\$('#csfAjax').css("font-size",myFont+"px");
 	});
 </script>
 EOF
