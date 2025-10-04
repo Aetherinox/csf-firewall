@@ -40,9 +40,14 @@
     --text-color: #111111;
 	--app-name-text: #ce2d5a;
     --link-color: #0077cc;
-	--panel-header-box: #e3e3e3;
-	--panel-box-alt: #ddd;
+	--panel-header-box: #e6e6e6;
+	--panel-box-alt: #eaeaea;
+
+	--panel-table-row-odd: #e6e6e6;
+	--panel-table-row-even: #eaeaea;
+
 	--panel-section-background: #d8d8d8;
+	--panel-section-border: #FFF;
 	--panel-section-text: #363636;
 	--panel-footer-background: #e1e1e1;
 	--panel-footer-border: #1c1c1c1a;
@@ -61,6 +66,38 @@
 	--mark-background-normal: #f2e523;
 	--mark-text-normal: #1d1d1d;
 
+	--icons-normal: #d2195ef0;
+	--icons-hover: #e69e19f0;
+
+
+	--settings-button-ok-background-normal: #FFF;
+	--settings-button-ok-background-hover: #bebebe;
+	--settings-button-ok-border-normal: #DBDBDB;
+	--settings-button-ok-border-hover: #FFF;
+	--settings-button-ok-text-normal: #424242;
+	--settings-button-ok-text-hover: #3f3f3f;
+
+	--settings-button-allow-background-normal: #4ca47b;
+	--settings-button-allow-background-hover: #4ca47b;
+	--settings-button-allow-border-normal: #4ca47b;
+	--settings-button-allow-border-hover: #4ca47b;
+	--settings-button-allow-text-normal: #FFFFFF;
+	--settings-button-allow-text-hover: #FFFFFF;
+
+	--settings-button-deny-background-normal: #ce5b66;
+	--settings-button-deny-background-hover: #ce5b66;
+	--settings-button-deny-border-normal: #ce5b66;
+	--settings-button-deny-border-hover: #ce5b66;
+	--settings-button-deny-text-normal: #FFFFFF;
+	--settings-button-deny-text-hover: #FFFFFF;
+
+	--settings-button-edit-background-normal: #bf8a46;
+	--settings-button-edit-background-hover: #bf8a46;
+	--settings-button-edit-border-normal: #bf8a46;
+	--settings-button-edit-border-hover: #bf8a46;
+	--settings-button-edit-text-normal: #FFFFFF;
+	--settings-button-edit-text-hover: #FFFFFF;
+
 	--section-background-normal: #ccc;
 	--section-border-normal: #e3e3e31a;
 	--section-text-normal: #363636;
@@ -70,9 +107,18 @@
 	--settings-button-enabled-active-background-normal: #5a732f;
 	--settings-button-enabled-active-text-normal: #FFF;
 
+	--status-check-score-background-normal: #e6e6e6;
+	--status-check-score-label-text-normal: #646464;
+	--status-check-score-total-text-normal: #646464;
+	--status-check-score-total-bar-normal: #4e4e4e;
+
+	--grading-general-background: #FFF;
+	--grading-general-border-normal: #e3e3e31a;
+	--grading-general-test-name-background-normal: #e6e6e6;
+
 	--input-textfield-main-normal-text: #111;
-	--input-textfield-main-normal-background: #e8e8e8;
-	--input-textfield-main-normal-border: #f7f7f7;
+	--input-textfield-main-normal-background: #FFFFFF;
+	--input-textfield-main-normal-border: #e1e1e1;
 	--input-textfield-main-focus-line: #dabe25;
 	--input-textfield-main-focus-background: #FFFFFF;
 	--input-textfield-main-focus-border: #ffffff;
@@ -80,20 +126,20 @@
 	--input-textfield-main-hover-line: #2b62b4;
 
 	--input-textfield-allow-normal-text: #111;
-	--input-textfield-allow-normal-background: #9edbb6;
+	--input-textfield-allow-normal-background: #b4e6c8;
 	--input-textfield-allow-normal-border: #f7f7f7;
 	--input-textfield-allow-focus-line: #2b7448;
 	--input-textfield-allow-focus-background: #FFFFFF;
-	--input-textfield-allow-focus-border: #c7c7c7;
+	--input-textfield-allow-focus-border: #FFFFFF;
 	--input-textfield-allow-focus-text: #353535;
 	--input-textfield-allow-hover-line: #62aa7f;
 
 	--input-textfield-deny-normal-text: #ff0062;
-	--input-textfield-deny-normal-background: #f9bfc5;
+	--input-textfield-deny-normal-background: #ffd8dc;
 	--input-textfield-deny-normal-border: #f7f7f7;
 	--input-textfield-deny-focus-line: #ff0062;
 	--input-textfield-deny-focus-background: #FFFFFF;
-	--input-textfield-deny-focus-border: #c7c7c7;
+	--input-textfield-deny-focus-border: #FFFFFF;
 	--input-textfield-deny-focus-text: #353535;
 	--input-textfield-deny-hover-line: #ff8b97;
 
@@ -139,7 +185,12 @@
     --link-color: #66aaff;
 	--panel-header-box: #2b2b2b;
 	--panel-box-alt: #333;
+
+	--panel-table-row-odd: #2b2b2b;
+	--panel-table-row-even: #333;
+
 	--panel-section-background: #3c3c3c;
+	--panel-section-border: #3c3c3c;
 	--panel-section-text: #FFF;
 	--panel-footer-background: hsl(0, 0%, 14.9%);
 	--panel-footer-border: #e3e3e31a;
@@ -158,6 +209,39 @@
 	--mark-background-normal: #8a6610;
 	--mark-text-normal: #fff;
 
+	--icons-normal: #d2195ef0;
+	--icons-hover: #FFF;
+
+
+
+	--settings-button-ok-background-normal: #3f4fa4;
+	--settings-button-ok-background-hover: #3f4fa4;
+	--settings-button-ok-border-normal: #3f4fa4;
+	--settings-button-ok-border-hover: #3f4fa4;
+	--settings-button-ok-text-normal: #FFFFFF;
+	--settings-button-ok-text-hover: #FFFFFF;
+
+	--settings-button-allow-background-normal: #219961;
+	--settings-button-allow-background-hover: #219961;
+	--settings-button-allow-border-normal: #219961;
+	--settings-button-allow-border-hover: #219961;
+	--settings-button-allow-text-normal: #FFFFFF;
+	--settings-button-allow-text-hover: #FFFFFF;
+
+	--settings-button-deny-background-normal: #ce5b66;
+	--settings-button-deny-background-hover: #ce5b66;
+	--settings-button-deny-border-normal: #ce5b66;
+	--settings-button-deny-border-hover: #ce5b66;
+	--settings-button-deny-text-normal: #FFFFFF;
+	--settings-button-deny-text-hover: #FFFFFF;
+
+	--settings-button-edit-background-normal: #bf8a46;
+	--settings-button-edit-background-hover: #bf8a46;
+	--settings-button-edit-border-normal: #bf8a46;
+	--settings-button-edit-border-hover: #bf8a46;
+	--settings-button-edit-text-normal: #FFFFFF;
+	--settings-button-edit-text-hover: #FFFFFF;
+
 	--section-background-normal: #396852;
 	--section-border-normal: #e3e3e31a;
 	--section-text-normal: #FFFFFF;
@@ -167,9 +251,18 @@
 	--settings-button-enabled-active-background-normal: #5a732f;
 	--settings-button-enabled-active-text-normal: #FFF;
 
+	--status-check-score-background-normal: #282828;
+	--status-check-score-label-text-normal: #e6e6e6;
+	--status-check-score-total-text-normal: #e6e6e6;
+	--status-check-score-total-bar-normal: #FFFFFF;
+
+	--grading-general-border-normal: #e3e3e31a;
+	--grading-general-background: #282828;
+	--grading-general-test-name-background-normal: #262626;
+
 	--input-textfield-main-normal-text: #adadad;
 	--input-textfield-main-normal-background: #1f2324;
-	--input-textfield-main-normal-border: #5e5e5e;
+	--input-textfield-main-normal-border: #484848;
 	--input-textfield-main-focus-background: #2b2b2b;
 	--input-textfield-main-focus-line: #FFFFFF;
 	--input-textfield-main-focus-border: #d8a91e;
@@ -178,7 +271,7 @@
 
 	--input-textfield-allow-normal-text: #75e6b2;
 	--input-textfield-allow-normal-background: #1f2324;
-	--input-textfield-allow-normal-border: #1b915a;
+	--input-textfield-allow-normal-border: #2d6a4e;
 	--input-textfield-allow-focus-background: #224233;
 	--input-textfield-allow-focus-line: #FFF;
 	--input-textfield-allow-focus-border: #20af6d;
@@ -300,20 +393,31 @@
 
 @-webkit-keyframes fade-in
 {
-    from { opacity: 0.6; }
+    from { opacity: 0.5; }
     to { opacity: 1; }
 }
 
 @-moz-keyframes fade-in
 {
-    from { opacity: 0.6; }
+    from { opacity: 0.5; }
     to { opacity: 1; }
 }
 
 @keyframes fade-in
 {
-    from { opacity: 0.6; }
+    from { opacity: 0.5; }
     to { opacity: 1; }
+}
+
+.fade
+{
+	animation-name:             fade-in, scale-in;
+	animation-duration:         1s, 0.5s;
+	animation-timing-function:  ease-in, linear;
+	animation-direction:        alternate, alternate;
+	animation-iteration-count:  infinite, 1;
+	transition: 				all 0.2s;
+	transform: 					scale(1);
 }
 
 /*
@@ -492,7 +596,7 @@ body
 	padding-bottom: 100px;
 }
 
-button#CSFpauseID
+button#csfPauseId
 {
 	background: var(--button-1-background);
 	border-radius:4px;
@@ -500,7 +604,7 @@ button#CSFpauseID
 	color: #d1d1d1 !important;
 }
 
-button#CSFpauseID:hover
+button#csfPauseId:hover
 {
 	filter: brightness(120%) !important;
 	transition: all 0.2s;
@@ -521,7 +625,7 @@ button#CSFpauseID:hover
 	transition: all 0.2s;
 }
 
-button:not([class]):not(#fontminus-btn):not(#CSFpauseID):not(#fontplus-btn),
+button:not([class]):not(#fontminus-btn):not(#csfPauseId):not(#fontplus-btn),
 button.btn.btn-default {
     background: var(--button-1-background);
     border-radius: 4px;
@@ -530,7 +634,235 @@ button.btn.btn-default {
     min-width: 13em;
 }
 
-button:not(button#fontminus-btn):not(button#CSFpauseID):not(button#fontplus-btn):not(.btn-edit):hover
+.width-fixed-13
+{
+	min-width: 13em;
+	width: 13em;
+	max-width: 13em;
+}
+
+
+.btn-settings-base
+{
+    border-width: 3px;
+    border-radius: 4px;
+	border: 1px solid transparent;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    height: 38px;
+    padding: 0 12px;
+    font-size: 14px !important;
+    font-weight: 400;
+    white-space: nowrap;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-appearance: button;
+}
+
+.btn-settings-base:hover
+{
+	filter: brightness(120%) !important;
+	transition: all 0.2s !important;
+}
+
+button,
+input,
+select,
+textarea
+{
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;   /* resets to browser default */
+    font-size: 14px;
+    line-height: 1.42857143;
+}
+
+/*
+	Refresh Timer › Main Container
+*/
+
+.refresh-timer-container
+{
+	padding-left: 5px;
+	padding-top: 10px;
+}
+
+/*
+	Refresh Timer › Label
+*/
+
+.refresh-timer-label
+{
+	color: #919191;
+}
+
+/*
+	Refresh Timer › Current Numerical Value
+*/
+
+.refresh-timer-count
+{
+	color: #f9c62e;
+	font-size: 15pt;
+}
+
+/*
+	Button › fontplus, fontminus
+*/
+
+#fontminus-btn, #fontplus-btn
+{
+	background-color: #557552;
+	border: 1px solid #557552;
+	color: #FFF;
+	margin-bottom: 15px;
+}
+
+#fontminus-btn:hover, #fontplus-btn:hover
+{
+	filter: brightness(120%);
+	transition: all 0.2s;
+}
+
+#fontminus-btn
+{
+	margin-right: 5px;
+}
+
+#fontplus-btn .glyphicon, #fontminus-btn .glyphicon
+{
+	color: #FFF;
+}
+
+
+.btn-ok
+{
+	color: var( --settings-button-ok-text-normal );
+	background-color: var( --settings-button-ok-background-normal );
+	border: 3px solid var( --settings-button-ok-border-normal );
+}
+
+.btn-ok:hover
+{
+	color: var( --settings-button-ok-text-hover );
+	background-color: var( --settings-button-ok-background-hover );
+	border: 3px solid var( --settings-button-ok-border-hover );
+}
+
+a.btn-ok:hover
+{
+	color: var( --settings-button-ok-text-hover );
+	border: 3px solid var( --settings-button-ok-border-hover );
+	text-decoration: none;
+	filter: brightness(120%);
+	transition: all 0.2s;
+}
+
+input.btn-ok:hover
+{
+	filter: brightness(120%) !important;
+	transition: all 0.2s;
+}
+
+/*
+	Button > Quick Allow
+*/
+
+.btn-allow
+{
+	background-color: var( --settings-button-allow-background-normal );
+	border: 3px solid var( --settings-button-allow-border-normal );
+	color: var( --settings-button-allow-text-normal );
+}
+
+.btn-allow:hover
+{
+	background-color: var( --settings-button-allow-background-hover );
+	border: 3px solid var( --settings-button-allow-border-hover );
+	color: var( --settings-button-allow-text-hover );
+}
+
+/*
+	Button > Quick Deny
+*/
+
+.btn-deny
+{
+	background-color: var( --settings-button-deny-background-normal );
+	border: 3px solid var( --settings-button-deny-border-normal );
+	color: var( --settings-button-deny-text-normal );
+}
+
+.btn-deny:hover
+{
+	background-color: var( --settings-button-deny-background-hover );
+	border: 3px solid var( --settings-button-deny-border-hover );
+	color: var( --settings-button-deny-text-hover );
+}
+
+/*
+	Padding between select and input button with element in-between
+
+	Example:				settings › Edit lfd ignore file
+*/
+
+select ~ input[type="submit"]
+{
+    margin-top: 0.5em;
+}
+
+/*
+	Padding between select and button button with element in-between
+
+	Example:				settings › Edit email alert templates. See Firewall Information for details of each file
+*/
+
+select ~ button[type="submit"]
+{
+    margin-top: 0.5em;
+}
+
+/*
+	Button > Edit
+*/
+
+.btn-edit
+{
+	background-color: var( --settings-button-edit-background-normal );
+	border-radius: 4px;
+	border: 1px solid var( --settings-button-edit-border-normal );
+	color: var( --settings-button-edit-text-normal );
+}
+
+input.btn-edit
+{
+    background-color: var( --settings-button-edit-background-hover );
+    border: 1px solid var( --settings-button-edit-border-hover );
+	color: var( --settings-button-edit-text-hover );
+}
+
+.btn-edit:hover
+{
+	filter: brightness(120%);
+	transition: all 0.2s;
+}
+
+
+.strict-width-settings
+{
+	width: 19rem;
+	max-width: 19rem;
+}
+
+
+
+
+
+
+
+
+button:not(button#fontminus-btn):not(button#csfPauseId):not(button#fontplus-btn):not(.btn-edit):hover
 {
 	filter: brightness(120%);
 	transition: all 0.2s;
@@ -560,7 +892,7 @@ a.app-name:not(:hover)
 	Input > Default
 */
 
-input
+input:not(.btn-no-anim)
 {
     background-color: #FFF;
     color: var( --input-textfield-main-normal-text );
@@ -570,10 +902,10 @@ input
     background: linear-gradient( var( --input-textfield-main-hover-line ) 0 0) no-repeat var( --input-textfield-main-normal-background );
     background-position: center bottom;
     background-size: 0% 2px;
-	border-left: 2px solid var( --input-textfield-main-normal-border );
-	border-top: 2px solid var( --input-textfield-main-normal-border );
-	border-right: 2px solid var( --input-textfield-main-normal-border );
-	border-bottom: 2px solid var( --input-textfield-main-normal-border );
+	border-left: 3px solid var( --input-textfield-main-normal-border );
+	border-top: 3px solid var( --input-textfield-main-normal-border );
+	border-right: 3px solid var( --input-textfield-main-normal-border );
+	border-bottom: 3px solid var( --input-textfield-main-normal-border );
 	font-size: 12pt;
 }
 
@@ -588,17 +920,18 @@ input:focus
     background-image: linear-gradient(var( --input-textfield-main-focus-line ) 0 0);
     background-color: var( --input-textfield-main-focus-background );
     background-size: calc(100% - 4px) 2px;
-	border-left: 2px solid var( --input-textfield-main-focus-border );
-	border-top: 2px solid var( --input-textfield-main-focus-border );
-	border-right: 2px solid var( --input-textfield-main-focus-border );
-	border-bottom: 2px solid var( --input-textfield-main-focus-border );
+	border-left: 3px solid var( --input-textfield-main-focus-border );
+	border-top: 3px solid var( --input-textfield-main-focus-border );
+	border-right: 3px solid var( --input-textfield-main-focus-border );
+	border-bottom: 3px solid var( --input-textfield-main-focus-border );
 }
 
 /*
 	Quick > Allow
 */
 
-.input-allow
+input.input-allow,
+textarea.input-allow
 {
     background-color: #FFF;
 	color: var( --input-textfield-allow-normal-text );
@@ -608,10 +941,10 @@ input:focus
 	background: linear-gradient( var( --input-textfield-allow-hover-line ) 0 0) no-repeat var( --input-textfield-allow-normal-background );
     background-position: center bottom;
     background-size: 0% 2px;
-	border-left: 2px solid var( --input-textfield-allow-normal-border );
-	border-top: 2px solid var( --input-textfield-allow-normal-border );
-	border-right: 2px solid var( --input-textfield-allow-normal-border );
-	border-bottom: 2px solid var( --input-textfield-allow-normal-border );
+	border-left: 3px solid var( --input-textfield-allow-normal-border );
+	border-top: 3px solid var( --input-textfield-allow-normal-border );
+	border-right: 3px solid var( --input-textfield-allow-normal-border );
+	border-bottom: 3px solid var( --input-textfield-allow-normal-border );
 	font-size: 12pt;
 }
 
@@ -626,17 +959,18 @@ input:focus
     background-image: linear-gradient(var( --input-textfield-allow-focus-line ) 0 0);
     background-color: var( --input-textfield-allow-focus-background );
     background-size: calc(100% - 4px) 2px;
-	border-left: 2px solid var( --input-textfield-allow-focus-border );
-	border-top: 2px solid var( --input-textfield-allow-focus-border );
-	border-right: 2px solid var( --input-textfield-allow-focus-border );
-	border-bottom: 2px solid var( --input-textfield-allow-focus-border );
+	border-left: 3px solid var( --input-textfield-allow-focus-border );
+	border-top: 3px solid var( --input-textfield-allow-focus-border );
+	border-right: 3px solid var( --input-textfield-allow-focus-border );
+	border-bottom: 3px solid var( --input-textfield-allow-focus-border );
 }
 
 /*
 	Quick > Deny
 */
 
-.input-deny
+input.input-deny,
+textarea.input-deny
 {
     background-color: #FFF;
 	color: var( --input-textfield-deny-normal-text );
@@ -646,10 +980,10 @@ input:focus
 	background: linear-gradient( var( --input-textfield-deny-hover-line ) 0 0) no-repeat var( --input-textfield-deny-normal-background );
     background-position: center bottom;
     background-size: 0% 2px;
-	border-left: 2px solid var( --input-textfield-deny-normal-border );
-	border-top: 2px solid var( --input-textfield-deny-normal-border );
-	border-right: 2px solid var( --input-textfield-deny-normal-border );
-	border-bottom: 2px solid var( --input-textfield-deny-normal-border );
+	border-left: 3px solid var( --input-textfield-deny-normal-border );
+	border-top: 3px solid var( --input-textfield-deny-normal-border );
+	border-right: 3px solid var( --input-textfield-deny-normal-border );
+	border-bottom: 3px solid var( --input-textfield-deny-normal-border );
 	font-size: 12pt;
 }
 
@@ -664,10 +998,10 @@ input:focus
     background-image: linear-gradient(var( --input-textfield-deny-focus-line ) 0 0);
     background-color: var( --input-textfield-deny-focus-background );
     background-size: calc(100% - 4px) 2px;
-	border-left: 2px solid var( --input-textfield-deny-focus-border );
-	border-top: 2px solid var( --input-textfield-deny-focus-border );
-	border-right: 2px solid var( --input-textfield-deny-focus-border );
-	border-bottom: 2px solid var( --input-textfield-deny-focus-border );
+	border-left: 3px solid var( --input-textfield-deny-focus-border );
+	border-top: 3px solid var( --input-textfield-deny-focus-border );
+	border-right: 3px solid var( --input-textfield-deny-focus-border );
+	border-bottom: 3px solid var( --input-textfield-deny-focus-border );
 }
 
 
@@ -695,38 +1029,6 @@ input:focus
 .panel img
 {
 	padding-right: 17px;
-}
-
-/*
-	Button > Quick Allow
-*/
-
-.btn-allow
-{
-	background-color: #486a47  !important;
-	border: 1px solid #FFFFFF0A !important;
-}
-
-.btn-allow:hover
-{
-	filter: brightness(120%);
-	transition: all 0.2s;
-}
-
-/*
-	Button > Quick Deny
-*/
-
-.btn-deny
-{
-	background-color: #d2195ef0 !important;
-	border: 1px solid #FFFFFF0A !important;
-}
-
-.btn-deny:hover
-{
-	filter: brightness(120%);
-	transition: all 0.2s;
 }
 
 /*
@@ -817,25 +1119,6 @@ input:focus
 }
 
 /*
-	Button > Edit
-*/
-
-.btn-edit
-{
-	background: #2c735f;
-	border-radius: 4px;
-	border: 1px solid #2c735f;
-	color: #FFF !important;
-	min-width: 13em;
-}
-
-.btn-edit:hover
-{
-	filter: brightness(120%);
-	transition: all 0.2s;
-}
-
-/*
 	Button > Long
 */
 
@@ -897,7 +1180,7 @@ input:focus
 
 .glyphicon
 {
-	color: #d2195ef0 !important;
+	color: var( --icons-normal );
 	padding-left: 2px;
 	padding-right: 2px;
 	top: 4px;
@@ -906,8 +1189,18 @@ input:focus
 
 .glyphicon:hover
 {
-	color: #FFF !important;
+	color: var( --icons-hover );
 	transition: all 0.2s;
+}
+
+.icon-configserver
+{
+	color: var( --icons-normal );
+}
+
+.icon-configserver:hover
+{
+	color: var( --icons-hover );
 }
 
 /*
@@ -926,34 +1219,10 @@ input:focus
 	padding-block: 1px;
 }
 
-.icon-configserver
-{
-	color: #FFF;
-}
-
-#fontminus-btn, #fontplus-btn
-{
-	background-color: #4e8c49;
-	border: 1px solid #fff0;
-	color: #FFF;
-	margin-bottom: 15px;
-}
-
-#fontminus-btn:hover, #fontplus-btn:hover
-{
-	filter: brightness(120%);
-	transition: all 0.2s;
-}
-
-#fontminus-btn
-{
-	margin-right: 5px;
-}
-
 input.btn-default[type="submit"]
 {
 	background: var(--button-1-background);
-	border-radius: 6px;
+	border-radius: 4px;
 	border: 1px solid var(--button-1-background);
 	color: #FFF !important;
 	max-width: 7em;
@@ -1070,20 +1339,6 @@ th
 	Section > Header
 */
 
-thead > tr > th
-{
-	background-color: var(--panel-section-background);
-	border-bottom: 1px solid #e3e3e31a !important;
-}
-
-.table > thead > tr > th
-{
-	vertical-align: bottom;
-	border-bottom: 1px solid #e3e3e31a !important;
-	border-top-left-radius: 3px;
-	border-top-right-radius: 3px;
-}
-
 textarea
 {
 	font-family: inherit;
@@ -1099,7 +1354,7 @@ textarea
 	background-color: var( --pre-background );
 	padding: 10px;
 	font-family: Courier New, Courier;
-	font-size: 12px;
+	font-size: 14px;
   	min-width: 100%;
 	max-width: 100%;
 }
@@ -1112,9 +1367,10 @@ textarea
 	font-size: 12px;
 	width: 100%;
 	min-height: 500px;
-	border: 2px solid var( --pre-border-normal );
+	border: 3px solid var( --pre-border-normal );
 	border-radius: 6px;
 	padding: 10px;
+	line-height: 25px;
 }
 
 pre
@@ -1171,19 +1427,26 @@ select
     border-radius: 4px;
     background-color: var(--bg-color, #222);
     color: var(--text-color, #fff);
-	border-left: 2px solid var( --input-textfield-main-normal-border );
-	border-top: 2px solid var( --input-textfield-main-normal-border );
-	border-right: 2px solid var( --input-textfield-main-normal-border );
-	border-bottom: 2px solid var( --input-textfield-main-normal-border );
-    padding: 6px 12px;
+	border-left: 3px solid var( --input-textfield-main-normal-border );
+	border-top: 3px solid var( --input-textfield-main-normal-border );
+	border-right: 3px solid var( --input-textfield-main-normal-border );
+	border-bottom: 3px solid var( --input-textfield-main-normal-border );
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
 	cursor: pointer;
 	vertical-align: baseline;
+	font-size: 12pt;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
 
-
+.setting-note
+{
+	font-size: 10pt;
+}
 
 .table-bordered
 {
@@ -1201,12 +1464,12 @@ tbody
 
 .table-striped > tbody > tr
 {
-	background-color: var(--panel-box-alt);
+	background-color: var(--panel-table-row-even);
 }
 
 .table-striped > tbody > tr:nth-of-type(2n+1)
 {
-	background-color: var(--panel-header-box);
+	background-color: var(--panel-table-row-odd);
 }
 
 .table-bordered > thead > tr > td, .table-bordered > thead > tr > th
@@ -1321,12 +1584,24 @@ code
 	List each item / setting
 */
 
+th.table-header
+{
+	height: 30px;
+	vertical-align: middle !important;
+	padding-left: 15px !important;
+	padding-top: 4px !important;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+}
+
+.table.table-bordered.table-striped > tbody > tr > td
+{
+	padding: 9px !important;
+}
+
 .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th
 {
-	padding: 8px;
-		padding-top: 6px;
-		padding-bottom: 6px;
-	line-height: 1.42857143;
+	padding: 0px;
 }
 
 .bs-callout
@@ -1584,7 +1859,7 @@ code
 	background-color: #ce2d5a;
 	color: #FFF;
 	border: 1px solid #FFF0;
-	border-radius: 6px;
+	border-radius: 4px;
 	transition: all 0.2s;
 	padding-left: 15px;
 }
@@ -1618,7 +1893,7 @@ code
 .section-header .header-btn
 {
     font-size: 14px;
-    border-radius: 6px;
+    border-radius: 4px;
     border: 1px solid var(--primary-color);
     background-color: var(--primary-color);
     color: var(--text-color);
@@ -1733,119 +2008,272 @@ img.logo:not(:hover)
     color: var(--text-muted-color);
 }
 
+/*
+	Server Grade › Section Title
 
+	The section title for each category of test:
+		- Firewall Check
+		- Server Check
+		- SSH/Telnet Check
+*/
 
-.server-check-status-container
+.server-grading-section-title
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	margin-top: 30px;
+	font-size: 1.5em;
+	font-weight: 100;
+}
+
+/*
+	Server Grade › General › Container
+
+	Main div which outputs the test and result. Children:
+		- .server-grading-general-test-name
+		- .server-grading-general-test-result
+*/
+
+.server-grading-general-container
 {
 	display: flex;
 	width: 100%;
 	clear: both;
-	background-color: var(--panel-header-box);
+	border-bottom: 1px solid var( --grading-general-background );
 }
 
-.server-check-status-check
+/*
+	Server Grade › General › Test Name
+
+	column for each test that is ran:
+		- RESTRICT_SYSLOG option check
+		- LF_IMAPD option check
+		- Check for IPv6
+*/
+
+.server-grading-general-test-name
 {
-	width: 250px;
-	background-color: #80273D;
-	padding: 8px;
-	border-bottom: 1px solid #e3e3e31a;
+	width: 20em;
+	background-color: var( --grading-general-test-name-background-normal );
+	padding-left: 20px;
+	padding-top: 8px;
+	padding-right: 8px;
+	padding-bottom: 8px;
 }
 
-.server-check-status-comment
+/*
+	Server Grade › General › Test Result
+
+	Column for each result of every test. This column explains why an issue / test should be fixed
+		- Due to issues with syslog/rsyslog you should consider enabling this option. See the Firewall Configuration (/etc/csf/csf.conf) for more information
+		- This option helps prevent brute force attacks on your server services or overall server stability
+		- Unable to find /etc/ssh/sshd_config
+*/
+
+.server-grading-general-test-result
 {
 	flex: 1;
 	padding: 8px;
-	border-bottom: 1px solid #e3e3e31a;
 }
 
-.server-check-verbose-container
+/*
+	Server Grade › Vernose › Container
+
+	Main div which outputs the test and result. Children:
+		- .server-grading-verbose-test-name
+		- .server-grading-verbose-test-result
+*/
+
+.server-grading-verbose-container
 {
 	display: flex;
 	width: 100%;
 	clear: both;
 }
 
-.server-check-verbose-check
+/*
+	Server Grade › General › Test Name
+
+	column for each test that is ran:
+		- RESTRICT_SYSLOG option check
+		- LF_IMAPD option check
+		- Check for IPv6
+*/
+
+.server-grading-verbose-test-name
 {
-	width: 250px;
+	width: 20em;
 	background: var(--panel-section-background);
-	padding: 8px;
-	border-bottom: 1px solid #e3e3e31a;
+	padding-left: 20px;
+	padding-top: 8px;
+	padding-right: 8px;
+	padding-bottom: 8px;
 }
 
-.server-check-verbose-comment
+/*
+	Server Grade › Verbose › Test Result
+
+	Column for each result of every test. This column explains why an issue / test should be fixed
+		- Due to issues with syslog/rsyslog you should consider enabling this option. See the Firewall Configuration (/etc/csf/csf.conf) for more information
+		- This option helps prevent brute force attacks on your server services or overall server stability
+		- Unable to find /etc/ssh/sshd_config
+*/
+
+.server-grading-verbose-test-result
 {
 	flex: 1;
 	padding: 8px;
-	border-bottom: 1px solid #e3e3e31a;
 }
 
-.server-check-result
+/*
+	Server Grade › Test Result/ Status
+
+	Displays the status "OK" or "Found Issues" for each test
+*/
+
+.server-grading-status-result
 {
 	clear: both;
-	background-color: var(--panel-header-box);
 	color: #FFF;
-	padding: 8px;
-	border: 1px solid #e3e3e31a;
+	padding-left: 20px;
+	padding-top: 8px;
+	padding-bottom: 8px;
 }
 
-.server-check-output
+.server-grading-status-ok
 {
-	clear: both;
-	background-color: var(--panel-header-box);
-	padding: 8px;
-	border: 1px solid #e3e3e31a;
+	background-color: #398a51;
 }
 
-.server-check-score-container
+.server-grading-status-warn
 {
-	border:1px solid #e3e3e31a;
+	background-color: #cc9a06;
+	color: #fff;
+	font-weight: 600;
+}
+
+.server-grading-status-ok
+{
+	background-color: #479f76;
+	color: #fff;
+	font-weight: 600;
+}
+
+/*
+	Server Grade › Final Status (Footer
+
+	Shows the final status at the bottom; above the grade amount
+*/
+
+.server-grading-status-overall-container
+{
+	padding: 10px;
+	border-radius: 4px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+}
+
+/*
+	Server Grade › Scorecard › Main Container
+
+	Main container for score card
+*/
+
+.server-grading-score-container
+{
+	border:1px solid var( --grading-general-border-normal );
 	padding:8px;
 	border-radius:5px;
-	background-color: #282828;
+	background-color: var( --status-check-score-background-normal );
 }
 
-.server-check-score-bar
+/*
+	Server Grade › Scorecard › Main Score Bar Container
+
+	Main container for score bar
+*/
+
+.server-grading-score-bar-container
 {
 	text-align: center;
-	border-bottom: 1px solid #e3e3e31a;
+	border-bottom: 1px solid var( --grading-general-border-normal );
 	width: 100%;
 	margin: auto;
 }
 
-.server-check-grade-poor
+/*
+	Server Grade › Scorecard › Grade Bars
+
+	All bars that are used for grading
+*/
+
+.server-grading-score-bar-poor
 {
 	width: 250px;
 	height: 30px;
-	background:#c42f4f
+	background:#d23c5c
 }
 
-.server-check-grade-ok
+.server-grading-score-bar-ok
 {
 	width: 125px;
 	height: 30px;
 	background: #be931a
 }
 
-.server-check-grade-good
+.server-grading-score-bar-good
 {
 	width: 60px;
 	height: 30px;
 	background: #e4bd4b
 }
 
-.server-check-grade-great
+.server-grading-score-bar-great
 {
 	width: 40px;
 	height: 30px;
 	background: #58a43c
 }
 
-.server-check-grade-excellent
+.server-grading-score-bar-excellent
 {
 	width: 25px;
 	height: 30px;
 	background: #4c8138
+}
+
+.server-check-grade-score-label
+{
+	font-size: 1.1rem;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+}
+
+/*
+	Server Grade › Scorecard › Numerical Value › Current
+
+	The numerical value for user's grade / score (current)
+*/
+
+.server-grading-value-cur
+{
+	font-size: 3em;
+	font-weight: 100;
+}
+
+/*
+	Server Grade › Scorecard › Numerical Value › Max
+
+	The numerical value for highest possible grade / score (Max)
+*/
+
+.server-grading-value-max
+{
+	color: #2EA858;
 }
 
 .server-check-grade-container
@@ -1857,8 +2285,9 @@ img.logo:not(:hover)
 
 .server-check-grade
 {
-	width:1px; height:30px;
-	background:#FFF
+	width: 1px;
+	height: 30px;
+	background:var( --status-check-score-total-bar-normal );
 }
 
 .server-check-grade-text
@@ -1868,13 +2297,27 @@ img.logo:not(:hover)
 
 .server-check-grade-score
 {
-	color: #646464;
+	color: var( --status-check-score-label-text-normal );
 	font-weight: lighter;
+	text-align: center;
 }
 
 .server-check-grade-score-num
 {
+	color: var( --status-check-score-total-text-normal );
+	font-weight: 600;
+}
+
+.server-check-grade-max
+{
+	height: 30px;
+	text-align: center;
+	background-color: #3C3C3C;
 	color: #FFF;
+	padding-right: 5px;
+	padding-left: 5px;
+	font-size: 13px;
+	vertical-align: middle;
 }
 
 .server-check-grade-notice
@@ -1960,6 +2403,123 @@ img.logo:not(:hover)
 	color: var( --settings-button-enabled-active-text-normal );
 }
 
+/*
+	Button > Toggle
+*/
+
+	/*
+		Check IPs IBL
+	*/
+
+	.rbl-option .btn-toggle
+	{
+
+	}
+
+	/*
+		Firewall Configuration
+	*/
+
+	.btn-group .btn-toggle
+	{
+
+	}
+
+	/*
+		Toggle > Disabled > Normal
+	*/
+
+	.btn-settings-base.btn-toggle.btn-csf-config.option-disabled
+	{
+		background-color: #282828;
+		color: #FFF;
+		border-color: #ffffff29;
+	}
+
+	/*
+		Toggle > Disabled > Active
+	*/
+
+	.btn-settings-base.btn-toggle.btn-csf-config.option-disabled.active
+	{
+		background-color: var( --settings-button-disabled-active-background-normal );
+		color: var( --settings-button-disabled-active-text-normal );
+	}
+
+	/*
+		Toggle > Enabled > Normal
+	*/
+
+	.btn-settings-base.btn-toggle.btn-csf-config.option-enabled
+	{
+		background-color: #282828;
+		color: #FFF;
+		border-color: #ffffff29;
+	}
+
+	/*
+		Toggle > Enabled > Active
+	*/
+
+	.btn-settings-base.btn-toggle.btn-csf-config.option-enabled.active
+	{
+		background-color: var( --settings-button-enabled-active-background-normal );
+		color: var( --settings-button-enabled-active-text-normal );
+	}
+
+	/*
+		Hide radio button
+	*/
+
+	[data-toggle="buttons"] > .btn-settings-base input[type="checkbox"], [data-toggle="buttons"] > .btn-settings-base input[type="radio"], [data-toggle="buttons"] > .btn-group > .btn-settings-base input[type="checkbox"], [data-toggle="buttons"] > .btn-group > .btn-settings-base input[type="radio"]
+	{
+		position: absolute;
+		clip: rect(0,0,0,0);
+		pointer-events: none;
+	}
+
+	select + .btn-toggle,
+	.btn-group + .btn-toggle
+	{
+		  min-width: 13em;
+	}
+
+	.btn-group .btn-toggle
+	{
+		width: 60px !important;
+		min-width: 0px !important;
+	}
+
+	.btn-group > .btn-settings-base:last-child:not(:first-child), .btn-group > .dropdown-toggle:not(:first-child)
+	{
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
+	}
+
+	.btn-group .btn-settings-base + .btn-settings-base, .btn-group .btn-settings-base + .btn-group, .btn-group .btn-group + .btn-settings-base, .btn-group .btn-group + .btn-group
+	{
+		margin-left: -1px !important;
+	}
+
+	/*
+		Remove gap between buttons
+	*/
+
+	.btn-group-vertical > .btn-settings-base, .btn-group > .btn-settings-base
+	{
+		position: relative;
+		float: left;
+	}
+
+	/*
+		Toggle - Left button over right
+	*/
+
+	.btn-group-vertical > .btn-settings-base.active, .btn-group-vertical > .btn-settings-base:active, .btn-group-vertical > .btn-settings-base:focus, .btn-group-vertical > .btn-settings-base:hover, .btn-group > .btn-settings-base.active, .btn-group > .btn-settings-base:active, .btn-group > .btn-settings-base:focus, .btn-group > .btn-settings-base:hover
+	{
+		z-index: 2;
+	}
+	
 /*
 	Preconfigured Profiles
 */
