@@ -52,7 +52,7 @@ const csfAjaxHttp = csfCreateReqObject( );
 
 function csfCreateReqObject( )
 {
-    var csfAjaxReq;
+    let csfAjaxReq;
 
     if ( window.XMLHttpRequest )
     {
@@ -77,7 +77,7 @@ function csfCreateReqObject( )
 
 function csfSendReq( url )
 {
-    var now = new Date( );
+    const now = new Date( );
 
     csfAjaxHttp.open( 'get', url + '&nocache=' + now.getTime( ) );
     csfAjaxHttp.onreadystatechange = csfHandleResp;
@@ -96,7 +96,7 @@ function csfHandleResp( )
     {
         if ( csfAjaxHttp.responseText )
         {
-            var csfObj = document.getElementById( 'csfAjax' );
+            const csfObj = document.getElementById( 'csfAjax' );
             csfObj.innerHTML = csfAjaxHttp.responseText;
 
             waitForElement( 'csfAjax', function( )
@@ -120,7 +120,7 @@ function waitForElement( elementId, callBack )
 {
     window.setTimeout( function( )
     {
-        var element = document.getElementById( elementId );
+        const element = document.getElementById( elementId );
 
         if ( element )
             callBack( elementId, element );
@@ -138,8 +138,8 @@ function csfGrep( )
 {
     csfTimerSet = 0;
 
-    var csfLogObj = document.getElementById( 'csfLogNum' );
-    var csfLogNum;
+    const csfLogObj = document.getElementById( 'csfLogNum' );
+    let csfLogNum;
 
     if ( csfLogObj )
         csfLogNum = '&lognum=' + csfLogObj.options[ csfLogObj.selectedIndex ].value;
@@ -155,7 +155,7 @@ function csfGrep( )
     if ( document.getElementById( 'CSFgrep_Z' ).checked )
         csfLogNum += '&grepZ=1';
 
-    var csfUrl = csfScript + '&grep=' + document.getElementById( 'csfGrep' ).value + csfLogNum;
+    const csfUrl = csfScript + '&grep=' + document.getElementById( 'csfGrep' ).value + csfLogNum;
     csfSendReq( csfUrl );
 }
 
