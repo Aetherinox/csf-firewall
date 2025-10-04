@@ -415,21 +415,21 @@ sub main
 			&printcmd("/usr/sbin/csf","-tf");
 		}
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
-		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='temp'><input type='submit' class='btn btn-default' value='Return'></form></div>\n";
+		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='temp'><input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Return'></form></div>\n";
 	}
 	elsif ($FORM{action} eq "temprmd")
 	{
 		print "<div><p>Removing temporary deny entry for $FORM{ip}:</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
 		&printcmd("/usr/sbin/csf","-trd",$FORM{ip});
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
-		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='temp'><input type='submit' class='btn btn-default' value='Return'></form></div>\n";
+		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='temp'><input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Return'></form></div>\n";
 	}
 	elsif ($FORM{action} eq "temprma")
 	{
 		print "<div><p>Removing temporary allow entry for $FORM{ip}:</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
 		&printcmd("/usr/sbin/csf","-tra",$FORM{ip});
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
-		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='temp'><input type='submit' class='btn btn-default' value='Return'></form></div>\n";
+		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='temp'><input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Return'></form></div>\n";
 	}
 	elsif ($FORM{action} eq "temptoperm")
 	{
@@ -437,7 +437,7 @@ sub main
 		&printcmd("/usr/sbin/csf","-tr",$FORM{ip});
 		&printcmd("/usr/sbin/csf","-d",$FORM{ip});
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
-		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='temp'><input type='submit' class='btn btn-default' value='Return'></form></div>\n";
+		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='temp'><input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Return'></form></div>\n";
 	}
 	elsif ($FORM{action} eq "tempdeny")
 	{
@@ -585,6 +585,16 @@ sub main
 	<img src="$images/loader.gif" id="csfRefreshing" style="display:none" />
 </div>
 
+<div class='pull-right btn-group'>
+	<button class='btn-settings-base' id='fontminus-btn'>
+		<strong>a</strong>
+		<span class='glyphicon glyphicon-arrow-down icon-configserver'></span>
+	</button>
+	<button class='btn-settings-base' id='fontplus-btn'>
+		<strong>A</strong>
+		<span class='glyphicon glyphicon-arrow-up icon-configserver'></span>
+	</button>
+</div>
 
 <pre class='console' id="csfAjax" style="overflow:auto;height:500px;resize:both;clear:both"> &nbsp; </pre>
 
@@ -933,10 +943,10 @@ EOF
 		foreach my $option ("never","hourly","daily","weekly","monthly") {
 			if ($option eq $optionselected) {print "<option selected>$option</option>\n"} else {print "<option>$option</option>\n"}
 		}
-		print "</select> to the email address <input type='text' name='email' value='$email'> <input type='submit' class='btn btn-default' value='Schedule'></form></div>\n";
+		print "</select> to the email address <input type='text' name='email' value='$email'> <input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Schedule'></form></div>\n";
 
-		print "<br><div><form action='$script' method='post'><input type='hidden' name='action' value='servercheck'><input type='submit' class='btn btn-default' value='Run Again'></form></div>\n";
-		print "<br><div><form action='$script' method='post'><input type='hidden' name='action' value='servercheck'><input type='hidden' name='verbose' value='1'><input type='submit' class='btn btn-default' value='Run Again and Display All Checks'></form></div>\n";
+		print "<br><div><form action='$script' method='post'><input type='hidden' name='action' value='servercheck'><input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Run Again'></form></div>\n";
+		print "<br><div><form action='$script' method='post'><input type='hidden' name='action' value='servercheck'><input type='hidden' name='verbose' value='1'><input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Run Again and Display All Checks'></form></div>\n";
 		&renderBtnReturn;
 	}
 	elsif ($FORM{action} eq "serverchecksave") {
@@ -974,15 +984,15 @@ EOF
 		} else {
 			print "<div>Report schedule cancelled $extra</div>\n";
 		}
-		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='servercheck'><input type='submit' class='btn btn-default' value='Return'></form></div>\n";
+		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='servercheck'><input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Return'></form></div>\n";
 	}
 	elsif ($FORM{action} eq "rblcheck") {
 		my ($status, undef) = ConfigServer::RBLCheck::report($FORM{verbose},$images,1);
 
 		print "<div><b>These options can take a long time to run</b> (several minutes) depending on the number of IP addresses to check and the response speed of the DNS requests:</div>\n";
-		print "<br><div class='rbl-option'><form action='$script' method='post'><input type='hidden' name='action' value='rblcheck'><input type='hidden' name='verbose' value='1'><input type='submit' class='btn btn-default' value='Update All Checks (standard)'> Generates the normal report showing exceptions only</form></div>\n";
-		print "<br><div class='rbl-option'><form action='$script' method='post'><input type='hidden' name='action' value='rblcheck'><input type='hidden' name='verbose' value='2'><input type='submit' class='btn btn-default' value='Update All Checks (verbose)'> Generates the normal report but shows successes and failures</form></div>\n";
-		print "<br><div class='rbl-option'><form action='$script' method='post'><input type='hidden' name='action' value='rblcheckedit'><input type='submit' class='btn btn-default' value='Edit RBL Options'> Edit csf.rblconf to enable and disable IPs and RBLs</form></div>\n";
+		print "<br><div class='rbl-option'><form action='$script' method='post'><input type='hidden' name='action' value='rblcheck'><input type='hidden' name='verbose' value='1'><input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Update All Checks (standard)'> Generates the normal report showing exceptions only</form></div>\n";
+		print "<br><div class='rbl-option'><form action='$script' method='post'><input type='hidden' name='action' value='rblcheck'><input type='hidden' name='verbose' value='2'><input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Update All Checks (verbose)'> Generates the normal report but shows successes and failures</form></div>\n";
+		print "<br><div class='rbl-option'><form action='$script' method='post'><input type='hidden' name='action' value='rblcheckedit'><input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Edit RBL Options'> Edit csf.rblconf to enable and disable IPs and RBLs</form></div>\n";
 
 		open (my $IN, "<", "/etc/cron.d/csf-cron");
 		flock ($IN, LOCK_SH);
@@ -999,7 +1009,7 @@ EOF
 		foreach my $option ("never","hourly","daily","weekly","monthly") {
 			if ($option eq $optionselected) {print "<option selected>$option</option>\n"} else {print "<option>$option</option>\n"}
 		}
-		print "</select> to the email address <input type='text' name='email' value='$email'> <input type='submit' class='btn btn-default' value='Schedule'></form></div>\n";
+		print "</select> to the email address <input type='text' name='email' value='$email'> <input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Schedule'></form></div>\n";
 		&renderBtnReturn;
 	}
 	elsif ($FORM{action} eq "rblchecksave") {
@@ -1037,15 +1047,15 @@ EOF
 		} else {
 			print "<div>Report schedule cancelled $extra</div>\n";
 		}
-		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='rblcheck'><input type='submit' class='btn btn-default' value='Return'></form></div>\n";
+		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='rblcheck'><input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Return'></form></div>\n";
 	}
 	elsif ($FORM{action} eq "rblcheckedit") {
 		&editfile("/etc/csf/csf.rblconf","saverblcheckedit");
-		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='rblcheck'><input type='submit' class='btn btn-default' value='Return'></form></div>\n";
+		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='rblcheck'><input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Return'></form></div>\n";
 	}
 	elsif ($FORM{action} eq "saverblcheckedit") {
 		&savefile("/etc/csf/csf.rblconf","");
-		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='rblcheck'><input type='submit' class='btn btn-default' value='Return'></form></div>\n";
+		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='rblcheck'><input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Return'></form></div>\n";
 	}
 	elsif ($FORM{action} eq "cloudflareedit") {
 		&editfile("/etc/csf/csf.cloudflare","savecloudflareedit");
@@ -1463,10 +1473,10 @@ EOF
 						if ($end == 1) {$switch_checked_1 = "checked"; $switch_active_1 = "active"}
 						print "<div class='$class'><b>$start</b> = ";
 						print "<div class='btn-group' data-toggle='buttons'>\n";
-						print "<label class='btn btn-default btn-csf-config option-disabled $switch_active_0'>\n";
+						print "<label class='btn-settings-base btn-toggle strict-width-settings btn-csf-config option-disabled $switch_active_0'>\n";
 						print "<input type='radio' name='${name}' value='0' $switch_checked_0> Off\n";
 						print "</label>\n";
-						print "<label class='btn btn-default btn-csf-config option-enabled $switch_active_1'>\n";
+						print "<label class='btn-settings-base btn-toggle strict-width-settings btn-csf-config option-enabled $switch_active_1'>\n";
 						print "<input type='radio' name='${name}' value='1' $switch_checked_1> On\n";
 						print "</label>\n";
 						print "</div></div>\n";
@@ -1528,7 +1538,7 @@ EOF
 		}
 
 		print "</div><br />\n";
-		print "<div id='paginatediv' class='text-center'>\n<a class='btn btn-default' href='javascript:pagecontent.showall()'>Show All</a> <a class='btn btn-default' href='#' rel='previous'>Prev</a> <select style='width: 250px'></select> <a class='btn btn-default' href='#' rel='next' >Next</a>\n</div>\n";
+		print "<div id='paginatediv' class='text-center'>\n<a class='btn-settings-base btn-ok strict-width-settings' href='javascript:pagecontent.showall()'>Show All</a> <a class='btn-settings-base btn-ok strict-width-settings' href='#' rel='previous'>Prev</a> <select style='width: 250px'></select> <a class='btn-settings-base btn-ok strict-width-settings' href='#' rel='next' >Next</a>\n</div>\n";
 		print <<EOD;
 <script type="text/javascript">
 var pagecontent=new virtualpaginate({
@@ -1543,7 +1553,7 @@ EOD
 		print "pagecontent.buildpagination(['paginatediv','paginatediv2'],[";
 		foreach my $line (@divnames) {print "'$line',"}
 		print "''])\npagecontent.showall();\n</script>\n";
-		print "<br /><div class='text-center'><input type='submit' class='btn btn-default' value='Change'></div>\n";
+		print "<br /><div class='text-center'><input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Change'></div>\n";
 		print "</form>\n";
 		&renderBtnReturn;
 	}
@@ -1613,7 +1623,7 @@ EOD
 		}
 
 		print "<div>Changes saved. You should restart both csf and lfd.</div>\n";
-		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='restartboth'><input type='submit' class='btn btn-default' value='Restart csf+lfd'></form></div>\n";
+		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='restartboth'><input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Restart csf+lfd'></form></div>\n";
 		&renderBtnReturn;
 	}
 	elsif ($FORM{action} eq "viewlogs")
@@ -1736,7 +1746,7 @@ EOD
 			print "<tr><td>$ip</td><td><input type='checkbox' name='$chk' $checked></td></tr>\n";
 		}
 
-		print "<tr><td colspan='2'><input type='submit' class='btn btn-default' value='Change'></td></tr>\n";
+		print "<tr><td colspan='2'><input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Change'></td></tr>\n";
 		print "</table></form>\n";
 		&renderBtnReturn;
 	}
@@ -1769,7 +1779,7 @@ EOD
 		close($OUT);
 
 		print "<div>Changes saved. You should restart csf.</div>\n";
-		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='restart'><input type='submit' class='btn btn-default' value='Restart csf'></form></div>\n";
+		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='restart'><input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Restart csf'></form></div>\n";
 		&renderBtnReturn;
 	}
 	elsif ($FORM{action} eq "upgrade")
@@ -1812,7 +1822,7 @@ EOD
 		&printcmd("/usr/local/csf/bin/csftest.pl");
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
 		print "<div>You should restart csf after having run this test.</div>\n";
-		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='restart'><input type='submit' class='btn btn-default' value='Restart csf'></form></div>\n";
+		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='restart'><input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Restart csf'></form></div>\n";
 		&renderBtnReturn;
 	}
 	elsif ($FORM{action} eq "profiles")
@@ -1863,7 +1873,7 @@ EOD
 		print "<table class='table table-bordered table-striped'>\n";
 		print "<thead><tr><th>Backup csf.conf</th></tr></thead>\n";
 		print "<tr><td>Create a backup of csf.conf. You can use an optional name for the backup that should only contain alphanumerics. Other characters (including spaces) will be replaced with an underscore ( _ )</td></tr>\n";
-		print "<tr><td><input type='text' size='40' name='backup' placeholder='Optional name'> <input type='submit' class='btn btn-default' value='Create Backup'></td></tr>\n";
+		print "<tr><td><input type='text' size='40' name='backup' placeholder='Optional name'> <input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Create Backup'></td></tr>\n";
 		print "</table>\n";
 		print "</form>\n";
 
@@ -1935,7 +1945,7 @@ EOD
 		&printcmd("/usr/sbin/csf","--profile","apply",$profile);
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
 		print "<div>You should restart both csf and lfd.</div>\n";
-		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='restartboth'><input type='submit' class='btn btn-default' value='Restart csf+lfd'></form></div>\n";
+		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='restartboth'><input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Restart csf+lfd'></form></div>\n";
 		&renderBtnReturn;
 	}
 	elsif ($FORM{action} eq "profilebackup")
@@ -1955,7 +1965,7 @@ EOD
 		&printcmd("/usr/sbin/csf","--profile","restore",$profile);
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
 		print "<div>You should restart both csf and lfd.</div>\n";
-		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='restartboth'><input type='submit' class='btn btn-default' value='Restart csf+lfd'></form></div>\n";
+		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='restartboth'><input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Restart csf+lfd'></form></div>\n";
 		&renderBtnReturn;
 	}
 	elsif ($FORM{action} eq "profilediff")
@@ -2026,10 +2036,10 @@ EOD
 	}
 	elsif ($mobile) {
 		print "<table class='table table-bordered table-striped'>\n";
-		print "<tr><td><form action='$script' method='post'><input type='hidden' name='mobi' value='$mobile'><input type='hidden' name='action' value='qallow'><input type='submit' class='btn btn-default btn-allow' value='Quick Allow'></td><td style='width:100%'><input type='text' name='ip' value='' size='18'></form></td></tr>\n";
-		print "<tr><td><form action='$script' method='post'><input type='hidden' name='mobi' value='$mobile'><input type='hidden' name='action' value='qdeny'><input type='submit' class='btn btn-default btn-deny' value='Quick Deny'></td><td style='width:100%'><input type='text' name='ip' value='' size='18'></form></td></tr>\n";
-		print "<tr><td><form action='$script' method='post'><input type='hidden' name='mobi' value='$mobile'><input type='hidden' name='action' value='qignore'><input type='submit' class='btn btn-default' value='Quick Ignore'></td><td style='width:100%'><input type='text' name='ip' value='' size='18'></form></td></tr>\n";
-		print "<tr><td><form action='$script' method='post'><input type='hidden' name='mobi' value='$mobile'><input type='hidden' name='action' value='kill'><input type='submit' class='btn btn-default' value='Quick Unblock'></td><td style='width:100%'><input type='text' name='ip' value='' size='18'></form></td></tr>\n";
+		print "<tr><td><form action='$script' method='post'><input type='hidden' name='mobi' value='$mobile'><input type='hidden' name='action' value='qallow'><input type='submit' class='btn-settings-base btn-ok strict-width-settings btn-allow' value='Quick Allow'></td><td style='width:100%'><input type='text' name='ip' value='' size='18'></form></td></tr>\n";
+		print "<tr><td><form action='$script' method='post'><input type='hidden' name='mobi' value='$mobile'><input type='hidden' name='action' value='qdeny'><input type='submit' class='btn-settings-base btn-ok strict-width-settings btn-deny' value='Quick Deny'></td><td style='width:100%'><input type='text' name='ip' value='' size='18'></form></td></tr>\n";
+		print "<tr><td><form action='$script' method='post'><input type='hidden' name='mobi' value='$mobile'><input type='hidden' name='action' value='qignore'><input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Quick Ignore'></td><td style='width:100%'><input type='text' name='ip' value='' size='18'></form></td></tr>\n";
+		print "<tr><td><form action='$script' method='post'><input type='hidden' name='mobi' value='$mobile'><input type='hidden' name='action' value='kill'><input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Quick Unblock'></td><td style='width:100%'><input type='text' name='ip' value='' size='18'></form></td></tr>\n";
 		print "</table>\n";
 	}
 	elsif ($FORM{action} eq "fix")
@@ -2037,15 +2047,15 @@ EOD
 		print "<div class='bs-callout bs-callout-warning'>These options should only be used as a last resort as most of them will reduce the effectiveness of csf and lfd to protect the server</div>\n";
 
 		print "<table class='table table-bordered table-striped'>\n";
-		print "<thead><tr><th colspan='2'>Fix Common Problems</th></tr></thead>";
+		print "<thead><tr><th class='table-header' colspan='2'>Fix Common Problems</th></tr></thead>";
 
 		if ($config{LF_SPI} == 0)
 		{
-			print "<tr><td><button class='btn btn-default' disabled>Disable SPI</button>\n";
+			print "<tr><td><button class='btn-settings-base btn-ok strict-width-settings' disabled>Disable SPI</button>\n";
 		}
 		else
 		{
-			print "<tr><td><button type='button' class='btn btn-default confirmButton' data-query='Are you sure you want to disable LF_SPI?' data-href='$script?action=fixspi' data-toggle='modal' data-target='#confirmmodal'>Disable SPI</button>\n";
+			print "<tr><td><button type='button' class='btn-settings-base btn-ok strict-width-settings confirmButton' data-query='Are you sure you want to disable LF_SPI?' data-href='$script?action=fixspi' data-toggle='modal' data-target='#confirmmodal'>Disable SPI</button>\n";
 		}
 
 		print "</td><td style='width:100%'>If you find that ports listed in TCP_IN/UDP_IN are being blocked by iptables (e.g. port 80) as seen in /var/log/messages and users can only connect to the server if entered in csf.allow, then it could be that the kernel (usually on virtual servers) is broken and cannot perform connection tracking. In this case, disabling the Stateful Packet Inspection functionality of csf (LF_SPI) may help\n";
@@ -2059,11 +2069,11 @@ EOD
 
 		if ($config{TCP_IN} =~ /30000:35000/)
 		{
-			print "<tr><td><button class='btn btn-default' disabled>Open PASV FTP Hole</button>\n";
+			print "<tr><td><button class='btn-settings-base btn-ok strict-width-settings' disabled>Open PASV FTP Hole</button>\n";
 		}
 		else
 		{
-			print "<tr><td><button type='button' class='btn btn-default confirmButton' data-query='Are you sure you want to open PASV FTP hole?' data-href='$script?action=fixpasvftp' data-toggle='modal' data-target='#confirmmodal'>Open PASV FTP Hole</button>\n";
+			print "<tr><td><button type='button' class='btn-settings-base btn-ok strict-width-settings confirmButton' data-query='Are you sure you want to open PASV FTP hole?' data-href='$script?action=fixpasvftp' data-toggle='modal' data-target='#confirmmodal'>Open PASV FTP Hole</button>\n";
 		}
 
 		print "</td><td style='width:100%'>If the kernel (usually on virtual servers) is broken and cannot perform ftp connection tracking, or if you are trying to use FTP over SSL, this option will open a hole in the firewall to allow PASV connections through\n";
@@ -2074,11 +2084,11 @@ EOD
 
 		if ($config{PT_USERKILL} == 0)
 		{
-			print "<tr><td><button class='btn btn-default' disabled>Disable PT_USERKILL</button>\n";
+			print "<tr><td><button class='btn-settings-base btn-ok strict-width-settings' disabled>Disable PT_USERKILL</button>\n";
 		}
 		else
 		{
-			print "<tr><td><button type='button' class='btn btn-default confirmButton' data-query='Are you sure you want to disable PT_USERKILL?' data-href='$script?action=fixkill' data-toggle='modal' data-target='#confirmmodal'>Disable PT_USERKILL</button>\n";
+			print "<tr><td><button type='button' class='btn-settings-base btn-ok strict-width-settings confirmButton' data-query='Are you sure you want to disable PT_USERKILL?' data-href='$script?action=fixkill' data-toggle='modal' data-target='#confirmmodal'>Disable PT_USERKILL</button>\n";
 		}
 
 		print "</td><td style='width:100%'>If lfd is killing running processes and you have PT_USERKILL enabled, then we recommend that you disable this feature\n";
@@ -2091,9 +2101,9 @@ EOD
 		print "</td></tr>\n";
 
 		if ($config{SMTP_BLOCK} == 0) {
-			print "<tr><td><button class='btn btn-default' disabled>Disable SMTP_BLOCK</button>\n";
+			print "<tr><td><button class='btn-settings-base btn-ok strict-width-settings' disabled>Disable SMTP_BLOCK</button>\n";
 		} else {
-			print "<tr><td><button type='button' class='btn btn-default confirmButton' data-query='Are you sure you want to disable SMTP_BLOCK?' data-href='$script?action=fixsmtp' data-toggle='modal' data-target='#confirmmodal'>Disable SMTP_BLOCK</button>\n";
+			print "<tr><td><button type='button' class='btn-settings-base btn-ok strict-width-settings confirmButton' data-query='Are you sure you want to disable SMTP_BLOCK?' data-href='$script?action=fixsmtp' data-toggle='modal' data-target='#confirmmodal'>Disable SMTP_BLOCK</button>\n";
 		}
 		print "</td><td style='width:100%'>If scripts on the server are unable to send out email via external SMTP connections and you have SMTP_BLOCK enabled then those scripts should be configured to send email either through /usr/sbin/sendmail or localhost on the server. If this is not possible then disabling SMTP_BLOCK can fix this\n";
 		if ($config{SMTP_BLOCK} == 0) {
@@ -2101,7 +2111,7 @@ EOD
 		}
 		print "</td></tr>\n";
 
-		print "<tr><td><button type='button' class='btn btn-default confirmButton' data-query='Are you sure you want to disable all alerts?' data-href='$script?action=fixalerts' data-toggle='modal' data-target='#confirmmodal'>Disable All Alerts</button>\n";
+		print "<tr><td><button type='button' class='btn-settings-base btn-ok strict-width-settings confirmButton' data-query='Are you sure you want to disable all alerts?' data-href='$script?action=fixalerts' data-toggle='modal' data-target='#confirmmodal'>Disable All Alerts</button>\n";
 		print "</td><td style='width:100%'>If you really want to disable all alerts in lfd you can do so here. This is <strong>not</strong> recommended in any situation - you should go through the csf configuration and only disable those you do not want. As new features are added to csf you may find that you have to go into the csf configuration and disable them manually as this procedure only disables the ones that it is aware of when applied\n";
 		print "</td></tr>\n";
 
@@ -2202,7 +2212,7 @@ EOD
 		print "</div>\n";
 		print "</div>\n";
 		print "<div>You MUST now restart both csf and lfd:</div>\n";
-		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='restartboth'><input type='submit' class='btn btn-default' value='Restart csf+lfd'></form></div>\n";
+		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='restartboth'><input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Restart csf+lfd'></form></div>\n";
 		&renderBtnReturn;
 	}
 	elsif ($FORM{action} eq "fixspi")
@@ -2236,7 +2246,7 @@ EOD
 		print "<div class='panel-footer panel-footer'>Completed</div>\n";
 		print "</div>\n";
 		print "<div>You MUST now restart both csf and lfd:</div>\n";
-		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='restartboth'><input type='submit' class='btn btn-default' value='Restart csf+lfd'></form></div>\n";
+		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='restartboth'><input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Restart csf+lfd'></form></div>\n";
 		&renderBtnReturn;
 	}
 	elsif ($FORM{action} eq "fixkill")
@@ -2272,7 +2282,7 @@ EOD
 		print "<div class='panel-footer panel-footer'>Completed</div>\n";
 		print "</div>\n";
 		print "<div>You MUST now restart both csf and lfd:</div>\n";
-		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='restartboth'><input type='submit' class='btn btn-default' value='Restart csf+lfd'></form></div>\n";
+		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='restartboth'><input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Restart csf+lfd'></form></div>\n";
 		&renderBtnReturn;
 	}
 	elsif ($FORM{action} eq "fixsmtp")
@@ -2306,7 +2316,7 @@ EOD
 		print "<div class='panel-footer panel-footer'>Completed</div>\n";
 		print "</div>\n";
 		print "<div>You MUST now restart both csf and lfd:</div>\n";
-		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='restartboth'><input type='submit' class='btn btn-default' value='Restart csf+lfd'></form></div>\n";
+		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='restartboth'><input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Restart csf+lfd'></form></div>\n";
 		&renderBtnReturn;
 	}
 	elsif ($FORM{action} eq "fixalerts")
@@ -2325,7 +2335,7 @@ EOD
 		print "<div class='panel-footer panel-footer'>Completed</div>\n";
 		print "</div>\n";
 		print "<div>You MUST now restart both csf and lfd:</div>\n";
-		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='restartboth'><input type='submit' class='btn btn-default' value='Restart csf+lfd'></form></div>\n";
+		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='restartboth'><input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Restart csf+lfd'></form></div>\n";
 		&renderBtnReturn;
 	}
 	elsif ($FORM{action} eq "fixnuclear") {
@@ -2392,7 +2402,7 @@ EOF
 
 		if (-e "/etc/csf/csf.disable")
 		{
-			$status = "<div class='bs-callout bs-callout-danger text-center'><form action='$script' method='post'><h4>Firewall Status: Disabled and Stopped <input type='hidden' name='action' value='enable'><input type='submit' class='btn btn-default' value='Enable'></form></h4></div>\n"
+			$status = "<div class='bs-callout bs-callout-danger text-center'><form action='$script' method='post'><h4>Firewall Status: Disabled and Stopped <input type='hidden' name='action' value='enable'><input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Enable'></form></h4></div>\n"
 		}
 		elsif ($config{TESTING})
 		{
@@ -2400,7 +2410,7 @@ EOF
 		}
 		elsif ($iptstatus[0] !~ /^Chain LOCALINPUT/)
 		{
-			$status = "<div class='bs-callout bs-callout-danger text-center'><form action='$script' method='post'><h4>Firewall Status: Enabled but Stopped <input type='hidden' name='action' value='start'><input type='submit' class='btn btn-default' value='Start'></form></h4></div>"
+			$status = "<div class='bs-callout bs-callout-danger text-center'><form action='$script' method='post'><h4>Firewall Status: Enabled but Stopped <input type='hidden' name='action' value='start'><input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Start'></form></h4></div>"
 		}
 
 		if (-e "/var/lib/csf/lfd.restart") {$status .= "<div class='bs-callout bs-callout-info text-center'><h4>lfd restart request pending</h4></div>"}
@@ -2480,8 +2490,8 @@ EOF
 		print "</ul><br>\n";
 
 		print "<table class='table table-bordered table-striped'>\n";
-		print "<thead><tr><th colspan='2'>Mobile View</th></tr></thead>";
-		print "<tr><td><a class='btn btn-default btn-mobile' id='MobileView'>Mobile View</a></td><td style='width:100%'>Shows mobile friendly action buttons to manage your firewall.</td></tr>\n";
+		print "<thead><tr><th class='table-header' colspan='2'>Mobile View</th></tr></thead>";
+		print "<tr><td><a class='btn-settings-base btn-ok strict-width-settings btn-mobile-view' id='MobileView'>Mobile View</a></td><td style='width:100%'>Shows mobile friendly action buttons to manage your firewall.</td></tr>\n";
 		print "</table>\n";
 
 		print "<div class='tab-content'>\n";
@@ -2491,23 +2501,23 @@ EOF
 		print "<div id='home' class='tab-pane active'>\n";
 		print "<form action='$script' method='post'>\n";
 		print "<table class='table table-bordered table-striped'>\n";
-		print "<thead><tr><th colspan='2'>Server Information</th></tr></thead>";
-		print "<tr><td><button name='action' value='servercheck' type='submit' class='btn btn-default'>Check Server Security</button></td><td style='width:100%'>Perform a basic security, stability and settings check on the server</td></tr>\n";
-		print "<tr><td><button name='action' value='readme' type='submit' class='btn btn-default'>Firewall Information</button></td><td style='width:100%'>View the csf+lfd readme.txt file</td></tr>\n";
-		print "<tr><td><button name='action' value='logtail' type='submit' class='btn btn-default'>Watch System Logs</button></td><td style='width:100%'>Watch (tail) various system log files (listed in csf.syslogs)</td></tr>\n";
-		print "<tr><td><button name='action' value='loggrep' type='submit' class='btn btn-default'>Search System Logs</button></td><td style='width:100%'>Search (grep) various system log files (listed in csf.syslogs)</td></tr>\n";
-		print "<tr><td><button name='action' value='viewports' type='submit' class='btn btn-default'>View Listening Ports</button></td><td style='width:100%'>View ports on the server that have a running process behind them listening for external connections</td></tr>\n";
-		print "<tr><td><button name='action' value='rblcheck' type='submit' class='btn btn-default'>Check for IPs in RBLs</button></td><td style='width:100%'>Check whether any of the servers IP addresses are listed in RBLs</td></tr>\n";
+		print "<thead><tr><th class='table-header' colspan='2'>Server Information</th></tr></thead>";
+		print "<tr><td><button name='action' value='servercheck' type='submit' class='btn-settings-base btn-ok strict-width-settings'>Check Server Security</button></td><td style='width:100%'>Perform a basic security, stability and settings check on the server</td></tr>\n";
+		print "<tr><td><button name='action' value='readme' type='submit' class='btn-settings-base btn-ok strict-width-settings'>Firewall Information</button></td><td style='width:100%'>View the csf+lfd readme.txt file</td></tr>\n";
+		print "<tr><td><button name='action' value='logtail' type='submit' class='btn-settings-base btn-ok strict-width-settings'>Watch System Logs</button></td><td style='width:100%'>Watch (tail) various system log files (listed in csf.syslogs)</td></tr>\n";
+		print "<tr><td><button name='action' value='loggrep' type='submit' class='btn-settings-base btn-ok strict-width-settings'>Search System Logs</button></td><td style='width:100%'>Search (grep) various system log files (listed in csf.syslogs)</td></tr>\n";
+		print "<tr><td><button name='action' value='viewports' type='submit' class='btn-settings-base btn-ok strict-width-settings'>View Listening Ports</button></td><td style='width:100%'>View ports on the server that have a running process behind them listening for external connections</td></tr>\n";
+		print "<tr><td><button name='action' value='rblcheck' type='submit' class='btn-settings-base btn-ok strict-width-settings'>Check for IPs in RBLs</button></td><td style='width:100%'>Check whether any of the servers IP addresses are listed in RBLs</td></tr>\n";
 
 		if ($config{ST_ENABLE})
 		{
-			print "<tr><td><button name='action' value='viewlogs' type='submit' class='btn btn-default'>View iptables Log</button></td><td style='width:100%'>View the last $config{ST_IPTABLES} iptables log lines</td></tr>\n";
+			print "<tr><td><button name='action' value='viewlogs' type='submit' class='btn-settings-base btn-ok strict-width-settings'>View iptables Log</button></td><td style='width:100%'>View the last $config{ST_IPTABLES} iptables log lines</td></tr>\n";
 			if ($chart)
 			{
-				print "<tr><td><button name='action' value='chart' type='submit' class='btn btn-default'>View lfd Statistics</button></td><td style='width:100%'>View lfd blocking statistics</td></tr>\n";
+				print "<tr><td><button name='action' value='chart' type='submit' class='btn-settings-base btn-ok strict-width-settings'>View lfd Statistics</button></td><td style='width:100%'>View lfd blocking statistics</td></tr>\n";
 				if ($config{ST_SYSTEM})
 				{
-					print "<tr><td><button name='action' value='systemstats' type='submit' class='btn btn-default'>View System Statistics</button></td><td style='width:100%'>View basic system statistics</td></tr>\n";
+					print "<tr><td><button name='action' value='systemstats' type='submit' class='btn-settings-base btn-ok strict-width-settings'>View System Statistics</button></td><td style='width:100%'>View basic system statistics</td></tr>\n";
 				}
 			}
 		}
@@ -2517,7 +2527,7 @@ EOF
 
 		print "<form action='$script' method='post'>\n";
 		print "<table class='table table-bordered table-striped' id='upgradetable'>\n";
-		print "<thead><tr><th colspan='2'>Upgrade</th></tr></thead>";
+		print "<thead><tr><th class='table-header' colspan='2'>Upgrade</th></tr></thead>";
 
 		#	upgrade (int)		0, 1
 		#	response (str)		upgrade status or version
@@ -2525,11 +2535,11 @@ EOF
 
 		if ($upgrade)
 		{
-			print "<tr><td><button name='action' value='upgrade' type='submit' class='btn btn-default'>Upgrade csf</button></td><td style='width:100%'><b>A new version of csf (v$response) is available. Upgrading will retain your settings<br><a href='https://$config{DOWNLOADSERVER}/csf/changelog.txt' target='_blank'>View ChangeLog</a></b></td></tr>\n";
+			print "<tr><td><button name='action' value='upgrade' type='submit' class='btn-settings-base btn-ok strict-width-settings'>Upgrade csf</button></td><td style='width:100%'><b>A new version of csf (v$response) is available. Upgrading will retain your settings<br><a href='https://$config{DOWNLOADSERVER}/csf/changelog.txt' target='_blank'>View ChangeLog</a></b></td></tr>\n";
 		}
 		else
 		{
-			print "<tr><td><button name='action' value='manualcheck' type='submit' class='btn btn-default'>Manual Check</button></td>";
+			print "<tr><td><button name='action' value='manualcheck' type='submit' class='btn-settings-base btn-ok strict-width-settings'>Manual Check</button></td>";
 			print "<td style='width:100%;'>";
 
 			if ( $response ne "" )
@@ -2544,7 +2554,7 @@ EOF
 
 		if (!$config{INTERWORX} and (-e "/etc/apf" or -e "/usr/local/bfd"))
 		{
-			print "<tr><td><button name='action' value='remapf' type='submit' class='btn btn-default'>Remove APF/BFD</button></td><td style='width:100%'>Remove APF/BFD from the server. You must not run both APF or BFD with csf on the same server</td></tr>\n";
+			print "<tr><td><button name='action' value='remapf' type='submit' class='btn-settings-base btn-ok strict-width-settings'>Remove APF/BFD</button></td><td style='width:100%'>Remove APF/BFD from the server. You must not run both APF or BFD with csf on the same server</td></tr>\n";
 		}
 
 		print "</table>\n";
@@ -2553,42 +2563,42 @@ EOF
 		print "</div>\n";
 
 		print "<div id='csf' class='tab-pane active'>\n";
-		print "<table class='table table-bordered table-striped'>\n";
-		print "<thead><tr><th colspan='2'>csf - Quick Actions</th></tr></thead>";
-		print "<tr><td><button onClick='\$(\"#qallow\").submit();' class='btn btn-default btn-allow'>Quick Allow</button></td><td style='width:100%'><form action='$script' method='post' id='qallow'><input type='submit' class='hide'><input type='hidden' name='action' value='qallow'>Allow IP address <a href='javascript:fillfield(\"allowip\",\"$ENV{REMOTE_ADDR}\")'><span class='glyphicon glyphicon-cog icon-configserver' style='font-size:1.3em;' data-tooltip='tooltip' title='$ENV{REMOTE_ADDR}'></span></a> <input class='input-allow' type='text' name='ip' id='allowip' value='' size='18'> through the firewall and add to the allow file (csf.allow).<br>Comment for Allow: <input type='text' name='comment' value='' size='30'></form></td></tr>\n";
-		print "<tr><td><button onClick='\$(\"#qdeny\").submit();' class='btn btn-default btn-deny'>Quick Deny</button></td><td style='width:100%'><form action='$script' method='post' id='qdeny'><input type='submit' class='hide'><input type='hidden' name='action' value='qdeny'>Block IP address <input class='input-deny' type='text' name='ip' value='' size='18'> in the firewall and add to the deny file (csf.deny).<br>Comment for Block: <input type='text' name='comment' value='' size='30'></form></td></tr>\n";
-		print "<tr><td><button onClick='\$(\"#qignore\").submit();' class='btn btn-default'>Quick Ignore</button></td><td style='width:100%'><form action='$script' method='post' id='qignore'><input type='submit' class='hide'><input type='hidden' name='action' value='qignore'>Ignore IP address <a href='javascript:fillfield(\"ignoreip\",\"$ENV{REMOTE_ADDR}\")'><span class='glyphicon glyphicon-cog icon-configserver' style='font-size:1.3em;' data-tooltip='tooltip' title='$ENV{REMOTE_ADDR}'></span></a> <input type='text' name='ip' id='ignoreip' value='' size='18'> in lfd, add to the ignore file (csf.ignore) and restart lfd</form></td></tr>\n";
-		print "<tr><td><button onClick='\$(\"#kill\").submit();' class='btn btn-default'>Quick Unblock</button></td><td style='width:100%'><form action='$script' method='post' id='kill'><input type='submit' class='hide'><input type='hidden' name='action' value='kill'>Remove IP address <input type='text' name='ip' value='' size='18'> from the firewall (temp and perm blocks)</form></td></tr>\n";
+		print "<table class='table table-bordered table-striped fixed-left-col'>\n";
+		print "<thead><tr><th class='table-header' colspan='2'>CSF - Quick Actions</th></tr></thead>";
+		print "<tr><td><button onClick='\$(\"#qallow\").submit();' class='btn-settings-base btn-ok strict-width-settings btn-allow'>Quick Allow</button></td><td style='width:100%'><form action='$script' method='post' id='qallow'><input type='submit' class='hide'><input type='hidden' name='action' value='qallow'>Allow IP address <a href='javascript:fillfield(\"allowip\",\"$ENV{REMOTE_ADDR}\")'><span class='glyphicon glyphicon-cog icon-configserver' style='font-size:1.3em;' data-tooltip='tooltip' title='$ENV{REMOTE_ADDR}'></span></a> <input class='input-allow' type='text' name='ip' id='allowip' value='' size='18'> through the firewall and add to the allow file (csf.allow).<br>Comment for Allow: <input type='text' name='comment' value='' size='30'></form></td></tr>\n";
+		print "<tr><td><button onClick='\$(\"#qdeny\").submit();' class='btn-settings-base btn-ok strict-width-settings btn-deny'>Quick Deny</button></td><td style='width:100%'><form action='$script' method='post' id='qdeny'><input type='submit' class='hide'><input type='hidden' name='action' value='qdeny'>Block IP address <input class='input-deny' type='text' name='ip' value='' size='18'> in the firewall and add to the deny file (csf.deny).<br>Comment for Block: <input type='text' name='comment' value='' size='30'></form></td></tr>\n";
+		print "<tr><td><button onClick='\$(\"#qignore\").submit();' class='btn-settings-base btn-ok strict-width-settings'>Quick Ignore</button></td><td style='width:100%'><form action='$script' method='post' id='qignore'><input type='submit' class='hide'><input type='hidden' name='action' value='qignore'>Ignore IP address <a href='javascript:fillfield(\"ignoreip\",\"$ENV{REMOTE_ADDR}\")'><span class='glyphicon glyphicon-cog icon-configserver' style='font-size:1.3em;' data-tooltip='tooltip' title='$ENV{REMOTE_ADDR}'></span></a> <input type='text' name='ip' id='ignoreip' value='' size='18'> in lfd, add to the ignore file (csf.ignore) and restart lfd</form></td></tr>\n";
+		print "<tr><td><button onClick='\$(\"#kill\").submit();' class='btn-settings-base btn-ok strict-width-settings'>Quick Unblock</button></td><td style='width:100%'><form action='$script' method='post' id='kill'><input type='submit' class='hide'><input type='hidden' name='action' value='kill'>Remove IP address <input type='text' name='ip' value='' size='18'> from the firewall (temp and perm blocks)</form></td></tr>\n";
 		print "</table>\n";
 
-		print "<table class='table table-bordered table-striped'>\n";
-		print "<thead><tr><th colspan='2'>csf - ConfigServer Firewall</th></tr></thead>";
-		print "<tr><td><form action='$script' method='post'><button name='action' value='conf' type='submit' class='btn btn-default'>Firewall Configuration</button></form></td><td style='width:100%'>Edit the configuration file for the csf firewall and lfd</td></tr>\n";
-		print "<tr><td><form action='$script' method='post'><button name='action' value='profiles' type='submit' class='btn btn-default'>Firewall Profiles</button></form></td><td style='width:100%'>Apply pre-configured csf.conf profiles and backup/restore csf.conf</td></tr>\n";
-		print "<tr><td><form action='$script' method='post'><button name='action' value='status' type='submit' class='btn btn-default'>View iptables Rules</button></form></td><td style='width:100%'>Display the active iptables rules</td></tr>\n";
-		print "<tr><td><button onClick='\$(\"#grep\").submit();' class='btn btn-default'>Search for IP</button></td><td style='width:100%'><form action='$script' method='post' id='grep'><input type='submit' class='hide'><input type='hidden' name='action' value='grep'>Search iptables for IP address <input type='text' name='ip' value='' size='18'></form></td></tr>\n";
-		print "<tr><td><form action='$script' method='post'><button name='action' value='allow' type='submit' class='btn btn-default'>Firewall Allow IPs</button></form></td><td style='width:100%'>Edit csf.allow, the IP address allow file $permallows</td></tr>\n";
-		print "<tr><td><form action='$script' method='post'><button name='action' value='deny' type='submit' class='btn btn-default'>Firewall Deny IPs</button></form></td><td style='width:100%'>Edit csf.deny, the IP address deny file $permbans</td></tr>\n";
-		print "<tr><td><form action='$script' method='post'><button name='action' value='enable' type='submit' class='btn btn-default'>Firewall Enable</button></form></td><td style='width:100%'>Enables csf and lfd if previously Disabled</td></tr>\n";
-		print "<tr><td><form action='$script' method='post'><button name='action' value='disable' type='submit' class='btn btn-default'>Firewall Disable</button></form></td><td style='width:100%'>Completely disables csf and lfd</td></tr>\n";
-		print "<tr><td><form action='$script' method='post'><button name='action' value='restart' type='submit' class='btn btn-default'>Firewall Restart</button></form></td><td style='width:100%'>Restart the csf iptables firewall</td></tr>\n";
-		print "<tr><td><form action='$script' method='post'><button name='action' value='restartq' type='submit' class='btn btn-default'>Firewall Quick Restart</button></form></td><td style='width:100%'>Have lfd restart the csf iptables firewall</td></tr>\n";
-		print "<tr><td><button onClick='\$(\"#tempdeny\").submit();' class='btn btn-default'>Temporary Allow/Deny</button></td><td style='width:100%'><form action='$script' method='post' id='tempdeny'><input type='submit' class='hide'><input type='hidden' name='action' value='tempdeny'>Temporarily <select name='do'><option>block</option><option>allow</option></select> IP address <input type='text' name='ip' value='' size='18'> to port(s) <input type='text' name='ports' value='*' size='5'> for <input type='text' name='timeout' value='' size='4'> <select name='dur'><option>seconds</option><option>minutes</option><option>hours</option><option>days</option></select>.<br>Comment: <input type='text' name='comment' value='' size='30'><br>\n(ports can be either * for all ports, a single port, or a comma separated list of ports)</form></td></tr>\n";
-		print "<tr><td><form action='$script' method='post'><button name='action' value='temp' type='submit' class='btn btn-default'>Temporary IP Entries</button></form></td><td style='width:100%'>View/Remove the <i>temporary</i> IP entries $tempbans</td></tr>\n";
-		print "<tr><td><form action='$script' method='post'><button name='action' value='sips' type='submit' class='btn btn-default'>Deny Server IPs</button></form></td><td style='width:100%'>Deny access to and from specific IP addresses configured on the server (csf.sips)</td></tr>\n";
-		print "<tr><td><form action='$script' method='post'><button name='action' value='denyf' type='submit' class='btn btn-default'>Flush all Blocks</button></form></td><td style='width:100%'>Removes and unblocks all entries in csf.deny (excluding those marked \"do not delete\") and all temporary IP entries (blocks <i>and</i> allows)</td></tr>\n";
-		print "<tr><td><form action='$script' method='post'><button name='action' value='redirect' type='submit' class='btn btn-default'>Firewall Redirect</button></form></td><td style='width:100%'>Redirect connections to this server to other ports/IP addresses</td></tr>\n";
-		print "<tr><td><form action='$script' method='post'><button name='action' value='fix' type='submit' class='btn btn-default'>Fix Common Problems</button></form></td><td style='width:100%'>Offers solutions to some common problems when using an SPI firewall</td></tr>\n";
+		print "<table class='table table-bordered table-striped fixed-left-col'>\n";
+		print "<thead><tr><th class='table-header' colspan='2'>CSF - ConfigServer Firewall</th></tr></thead>";
+		print "<tr><td><form action='$script' method='post'><button name='action' value='conf' type='submit' class='btn-settings-base btn-ok strict-width-settings'>Firewall Configuration</button></form></td><td style='width:100%'>Edit the configuration file for the csf firewall and lfd</td></tr>\n";
+		print "<tr><td><form action='$script' method='post'><button name='action' value='profiles' type='submit' class='btn-settings-base btn-ok strict-width-settings'>Firewall Profiles</button></form></td><td style='width:100%'>Apply pre-configured csf.conf profiles and backup/restore csf.conf</td></tr>\n";
+		print "<tr><td><form action='$script' method='post'><button name='action' value='status' type='submit' class='btn-settings-base btn-ok strict-width-settings'>View iptables Rules</button></form></td><td style='width:100%'>Display the active iptables rules</td></tr>\n";
+		print "<tr><td><button onClick='\$(\"#grep\").submit();' class='btn-settings-base btn-ok strict-width-settings'>Search for IP</button></td><td style='width:100%'><form action='$script' method='post' id='grep'><input type='submit' class='hide'><input type='hidden' name='action' value='grep'>Search iptables for IP address <input type='text' name='ip' value='' size='18'></form></td></tr>\n";
+		print "<tr><td><form action='$script' method='post'><button name='action' value='allow' type='submit' class='btn-settings-base btn-ok strict-width-settings'>Firewall Allow IPs</button></form></td><td style='width:100%'>Edit csf.allow, the IP address allow file $permallows</td></tr>\n";
+		print "<tr><td><form action='$script' method='post'><button name='action' value='deny' type='submit' class='btn-settings-base btn-ok strict-width-settings'>Firewall Deny IPs</button></form></td><td style='width:100%'>Edit csf.deny, the IP address deny file $permbans</td></tr>\n";
+		print "<tr><td><form action='$script' method='post'><button name='action' value='enable' type='submit' class='btn-settings-base btn-ok strict-width-settings'>Firewall Enable</button></form></td><td style='width:100%'>Enables csf and lfd if previously Disabled</td></tr>\n";
+		print "<tr><td><form action='$script' method='post'><button name='action' value='disable' type='submit' class='btn-settings-base btn-ok strict-width-settings'>Firewall Disable</button></form></td><td style='width:100%'>Completely disables csf and lfd</td></tr>\n";
+		print "<tr><td><form action='$script' method='post'><button name='action' value='restart' type='submit' class='btn-settings-base btn-ok strict-width-settings'>Firewall Restart</button></form></td><td style='width:100%'>Restart the csf iptables firewall</td></tr>\n";
+		print "<tr><td><form action='$script' method='post'><button name='action' value='restartq' type='submit' class='btn-settings-base btn-ok strict-width-settings'>Firewall Quick Restart</button></form></td><td style='width:100%'>Have lfd restart the csf iptables firewall</td></tr>\n";
+		print "<tr><td><button onClick='\$(\"#tempdeny\").submit();' class='btn-settings-base btn-ok strict-width-settings'>Temporary Allow/Deny</button></td><td style='width:100%'><form action='$script' method='post' id='tempdeny'><input type='submit' class='hide'><input type='hidden' name='action' value='tempdeny'>Temporarily <select name='do'><option>block</option><option>allow</option></select> IP address <input type='text' name='ip' value='' size='18'> to port(s) <input type='text' name='ports' value='*' size='5'> for <input type='text' name='timeout' value='' size='4'> <select name='dur'><option>seconds</option><option>minutes</option><option>hours</option><option>days</option></select> <br>Comment: <input type='text' name='comment' value='' size='30'><br>\n<i class='axs ax-sticky-note'></i> (ports can be either * for all ports, a single port, or a comma separated list of ports)</span></form></td></tr>\n";
+		print "<tr><td><form action='$script' method='post'><button name='action' value='temp' type='submit' class='btn-settings-base btn-ok strict-width-settings'>Temporary IP Entries</button></form></td><td style='width:100%'>View/Remove the <i>temporary</i> IP entries $tempbans</td></tr>\n";
+		print "<tr><td><form action='$script' method='post'><button name='action' value='sips' type='submit' class='btn-settings-base btn-ok strict-width-settings'>Deny Server IPs</button></form></td><td style='width:100%'>Deny access to and from specific IP addresses configured on the server (csf.sips)</td></tr>\n";
+		print "<tr><td><form action='$script' method='post'><button name='action' value='denyf' type='submit' class='btn-settings-base btn-ok strict-width-settings'>Flush all Blocks</button></form></td><td style='width:100%'>Removes and unblocks all entries in csf.deny (excluding those marked \"do not delete\") and all temporary IP entries (blocks <i>and</i> allows)</td></tr>\n";
+		print "<tr><td><form action='$script' method='post'><button name='action' value='redirect' type='submit' class='btn-settings-base btn-ok strict-width-settings'>Firewall Redirect</button></form></td><td style='width:100%'>Redirect connections to this server to other ports/IP addresses</td></tr>\n";
+		print "<tr><td><form action='$script' method='post'><button name='action' value='fix' type='submit' class='btn-settings-base btn-ok strict-width-settings'>Fix Common Problems</button></form></td><td style='width:100%'>Offers solutions to some common problems when using an SPI firewall</td></tr>\n";
 		print "</table>\n";
 		print "<script>function fillfield (myitem,myip) {document.getElementById(myitem).value = myip;}</script>\n";
 		print "</div>\n";
 
 		print "<div id='lfd' class='tab-pane active'>\n";
-		print "<table class='table table-bordered table-striped'>\n";
-		print "<thead><tr><th colspan='2'>lfd - Login Failure Daemon</th></tr></thead>";
-		print "<tr><td><form action='$script' method='post'><input type='hidden' name='action' value='lfdstatus'><input type='submit' class='btn btn-default' value='lfd Status'></form></td><td style='width:100%'>Display lfd status</td></tr>\n";
-		print "<tr><td><form action='$script' method='post'><input type='hidden' name='action' value='lfdrestart'><input type='submit' class='btn btn-default' value='lfd Restart'></form></td><td style='width:100%'>Restart lfd</td></tr>\n";
-		print "<tr><td><form action='$script' method='post'><input type='hidden' name='action' value='ignorefiles'><select style='width: 13em;' name='ignorefile'>\n";
+		print "<table class='table table-bordered table-striped fixed-left-col'>\n";
+		print "<thead><tr><th class='table-header' colspan='2'>LFD - Login Failure Daemon</th></tr></thead>";
+		print "<tr><td><form action='$script' method='post'><input type='hidden' name='action' value='lfdstatus'><input type='submit' class='btn-settings-base btn-ok strict-width-settings btn-no-anim' value='lfd Status'></form></td><td style='width:100%'>Display lfd status</td></tr>\n";
+		print "<tr><td><form action='$script' method='post'><input type='hidden' name='action' value='lfdrestart'><input type='submit' class='btn-settings-base btn-ok strict-width-settings btn-no-anim' value='lfd Restart'></form></td><td style='width:100%'>Restart lfd</td></tr>\n";
+		print "<tr><td><form action='$script' method='post'><input type='hidden' name='action' value='ignorefiles'><select class='btn-settings-base strict-width-settings' name='ignorefile'>\n";
 		print "<option value='csf.ignore'>csf.ignore - IP Blocking</option>\n";
 		print "<option value='csf.pignore'>csf.pignore, Process Tracking</option>\n";
 		print "<option value='csf.fignore'>csf.fignore, Directory Watching</option>\n";
@@ -2599,36 +2609,36 @@ EOF
 		print "<option value='csf.logignore'>csf.logignore, Log Scanner</option>\n";
 		print "<option value='csf.uidignore'>csf.uidignore, User ID Tracking</option>\n";
 
-		print "</select><input style='min-width: 13em;' type='submit' class='btn btn-edit' value='Edit'></form></td><td style='width:100%'>Edit lfd ignore file</td></tr>\n";
+		print "</select><br><input type='submit' class='btn-settings-base btn-edit strict-width-settings btn-no-anim' value='Edit'></form></td><td style='width:100%'>Edit lfd ignore file</td></tr>\n";
 
-		print "<tr><td><form action='$script' method='post'><button name='action' value='dirwatch' type='submit' class='btn btn-default'>lfd Dir File Watching</button></form></td><td style='width:100%'>Edit the Directory File Watching file (csf.dirwatch) - all listed files and directories will be watched for changes by lfd</td></tr>\n";
-		print "<tr><td><form action='$script' method='post'><button name='action' value='dyndns' type='submit' class='btn btn-default'>lfd Dynamic DNS</button></form></td><td style='width:100%'>Edit the Dynamic DNS file (csf.dyndns) - all listed domains will be resolved and allowed through the firewall</td></tr>\n";
-		print "<tr><td><form action='$script' method='post'><select style='width: 13em;' name='template'>\n";
+		print "<tr><td><form action='$script' method='post'><button name='action' value='dirwatch' type='submit' class='btn-settings-base btn-ok strict-width-settings'>lfd Dir File Watching</button></form></td><td style='width:100%'>Edit the Directory File Watching file (csf.dirwatch) - all listed files and directories will be watched for changes by lfd</td></tr>\n";
+		print "<tr><td><form action='$script' method='post'><button name='action' value='dyndns' type='submit' class='btn-settings-base btn-ok strict-width-settings'>lfd Dynamic DNS</button></form></td><td style='width:100%'>Edit the Dynamic DNS file (csf.dyndns) - all listed domains will be resolved and allowed through the firewall</td></tr>\n";
+		print "<tr><td><form action='$script' method='post'><select class='btn-settings-base strict-width-settings' name='template'>\n";
 
 		foreach my $tmp ("alert.txt","tracking.txt","connectiontracking.txt","processtracking.txt","accounttracking.txt","usertracking.txt","sshalert.txt","webminalert.txt","sualert.txt","sudoalert.txt","uialert.txt","cpanelalert.txt","scriptalert.txt","filealert.txt","watchalert.txt","loadalert.txt","resalert.txt","integrityalert.txt","exploitalert.txt","relayalert.txt","portscan.txt","uidscan.txt","permblock.txt","netblock.txt","queuealert.txt","logfloodalert.txt","logalert.txt","modsecipdbcheck.txt") {print "<option>$tmp</option>\n"}
 
-		print "</select> <button name='action' value='templates' type='submit' class='btn btn-edit'>Edit</button></form></td><td style='width:100%'>Edit email alert templates. See Firewall Information for details of each file</td></tr>\n";
+		print "</select><br><button name='action' value='templates' type='submit' class='btn-settings-base btn-edit strict-width-settings'>Edit</button></form></td><td style='width:100%'>Edit email alert templates. See Firewall Information for details of each file</td></tr>\n";
 
-		print "<tr><td><form action='$script' method='post'><button name='action' value='logfiles' type='submit' class='btn btn-default'>lfd Log Scanner Files</button></form></td><td style='width:100%'>Edit the Log Scanner file (csf.logfiles) - Scan listed log files for log lines and periodically send a report</td></tr>\n";
-		print "<tr><td><form action='$script' method='post'><button name='action' value='blocklists' type='submit' class='btn btn-default'>lfd Blocklists</button></form></td><td style='width:100%'>Edit the Blocklists configuration file (csf.blocklists)</td></tr>\n";
-		print "<tr><td><form action='$script' method='post'><button name='action' value='syslogusers' type='submit' class='btn btn-default'>lfd Syslog Users</button></form></td><td style='width:100%'>Edit the syslog/rsyslog allowed users file (csf.syslogusers)</td></tr>\n";
+		print "<tr><td><form action='$script' method='post'><button name='action' value='logfiles' type='submit' class='btn-settings-base btn-ok strict-width-settings'>lfd Log Scanner Files</button></form></td><td style='width:100%'>Edit the Log Scanner file (csf.logfiles) - Scan listed log files for log lines and periodically send a report</td></tr>\n";
+		print "<tr><td><form action='$script' method='post'><button name='action' value='blocklists' type='submit' class='btn-settings-base btn-ok strict-width-settings'>lfd Blocklists</button></form></td><td style='width:100%'>Edit the Blocklists configuration file (csf.blocklists)</td></tr>\n";
+		print "<tr><td><form action='$script' method='post'><button name='action' value='syslogusers' type='submit' class='btn-settings-base btn-ok strict-width-settings'>lfd Syslog Users</button></form></td><td style='width:100%'>Edit the syslog/rsyslog allowed users file (csf.syslogusers)</td></tr>\n";
 		print "</table>\n";
 		print "</div>\n";
 
 		if ($config{CLUSTER_SENDTO}) {
 			print "<div id='cluster' class='tab-pane active'>\n";
 			print "<table class='table table-bordered table-striped'>\n";
-			print "<thead><tr><th colspan='2'>csf - ConfigServer lfd Cluster</th></tr></thead>";
+			print "<thead><tr><th class='table-header' colspan='2'>CSF - ConfigServer lfd Cluster</th></tr></thead>";
 
-			print "<tr><td><form action='$script' method='post'><button name='action' value='cping' type='submit' class='btn btn-default'>Cluster PING</button></form></td><td style='width:100%'>Ping each member of the cluster (logged in lfd.log)</td></tr>\n";
-			print "<tr><td><button onClick='\$(\"#callow\").submit();' class='btn btn-default'>Cluster Allow</button></td><td style='width:100%'><form action='$script' method='post' id='callow'><input type='submit' class='hide'><input type='hidden' name='action' value='callow'>Allow IP address <input type='text' name='ip' value='' size='18' style='background-color: lightgreen'> through the Cluster and add to the allow file (csf.allow)<br>Comment: <input type='text' name='comment' value='' size='30'></form></td></tr>\n";
-			print "<tr><td><button onClick='\$(\"#cdeny\").submit();' class='btn btn-default'>Cluster Deny</button></td><td style='width:100%'><form action='$script' method='post' id='cdeny'><input type='submit' class='hide'><input type='hidden' name='action' value='cdeny'>Block IP address <input type='text' name='ip' value='' size='18' style='background-color: pink'> in the Cluster and add to the deny file (csf.deny)<br>Comment: <input type='text' name='comment' value='' size='30'></form></td></tr>\n";
-			print "<tr><td><button onClick='\$(\"#cignore\").submit();' class='btn btn-default'>Cluster Ignore</button></td><td style='width:100%'><form action='$script' method='post' id='cignore'><input type='submit' class='hide'><input type='hidden' name='action' value='cignore'>Ignore IP address <input type='text' name='ip' value='' size='18'> in the Cluster and add to the ignore file (csf.ignore)<br>Comment: <input type='text' name='comment' value='' size='30'> Note: This will result in lfd being restarted</form></td></tr>\n";
-			print "<tr><td><button onClick='\$(\"#cgrep\").submit();' class='btn btn-default'>Search the Cluster for IP</button></td><td style='width:100%'><form action='$script' method='post' id='cgrep'><input type='submit' class='hide'><input type='hidden' name='action' value='cgrep'>Search iptables for IP address <input type='text' name='ip' value='' size='18'></form></td></tr>\n";
-			print "<tr><td><button onClick='\$(\"#ctempdeny\").submit();' class='btn btn-default'>Cluster Temp Allow/Deny</button></td><td style='width:100%'><form action='$script' method='post' id='ctempdeny'><input type='submit' class='hide'><input type='hidden' name='action' value='ctempdeny'>Temporarily <select name='do'><option>block</option><option>allow</option></select> IP address <input type='text' name='ip' value='' size='18'> to port(s) <input type='text' name='ports' value='*' size='5'> for <input type='text' name='timeout' value='' size='4'> <select name='dur'><option>seconds</option><option>minutes</option><option>hours</option><option>days</option></select>.<br>Comment: <input type='text' name='comment' value='' size='30'><br>\n(ports can be either * for all ports, a single port, or a comma separated list of ports)</form></td></tr>\n";
-			print "<tr><td><button onClick='\$(\"#crm\").submit();' class='btn btn-default'>Cluster Remove Deny</button></td><td style='width:100%'><form action='$script' method='post' id='crm'><input type='submit' class='hide'><input type='hidden' name='action' value='crm'>Remove Deny IP address <input type='text' name='ip' value='' size='18' style=''> in the Cluster (temporary or permanent)</form></td></tr>\n";
-			print "<tr><td><button onClick='\$(\"#carm\").submit();' class='btn btn-default'>Cluster Remove Allow</button></td><td style='width:100%'><form action='$script' method='post' id='carm'><input type='submit' class='hide'><input type='hidden' name='action' value='carm'>Remove Allow IP address <input type='text' name='ip' value='' size='18' style=''> in the Cluster (temporary or permanent)</form></td></tr>\n";
-			print "<tr><td><button onClick='\$(\"#cirm\").submit();' class='btn btn-default'>Cluster Remove Ignore</button></td><td style='width:100%'><form action='$script' method='post' id='cirm'><input type='submit' class='hide'><input type='hidden' name='action' value='cirm'>Remove Ignore IP address <input type='text' name='ip' value='' size='18'> in the Cluster<br>Note: This will result in lfd being restarted</form></td></tr>\n";
+			print "<tr><td><form action='$script' method='post'><button name='action' value='cping' type='submit' class='btn-settings-base btn-ok strict-width-settings'>Cluster PING</button></form></td><td style='width:100%'>Ping each member of the cluster (logged in lfd.log)</td></tr>\n";
+			print "<tr><td><button onClick='\$(\"#callow\").submit();' class='btn-settings-base btn-ok strict-width-settings'>Cluster Allow</button></td><td style='width:100%'><form action='$script' method='post' id='callow'><input type='submit' class='hide'><input type='hidden' name='action' value='callow'>Allow IP address <input type='text' name='ip' value='' size='18' style='background-color: lightgreen'> through the Cluster and add to the allow file (csf.allow)<br>Comment: <input type='text' name='comment' value='' size='30'></form></td></tr>\n";
+			print "<tr><td><button onClick='\$(\"#cdeny\").submit();' class='btn-settings-base btn-ok strict-width-settings'>Cluster Deny</button></td><td style='width:100%'><form action='$script' method='post' id='cdeny'><input type='submit' class='hide'><input type='hidden' name='action' value='cdeny'>Block IP address <input type='text' name='ip' value='' size='18' style='background-color: pink'> in the Cluster and add to the deny file (csf.deny)<br>Comment: <input type='text' name='comment' value='' size='30'></form></td></tr>\n";
+			print "<tr><td><button onClick='\$(\"#cignore\").submit();' class='btn-settings-base btn-ok strict-width-settings'>Cluster Ignore</button></td><td style='width:100%'><form action='$script' method='post' id='cignore'><input type='submit' class='hide'><input type='hidden' name='action' value='cignore'>Ignore IP address <input type='text' name='ip' value='' size='18'> in the Cluster and add to the ignore file (csf.ignore)<br>Comment: <input type='text' name='comment' value='' size='30'> Note: This will result in lfd being restarted</form></td></tr>\n";
+			print "<tr><td><button onClick='\$(\"#cgrep\").submit();' class='btn-settings-base btn-ok strict-width-settings'>Search the Cluster for IP</button></td><td style='width:100%'><form action='$script' method='post' id='cgrep'><input type='submit' class='hide'><input type='hidden' name='action' value='cgrep'>Search iptables for IP address <input type='text' name='ip' value='' size='18'></form></td></tr>\n";
+			print "<tr><td><button onClick='\$(\"#ctempdeny\").submit();' class='btn-settings-base btn-ok strict-width-settings'>Cluster Temp Allow/Deny</button></td><td style='width:100%'><form action='$script' method='post' id='ctempdeny'><input type='submit' class='hide'><input type='hidden' name='action' value='ctempdeny'>Temporarily <select name='do'><option>block</option><option>allow</option></select> IP address <input type='text' name='ip' value='' size='18'> to port(s) <input type='text' name='ports' value='*' size='5'> for <input type='text' name='timeout' value='' size='4'> <select name='dur'><option>seconds</option><option>minutes</option><option>hours</option><option>days</option></select> <br>Comment: <input type='text' name='comment' value='' size='30'><br>\n<span class='setting-note'><i class='axs ax-sticky-note'></i> ports can be either * for all ports, a single port, or a comma separated list of ports</span></form></td></tr>\n";
+			print "<tr><td><button onClick='\$(\"#crm\").submit();' class='btn-settings-base btn-ok strict-width-settings'>Cluster Remove Deny</button></td><td style='width:100%'><form action='$script' method='post' id='crm'><input type='submit' class='hide'><input type='hidden' name='action' value='crm'>Remove Deny IP address <input type='text' name='ip' value='' size='18' style=''> in the Cluster (temporary or permanent)</form></td></tr>\n";
+			print "<tr><td><button onClick='\$(\"#carm\").submit();' class='btn-settings-base btn-ok strict-width-settings'>Cluster Remove Allow</button></td><td style='width:100%'><form action='$script' method='post' id='carm'><input type='submit' class='hide'><input type='hidden' name='action' value='carm'>Remove Allow IP address <input type='text' name='ip' value='' size='18' style=''> in the Cluster (temporary or permanent)</form></td></tr>\n";
+			print "<tr><td><button onClick='\$(\"#cirm\").submit();' class='btn-settings-base btn-ok strict-width-settings'>Cluster Remove Ignore</button></td><td style='width:100%'><form action='$script' method='post' id='cirm'><input type='submit' class='hide'><input type='hidden' name='action' value='cirm'>Remove Ignore IP address <input type='text' name='ip' value='' size='18'> in the Cluster<br>Note: This will result in lfd being restarted</form></td></tr>\n";
 
 			if ($config{CLUSTER_CONFIG}) {
 				if ($ips{$config{CLUSTER_MASTER}} or $ipscidr6->find($config{CLUSTER_MASTER}) or ($config{CLUSTER_MASTER} eq $config{CLUSTER_NAT})) {
@@ -2646,10 +2656,10 @@ EOF
 					foreach my $key (sort keys %config) {
 						unless ($restricted{$key}) {$options .= "<option>$key</option>"}
 					}
-					print "<tr><td><button onClick='\$(\"#cconfig\").submit();' class='btn btn-default'>Cluster Config</button></td><td style='width:100%'><form action='$script' method='post' id='cconfig'><input type='submit' class='hide'><input type='hidden' name='action' value='cconfig'>Change configuration option <select name='option'>$options</select> to <input type='text' name='value' value='' size='18'> in the Cluster";
+					print "<tr><td><button onClick='\$(\"#cconfig\").submit();' class='btn-settings-base btn-ok strict-width-settings'>Cluster Config</button></td><td style='width:100%'><form action='$script' method='post' id='cconfig'><input type='submit' class='hide'><input type='hidden' name='action' value='cconfig'>Change configuration option <select name='option'>$options</select> to <input type='text' name='value' value='' size='18'> in the Cluster";
 					if ($config{RESTRICT_UI}) {print "<br />\nSome items have been removed with RESTRICT_UI enabled"}
 					print "</form></td></tr>\n";
-					print "<tr><td><form action='$script' method='post'><button name='action' value='crestart' type='submit' class='btn btn-default'>Cluster Restart</button></form></td><td style='width:100%'>Restart csf and lfd on Cluster members</td></tr>\n";
+					print "<tr><td><form action='$script' method='post'><button name='action' value='crestart' type='submit' class='btn-settings-base btn-ok strict-width-settings'>Cluster Restart</button></form></td><td style='width:100%'>Restart csf and lfd on Cluster members</td></tr>\n";
 				}
 			}
 			print "</table>\n";
@@ -2659,15 +2669,15 @@ EOF
 		print "<div id='other' class='tab-pane active'>\n";
 		if ($config{CF_ENABLE}) {
 			print "<table class='table table-bordered table-striped'>\n";
-			print "<thead><tr><th colspan='2'>CloudFlare Firewall</th></tr></thead>";
-			print "<tr><td><form action='$script' method='post'><button name='action' value='cloudflare' type='submit' class='btn btn-default'>CloudFlare</button></form></td><td style='width:100%'>Access CloudFlare firewall functionality</td></tr>\n";
-			print "<tr><td><form action='$script' method='post'><button name='action' value='cloudflareedit' type='submit' class='btn btn-default'>CloudFlare Config</button></form></td><td style='width:100%'>Edit the CloudFlare Configuration file (csf.cloudflare)</td></tr>\n";
+			print "<thead><tr><th class='table-header' colspan='2'>CloudFlare Firewall</th></tr></thead>";
+			print "<tr><td><form action='$script' method='post'><button name='action' value='cloudflare' type='submit' class='btn-settings-base btn-ok strict-width-settings'>CloudFlare</button></form></td><td style='width:100%'>Access CloudFlare firewall functionality</td></tr>\n";
+			print "<tr><td><form action='$script' method='post'><button name='action' value='cloudflareedit' type='submit' class='btn-settings-base btn-ok strict-width-settings'>CloudFlare Config</button></form></td><td style='width:100%'>Edit the CloudFlare Configuration file (csf.cloudflare)</td></tr>\n";
 			print "</table>\n";
 		}
 		if ($config{SMTPAUTH_RESTRICT}) {
 			print "<table class='table table-bordered table-striped'>\n";
-			print "<thead><tr><th colspan='2'>cPanel SMTP AUTH Restrictions</th></tr></thead>";
-			print "<tr><td><form action='$script' method='post'><button name='action' value='smtpauth' type='submit' class='btn btn-default'>Edit SMTP AUTH</button></form></td><td style='width:100%'>Edit the file that allows SMTP AUTH to be advertised to listed IP addresses (csf.smtpauth)</td></tr>\n";
+			print "<thead><tr><th class='table-header' colspan='2'>cPanel SMTP AUTH Restrictions</th></tr></thead>";
+			print "<tr><td><form action='$script' method='post'><button name='action' value='smtpauth' type='submit' class='btn-settings-base btn-ok strict-width-settings'>Edit SMTP AUTH</button></form></td><td style='width:100%'>Edit the file that allows SMTP AUTH to be advertised to listed IP addresses (csf.smtpauth)</td></tr>\n";
 			print "</table>\n";
 		}
 
@@ -2676,14 +2686,14 @@ EOF
 			if ($config{DIRECTADMIN}) {$resellers = "DirectAdmin Resellers"}
 			elsif ($config{INTERWORX}) {$resellers = "InterWorx Resellers"}
 			print "<table class='table table-bordered table-striped'>\n";
-			print "<thead><tr><th colspan='2'>$resellers</th></tr></thead>";
-			print "<tr><td><form action='$script' method='post'><button name='action' value='reseller' type='submit' class='btn btn-default'>Edit Reseller Privs</button></form></td><td style='width:100%'>Privileges can be assigned to $resellers accounts by editing this file (csf.resellers)</td></tr>\n";
+			print "<thead><tr><th class='table-header' colspan='2'>$resellers</th></tr></thead>";
+			print "<tr><td><form action='$script' method='post'><button name='action' value='reseller' type='submit' class='btn-settings-base btn-ok strict-width-settings'>Edit Reseller Privs</button></form></td><td style='width:100%'>Privileges can be assigned to $resellers accounts by editing this file (csf.resellers)</td></tr>\n";
 			print "</table>\n";
 		}
 
 		print "<table class='table table-bordered table-striped'>\n";
-		print "<thead><tr><th colspan='2'>Extra</th></tr></thead>";
-		print "<tr><td><form action='$script' method='post'><button name='action' value='csftest' type='submit' class='btn btn-default'>Test iptables</button></form></td><td style='width:100%'>Check that iptables has the required modules to run csf</td></tr>\n";
+		print "<thead><tr><th class='table-header' colspan='2'>Extra</th></tr></thead>";
+		print "<tr><td><form action='$script' method='post'><button name='action' value='csftest' type='submit' class='btn-settings-base btn-ok strict-width-settings'>Test iptables</button></form></td><td style='width:100%'>Check that iptables has the required modules to run csf</td></tr>\n";
 		print "</table>\n";
 #		if ($config{DIRECTADMIN} and !$config{THIS_UI}) {
 #			print "<a href='/' class='btn btn-success' data-spy='affix' data-offset-bottom='0' style='bottom: 0; left:45%'><span class='glyphicon glyphicon-home'></span> DirectAdmin Main Page</a>\n";
@@ -3001,7 +3011,7 @@ sub systemstats {
 			print "<option value='apachework' $selected>Apache Workers</option>\n";
 		}
 
-		print "</select> <input type='submit' class='btn btn-default' value='Select Graphs'></form></div><br />\n";
+		print "</select> <input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Select Graphs'></form></div><br />\n";
 		print ConfigServer::ServerStats::graphs_html($imgdir);
 
 		unless ($config{ST_MYSQL} and $config{ST_APACHE})
@@ -3046,9 +3056,9 @@ sub editfile
 	{
 		print "<script src='/libraries/ace-editor/optimized/src-min-noconflict/ace.js'></script>\n";
 		print "<h4>Edit <code>$file</code></h4>\n";
-		print "<button class='btn btn-default' id='toggletextarea-btn'>Toggle Editor/Textarea</button>\n";
-		print " <div class='pull-right btn-group'><button class='btn btn-default' id='fontminus-btn'><strong>a</strong><span class='glyphicon glyphicon-arrow-down icon-configserver'></span></button>\n";
-		print "<button class='btn btn-default' id='fontplus-btn'><strong>A</strong><span class='glyphicon glyphicon-arrow-up icon-configserver'></span></button></div>\n";
+		print "<button class='btn-settings-base btn-ok strict-width-settings' id='toggletextarea-btn'>Toggle Editor/Textarea</button>\n";
+		print " <div class='pull-right btn-group'><button class='btn-settings-base btn-ok' id='fontminus-btn'><strong>a</strong><span class='glyphicon glyphicon-arrow-down icon-configserver'></span></button>\n";
+		print "<button class='btn-settings-base btn-ok' id='fontplus-btn'><strong>A</strong><span class='glyphicon glyphicon-arrow-up icon-configserver'></span></button></div>\n";
 		print "<form action='$script' method='post'>\n";
 		print "<input type='hidden' name='action' value='$save'>\n";
 		print "<input type='hidden' name='ace' value='1'>\n";
@@ -3063,7 +3073,7 @@ sub editfile
 			print $line."\n";
 		}
 		print "</textarea><br></div>\n";
-		print "<br><div class='text-center'><input type='submit' class='btn btn-default' value='Change'></div>\n";
+		print "<br><div class='text-center'><input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Change'></div>\n";
 		print "</form>\n";
 		print <<EOF;
 <script>
@@ -3134,7 +3144,7 @@ EOF
 		}
 
 		print "</textarea></div>\n";
-		print "<div class='panel-footer text-center'><input type='submit' class='btn btn-default' value='Change'></div>\n";
+		print "<div class='panel-footer text-center'><input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Change'></div>\n";
 		print "</div></form>\n";
 	}
 
@@ -3171,16 +3181,16 @@ sub savefile
 	if ($restart eq "csf")
 	{
 		print "<div>Changes saved. You should restart csf.</div>\n";
-		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='restart'><input type='submit' class='btn btn-default' value='Restart csf'></form></div>\n";
+		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='restart'><input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Restart csf'></form></div>\n";
 	}
 	elsif ($restart eq "lfd")
 	{
 		print "<div>Changes saved. You should restart lfd.</div>\n";
-		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='lfdrestart'><input type='submit' class='btn btn-default' value='Restart lfd'></form></div>\n";
+		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='lfdrestart'><input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Restart lfd'></form></div>\n";
 	}
 	elsif ($restart eq "both") {
 		print "<div>Changes saved. You should restart csf and lfd.</p>\n";
-		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='restartboth'><input type='submit' class='btn btn-default' value='Restart csf+lfd'></form></div>\n";
+		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='restartboth'><input type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Restart csf+lfd'></form></div>\n";
 	}
 	else
 	{
@@ -3207,7 +3217,7 @@ sub cloudflare
 	print "</script>\n";
 
 	print "<table class='table table-bordered table-striped'>\n";
-	print "<thead><tr><th colspan='2'>csf - CloudFlare</th></tr></thead>";
+	print "<thead><tr><th class='table-header' colspan='2'>CSF - CloudFlare</th></tr></thead>";
 	print "<tr><td>Select the user(s), then select the action below</td><td style='width:100%'><select data-placeholder='Select user(s)' class='chosen-select' id='domains' name='domains' multiple>\n";
 	foreach my $user (keys %{$scope->{user}}) {print "<option>$user</option>\n"}
 	print "</select></td></tr>\n";
@@ -3216,10 +3226,10 @@ sub cloudflare
 #		foreach my $domain (keys %{$scope->{domain}}) {print "<option>$domain</option>\n"}
 #		print "</select></td></tr>\n";
 #	}
-	print "<tr><td><button type='button' id='cflistbtn' class='btn btn-default' disabled='true'>CF List Rules</button></td><td style='width:100%'><form action='#' id='cflist'>List <select name='type' id='type'><option>all</option><option>block</option><option>challenge</option><option>whitelist</option></select> rules in CloudFlare ONLY for the chosen accounts</form></td></tr>";
-	print "<tr><td><button type='button' id='cfaddbtn' class='btn btn-default' disabled='true'>CloudFlare Add</button></td><td style='width:100%'><form action='#' id='cfadd'>Add <select name='type' id='type'><option>block</option><option>challenge</option><option>whitelist</option></select> rule for target <input type='text' name='target' value='' size='18' id='target'> in CloudFlare ONLY for the chosen accounts</form></td></tr>\n";
-	print "<tr><td><button type='button' id='cfremovebtn' class='btn btn-default' disabled='true'>CloudFlare Delete</button></td><td style='width:100%'><form action='#' id='cfremove'>Delete rule for target <input type='text' name='target' value='' size='18' id='target'> in CloudFlare ONLY</form></td></tr>\n";
-	print "<tr><td><button type='button' id='cftempdenybtn' class='btn btn-default' disabled='true'>CF Temp Allow/Deny</button></td><td style='width:100%'><form action='#' id='cftempdeny'>Temporarily <select name='do' id='do'><option>allow</option><option>deny</option></select> IP address <input type='text' name='target' value='' size='18' id='target'> for $config{CF_TEMP} secs in CloudFlare AND csf for the chosen accounts and those with to \"any\"</form></td></tr>";
+	print "<tr><td><button type='button' id='cflistbtn' class='btn-settings-base btn-ok strict-width-settings' disabled='true'>CF List Rules</button></td><td style='width:100%'><form action='#' id='cflist'>List <select name='type' id='type'><option>all</option><option>block</option><option>challenge</option><option>whitelist</option></select> rules in CloudFlare ONLY for the chosen accounts</form></td></tr>";
+	print "<tr><td><button type='button' id='cfaddbtn' class='btn-settings-base btn-ok strict-width-settings' disabled='true'>CloudFlare Add</button></td><td style='width:100%'><form action='#' id='cfadd'>Add <select name='type' id='type'><option>block</option><option>challenge</option><option>whitelist</option></select> rule for target <input type='text' name='target' value='' size='18' id='target'> in CloudFlare ONLY for the chosen accounts</form></td></tr>\n";
+	print "<tr><td><button type='button' id='cfremovebtn' class='btn-settings-base btn-ok strict-width-settings' disabled='true'>CloudFlare Delete</button></td><td style='width:100%'><form action='#' id='cfremove'>Delete rule for target <input type='text' name='target' value='' size='18' id='target'> in CloudFlare ONLY</form></td></tr>\n";
+	print "<tr><td><button type='button' id='cftempdenybtn' class='btn-settings-base btn-ok strict-width-settings' disabled='true'>CF Temp Allow/Deny</button></td><td style='width:100%'><form action='#' id='cftempdeny'>Temporarily <select name='do' id='do'><option>allow</option><option>deny</option></select> IP address <input type='text' name='target' value='' size='18' id='target'> for $config{CF_TEMP} secs in CloudFlare AND csf for the chosen accounts and those with to \"any\"</form></td></tr>";
 	print "</table>\n";
 
 	print "<div id='CFajax'><div class='panel panel-info'><div class='panel-heading'>Output will appear here</div></div></div>\n";
@@ -3268,8 +3278,8 @@ sub resize
 	my $scroll = shift;
 	if ($part eq "top")
 	{
-		print "<div class='pull-right btn-group'><button class='btn btn-default' id='fontminus-btn'><strong>a</strong><span class='glyphicon glyphicon-arrow-down icon-configserver'></span></button>\n";
-		print "<button class='btn btn-default' id='fontplus-btn'><strong>A</strong><span class='glyphicon glyphicon-arrow-up icon-configserver'></span></button></div>\n";
+		print "<div class='pull-right btn-group'><button class='btn-settings-base' id='fontminus-btn'><strong>a</strong><span class='glyphicon glyphicon-arrow-down icon-configserver'></span></button>\n";
+		print "<button class='btn-settings-base' id='fontplus-btn'><strong>A</strong><span class='glyphicon glyphicon-arrow-up icon-configserver'></span></button></div>\n";
 	}
 	else
 	{
@@ -3304,7 +3314,7 @@ EOF
 
 sub renderBtnReturn
 {
-	print "<div class='section-return'><hr><form action='$script' method='post'><input type='hidden' name='mobi' value='$mobile'><input id='csfreturn' type='submit' class='btn btn-default' value='Return'></form></div>\n";
+	print "<div class='section-return'><hr><form action='$script' method='post'><input type='hidden' name='mobi' value='$mobile'><input id='csfreturn' type='submit' class='btn-settings-base btn-ok strict-width-settings' value='Return'></form></div>\n";
 
 	return;
 }
@@ -3313,7 +3323,7 @@ sub renderBtnReturn
 #	Confirm Modal
 #
 #	start confirmmodal
-#		print "<button type='button' class='btn btn-default confirmButton' data-query='Are you sure?' data-href='$script?action=fix' data-toggle='modal' data-target='#confirmmodal'>Submit</button>\n";
+#		print "<button type='button' class='btn-settings-base btn-ok strict-width-settings confirmButton' data-query='Are you sure?' data-href='$script?action=fix' data-toggle='modal' data-target='#confirmmodal'>Submit</button>\n";
 #		&confirmmodal;
 # #
 
