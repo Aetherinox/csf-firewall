@@ -1483,8 +1483,22 @@ EOF
 						print "<div class='$class'><b>$start</b> = <input type='text' onFocus='CSFexpand(this);' onkeyup='CSFexpand(this);' name='$name' value='$end' size='$size'>$showrange</div>\n";
 					}
 				}
-			} else {
-				if ($line =~ /^\# SECTION:(.*)/) {
+			}
+			else
+			{
+
+				# #
+				#	skip entirely if there are two # # symbols on the line. it accepts both:
+				#		## comment here
+				#		# # comment here
+				# #
+				
+				if ($line =~ /^\#\s*\#/) { next }
+				if ($line =~ /^\#\#/) { next }
+				if ($line =~ /^\s*$/) { next }
+
+				if ($line =~ /^\#\s*SECTION:(.*)/)
+				{
 					push @divnames, $1;
 					unless ($first) {print "</div>\n"}
 					print "<div class='virtualpage hidepiece'>\n<div class='section'>";
@@ -1492,18 +1506,27 @@ EOF
 					$first = 0;
 					next;
 				}
-				if ($line =~ /^\# / and $comment == 0) {
+
+				if ($line =~ /^\# / and $comment == 0)
+				{
 					$comment = 1;
 					print "<div class='comment'>\n";
 				}
+
 				$line =~ s/\#//g;
 				$line =~ s/&/&amp;/g;
 				$line =~ s/</&lt;/g;
 				$line =~ s/>/&gt;/g;
 				$line =~ s/\n/<br \/>\n/g;
+
+				# #
+				#	print the line
+				# #
+
 				print "$line<br />\n";
 			}
 		}
+
 		print "</div><br />\n";
 		print "<div id='paginatediv' class='text-center'>\n<a class='btn btn-default' href='javascript:pagecontent.showall()'>Show All</a> <a class='btn btn-default' href='#' rel='previous'>Prev</a> <select style='width: 250px'></select> <a class='btn btn-default' href='#' rel='next' >Next</a>\n</div>\n";
 		print <<EOD;
