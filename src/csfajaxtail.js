@@ -25,17 +25,26 @@
     along with this program; if not, see <https://www.gnu.org/licenses>.
 */
 
+/*
+	Declarations
+
+	@note				Existing vars are replaced dynamically by Perl injection via DisplayUI.pm;
+						must remain var for global exposure and mutation safety.
+
+	@todo				Modify how this works later when there's more free time
+*/
+
 var csfScript = '';
-var csfCountVal = typeof csfCountVal !== 'undefined' ? csfCountVal : 6;
-var csfCounter;
-var csfCount = 1;
-var csfPause = 0;
+var csfDuration = typeof csfDuration !== 'undefined' ? csfDuration : 6;
 var csfFromBot = 120;
 var csfFromRight = 10;
-var csfTimerSet = 0;
-var csfHeight = 0;
-var csfWidth = 0;
-var csfAjaxHttp = csfCreateReqObject( );
+let csfCounter;
+let csfCount = 1;
+let csfPause = 0;
+let csfTimerSet = 0;
+let csfHeight = 0;
+let csfWidth = 0;
+const csfAjaxHttp = csfCreateReqObject( );
 
 /*
     Creates and returns a compatible XMLHttpRequest object
@@ -98,9 +107,7 @@ function csfHandleResp( )
             document.getElementById( 'csfRefreshing' ).style.display = 'none';
 
             if ( csfTimerSet )
-            {
                 csfCounter = setInterval( csfTimerInitialize, 1000 );
-            }
         }
     }
 }
@@ -116,13 +123,10 @@ function waitForElement( elementId, callBack )
         var element = document.getElementById( elementId );
 
         if ( element )
-        {
             callBack( elementId, element );
-        }
         else
-        {
             waitForElement( elementId, callBack );
-        }
+
     }, 500 );
 }
 
@@ -138,28 +142,18 @@ function csfGrep( )
     var csfLogNum;
 
     if ( csfLogObj )
-    {
         csfLogNum = '&lognum=' + csfLogObj.options[ csfLogObj.selectedIndex ].value;
-    }
     else
-    {
         csfLogNum = '';
-    }
 
     if ( document.getElementById( 'CSFgrep_i' ).checked )
-    {
         csfLogNum += '&grepi=1';
-    }
 
     if ( document.getElementById( 'CSFgrep_E' ).checked )
-    {
         csfLogNum += '&grepE=1';
-    }
 
     if ( document.getElementById( 'CSFgrep_Z' ).checked )
-    {
         csfLogNum += '&grepZ=1';
-    }
 
     var csfUrl = csfScript + '&grep=' + document.getElementById( 'csfGrep' ).value + csfLogNum;
     csfSendReq( csfUrl );
@@ -167,6 +161,7 @@ function csfGrep( )
 
 /*
     Timer › Initialize
+
     Automatically refreshes on-screen logs at regular intervals
 */
 
@@ -178,8 +173,9 @@ function csfTimerInitialize( )
     if ( !timerEl ) return;
 
     /*
-        If paused, show "Paused" instead of the count
+        When user pauses timer on "system logs" page, display status to user in interface
     */
+
     if ( csfPause )
     {
         timerEl.textContent = 'Paused';
@@ -187,14 +183,16 @@ function csfTimerInitialize( )
     }
 
     /*
-        Decrement timer and update display
+        Decrement timer / update display
     */
+
     csfCount--;
     timerEl.textContent = csfCount;
 
     /*
-        When timer hits zero, reset and perform request
+        When timer hits zero, perform request and then reset for next cycle
     */
+
     if ( csfCount <= 0 )
     {
         clearInterval( csfCounter );
@@ -204,12 +202,13 @@ function csfTimerInitialize( )
         const logNum = logObj ? `&lognum=${ logObj.value }` : '';
 
         csfSendReq( `${ csfScript }&lines=${ linesVal }${ logNum }` );
-        csfCount = csfCountVal;
+        csfCount = csfDuration;
     }
 }
 
 /*
     Timer › Pause
+
     Toggles the automatic refresh pause state and updates button text
 */
 
@@ -227,13 +226,12 @@ function csfTimerPause( )
 
     const pauseBtn = document.getElementById( 'csfPauseId' );
     if ( pauseBtn )
-    {
         pauseBtn.textContent = csfPause ? 'Continue' : 'Pause';
-    }
 }
 
 /*
     Timer › Refresh
+
     Forces an immediate refresh without waiting for timer to expire
 */
 
@@ -250,16 +248,18 @@ function csfTimerRefresh( )
     csfPause = prevPause;
 
     /*
-        Reset counter and update display
+        Reset counter / update display
     */
 
-    csfCount = csfCountVal - 1;
+    csfCount = csfDuration - 1;
     const timerEl = document.getElementById( 'csfTimer' );
     if ( timerEl ) timerEl.textContent = csfCount;
 }
 
 /*
     Gets and stores the current browser window width and height
+
+	@note				Currently not utilized in main app
 */
 
 function windowSize( )
