@@ -757,13 +757,13 @@ EOF
 <pre class='comment' id="csfAjax" style="overflow:auto;height:500px;resize:both; white-space: pre-wrap;clear: both">
 Please Note:
 
- 1. Searches use $config{GREP}/$config{ZGREP} if wildcard is used), so the search text/regex must be syntactically correct
- 2. Use the "-i" option to ignore case
- 3. Use the "-E" option to perform an extended regular expression search
- 4. Searching large log files can take a long time. This feature has a 30 second timeout
- 5. The searched for text will usually be <mark>highlighted</mark> but may not always be successful
- 6. Only log files listed in /etc/csf/csf.syslogs can be searched. You can add to this file
- 7. The wildcard option will use $config{ZGREP} and search logs with a wildcard suffix, e.g. /var/log/lfd.log*
+1. Searches use $config{GREP} or $config{ZGREP} when a wildcard is provided, so the search text or regex must be syntactically correct.
+2. Include the "-i" option to perform a case-insensitive search.
+3. Include the "-E" option to enable extended regular expressions.
+4. Searching large log files may take time and consume memory. The feature enforces a 30-second timeout.
+5. The matched text will usually appear <mark>highlighted</mark>, though highlighting may not always succeed.
+6. Only log files listed in /etc/csf/csf.syslogs can be searched; you may add files to this list as needed.
+7. When using the wildcard option, $config{ZGREP} will search logs matching the wildcard pattern, e.g., /var/log/lfd.log*
 </pre>
 
 <script>
