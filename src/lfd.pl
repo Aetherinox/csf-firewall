@@ -10023,7 +10023,7 @@ sub ui {
 							flock ($SESSION, LOCK_EX);
 							print $SESSION "fail|$time||||$peeraddress||\n";
 							close ($SESSION);
-							$valid = "login";
+							$valid = "login-retry";
 							logfile("UI: *Invalid login* attempt from $peeraddress [$fails{$peeraddress}/$config{UI_RETRY}]");
 							if ($config{UI_ALERT} >= 2)
 							{
@@ -10089,7 +10089,7 @@ sub ui {
 						}
 					}
 
-					if ($valid eq "login")
+					if ( $valid eq "login" || $valid eq "login-retry" )
 					{
 						print "HTTP/1.0 200 OK\r\n";
 						print "Content-type: text/html\r\n";
@@ -10283,14 +10283,41 @@ img.login-logo:not(:hover)
 	transition: all 0.3s;
 }
 
+.login-notify-failure
+{
+	background-color: #a82e2e;
+	border: 1px solid #e3e3e31a;
+	border-radius: 4px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: clamp(150px, 35vw, 350px);
+	margin: 0 auto;
+	color: #FFF;
+	padding-top: clamp(5px, 40vh, 8px);
+	padding-bottom: clamp(5px, 40vh, 8px);
+	padding-left: clamp(0.1em, 0.5vw, 1.5em);
+	padding-right: clamp(0.1em, 0.5vw, 1.5em);
+}
+
+.login-notify-failure span
+{
+	text-align: center;
+}
+
 </style>
 EOF
 						print "</HEAD>\n";
 						print "<BODY style='background-color:#1c1c1c;font-family:Arial, Helvetica, sans-serif;' onload='document.getElementById(\"user\").focus()'>\n";
 
-						if ($valid eq "failed")
+
+						# #
+						#	Login failed
+						# #
+
+						if ($valid eq "fail" || $valid eq "login-retry")
 						{
-							print "<div align='center'><h2>Login Failed</h2></div>\n"
+							print "<div class='login-notify-failure'><span>Login Failed</span></div>\n"
 						}
 
 						print "<div class='login-container-main'>";
@@ -10482,7 +10509,7 @@ EOF
 										{
 											print "<form action='$script' method='post' class='form-csfapp-dropdown'>\n";
 											print "  <div class='btn-group'>\n";
-											print "    <button type='button' class='btn btn-csfapp-dropdown dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>\n";
+											print "    <button type='button' class='btn-settings-base btn-csfapp-dropdown dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>\n";
 											print "      <span class='selected-text'>csf</span> <span class='caret'></span>\n";
 											print "    </button>\n";
 											print "    <ul class='dropdown-menu'>\n";
@@ -10505,7 +10532,7 @@ EOF
 											print "  <input type='hidden' name='csfapp' value='csf'>\n";
 
 											# submit button
-											print "  <input class='btn btn-default' type='submit' value='Switch'>\n";
+											print "  <input class='btn-settings-base btn-default' type='submit' value='Switch'>\n";
 
 											# noscript fallback
 											print "  <noscript>\n";
@@ -10521,7 +10548,7 @@ EOF
 												print "      <option>cse</option>\n";
 											}
 											print "    </select>\n";
-											print "    <input class='btn btn-default' type='submit' value='Switch'>\n";
+											print "    <input class='btn-settings-base btn-default' type='submit' value='Switch'>\n";
 											print "  </noscript>\n";
 											print "</form>\n";
 										}
@@ -10529,7 +10556,7 @@ EOF
 									print "</div>\n";
 									print <<EOF;
 
-        <button class="header-btn"><a class='btn btn-logout' href='/$session/?csfaction=csflogout'>Logout</a></button>
+        <button class="header-btn"><a class='btn-settings-base btn-logout' href='/$session/?csfaction=csflogout'>Logout</a></button>
     </div>
 </div>
 EOF
