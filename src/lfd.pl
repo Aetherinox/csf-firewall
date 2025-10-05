@@ -192,8 +192,7 @@ setsid();
 #	Login page vars
 # #
 
-our $th_dark_version = 2.21;
-my $th_dark_url = "https://github.com/Aetherinox/csf-firewall";
+my $app_github_url = "https://github.com/Aetherinox/csf-firewall";
 
 my $oldfh = select STDERR; ##no critic
 $| = 1;
@@ -10322,13 +10321,13 @@ EOF
 
 						print "<div class='login-container-main'>";
 						print "<form action='/' method='post'><div class='login-form' align='center'>\n";
-						print "<div class='login-container-logo'><a href='$th_dark_url'><img class='login-logo' src='https://github.com/user-attachments/assets/ba005563-da8b-456c-8c4d-19f4ee31eb71'></a></div>";
+						print "<div class='login-container-logo'><a href='$app_github_url'><img class='login-logo' src='https://github.com/user-attachments/assets/ba005563-da8b-456c-8c4d-19f4ee31eb71'></a></div>";
 						print "<table align='center' cellspacing='0' cellpadding='4' class='login-container'>\n";
 						print "<tr><td><input placeholder='Username' id='user' name='csflogin' type='text' class='input' size='25'></td></tr>\n";
 						print "<tr><td><input placeholder='Password' name='csfpassword' type='password' class='input' size='25'></td></tr>\n";
 						print "<tr><td colspan='2' align='center'><input type='submit' value='Enter' class='btn-login'></td></tr>\n";
 						print "<", "/table>";
-						print "<div class='login-footer'><a href='$th_dark_url'>ConfigServer Firewall</a> v$version</div>";
+						print "<div class='login-footer'><a href='$app_github_url'>ConfigServer Firewall</a> v$version</div>";
 						print "</div></form>\n";
 						print "</div>";
 						print "\n</BODY>\n</HTML>\n";
