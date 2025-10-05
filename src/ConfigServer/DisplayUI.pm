@@ -1421,50 +1421,249 @@ function CSFexpand(obj){
 }
 </script>
 EOF
-		print "<style>.hidepiece\{display:none\}</style>\n";
+
+		print "<style>.hidepiece{display:none}</style>\n";
 		open (my $DIV, "<", "/usr/local/csf/lib/csf.div");
 		flock ($DIV, LOCK_SH);
 		my @divdata = <$DIV>;
 		close ($DIV);
 		print @divdata;
+
 		print "<div id='paginatediv2' class='text-center'></div>\n";
 		print "<form action='$script' method='post'>\n";
 		print "<input type='hidden' name='action' value='saveconf'>\n";
+
+		# #
+		#	Process csf.conf config
+		# #
+
 		my $first = 1;
 		my @divnames;
 		my $comment = 0;
-		foreach my $line (@confdata) {
-			if (($line !~ /^\#/) and ($line =~ /=/)) {
-				if ($comment) {print "</div>\n"}
+
+		# #
+		#	HEADER block parser
+		#	
+		#	Updated main functionality around 10/25 so that a new section was introduced
+		#	HEADER:csf.conf
+		#   
+		#   This allows us to add information about a specific config file and show that
+		#   to users when they view the "Firewall Configuration" page.
+		#   
+		#	The HEADER: block is completely optional, and we maintain reverse compatibility
+		#	so that users can copy/paste old configs from previous versions.
+		# #
+
+		my $header_found  = 0;
+		my $header_title  = '';
+		my @header_lines  = ();
+
+		for ( my $i = 0; $i <= $#confdata; $i++ )
+		{
+			my $line = $confdata[$i];
+
+			# #
+			#	Match lines like "# HEADER:csf.conf" (any number of # and spaces)
+			# #
+
+			if ( defined $line && $line =~ /^\s*#+\s*HEADER\s*:\s*(.*)/i )
+			{
+				$header_found = 1;
+				$header_title = $1;
+				$header_title =~ s/^\s+|\s+$//g;
+
+				# #
+				#	Find start index including decorative-only lines
+				# #
+	
+				my $start = $i;
+				while ( $start > 0 && defined $confdata[$start - 1] && $confdata[$start - 1] =~ /^\s*[#\s]+\s*$/ )
+				{
+					$start--;
+				}
+
+				# #
+				#	Collect lines under header
+				# #
+
+				my $cur = $i + 1;
+				while ( $cur <= $#confdata && defined $confdata[$cur] && $confdata[$cur] =~ /^\s*\#/ )
+				{
+					my $raw = $confdata[$cur];
+					chomp $raw;
+
+					# #
+					#	Blank comment line (just "#" or "#   ") -> push empty string
+					# #
+	
+					if ( $raw =~ /^\s*#\s*$/ )
+					{
+						push @header_lines, '';
+						$cur++;
+						next;
+					}
+
+					# #
+					#	Skip decorative lines like "# #", "###   "
+					# #
+	
+					if ( $raw =~ /^\s*#\s*#\s*$/ )
+					{
+						$cur++;
+						next;
+					}
+
+					# #
+					#	Strip leading hashes and whitespace
+					# #
+
+					$raw =~ s/^\s*#+\s*//;
+					$raw =~ s/&/&amp;/g;
+					$raw =~ s/</&lt;/g;
+					$raw =~ s/>/&gt;/g;
+
+					push @header_lines, $raw;
+					$cur++;
+				}
+
+				# #
+				#	Include trailing decorative lines
+				# #
+	
+				my $last = $cur - 1;
+				while ( $last + 1 <= $#confdata && defined $confdata[$last + 1] && $confdata[$last + 1] =~ /^\s*[#\s]+\s*$/ )
+				{
+					$last++;
+				}
+
+				# #
+				#	Remove header block
+				# #
+	
+				if ( $last >= $start )
+				{
+					splice( @confdata, $start, $last - $start + 1 );
+				}
+
+				last;
+			}
+		}
+
+		# #
+		#   Print header (if found)
+		# #
+	
+		if ( $header_found )
+		{
+			print "<div class='header-block'>\n";
+			print "<div class='section'>$header_title</div>\n";
+			print "<div class='section-body comment'>\n";
+
+			foreach my $hl ( @header_lines )
+			{
+				# #
+				#	Skip decorative lines with multiple # #
+				# #
+	
+				next if $hl =~ /^\s*\#\s*\#\s*$/;
+
+				# #
+				#	Blank line (just # or whitespace) -> output a <br>
+				# #
+
+				if ( $hl =~ /^\s*\#\s*$/ )
+				{
+					print "<br>\n";
+					next;
+				}
+
+				# #
+				#	Remove leading # and optional whitespace
+				# #
+
+				$hl =~ s/^\s*\#\s*//;
+
+				# #
+				#	Encode HTML entities just in case
+				# #
+
+				$hl =~ s/&/&amp;/g;
+				$hl =~ s/</&lt;/g;
+				$hl =~ s/>/&gt;/g;
+
+				# #
+				#	Print the line with <br>
+				# #
+	
+				print "$hl<br>\n";
+			}
+
+			print "</div>\n";  # close section-body
+			print "</div>\n";  # close header-block
+		}
+
+		# #
+		#   Main configuration parsing loop
+		# #
+
+		foreach my $line (@confdata)
+		{
+			if (($line !~ /^\#/) and ($line =~ /=/))
+			{
+				if ($comment)
+				{
+					print "</div>\n"
+				}
+
 				$comment = 0;
 				my ($start,$end) = split (/=/,$line,2);
 				my $name = $start;
 				my $cleanname = $start;
 				$cleanname =~ s/\s//g;
 				$name =~ s/\s/\_/g;
-				if ($end =~ /\"(.*)\"/) {$end = $1}
+	
+				if ($end =~ /\"(.*)\"/)
+				{
+					$end = $1
+				}
+	
 				my $size = length($end) + 4;
 				my $class = "value-default";
 				my ($status,$range,$default) = sanity($start,$end);
 				my $showrange = "";
 				my $showfrom;
 				my $showto;
-				if ($range =~ /^(\d+)-(\d+)$/) {
+
+				if ($range =~ /^(\d+)-(\d+)$/)
+				{
 					$showfrom = $1;
 					$showto = $2;
 				}
-				if ($default ne "") {
+
+				if ($default ne "")
+				{
 					$showrange = " Default: $default [$range]";
 					if ($end ne $default) {$class = "value-other"}
 				}
-				if ($status) {$class = "value-warning"; $showrange = " Recommended range: $range (Default: $default)"}
-				if ($config{RESTRICT_UI} and ($cleanname eq "CLUSTER_KEY" or $cleanname eq "UI_PASS" or $cleanname eq "UI_USER")) {
+	
+				if ($status)
+				{
+					$class = "value-warning";
+					$showrange = " Recommended range: $range (Default: $default)";
+				}
+	
+				if ($config{RESTRICT_UI} and ($cleanname eq "CLUSTER_KEY" or $cleanname eq "UI_PASS" or $cleanname eq "UI_USER"))
+				{
 					print "<div class='$class'><b>$start</b> = <input type='text' value='********' size='14' disabled> (hidden restricted UI item)</div>\n";
 				}
-				elsif ($restricted{$cleanname}) {
+				elsif ($restricted{$cleanname})
+				{
 					print "<div class='$class'><b>$start</b> = <input type='text' onFocus='CSFexpand(this);' onkeyup='CSFexpand(this);' value='$end' size='$size' disabled> (restricted UI item)</div>\n";
-				} else {
-					if ($range eq "0-1") {
+				}
+				else
+				{
+					if ($range eq "0-1")
+					{
 						my $switch_checked_0 = "";
 						my $switch_checked_1 = "";
 						my $switch_active_0 = "";
@@ -1481,57 +1680,61 @@ EOF
 						print "</label>\n";
 						print "</div></div>\n";
 					}
-					elsif ($range =~ /^(\d+)-(\d+)$/ and !(-e "/etc/csuibuttondisable") and ($showto - $showfrom <= 20) and $end >= $showfrom and $end <= $showto) {
+					elsif ($range =~ /^(\d+)-(\d+)$/ and !(-e "/etc/csuibuttondisable") and ($showto - $showfrom <= 20) and $end >= $showfrom and $end <= $showto)
+					{
 						my $selected = "";
 						print "<div class='$class'><b>$start</b> = <select name='$name'>\n";
-						for ($showfrom..$showto) {
+						for ($showfrom..$showto)
+						{
 							if ($_ == $end) {$selected = "selected"} else {$selected = ""}
 							print "<option $selected>$_</option>\n";
 						}
 						print "</select></div>\n";
-					} else {
+					}
+					else
+					{
 						print "<div class='$class'><b>$start</b> = <input type='text' onFocus='CSFexpand(this);' onkeyup='CSFexpand(this);' name='$name' value='$end' size='$size'>$showrange</div>\n";
 					}
 				}
 			}
 			else
 			{
-
 				# #
-				#	skip entirely if there are two # # symbols on the line. it accepts both:
-				#		## comment here
-				#		# # comment here
+				#   Skip decorative comments and blank lines
 				# #
-				
+		
 				if ($line =~ /^\#\s*\#/) { next }
 				if ($line =~ /^\#\#/) { next }
 				if ($line =~ /^\s*$/) { next }
 
+				# #
+				#   Handle SECTION markers
+				# #
+		
 				if ($line =~ /^\#\s*SECTION:(.*)/)
 				{
 					push @divnames, $1;
 					unless ($first) {print "</div>\n"}
-					print "<div class='virtualpage hidepiece'>\n<div class='section'>";
-					print "$1</div>\n";
+					print "<div class='virtualpage hidepiece'>\n<div class='section'>$1</div>\n";
 					$first = 0;
 					next;
 				}
 
+				# #
+				#   Handle regular comments
+				# #
+	
 				if ($line =~ /^\# / and $comment == 0)
 				{
 					$comment = 1;
 					print "<div class='comment'>\n";
 				}
 
-				$line =~ s/\#//g;
+				$line =~ s/^\s*#+\s*//;
 				$line =~ s/&/&amp;/g;
 				$line =~ s/</&lt;/g;
 				$line =~ s/>/&gt;/g;
 				$line =~ s/\n/<br \/>\n/g;
-
-				# #
-				#	print the line
-				# #
 
 				print "$line<br />\n";
 			}
