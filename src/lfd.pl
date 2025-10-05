@@ -10202,9 +10202,11 @@ img.login-logo:not(:hover)
 	transform: scale(1);
 }
 
-form.login-form
+.login-form
 {
-
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .login-container-logo
@@ -10215,11 +10217,10 @@ form.login-form
 
 .login-container-main
 {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
-	min-height: 100vh;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .login-container
@@ -10250,9 +10251,9 @@ form.login-form
 
 .input
 {
-	width: 30vw;
+	width: clamp(200px, 35vw, 400px);
 	max-width: 400px;
-	min-width: 100px;
+	min-width: 200px;
 	padding-left:10px;
 	padding-right: 10px;
 	padding-top: 4px;
