@@ -284,6 +284,7 @@ nav:
                 - Structure: 'usage/cheatsheet/structure.md'
                 - Commands: 'usage/cheatsheet/commands.md'
                 - Example Configs: 'usage/cheatsheet/conf.md'
+                - Ports: 'usage/cheatsheet/ports.md'
     - Advanced:
           - Services:
                 - blocklist.configserver.dev: 'advanced/services/blocklist.configserver.md'
