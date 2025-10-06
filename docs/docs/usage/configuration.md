@@ -116,20 +116,20 @@ Define the allowed incoming and outgoing TCP ports, respectively. Add or remove 
 
       <h3>Samba Users</h3>
 
-      If you wish to access a drive on the server you are running CSF on from another machine, you must add the following ports:
+      You must have the following `TCP` ports unblocked:
 
       ``` shell
       TCP_IN = "445,139"
-      UDP_IN = "137,138"
+      TCP_OUT = "445,139"
       ```
 
       <br />
 
-      If you need to access a drive from another machine on your server running CSF; you must add the following ports:
+      You must have the following `UDP` ports unblocked:
 
       ``` shell
-      TCP_OUT = "445,139"
-      UDP_OUT = "137,138"
+      UDP_IN = "137,138,445"
+      UDP_OUT = "137,138,445"
       ```
 
 <br />
@@ -184,20 +184,20 @@ Define the allowed incoming and outgoing UDP ports, respectively. Add or remove 
 
       <h3>Samba Users</h3>
 
-      If you wish to access a drive on the server you are running CSF on from another machine, you must add the following ports:
+      You must have the following `TCP` ports unblocked:
 
       ``` shell
       TCP_IN = "445,139"
-      UDP_IN = "137,138"
+      TCP_OUT = "445,139"
       ```
 
       <br />
 
-      If you need to access a drive from another machine on your server running CSF; you must add the following ports:
+      You must have the following `UDP` ports unblocked:
 
       ``` shell
-      TCP_OUT = "445,139"
-      UDP_OUT = "137,138"
+      UDP_IN = "137,138,445"
+      UDP_OUT = "137,138,445"
       ```
 
 <br />
