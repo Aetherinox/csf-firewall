@@ -503,6 +503,12 @@ jobs:
                   zip "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.zip" README.md LICENSE.md 
                   (cd src && zip -r "../${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.zip" .)
 
+                  echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
+                  echo "⚙️ Building STABLE Package .tgz ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.tgz"
+                  echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
+
+                  tar -czf "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.tgz" README.md LICENSE.md -C src .
+
                   echo "‎"
                   echo "‎"
 
@@ -546,6 +552,12 @@ jobs:
 
                   zip "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}.zip" README.md LICENSE.md 
                   (cd src && zip -r "../${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}" .)
+
+                  echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
+                  echo "⚙️ Building RC Package .tgz ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}.tgz"
+                  echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
+
+                  tar -czf "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}.tgz" README.md LICENSE.md -C src .
 
                   echo "‎"
                   echo "‎"
@@ -679,52 +691,51 @@ jobs:
                   startsWith( inputs.RC_RELEASE, false ) ||
                   startsWith( env.RC_RELEASE, false )
               run: |
-                  #  Filename › Main ›App
-                  file_app_main="${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.zip"
-                  echo "FILE_APP_MAIN=${file_app_main}" >> $GITHUB_ENV
+                  #  Filename › Csf › zip
+                  file_csf_zip="${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.zip"
+                  echo "FILE_CSF_ZIP=${file_csf_zip}" >> $GITHUB_ENV
+
+                  #  Filename › Csf › tgz
+                  file_csf_tgz="${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.tgz"
+                  echo "FILE_CSF_TGZ=${file_csf_tgz}" >> $GITHUB_ENV
 
                   #  Filename › Extra › Helpers
                   file_extra_helpers="${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-helpers.zip"
                   echo "FILE_EXTRA_HELPERS=${file_extra_helpers}" >> $GITHUB_ENV
 
-                  #  Filename › Extra › Dark
-                  file_extra_dark="${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-theme-dark.zip"
-                  echo "FILE_EXTRA_DARK=${file_extra_dark}" >> $GITHUB_ENV
 
 
+                  #  SHA1SUM › Csf › zip
+                  sha1sum_csf_zip="$(shasum --algorithm 1 ${file_csf_zip} | awk '{ print $1 }')"
+                  echo "SHA1SUM_CSF_ZIP=${sha1sum_csf_zip}" >> $GITHUB_ENV
 
-                  #  SHA1SUM › Main App
-                  sha1sum_app_main="$(shasum --algorithm 1 ${file_app_main} | awk '{ print $1 }')"
-                  echo "SHA1SUM_APP_MAIN=${sha1sum_app_main}" >> $GITHUB_ENV
-
+                  #  SHA1SUM › Csf › tgz
+                  sha1sum_csf_tgz="$(shasum --algorithm 1 ${file_csf_tgz} | awk '{ print $1 }')"
+                  echo "SHA1SUM_CSF_TGZ=${sha1sum_csf_tgz}" >> $GITHUB_ENV
+  
                   #  SHA1SUM › Extra › Helpers
                   sha1sum_extra_helpers="$(shasum --algorithm 1 ${file_extra_helpers} | awk '{ print $1 }')"
                   echo "SHA1SUM_EXTRA_HELPERS=${sha1sum_extra_helpers}" >> $GITHUB_ENV
 
-                  #  SHA1SUM › Extra › Dark
-                  sha1sum_extra_dark="$(shasum --algorithm 1 ${file_extra_dark} | awk '{ print $1 }')"
-                  echo "SHA1SUM_EXTRA_DARK=${sha1sum_extra_dark}" >> $GITHUB_ENV
 
 
+                  #  SHA256SUM › Csf › zip
+                  sha256sum_csf_zip="$(shasum --algorithm 256 "$file_csf_zip" | awk '{ print $1 }')"
+                  echo "SHA256SUM_CSF_ZIP=$sha256sum_csf_zip" >> $GITHUB_ENV
 
-                  #  SHA256SUM › Main App
-                  sha256sum_app_main="$(shasum --algorithm 256 "$file_app_main" | awk '{ print $1 }')"
-                  echo "SHA256SUM_APP_MAIN=$sha256sum_app_main" >> $GITHUB_ENV
+                  #  SHA256SUM › Csf › tgz
+                  sha256sum_csf_tgz="$(shasum --algorithm 256 "$file_csf_tgz" | awk '{ print $1 }')"
+                  echo "SHA256SUM_CSF_TGZ=$sha256sum_csf_tgz" >> $GITHUB_ENV
 
                   #  SHA256SUM › Extra › Helpers 
                   sha256sum_extra_helpers="$(shasum --algorithm 256 "$file_extra_helpers" | awk '{ print $1 }')"
                   echo "SHA256SUM_EXTRA_HELPERS=$sha256sum_extra_helpers" >> $GITHUB_ENV
 
-                  #  SHA256SUM › Extra › Dark 
-                  sha256sum_extra_dark="$(shasum --algorithm 256 "$file_extra_dark" | awk '{ print $1 }')"
-                  echo "SHA256SUM_EXTRA_DARK=$sha256sum_extra_dark" >> $GITHUB_ENV
 
-
-
-                  
+                
                   #  get sha1 and sha256 for .zip and .gz files
-                  find . -maxdepth 1 \( -name '*.zip' -o -name '*.gz' \) -printf '%P\n' | xargs -r sha1sum | gpg --digest-algo sha256 --clearsign > sha1sum.txt.asc
-                  find . -maxdepth 1 \( -name '*.zip' -o -name '*.gz' \) -printf '%P\n' | xargs -r sha256sum | gpg --digest-algo sha256 --clearsign > sha256sum.txt.asc
+                  find . -maxdepth 1 \( -name '*.zip' -o -name '*.tgz' \) -printf '%P\n' | xargs -r sha1sum | gpg --digest-algo sha256 --clearsign > sha1sum.txt.asc
+                  find . -maxdepth 1 \( -name '*.zip' -o -name '*.tgz' \) -printf '%P\n' | xargs -r sha256sum | gpg --digest-algo sha256 --clearsign > sha256sum.txt.asc
 
 
 
@@ -741,46 +752,45 @@ jobs:
                   startsWith( inputs.RC_RELEASE, true ) ||
                   startsWith( env.RC_RELEASE, true )
               run: |
-                  #  Filename › Main ›App
-                  file_app_main="${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}.zip"
-                  echo "FILE_APP_MAIN=${file_app_main}" >> $GITHUB_ENV
+                  #  Filename › Csf › zip
+                  file_csf_zip="${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}.zip"
+                  echo "FILE_CSF_ZIP=${file_csf_zip}" >> $GITHUB_ENV
+
+                  #  Filename › Csf › tgz
+                  file_csf_tgz="${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}.tgz"
+                  echo "FILE_CSF_TGZ=${file_csf_tgz}" >> $GITHUB_ENV
 
                   #  Filename › Extra › Helpers
                   file_extra_helpers="${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}-helpers.zip"
                   echo "FILE_EXTRA_HELPERS=${file_extra_helpers}" >> $GITHUB_ENV
 
-                  #  Filename › Extra › Dark
-                  file_extra_dark="${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}-theme-dark.zip"
-                  echo "FILE_EXTRA_DARK=${file_extra_dark}" >> $GITHUB_ENV
 
 
+                  #  SHA1SUM › Csf › zip
+                  sha1sum_csf_zip="$(shasum --algorithm 1 ${file_csf_zip} | awk '{ print $1 }')"
+                  echo "SHA1SUM_CSF_ZIP=${sha1sum_csf_zip}" >> $GITHUB_ENV
 
-                  #  SHA1SUM › Main App
-                  sha1sum_app_main="$(shasum --algorithm 1 ${file_app_main} | awk '{ print $1 }')"
-                  echo "SHA1SUM_APP_MAIN=${sha1sum_extra_dark}" >> $GITHUB_ENV
+                  #  SHA1SUM › Csf › tgz
+                  sha1sum_csf_tgz="$(shasum --algorithm 1 ${file_csf_tgz} | awk '{ print $1 }')"
+                  echo "SHA1SUM_CSF_TGZ=${sha1sum_csf_tgz}" >> $GITHUB_ENV
 
                   #  SHA1SUM › Extra › Helpers
                   sha1sum_extra_helpers="$(shasum --algorithm 1 ${file_extra_helpers} | awk '{ print $1 }')"
                   echo "SHA1SUM_EXTRA_HELPERS=${sha1sum_extra_helpers}" >> $GITHUB_ENV
 
-                  #  SHA1SUM › Extra › Dark
-                  sha1sum_extra_dark="$(shasum --algorithm 1 ${file_extra_dark} | awk '{ print $1 }')"
-                  echo "SHA1SUM_EXTRA_DARK=${sha1sum_extra_dark}" >> $GITHUB_ENV
 
 
+                  #  SHA256SUM › Csf › zip
+                  sha256sum_csf_zip="$(shasum --algorithm 256 "$file_csf_zip" | awk '{ print $1 }')"
+                  echo "SHA256SUM_CSF_ZIP=$sha256sum_csf_zip" >> $GITHUB_ENV
 
-                  #  SHA256SUM › Main App
-                  sha256sum_app_main="$(shasum --algorithm 256 "$file_app_main" | awk '{ print $1 }')"
-                  echo "SHA256SUM_APP_MAIN=$sha256sum_app_main" >> $GITHUB_ENV
+                  #  SHA256SUM › Csf › tgz
+                  sha256sum_csf_tgz="$(shasum --algorithm 256 "$file_csf_tgz" | awk '{ print $1 }')"
+                  echo "SHA256SUM_CSF_TGZ=$sha256sum_csf_tgz" >> $GITHUB_ENV
 
                   #  SHA256SUM › Extra › Helpers 
                   sha256sum_extra_helpers="$(shasum --algorithm 256 "$file_extra_helpers" | awk '{ print $1 }')"
                   echo "SHA256SUM_EXTRA_HELPERS=$sha256sum_extra_helpers" >> $GITHUB_ENV
-
-                  #  SHA256SUM › Extra › Dark 
-                  sha256sum_extra_dark="$(shasum --algorithm 256 "$file_extra_dark" | awk '{ print $1 }')"
-                  echo "SHA256SUM_EXTRA_DARK=$sha256sum_extra_dark" >> $GITHUB_ENV
-
 
 
                   
@@ -806,7 +816,7 @@ jobs:
                   echo " 🆔 CHECKSUMS"
                   echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
                   echo "‎"
-                  echo " ${{ env.FILE_APP_MAIN }} .................... ${{ env.SHA256SUM_APP_MAIN }}"
+                  echo " ${{ env.FILE_CSF_ZIP }} .................... ${{ env.SHA256SUM_CSF_ZIP }}"
                   echo " ${{ env.FILE_EXTRA_HELPERS }} ............... ${{ env.SHA256SUM_EXTRA_HELPERS }}"
                   echo " ${{ env.FILE_EXTRA_DARK }} .................. ${{ env.SHA256SUM_EXTRA_DARK }}"
                   echo "‎"
@@ -868,7 +878,7 @@ jobs:
                   fetchViaCommits: true
                   configurationJson: |
                     {
-                      "template": "## Release Info \n| Item | Value |\n| --- | --- |\n| <sub>🏷️ Version</sub> | <sub>v${{ env.VERSION_CSF }}</sub>|\n| <sub>📄 ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.zip</sub> | <sub>ConfigServer Firewall main app</sub><br /><sub>${{ env.SHA256SUM_APP_MAIN }}</sub>|\n| <sub>📄 ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-helpers.zip</sub> | <sub>Helper patches. View README for instructions</sub><br /><sub>${{ env.SHA256SUM_EXTRA_HELPERS }}</sub>|\n| <sub>📄 ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-theme-dark.zip</sub> | <sub>Dark theme</sub><br /><sub>${{ env.SHA256SUM_EXTRA_DARK }}</sub>|\n| <sub>🕟 Stamp</sub>| <sub>`#{{FROM_TAG}}-#{{FROM_TAG_DATE}} 🔺 #{{TO_TAG}}-#{{TO_TAG_DATE}}`</sub>|\n| <sub>📅 Last Release</sub>| <sub>`#{{DAYS_SINCE}} days ago`</sub>|\n\n<br>\n\n---\n\n<br>\n\n### What's New\nThis release contains the following changes:\n\n<br>\n\n---\n\n<br>\n\n### Statistics\nHow the files have changed:\n<ul><li><a href='#{{RELEASE_DIFF}}'>Changed files</a>  : <b>#{{CHANGED_FILES}}</b> </li><li>Changes  : <b>#{{CHANGES}}</b> </li><li>Commits : <b>#{{COMMITS}}</b> </li><li>Additions : <b>#{{ADDITIONS}}</b></li><li>Deletions : <b>#{{DELETIONS}}</b></li><li>PRs (categorized) : <b>#{{CATEGORIZED_COUNT}}</b></li><li>PRs (uncategorized) : <b>#{{UNCATEGORIZED_COUNT}}</b></li><li>PRs (open) : <b>#{{OPEN_COUNT}}</b></li>\n<br />\n</ul>\n\n<br>\n\n---\n\n<br>\n\n### Pull Requests\nThis release is associated with the following pull requests:\n#{{CHANGELOG}}\n\n<br>\n\n---\n\n<br>\n\n"
+                      "template": "## Release Info \n| Item | Value |\n| --- | --- |\n| <sub>🏷️ Version</sub> | <sub>v${{ env.VERSION_CSF }}</sub>|\n| <sub>📄 ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.zip</sub> | <sub>ConfigServer Firewall main app</sub><br /><sub>${{ env.SHA256SUM_CSF_ZIP }}</sub>|\n| <sub>📄 ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-helpers.zip</sub> | <sub>Helper patches. View README for instructions</sub><br /><sub>${{ env.SHA256SUM_EXTRA_HELPERS }}</sub>|\n| <sub>📄 ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-theme-dark.zip</sub> | <sub>Dark theme</sub><br /><sub>${{ env.SHA256SUM_EXTRA_DARK }}</sub>|\n| <sub>🕟 Stamp</sub>| <sub>`#{{FROM_TAG}}-#{{FROM_TAG_DATE}} 🔺 #{{TO_TAG}}-#{{TO_TAG_DATE}}`</sub>|\n| <sub>📅 Last Release</sub>| <sub>`#{{DAYS_SINCE}} days ago`</sub>|\n\n<br>\n\n---\n\n<br>\n\n### What's New\nThis release contains the following changes:\n\n<br>\n\n---\n\n<br>\n\n### Statistics\nHow the files have changed:\n<ul><li><a href='#{{RELEASE_DIFF}}'>Changed files</a>  : <b>#{{CHANGED_FILES}}</b> </li><li>Changes  : <b>#{{CHANGES}}</b> </li><li>Commits : <b>#{{COMMITS}}</b> </li><li>Additions : <b>#{{ADDITIONS}}</b></li><li>Deletions : <b>#{{DELETIONS}}</b></li><li>PRs (categorized) : <b>#{{CATEGORIZED_COUNT}}</b></li><li>PRs (uncategorized) : <b>#{{UNCATEGORIZED_COUNT}}</b></li><li>PRs (open) : <b>#{{OPEN_COUNT}}</b></li>\n<br />\n</ul>\n\n<br>\n\n---\n\n<br>\n\n### Pull Requests\nThis release is associated with the following pull requests:\n#{{CHANGELOG}}\n\n<br>\n\n---\n\n<br>\n\n"
                     }
               env:
                   GITHUB_TOKEN: ${{ secrets.ADMINSERV_TOKEN }}
@@ -904,7 +914,7 @@ jobs:
                   fetchViaCommits: true
                   configurationJson: |
                     {
-                      "template": "## Release Info \n| Item | Value |\n| --- | --- |\n| <sub>🏷️ Version</sub> | <sub>v${{ env.VERSION_CSF }}</sub>|\n| <sub>📄 ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.zip</sub> | <sub>ConfigServer Firewall main app</sub><br /><sub>${{ env.SHA256SUM_APP_MAIN }}</sub>|\n| <sub>📄 ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-helpers.zip</sub> | <sub>Helper patches. View README for instructions</sub><br /><sub>${{ env.SHA256SUM_EXTRA_HELPERS }}</sub>|\n| <sub>📄 ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-theme-dark.zip</sub> | <sub>Dark theme</sub><br /><sub>${{ env.SHA256SUM_EXTRA_DARK }}</sub>|\n| <sub>🕟 Stamp</sub>| <sub>`#{{FROM_TAG}}-#{{FROM_TAG_DATE}} 🔺 #{{TO_TAG}}-#{{TO_TAG_DATE}}`</sub>|\n| <sub>📅 Last Release</sub>| <sub>`#{{DAYS_SINCE}} days ago`</sub>|\n\n<br>\n\n---\n\n<br>\n\n### What's New\nThis release contains the following changes:\n\n<br>\n\n---\n\n<br>\n\n### Statistics\nHow the files have changed:\n<ul><li><a href='#{{RELEASE_DIFF}}'>Changed files</a>  : <b>#{{CHANGED_FILES}}</b> </li><li>Changes  : <b>#{{CHANGES}}</b> </li><li>Commits : <b>#{{COMMITS}}</b> </li><li>Additions : <b>#{{ADDITIONS}}</b></li><li>Deletions : <b>#{{DELETIONS}}</b></li><li>PRs (categorized) : <b>#{{CATEGORIZED_COUNT}}</b></li><li>PRs (uncategorized) : <b>#{{UNCATEGORIZED_COUNT}}</b></li><li>PRs (open) : <b>#{{OPEN_COUNT}}</b></li>\n<br />\n</ul>\n\n<br>\n\n---\n\n<br>\n\n### Pull Requests\nThis release is associated with the following pull requests:\n#{{CHANGELOG}}\n\n<br>\n\n"
+                      "template": "## Release Info \n| Item | Value |\n| --- | --- |\n| <sub>🏷️ Version</sub> | <sub>v${{ env.VERSION_CSF }}</sub>|\n| <sub>📄 ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.zip</sub> | <sub>ConfigServer Firewall main app</sub><br /><sub>${{ env.SHA256SUM_CSF_ZIP }}</sub>|\n| <sub>📄 ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-helpers.zip</sub> | <sub>Helper patches. View README for instructions</sub><br /><sub>${{ env.SHA256SUM_EXTRA_HELPERS }}</sub>|\n| <sub>📄 ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-theme-dark.zip</sub> | <sub>Dark theme</sub><br /><sub>${{ env.SHA256SUM_EXTRA_DARK }}</sub>|\n| <sub>🕟 Stamp</sub>| <sub>`#{{FROM_TAG}}-#{{FROM_TAG_DATE}} 🔺 #{{TO_TAG}}-#{{TO_TAG_DATE}}`</sub>|\n| <sub>📅 Last Release</sub>| <sub>`#{{DAYS_SINCE}} days ago`</sub>|\n\n<br>\n\n---\n\n<br>\n\n### What's New\nThis release contains the following changes:\n\n<br>\n\n---\n\n<br>\n\n### Statistics\nHow the files have changed:\n<ul><li><a href='#{{RELEASE_DIFF}}'>Changed files</a>  : <b>#{{CHANGED_FILES}}</b> </li><li>Changes  : <b>#{{CHANGES}}</b> </li><li>Commits : <b>#{{COMMITS}}</b> </li><li>Additions : <b>#{{ADDITIONS}}</b></li><li>Deletions : <b>#{{DELETIONS}}</b></li><li>PRs (categorized) : <b>#{{CATEGORIZED_COUNT}}</b></li><li>PRs (uncategorized) : <b>#{{UNCATEGORIZED_COUNT}}</b></li><li>PRs (open) : <b>#{{OPEN_COUNT}}</b></li>\n<br />\n</ul>\n\n<br>\n\n---\n\n<br>\n\n### Pull Requests\nThis release is associated with the following pull requests:\n#{{CHANGELOG}}\n\n<br>\n\n"
                     }
               env:
                   GITHUB_TOKEN: ${{ secrets.ADMINSERV_TOKEN }}
@@ -950,7 +960,7 @@ jobs:
             #   Release › SFTP / SSH › Setup SSH Key
             # #
 
-            - name: '📁 Release › Upload Artifacts'
+            - name: '📁 Release › Upload Artifacts › .zip'
               env:
                   repo: ${{ github.event.repository.name }}
                   username: github
@@ -958,6 +968,39 @@ jobs:
                   domain: ${{ secrets.ARTIFACTS_DOMAIN }}
                   sshkey: ${{ secrets.ARTIFACTS_GITHUB_SSH_PRIVATE_KEY }}
                   artifact: "releases/${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.zip"
+              run: |
+                  mkdir -p ~/.ssh
+                  echo "$sshkey" > "$HOME/.ssh/github_sftp_key"
+                  chmod 600 "$HOME/.ssh/github_sftp_key"
+
+                  folder=$(dirname "$artifact")
+                  file=$(basename "$artifact")
+
+                  sftp -P "$port" -i "$HOME/.ssh/github_sftp_key" -o StrictHostKeyChecking=no "$username@$domain" <<EOF
+                  mkdir $repo
+                  cd $repo
+
+                  # Create remote directories
+                  $(IFS=/; for d in $folder; do
+                        if [ "$d" != "." ]; then
+                            echo "mkdir $d"
+                            echo "cd $d"
+                        fi
+                  done)
+
+                  # Upload the file
+                  put $file
+                  bye
+                  EOF
+
+            - name: '📁 Release › Upload Artifacts › .tgz'
+              env:
+                  repo: ${{ github.event.repository.name }}
+                  username: github
+                  port: ${{ secrets.ARTIFACTS_PORT }}
+                  domain: ${{ secrets.ARTIFACTS_DOMAIN }}
+                  sshkey: ${{ secrets.ARTIFACTS_GITHUB_SSH_PRIVATE_KEY }}
+                  artifact: "releases/${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.tgz"
               run: |
                   mkdir -p ~/.ssh
                   echo "$sshkey" > "$HOME/.ssh/github_sftp_key"
@@ -1079,9 +1122,9 @@ jobs:
                   draft: false
                   generate_release_notes: false
                   files: |
+                      ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.tgz
                       ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.zip
                       ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-helpers.zip
-                      ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-theme-dark.zip
 
                       sha1sum.txt.asc
                       sha256sum.txt.asc
@@ -1117,9 +1160,9 @@ jobs:
                   draft: false
                   generate_release_notes: false
                   files: |
+                      ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}.tgz
                       ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}.zip
                       ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}-helpers.zip
-                      ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}-theme-dark.zip
 
                       sha1sum.txt.asc
                       sha256sum.txt.asc
@@ -1201,12 +1244,12 @@ jobs:
                   echo "| 🆔 RC Output ID                     | ${{ steps.task_release_bundle_rc.outputs.id }} |" >> $GITHUB_STEP_SUMMARY
                   echo "\n\n\n"
                   echo ""
-                  echo "### 📄 File (${{ env.FILE_APP_MAIN }})                                    " >> $GITHUB_STEP_SUMMARY
+                  echo "### 📄 File (${{ env.FILE_CSF_ZIP }})                                    " >> $GITHUB_STEP_SUMMARY
                   echo "The main application release" >> $GITHUB_STEP_SUMMARY
                   echo "| File                                | Result                                 |" >> $GITHUB_STEP_SUMMARY
                   echo "| ----------------------------------- | -------------------------------------- |" >> $GITHUB_STEP_SUMMARY
-                  echo "| 🆔 **SHA1**                         | ${{ env.SHA1SUM_APP_MAIN }}            |" >> $GITHUB_STEP_SUMMARY
-                  echo "| 🆔 **SHA256**                       | ${{ env.SHA256SUM_APP_MAIN }}          |" >> $GITHUB_STEP_SUMMARY
+                  echo "| 🆔 **SHA1**                         | ${{ env.SHA1SUM_CSF_ZIP }}            |" >> $GITHUB_STEP_SUMMARY
+                  echo "| 🆔 **SHA256**                       | ${{ env.SHA256SUM_CSF_ZIP }}          |" >> $GITHUB_STEP_SUMMARY
                   echo "\n\n\n"
                   echo ""
                   echo "### 📄 File (${{ env.FILE_EXTRA_HELPERS }})                               " >> $GITHUB_STEP_SUMMARY
@@ -1217,11 +1260,5 @@ jobs:
                   echo "| 🆔 **SHA256**                       | ${{ env.SHA256SUM_EXTRA_HELPERS }}    |" >> $GITHUB_STEP_SUMMARY
                   echo "\n\n\n"
                   echo ""
-                  echo "### 📄 File (${{ env.FILE_EXTRA_DARK }})                                  " >> $GITHUB_STEP_SUMMARY
-                  echo "Dark theme template files" >> $GITHUB_STEP_SUMMARY
-                  echo "| File                                | Result                                |" >> $GITHUB_STEP_SUMMARY
-                  echo "| ----------------------------------- | ------------------------------------- |" >> $GITHUB_STEP_SUMMARY
-                  echo "| 🆔 **SHA1**                        | ${{ env.SHA1SUM_EXTRA_DARK }}         |" >> $GITHUB_STEP_SUMMARY
-                  echo "| 🆔 **SHA256**                      | ${{ env.SHA256SUM_EXTRA_DARK }}       |" >> $GITHUB_STEP_SUMMARY
                   echo "‎"
                   echo "‎"
