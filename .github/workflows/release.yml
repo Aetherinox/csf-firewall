@@ -518,17 +518,6 @@ jobs:
 
                   echo "‎"
                   echo "‎"
-
-                  # #
-                  #   Zip contents of "📁 extras/theme_dark"
-                  # #
-
-                  echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
-                  echo "⚙️ Building STABLE Package .zip ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-theme-dark.zip"
-                  echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
-
-                  cd extras/theme_dark || exit 1
-                  zip -r "../../${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-theme-dark.zip" ./*
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.ADMINSERV_TOKEN_CL }}
 
@@ -573,17 +562,6 @@ jobs:
 
                   echo "‎"
                   echo "‎"
-
-                  # #
-                  #  Zip contents of "📁 extras/theme_dark"
-                  # #
-
-                  echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
-                  echo "⚙️ Building RC Package .zip ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}-theme-dark.zip"
-                  echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
-
-                  cd extras/theme_dark || exit 1
-                  zip -r "../../${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}-theme-dark.zip" ./*
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.ADMINSERV_TOKEN_CL }}
 
