@@ -5,7 +5,7 @@
 </div>
 
 <div align="center">
-<h6>♾️ Official repository for Config Server Firewall (CSF) ♾️</h1>
+<h6>♾️ Continuation of development for Config Server Firewall (CSF) ♾️</h1>
 </div>
 
 <div align="center">
@@ -117,7 +117,7 @@ This provides better security for your server while giving you an advanced, easy
 <br />
 
 > [!NOTE] 
-> In August 2025, the original developer, Way to the Web Ltd, discontinued development of ConfigServer Firewall. This repository has since taken over, continuing its development by adding new features and providing ongoing bug fixes.
+> In August 2025, the original developer, Way to the Web Ltd, unfortunately discontinued development of ConfigServer Firewall. This repository has since became a fork of the original application, continuing its development by adding new features and providing ongoing bug fixes.
 
 <br />
 
@@ -197,7 +197,7 @@ Interested in Config Server Firewall & Security? Check out a partial list of the
 ### Management & Control
 
 - Integrated UI for major control panels:
-    - cPanel, DirectAdmin, InterWorx, CWP, VestaCP, CyberPanel, Webmin
+    - [cPanel](https://cpanel.net/), [DirectAdmin](https://directadmin.com/), [InterWorx](https://interworx.com/), [CWP](https://control-webpanel.com/), [VestaCP](https://vestacp.com/), [CyberPanel](https://cyberpanel.net/), [Webmin](https://webmin.com/)
 - cPanel reseller access (per-reseller firewall controls: Allow, Deny, Unblock, Search)
 - Integrated with CloudFlare Firewall
 - Upgrade firewall directly from control panel or shell
@@ -1389,7 +1389,7 @@ _Yes. This repository will continue to release updates to Config Server Firewall
 
 <br />
 
-_The dark theme was officially integrated into ConfigServer Firewall. It will release with `v` with a theme selector._
+_After the original developer of CSF sadly stopped work on the app; this repository became a fork for the app itself, instead of just delivering themes and addons. It will be integrated into the app after all work is complete._
 
 </details>
 
@@ -1407,11 +1407,11 @@ _I cannot say for certain. Nobody from cPanel has reached out to me. I hope they
 <br />
 
 <details>
-<summary>what about documentation?</summary>
+<summary>What about documentation?</summary>
 
 <br />
 
-_Since I started managing ConfigServer Firewall; I have been working on re-doing the current documentation so that it supports CSF in its entirety._
+_Docs are available at [https://aetherinox.github.io/csf-firewall/](https://aetherinox.github.io/csf-firewall/). They are a work in progress and consume a lot of time writing. So please be patient while it gets more populated as time goes on._
 
 </details>
 
@@ -1422,7 +1422,7 @@ _Since I started managing ConfigServer Firewall; I have been working on re-doing
 
 <br />
 
-_I hate AI. If you enjoy using it, that's fine. I have a few select emojis that I use which indicate whether my docs are talking about a folder or file. I have written it all by hand._
+_I'm not a fan of AI. I guess it has a purpose, and if you enjoy using it, that's fine. I have a few select emojis that I use which indicate whether my docs are talking about a folder, file, or to note something of importance. I have written it all by hand._
 
 </details>
 
