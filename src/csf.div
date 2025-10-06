@@ -1,8 +1,9 @@
 <script type="text/javascript">
 /***********************************************
-* Virtual Pagination script- ï¿½ Dynamic Drive DHTML code library (www.dynamicdrive.com)
+* Virtual Pagination script- © Dynamic Drive DHTML code library (www.dynamicdrive.com)
 * This notice MUST stay intact for legal use
 * Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code
+* Additions and Modifications © Jonathan Michaelson (www.configserver.com)
 ***********************************************/
 function virtualpaginate(config){ //config: {piececlass:, piececontainer:, pieces_per_page:, defaultpage:, wraparound:, persist}
 	this.piececlass=config.piececlass
