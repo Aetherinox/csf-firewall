@@ -70,13 +70,13 @@ Decompress / unzip the downloaded file to your server. We have provided instruct
 === ":aetherx-axs-file-zipper: .tgz"
 
     ```bash
-    tar -xzf csf.tgz -C /tmp/csf
+    tar -xzf csf.tgz -C /tmp
     ```
 
 === ":aetherx-axs-file-zip: .zip"
 
     ```bash
-    unzip csf.zip -d /tmp/csf
+    unzip csf.zip -d /tmp
     ```
 
 <br />
@@ -111,10 +111,8 @@ Select what documentation you would like to proceed with next ...
 
 </div>
 
-
 <br />
 <br />
-
 
 ## cPanel & WHM
 
@@ -179,13 +177,13 @@ Decompress / unzip the downloaded file to your server. We have provided instruct
 === ":aetherx-axs-file-zipper: .tgz"
 
     ```bash
-    tar -xzf csf.tgz -C /root/csf
+    tar -xzf csf.tgz -C /usr/local/src/
     ```
 
 === ":aetherx-axs-file-zip: .zip"
 
     ```bash
-    unzip csf.zip -d /root/csf
+    unzip csf.zip -d /usr/local/src/
     ```
 
 <br />
@@ -193,7 +191,7 @@ Decompress / unzip the downloaded file to your server. We have provided instruct
 After you extract the archive, you can now change over to the folder where the extracted CSF files are located:
 
 ```shell
-cd /root/csf
+cd /usr/local/src/csf
 ```
 
 <br />
