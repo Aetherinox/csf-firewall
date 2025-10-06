@@ -1,31 +1,15 @@
 ChangeLog:
 
-15.10 - First version released by Aetherinox
+15.01 - First version released by Aetherinox
         https://github.com/Aetherinox/csf-firewall
 
         Registered new domain https://configserver.dev
-
-        Added new pre and post startup scripts
-
-        Added new theme switcher
-
-        Added new dedicated javascript library
-
-        Added new icon font library
-
-        Added new login interface for web interface
-
-        Added new static footer to web interface
 
         Added new blocklist service at https://blocklist.configserver.dev
 
         Bring new update server online at https://download.configserver.dev
 
         Changed csf update server code to point to new csf domain
-
-        Integrated dark theme addon into csf with light theme
-
-        Migrated css over to template structure and theme variables
 
         Fixed bug with "All" tab not properly displaying correct sections in
         web interface
@@ -1766,7 +1750,7 @@ ChangeLog:
         instead of HTTP::Tiny
 
         If URLGET set to use LWP, csf will perform upgrades over SSL to
-        https://download.configserver.com
+        https://download.configserver.dev
 
         Added check for URLGET to Server Check
 
@@ -1889,7 +1873,7 @@ ChangeLog:
         Modified integrated UI to display die errors to browser
 
         Modified X_ARF report to use a self-published schema:
-        http://download.configserver.com/abuse_login-attack_0.2.json
+        https://download.configserver.dev/schema/abuse_login-attack_0.2.json
 
         Modified X_ARF to lowercase the Source-Type field
 
@@ -1906,7 +1890,7 @@ ChangeLog:
         Fixed issue with temporary allow/deny not applying individual port
         rules for outgoing connections
 
-7.14  - Updated scripts to use download.configserver.com
+7.14  - Updated scripts to use download.configserver.dev
 
 7.13  - Fixed issue with temporary allow/deny when issued through the UI
 
@@ -2408,7 +2392,7 @@ ChangeLog:
         automatically. Some files and directories are symlinked to /etc/csf/
         for backwards compatibility and ease of use. See the following for
         individual file locations in the new configuration:
-        http://blog.configserver.com/?p=7
+        https://web.archive.org/web/20250801022207/http://blog.configserver.com/?p=7
 
         CC_LOOKUPS rDNS reporting improvements
 
@@ -3298,7 +3282,7 @@ ChangeLog:
         All user: item selector examples removed from the default csf.pignore
         for all new installations (e.g. user:mailman). csf.pignore examples
         for some common processes can be found here:
-        http://forum.configserver.com/viewtopic.php?f=6&t=2059
+        https://web.archive.org/web/20201202095726/http://forum.configserver.com/viewtopic.php?f=6&t=2059
 
         Updated DA and GENERIC default csf.pignore files for new installations
 
@@ -3457,7 +3441,7 @@ ChangeLog:
         Added 'exe:/usr/bin/postgres' to the cPanel csf.pignore for new
         installations
 
-        Added retry timeout in WHM UI for checking www.configserver.com for
+        Added retry timeout in WHM UI for checking configserver.dev for
         new version information (to avoid repeated hangs when unreachable)
 
         Fixed LF_PERMBLOCK issue that flushed all temporary IP blocks, not

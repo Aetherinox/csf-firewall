@@ -1,22 +1,38 @@
 #!/bin/sh
-###############################################################################
-# Copyright (C) 2006-2025 Jonathan Michaelson
-#
-# https://github.com/waytotheweb/scripts
-#
-# This program is free software; you can redistribute it and/or modify it under
-# the terms of the GNU General Public License as published by the Free Software
-# Foundation; either version 3 of the License, or (at your option) any later
-# version.
-#
-# This program is distributed in the hope that it will be useful, but WITHOUT
-# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-# FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
-# details.
-#
-# You should have received a copy of the GNU General Public License along with
-# this program; if not, see <https://www.gnu.org/licenses>.
-###############################################################################
+# #
+#   @app                ConfigServer Firewall & Security (CSF)
+#                       Login Failure Daemon (LFD)
+#   @website            https://configserver.dev
+#   @docs               https://docs.configserver.dev
+#   @download           https://download.configserver.dev
+#   @repo               https://github.com/Aetherinox/csf-firewall
+#   @copyright          Copyright (C) 2025-2026 Aetherinox
+#                       Copyright (C) 2006-2025 Jonathan Michaelson
+#                       Copyright (C) 2006-2025 Way to the Web Ltd.
+#   @license            GPLv3
+#   @updated            09.26.2025
+#   
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 3 of the License, or (at
+#   your option) any later version.
+#   
+#   This program is distributed in the hope that it will be useful, but
+#   WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+#   General Public License for more details.
+#   
+#   You should have received a copy of the GNU General Public License
+#   along with this program; if not, see <https://www.gnu.org/licenses>.
+#   
+#   @script     ConfigServer Firewall Installer
+#   @desc       determines the users distro and (if any) control panel, launches correct installer sub-script
+#   @author     Aetherinox
+#   @repo       https://github.com/Aetherinox/csf-firewall
+#   
+#   @usage      Normal install          sh install.sh
+#               Dryrun install          sh install.sh --dryrun
+# #
 
 umask 0177
 
@@ -288,12 +304,6 @@ fi
 if [ ! -e "/usr/local/csf/bin/pt_deleted_action.pl" ]; then
 	cp -avf pt_deleted_action.pl /usr/local/csf/bin/.
 fi
-if [ ! -e "/usr/local/csf/bin/csfpre.sh" ]; then
-	cp -avf csfpre.sh /usr/local/csf/bin/.
-fi
-if [ ! -e "/usr/local/csf/bin/csfpost.sh" ]; then
-	cp -avf csfpost.sh /usr/local/csf/bin/.
-fi
 if [ ! -e "/etc/csf/messenger" ]; then
 	cp -avf messenger /etc/csf/.
 fi
@@ -410,17 +420,6 @@ cp -avf messenger/*.php /etc/csf/messenger/.
 cp -avf lfd.logrotate /etc/logrotate.d/lfd
 
 rm -fv /etc/csf/csf.spamhaus /etc/csf/csf.dshield /etc/csf/csf.tor /etc/csf/csf.bogon
-
-# #
-#   pre.d/post.d
-# #
-
-mkdir -p /usr/local/include/csf/pre.d/
-mkdir -p /usr/local/include/csf/post.d/
-
-# #
-#   man pages
-# #
 
 mkdir -p /usr/local/man/man1/
 cp -avf csf.1.txt /usr/local/man/man1/csf.1

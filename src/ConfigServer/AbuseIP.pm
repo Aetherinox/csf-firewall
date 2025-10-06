@@ -25,7 +25,6 @@
 #   along with this program; if not, see <https://www.gnu.org/licenses>.
 # #
 ## no critic (RequireUseWarnings, ProhibitExplicitReturnUndef, ProhibitMixedBooleanOperators, RequireBriefOpen)
-
 # start main
 package ConfigServer::AbuseIP;
 

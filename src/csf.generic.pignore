@@ -50,7 +50,6 @@
 #   For more information, see readme.txt.
 # #
 
-
 exe:/bin/dbus-daemon
 exe:/sbin/ntpd
 exe:/usr/bin/dbus-daemon

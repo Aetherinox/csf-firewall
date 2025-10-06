@@ -140,7 +140,7 @@ EOF
 	else {print "Invalid action"};
 
 	unless ($FORM{do} eq "console") {
-		print "<p>&copy;2025, <a href='https://github.com/Aetherinox/csf-firewall' target='_blank'>ConfigServer Firewall</a></p>\n";
+		print "<p>&copy;2006-2025, <a href='https://github.com/Aetherinox/csf-firewall' target='_blank'>ConfigServer Firewall & LFD</a></p>\n";
 	}
 	print <<EOF;
 </div>
@@ -864,7 +864,7 @@ sub edit {
 	print "<input type='hidden' name='p' value='$FORM{p}'>\n";
 	print "<input type='hidden' name='f' value='$FORM{f}'>\n";
 	print "<input type='hidden' name='lf' value='$lf'>\n";
-	print "<textarea class='console' cols='100' rows='25' name='newf'>$filedata</textarea>\n";
+	print "<textarea cols='100' rows='25' name='newf' style='width:100%'>$filedata</textarea>\n";
 	print "</td></tr>\n";
 	print "<tr><td align='center'>";
 	print "<input type='submit' class='btn btn-default' name='do' value='Save'> \n";
@@ -1023,16 +1023,14 @@ sub countfiles {
 # end countfiles
 ###############################################################################
 # loadconfig
-sub loadconfig
-{
+sub loadconfig {
 	sysopen (my $IN, "/etc/csf/csf.conf", O_RDWR | O_CREAT) or die "Unable to open file: $!";
 	flock ($IN, LOCK_SH);
 	my @config = <$IN>;
 	close ($IN);
 	chomp @config;
 
-	foreach my $line (@config)
-	{
+	foreach my $line (@config) {
 		if ($line =~ /^\#/) {next}
 		if ($line !~ /=/) {next}
 		my ($name,$value) = split (/=/,$line,2);
