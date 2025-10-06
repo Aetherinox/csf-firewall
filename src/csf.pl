@@ -3777,32 +3777,48 @@ sub doupdate {
 		$actv = $text;
 	}
 
-	if ((($actv ne "") and ($actv =~ /^[\d\.]*$/)) or $force) {
-		if (($actv > $version) or $force) {
+	if ((($actv ne "") and ($actv =~ /^[\d\.]*$/)) or $force)
+	{
+		if (($actv > $version) or $force)
+		{
 			local $| = 1;
 
 			unless ($force) {print "Upgrading csf from v$version to $actv...\n"}
-			if (-e "/usr/src/csf.tgz") {unlink ("/usr/src/csf.tgz") or die $!}
+			if (-e "/usr/src/csf.tgz")
+			{
+				unlink ("/usr/src/csf.tgz") or die $!
+			}
+
 			print "Retrieving new csf package...\n";
 
 			my $url = "https://$config{DOWNLOADSERVER}/csf.tgz";
-			if ($config{URLGET} == 1) {$url = "http://$config{DOWNLOADSERVER}/csf.tgz";}
+			if ($config{URLGET} == 1)
+			{
+				$url = "http://$config{DOWNLOADSERVER}/csf.tgz";
+			}
+
 			my ($status, $text) = $urlget->urlget($url,"/usr/src/csf.tgz");
 
-			if (! -z "/usr/src/csf/csf.tgz") {
+			print "Downloading csf update from server: $url\n";
+			if (! -z "/usr/src/csf/csf.tgz")
+			{
 				print "\nUnpacking new csf package...\n";
 				system ("cd /usr/src ; tar -xzf csf.tgz ; cd csf ; sh install.sh");
-				print "\nTidying up...\n";
+				print "\nPerforming housekeeping on temp files...\n";
 				system ("rm -Rfv /usr/src/csf*");
 				print "\nRestarting csf and lfd...\n";
 				system ("/usr/sbin/csf -r");
 				ConfigServer::Service::restartlfd();
-				print "\n...All done.\n\nChangelog: https://$config{DOWNLOADSERVER}/csf/changelog.txt\n";
+				print "\nUpdate complete.\n\nView Changelog: https://$config{DOWNLOADSERVER}/csf/changelog.txt\n";
 			}
-		} else {
+		}
+		else
+		{
 			if (-t STDOUT) {print "csf is already at the latest version: v$version\n"} ##no critic
 		}
-	} else {
+	}
+	else
+	{
 		print "Unable to verify the latest version of csf at this time\n";
 	}
 	return;
