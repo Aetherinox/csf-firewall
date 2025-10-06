@@ -10047,7 +10047,9 @@ EOF
 									print "</div>\n";
 									print <<EOF;
 <div class='panel panel-default panel-body'>
-<img align='absmiddle' src='$images/csf_small.png' alt='ConfigServer Firewall &amp; Security' style='float:left'>
+<a href="/$session/">
+	<img align='absmiddle' src='$images/csf_small.png' alt='ConfigServer Firewall &amp; Security' style='float:left'>
+</a>
 <h3>ConfigServer Security &amp; Firewall - csf v$myv</h3>
 </div>
 EOF
