@@ -2350,7 +2350,7 @@ EOF
 
 		print "<div class='panel panel-info'>\n";
 		print "<div class='panel-heading'>Development Contribution</div>";
-		print "<div class='panel-body'>We are very happy to be able to provide this and other products for free. However, it does take time for us to develop and maintain them. If you would like to help with their development by providing a PayPal contribution, please <a href='mailto:sales\@waytotheweb.com?Subject=ConfigServer%20Contribution'>contact us</a> for details</div>\n";
+		print "<div class='panel-body'>CSF will always remain free, however, it does take time to develop, as well as server costs to license the various control panels for testing. If you would like to support us to offset these costs, visit <a href='https://buymeacoffee.com/aetherinox'>BuyMeACoffee</a>.</div>\n";
 		print "</div>\n";
 
 	}

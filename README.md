@@ -10,7 +10,7 @@
 
 <div align="center">
 
-<img src="src/csf/csf-logo.png" height="230">
+<img src="docs/images/logos/csf.png" height="230">
 
 <!-- prettier-ignore-start -->
 [![Version][github-version-img]][github-version-uri]
