@@ -279,8 +279,6 @@ The system wide configuration file
 .RS
 Detailed information about csf and lfd
 .SH BUGS
-Report bugs on our repo https://github.com/Aetherinox/csf-firewall/issues
+Report bugs at  http://tickets.configserver.dev/
 .SH AUTHOR
-(c)2025, Aetherinox (https://github.com/Aetherinox/csf-firewall)
-.SH LEGACY
-(c)2006-2023, Jonathan Michaelson (https://github.com/Aetherinox/csf-firewall)
+(c)2006-2025, Aetherinox, Jonathan Michaelson (https://github.com/Aetherinox/csf-firewall)

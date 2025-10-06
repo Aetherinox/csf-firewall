@@ -25,9 +25,7 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program; if not, see <https://www.gnu.org/licenses>.
 # #
-
 ## no critic (ProhibitBarewordFileHandles, ProhibitExplicitReturnUndef, ProhibitMixedBooleanOperators, RequireBriefOpen)
-
 use strict;
 use Fcntl qw(:DEFAULT :flock);
 use IPC::Open3;

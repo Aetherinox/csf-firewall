@@ -25,7 +25,8 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program; if not, see <https://www.gnu.org/licenses>.
 # #
-
+## no critic (RequireUseWarnings, ProhibitExplicitReturnUndef, ProhibitMixedBooleanOperators, RequireBriefOpen, RequireLocalizedPunctuationVars)
+# start main
 use strict;
 use lib '/usr/local/csf/lib';
 use Fcntl qw(:DEFAULT :flock);
@@ -113,68 +114,53 @@ if ($config{UI}) {
 		import IO::Socket::SSL;
 	};
 }
-
 if ($config{LF_DIRWATCH}) {
 	require File::Find;
 	import File::Find;
 }
-
 if ($config{UI} or $config{LF_DIRWATCH_FILE}) {
 	require Digest::MD5;
 	import Digest::MD5;
 }
-
 if ($config{SYSLOG} or $config{SYSLOG_CHECK}) {
 	eval('use Sys::Syslog;'); ##no critic
 	unless ($@) {$sys_syslog = 1}
 }
-
 if ($config{DEBUG}) {
 	require Time::HiRes;
 	import Time::HiRes;
 }
-
 if ($config{CLUSTER_SENDTO} or $config{CLUSTER_RECVFROM}) {
 	require Crypt::CBC;
 	import Crypt::CBC;
 	require File::Basename;
 	import File::Basename;
 }
-
 if ($config{CLUSTER_SENDTO} or $config{CLUSTER_RECVFROM}) {
 	require IO::Socket::INET;
 	import IO::Socket::INET;
 }
-
 if ($config{MESSENGER}) {
 	require ConfigServer::Messenger;
 	import ConfigServer::Messenger;
 }
-
 if ($config{CF_ENABLE}) {
 	require ConfigServer::CloudFlare;
 	import ConfigServer::CloudFlare;
 }
-
 if (-e "/etc/cxs/cxs.reputation" and -e "/usr/local/csf/lib/ConfigServer/cxs.pm") {
 	require ConfigServer::cxs;
 	import ConfigServer::cxs;
 	$cxsreputation = 1;
 	%cxsports = ConfigServer::cxs::Rports();
 }
-
 $SIG{CHLD} = 'IGNORE';
 
-if ($pid = fork)
-{
+if ($pid = fork)  {
 	exit 0;
-}
-elsif (defined($pid))
-{
+} elsif (defined($pid)) {
 	$pid = $$;
-}
-else
-{
+} else {
 	die "*Error* Unable to fork: $!";
 }
 
@@ -187,12 +173,6 @@ open STDIN, "<","/dev/null";
 open STDOUT, ">","/dev/null";
 open STDERR, ">","/dev/null";
 setsid();
-
-# #
-#	Login page vars
-# #
-
-my $app_github_url = "https://github.com/Aetherinox/csf-firewall";
 
 my $oldfh = select STDERR; ##no critic
 $| = 1;
@@ -244,43 +224,32 @@ eval {local $SIG{__DIE__} = undef; $ipscidr->add("127.0.0.0/8")};
 
 $faststart = 0;
 
-eval
-{
+eval {
 	local $SIG{__DIE__} = undef;
 	$urlget = ConfigServer::URLGet->new($config{URLGET}, "csf/$version", $config{URLPROXY});
 };
-
-unless (defined $urlget)
-{
-	if (-e $config{CURL} or -e $config{WGET})
-	{
+unless (defined $urlget) {
+	if (-e $config{CURL} or -e $config{WGET}) {
 		$config{URLGET} = 3;
 		$urlget = ConfigServer::URLGet->new($config{URLGET}, "csf/$version", $config{URLPROXY});
 		logfile("*WARNING* URLGET set to use LWP but perl module is not installed, fallback to using CURL/WGET");
-	}
-	else
-	{
+	} else {
 		$config{URLGET} = 1;
 		$urlget = ConfigServer::URLGet->new($config{URLGET}, "csf/$version", $config{URLPROXY});
 		logfile("*WARNING* URLGET set to use LWP but perl module is not installed, CURL and WGET not installed - reverting to HTTP::Tiny");
 	}
 }
 
-if (-e "/etc/wwwacct.conf")
-{
-	foreach my $line (slurp("/etc/wwwacct.conf"))
-	{
+if (-e "/etc/wwwacct.conf") {
+	foreach my $line (slurp("/etc/wwwacct.conf")) {
 		$line =~ s/$cleanreg//g;
 		if ($line =~ /^(\s|\#|$)/) {next}
 		my ($name,$value) = split (/ /,$line,2);
 		$cpconfig{$name} = $value;
 	}
 }
-
-if (-e "/usr/local/cpanel/version")
-{
-	foreach my $line (slurp("/usr/local/cpanel/version"))
-	{
+if (-e "/usr/local/cpanel/version") {
+	foreach my $line (slurp("/usr/local/cpanel/version")) {
 		$line =~ s/$cleanreg//g;
 		if ($line =~ /\d/) {$cpconfig{version} = $line}
 	}
@@ -303,7 +272,6 @@ flock ($IN, LOCK_SH);
 $version = <$IN>;
 close ($IN);
 chomp $version;
-
 my $generic = " (cPanel)";
 if ($config{GENERIC}) {$generic = " (generic)"}
 if ($config{DIRECTADMIN}) {$generic = " (DirectAdmin)"}
@@ -311,23 +279,18 @@ if ($config{INTERWORX}) {$generic = " (InterWorx)"}
 if ($config{CYBERPANEL}) {$generic = " (CyberPanel)"}
 if ($config{CWP}) {$generic = " (CentOS Web Panel)"}
 if ($config{VESTA}) {$generic = " (VestaCP)"}
+logfile("daemon started on $hostname - csf v$version$generic");
+if ($config{DEBUG} >= 1) {logfile("Clock Ticks: $clock_ticks")}
+if ($config{DEBUG} >= 1) {logfile("debug: **** DEBUG LEVEL $config{DEBUG} ENABLED ****")}
 
-logfile( "daemon started on $hostname - csf v$version$generic" );
-
-if ( $config{DEBUG} >= 1 ) { logfile( "Clock Ticks: $clock_ticks" ) }
-if ( $config{DEBUG} >= 1 ) { logfile("debug: **** DEBUG LEVEL $config{DEBUG} ENABLED ****") }
-
-unless (-e $config{SENDMAIL})
-{
+unless (-e $config{SENDMAIL}) {
 	logfile("*WARNING* Unable to send email reports - [$config{SENDMAIL}] not found");
 }
 
-if (ConfigServer::Service::type() eq "systemd")
-{
+if (ConfigServer::Service::type() eq "systemd") {
 	my @reply = &syscommand(__LINE__,$config{SYSTEMCTL},"is-active","firewalld");
 	chomp @reply;
-	if ($reply[0] eq "active" or $reply[0] eq "activating")
-	{
+	if ($reply[0] eq "active" or $reply[0] eq "activating") {
 		&cleanup(__LINE__,"*Error* firewalld found to be running. You must stop and disable firewalld when using csf");
 		exit 1;
 	}
@@ -336,56 +299,44 @@ if (ConfigServer::Service::type() eq "systemd")
 require ConfigServer::RegexMain;
 import ConfigServer::RegexMain;
 
-if ($config{RESTRICT_SYSLOG} == 1)
-{
+if ($config{RESTRICT_SYSLOG} == 1) {
 	logfile("Restricted log file access (RESTRICT_SYSLOG)");
 	foreach (qw{LF_SSHD LF_FTPD LF_IMAPD LF_POP3D LF_BIND LF_SUHOSIN
 				LF_SSH_EMAIL_ALERT LF_SU_EMAIL_ALERT LF_CONSOLE_EMAIL_ALERT
 				LF_DISTATTACK LF_DISTFTP LT_POP3D LT_IMAPD PS_INTERVAL
 				UID_INTERVAL WEBMIN_LOG LF_WEBMIN_EMAIL_ALERT
-				PORTKNOCKING_ALERT LF_SUDO_EMAIL_ALERT})
-	{
-		if ($config{$_} != 0)
-		{
+				PORTKNOCKING_ALERT LF_SUDO_EMAIL_ALERT}) {
+		if ($config{$_} != 0) {
 			$config{$_} = 0;
 			logfile("RESTRICT_SYSLOG: Option $_ *Disabled*");
 		}
 	}
 }
-elsif ($config{RESTRICT_SYSLOG} == 3)
-{
+elsif ($config{RESTRICT_SYSLOG} == 3) {
 	logfile("Restricting syslog/rsyslog socket acccess to group [$config{RESTRICT_SYSLOG_GROUP}]...");
 	&syslog_init;
 }
 
-if ($config{SYSLOG} or $config{SYSLOG_CHECK})
-{
-	unless ($sys_syslog)
-	{
+if ($config{SYSLOG} or $config{SYSLOG_CHECK}) {
+	unless ($sys_syslog) {
 		logfile("*Error* Cannot log to SYSLOG - Perl module Sys::Syslog required");
 	}
 }
 
-if (-e "/etc/csf/csf.blocklists")
-{
+if (-e "/etc/csf/csf.blocklists") {
 	my @entries = slurp("/etc/csf/csf.blocklists");
-	foreach my $line (@entries)
-	{
-		if ($line =~ /^Include\s*(.*)$/)
-		{
+	foreach my $line (@entries) {
+		if ($line =~ /^Include\s*(.*)$/) {
 			my @incfile = slurp($1);
 			push @entries,@incfile;
 		}
 	}
-
-	foreach my $line (@entries)
-	{
+	foreach my $line (@entries) {
 		$line =~ s/$cleanreg//g;
 		if ($line eq "") {next}
 		if ($line =~ /^\s*\#|Include/) {next}
 		my ($name,$interval,$max,$url) = split(/\|/,$line);
-		if ($name =~ /^\w+$/)
-		{
+		if ($name =~ /^\w+$/) {
 			$name = substr(uc $name, 0, 25);
 			if ($name =~ /^CXS_/) {$name =~ s/^CXS_/X_CXS_/}
 			if ($interval < 3600) {$interval = 3600}
@@ -404,7 +355,7 @@ if ($cxsreputation and -e "/etc/cxs/cxs.blocklists") {
 		$line =~ s/$cleanreg//g;
 		if ($line =~ /^(\s|\#|$)/) {next}
 		my ($name,$interval,$max,$url) = split(/\|/,$line);
-		$url =~ s/download\.configserver\.dev/$config{DOWNLOADSERVER}/g;
+		$url =~ s/download\.configserver\.com/$config{DOWNLOADSERVER}/g;
 		if ($all and $name ne "CXS_ALL") {next}
 		if ($name =~ /^\w+$/) {
 			$name = substr(uc $name, 0, 25);
@@ -732,34 +683,20 @@ if ($config{MESSENGER}) {
 	&messengerstop(3);
 }
 
-if ( $config{UI} )
-{
-	if ($config{UI_CXS})
-	{
-		my $cxs_ui_file = '/etc/cxs/ConfigServer/cxsUI.pm';
-		if (-e $cxs_ui_file)
-		{
-			use lib '/etc/cxs';
-			require ConfigServer::cxsUI;
-		}
-		else
-		{
-			warn "CXS UI module not found: $cxs_ui_file\n";
-		}
+if ($config{UI}) {
+	if ($config{UI_CXS}) {
+	use lib '/etc/cxs';
+	require ConfigServer::cxsUI;
 	}
-
-	if ($config{UI_USER} eq "" or $config{UI_USER} eq "username")
-	{
+	if ($config{UI_USER} eq "" or $config{UI_USER} eq "username") {
 		logfile("*Error* Cannot run csf Integrated UI - UI_USER must set");
 		$config{UI} = 0;
 	}
-	elsif ($config{UI_PASS} eq "" or $config{UI_PASS} eq "password")
-	{
+	elsif ($config{UI_PASS} eq "" or $config{UI_PASS} eq "password") {
 		logfile("*Error* Cannot run Integrated csf UI - UI_PASS must set");
 		$config{UI} = 0;
 	}
-	else
-	{
+	else {
 		logfile("csf Integrated UI running up on port $config{UI_PORT}...");
 		&ui;
 	}
@@ -4985,7 +4922,7 @@ sub blocklist {
 			my $getlist = 0;
 			my $verbose = 1;
 
-			if ($name =~ /^CXS_/ and $blocklists{$name}{url} =~ /download\.configserver\.dev/) {
+			if ($name =~ /^CXS_/ and $blocklists{$name}{url} =~ /download\.configserver\.com/) {
 				$blocklists{$name}{interval} = 600;
 				$verbose = 0;
 			}
@@ -6361,8 +6298,7 @@ sub countrycode6 {
 			if ($cc eq "") {next}
 			undef @ipset;
 			$cc = lc $cc;
-			if ($config{CC_ALLOW_FILTER} and $redo_allow_filter) {
-				&iptablescmd(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} -A CC_ALLOWF -m set --match-set cc_6_$cc src -j RETURN")}
+			if ($config{CC_ALLOW_FILTER} and $redo_allow_filter) {&iptablescmd(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} -A CC_ALLOWF -m set --match-set cc_6_$cc src -j RETURN")}
 			if (-e "/var/lib/csf/zone/$cc.zone6") {
 				logfile("CC: Repopulating ipset cc_6_$cc with IP addresses from [".uc($cc)."]");
 				open (my $IN, "<", "/var/lib/csf/zone/$cc.zone6");
@@ -9601,32 +9537,22 @@ sub ui {
 					}
 					$ENV{REMOTE_ADDR} = $peeraddress; ##no critic
 
-					if ($config{UI_BLOCK_PRIVATE_NET} == 1)
-					{
-						if ($ips{$peeraddress})
-						{
-							logfile("UI: Login attempt from local IP address denied [$peeraddress]");
-							if ($config{UI_ALERT} >= 4)
-							{
-								my @message;
-								my $tip = iplookup($peeraddress);
-								foreach my $line (@alert)
-								{
-									$line =~ s/\[ip\]/$tip/ig;
-									$line =~ s/\[alert\]/Login attempt from local IP/ig;
-									$line =~ s/\[text\]/Login attempt from local IP address $tip - denied/ig;
-									push @message, $line;
-								}
-								ConfigServer::Sendmail::relay("", "", @message);
+					if ($ips{$peeraddress}) {
+						logfile("UI: Login attempt from local IP address denied [$peeraddress]");
+						if ($config{UI_ALERT} >= 4) {
+							my @message;
+							my $tip = iplookup($peeraddress);
+							foreach my $line (@alert) {
+								$line =~ s/\[ip\]/$tip/ig;
+								$line =~ s/\[alert\]/Login attempt from local IP/ig;
+								$line =~ s/\[text\]/Login attempt from local IP address $tip - denied/ig;
+								push @message, $line;
 							}
-							close ($client);
-							alarm(0);
-							exit;
+							ConfigServer::Sendmail::relay("", "", @message);
 						}
-					}
-					else
-					{
-						logfile("UI: [ WARNING ] UI_BLOCK_PRIVATE_NET set to 0. Accepting connection to UI through local IP [$peeraddress]");
+						close ($client);
+						alarm(0);
+						exit;
 					}
 
 					if ($config{"UI_BAN"}) {
@@ -9705,131 +9631,98 @@ sub ui {
 					$| = 1;
 
 					$clientcnt = 0;
-					while ($request !~ /\n$/)
-					{
+					while ($request !~ /\n$/) {
 						my $char;
 						$client->read($char,1);
 						$request .= $char;
 						$clientcnt++;
-					
-						if ($char eq "")
-						{
+						if ($char eq "") {
 							if ($config{DEBUG} >= 2) {logfile("UI debug: Child [request] finished")}
 							close ($client);
 							alarm(0);
 							exit;
 						}
-
-						if ($clientcnt > $maxline)
-						{
+						if ($clientcnt > $maxline) {
 							&ui_413;
 							close ($client);
 							alarm(0);
 							exit;
 						}
 					}
-
 					$request =~ s/\r\n$//;
-					if ($request =~ /^(GET|POST)\s(\S+)\sHTTP/)
-					{
+					if ($request =~ /^(GET|POST)\s(\S+)\sHTTP/) {
 						($file,undef) = split(/\?/,$2);
-						if ($file =~ /^\/(\w+)(\/.*)/)
-						{
+						if ($file =~ /^\/(\w+)(\/.*)/) {
 							$session = $1;
 							$file = $2;
 						}
-					}
-					else
-					{
+					} else {
 						close ($client);
 						alarm(0);
 						exit;
 					}
-
 					my $linecnt;
 					while (1) {
 						my $line;
 						$clientcnt = 0;
-						while ($line !~ /\n$/)
-						{
+						while ($line !~ /\n$/) {
 							my $char;
 							$client->read($char,1);
 							$line .= $char;
 							$clientcnt++;
-						
-							if ($char eq "")
-							{
+							if ($char eq "") {
 								if ($config{DEBUG} >= 2) {logfile("UI debug: Child [header] finished")}
 								close ($client);
 								alarm(0);
 								exit;
 							}
-
-							if ($clientcnt > $maxline)
-							{
+							if ($clientcnt > $maxline) {
 								&ui_413;
 								close ($client);
 								alarm(0);
 								exit;
 							}
 						}
-		
 						if ($line =~ /^\r\n$/) {last}
 						$line =~ s/\r\n$//;
 						my ($field,$value) = split(/\:\s/,$line);
+						$field = lc($field);
 						$header{$field} = $value;
 						if ($config{DEBUG} >= 2) {logfile("UI debug: header [$field] [$value]")}
 						$linecnt++;
-						if ($linecnt > $maxheader)
-						{
+						if ($linecnt > $maxheader) {
 							&ui_413;
 							close ($client);
 							alarm(0);
 							exit;
 						}
 					}
-	
-					if ($header{'Content-Length'} > 0)
-					{
-						if ($header{'Content-Length'} > $maxbody)
-						{
+					if ($header{'content-length'} > 0) {
+						if ($header{'content-length'} > $maxbody) {
 							&ui_413;
 							close ($client);
 							alarm(0);
 							exit;
-						}
-						else
-						{
-							if ($header{'Content-Type'} =~ /multipart\/form-data/)
-							{
-								$client->read($fileinc,$header{'Content-Length'});
-							}
-							else
-							{
-								$client->read($buffer,$header{'Content-Length'});
+						} else {
+							if ($header{'content-type'} =~ /multipart\/form-data/i) {
+								$client->read($fileinc,$header{'content-length'});
+							} else {
+								$client->read($buffer,$header{'content-length'});
 							}
 						}
 					}
-
 					if ($request =~ /^GET\s(\S+)\sHTTP/) {if ($1 =~ /\?([^\?]*)$/) {$buffer = $1}}
 					if ($config{DEBUG} >= 2) {logfile("UI debug: request [$request] buffer [$buffer]")}
 					my @pairs = split(/&/,$buffer);
-
-					foreach my $pair (@pairs)
-					{
+					foreach my $pair (@pairs) {
 						my ($name, $value) = split(/=/, $pair);
 						$value =~ tr/+/ /;
 						$value =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C", hex($1))/eg;
 						$FORM{$name} = $value;
 					}
+					if ($header{cookie} =~ /csfsession=(\w+)/) {$cookie = $1}
 
-					if ($header{Cookie} =~ /csfsession=(\w+)/)
-					{
-						$cookie = $1
-					}
-
-					if (($session ne "" and $cookie ne "") or defined $FORM{csflogin})
-					{
+					if (($session ne "" and $cookie ne "") or defined $FORM{csflogin}) {
 						sysopen (my $SESSION,"/var/lib/csf/ui/ui.session", O_RDWR | O_CREAT) or &childcleanup(__LINE__,"UI: unable to open csf.session: $!");
 						flock ($SESSION, LOCK_EX);
 						my @records = <$SESSION>;
@@ -9838,198 +9731,131 @@ sub ui {
 						truncate ($SESSION, 0);
 
 						my $md5current = Digest::MD5->new;
-						$md5current->add($header{'User-Agent'});
+						$md5current->add($header{'user-agent'});
 						my $md5sum = $md5current->b64digest;
-						foreach my $record (@records)
-						{
+						foreach my $record (@records) {
 							my ($rtype,$rstart,$rtime,$rsession,$rcookie,$rip,$rhead,$rapp) = split(/\|/,$record,8);
-							if ($rtype eq "login" and $rip eq $peeraddress and $rsession eq $session)
-							{
-								if ((time - $rtime) > $config{UI_TIMEOUT})
-								{
+							if ($rtype eq "login" and $rip eq $peeraddress and $rsession eq $session) {
+								if ((time - $rtime) > $config{UI_TIMEOUT}) {
 									$valid = "login";
 									$record = "";
 									($rstart,$rtime,$rsession,$rcookie,$rip,$rhead) = "";
 									logfile("UI: *Invalid session* $peeraddress [timeout]");
 								}
-								elsif ($rcookie eq $cookie)
-								{
-									if ($rhead eq $md5sum)
-									{
-										if ($FORM{csfaction} eq "csflogout")
-										{
+								elsif ($rcookie eq $cookie) {
+									if ($rhead eq $md5sum) {
+										if ($FORM{csfaction} eq "csflogout") {
 											$valid = "login";
 											$record = "";
 											logfile("UI: Successful logout from $peeraddress");
-										}
-										else
-										{
+										} else {
 											$valid = "session";
 											$application = $rapp;
 											$rtime = time;
 											$record = "$rtype|$rstart|$rtime|$rsession|$rcookie|$rip|$rhead|$rapp";
 										}
-									}
-									else
-									{
+									} else {
 										$valid = "fail";
 										$record = "";
 										logfile("UI: *Invalid session* $peeraddress [session-header]");
 									}
-								}
-								else
-								{
+								} else {
 									$valid = "fail";
 									$record = "";
 									logfile("UI: *Invalid session* $peeraddress [session-cookie]");
 								}
-							}
-							else
-							{
-								if ($rtype eq "login")
-								{
-									if ((time - $rtime) > $config{UI_TIMEOUT})
-									{
+							} else {
+								if ($rtype eq "login") {
+									if ((time - $rtime) > $config{UI_TIMEOUT}) {
 										$record = "";
 										($rstart,$rtime,$rsession,$rcookie,$rip,$rhead) = "";
 									}
 								}
-								elsif ($rtype eq "fail")
-								{
-									if ((time - $rstart) > 86400)
-									{
+								elsif ($rtype eq "fail") {
+									if ((time - $rstart) > 86400) {
 										$record = "";
-									}
-									else
-									{
+									} else {
 										$fails{$rip}++;
 									}
 								}
 							}
-
-							if ($record ne "")
-							{
-								print $SESSION "$record\n"
-							}
+							if ($record ne "") {print $SESSION "$record\n"}
 						}
-
 						close ($SESSION);
-					}
-					else
-					{
+					} else {
 						$valid = "login";
 					}
-	
-					if (defined $FORM{csflogin} and $valid ne "fail")
-					{
-						if ($FORM{csflogin} eq $config{UI_USER} and $FORM{csfpassword} eq $config{UI_PASS})
-						{
+					if (defined $FORM{csflogin} and $valid ne "fail") {
+						if ($FORM{csflogin} eq $config{UI_USER} and $FORM{csfpassword} eq $config{UI_PASS}) {
 							$valid = "yes";
-						}
-						else
-						{
+						} else {
 							$valid = "fail";
 						}
 					}
 
-					if ($valid eq "fail")
-					{
+					if ($valid eq "fail") {
 						$fails{$peeraddress}++;
-						if ($fails{$peeraddress} > $config{UI_RETRY})
-						{
-							if ($config{UI_BAN})
-							{
+						if ($fails{$peeraddress} > $config{UI_RETRY}) {
+							if ($config{UI_BAN}) {
 								sysopen (my $SESSIONBAN,"/etc/csf/ui/ui.ban", O_WRONLY | O_APPEND | O_CREAT) or &childcleanup(__LINE__,"UI: unable to open csf.session: $!");
 								flock ($SESSIONBAN, LOCK_EX);
 								print $SESSIONBAN "$peeraddress - Banned for too many login failures ".localtime()."\n";
 								close ($SESSIONBAN);
 								logfile("UI: *Invalid login* attempts from $peeraddress [$fails{$peeraddress}/$config{UI_RETRY}] - Banned in /etc/csf/ui/ui.ban");
-							}
-							else
-							{
+							} else {
 								logfile("UI: *Invalid login* attempts from $peeraddress [$fails{$peeraddress}/$config{UI_RETRY}] - Not Banned");
 							}
-
 							sysopen (my $SESSION,"/var/lib/csf/ui/ui.session", O_RDWR | O_CREAT) or &childcleanup(__LINE__,"UI: unable to open csf.session: $!");
 							flock ($SESSION, LOCK_EX);
 							my @records = <$SESSION>;
 							chomp @records;
 							seek ($SESSION, 0, 0);
 							truncate ($SESSION, 0);
-
-							foreach my $record (@records)
-							{
+							foreach my $record (@records) {
 								my ($rtype,$rstart,$rtime,$rsession,$rcookie,$rip,$rhead,$rapp) = split(/\|/,$record,8);
-								if ($rip eq $peeraddress)
-								{
-									next
-								}
-
+								if ($rip eq $peeraddress) {next}
 								print $SESSION "$record\n"
 							}
-
 							close ($SESSION);
-
-							if ($config{UI_BLOCK})
-							{
+							if ($config{UI_BLOCK}) {
 								my $perm = 0;
-								if ( $config{UI_BLOCK} == 1 )
-								{
-									$perm = 1
-								}
-
+								if ($config{UI_BLOCK} == 1) {$perm = 1}
 								my $tip = iplookup($peeraddress);
 								&ipblock("1","UI: Invalid login attempts from $tip",$peeraddress,"","in",$config{UI_BLOCK},0,"UI: *Invalid login* attempts from $peeraddress [$fails{$peeraddress}/$config{UI_RETRY}] - Banned","UI_RETRY");
 							}
-
-							if ($config{UI_ALERT} >= 1)
-							{
+							if ($config{UI_ALERT} >= 1) {
 								my @message;
 								my $tip = iplookup($peeraddress);
 								my $text;
-
-								if ($config{UI_BAN})
-								{
-									$text .= "Banned in ui.ban"
-								}
-
-								if ($config{UI_BLOCK})
-								{
+								if ($config{UI_BAN}) {$text .= "Banned in ui.ban"}
+								if ($config{UI_BLOCK}) {
 									if ($text ne "") {$text .= ", "}
 									$text .= "Blocked in csf";
 								}
-
-								foreach my $line (@alert)
-								{
+								foreach my $line (@alert) {
 									$line =~ s/\[ip\]/$tip/ig;
 									$line =~ s/\[alert\]/Login failure \[$fails{$peeraddress}\/$config{UI_RETRY}]/ig;
 									$line =~ s/\[text\]/Login failure from IP address $tip \[$fails{$peeraddress}\/$config{UI_RETRY}] - $text/ig;
 									push @message, $line;
 								}
-
 								ConfigServer::Sendmail::relay("", "", @message);
 							}
-
 							&ui_403;
 							close ($client);
 							alarm(0);
 							exit;
-						}
-						else
-						{
+						} else {
 							my $time = time;
 							sysopen (my $SESSION,"/var/lib/csf/ui/ui.session", O_WRONLY | O_APPEND | O_CREAT) or &childcleanup(__LINE__,"UI: unable to open csf.session: $!");
 							flock ($SESSION, LOCK_EX);
 							print $SESSION "fail|$time||||$peeraddress||\n";
 							close ($SESSION);
-							$valid = "login-retry";
+							$valid = "login";
 							logfile("UI: *Invalid login* attempt from $peeraddress [$fails{$peeraddress}/$config{UI_RETRY}]");
-							if ($config{UI_ALERT} >= 2)
-							{
+							if ($config{UI_ALERT} >= 2) {
 								my @message;
 								my $tip = iplookup($peeraddress);
-								foreach my $line (@alert)
-								{
+								foreach my $line (@alert) {
 									$line =~ s/\[ip\]/$tip/ig;
 									$line =~ s/\[alert\]/Login failure \[$fails{$peeraddress}\/$config{UI_RETRY}]/ig;
 									$line =~ s/\[text\]/Login failure from IP address $tip \[$fails{$peeraddress}\/$config{UI_RETRY}] - denied/ig;
@@ -10039,15 +9865,13 @@ sub ui {
 							}
 						}
 					}
-
-					if ($valid eq "yes")
-					{
+					if ($valid eq "yes") {
 						srand;
 						$session = join '', map {$chars[rand(@chars)]} (1..(15 + int(rand(15))));
 						$cookie = join '', map {$chars[rand(@chars)]} (1..(15 + int(rand(15))));
 
 						my $md5current = Digest::MD5->new;
-						$md5current->add($header{'User-Agent'});
+						$md5current->add($header{'user-agent'});
 						my $md5sum = $md5current->b64digest;
 						my $time = time;
 						sysopen (my $SESSION,"/var/lib/csf/ui/ui.session", O_RDWR | O_CREAT) or &childcleanup(__LINE__,"UI: unable to open csf.session: $!");
@@ -10056,13 +9880,11 @@ sub ui {
 						chomp @records;
 						seek ($SESSION, 0, 0);
 						truncate ($SESSION, 0);
-						foreach my $record (@records)
-						{
+						foreach my $record (@records) {
 							my ($rtype,$rstart,$rtime,$rsession,$rcookie,$rip,$rhead) = split(/\|/,$record,8);
 							if ($rtype eq "fail" and $rip eq $peeraddress) {next}
 							print $SESSION "$record\n"
 						}
-
 						print $SESSION "login|$time|$time|$session|$cookie|$peeraddress|$md5sum|$application\n";
 						close ($SESSION);
 
@@ -10072,316 +9894,60 @@ sub ui {
 						print "\r\n";
 
 						logfile("UI: Successful login from $peeraddress");
-						if ($config{UI_ALERT} >= 3)
-						{
+						if ($config{UI_ALERT} >= 3) {
 							my @message;
 							my $tip = iplookup($peeraddress);
-							foreach my $line (@alert)
-							{
+							foreach my $line (@alert) {
 								$line =~ s/\[ip\]/$tip/ig;
 								$line =~ s/\[alert\]/Login success/ig;
 								$line =~ s/\[text\]/Login success from IP address $tip/ig;
 								push @message, $line;
 							}
-
 							ConfigServer::Sendmail::relay("", "", @message);
 						}
 					}
-
-					if ( $valid eq "login" || $valid eq "login-retry" )
-					{
+					if ($valid eq "login") {
 						print "HTTP/1.0 200 OK\r\n";
 						print "Content-type: text/html\r\n";
 						print "\r\n";
 						print "<!DOCTYPE html>\n";
-						print "<HTML>\n";
-						print "<HEAD>";
-						print "<TITLE>ConfigServer Security & Firewall</TITLE>\n";
-						print <<EOF;
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
-<link rel="icon" type="image/x-icon" href="https://github.com/user-attachments/assets/ba005563-da8b-456c-8c4d-19f4ee31eb71">
-<style>
-
-\@-webkit-keyframes fade-in
-{
-    from { opacity: 0.6; }
-    to { opacity: 1; }
-}
-
-\@-moz-keyframes fade-in
-{
-    from { opacity: 0.6; }
-    to { opacity: 1; }
-}
-
-\@keyframes fade-in
-{
-    from { opacity: 0.6; }
-    to { opacity: 1; }
-}
-
-\@keyframes scale-in
-{
-    from {
-        transform: scale(1, 1);
-    }
-    to {
-        transform: scale(1.1, 1.1);
-    }
-}
-
-body
-{
-	font-family: Nunito,Roboto,sans-serif;
-}
-
-input::placeholder
-{
-	font-weight: lighter;
-	opacity: 0.8;
-	color: #707070;
-}
-
-input:focus::placeholder
-{
-	color: transparent;
-}
-
-input:focus
-{
-    outline: none;
-}
-
-.btn-login
-{
-	background-color: #a81840;
-	color: #FFF;
-	border: 1px solid #e3e3e31a;
-	border-radius: 4px;
-	padding-left: 4px;
-	padding-right: 4px;
-	padding-top: 7px;
-	padding-bottom: 7px;
-	min-width: 100px;
-	margin-top: 15px;
-	cursor: pointer;
-}
-
-.btn-login:hover
-{
-	background-color: #6a791c;
-	transition: all 0.3s;
-}
-
-img.login-logo
-{
-	width: 100px;
-	opacity: 0.6;
-}
-
-img.login-logo:hover
-{
-	animation-name:             fade-in, scale-in;
-	animation-duration:         1s, 0.5s;
-	animation-timing-function:  ease-in, linear;
-	animation-direction:        alternate, alternate;
-	animation-iteration-count:  infinite, 1;
-	transition: all 0.3s;
-	opacity: 0.5;
-	transform: scale(1.1);
-}
-
-img.login-logo:not(:hover)
-{
-	transition: all 0.3s;
-	opacity: 0.5;
-	transform: scale(1);
-}
-
-.login-form
-{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.login-container-logo
-{
-	margin-top: -75px;
-	margin-bottom: 20px;
-}
-
-.login-container-main
-{
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.login-container
-{
-	background-color: #282828;
-	border:1px solid #e3e3e31a;
-	padding:15px;
-}
-
-.login-footer
-{
-	font-size: 8pt;
-	padding-top: 20px;
-	color: #868686;
-}
-
-.login-footer a
-{
-	color: #dd761c;
-	text-decoration: none;
-}
-
-.login-footer a:hover
-{
-	color: #ffa354;
-	transition: all 0.3s;
-}
-
-.input
-{
-	width: clamp(200px, 35vw, 400px);
-	max-width: 400px;
-	min-width: 200px;
-	padding-left:10px;
-	padding-right: 10px;
-	padding-top: 4px;
-	padding-bottom: 4px;
-	background-color: #393939;
-	border: 1px solid #e3e3e31a;
-	color: #FFF;
-	font-size: 16pt;
-	font-family: "Abel";
-	transition: 0.5s;
-	background: linear-gradient(#ff3678 0 0) bottom / 0% 2px no-repeat #393939;
-	cursor: pointer;
-	text-align: center;
-}
-
-.input:hover, .input:focus
-{
-	background-size: 100% 2px;
-	transition: all 0.3s;
-}
-
-.input:focus
-{
-	transition: 0.5s;
-	background: linear-gradient(#1F85DE 0 0) bottom / 0% 2px no-repeat #393939;
-	background-size: 100% 2px;
-	transition: all 0.3s;
-}
-
-.login-notify-failure
-{
-	background-color: #a82e2e;
-	border: 1px solid #e3e3e31a;
-	border-radius: 4px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: clamp(150px, 35vw, 350px);
-	margin: 0 auto;
-	color: #FFF;
-	padding-top: clamp(5px, 40vh, 8px);
-	padding-bottom: clamp(5px, 40vh, 8px);
-	padding-left: clamp(0.1em, 0.5vw, 1.5em);
-	padding-right: clamp(0.1em, 0.5vw, 1.5em);
-}
-
-.login-notify-failure span
-{
-	text-align: center;
-}
-
-</style>
-EOF
-						print "</HEAD>\n";
-						print "<BODY style='background-color:#1c1c1c;font-family:Arial, Helvetica, sans-serif;' onload='document.getElementById(\"user\").focus()'>\n";
-
-
-						# #
-						#	Login failed
-						# #
-
-						if ($valid eq "fail" || $valid eq "login-retry")
-						{
-							print "<div class='login-notify-failure'><span>Login Failed</span></div>\n"
-						}
-
-						print "<div class='login-container-main'>";
-						print "<form action='/' method='post'><div class='login-form' align='center'>\n";
-						print "<div class='login-container-logo'><a href='$app_github_url'><img class='login-logo' src='https://github.com/user-attachments/assets/ba005563-da8b-456c-8c4d-19f4ee31eb71'></a></div>";
-						print "<table align='center' cellspacing='0' cellpadding='4' class='login-container'>\n";
-						print "<tr><td><input placeholder='Username' id='user' name='csflogin' type='text' class='input' size='25'></td></tr>\n";
-						print "<tr><td><input placeholder='Password' name='csfpassword' type='password' class='input' size='25'></td></tr>\n";
-						print "<tr><td colspan='2' align='center'><input type='submit' value='Enter' class='btn-login'></td></tr>\n";
-						print "<", "/table>";
-						print "<div class='login-footer'><a href='$app_github_url'>ConfigServer Firewall</a> v$version</div>";
-						print "</div></form>\n";
-						print "</div>";
+						print "<HTML>\n<TITLE>ConfigServer Security & Firewall</TITLE>\n<BODY style='font-family:Arial, Helvetica, sans-serif;' onload='document.getElementById(\"user\").focus()'>\n";
+						if ($valid eq "failed") {print "<div align='center'><h2>Login Failed</h2></div>\n"}
+						print "<form action='/' method='post'><div align='center'>\n";
+						print "<table align='center' border='0' cellspacing='0' cellpadding='4' bgcolor='#FFFFFF' style='border:1px solid #990000'>\n";
+						print "<tr bgcolor='#F4F4EA'><td>Username:</td><td><input id='user' name='csflogin' type='text' size='15'></td></tr>\n";
+						print "<tr bgcolor='#F4F4EA'><td>Password:</td><td><input name='csfpassword' type='password' size='15'></td></tr>\n";
+						print "<tr bgcolor='#FFFFFF'><td colspan='2' align='center'><input type='submit' value='Enter'></td></tr>\n";
+						print "<", "/table></div></form>\n";
 						print "\n</BODY>\n</HTML>\n";
 					}
-	
-					if ($valid eq "session")
-					{
-						if (defined $FORM{csfapp} and ($FORM{csfapp} ne $application))
-						{
+					if ($valid eq "session") {
+						if (defined $FORM{csfapp} and ($FORM{csfapp} ne $application)) {
 							my $newapp = $application;
-							if ($FORM{csfapp} eq "csf")
-							{
-								$newapp = "csf"
-							}
-							elsif ($FORM{csfapp} eq "cxs" and $config{UI_CXS})
-							{
-								$newapp = "cxs"
-							}
-							elsif ($FORM{csfapp} eq "cse" and $config{UI_CSE})
-							{
-								$newapp = "cse"
-							}
-
-							if ($newapp ne $application)
-							{
+							if ($FORM{csfapp} eq "csf") {$newapp = "csf"}
+							elsif ($FORM{csfapp} eq "cxs" and $config{UI_CXS}) {$newapp = "cxs"}
+							elsif ($FORM{csfapp} eq "cse" and $config{UI_CSE}) {$newapp = "cse"}
+							if ($newapp ne $application) {
 								sysopen (my $SESSION,"/var/lib/csf/ui/ui.session", O_RDWR | O_CREAT) or &childcleanup(__LINE__,"UI: unable to open csf.session: $!");
 								flock ($SESSION, LOCK_EX);
 								my @records = <$SESSION>;
 								chomp @records;
 								seek ($SESSION, 0, 0);
 								truncate ($SESSION, 0);
-
-								foreach my $record (@records)
-								{
+								foreach my $record (@records) {
 									my ($rtype,$rstart,$rtime,$rsession,$rcookie,$rip,$rhead,$rapp) = split(/\|/,$record,8);
-									if ($rip eq $peeraddress and $rsession eq $session)
-									{
+									if ($rip eq $peeraddress and $rsession eq $session) {
 										$record = "$rtype|$rstart|$rtime|$rsession|$rcookie|$rip|$rhead|$newapp";
 										$application = $newapp;
 									}
-
 									print $SESSION "$record\n"
 								}
-
 								close ($SESSION);
 							}
 						}
-			
-						if ($file eq "/")
-						{
+						if ($file eq "/") {
 							print "HTTP/1.0 200 OK\r\n";
-						
-							if ($application eq "csf")
-							{
+							if ($application eq "csf") {
 								open (my $IN, "<", "/etc/csf/version.txt") or die $!;
 								flock ($IN, LOCK_SH);
 								$myv = <$IN>;
@@ -10390,34 +9956,25 @@ EOF
 								$script = "/$session/";
 								$images = "/$session/images";
 								$config{THIS_UI} = 1;
-	
 								my $bootstrapcss = "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css'>";
 								my $jqueryjs = "<script src='$images/jquery.min.js'></script>";
 								my $bootstrapjs = "<script src='$images/bootstrap/js/bootstrap.min.js'></script>";
-								my $csfjs = "<script src='$images/csf.min.js'></script>";
-								my $enginejs = "<script src='$images/engine.min.js'></script>";
 								my @header;
 								my @footer;
 								my $htmltag = "data-post='$FORM{action}'";
-				
-								if (-e "/etc/csf/csf.header")
-								{
+								if (-e "/etc/csf/csf.header") {
 									open (my $HEADER, "<", "/etc/csf/csf.header");
 									flock ($HEADER, LOCK_SH);
 									@header = <$HEADER>;
 									close ($HEADER);
 								}
-
-								if (-e "/etc/csf/csf.footer")
-								{
+								if (-e "/etc/csf/csf.footer") {
 									open (my $FOOTER, "<", "/etc/csf/csf.footer");
 									flock ($FOOTER, LOCK_SH);
 									@footer = <$FOOTER>;
 									close ($FOOTER);
 								}
-
-								unless ($config{STYLE_CUSTOM})
-								{
+								unless ($config{STYLE_CUSTOM}) {
 									undef @header;
 									undef @footer;
 									$htmltag = "";
@@ -10425,44 +9982,28 @@ EOF
 
 								print "Content-type: text/html\r\n";
 								print "\r\n";
-
-								# #
-								#	standard header
-								# #
-
-								unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq "logtailcmd" or $FORM{action} eq "loggrepcmd")
-								{
+								unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq "logtailcmd" or $FORM{action} eq "loggrepcmd") {
 									print <<EOF;
 <!doctype html>
 <html lang='en' $htmltag>
 <head>
-	<script>
-		(function()
-		{
-			var theme = localStorage.getItem('theme') || 'light';
-			document.documentElement.setAttribute('data-theme', theme);
-		})();
-	</script>
-	$bootstrapcss
-
-	<link rel="preload" href="$images/configserver.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	<noscript><link rel="stylesheet" href="$images/configserver.css"></noscript>
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link rel="preconnect" href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet">
-	<link rel="icon" type="image/x-icon" href="$images/csf-logo.png">
-	$csfjs
-	$jqueryjs
-	$enginejs
-	$bootstrapjs
-	<title>ConfigServer Security &amp; Firewall</title>
-	<meta charset='utf-8'>
-	<meta name='viewport' content='width=device-width, initial-scale=1'>
+<title>ConfigServer Security &amp; Firewall</title>
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+$bootstrapcss
+<link href='$images/configserver.css' rel='stylesheet' type='text/css'>
+$jqueryjs
+$bootstrapjs
 
 <style>
+.mobilecontainer {
+display:none;
+}
+.normalcontainer {
+display:block;
+}
 EOF
-									if ($config{STYLE_MOBILE})
-									{
+									if ($config{STYLE_MOBILE}) {
 	print <<EOF;
 \@media (max-width: 480px) {
 .mobilecontainer {
@@ -10474,7 +10015,6 @@ EOF
 }
 EOF
 									}
-
 									print "</style>\n";
 									print @header;
 									print <<EOF;
@@ -10483,88 +10023,27 @@ EOF
 <div id="loader"></div>
 <a id='toplink' class='toplink' title='Go to bottom'><span class='glyphicon glyphicon-hand-down'></span></a>
 <div class='container-fluid'>
-
-
-<div class="section-header">
-    <div class="header-left">
-        <a href="/$session/">
-            <img class="logo" src="$images/csf-logo.png" alt="ConfigServer Firewall">
-        </a>
-        <div class="app-info">
-            <span class="app-name">ConfigServer Firewall</span>
-            <span class="app-version"><code>v$version</code></span>
-        </div>
-    </div>
-
-    <div class="header-right">
 EOF
 								}
-
-								unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq "logtailcmd" or $FORM{action} eq "loggrepcmd")
-								{
-
-									print "<div class='header-form'>\n";
-										if ( $config{UI_CXS} or $config{UI_CSE} )
-										{
-											print "<form action='$script' method='post' class='form-csfapp-dropdown'>\n";
-											print "  <div class='btn-group'>\n";
-											print "    <button type='button' class='btn-settings-base btn-csfapp-dropdown dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>\n";
-											print "      <span class='selected-text'>csf</span> <span class='caret'></span>\n";
-											print "    </button>\n";
-											print "    <ul class='dropdown-menu'>\n";
-											print "      <li><a href='#' data-value='csf'>csf</a></li>\n";
-
-											if ( $config{UI_CXS} )
-											{
-												print "      <li><a href='#' data-value='cxs'>cxs</a></li>\n";
-											}
-
-											if ( $config{UI_CSE} )
-											{
-												print "      <li><a href='#' data-value='cse'>cse</a></li>\n";
-											}
-
-											print "    </ul>\n";
-											print "  </div>\n";
-
-											# hidden input holds the real value to submit
-											print "  <input type='hidden' name='csfapp' value='csf'>\n";
-
-											# submit button
-											print "  <input class='btn-settings-base btn-default' type='submit' value='Switch'>\n";
-
-											# noscript fallback
-											print "  <noscript>\n";
-											print "    <select name='csfapp'>\n";
-											print "      <option selected>csf</option>\n";
-											if ( $config{UI_CXS} )
-											{
-												print "      <option>cxs</option>\n";
-											}
-
-											if ( $config{UI_CSE} )
-											{
-												print "      <option>cse</option>\n";
-											}
-											print "    </select>\n";
-											print "    <input class='btn-settings-base btn-default' type='submit' value='Switch'>\n";
-											print "  </noscript>\n";
-											print "</form>\n";
-										}
-
+								unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq "logtailcmd" or $FORM{action} eq "loggrepcmd") {
+									print "<div class='pull-right' style='margin:8px'>\n";
+									if ($config{UI_CXS} or $config{UI_CSE}) {
+										print "<form action='$script' method='post'><select name='csfapp'><option>csf</option>";
+										if ($config{UI_CXS}) {print "<option>cxs</option>"}
+										if ($config{UI_CSE}) {print "<option>cse</option>"}
+										print "<", "/select> <input class='btn btn-default' type='submit' value='Switch'></form>\n";
+									}
+									print " <a class='btn btn-default' href='/$session/?csfaction=csflogout'>csf Logout</a>\n";
 									print "</div>\n";
 									print <<EOF;
-
-        <button class="header-btn"><a class='btn-settings-base btn-logout' href='/$session/?csfaction=csflogout'>Logout</a></button>
-    </div>
+<div class='panel panel-default panel-body'>
+<img align='absmiddle' src='$images/csf_small.png' alt='ConfigServer Firewall &amp; Security' style='float:left'>
+<h3>ConfigServer Security &amp; Firewall - csf v$myv</h3>
 </div>
 EOF
 								}
-
 								ConfigServer::DisplayUI::main(\%FORM, $script, 0, $images, $myv, $config{THIS_UI});
-
-								unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq "logtailcmd" or $FORM{action} eq "loggrepcmd")
-								{
+								unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq "logtailcmd" or $FORM{action} eq "loggrepcmd") {
 									print <<EOF;
 <a class='botlink' id='botlink' title='Go to top'><span class='glyphicon glyphicon-hand-up'></span></a>
 <script>
@@ -10609,8 +10088,7 @@ function getCookie(cname) {
 		}
 	});
 EOF
-									if ($config{STYLE_MOBILE})
-									{
+									if ($config{STYLE_MOBILE}) {
 									print <<EOF;
 	var csfview = getCookie('csfview');
 	if (csfview == 'mobile') {
@@ -10625,8 +10103,7 @@ EOF
 EOF
 }
 									print "});\n";
-									if ($config{STYLE_MOBILE})
-									{
+									if ($config{STYLE_MOBILE}) {
 										print <<EOF;
 \$("#NormalView").click(function(){
 	document.cookie = "csfview=desktop; path=/";
@@ -10646,15 +10123,10 @@ EOF
 									print "</html>\n";
 								}
 							}
-							elsif ($application eq "cxs" and $config{UI_CXS})
-							{
+							elsif ($application eq "cxs" and $config{UI_CXS}) {
 								my @data = &syscommand(__LINE__,"/usr/sbin/cxs","--version");
 								chomp @data;
-								if ($data[0] =~ /v(.*)$/)
-								{
-									$myv = $1
-								}
-
+								if ($data[0] =~ /v(.*)$/) {$myv = $1}
 								my %ajaxsubs = (
 									"cc_body" => 1,
 									"cc_dbody" => 1,
@@ -10688,19 +10160,11 @@ EOF
 								my $bootstrapcss = "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css'>";
 								my $jqueryjs = "<script src='$images/jquery.min.js'></script>";
 								my $bootstrapjs = "<script src='$images/bootstrap/js/bootstrap.min.js'></script>";
-								my $csfjs = "<script src='$images/csf.min.js'></script>";
-								my $enginejs = "<script src='$images/engine.min.js'></script>";
 								my $fontawesome = "<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.0.10/css/all.css'>";
-
-								if ( $FORM{action} eq "cc_body" or $FORM{action} eq "cc_dbody" or $FORM{action} eq "cc_showreports" )
-								{
-								}
-								elsif ( $ajaxsubs{$FORM{action}} or $FORM{action} eq "tailcmd" or $FORM{action} eq "tailscancmd" )
-								{
+								if ($FORM{action} eq "cc_body" or $FORM{action} eq "cc_dbody" or $FORM{action} eq "cc_showreports") {
+								} elsif ($ajaxsubs{$FORM{action}} or $FORM{action} eq "tailcmd" or $FORM{action} eq "tailscancmd") {
 									print "content-type: text/plain\n\n";
-								}
-								else
-								{
+								} else {
 									print "Content-type: text/html\n\n";
 									unless ($FORM{action} eq "RunScan" or ($FORM{action} =~ /^cc_/ and !$fullsubs{$FORM{action}} and $FORM{action} !~ /^cc_\w+bulk$/) or $FORM{action} eq "Run Scan" or $FORM{action} eq "viewq" or $FORM{action} eq "tailcmd" or $FORM{action} eq "tailscancmd") {
 										print <<EOF;
@@ -10715,8 +10179,6 @@ $fontawesome
 <link href='$images/configserver.css' rel='stylesheet' type='text/css'>
 $jqueryjs
 $bootstrapjs
-$csfjs
-$enginejs
 <link href='https://fonts.googleapis.com/css?family=Raleway:400,700' rel='stylesheet' type='text/css'>
 </head>
 <body>
@@ -10725,26 +10187,21 @@ $enginejs
 <div class='container-fluid'>
 EOF
 										print "<div class='pull-right' style='margin:8px'>\n";
-
-										if ($config{UI_CXS} or $config{UI_CSE})
-										{
+										if ($config{UI_CXS} or $config{UI_CSE}) {
 											print "<form action='$script' method='post'><select name='csfapp'><option>csf</option>";
 											if ($config{UI_CXS}) {print "<option selected>cxs</option>"}
 											if ($config{UI_CSE}) {print "<option>cse</option>"}
 											print "<", "/select> <input class='btn btn-default' type='submit' value='Switch'></form>\n";
 										}
-
 										print " <a class='btn btn-default' href='/$session/?csfaction=csflogout'>cxs Logout</a>\n";
 										print "</div>\n";
 										print <<EOF;
 <div class='panel panel-default panel-body'>
-<img class='logo' align='absmiddle' src='https://github.com/user-attachments/assets/ba005563-da8b-456c-8c4d-19f4ee31eb71' alt='ConfigServer eXploit Scanner' style='float:left'>
+<img align='absmiddle' src='$images/cxs_small.png' alt='ConfigServer eXploit Scanner' style='float:left'>
 <h3>ConfigServer eXploit Scanner - cxs v$myv</h3>
 </div>
 EOF
-									}
-									else
-									{
+									} else {
 										print <<EOF;
 <!doctype html>
 <html lang='en'>
@@ -10753,8 +10210,6 @@ EOF
 	<link href='$images/configserver.css' rel='stylesheet' type='text/css'>
 	$jqueryjs
 	$bootstrapjs
-	$csfjs
-	$enginejs
 </head>
 <body>
 <div class='container-fluid'>
@@ -10766,11 +10221,9 @@ pre {
 EOF
 									}
 								}
-	
 								ConfigServer::cxsUI::displayUI(\%FORM,\%ajaxsubs,$script,"",$images,$myv, "cpsess".$session);
 
-								unless ($ajaxsubs{$FORM{action}})
-								{
+								unless ($ajaxsubs{$FORM{action}}) {
 									print <<EOF;
 <script>
 	\$("#loader").hide();
@@ -10780,82 +10233,61 @@ EOF
 EOF
 								}
 							}
-							elsif ($application eq "cse" and $config{UI_CSE})
-							{
+							elsif ($application eq "cse" and $config{UI_CSE}) {
 								$script = "/$session/";
 								$images = "/$session/images";
 								$config{THIS_UI} = 1;
 								ConfigServer::cseUI::main(\%FORM, $fileinc, $script, 0, $images, $myv, $config{THIS_UI});
 							}
 						}
-						elsif ($file =~ /^\/images\/(\w+\/)?(\w+\/)?(\w+\/)?([\w\-]+\.(gif|png|jpg|[\w\-]+\.js|[\w\-]+\.css|css|[\w\-]+\.woff2|woff2|[\w\-]+\.woff|woff|[\w\-]+\.tff|tff))/i)
-						{
+						elsif ($file =~ /^\/images\/(\w+\/)?(\w+\/)?(\w+\/)?([\w\-]+\.(gif|png|jpg|[\w\-]+\.js|[\w\-]+\.css|css|[\w\-]+\.woff2|woff2|[\w\-]+\.woff|woff|[\w\-]+\.tff|tff))/i) {
 							my $type = $2;
 							if ($type eq "jpg") {$type = "jpeg"}
 							print "HTTP/1.0 200 OK\r\n";
-							if ($file =~ /^\/images\/((\w+\/)?(\w+\/)?(\w+\/)?[\w\-]+\.(gif|png|jpg))/i)
-							{
+							if ($file =~ /^\/images\/((\w+\/)?(\w+\/)?(\w+\/)?[\w\-]+\.(gif|png|jpg))/i) {
 								print "Content-type: image/$type\r\n";
 							}
-							elsif ($file =~ /^\/images\/((\w+\/)?(\w+\/)?(\w+\/)?[\w\-]+\.([\w\-]+\.css|css))/i)
-							{
+							elsif ($file =~ /^\/images\/((\w+\/)?(\w+\/)?(\w+\/)?[\w\-]+\.([\w\-]+\.css|css))/i) {
 								print "Content-type: text/css\r\n";
 							}
-							elsif ($file =~ /^\/images\/((\w+\/)?(\w+\/)?(\w+\/)?[\w\-]+\.([\w\-]+\.js))/i)
-							{
+							elsif ($file =~ /^\/images\/((\w+\/)?(\w+\/)?(\w+\/)?[\w\-]+\.([\w\-]+\.js))/i) {
 								print "Content-type: text/plain\r\n";
 							}
-							elsif ($file =~ /^\/images\/((\w+\/)?(\w+\/)?(\w+\/)?[\w\-]+\.([\w\-]+\.woff2|woff2))/i)
-							{
+							elsif ($file =~ /^\/images\/((\w+\/)?(\w+\/)?(\w+\/)?[\w\-]+\.([\w\-]+\.woff2|woff2))/i) {
 								print "Content-type: application/font-woff2\r\n";
 							}
-							elsif ($file =~ /^\/images\/((\w+\/)?(\w+\/)?(\w+\/)?[\w\-]+\.([\w\-]+\.woff|woff))/i)
-							{
+							elsif ($file =~ /^\/images\/((\w+\/)?(\w+\/)?(\w+\/)?[\w\-]+\.([\w\-]+\.woff|woff))/i) {
 								print "Content-type: application/font-woff\r\n";
 							}
-							elsif ($file =~ /^\/images\/((\w+\/)?(\w+\/)?(\w+\/)?[\w\-]+\.([\w\-]+\.tff|tff))/i)
-							{
+							elsif ($file =~ /^\/images\/((\w+\/)?(\w+\/)?(\w+\/)?[\w\-]+\.([\w\-]+\.tff|tff))/i) {
 								print "Content-type: application/octet-stream\r\n";
 							}
-				
 							print "\r\n";
 							open (my $IMAGE, "<", "/etc/csf/ui/images/$1");
 							flock ($IMAGE, LOCK_SH);
 							while (<$IMAGE>) {print $_}
 							close ($IMAGE);
-						}
-						else
-						{
+						} else {
 							&ui_403;
 						}
 					}
-
 					alarm(0);
 				};
-
-				if ($@)
-				{
-					logfile("*UI* child: [$!] [$@]")
-				}
-
+				if ($@) {logfile("*UI* child: [$!] [$@]")}
 				$client->close();
 				alarm(0);
 				exit;
 			}
-
 			$client->close(SSL_no_shutdown => 1);
 		}
-
 		exit;
 	}
-
 	return;
 }
 # end ui
 ###############################################################################
 # ui_403
-sub ui_403
-{
+sub ui_403 {
 	print "HTTP/1.0 403 Forbidden\r\n";
 	print "Content-type: text/html\r\n";
 	print "\r\n";
@@ -10868,8 +10300,7 @@ sub ui_403
 # end ui_403
 ###############################################################################
 # ui_413
-sub ui_413
-{
+sub ui_413 {
 	print "HTTP/1.0 413 Request Entity Too Large\r\n";
 	print "Content-type: text/html\r\n";
 	print "\r\n";
