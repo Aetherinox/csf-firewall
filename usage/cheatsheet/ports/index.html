@@ -7,28 +7,28 @@
         <meta name="author" content="Aetherinox">
       
       
-        <link rel="canonical" href="https://Aetherinox.github.io/csf-firewall/install/docker/">
+        <link rel="canonical" href="https://Aetherinox.github.io/csf-firewall/usage/cheatsheet/ports/">
       
       
-        <link rel="prev" href="../webui/">
+        <link rel="prev" href="../conf/">
       
       
-        <link rel="next" href="../traefik/">
+        <link rel="next" href="../../../advanced/services/blocklist.configserver/">
       
       
-      <link rel="icon" href="../../assets/favicon.png">
+      <link rel="icon" href="../../../assets/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.21">
     
     
       
-        <title>Usage › Docker Integration - CSF Firewall</title>
+        <title>Cheatsheet › Ports List - CSF Firewall</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.2a3383ac.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.2a3383ac.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -47,20 +47,20 @@
       
     
     
-      <link rel="stylesheet" href="../../css/timeago.css">
+      <link rel="stylesheet" href="../../../css/timeago.css">
     
-      <link rel="stylesheet" href="../../stylesheets/extra.css?v1.000">
+      <link rel="stylesheet" href="../../../stylesheets/extra.css?v1.000">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
     
     
     
-  <link rel="stylesheet" href="../../assets/stylesheets/custom.00c04c01.min.css">
+  <link rel="stylesheet" href="../../../assets/stylesheets/custom.00c04c01.min.css">
 
-  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+  <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
             html.glightbox-open { overflow: initial; height: 100%; }
             .gslide-title { margin-top: 0px; user-select: text; }
             .gslide-desc { color: #666; user-select: text; }
@@ -90,7 +90,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#docker-integration" class="md-skip">
+        <a href="#cheatsheet-port-list" class="md-skip">
           Skip to content
         </a>
       
@@ -122,12 +122,12 @@
             <div class="md-banner__inner md-grid md-typeset">
               
   You're not viewing the latest version.
-  <a href="../../.."> 
+  <a href="../../../.."> 
     <strong>Click here to go to latest.</strong>
   </a>
 
             </div>
-            <script>var el=document.querySelector("[data-md-component=outdated]"),base=new URL("../.."),outdated=__md_get("__outdated",sessionStorage,base);!0===outdated&&el&&(el.hidden=!1)</script>
+            <script>var el=document.querySelector("[data-md-component=outdated]"),base=new URL("../../.."),outdated=__md_get("__outdated",sessionStorage,base);!0===outdated&&el&&(el.hidden=!1)</script>
           </aside>
         
       </div>
@@ -137,7 +137,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="CSF Firewall" class="md-header__button md-logo" aria-label="CSF Firewall" data-md-component="logo">
+    <a href="../../.." title="CSF Firewall" class="md-header__button md-logo" aria-label="CSF Firewall" data-md-component="logo">
       
   
   <svg viewBox="0 0 512 512" id="svgContainer" xmlns="http://www.w3.org/2000/svg">
@@ -161,7 +161,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Usage › Docker Integration
+              Cheatsheet › Ports List
             
           </span>
         </div>
@@ -279,7 +279,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../home/" class="md-tabs__link">
+      <a href="../../../home/" class="md-tabs__link">
         
   
   
@@ -300,7 +300,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../about/csf/" class="md-tabs__link">
+        <a href="../../../about/csf/" class="md-tabs__link">
           
   
   
@@ -318,13 +318,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../dependencies/" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../../install/dependencies/" class="md-tabs__link">
           
   
   
@@ -342,11 +340,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../usage/getting-started/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../getting-started/" class="md-tabs__link">
           
   
   
@@ -375,7 +375,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../advanced/services/blocklist.configserver/" class="md-tabs__link">
+        <a href="../../../advanced/services/blocklist.configserver/" class="md-tabs__link">
           
   
   
@@ -398,7 +398,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../services/" class="md-tabs__link">
+      <a href="../../../services/" class="md-tabs__link">
         
   
   
@@ -417,7 +417,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../about/changelog/" class="md-tabs__link">
+      <a href="../../../about/changelog/" class="md-tabs__link">
         
   
   
@@ -490,7 +490,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="CSF Firewall" class="md-nav__button md-logo" aria-label="CSF Firewall" data-md-component="logo">
+    <a href="../../.." title="CSF Firewall" class="md-nav__button md-logo" aria-label="CSF Firewall" data-md-component="logo">
       
   
   <svg viewBox="0 0 512 512" id="svgContainer" xmlns="http://www.w3.org/2000/svg">
@@ -524,7 +524,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../home/" class="md-nav__link">
+      <a href="../../../home/" class="md-nav__link">
         
   
   
@@ -599,7 +599,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../about/csf/" class="md-nav__link">
+      <a href="../../../about/csf/" class="md-nav__link">
         
   
   
@@ -622,7 +622,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../about/contributing/" class="md-nav__link">
+      <a href="../../../about/contributing/" class="md-nav__link">
         
   
   
@@ -645,7 +645,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../about/license/" class="md-nav__link">
+      <a href="../../../about/license/" class="md-nav__link">
         
   
   
@@ -717,7 +717,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../about/conventions/" class="md-nav__link">
+      <a href="../../../about/conventions/" class="md-nav__link">
         
   
   
@@ -740,7 +740,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../about/tags/" class="md-nav__link">
+      <a href="../../../about/tags/" class="md-nav__link">
         
   
   
@@ -775,8 +775,6 @@
       
   
   
-    
-  
   
   
     
@@ -787,6 +785,304 @@
         
       
         
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Install
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Install
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../install/dependencies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Dependencies
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../install/download/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Download
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../install/tests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Diagnostic Tests
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../install/install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Install
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../install/services/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Start Services
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../install/webui/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Enable Web Interface
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../install/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker Integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../install/traefik/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Traefik Integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../install/authentik/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Authentik Integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../install/uninstall/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Uninstall
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
       
         
       
@@ -818,408 +1114,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
-            
-  
-  
-  <span class="md-ellipsis">
-    Install
-    
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_3">
-            <span class="md-nav__icon md-icon"></span>
-            Install
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../dependencies/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Dependencies
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../download/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Download
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../tests/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Diagnostic Tests
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../install/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Install
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../services/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Start Services
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../webui/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Enable Web Interface
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Docker Integration
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        
-  
-  
-  <span class="md-ellipsis">
-    Docker Integration
-    
-  </span>
-  
-
-      </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#enable-docker-mode" class="md-nav__link">
-    <span class="md-ellipsis">
-      Enable Docker Mode
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#what-is-docker" class="md-nav__link">
-    <span class="md-ellipsis">
-      What is Docker?
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
-    <span class="md-ellipsis">
-      Troubleshooting
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Troubleshooting">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#error-response-from-daemon-failed-to-set-up-container-networking" class="md-nav__link">
-    <span class="md-ellipsis">
-      Error response from daemon: failed to set up container networking
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#conclusion" class="md-nav__link">
-    <span class="md-ellipsis">
-      Conclusion
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#next-steps" class="md-nav__link">
-    <span class="md-ellipsis">
-      Next Steps
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../traefik/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Traefik Integration
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../authentik/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Authentik Integration
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../uninstall/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Uninstall
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4">
-        
-          
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
             
   
   
@@ -1232,7 +1130,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             Usage
@@ -1246,7 +1144,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/getting-started/" class="md-nav__link">
+      <a href="../../getting-started/" class="md-nav__link">
         
   
   
@@ -1269,7 +1167,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/configuration/" class="md-nav__link">
+      <a href="../../configuration/" class="md-nav__link">
         
   
   
@@ -1292,7 +1190,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/prepost/" class="md-nav__link">
+      <a href="../../prepost/" class="md-nav__link">
         
   
   
@@ -1315,7 +1213,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/ipset/" class="md-nav__link">
+      <a href="../../ipset/" class="md-nav__link">
         
   
   
@@ -1346,7 +1244,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/blocklists/" class="md-nav__link">
+      <a href="../../blocklists/" class="md-nav__link">
         
   
   
@@ -1377,7 +1275,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/geoip/" class="md-nav__link">
+      <a href="../../geoip/" class="md-nav__link">
         
   
   
@@ -1397,8 +1295,10 @@
                 
   
   
+    
   
   
+  
     
     
       
@@ -1417,18 +1317,21 @@
     
       
       
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_7">
         
           
-          <label class="md-nav__link" for="__nav_4_7" id="__nav_4_7_label" tabindex="0">
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_7" id="__nav_4_7_label" tabindex="">
             
   
   
@@ -1441,7 +1344,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_7_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_7_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4_7">
             <span class="md-nav__icon md-icon"></span>
             Cheatsheet
@@ -1455,7 +1358,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/cheatsheet/home/" class="md-nav__link">
+      <a href="../home/" class="md-nav__link">
         
   
   
@@ -1478,7 +1381,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/cheatsheet/structure/" class="md-nav__link">
+      <a href="../structure/" class="md-nav__link">
         
   
   
@@ -1501,7 +1404,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/cheatsheet/commands/" class="md-nav__link">
+      <a href="../commands/" class="md-nav__link">
         
   
   
@@ -1524,7 +1427,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/cheatsheet/conf/" class="md-nav__link">
+      <a href="../conf/" class="md-nav__link">
         
   
   
@@ -1544,10 +1447,19 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../usage/cheatsheet/ports/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1558,6 +1470,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -1685,7 +1598,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../advanced/services/blocklist.configserver/" class="md-nav__link">
+      <a href="../../../advanced/services/blocklist.configserver/" class="md-nav__link">
         
   
   
@@ -1708,7 +1621,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../advanced/services/download.configserver/" class="md-nav__link">
+      <a href="../../../advanced/services/download.configserver/" class="md-nav__link">
         
   
   
@@ -1731,7 +1644,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../advanced/services/get.configserver/" class="md-nav__link">
+      <a href="../../../advanced/services/get.configserver/" class="md-nav__link">
         
   
   
@@ -1811,7 +1724,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../extras/download.md" class="md-nav__link">
+      <a href="../../../extras/download.md" class="md-nav__link">
         
   
   
@@ -1834,7 +1747,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../extras/configure.md" class="md-nav__link">
+      <a href="../../../extras/configure.md" class="md-nav__link">
         
   
   
@@ -1872,7 +1785,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../services/" class="md-nav__link">
+      <a href="../../../services/" class="md-nav__link">
         
   
   
@@ -1894,7 +1807,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../about/changelog/" class="md-nav__link">
+      <a href="../../../about/changelog/" class="md-nav__link">
         
   
   
@@ -1973,74 +1886,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#enable-docker-mode" class="md-nav__link">
-    <span class="md-ellipsis">
-      Enable Docker Mode
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#what-is-docker" class="md-nav__link">
-    <span class="md-ellipsis">
-      What is Docker?
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
-    <span class="md-ellipsis">
-      Troubleshooting
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Troubleshooting">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#error-response-from-daemon-failed-to-set-up-container-networking" class="md-nav__link">
-    <span class="md-ellipsis">
-      Error response from daemon: failed to set up container networking
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#conclusion" class="md-nav__link">
-    <span class="md-ellipsis">
-      Conclusion
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#next-steps" class="md-nav__link">
-    <span class="md-ellipsis">
-      Next Steps
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -2061,7 +1906,7 @@
         
       
       
-        <a href="../../about/tags/#tag:configure" class="md-tag md-tag-icon">configure</a>
+        <a href="../../../about/tags/#tag:cheatsheet" class="md-tag md-tag-icon">cheatsheet</a>
       
     
       
@@ -2070,7 +1915,7 @@
         
       
       
-        <a href="../../about/tags/#tag:docker" class="md-tag md-tag-icon">docker</a>
+        <a href="../../../about/tags/#tag:configs" class="md-tag md-tag-icon">configs</a>
       
     
       
@@ -2079,7 +1924,7 @@
         
       
       
-        <a href="../../about/tags/#tag:integration" class="md-tag md-tag-icon">integration</a>
+        <a href="../../../about/tags/#tag:configure" class="md-tag md-tag-icon">configure</a>
       
     
       
@@ -2088,14 +1933,23 @@
         
       
       
-        <a href="../../about/tags/#tag:usage" class="md-tag md-tag-icon">usage</a>
+        <a href="../../../about/tags/#tag:ports" class="md-tag md-tag-icon">ports</a>
+      
+    
+      
+      
+        
+        
+      
+      
+        <a href="../../../about/tags/#tag:resource" class="md-tag md-tag-icon">resource</a>
       
     
   </nav>
 
 
   
-    <a href="https://github.com/Aetherinox/csf-firewall/edit/main/docs/docs/install/docker.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/Aetherinox/csf-firewall/edit/main/docs/docs/usage/cheatsheet/ports.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"></path></svg>
     </a>
@@ -2104,140 +1958,727 @@
     
       
     
-    <a href="https://github.com/Aetherinox/csf-firewall/raw/main/docs/docs/install/docker.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/Aetherinox/csf-firewall/raw/main/docs/docs/usage/cheatsheet/ports.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"></path></svg>
     </a>
   
 
 
-<h1 id="docker-integration"><abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> Integration<a class="headerlink" href="#docker-integration" title="Permanent link">¶</a></h1>
-<p>Running <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> in environments that leverage <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> requires special considerations due to containerized networking and isolated interfaces. This section provides guidance on configuring <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> to recognize <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> networks, manage container IP ranges, and ensure that firewall rules do not interfere with container-to-host or container-to-container communication. Following these steps will help maintain both security and functionality in your <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr>-based infrastructure.</p>
-<p><br></p>
-<hr>
-<p><br></p>
-<h2 id="enable-docker-mode">Enable <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> Mode<a class="headerlink" href="#enable-docker-mode" title="Permanent link">¶</a></h2>
-<p>Open your <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> config file located at <code>/etc/csf/csf.conf</code> and change the following setting to the value <code>1</code>:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="enable-docker-mode-find" name="__tabbed_1" type="radio"><input id="enable-docker-mode-change-to" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="enable-docker-mode-find"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 64C0 28.7 28.7 0 64 0L213.5 0c17 0 33.3 6.7 45.3 18.7L365.3 125.3c12 12 18.7 28.3 18.7 45.3L384 448c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 64zm208-5.5l0 93.5c0 13.3 10.7 24 24 24L325.5 176 208 58.5zM272 320c0-53-43-96-96-96s-96 43-96 96 43 96 96 96c17.8 0 34.4-4.8 48.7-13.2L263 441.1c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-38.3-38.3c8.5-14.3 13.3-31 13.3-48.9zm-96-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg></span> Find</label><label for="enable-docker-mode-change-to"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M128.1 0c-35.3 0-64 28.7-64 64l0 384c0 35.3 28.7 64 64 64l146.2 0 10.9-54.5c4.3-21.7 15-41.6 30.6-57.2l132.2-132.2 0-97.5c0-17-6.7-33.3-18.7-45.3L322.8 18.7C310.8 6.7 294.5 0 277.6 0L128.1 0zM389.6 176l-93.5 0c-13.3 0-24-10.7-24-24l0-93.5 117.5 117.5zM332.3 466.9l-11.9 59.6c-.2 .9-.3 1.9-.3 2.9 0 8 6.5 14.6 14.6 14.6 1 0 1.9-.1 2.9-.3l59.6-11.9c12.4-2.5 23.8-8.6 32.7-17.5l118.9-118.9-80-80-118.9 118.9c-8.9 8.9-15 20.3-17.5 32.7zm267.8-123c22.1-22.1 22.1-57.9 0-80s-57.9-22.1-80 0l-28.8 28.8 80 80 28.8-28.8z"></path></svg></span> Change To</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="language-bash highlight"><span class="filename">/etc/csf/csf.conf</span><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nv">DOCKER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"0"</span>
-</span></code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="language-bash highlight"><span class="filename">/etc/csf/csf.conf</span><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nv">DOCKER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"1"</span>
-</span></code></pre></div>
-</div>
-</div>
-</div>
-<p><br></p>
-<p>Save the file and then give <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> a restart:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="enable-docker-mode-command" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="enable-docker-mode-command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> Command</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-ra
-</span></code></pre></div>
-</div>
-</div>
-</div>
-<p><br></p>
-<p>Afterward, give your <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> service a restart:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="enable-docker-mode-command_1" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="enable-docker-mode-command_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> Command</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudo<span class="w"> </span>service<span class="w"> </span>docker<span class="w"> </span>restart
-</span></code></pre></div>
-</div>
-</div>
-</div>
-<p><br></p>
-<hr>
-<p><br></p>
-<h2 id="what-is-docker">What is <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr>?<a class="headerlink" href="#what-is-docker" title="Permanent link">¶</a></h2>
-<p><abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> is a platform that allows developers and system administrators to package applications and their <abbr title="A list of packages required for CSF to function properly">dependencies</abbr> into lightweight, portable containers. These containers run consistently across different environments, ensuring that software behaves the same on a developer’s laptop as it does on production servers. By isolating applications from the underlying operating system, <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> simplifies deployment, scaling, and management, making it an essential tool for modern infrastructure and DevOps practices.</p>
-<p>While <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> containers are not full virtual machines, they function in a similar way by providing isolated environments for applications. Each container has its own filesystem, processes, and network interfaces, allowing multiple containers to run on the same host without interfering with each other. This isolation provides many of the benefits of traditional virtual machines but with far lower overhead and faster startup times.</p>
-<p><br></p>
-<hr>
-<p><br></p>
-<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">¶</a></h2>
-<p>The following section highlights common issues or errors you might encounter when configuring <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> to work with <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr>, along with potential solutions to resolve them.</p>
-<p><br></p>
-<h3 id="error-response-from-daemon-failed-to-set-up-container-networking">Error response from daemon: failed to set up container networking<a class="headerlink" href="#error-response-from-daemon-failed-to-set-up-container-networking" title="Permanent link">¶</a></h3>
-<p>After integrating <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>, you might encounter the following error when trying to start or restart a <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> container:</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Error<span class="w"> </span>response<span class="w"> </span>from<span class="w"> </span>daemon:<span class="w"> </span>failed<span class="w"> </span>to<span class="w"> </span><span class="nb">set</span><span class="w"> </span>up<span class="w"> </span>container<span class="w"> </span>networking:
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span>driver<span class="w"> </span>failed<span class="w"> </span>programming<span class="w"> </span>external<span class="w"> </span>connectivity<span class="w"> </span>on<span class="w"> </span>endpoint<span class="w"> </span>my_container<span class="w"> </span><span class="o">(</span>cc81da8c4XXXXXXXXX<span class="o">)</span>:<span class="w"> </span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">        </span>Unable<span class="w"> </span>to<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>DNAT<span class="w"> </span>rule:<span class="w">  </span><span class="o">(</span>iptables<span class="w"> </span>failed:<span class="w"> </span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">            </span>iptables<span class="w"> </span>--wait<span class="w"> </span>-t<span class="w"> </span>nat<span class="w"> </span>-A<span class="w"> </span>DOCKER<span class="w"> </span>-p<span class="w"> </span>tcp<span class="w"> </span>-d<span class="w"> </span><span class="m">0</span>/0<span class="w"> </span>--dport<span class="w"> </span><span class="m">80</span><span class="w"> </span>-j<span class="w"> </span>DNAT<span class="w"> </span>--to-destination<span class="w"> </span><span class="m">172</span>.XX.XX.XX:80<span class="w"> </span>!<span class="w"> </span>-i<span class="w"> </span>br-6f611f185f
-</span></code></pre></div>
-<p><br></p>
-<p>To correct the above error, restart your <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">docker</abbr> service:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="4:1"><input checked="checked" id="error-response-from-daemon-failed-to-set-up-container-networking-command" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="error-response-from-daemon-failed-to-set-up-container-networking-command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> Command</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sudo<span class="w"> </span>service<span class="w"> </span>docker<span class="w"> </span>restart
-</span></code></pre></div>
-</div>
-</div>
-</div>
-<p><br></p>
-<p>You can now restart the <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> container again.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="5:3"><input checked="checked" id="error-response-from-daemon-failed-to-set-up-container-networking-command-docker-restart" name="__tabbed_5" type="radio"><input id="error-response-from-daemon-failed-to-set-up-container-networking-command-docker-compose" name="__tabbed_5" type="radio"><input id="error-response-from-daemon-failed-to-set-up-container-networking-command-docker-run" name="__tabbed_5" type="radio"><div class="tabbed-labels"><label for="error-response-from-daemon-failed-to-set-up-container-networking-command-docker-restart"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> Command (<abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">docker</abbr> restart)</label><label for="error-response-from-daemon-failed-to-set-up-container-networking-command-docker-compose"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> Command (<abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">docker</abbr> compose)</label><label for="error-response-from-daemon-failed-to-set-up-container-networking-command-docker-run"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> Command (<abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">docker</abbr> run)</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>docker<span class="w"> </span>restart<span class="w"> </span>&lt;container_name_or_id&gt;
-</span></code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>docker-compose<span class="w"> </span>restart<span class="w"> </span>&lt;container_name_or_id&gt;
-</span></code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--name<span class="w"> </span>&lt;container_name_or_id&gt;<span class="w"> </span>--restart<span class="w"> </span>unless-stopped<span class="w"> </span>...
-</span></code></pre></div>
-</div>
-</div>
-</div>
-<p><br></p>
-<hr>
-<p><br></p>
-<h2 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">¶</a></h2>
-<p>If you do all of the steps above, you should now be able to access the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface through your browser, with the added protection of <abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr>. This will allow you to access the web interface from other locations, implement <abbr title="A component in Traefik that modifies requests or responses before they reach a service or client.">middleware</abbr> such as IP whitelisting, and not expose the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface port to the world. You should <strong>NOT</strong> be allowing any connection to access the web interface, even if they don't have the username and password to sign in.</p>
-<p><br></p>
-<hr>
-<p><br></p>
-<h2 id="next-steps">Next Steps <!-- omit from toc --><a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
-<mark class="critic block">
-<p>Select what documentation you would like to proceed with next ...</p>
-</mark>
-<div class="grid cards">
-<ul>
-<li>
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300">
-  <path fill="currentColor" d="M 110.517 35.585 C 91.004 38.863, 77.219 51.033, 71.612 69.932 C 70.290 74.387, 70 80.632, 70 104.682 C 70 120.807, 69.739 134, 69.420 134 C 69.101 134, 66.236 131.412, 63.053 128.250 C 59.870 125.088, 54.635 120.925, 51.421 119 C 45.877 115.680, 45.136 115.507, 37.038 115.645 C 30.246 115.760, 27.312 116.316, 22.692 118.365 C 15.449 121.577, 7.234 129.787, 3.354 137.689 C 0.764 142.962, 0.500 144.472, 0.505 154 C 0.509 163.142, 0.819 165.082, 2.899 169 C 8.112 178.817, 13.499 184.540, 21.500 188.758 C 25.907 191.081, 27.686 191.400, 36.500 191.447 C 45.771 191.496, 46.865 191.288, 51.500 188.597 C 59.645 183.869, 70.267 172.217, 74.936 162.888 C 77.171 158.422, 79 154.209, 79 153.525 C 79 152.841, 77.656 149.631, 76.013 146.391 C 74.370 143.151, 73.020 140.393, 73.013 140.262 C 73.006 140.131, 89.987 139.906, 110.750 139.762 L 148.500 139.500 148.769 116.750 L 149.038 94 156.519 94 L 164 94 164 103.552 L 164 113.105 169.250 112.802 L 174.500 112.500 174.788 103.250 L 175.075 94 183.038 94 L 191 94 191 99.500 L 191 105 196.481 105 C 201.515 105, 202.014 104.793, 202.599 102.463 C 202.949 101.068, 202.969 98.593, 202.643 96.963 L 202.050 94 211.525 94 L 221 94 221 134.500 L 221 175 145.500 175 L 70 175 70 199.818 C 70 219.729, 70.319 225.711, 71.612 230.068 C 74.239 238.923, 77.914 245.124, 84.155 251.231 C 94.162 261.023, 104.084 264.811, 122.057 265.703 C 139.288 266.558, 138 268.516, 138 241.465 L 138 219 185 219 L 232 219 232 240.929 C 232 260.228, 232.204 263.061, 233.699 264.556 C 235.169 266.026, 237.021 266.189, 247.449 265.765 C 274.087 264.681, 290.217 253.971, 297.914 232.254 C 300.125 226.015, 300.127 225.925, 300.106 150.254 C 300.086 78.629, 299.982 74.189, 298.191 68.794 C 292.029 50.226, 277.958 38.369, 258.582 35.419 C 245.757 33.466, 122.306 33.604, 110.517 35.585 M 30.754 131.599 C 19.002 135.213, 11.993 149.859, 16.156 162.101 C 18.888 170.134, 27.549 177, 34.950 177 C 43.909 177, 53.387 170.391, 59.858 159.630 L 63.217 154.045 60.428 149.273 C 55.937 141.585, 47.474 133.350, 42.229 131.562 C 36.826 129.721, 36.860 129.721, 30.754 131.599 M 0.355 153.500 C 0.352 158.450, 0.521 160.601, 0.731 158.280 C 0.940 155.959, 0.943 151.909, 0.736 149.280 C 0.530 146.651, 0.358 148.550, 0.355 153.500"></path>
-</svg>
-</span> &nbsp; <strong><a href="../authentik/"><abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> Integration</a></strong></p>
-<hr>
-<p>Enhance the security of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> by placing it behind the <strong><abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr></strong> identity 
-provider using a forward proxy. </p>
-<p>This ensures that all traffic to the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface passes through <abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr>, 
-giving you centralized control over authentication and access.</p>
-<p>With this setup, <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> is protected by modern authentication methods such as
-passwords, two-factor authentication (2FA), or passkeys.</p>
-</li>
-<li>
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 256c0 141.4 114.6 256 256 256 5.4 0 10.7-.2 16-.5l0-34.3c0-25-20.3-45.3-45.3-45.3-12 0-23.5-4.8-32-13.3l-16-16c-12-12-18.7-28.3-18.7-45.3l0-3.2c0-21.4 10.7-41.4 28.5-53.3 9.1-6.1 18.3-12.2 27.4-18.3 10.5-7 22.9-10.7 35.5-10.7l20.9 0c15.3 0 30 5.5 41.6 15.4l26.6 22.8c7.4 6.3 16.8 9.8 26.6 9.8 10.8 0 21.2 4.3 28.9 12l4 4c10.2 10.2 24.1 16 38.6 16l54.8 0c4.2-10.3 7.7-21 10.5-32l-57.3 0c-14.5 0-28.4-5.8-38.6-16l-18.3-18.3C386 282 384 277.1 384 272s2-10 5.7-13.7c2.5-2.5 5-5 7.5-7.5 1.8-1.8 2.8-4.3 2.8-6.8s-1-5-2.8-6.8c-2.2-2.2-4.4-4.4-6.5-6.5-4.2-4.2-10-6.6-16-6.6-3.8 0-7.5 0-11.3 0-6.2 0-11.3-5.1-11.3-11.3 0-3 1.2-5.9 3.3-8 1.6-1.6 3.1-3.1 4.7-4.7 5.1-5.1 12.1-8 19.3-8 6.9 0 13.8 0 20.7 0 8.8 0 16-7.2 16-16s-7.2-16-16-16c-9.8 0-19.6 0-29.4 0-10.3 0-18.6 8.3-18.6 18.6 0 8-5.1 15.1-12.7 17.6-7.1 2.4-14.1 4.7-21.2 7.1-7.5 2.5-11 11-7.5 18 .4 .8 .8 1.5 1.1 2.3 3.8 7.5-1.7 16.4-10.1 16.4-3.6 0-6.9-1.7-9.1-4.5-5.4-7.2-10.9-14.5-16.3-21.7-2.7-3.6-6.9-5.7-11.4-5.7-5.4 0-10.4 3.1-12.8 7.9-1.3 2.7-2.7 5.4-4 8.1-4.9 9.8-15.1 16-26.1 16-16.4 0-29.9-13.3-29.9-29.7l0-4.3c0-9 3.6-17.6 9.9-24 6-6 12-12 17.9-17.9 2.6-2.6 4.1-6.2 4.1-10 0-6.1 3.9-11.5 9.6-13.4 8.8-2.9 17.7-5.9 26.5-8.8 7.8-2.6 14.9-7 20.7-12.8 6.6-6.6 13.2-13.2 19.9-19.9 2.1-2.1 3.3-5 3.3-8 0-6.2-5.1-11.3-11.3-11.3-.2 0-.3 0-.5 0-3 0-5.3 .7-7.3 2.1-13.9 9.3-27.9 18.6-41.8 27.9-2 1.3-4.4 2.1-6.8 2.1-6.8 0-12.3-5.5-12.3-12.3l0-8.6c0-7 3.5-13.5 9.3-17.3 31.7-21.1 63.4-42.3 95.1-63.4-23-6.8-47.3-10.4-72.4-10.4-141.4 0-256 114.6-256 256zM132.7 132.7c10.7-10.7 21.3-21.3 32-32 6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6c-10.7 10.7-21.3 21.3-32 32-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M192 210.3l0-4.3c0-9 3.6-17.6 9.9-24l17.9-17.9c2.6-2.6 4.1-6.2 4.1-10 0-6.1 3.9-11.5 9.6-13.4l26.5-8.8c7.8-2.6 14.9-7 20.7-12.8l19.9-19.9c2.1-2.1 3.3-5 3.3-8 0-6.2-5.1-11.3-11.3-11.3l-1 0c-2.4 0-4.8 .7-6.8 2.1l-41.8 27.9c-2 1.3-4.4 2.1-6.8 2.1-6.8 0-12.3-5.5-12.3-12.3l0-8.6c0-7 3.5-13.5 9.3-17.3l95.1-63.4c106.1 31.2 183.6 129.4 183.6 245.6 0 22.1-2.8 43.5-8.1 64l-57.3 0c-14.5 0-28.4-5.8-38.6-16l-18.3-18.3C386 282 384 277.1 384 272s2-10 5.7-13.7l7.5-7.5c1.8-1.8 2.8-4.3 2.8-6.8s-1-5-2.8-6.8l-6.5-6.5c-4.2-4.2-10-6.6-16-6.6l-11.3 0c-6.2 0-11.3-5.1-11.3-11.3 0-3 1.2-5.9 3.3-8L360 200c5.1-5.1 12.1-8 19.3-8l20.7 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-29.4 0c-10.3 0-18.6 8.3-18.6 18.6 0 8-5.1 15.1-12.7 17.6l-21.2 7.1c-7.5 2.5-11 11-7.5 18l1.1 2.3c3.8 7.5-1.7 16.4-10.1 16.4-3.6 0-6.9-1.7-9.1-4.5l-16.3-21.7c-2.7-3.6-6.9-5.7-11.4-5.7-5.4 0-10.4 3.1-12.8 7.9l-4 8.1c-4.9 9.8-15.1 16-26.1 16-16.4 0-29.9-13.3-29.9-29.7zM493.4 352C457.3 441.1 372.5 505.3 272 511.5l0-34.3c0-25-20.3-45.3-45.3-45.3-12 0-23.5-4.8-32-13.3l-16-16c-12-12-18.7-28.3-18.7-45.3l0-3.2c0-21.4 10.7-41.4 28.5-53.3l27.4-18.2c10.5-7 22.9-10.7 35.5-10.7l20.9 0c15.3 0 30 5.5 41.6 15.4l26.6 22.8c7.4 6.3 16.8 9.8 26.6 9.8 10.8 0 21.2 4.3 28.9 12l4 4c10.2 10.2 24.1 16 38.6 16l54.8 0zM187.3 100.7c6.2 6.2 6.2 16.4 0 22.6l-32 32c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l32-32c6.2-6.2 16.4-6.2 22.6 0z"></path></svg></span> &nbsp; <strong><a href="../../usage/geoip/">Geographical IP Block Integration</a></strong></p>
-<hr>
-<p>Configure geographical restrictions in <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> to whitelist or blacklist specific
-regions from accessing your server.</p>
-<p>This chapter covers enabling the GeoIP blocklist feature using third-party
-<abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> such as MaxMind (requires an API key), db-ip, ipdeny, or iptoasn.</p>
-<p>These <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> allow you to control access based on location while keeping
-your server secure.</p>
-</li>
-</ul>
-</div>
+<h1 id="cheatsheet-port-list">Cheatsheet: Port List <!-- omit from toc --><a class="headerlink" href="#cheatsheet-port-list" title="Permanent link">¶</a></h1>
+<p>The following list of ports can be referenced when setting up <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> firewall with your other applications:</p>
+<table>
+<thead>
+<tr>
+<th>Port</th>
+<th>TCP</th>
+<th>UDP</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>20</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>FTP Data (mostly TCP, rarely UDP)</td>
+</tr>
+<tr>
+<td><code>21</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>FTP Control (mostly TCP, rarely UDP)</td>
+</tr>
+<tr>
+<td><code>22</code></td>
+<td>✅</td>
+<td></td>
+<td>SSH <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> / SCP / SFTP</td>
+</tr>
+<tr>
+<td><code>23</code></td>
+<td>✅</td>
+<td></td>
+<td>Telnet</td>
+</tr>
+<tr>
+<td><code>25</code></td>
+<td>✅</td>
+<td></td>
+<td>SMTP (non-secure email sending)</td>
+</tr>
+<tr>
+<td><code>26</code></td>
+<td>✅</td>
+<td></td>
+<td>SMTP (non-secure email sending, alternate when 25 blocked)</td>
+</tr>
+<tr>
+<td><code>37</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>Machine-readable time protocol (rdate)</td>
+</tr>
+<tr>
+<td><code>43</code></td>
+<td>✅</td>
+<td></td>
+<td>Whois</td>
+</tr>
+<tr>
+<td><code>53</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>DNS (Pihole, AdGuard)</td>
+</tr>
+<tr>
+<td><code>67</code></td>
+<td></td>
+<td>✅</td>
+<td>DHCP Server</td>
+</tr>
+<tr>
+<td><code>68</code></td>
+<td></td>
+<td>✅</td>
+<td>DHCP Client</td>
+</tr>
+<tr>
+<td><code>69</code></td>
+<td></td>
+<td>✅</td>
+<td>TFTP (Trivial File Transfer Protocol)</td>
+</tr>
+<tr>
+<td><code>70</code></td>
+<td>✅</td>
+<td></td>
+<td>Gopher</td>
+</tr>
+<tr>
+<td><code>71</code></td>
+<td>✅</td>
+<td></td>
+<td>Genius protocol</td>
+</tr>
+<tr>
+<td><code>80</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>HTTP (web traffic)</td>
+</tr>
+<tr>
+<td><code>88</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>Kerberos authentication</td>
+</tr>
+<tr>
+<td><code>110</code></td>
+<td>✅</td>
+<td></td>
+<td>POP3 (non-secure email retrieval)</td>
+</tr>
+<tr>
+<td><code>113</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>Identification Protocol (Ident) (RFC 1413)</td>
+</tr>
+<tr>
+<td><code>123</code></td>
+<td></td>
+<td>✅</td>
+<td>NTP (Network Time Protocol) / Pihole</td>
+</tr>
+<tr>
+<td><code>137</code></td>
+<td></td>
+<td>✅</td>
+<td>NetBIOS Name Service (Samba name resolution)</td>
+</tr>
+<tr>
+<td><code>138</code></td>
+<td></td>
+<td>✅</td>
+<td>NetBIOS Datagram Service (Samba broadcasts)</td>
+</tr>
+<tr>
+<td><code>139</code></td>
+<td>✅</td>
+<td></td>
+<td>NetBIOS Session Service (Samba file/printer sharing)</td>
+</tr>
+<tr>
+<td><code>143</code></td>
+<td>✅</td>
+<td></td>
+<td>IMAP (non-secure email retrieval)</td>
+</tr>
+<tr>
+<td><code>443</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>HTTPS / QUIC / DoH (DNS over HTTPS, HTTP/3)</td>
+</tr>
+<tr>
+<td><code>445</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>Microsoft-DS / SMB over TCP/IP (Samba)</td>
+</tr>
+<tr>
+<td><code>458</code></td>
+<td></td>
+<td></td>
+<td>Apple QuickTime / Real-Time Streaming Protocol (RTSP)</td>
+</tr>
+<tr>
+<td><code>465</code></td>
+<td>✅</td>
+<td></td>
+<td>SMTPS (secure SMTP)</td>
+</tr>
+<tr>
+<td><code>546</code></td>
+<td></td>
+<td>✅</td>
+<td>DHCPv6 Client</td>
+</tr>
+<tr>
+<td><code>547</code></td>
+<td></td>
+<td>✅</td>
+<td>DHCPv6 Server (Pihole, etc)</td>
+</tr>
+<tr>
+<td><code>565</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>Whoami</td>
+</tr>
+<tr>
+<td><code>566</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>Streettalk</td>
+</tr>
+<tr>
+<td><code>587</code></td>
+<td>✅</td>
+<td></td>
+<td>SMTP submission</td>
+</tr>
+<tr>
+<td><code>574</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>FTP Software Agent System</td>
+</tr>
+<tr>
+<td><code>596</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>SysMan Station daemon</td>
+</tr>
+<tr>
+<td><code>783</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://spamassassin.apache.org/">Spamassassin</a> Razor Agent</td>
+</tr>
+<tr>
+<td><code>853</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>DNS over TLS (DoT)</td>
+</tr>
+<tr>
+<td><code>873</code></td>
+<td>✅</td>
+<td></td>
+<td>Rsync file transfer</td>
+</tr>
+<tr>
+<td><code>953</code></td>
+<td>✅</td>
+<td></td>
+<td>Unbound Remote control / statistics (RPC for unbound-control)</td>
+</tr>
+<tr>
+<td><code>993</code></td>
+<td>✅</td>
+<td></td>
+<td>IMAPS (secure IMAP)</td>
+</tr>
+<tr>
+<td><code>995</code></td>
+<td>✅</td>
+<td></td>
+<td>POP3S (secure POP3)</td>
+</tr>
+<tr>
+<td><code>1025</code></td>
+<td>✅</td>
+<td></td>
+<td>Microsoft Remote Procedure Call</td>
+</tr>
+<tr>
+<td><code>1194</code></td>
+<td>✅</td>
+<td>✅</td>
+<td><a href="https://openvpn.net/">OpenVPN</a></td>
+</tr>
+<tr>
+<td><code>1241</code></td>
+<td>✅</td>
+<td>✅</td>
+<td><a href="https://www.tenable.com/products/nessus">Nessus</a> security scanner</td>
+</tr>
+<tr>
+<td><code>1311</code></td>
+<td>✅</td>
+<td></td>
+<td>Dell OpenManage server administrator web GUI (EMC)</td>
+</tr>
+<tr>
+<td><code>1337</code></td>
+<td>✅</td>
+<td></td>
+<td>WASTE peer-to-peer encrypted file-sharing Program</td>
+</tr>
+<tr>
+<td><code>1589</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>Cisco VLAN Query Protocol (VQP)</td>
+</tr>
+<tr>
+<td><code>1701</code></td>
+<td>✅</td>
+<td></td>
+<td>Layer Two Tunneling Protocol Virtual Private Networking</td>
+</tr>
+<tr>
+<td><code>1723</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>Microsoft PPTP</td>
+</tr>
+<tr>
+<td><code>1725</code></td>
+<td></td>
+<td>✅</td>
+<td><a href="https://store.steampowered.com/about/">Steam</a> Client</td>
+</tr>
+<tr>
+<td><code>1863</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://escargot.chat/download/">MSN Live Messenger</a>, Xbox Live 360</td>
+</tr>
+<tr>
+<td><code>1900</code></td>
+<td></td>
+<td>✅</td>
+<td>Universal Plug and Play (UPnP)</td>
+</tr>
+<tr>
+<td><code>2049</code></td>
+<td>✅</td>
+<td>✅</td>
+<td>Network File Sharing (NFS)</td>
+</tr>
+<tr>
+<td><code>2077</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://cpanel.net/"><abbr title="A Linux-based control panel used to manage your web hosting.">cPanel</abbr></a> Web Disk (HTTPS) / WebDAV</td>
+</tr>
+<tr>
+<td><code>2078</code></td>
+<td>✅</td>
+<td></td>
+<td>Web Disk (HTTP) / WebDAV</td>
+</tr>
+<tr>
+<td><code>2079</code></td>
+<td>✅</td>
+<td></td>
+<td>Web Disk (HTTPS) / CalDAV</td>
+</tr>
+<tr>
+<td><code>2080</code></td>
+<td>✅</td>
+<td></td>
+<td>Web Disk (HTTP)</td>
+</tr>
+<tr>
+<td><code>2082</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://cpanel.net/"><abbr title="A Linux-based control panel used to manage your web hosting.">cPanel</abbr></a> (HTTP) / <a href="https://control-webpanel.com/">CWP</a> User Panel (HTTP)</td>
+</tr>
+<tr>
+<td><code>2083</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://cpanel.net/"><abbr title="A Linux-based control panel used to manage your web hosting.">cPanel</abbr></a> (HTTPS) / <a href="https://control-webpanel.com/">CWP</a> User Panel (HTTPS)</td>
+</tr>
+<tr>
+<td><code>2086</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://cpanel.net/"><abbr title="WebHost Manager; an app from the same developers as cPanel used to manage web servers through a control panel.">WHM</abbr></a> (HTTP) / <a href="https://control-webpanel.com/">CWP</a> Admin (HTTP)</td>
+</tr>
+<tr>
+<td><code>2087</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://cpanel.net/"><abbr title="WebHost Manager; an app from the same developers as cPanel used to manage web servers through a control panel.">WHM</abbr></a> (HTTPS) / <a href="https://control-webpanel.com/">CWP</a> Admin (HTTPS) / Event Logging Integration (ELI)</td>
+</tr>
+<tr>
+<td><code>2095</code></td>
+<td>✅</td>
+<td></td>
+<td>Webmail (HTTP)</td>
+</tr>
+<tr>
+<td><code>2096</code></td>
+<td>✅</td>
+<td></td>
+<td>Webmail (HTTPS)</td>
+</tr>
+<tr>
+<td><code>2089</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://cpanel.net/"><abbr title="A Linux-based control panel used to manage your web hosting.">cPanel</abbr></a> Licensing</td>
+</tr>
+<tr>
+<td><code>2091</code></td>
+<td>✅</td>
+<td></td>
+<td>ActiveSync</td>
+</tr>
+<tr>
+<td><code>2222</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://directadmin.com/">DirectAdmin</a> control panel</td>
+</tr>
+<tr>
+<td><code>2304</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://control-webpanel.com/">CWP</a> External API SSL (HTTPS for API access)</td>
+</tr>
+<tr>
+<td><code>2703</code></td>
+<td>✅</td>
+<td></td>
+<td>Local <a href="https://spamassassin.apache.org/">Spamassassin</a> / <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>+<abbr title="Login Failure Daemon">LFD</abbr></td>
+</tr>
+<tr>
+<td><code>3000</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://gogs.io/">Gogs</a> 🔹 <a href="https://about.gitea.com/">Gitea</a> 🔹 <a href="https://grafana.com/">Grafana</a> 🔹 <a href="https://github.com/CyferShepard/Jellystat">Jellyfin Stats </a> 🔹 <a href="https://linkwarden.app/">Linkwarden</a> 🔹 <a href="https://github.com/vrtmrz/obsidian-livesync">Obsidian LiveSync</a> 🔹 <a href="https://github.com/andrii-kryvoviaz/slink">Slink</a> / <a href="https://github.com/diced/zipline">Zipline</a></td>
+</tr>
+<tr>
+<td><code>3001</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://github.com/louislam/uptime-kuma">Uptime Kuma</a> / <a href="https://hub.docker.com/r/linuxserver/obsidian">Obsidian</a></td>
+</tr>
+<tr>
+<td><code>3306</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://hub.docker.com/_/mysql">MySQL</a> / <a href="https://hub.docker.com/_/mariadb">MariaDB</a></td>
+</tr>
+<tr>
+<td><code>3389</code></td>
+<td>✅</td>
+<td></td>
+<td>Remote Desktop Protocol (RDP)</td>
+</tr>
+<tr>
+<td><code>3875</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://hub.docker.com/r/saspus/duplicacy-web">Duplicacy</a></td>
+</tr>
+<tr>
+<td><code>5001</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://github.com/louislam/dockge">Dockge</a></td>
+</tr>
+<tr>
+<td><code>5224</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://plesk.com/">Plesk</a> license check</td>
+</tr>
+<tr>
+<td><code>5432</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://hub.docker.com/_/postgres">Postgres</a></td>
+</tr>
+<tr>
+<td><code>5601</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://elastic.co/kibana">Kibana</a> web interface 🔹 visualization/dashboard for <a href="https://elastic.co/downloads/elasticsearch">Elastic Search</a> (HTTP)</td>
+</tr>
+<tr>
+<td><code>5938</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://teamviewer.com/en-us/download/windows/">Teamviewer</a></td>
+</tr>
+<tr>
+<td><code>5984</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://hub.docker.com/_/couchdb">CouchDB</a> Clustered Mode</td>
+</tr>
+<tr>
+<td><code>6077</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://github.com/cabernetwork/cabernet">Cabernet</a></td>
+</tr>
+<tr>
+<td><code>6157</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://github.com/thomiceli/opengist">Opengist</a></td>
+</tr>
+<tr>
+<td><code>6277</code></td>
+<td>✅</td>
+<td>✅</td>
+<td><a href="https://github.com/Aetherinox/csf-firewall"><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> / <abbr title="Login Failure Daemon">LFD</abbr></a> internal service</td>
+</tr>
+<tr>
+<td><code>6379</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://hub.docker.com/_/redis">Redis</a></td>
+</tr>
+<tr>
+<td><code>6568</code></td>
+<td>✅</td>
+<td>✅</td>
+<td><a href="https://anydesk.com">AnyDesk</a> streaming (peer-to-peer connections)</td>
+</tr>
+<tr>
+<td><code>6881</code></td>
+<td>✅</td>
+<td>✅</td>
+<td><a href="https://hub.docker.com/r/linuxserver/qbittorrent">qBittorrent</a></td>
+</tr>
+<tr>
+<td><code>6666</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://github.com/Aetherinox/csf-firewall"><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> / <abbr title="Login Failure Daemon">LFD</abbr></a> web interface</td>
+</tr>
+<tr>
+<td><code>7080</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://litespeedtech.com/">LiteSpeed WebAdmin Console</a></td>
+</tr>
+<tr>
+<td><code>8083</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://vestacp.com/">VestaCP</a> control panel</td>
+</tr>
+<tr>
+<td><code>8096</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://github.com/jellyfin/jellyfin">Jellyfin</a></td>
+</tr>
+<tr>
+<td><code>8200</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://github.com/hashicorp/vault">Hashicorp</a> Vault 🔹 <a href="https://github.com/duplicati/duplicati">Duplicati</a> control panel</td>
+</tr>
+<tr>
+<td><code>8384</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://syncthing.net/">Syncthing</a></td>
+</tr>
+<tr>
+<td><code>8443</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://plesk.com/">Plesk</a> administrative interface (HTTPS)</td>
+</tr>
+<tr>
+<td><code>8840</code></td>
+<td>✅</td>
+<td>✅</td>
+<td><a href="https://github.com/aceberg/WatchYourLAN">WatchYourLan</a></td>
+</tr>
+<tr>
+<td><code>8880</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://plesk.com/">Plesk administrative interface (HTTP)</a> / <a href="https://github.com/VueTorrent/VueTorrent">Vuetorrent</a></td>
+</tr>
+<tr>
+<td><code>8853</code></td>
+<td>✅</td>
+<td>✅</td>
+<td><a href="https://github.com/aceberg/WatchYourPorts">WatchYourPorts</a></td>
+</tr>
+<tr>
+<td><code>9000</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://portainer.io/">Portainer</a> (HTTP)</td>
+</tr>
+<tr>
+<td><code>9001</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://hub.docker.com/r/portainer/agent">Portainer agent</a></td>
+</tr>
+<tr>
+<td><code>9090</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://prometheus.io/download/">Prometheus</a></td>
+</tr>
+<tr>
+<td><code>9100</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://prometheus.io/download/">Prometheus</a> Node Exporter</td>
+</tr>
+<tr>
+<td><code>9200</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://elastic.co/downloads/elasticsearch">Elastic Search</a> REST API</td>
+</tr>
+<tr>
+<td><code>9300</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://elastic.co/downloads/elasticsearch">Elastic Search</a> internal cluster communication</td>
+</tr>
+<tr>
+<td><code>9443</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://portainer.io/">Portainer</a> (HTTPS)</td>
+</tr>
+<tr>
+<td><code>9600</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://elastic.co/downloads/elasticsearch">Elastic Search</a> monitoring API (used by X-Pack/<a href="https://elastic.co/downloads/elasticsearch">Elastic Search</a> stack monitoring)</td>
+</tr>
+<tr>
+<td><code>9999</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://github.com/stashapp/stash">Stash</a></td>
+</tr>
+<tr>
+<td><code>10000</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://webmin.com/">Webmin</a> control panel</td>
+</tr>
+<tr>
+<td><code>11211</code></td>
+<td>✅</td>
+<td>✅</td>
+<td><a href="https://memcached.org">Memcached</a></td>
+</tr>
+<tr>
+<td><code>22067</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://syncthing.net/">Syncthing</a> Relay Server</td>
+</tr>
+<tr>
+<td><code>22070</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://syncthing.net/">Syncthing</a> Relay Server</td>
+</tr>
+<tr>
+<td><code>22000</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://syncthing.net/">Syncthing</a> Relay Server</td>
+</tr>
+<tr>
+<td><code>27017</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://mongodb.com/try/download/community">MongoDB</a></td>
+</tr>
+<tr>
+<td><code>24441</code></td>
+<td>✅</td>
+<td>✅</td>
+<td><a href="https://github.com/Aetherinox/csf-firewall"><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> / <abbr title="Login Failure Daemon">LFD</abbr></a> internal <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> / <a href="https://spamassassin.apache.org/">Spamassassin</a> Pyzor</td>
+</tr>
+<tr>
+<td><code>32400</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://plesk.com/">Plesk</a></td>
+</tr>
+<tr>
+<td><code>34400</code></td>
+<td>✅</td>
+<td></td>
+<td><a href="https://github.com/Threadfin/Threadfin">Threadfin</a></td>
+</tr>
+<tr>
+<td><code>50001</code></td>
+<td></td>
+<td>✅</td>
+<td><a href="https://anydesk.com">AnyDesk</a> Discovery - Identify devices on the local network</td>
+</tr>
+<tr>
+<td><code>50002</code></td>
+<td></td>
+<td>✅</td>
+<td><a href="https://anydesk.com">AnyDesk</a> Discovery - Identify devices on the local network</td>
+</tr>
+<tr>
+<td><code>50003</code></td>
+<td></td>
+<td>✅</td>
+<td><a href="https://anydesk.com">AnyDesk</a> Discovery - Identify devices on the local network</td>
+</tr>
+</tbody>
+</table>
 <p><br>
 <br></p>
+<div class="footnote">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Some sources list UDP for port 22, but officially SSH only uses TCP. UDP is not standard for this service.&nbsp;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">↩</a></p>
+</li>
+</ol>
+</div>
 
 
 
@@ -2258,7 +2699,7 @@ your server secure.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 2, 2025 22:37:32 UTC"><span class="timeago" datetime="2025-10-02T22:37:32+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 2, 2025 22:37:32 UTC">2025-10-02</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 6, 2025 21:02:19 UTC"><span class="timeago" datetime="2025-10-06T21:02:19+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 6, 2025 21:02:19 UTC">2025-10-06</span>
   </span>
 
     
@@ -2332,7 +2773,7 @@ your server secure.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer">
         
           
-          <a href="../webui/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Enable Web Interface">
+          <a href="../conf/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Example Configs">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
@@ -2342,20 +2783,20 @@ your server secure.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Enable Web Interface
+                Example Configs
               </div>
             </div>
           </a>
         
         
           
-          <a href="../traefik/" class="md-footer__link md-footer__link--next" aria-label="Next: Traefik Integration">
+          <a href="../../../advanced/services/blocklist.configserver/" class="md-footer__link md-footer__link--next" aria-label="Next: blocklist.configserver.dev">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Traefik Integration
+                blocklist.configserver.dev
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -2498,24 +2939,24 @@ your server secure.</p>
     
     
       
-      <script id="__config" type="application/json">{"base": "../..", "features": ["announce.dismiss", "toc.follow", "content.action.edit", "content.action.view", "content.tooltips", "search.highlight", "search.share", "search.suggest", "content.code.annotate", "content.code.select", "content.code.copy", "navigation.tabs", "navigation.sections", "navigation.footer", "navigation.indexes", "navigation.instant", "navigation.instant.progress", "navigation.instant.prefetch", "navigation.instant.preview", "navigation.tracking", "navigation.path", "navigation.top"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": {"CSS": "css", "HTML5": "html", "JavaScript": "js"}, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"alias": true, "default": "latest", "provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["announce.dismiss", "toc.follow", "content.action.edit", "content.action.view", "content.tooltips", "search.highlight", "search.share", "search.suggest", "content.code.annotate", "content.code.select", "content.code.copy", "navigation.tabs", "navigation.sections", "navigation.footer", "navigation.indexes", "navigation.instant", "navigation.instant.progress", "navigation.instant.prefetch", "navigation.instant.preview", "navigation.tracking", "navigation.path", "navigation.top"], "search": "../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": {"CSS": "css", "HTML5": "html", "JavaScript": "js"}, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"alias": true, "default": "latest", "provider": "mike"}}</script>
     
     
   
-      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
-        <script src="../../js/timeago.min.js"></script>
+        <script src="../../../js/timeago.min.js"></script>
       
-        <script src="../../js/timeago_mkdocs_material.js"></script>
+        <script src="../../../js/timeago_mkdocs_material.js"></script>
       
         <script src="https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js"></script>
       
-        <script src="../../javascripts/tablesort.js"></script>
+        <script src="../../../javascripts/tablesort.js"></script>
       
-        <script src="../../javascripts/all.js?v7.000"></script>
+        <script src="../../../javascripts/all.js?v7.000"></script>
       
     
-  <script src="../../assets/javascripts/custom.129bd6ad.min.js"></script>
+  <script src="../../../assets/javascripts/custom.129bd6ad.min.js"></script>
 
   
 <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": false, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
