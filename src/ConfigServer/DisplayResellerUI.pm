@@ -227,7 +227,7 @@ sub main {
 
 	print "<br>\n";
 	print "<pre>csf: v$myv</pre>";
-	print "<p>&copy;2025, <a href='https://github.com/Aetherinox/csf-firewall' target='_blank'>ConfigServer Firewall</a></p>\n";
+	print "<p>&copy;2006-2025, <a href='https://github.com/Aetherinox/csf-firewall' target='_blank'>ConfigServer Firewall & LFD</a></p>\n";
 
 	return;
 }
