@@ -2251,14 +2251,14 @@
 </div>
 <div class="tabbed-block">
 <p></p><h3>Samba Users</h3><p></p>
-<p>If you wish to access a drive on the server you are running <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> on from another machine, you must add the following ports:</p>
+<p>You must have the following <code>TCP</code> ports unblocked:</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nv">TCP_IN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"445,139"</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nv">UDP_IN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"137,138"</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nv">TCP_OUT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"445,139"</span>
 </span></code></pre></div>
 <p><br></p>
-<p>If you need to access a drive from another machine on your server running <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>; you must add the following ports:</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nv">TCP_OUT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"445,139"</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nv">UDP_OUT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"137,138"</span>
+<p>You must have the following <code>UDP</code> ports unblocked:</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nv">UDP_IN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"137,138,445"</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nv">UDP_OUT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"137,138,445"</span>
 </span></code></pre></div>
 </div>
 </div>
@@ -2371,14 +2371,14 @@
 </div>
 <div class="tabbed-block">
 <p></p><h3>Samba Users</h3><p></p>
-<p>If you wish to access a drive on the server you are running <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> on from another machine, you must add the following ports:</p>
+<p>You must have the following <code>TCP</code> ports unblocked:</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nv">TCP_IN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"445,139"</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nv">UDP_IN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"137,138"</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nv">TCP_OUT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"445,139"</span>
 </span></code></pre></div>
 <p><br></p>
-<p>If you need to access a drive from another machine on your server running <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>; you must add the following ports:</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nv">TCP_OUT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"445,139"</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nv">UDP_OUT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"137,138"</span>
+<p>You must have the following <code>UDP</code> ports unblocked:</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nv">UDP_IN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"137,138,445"</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nv">UDP_OUT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"137,138,445"</span>
 </span></code></pre></div>
 </div>
 </div>
@@ -2492,7 +2492,7 @@ they work efficiently no matter the size of the list.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 2, 2025 22:37:32 UTC"><span class="timeago" datetime="2025-10-02T22:37:32+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 2, 2025 22:37:32 UTC">2025-10-02</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 6, 2025 04:19:15 UTC"><span class="timeago" datetime="2025-10-06T04:19:15+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 6, 2025 04:19:15 UTC">2025-10-06</span>
   </span>
 
     
