@@ -512,7 +512,7 @@ jobs:
                   echo "⚙️ Building STABLE Package .zip ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.zip"
                   echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
 
-                  zip -r "$${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.zip" csf
+                  zip -r "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.zip" csf
                   
                   echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
                   echo "⚙️ Building STABLE Package .tgz ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.tgz"
