@@ -493,6 +493,18 @@ jobs:
                   echo "‎"
 
                   # #
+                  #   Move required files to csf folder
+                  # #
+
+                  echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
+                  echo "⚙️ Moving files to csf folder"
+                  echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
+
+                  mkdir -p csf
+                  cp README.md LICENSE.md csf/
+                  cp -r src/* csf/
+
+                  # #
                   #   Zip contents of "📁 src" | first add readme and license | then add all files from src folddr
                   # #
 
@@ -500,16 +512,13 @@ jobs:
                   echo "⚙️ Building STABLE Package .zip ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.zip"
                   echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
 
-                  zip "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.zip" README.md LICENSE.md 
-                  (cd src && zip -r "../${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.zip" .)
-
+                  zip -r "$${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.zip" csf
+                  
                   echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
                   echo "⚙️ Building STABLE Package .tgz ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.tgz"
                   echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
 
-                  tar -czf "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.tgz" \
-                      README.md LICENSE.md \
-                      -C src $(find src -mindepth 1 -maxdepth 1 -printf '%f\n')
+                  tar -czf "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.tgz" -C . csf
 
                   echo "‎"
                   echo "‎"
@@ -545,6 +554,18 @@ jobs:
                   echo "‎"
                   
                   # #
+                  #   Move required files to csf folder
+                  # #
+
+                  echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
+                  echo "⚙️ Moving files to csf folder"
+                  echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
+
+                  mkdir -p csf
+                  cp README.md LICENSE.md csf/
+                  cp -r src/* csf/
+
+                  # #
                   #   Zip contents of "📁 src" | first add readme and license | then add all files from src folddr
                   # #
 
@@ -552,16 +573,13 @@ jobs:
                   echo "⚙️ Building RC Package .zip ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}.zip"
                   echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
 
-                  zip "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}.zip" README.md LICENSE.md 
-                  (cd src && zip -r "../${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}" .)
-
+                  zip -r "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}.zip" csf
+                  
                   echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
                   echo "⚙️ Building RC Package .tgz ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}.tgz"
                   echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
 
-                  tar -czf "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}.tgz" \
-                      README.md LICENSE.md \
-                      -C src $(find src -mindepth 1 -maxdepth 1 -printf '%f\n')
+                  tar -czf "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}.tgz" -C . csf
 
                   echo "‎"
                   echo "‎"
