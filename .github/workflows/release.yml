@@ -507,7 +507,9 @@ jobs:
                   echo "⚙️ Building STABLE Package .tgz ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.tgz"
                   echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
 
-                  tar -czf "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.tgz" README.md LICENSE.md -C src .
+                  tar -czf "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.tgz" \
+                      README.md LICENSE.md \
+                      -C src $(find src -mindepth 1 -maxdepth 1 -printf '%f\n')
 
                   echo "‎"
                   echo "‎"
@@ -557,7 +559,9 @@ jobs:
                   echo "⚙️ Building RC Package .tgz ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}.tgz"
                   echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
 
-                  tar -czf "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}.tgz" README.md LICENSE.md -C src .
+                  tar -czf "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}.tgz" \
+                      README.md LICENSE.md \
+                      -C src $(find src -mindepth 1 -maxdepth 1 -printf '%f\n')
 
                   echo "‎"
                   echo "‎"
