@@ -6165,4 +6165,4 @@ ETH_DEVICE_SKIP = ""
 
         Added new configuration option DENY_IP_LIMIT
 
-0.1b   - Initial beta release (24 May 2006)
+0.1b  - Initial beta release (24 May 2006)
