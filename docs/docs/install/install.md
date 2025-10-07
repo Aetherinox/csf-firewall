@@ -204,7 +204,99 @@ Log in as the `root` user via SSH.
 
 <br />
 
-We need to ensure that we don't have any existing firewalls that need to be disabled. Run the commands below to ensure they are disabled:
+You must already have cPanel installed to your server. cPanel offers a [15-day free trial](https://cpanel.net/products/trial/), or you can [purchase a license](https://cpanel.net/pricing/). To install and activate a free trial, run the following command on your server:
+
+=== ":aetherx-axd-command: Command"
+
+      ```shell
+      cd /home && sudo curl -o latest -L https://securedownloads.cpanel.net/latest && sudo sh latest
+      ```
+
+<br />
+
+The installation of **cPanel** usually takes between **5 and 20 minutes**, depending on your server’s hardware and internet connection, as it installs and configures a large number of system packages.  
+
+While the installation is in progress, you’ll need to [**create a cPanel account**](https://store.cpanel.net/register.php). This account is required to activate your free trial or paid license, and you’ll use it to sign in once the installation finishes.  
+
+<br />
+
+After the installation completes, you’ll see output similar to the following in your terminal:
+
+=== ":aetherx-axs-square-terminal: Output"
+
+      ```shell
+      [19126] ( INFO): Flushing the task queue
+      [19126] ( INFO): cPanel install finished in 6 minutes and 28 seconds!
+      [19126] ( INFO): Congratulations! Your installation of cPanel & WHM 11.130 is now complete. The next step is to configure your server. 
+      [19126] ( INFO): 
+      [19126] ( INFO): Before you configure your server, ensure that your firewall allows access on port 2087.
+      [19126] ( INFO): 
+      [19126] ( INFO): After ensuring that your firewall allows access on port 2087, you can configure your server.
+      [19126] ( INFO): 
+      [19126] ( INFO): 1. Open your preferred browser
+      [19126] ( INFO): 
+      [19126] ( INFO): 2. Navigate to the following url using the address bar and enter this one-time autologin url:
+      [19126] ( INFO): 
+      [19126] ( INFO): https://cp.configserver.dev:2087/cpsess4927138456/login/?session=root%x7rGd9PLkWqz3YFb2t%3acreate_user_session%f8b47c19a5de91b03ce6f20dbb1847e9d2
+      ```
+
+<br />
+
+Open the link in your browser and begin activating cPanel. Copy/paste the link you were provided in the terminal into your browser. 
+
+<figure markdown="span">
+    ![cPanel › WHM Introduction Screen](../assets/images/install/cpanel/1.png){ width="700" }
+    <figcaption>cPanel › WHM Introduction Screen</figcaption>
+</figure>
+
+<br />
+
+During setup, you may be prompted to review and accept the **cPanel License Agreement** or **Terms of Use**.  
+
+On the following page, click **Log in to cPanel Store** button in the lower-right corner to activate your license. You will be prompted to sign into your cPanel account that you created earlier.  
+
+If you ever need to verify your cPanel license later, you can do so by running the command below in your terminal:
+
+
+=== ":aetherx-axd-command: Command"
+
+      ```shell
+      sudo /usr/local/cpanel/cpkeyclt
+      ```
+
+=== ":aetherx-axs-square-terminal: Output"
+
+      ```shell
+      Updating cPanel license...Done. Update succeeded.
+      ```
+
+<br />
+
+If you get the following response from running the command, you will need to reach out to the [cPanel Support Team](https://support.cpanel.net/hc/en-us/requests/new) by creating a ticket.
+
+=== ":aetherx-axs-square-terminal: Output"
+
+      ```shell
+      Updating cPanel license...Done. Update Failed!
+      Error message:
+      The cPanel license server said that a license could not be issued for your server (66).
+      For more information visit: https://www.cpanel.net/lic/
+
+      The exact message was: No valid cPanel/WHM license found. (XX.XX.XX.XX)
+      ```
+
+<br />
+
+Complete the cPanel Activation Wizard, and at some point, you will be taken to the homepage of WHM:
+
+<figure markdown="span">
+    ![WHM › Home](../assets/images/install/cpanel/2.png){ width="700" }
+    <figcaption>WHM › Home</figcaption>
+</figure>
+
+<br />
+
+Set WHM aside for a moment. Next, we need to ensure that we don't have any existing firewalls that need to be disabled. Run the commands below to disable them:
 
 === ":aetherx-axs-block-brick-fire: UFW"
 
@@ -238,61 +330,131 @@ We need to ensure that we don't have any existing firewalls that need to be disa
 
 <br />
 
-Finally, run the installation script. You can either execute `/usr/local/src/csf/install.sh` or `/usr/local/src/csf/install.cpanel.sh`. We recommend `install.sh`. Most users will use :aetherx-axd-circle-1:
+??? note "Previous Chapter: Download"
+
+    If coming from the previous [download](download.md) chapter, you should have downloaded a copy of CSF and extracted it on your server.  
+
+    If so, skip ahead a few steps.
 
 <br />
 
-Pick one of the run options below. 
+If you do not have the latest vesion of CSF downloaded; grab a copy with one of the following commands:
 
-=== ":aetherx-axd-circle-1: Option 1"
+=== ":aetherx-axs-file-zipper: .tgz"
 
-    :aetherx-axd-circle-1: Runs `install.sh` :aetherx-axd-dot: uses `sh` shell :aetherx-axd-dot: executable permission not required
+    ```shell
+    # Using wget (tgz)
+    wget https://download.configserver.dev/csf.tgz
 
-    ```bash
-    sudo sh /usr/local/src/csf/install.sh
+    # Using curl (tgz)
+    curl -O https://download.configserver.dev/csf.tgz
     ```
 
-=== ":aetherx-axd-circle-2: Option 2"
+=== ":aetherx-axs-file-zip: .zip"
 
-    :aetherx-axd-circle-2: Runs `install.sh` :aetherx-axd-dot: uses shebang interpreter :aetherx-axd-dot: requires executable `+x` permission
+    ```shell
+    # Using wget (zip)
+    wget https://download.configserver.dev/csf.zip
 
-    ```bash
-    sudo chmod +x /usr/local/src/csf/install.sh
-    /usr/local/src/csf/install.sh
-    ```
-
-=== ":aetherx-axd-circle-3: Option 3"
-
-    :aetherx-axd-circle-3: Runs `install.cpanel.sh` :aetherx-axd-dot: uses `sh` shell :aetherx-axd-dot: executable permission not required
-
-    ```bash
-    sudo sh /usr/local/src/csf/install.cpanel.sh
-    ```
-
-=== ":aetherx-axd-circle-4: Option 4"
-
-    :aetherx-axd-circle-4: Runs `install.cpanel.sh` :aetherx-axd-dot: uses shebang interpreter :aetherx-axd-dot: requires executable `+x` permission
-
-    ```bash
-    sudo chmod +x /usr/local/src/csf/install.cpanel.sh
-    /usr/local/src/csf/install.cpanel.sh
+    # Using curl (zip)
+    curl -O https://download.configserver.dev/csf.zip
     ```
 
 <br />
 
-When you run the installer script `install.sh`, it first executes the code in `/usr/local/src/csf/install.sh`.  
-After the initial steps, the process is handed off to the appropriate sub-script. For cPanel, this is `/usr/local/src/csf/install.cpanel.sh`.
+Decompress / unzip the downloaded archive file:
 
-Follow any instructions on-screen. If prompted for any additional information, enter it.
+??? warning "Root required for tar extraction"
 
-Once complete, access CSF through the WHM control panel:
+    On a cPanel server, you must extract CSF as **root** when decompressing to `/usr/src/`. Otherwise will you get the error:
+
+      - `tar: csf: Cannot mkdir: Permission denied`
+
+    You can also extract to `/tmp`
+
+<br />
+
+=== ":aetherx-axs-file-zipper: .tgz"
+
+    ```bash
+    tar -xzf csf.tgz -C /usr/src/
+    ```
+
+=== ":aetherx-axs-file-zip: .zip"
+
+    ```bash
+    unzip csf.zip -d /usr/src/
+    ```
+
+<br />
+
+Run the CSF installation script:
+
+=== ":aetherx-axd-command: Command"
+
+      ```bash
+      sudo sh /usr/src/csf/install.sh
+      ```
+
+<br />
+
+Follow any instructions on-screen. If prompted for any additional information, enter it. Once the wizard completes, you can confirm if CSF is installed and functioning by accessing your server via SSH, and running the CSF version command:
+
+=== ":aetherx-axd-command: Command"
+
+      ```shell
+      sudo csf -v
+      ```
+
+=== ":aetherx-axs-square-terminal: Output"
+
+      ```shell
+      csf: v15.01 (cPanel)
+      ```
+
+<br />
+
+Confirm the status of `csf` by running:
+
+=== ":aetherx-axd-command: Command"
+
+      ```shell
+      sudo systemctl status csf
+      ```
+
+=== ":aetherx-axs-square-terminal: Output"
+
+      ```shell
+      ● csf.service - ConfigServer Firewall & Security - csf
+          Loaded: loaded (/lib/systemd/system/csf.service; enabled; vendor preset: enabled)
+          Active: active (exited) since Mon 2025-09-15 23:45:04 UTC; 14 seconds ago
+        Main PID: 597 (code=exited, status=0/SUCCESS)
+              CPU: 0min 14.956s
+
+      Notice: journal has been rotated since unit was started, output may be incomplete.
+      ```
+
+<br />
+
+
+??? warning "Testing Mode Disables LFD"
+
+    If you have not yet disabled testing mode in the `csf.conf`, lfd will be unable to start. Performing this step is covered in the next [Configuration](../usage/configuration.md) chapter.
+
+<br />
+
+If you received the expected response, CSF has successfully installed. Next, log back into your WHM control panel at `https://domain.lan:2087` or `https://127.0.0.1:2087`. On the left-side WHM menu, navigate to:
 
   - WHM » Home » Plugins » `ConfigServer Security & Firewall` 
 
+<figure markdown="span">
+    ![WHM › Plugins › ConfigServer Security & Firewall](../assets/images/install/cpanel/3.png){ width="700" }
+    <figcaption>WHM › Plugins › ConfigServer Security & Firewall</figcaption>
+</figure>
+
 <br />
 
-If you see **ConfigServer Security & Firewall** listed within WHM, you can skip the remaining steps on this page and continue to [Next Steps](#next-steps).  
-For a detailed guide on configuring and using CSF, refer to the [Usage](../usage/getting-started.md) section.
+If you see **ConfigServer Security & Firewall** within your **WHM › Plugins** menu, this means that CSF has been successfully integrated and is ready to [configure](../usage/configuration.md). You can skip the remaining steps on this page and continue to the [Next Steps](#next-steps) section. Detailed instructions on using CSF will be provided in the next chapter of this guide.
 
 <br />
 <br />
@@ -591,7 +753,7 @@ Click the text link and you'll be taken to the home screen of CSF.
 <br />
 
 If the interface matches the screenshot above, the CSF integration with Webmin is complete.  
-You can now proceed to the [Next Steps](#next-steps) or skip the rest of this section and begin [configuring CSF](../usage/configuration.md) to suit your setup.
+You can now proceed to the [Next Steps](#next-steps) or skip the rest of this section and begin our [Configuration](../usage/configuration.md) chapter to get things set up.
 
 <br />
 <br />
