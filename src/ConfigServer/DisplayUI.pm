@@ -1464,10 +1464,10 @@ EOF
 						if ($end == 1) {$switch_checked_1 = "checked"; $switch_active_1 = "active"}
 						print "<div class='$class'><b>$start</b> = ";
 						print "<div class='btn-group' data-toggle='buttons'>\n";
-						print "<label class='btn-settings-base btn-toggle strict-width-settings btn-csf-config option-disabled $switch_active_0'>\n";
+						print "<label class='btn btn-default btn-csf-config $switch_active_0'>\n";
 						print "<input type='radio' name='${name}' value='0' $switch_checked_0> Off\n";
 						print "</label>\n";
-						print "<label class='btn-settings-base btn-toggle strict-width-settings btn-csf-config option-enabled $switch_active_1'>\n";
+						print "<label class='btn btn-default btn-csf-config $switch_active_1'>\n";
 						print "<input type='radio' name='${name}' value='1' $switch_checked_1> On\n";
 						print "</label>\n";
 						print "</div></div>\n";
