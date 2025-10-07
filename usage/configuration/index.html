@@ -1280,6 +1280,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#ui_block_private_net" class="md-nav__link">
+    <span class="md-ellipsis">
+      UI_BLOCK_PRIVATE_NET
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2064,6 +2073,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#ui_block_private_net" class="md-nav__link">
+    <span class="md-ellipsis">
+      UI_BLOCK_PRIVATE_NET
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2464,6 +2482,39 @@
 </span></code></pre></div>
 <p><br>
 <br></p>
+<h3 id="ui_block_private_net">UI_BLOCK_PRIVATE_NET<a class="headerlink" href="#ui_block_private_net" title="Permanent link">¶</a></h3>
+<p><span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#required" title="Required value"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 14h-2V9h2m0 9h-2v-2h2M1 21h22L12 2 1 21Z"></path></svg></span></a></span></span> <span class="mdx-badge mdx-badge--files-group-right"><span class="mdx-badge mdx-badge--files-download"><span class="mdx-badge__icon"><a href="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf" target="_blank" title="Download"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 6a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6c0-1.11.89-2 2-2h6l2 2h8m-.75 7H16V9h-2v4h-3.25L15 17.25"></path></svg></span></a></span><span class="mdx-badge__text"><a href="https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf" target="_blank"><code>.conf</code></a></span></span></span> <span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#source" title="This setting can be found in the file <pre>/etc/csf/csf.conf</pre>"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0C28.7 0 0 28.7 0 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M224 0c15.4 0 30.1 6.1 41 17L367 119c10.9 10.9 17 25.6 17 41l-128 0c-17.7 0-32-14.3-32-32L224 0z"></path></svg></span></a></span><span class="mdx-badge__text">/etc/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>/<abbr title="The default csf config file, usually in <pre>/etc/csf/csf.conf</pre>">csf.conf</abbr></span></span> <span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#default" title="Default value"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a6 6 0 0 1-6-6c0-4 6-10.75 6-10.75S18 10 18 14a6 6 0 0 1-6 6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>1</code></span></span> <span class="mdx-badge"><span class="mdx-badge__icon"><a href="../../about/conventions/#release-types" title="Requires stable version 15.01"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M0 80V229.5c0 17 6.7 33.3 18.7 45.3l176 176c25 25 65.5 25 90.5 0L418.7 317.3c25-25 25-65.5 0-90.5l-176-176c-12-12-28.3-18.7-45.3-18.7H48C21.5 32 0 53.5 0 80zm112 32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"></path></svg></span></a></span><span class="mdx-badge__text"><a href="../../about/changelog/#15.01">15.01</a></span></span></p>
+<p><br></p>
+<p>This option determines whether login attempts to the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>/<abbr title="Login Failure Daemon">LFD</abbr> web interface (UI) from the server’s <strong>own local network interfaces</strong> are allowed or blocked.  Local interfaces include any IPs bound to the system’s network devices, as discovered by <code>getethdev</code>. These typically cover private IP ranges such as:</p>
+<ul>
+<li><strong>192.168.x.x</strong></li>
+<li><strong>172.16–31.x.x</strong></li>
+<li><strong>10.x.x.x</strong></li>
+<li>addresses assigned to <strong><abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> bridges</strong>, <strong>virtual adapters</strong>, or <strong>loopback interfaces</strong>.</li>
+</ul>
+<p>When this setting is enabled with the value <code>1</code>, <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> will block access attempts originating from local network IPs. This helps prevent unauthorized access from internal containers, proxy bridges, or other <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> running within the same host environment. It’s a useful safeguard against loopback-style attacks or accidental internal exposure.</p>
+<p>If you intentionally access the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface through a local bridge such as a <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> container using a proxy IP like 172.18.0.2; you may need to disable this feature by setting the value to <code>0</code>.</p>
+<p>Keeping this feature enabled is recommended for most setups, as it adds an extra layer of protection against internal or bridged network access. When blocked, the browser will typically display an error such as <code>PR_CONNECT_RESET_ERROR</code> when attempting to connect.</p>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># #</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="c1">#   Connection Tracking. This option enables tracking of all connections from IP</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="c1">#   addresses to the server. If the total number of connections is greater than</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1">#   this value then the offending IP address is blocked. This can be used to help</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="c1">#   prevent some types of DOS attack.</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="c1">#</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="c1">#   Care should be taken with this option. It's entirely possible that you will</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="c1">#   see false-positives. Some protocols can be connection hungry, e.g. FTP, IMAPD</span>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="c1">#   and HTTP so it could be quite easy to trigger, especially with a lot of</span>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="c1">#   closed connections in TIME_WAIT. However, for a server that is prone to DOS</span>
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="c1">#   attacks this may be very useful. A reasonable setting for this option might</span>
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="c1">#   be around 300.</span>
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="c1">#   </span>
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="c1">#   To disable this feature, set this to 0</span>
+</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="c1"># #</span>
+</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>
+</span><span id="__span-10-17"><a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a><span class="na">CT_LIMIT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"0"</span>
+</span></code></pre></div>
+<p><br>
+<br></p>
 <p><br></p>
 <hr>
 <p><br></p>
@@ -2517,7 +2568,7 @@ they work efficiently no matter the size of the list.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 6, 2025 04:19:15 UTC"><span class="timeago" datetime="2025-10-06T04:19:15+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 6, 2025 04:19:15 UTC">2025-10-06</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 7, 2025 04:47:55 UTC"><span class="timeago" datetime="2025-10-07T04:47:55+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 7, 2025 04:47:55 UTC">2025-10-07</span>
   </span>
 
     
