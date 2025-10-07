@@ -65,7 +65,7 @@ Download the latest version of CSF. Two methods are provided below, and you can 
 
 <br />
 
-Decompress / unzip the downloaded file to your server. We have provided instructions for extracting both the `.tgz` and `.zip`
+Decompress / unzip the downloaded archive file:
 
 === ":aetherx-axs-file-zipper: .tgz"
 
@@ -172,7 +172,7 @@ Download the latest version of CSF. Two methods are provided below, and you can 
 
 <br />
 
-Decompress / unzip the downloaded file to your server. We have provided instructions for extracting both the `.tgz` and `.zip`
+Decompress / unzip the downloaded archive file:
 
 === ":aetherx-axs-file-zipper: .tgz"
 
