@@ -177,13 +177,13 @@ Decompress / unzip the downloaded archive file:
 === ":aetherx-axs-file-zipper: .tgz"
 
     ```bash
-    tar -xzf csf.tgz -C /usr/local/src/
+    tar -xzf csf.tgz -C /usr/src/
     ```
 
 === ":aetherx-axs-file-zip: .zip"
 
     ```bash
-    unzip csf.zip -d /usr/local/src/
+    unzip csf.zip -d /usr/src/
     ```
 
 <br />
@@ -191,7 +191,7 @@ Decompress / unzip the downloaded archive file:
 After you extract the archive, you can now change over to the folder where the extracted CSF files are located:
 
 ```shell
-cd /usr/local/src/csf
+cd /usr/src/csf
 ```
 
 <br />
