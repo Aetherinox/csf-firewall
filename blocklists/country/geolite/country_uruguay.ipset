@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_uruguay_ipset
 #   @uuid           c4d5d814-f1eb-380f-acbe-c98f4030f44f
-#   @updated        Tue 30 Sep 2025 12:40:28 PM UTC
-#   @entries        281,474,979,184,790 ips
-#                   443 subnets
-#                   443 lines
+#   @updated        Tue 07 Oct 2025 12:17:09 PM UTC
+#   @entries        281,474,979,186,070 ips
+#                   446 subnets
+#                   446 lines
 #   @country        Uruguay (UY)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -66,6 +66,8 @@
 128.77.117.96/27
 128.90.119.0/24
 131.0.212.0/22
+131.103.99.0/24
+131.103.104.0/22
 131.229.129.22/32
 131.229.129.150/32
 131.229.130.22/32
@@ -390,7 +392,8 @@
 2a01:ce90:b000::/36
 2a02:26f7:d880::/48
 2a02:26f7:d881:4000::/64
-2a02:26f7:d884::/48
+2a02:26f7:d884:4000::/64
+2a02:26f7:d884:4e80::/64
 2a02:26f7:d885:4000::/64
 2a02:26f7:d888:4000::/64
 2a02:26f7:d888:4e80::/64

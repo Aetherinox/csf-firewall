@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_niger_ipset
 #   @uuid           18c01990-879e-3515-9211-f24f69b42f4e
-#   @updated        Tue 30 Sep 2025 12:39:29 PM UTC
-#   @entries        53,173 ips
-#                   159 subnets
-#                   159 lines
+#   @updated        Tue 07 Oct 2025 12:16:02 PM UTC
+#   @entries        53,685 ips
+#                   161 subnets
+#                   161 lines
 #   @country        Niger (NE)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -27,6 +27,7 @@
 41.203.128.0/19
 57.82.150.0/23
 57.84.80.0/20
+74.244.12.0/23
 85.255.21.80/28
 102.213.60.0/22
 102.213.244.0/22
@@ -101,6 +102,7 @@
 2001:470:68ab::/48
 2001:470:ee11::/48
 2001:4b28:3900::/40
+2605:59c0:b00::/40
 2606:54c0:4cb8::/45
 2606:54c3:0:1101::/64
 2607:8940:2166::/47
