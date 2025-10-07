@@ -3,6 +3,8 @@ title: "Install › Install CSF"
 tags:
   - install
   - setup
+  - cpanel
+  - webmin
 ---
 
 # Install CSF <!-- omit from toc -->
@@ -33,9 +35,7 @@ If your distro or control panel is not mentioned here, follow the [Install: Gene
 
 ## Install: Generic
 
-In the previous [download](download.md) step; you were instructed to download a copy of CSF which comes in the form of a zip archive. You then extracted that zip to `/tmp/csf`, and set `+x` executable permissions on the `install.sh` file. 
-
-We need to ensure that we don't have any existing firewalls that need to be disabled. Run the commands below to ensure they are disabled:
+Before installing CSF, we need to make sure that no other firewalls are running. Use the commands below to disable any existing firewalls:
 
 === ":aetherx-axs-block-brick-fire: UFW"
 
@@ -69,49 +69,65 @@ We need to ensure that we don't have any existing firewalls that need to be disa
 
 <br />
 
-Finally, run the installation script. You can either execute `/tmp/csf/install.sh` or `/tmp/csf/install.generic.sh`. Pick one of the run options below. Most users will use :aetherx-axd-circle-1:
+??? note "Previous Chapter: Download"
 
-=== ":aetherx-axd-circle-1: Option 1"
+    If coming from the previous [download](download.md) chapter, you should have downloaded a copy of CSF and extracted it on your server.  
 
-    :aetherx-axd-circle-1: Runs `install.sh` :aetherx-axd-dot: uses `sh` shell :aetherx-axd-dot: executable permission not required
+    If so, skip ahead a few steps.
 
-    ```bash
-    sudo sh /tmp/csf/install.sh
+<br />
+
+If you do not have the latest vesion of CSF downloaded; grab a copy with one of the following commands:
+
+=== ":aetherx-axs-file-zipper: .tgz"
+
+    ```shell
+    # Using wget (tgz)
+    wget https://download.configserver.dev/csf.tgz
+
+    # Using curl (tgz)
+    curl -O https://download.configserver.dev/csf.tgz
     ```
 
-=== ":aetherx-axd-circle-2: Option 2"
+=== ":aetherx-axs-file-zip: .zip"
 
-    :aetherx-axd-circle-2: Runs `install.sh` :aetherx-axd-dot: uses shebang interpreter :aetherx-axd-dot: requires executable `+x` permission
+    ```shell
+    # Using wget (zip)
+    wget https://download.configserver.dev/csf.zip
 
-    ```bash
-    sudo chmod +x /tmp/csf/install.sh
-    /tmp/csf/install.sh
-    ```
-
-=== ":aetherx-axd-circle-3: Option 3"
-
-    :aetherx-axd-circle-3: Runs `install.generic.sh` :aetherx-axd-dot: uses `sh` shell :aetherx-axd-dot: executable permission not required
-
-    ```bash
-    sudo sh /tmp/csf/install.generic.sh
-    ```
-
-=== ":aetherx-axd-circle-4: Option 4"
-
-    :aetherx-axd-circle-4: Runs `install.generic.sh` :aetherx-axd-dot: uses shebang interpreter :aetherx-axd-dot: requires executable `+x` permission
-
-    ```bash
-    sudo chmod +x /tmp/csf/install.generic.sh
-    /tmp/csf/install.generic.sh
+    # Using curl (zip)
+    curl -O https://download.configserver.dev/csf.zip
     ```
 
 <br />
 
-When you run the installer script, initially it will execute the code inside `/tmp/csf/install.sh`, however, it will then be passed off to the correct sub-script to complete the installation. If you are not running any control panels such as cPanel, VestaCP, etc, then the installation wizard will run the sub-script `/tmp/csf/install.generic.sh`.
+Decompress / unzip the downloaded archive file:
 
-Follow the instructions on-screen. If you are prompted for any additional information, enter it when asked. For the most part, the installation wizard is automated.
+=== ":aetherx-axs-file-zipper: .tgz"
 
-Once the wizard completes, you can confirm if CSF is installed and functioning by accessing your server via SSH, and running the CSF version command:
+    ```bash
+    tar -xzf csf.tgz -C /tmp
+    ```
+
+=== ":aetherx-axs-file-zip: .zip"
+
+    ```bash
+    unzip csf.zip -d /tmp
+    ```
+
+<br />
+
+Run the CSF installation script:
+
+=== ":aetherx-axd-command: Command"
+
+      ```bash
+      sudo sh /tmp/csf/install.sh
+      ```
+
+<br />
+
+Follow any instructions on-screen. If prompted for any additional information, enter it. Once the wizard completes, you can confirm if CSF is installed and functioning by accessing your server via SSH, and running the CSF version command:
 
 === ":aetherx-axd-command: Command"
 
@@ -127,7 +143,7 @@ Once the wizard completes, you can confirm if CSF is installed and functioning b
 
 <br />
 
-You can also confirm the status of `csf` and `lfd` by running:
+Confirm the status of `csf` by running:
 
 === ":aetherx-axd-command: Command"
 
@@ -149,7 +165,14 @@ You can also confirm the status of `csf` and `lfd` by running:
 
 <br />
 
-If you recieve the correct response, you can skip the rest of this page and proceed to the section [Next Steps](#next-steps). A more detailed explanation of how to use CSF will be explained in the next chapter of this guide.
+
+??? warning "Testing Mode Disables LFD"
+
+    If you have not yet disabled testing mode in the `csf.conf`, lfd will be unable to start. Performing this step is covered in the next [Configuration](../usage/configuration.md) chapter.
+
+<br />
+
+If you receive the expected response, you can skip the remaining steps on this page and continue to the [Next Steps](#next-steps) section. Detailed instructions on using CSF will be provided in the next chapter of this guide.
 
 <br />
 <br />
@@ -165,7 +188,7 @@ Installing CSF for WHM is almost the same process outlined in the [Install: Gene
 
 <br />
 
-If you have not yet logged into your server, log in as the `root` user via SSH.
+Log in as the `root` user via SSH.
 
 === ":aetherx-axs-key: Using Password"
 
@@ -215,7 +238,7 @@ We need to ensure that we don't have any existing firewalls that need to be disa
 
 <br />
 
-Finally, run the installation script. You can either execute `/root/csf/install.sh` or `/root/csf/install.cpanel.sh`. We recommend `install.sh`. Most users will use :aetherx-axd-circle-1:
+Finally, run the installation script. You can either execute `/usr/local/src/csf/install.sh` or `/usr/local/src/csf/install.cpanel.sh`. We recommend `install.sh`. Most users will use :aetherx-axd-circle-1:
 
 <br />
 
@@ -226,7 +249,7 @@ Pick one of the run options below.
     :aetherx-axd-circle-1: Runs `install.sh` :aetherx-axd-dot: uses `sh` shell :aetherx-axd-dot: executable permission not required
 
     ```bash
-    sudo sh /root/csf/install.sh
+    sudo sh /usr/local/src/csf/install.sh
     ```
 
 === ":aetherx-axd-circle-2: Option 2"
@@ -234,8 +257,8 @@ Pick one of the run options below.
     :aetherx-axd-circle-2: Runs `install.sh` :aetherx-axd-dot: uses shebang interpreter :aetherx-axd-dot: requires executable `+x` permission
 
     ```bash
-    sudo chmod +x /root/csf/install.sh
-    /root/csf/install.sh
+    sudo chmod +x /usr/local/src/csf/install.sh
+    /usr/local/src/csf/install.sh
     ```
 
 === ":aetherx-axd-circle-3: Option 3"
@@ -243,7 +266,7 @@ Pick one of the run options below.
     :aetherx-axd-circle-3: Runs `install.cpanel.sh` :aetherx-axd-dot: uses `sh` shell :aetherx-axd-dot: executable permission not required
 
     ```bash
-    sudo sh /root/csf/install.cpanel.sh
+    sudo sh /usr/local/src/csf/install.cpanel.sh
     ```
 
 === ":aetherx-axd-circle-4: Option 4"
@@ -251,23 +274,324 @@ Pick one of the run options below.
     :aetherx-axd-circle-4: Runs `install.cpanel.sh` :aetherx-axd-dot: uses shebang interpreter :aetherx-axd-dot: requires executable `+x` permission
 
     ```bash
-    sudo chmod +x /root/csf/install.cpanel.sh
-    /root/csf/install.cpanel.sh
+    sudo chmod +x /usr/local/src/csf/install.cpanel.sh
+    /usr/local/src/csf/install.cpanel.sh
     ```
 
 <br />
 
-When you run the installer script `install.sh`, initially it will execute the code inside `/root/csf/install.sh`, however, it will then be passed off to the correct sub-script. For cPanel, it will run the sub-script `/root/csf/install.cpanel.sh`.
+When you run the installer script `install.sh`, it first executes the code in `/usr/local/src/csf/install.sh`.  
+After the initial steps, the process is handed off to the appropriate sub-script. For cPanel, this is `/usr/local/src/csf/install.cpanel.sh`.
 
-Follow the instructions on-screen. If you are prompted for any additional information, enter it when asked. For the most part, the installation wizard is automated.
+Follow any instructions on-screen. If prompted for any additional information, enter it.
 
-Once the installation is complete, you can access CSF through the WHM control panel:
+Once complete, access CSF through the WHM control panel:
 
   - WHM » Home » Plugins » `ConfigServer Security & Firewall` 
 
 <br />
 
-If you see ConfigServer Security & Firewall within WHM, you can skip the rest of this page and proceed to the section [Next Steps](#next-steps). A more detailed explanation of how to configure and use CSF will be explained in the [Usage](../usage/getting-started.md) chapter.
+If you see **ConfigServer Security & Firewall** listed within WHM, you can skip the remaining steps on this page and continue to [Next Steps](#next-steps).  
+For a detailed guide on configuring and using CSF, refer to the [Usage](../usage/getting-started.md) section.
+
+<br />
+<br />
+
+---
+
+<br />
+<br />
+
+## Install: Webmin
+
+Installing CSF with Webmin integration is straightforward. Simply install Webmin first, then install CSF, and finally add the CSF module to Webmin to complete the integration.
+
+<br />
+
+Log in as the `root` user via SSH.
+
+=== ":aetherx-axs-key: Using Password"
+
+    ```shell
+    ssh -vvv root@XX.XX.XX.XX -p 22
+    ```
+
+=== ":aetherx-axs-file: Using Private Key"
+
+    ```shell
+    ssh -i /path/to/private_key -vvv root@XX.XX.XX.XX -p 22
+    ```
+
+<br />
+
+Ensure you have Webmin installed. If not, download the Webmin installer script:
+
+=== ":aetherx-axd-command: Command"
+
+      ```shell
+      curl -o webmin-setup-repo.sh \
+        https://raw.githubusercontent.com/webmin/webmin/master/webmin-setup-repo.sh
+      ```
+
+=== ":aetherx-axs-square-terminal: Output"
+
+      ```shell
+        % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                      Dload  Upload   Total   Spent    Left  Speed
+      100 17604  100 17604    0     0  59917      0 --:--:-- --:--:-- --:--:-- 60081
+      ```
+
+<br />
+
+Run the Webmin installer:
+
+=== ":aetherx-axd-command: Command"
+
+      ```shell
+      sudo sh webmin-setup-repo.sh
+      ```
+
+=== ":aetherx-axs-square-terminal: Output"
+
+      ```shell
+      Setup Webmin releases repository? (y/N) y
+        Downloading Webmin developers key ..
+        .. done
+        Installing Webmin developers key ..
+        .. done
+        Setting up Webmin releases repository ..
+        .. done
+        Cleaning repository metadata ..
+        .. done
+        Downloading repository metadata ..
+        .. done
+      Webmin and Usermin can be installed with:
+        apt-get install --install-recommends webmin usermin
+      ```
+
+<br />
+
+Do as instructed on-screen and run the command to install the required dependencies and the Webmin package. When prompted, press `Y`:
+
+=== ":aetherx-axb-debian: Debian/Ubuntu (apt-get)"
+
+    ```bash
+    apt-get install --install-recommends webmin usermin
+    ```
+
+=== ":aetherx-axb-redhat: CentOS/RHEL (yum/dnf)"
+
+    ```bash
+    sudo dnf install webmin
+    ```
+
+=== ":aetherx-axs-square-terminal: Output"
+
+      ```shell
+      The following NEW packages will be installed:
+        html2text libalgorithm-c3-perl libauthen-pam-perl libb-hooks-endofscope-perl libb-hooks-op-check-perl libclass-c3-perl libclass-c3-xs-perl
+        libclass-data-inheritable-perl libclass-inspector-perl libclass-method-modifiers-perl libclass-singleton-perl libclass-xsaccessor-perl
+        libcommon-sense-perl libdata-optlist-perl libdatetime-locale-perl libdatetime-perl libdatetime-timezone-perl libdbd-mysql-perl libdbi-perl
+        libdevel-callchecker-perl libdevel-caller-perl libdevel-lexalias-perl libdevel-stacktrace-perl libdynaloader-functions-perl
+        libencode-detect-perl libeval-closure-perl libexception-class-perl libfile-sharedir-perl libio-pty-perl libjson-xs-perl
+        libmodule-implementation-perl libmodule-runtime-perl libmro-compat-perl libnamespace-autoclean-perl libnamespace-clean-perl
+        libpackage-stash-perl libpackage-stash-xs-perl libpadwalker-perl libparams-classify-perl libparams-util-perl
+        libparams-validationcompiler-perl libqrencode4 libreadonly-perl libref-util-perl libref-util-xs-perl librole-tiny-perl libsocket6-perl
+        libspecio-perl libsub-exporter-perl libsub-exporter-progressive-perl libsub-identify-perl libsub-install-perl libsub-name-perl
+        libsub-quote-perl libtypes-serialiser-perl libvariable-magic-perl libxstring-perl qrencode usermin webmin
+      0 upgraded, 60 newly installed, 0 to remove and 5 not upgraded.
+      Need to get 42.3 MB of archives.
+      After this operation, 265 MB of additional disk space will be used.
+
+      Do you want to continue? [Y/n]  Y
+
+      [...]
+      Setting up libspecio-perl (0.47-1) ...
+      Setting up libb-hooks-endofscope-perl (0.25-1) ...
+      Setting up libnamespace-clean-perl (0.27-1) ...
+      Setting up libnamespace-autoclean-perl (0.29-1) ...
+      Setting up libdatetime-locale-perl (1:1.33-1) ...
+      Setting up libdatetime-timezone-perl (1:2.51-1+2021e) ...
+      Setting up libdatetime-perl:amd64 (2:1.55-1build1) ...
+      Processing triggers for man-db (2.10.2-1) ...
+      Processing triggers for mailcap (3.70+nmu1ubuntu1) ...
+      Processing triggers for libc-bin (2.35-0ubuntu3.11) ...
+      ```
+
+<br />
+
+After installation is complete, open your browser and navigate to:
+
+- `https://127.0.0.1:10000/`
+
+<br />
+
+You should be greeted with a Webmin authentication page. Test signing in to make sure you have root access. The username and password will be associated with your root account on your server.
+
+<figure markdown="span">
+    ![Webmin Login Screen](../assets/images/install/webmin/1.png){ width="700" }
+    <figcaption>Webmin Login Screen</figcaption>
+</figure>
+
+<br />
+
+Put Webmin aside for a moment; we need to make sure that we don't have any existing firewalls that need disabled. If so, run the commands below:
+
+=== ":aetherx-axs-block-brick-fire: UFW"
+
+    Stop and disable `ufw`
+
+    ```bash
+    sudo systemctl stop ufw
+    sudo systemctl disable ufw
+    ```
+
+    Confirm `ufw` is disabled with:
+
+    ```bash
+    sudo systemctl status ufw
+    ```
+
+=== ":aetherx-axs-block-brick-fire: Firewalld"
+
+    Stop and disable `firewalld`
+
+    ```bash
+    sudo systemctl stop firewalld
+    sudo systemctl disable firewalld
+    ```
+
+    Confirm `firewalld` is disabled with:
+
+    ```bash
+    sudo systemctl status firewalld
+    ```
+
+<br />
+
+We are ready to install CSF, which you should already have downloaded to your system. If not; download the latest version of CSF:
+
+=== ":aetherx-axs-file-zipper: .tgz"
+
+    ```shell
+    # Using wget (tgz)
+    wget https://download.configserver.dev/csf.tgz
+
+    # Using curl (tgz)
+    curl -O https://download.configserver.dev/csf.tgz
+    ```
+
+=== ":aetherx-axs-file-zip: .zip"
+
+    ```shell
+    # Using wget (zip)
+    wget https://download.configserver.dev/csf.zip
+
+    # Using curl (zip)
+    curl -O https://download.configserver.dev/csf.zip
+    ```
+
+<br />
+
+Decompress / unzip the downloaded archive file:
+
+=== ":aetherx-axs-file-zipper: .tgz"
+
+    ```bash
+    tar -xzf csf.tgz -C /tmp
+    ```
+
+=== ":aetherx-axs-file-zip: .zip"
+
+    ```bash
+    unzip csf.zip -d /tmp
+    ```
+
+<br />
+
+Run the CSF installation script:
+
+=== ":aetherx-axd-circle-1: Option 1"
+
+    :aetherx-axd-circle-1: Runs `install.sh` :aetherx-axd-dot: uses `sh` shell :aetherx-axd-dot: executable permission not required
+
+    ```bash
+    sudo sh /tmp/csf/install.sh
+    ```
+
+=== ":aetherx-axd-circle-2: Option 2"
+
+    :aetherx-axd-circle-2: Runs `install.sh` :aetherx-axd-dot: uses shebang interpreter :aetherx-axd-dot: requires executable `+x` permission
+
+    ```bash
+    sudo chmod +x /tmp/csf/install.sh
+    sudo /tmp/csf/install.sh
+    ```
+
+<br />
+
+Follow any instructions on-screen. If prompted for any additional information, enter it.
+
+<br />
+
+Log back into Webmin. Once in, navigate to **Webmin Configuration** › **Webmin Modules** from the left-hand menu.
+
+<figure markdown="span">
+    ![Webmin Configuration](../assets/images/install/webmin/2.png){ width="700" }
+    <figcaption>Webmin Configuration › Webmin Modules</figcaption>
+</figure>
+
+<br />
+
+A form will appear asking how you'd like to install the CSF module. Choose **From Local File**, then click **Browse** and select the file located at `/usr/local/csf/csfwebmin.tgz`.
+
+<figure markdown="span">
+    ![Select local webmin module .tgz](../assets/images/install/webmin/3.png){ width="700" }
+    <figcaption>Webmin Modules › Select `/usr/local/csf/csfwebmin.tgz`</figcaption>
+</figure>
+
+<br />
+
+Click the **Install Module** button at the bottom.
+
+<figure markdown="span">
+    ![Webmin › Install Module](../assets/images/install/webmin/4.png){ width="700" }
+    <figcaption>Webmin Modules › Install Module</figcaption>
+</figure>
+
+<br />
+
+After installation, Webmin will display a confirmation message indicating that CSF was successfully installed.  
+To access it, go to the left-hand Webmin menu and navigate to:
+
+- **System** › **ConfigServer Security & Firewall**
+
+<figure markdown="span">
+    ![Webmin › Install Module › Success](../assets/images/install/webmin/5.png){ width="700" }
+    <figcaption>Webmin › Install Module › Success</figcaption>
+</figure>
+
+<br />
+
+On the next page, you should see the following message:
+
+??? note "Symlink Created"
+
+    csf updated to symlink webmin module to /usr/local/csf/lib/webmin/csf/. Click here to continue
+
+<br />
+
+Click the text link and you'll be taken to the home screen of CSF.
+
+<figure markdown="span">
+    ![Webmin Integration › CSf Homepage](../assets/images/install/webmin/6.png){ width="700" }
+    <figcaption>Webmin › CSF › Homepage</figcaption>
+</figure>
+
+<br />
+
+If the interface matches the screenshot above, the CSF integration with Webmin is complete.  
+You can now proceed to the [Next Steps](#next-steps) or skip the rest of this section and begin [configuring CSF](../usage/configuration.md) to suit your setup.
 
 <br />
 <br />

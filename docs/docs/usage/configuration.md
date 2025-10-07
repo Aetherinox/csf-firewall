@@ -276,6 +276,49 @@ CT_LIMIT = "0"
 <br />
 <br />
 
+### UI_BLOCK_PRIVATE_NET
+
+<!-- md:flag required --> <!-- md:fileDownload https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf --> <!-- md:source /etc/csf/csf.conf --> <!-- md:default `1` --> <!-- md:version stable-15.01 -->
+
+<br />
+
+This option determines whether login attempts to the CSF/LFD web interface (UI) from the server’s **own local network interfaces** are allowed or blocked.  Local interfaces include any IPs bound to the system’s network devices, as discovered by `getethdev`. These typically cover private IP ranges such as:
+
+- **192.168.x.x**
+- **172.16–31.x.x**
+- **10.x.x.x**
+- addresses assigned to **Docker bridges**, **virtual adapters**, or **loopback interfaces**.
+
+When this setting is enabled with the value `1`, CSF will block access attempts originating from local network IPs. This helps prevent unauthorized access from internal containers, proxy bridges, or other services running within the same host environment. It’s a useful safeguard against loopback-style attacks or accidental internal exposure.
+
+If you intentionally access the CSF web interface through a local bridge such as a Docker container using a proxy IP like 172.18.0.2; you may need to disable this feature by setting the value to `0`.
+
+Keeping this feature enabled is recommended for most setups, as it adds an extra layer of protection against internal or bridged network access. When blocked, the browser will typically display an error such as `PR_CONNECT_RESET_ERROR` when attempting to connect.
+
+```ini
+# #
+#   Connection Tracking. This option enables tracking of all connections from IP
+#   addresses to the server. If the total number of connections is greater than
+#   this value then the offending IP address is blocked. This can be used to help
+#   prevent some types of DOS attack.
+#
+#   Care should be taken with this option. It's entirely possible that you will
+#   see false-positives. Some protocols can be connection hungry, e.g. FTP, IMAPD
+#   and HTTP so it could be quite easy to trigger, especially with a lot of
+#   closed connections in TIME_WAIT. However, for a server that is prone to DOS
+#   attacks this may be very useful. A reasonable setting for this option might
+#   be around 300.
+#   
+#   To disable this feature, set this to 0
+# #
+
+CT_LIMIT = "0"
+```
+
+
+<br />
+<br />
+
 <br />
 
 ---

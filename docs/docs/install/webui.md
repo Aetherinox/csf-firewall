@@ -512,6 +512,18 @@ Select what documentation you would like to proceed with next ...
 
 <div class="grid cards" markdown>
 
+-   :aetherx-axb-docker: &nbsp; __[Docker Integration](../install/docker.md)__
+
+    ---
+
+    This section explains how to run CSF and Docker together in the same 
+    environment. By using CSF’s integrated Docker mode and the included 
+    Docker scripts, you can strengthen your server’s security while 
+    running your containers safely within a controlled setup.
+
+    We’ve provided a detailed set of instructions along with troubleshooting 
+    guidance to help you resolve any issues that may arise during setup.
+
 -   :aetherx-axb-traefikproxy: &nbsp; __[Traefik Integration](../install/traefik.md)__
 
     ---
