@@ -9,10 +9,10 @@
 	--scrollbar-background-active: #900834;
 	--scrollbar-background-hover: #3553c8cc;
 
-    --bg-color: #ffffff;
-    --text-color: #111111;
+	--bg-color: #ffffff;
+	--text-color: #111111;
 	--app-name-text: #ce2d5a;
-    --link-color: #0077cc;
+	--link-color: #0077cc;
 	--panel-header-box: #e6e6e6;
 	--panel-box-alt: #eaeaea;
 
@@ -152,10 +152,10 @@
 	--scrollbar-background-active: #900834;
 	--scrollbar-background-hover: #c00a47;
 
-    --bg-color: #1e1d1d;
-    --text-color: #ffffff;
+	--bg-color: #1e1d1d;
+	--text-color: #ffffff;
 	--app-name-text: #ce2d5a;
-    --link-color: #66aaff;
+	--link-color: #66aaff;
 	--panel-header-box: #2b2b2b;
 	--panel-box-alt: #333;
 
@@ -842,7 +842,7 @@ th
 }
 
 /*
-	Section ›  Footer
+	Footer › Main Container
 */
 
 .footer
@@ -866,7 +866,7 @@ th
 }
 
 /*
-	Section ›  Footer › Inner Left
+	Footer › Left
 */
 
 .footer .footer-left
@@ -875,7 +875,7 @@ th
 }
 
 /*
-	Section ›  Footer › Copyright <span>
+	Footer › Left › Copyright <span>
 */
 
 .footer .footer-left span.copyright
@@ -884,7 +884,7 @@ th
 }
 
 /*
-	Button › Button › Sponsor
+	Footer › Left › Button › Sponsor
 */
 
 .footer .footer-left button.btn-sponsor
@@ -896,38 +896,34 @@ th
 }
 
 /*
-	Section ›  Footer › Inner Right
+	Footer › Right
 */
 
 .footer .footer-right
 {
     display: flex;
-    gap: 7px;
+	gap: 5px;
+	padding-right: 10px;
 }
 
 /*
-	Footer › Standard Button
+	Footer › Right › Standard Button
 */
 
 .footer .footer-right button,
 .footer .footer-right a.btn-footer
 {
-    padding: 4px 8px;
-    border: none;
-    border-radius: 4px;
-    text-decoration: none;
-    font-size: 14px;
-    cursor: pointer;
+	padding: 7px 9px;
+	border: none;
+	border-radius: 4px;
+	text-decoration: none;
+	font-size: 14px;
+	cursor: pointer;
 	margin-right: 5px;
 }
 
-.footer .footer-right .btn-footer
-{
-	min-width: 5px !important;
-}
-
 /*
-	Button › Button › Theme Switcher
+	Footer › Button › Theme Switcher
 */
 
 .footer .footer-right button.btn-theme
@@ -939,7 +935,7 @@ th
 }
 
 /*
-	Button › Button › Github
+	Footer › Button › Github
 */
 
 .footer .footer-right button.btn-github
@@ -948,6 +944,16 @@ th
     border-color: var(--button-1-background);
     color: white;
     min-width: auto;
+}
+
+/*
+	Footer › Button › Hover (All)
+*/
+
+.footer button.btn-footer:hover
+{
+	filter: brightness(120%) !important;
+	transition: all 0.2s;
 }
 
 /*
@@ -968,7 +974,7 @@ button.btn-update
 }
 
 /*
-	Button › Button › Logout
+	Footer › Button › Logout
 */
 
 .footer-right button.btn-logout
@@ -976,5 +982,44 @@ button.btn-update
     background-color: #fd0966;
     border-color: #fd0966;
     color: white;
-    min-width: auto;
+}
+
+/*
+	Footer › Right › Group
+*/
+
+.footer .footer-right .btn-footer
+{
+	min-width: 5px !important;
+}
+
+/*
+	Footer › Buttons › All
+*/
+
+.footer .footer-right button
+{
+    width: 30px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+
+.footer .footer-right button svg
+{
+    width: 13px;
+    height: 14px;
+    display: block;
+    fill: currentColor;
+}
+
+.footer .copyright code
+{
+	background-color: var( --codeblock-background );
+	color: var( --codeblock-text );
 }
