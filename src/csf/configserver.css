@@ -1,23 +1,607 @@
-.icon-configserver {
+/*
+	Theme › Light
+*/
+
+:root,
+[data-theme="light"]
+{
+	--scrollbar-background-normal: #888c;
+	--scrollbar-background-active: #900834;
+	--scrollbar-background-hover: #3553c8cc;
+
+    --bg-color: #ffffff;
+    --text-color: #111111;
+	--app-name-text: #ce2d5a;
+    --link-color: #0077cc;
+	--panel-header-box: #e6e6e6;
+	--panel-box-alt: #eaeaea;
+
+	--panel-table-row-odd: #e6e6e6;
+	--panel-table-row-even: #eaeaea;
+
+	--panel-section-background: #d8d8d8;
+	--panel-section-border: #FFF;
+	--panel-section-text: #363636;
+	--panel-footer-background: #e1e1e1;
+	--panel-footer-border: #1c1c1c1a;
+	--panel-footer-text: #1c1c1c;
+
+	--button-1-background: #3566c0;
+	--button-1-border: #3566c0;
+
+	--codeblock-text: #ea8c28;
+	--codeblock-background: #f9f2f4;
+
+	--pre-background: #f1f1f1 ;
+	--pre-text-normal: #1d1d1d;
+	--pre-border-normal: #0000001a;
+
+	--mark-background-normal: #f2e523;
+	--mark-text-normal: #1d1d1d;
+
+	--icons-normal: #d2195ef0;
+	--icons-hover: #e69e19f0;
+
+
+	--settings-button-ok-background-normal: #FFF;
+	--settings-button-ok-background-hover: #bebebe;
+	--settings-button-ok-border-normal: #DBDBDB;
+	--settings-button-ok-border-hover: #FFF;
+	--settings-button-ok-text-normal: #424242;
+	--settings-button-ok-text-hover: #3f3f3f;
+
+	--settings-button-allow-background-normal: #4ca47b;
+	--settings-button-allow-background-hover: #4ca47b;
+	--settings-button-allow-border-normal: #4ca47b;
+	--settings-button-allow-border-hover: #4ca47b;
+	--settings-button-allow-text-normal: #FFFFFF;
+	--settings-button-allow-text-hover: #FFFFFF;
+
+	--settings-button-deny-background-normal: #ce5b66;
+	--settings-button-deny-background-hover: #ce5b66;
+	--settings-button-deny-border-normal: #ce5b66;
+	--settings-button-deny-border-hover: #ce5b66;
+	--settings-button-deny-text-normal: #FFFFFF;
+	--settings-button-deny-text-hover: #FFFFFF;
+
+	--settings-button-edit-background-normal: #bf8a46;
+	--settings-button-edit-background-hover: #bf8a46;
+	--settings-button-edit-border-normal: #bf8a46;
+	--settings-button-edit-border-hover: #bf8a46;
+	--settings-button-edit-text-normal: #FFFFFF;
+	--settings-button-edit-text-hover: #FFFFFF;
+
+	--section-background-normal: #ccc;
+	--section-border-normal: #e3e3e31a;
+	--section-text-normal: #363636;
+
+	--settings-button-disabled-active-background-normal: #A81B43;
+	--settings-button-disabled-active-text-normal: #FFFFFF;
+	--settings-button-enabled-active-background-normal: #5a732f;
+	--settings-button-enabled-active-text-normal: #FFF;
+
+	--status-check-score-background-normal: #e6e6e6;
+	--status-check-score-label-text-normal: #646464;
+	--status-check-score-total-text-normal: #646464;
+	--status-check-score-total-bar-normal: #4e4e4e;
+
+	--grading-general-background: #FFF;
+	--grading-general-border-normal: #e3e3e31a;
+	--grading-general-test-name-background-normal: #e6e6e6;
+
+	--input-textfield-main-normal-text: #111;
+	--input-textfield-main-normal-background: #FFFFFF;
+	--input-textfield-main-normal-border: #e1e1e1;
+	--input-textfield-main-focus-line: #dabe25;
+	--input-textfield-main-focus-background: #FFFFFF;
+	--input-textfield-main-focus-border: #ffffff;
+	--input-textfield-main-focus-text: #353535;
+	--input-textfield-main-hover-line: #2b62b4;
+
+	--input-textfield-allow-normal-text: #111;
+	--input-textfield-allow-normal-background: #b4e6c8;
+	--input-textfield-allow-normal-border: #f7f7f7;
+	--input-textfield-allow-focus-line: #2b7448;
+	--input-textfield-allow-focus-background: #FFFFFF;
+	--input-textfield-allow-focus-border: #FFFFFF;
+	--input-textfield-allow-focus-text: #353535;
+	--input-textfield-allow-hover-line: #62aa7f;
+
+	--input-textfield-deny-normal-text: #ff0062;
+	--input-textfield-deny-normal-background: #ffd8dc;
+	--input-textfield-deny-normal-border: #f7f7f7;
+	--input-textfield-deny-focus-line: #ff0062;
+	--input-textfield-deny-focus-background: #FFFFFF;
+	--input-textfield-deny-focus-border: #FFFFFF;
+	--input-textfield-deny-focus-text: #353535;
+	--input-textfield-deny-hover-line: #ff8b97;
+
+	--tabs-background: #37373700;
+	--tabs-border: #e3e3e31a;
+	--tabs-button-active-background: #fff;
+	--tabs-button-active-border: rgba(128, 128, 128, 0.3);
+	--tabs-button-active-text: #505050;
+	--tabs-button-hover-background: #e2e2e2;
+	--tabs-button-hover-border: #FFF3;
+	--tabs-button-hover-border-bottom: #28282800;
+	--tabs-button-inactive-background: #3859a6;
+	--tabs-button-inactive-border: rgba(221, 221, 221, 0.09);
+	--tabs-button-inactive-text: #808080;
+
+	--callout-success-background: #d4edda;
+	--callout-success-text: #155724;
+	--callout-success-border: #c3e6cb;
+	--callout-warning-background: #fff3cd;
+	--callout-warning-text: #856404;
+	--callout-warning-border: #ffeeba;
+	--callout-danger-background: #f8d7da;
+	--callout-danger-text: #721c24;
+	--callout-danger-border: #f5c6cb;
+	--callout-info-background: #cce5ff;
+	--callout-info-text: #004085;
+	--callout-info-border: #b8daff;
+}
+
+/*
+	Theme › Dark
+*/
+
+[data-theme="dark"]
+{
+	--scrollbar-background-normal: #F30C5998;
+	--scrollbar-background-active: #900834;
+	--scrollbar-background-hover: #c00a47;
+
+    --bg-color: #1e1d1d;
+    --text-color: #ffffff;
+	--app-name-text: #ce2d5a;
+    --link-color: #66aaff;
+	--panel-header-box: #2b2b2b;
+	--panel-box-alt: #333;
+
+	--panel-table-row-odd: #2b2b2b;
+	--panel-table-row-even: #333;
+
+	--panel-section-background: #3c3c3c;
+	--panel-section-border: #3c3c3c;
+	--panel-section-text: #FFF;
+	--panel-footer-background: hsl(0, 0%, 14.9%);
+	--panel-footer-border: #e3e3e31a;
+	--panel-footer-text: #cccccc;
+
+	--button-1-background: #3566c0;
+	--button-1-border: #3566c0;
+
+	--codeblock-text: #ea8c28;
+	--codeblock-background: #1e1e1e;
+
+	--pre-background: #171717;
+	--pre-text-normal: #c9c9c9;
+	--pre-border-normal: #e3e3e31a;
+
+	--mark-background-normal: #8a6610;
+	--mark-text-normal: #fff;
+
+	--icons-normal: #d2195ef0;
+	--icons-hover: #FFF;
+
+
+
+	--settings-button-ok-background-normal: #3f4fa4;
+	--settings-button-ok-background-hover: #3f4fa4;
+	--settings-button-ok-border-normal: #3f4fa4;
+	--settings-button-ok-border-hover: #3f4fa4;
+	--settings-button-ok-text-normal: #FFFFFF;
+	--settings-button-ok-text-hover: #FFFFFF;
+
+	--settings-button-allow-background-normal: #219961;
+	--settings-button-allow-background-hover: #219961;
+	--settings-button-allow-border-normal: #219961;
+	--settings-button-allow-border-hover: #219961;
+	--settings-button-allow-text-normal: #FFFFFF;
+	--settings-button-allow-text-hover: #FFFFFF;
+
+	--settings-button-deny-background-normal: #ce5b66;
+	--settings-button-deny-background-hover: #ce5b66;
+	--settings-button-deny-border-normal: #ce5b66;
+	--settings-button-deny-border-hover: #ce5b66;
+	--settings-button-deny-text-normal: #FFFFFF;
+	--settings-button-deny-text-hover: #FFFFFF;
+
+	--settings-button-edit-background-normal: #bf8a46;
+	--settings-button-edit-background-hover: #bf8a46;
+	--settings-button-edit-border-normal: #bf8a46;
+	--settings-button-edit-border-hover: #bf8a46;
+	--settings-button-edit-text-normal: #FFFFFF;
+	--settings-button-edit-text-hover: #FFFFFF;
+
+	--section-background-normal: #396852;
+	--section-border-normal: #e3e3e31a;
+	--section-text-normal: #FFFFFF;
+
+	--settings-button-disabled-active-background-normal: #A81B43;
+	--settings-button-disabled-active-text-normal: #FFFFFF;
+	--settings-button-enabled-active-background-normal: #5a732f;
+	--settings-button-enabled-active-text-normal: #FFF;
+
+	--status-check-score-background-normal: #282828;
+	--status-check-score-label-text-normal: #e6e6e6;
+	--status-check-score-total-text-normal: #e6e6e6;
+	--status-check-score-total-bar-normal: #FFFFFF;
+
+	--grading-general-border-normal: #e3e3e31a;
+	--grading-general-background: #282828;
+	--grading-general-test-name-background-normal: #262626;
+
+	--input-textfield-main-normal-text: #adadad;
+	--input-textfield-main-normal-background: #1f2324;
+	--input-textfield-main-normal-border: #484848;
+	--input-textfield-main-focus-background: #2b2b2b;
+	--input-textfield-main-focus-line: #FFFFFF;
+	--input-textfield-main-focus-border: #d8a91e;
+	--input-textfield-main-focus-text: #FFF;
+	--input-textfield-main-hover-line: #d8a91e;
+
+	--input-textfield-allow-normal-text: #75e6b2;
+	--input-textfield-allow-normal-background: #1f2324;
+	--input-textfield-allow-normal-border: #2d6a4e;
+	--input-textfield-allow-focus-background: #224233;
+	--input-textfield-allow-focus-line: #FFF;
+	--input-textfield-allow-focus-border: #20af6d;
+	--input-textfield-allow-focus-text: #FFF;
+	--input-textfield-allow-hover-line: #2bcf83;
+
+	--input-textfield-deny-normal-text: #df4655;
+	--input-textfield-deny-normal-background: #1f2324;
+	--input-textfield-deny-normal-border: #bd2330;
+	--input-textfield-deny-focus-line: #FFFFFF;
+	--input-textfield-deny-focus-background: #682128;
+	--input-textfield-deny-focus-border: #dd3e4c;
+	--input-textfield-deny-focus-text: #FFF;
+	--input-textfield-deny-hover-line: #ff8b97;
+
+	--tabs-background: #373737;
+	--tabs-border: #e3e3e31a;
+	--tabs-button-active-background: #3859a6;
+	--tabs-button-active-border: rgba(221, 221, 221, 0.09);
+	--tabs-button-active-text: #FFFFFF;
+	--tabs-button-hover-background: #282828;
+	--tabs-button-hover-border: #FFF3;
+	--tabs-button-hover-border-bottom: #282828;
+	--tabs-button-inactive-background: #3859a6;
+	--tabs-button-inactive-border: rgba(221, 221, 221, 0.09);
+	--tabs-button-inactive-text: #808080;
+
+	--callout-success-background: #203d33;
+	--callout-success-text: #cac5be;
+	--callout-success-border: #2e5845;
+	--callout-warning-background: #3d2e00;
+	--callout-warning-text: #fbde86;
+	--callout-warning-border: #7c5c00;
+	--callout-danger-background: #430c11;
+	--callout-danger-text: #721c24;
+	--callout-danger-border: #f5c6cb;
+	--callout-info-background: #05404d;
+	--callout-info-text: #c8c3bc;
+	--callout-info-border: #066377;
+}
+
+/*
+	Animations › Splash
+*/
+
+@-moz-keyframes splash-12
+{
+	40%
+	{
+		background: #866efb;
+		box-shadow: 0 -18px 0 -8px #866efb, 16px -8px 0 -8px #866efb, 16px 8px 0 -8px #866efb, 0 18px 0 -8px #866efb, -16px 8px 0 -8px #866efb, -16px -8px 0 -8px #866efb;
+	}
+	100%
+	{
+		background: #866efb;
+		box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
+	}
+}
+
+@-webkit-keyframes splash-12
+{
+	40%
+	{
+		background: #866efb;
+		box-shadow: 0 -18px 0 -8px #866efb, 16px -8px 0 -8px #866efb, 16px 8px 0 -8px #866efb, 0 18px 0 -8px #866efb, -16px 8px 0 -8px #866efb, -16px -8px 0 -8px #866efb;
+	}
+	100%
+	{
+		background: #866efb;
+		box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
+	}
+}
+
+@-o-keyframes splash-12
+{
+	40%
+	{
+		background: #866efb;
+		box-shadow: 0 -18px 0 -8px #866efb, 16px -8px 0 -8px #866efb, 16px 8px 0 -8px #866efb, 0 18px 0 -8px #866efb, -16px 8px 0 -8px #866efb, -16px -8px 0 -8px #866efb;
+	}
+	100%
+	{
+		background: #866efb;
+		box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
+	}
+}
+
+@keyframes splash-12
+{
+	40%
+	{
+		background: #866efb;
+		box-shadow: 0 -18px 0 -8px #866efb, 16px -8px 0 -8px #866efb, 16px 8px 0 -8px #866efb, 0 18px 0 -8px #866efb, -16px 8px 0 -8px #866efb, -16px -8px 0 -8px #866efb;
+	}
+	100%
+	{
+		background: #866efb;
+		box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
+	}
+}
+
+/*
+	Animations › Scale
+*/
+
+@keyframes scale-in
+{
+    from {
+        transform: scale(1, 1);
+    }
+    to {
+        transform: scale(1.1, 1.1);
+    }
+}
+
+/*
+	Animations › Fade In
+*/
+
+@-webkit-keyframes fade-in
+{
+    from { opacity: 0.5; }
+    to { opacity: 1; }
+}
+
+@-moz-keyframes fade-in
+{
+    from { opacity: 0.5; }
+    to { opacity: 1; }
+}
+
+@keyframes fade-in
+{
+    from { opacity: 0.5; }
+    to { opacity: 1; }
+}
+
+.fade
+{
+	animation-name:             fade-in, scale-in;
+	animation-duration:         1s, 0.5s;
+	animation-timing-function:  ease-in, linear;
+	animation-direction:        alternate, alternate;
+	animation-iteration-count:  infinite, 1;
+	transition: 				all 0.2s;
+	transform: 					scale(1);
+}
+
+/*
+	Animations › Pulsate
+*/
+
+@-webkit-keyframes pulsate
+{
+    0% { transform: scale(0.8); opacity: 0.5; }
+    50% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(0.8); opacity: 0.5; }
+}
+
+@keyframes pulsate
+{
+    0% { transform: scale(0.8); opacity: 0.5; }
+    50% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(0.8); opacity: 0.5; }
+}
+
+.pulsate
+{
+    -webkit-animation: pulsate 3s ease-out;
+    -webkit-animation-iteration-count: infinite; 
+    animation: pulsate 3s ease-out;
+    animation-iteration-count: infinite;
+    opacity: 0.5;
+}
+
+/*
+	Animations › Health / Heart
+*/
+
+@keyframes health
+{
+    0%, 40%, 80%, 100%
+	{
+        transform: scale(1);
+        color: #FFF;
+        fill: #FFF !important;
+    }
+
+    20%, 60%
+	{
+        transform: scale(1.15);
+        color: #FF6593;
+        fill: #FF6593 !important;
+    }
+}
+
+.heart
+{
+    animation: health 1000ms infinite;
+}
+
+/*
+	Helpers › Effects
+*/
+
+.blur
+{
+	filter: blur( 4px );
+}
+
+/*
+	Helpers › Mobile
+*/
+
+.mobilecontainer
+{
+	display: none;
+}
+
+.normalcontainer
+{
+	display: block;
+}
+
+/*
+	Helpers › Transitions
+
+	Switching themes will produce a small animation.
+	Certain elements should not have this animation or they look
+	weird
+*/
+
+.no-transition *
+{
+    transition: none !important;
+}
+
+html.theme-transition *
+{
+    transition: all 0.1s ease-in-out;
+}
+
+/*
+	Scrollbar › Chrome, Edge, Safari Support (Hide Scrollbar)
+*/
+
+.csf-container::-webkit-scrollbar
+{
+    display: none;
+}
+
+/*
+	Scrollbar › Firefox Support (Hide Scrollbar)
+*/
+
+.csf-container
+{
+    scrollbar-width: none;
+}
+
+/*
+	Scrollbar › Firefox Support
+*/
+
+*
+{
+    scrollbar-width: auto;
+	scrollbar-color: var( --scrollbar-background-normal );
+}
+
+/*
+	Scrollbar › Base
+*/
+
+.csf-scrollbar
+{
+    position: fixed;
+    top: 0;
+    right: 2px;
+    width: 5px;
+    border-radius: 6px;
+    background: var( --scrollbar-background-normal );
+    cursor: pointer;
+    height: 50px;
+    z-index: 9999;
+    margin: 7px;
+    transition: background 0.4s ease;
+}
+
+/*
+	Scrollbar › Hover
+*/
+
+.csf-scrollbar:hover
+{
+    background: var( --scrollbar-background-hover );
+}
+
+/*
+	Scrollbar › Active (Mousedown
+*/
+
+.csf-scrollbar:active
+{
+    background: var( --scrollbar-background-active );
+}
+
+/*
+	Scrollbar › Container scrolling
+*/
+
+.csf-container
+{
+    height: 100%;
+    overflow-y: scroll;
+    padding-right: 20px;
+    box-sizing: content-box;
+}
+
+.csf-container::-webkit-scrollbar
+{
+	display: none;
+}
+
+.icon-configserver
+{
 	color: #990000;
 }
+
+/*
+	CSF v1.0 › Defaults
+
+	These are the default style properties from the original configserver.css
+*/
+
 .btn-default:active,
 .btn-default:visited,
 .btn-default:focus,
-.btn-default {
+.btn-default
+{
 	background:#FFFFFF;
 	border-radius:3px;
 	border:1px solid #A6C150;
 	color:#990000 !important;
 }
-.btn-default:hover {
+
+.btn-default:hover
+{
 	border:1px solid #A6C150;
 	background: #F5F5F5;
 }
+
 .btn-csf-config:focus,
 .btn-csf-config:hover,
 .btn-csf-config:active,
-.btn-csf-config.active {
+.btn-csf-config.active
+{
 	background-color:#BDECB6 !important;
 	-webkit-transition: all 0.30s ease-in-out;
 	-moz-transition: all 0.30s ease-in-out;
@@ -25,7 +609,9 @@
 	-o-transition: all 0.30s ease-in-out;
 	transition: all 0.30s ease-in-out;
 }
-input[type=text], select {
+
+input[type=text], select
+{
 	-webkit-transition: all 0.30s ease-in-out;
 	-moz-transition: all 0.30s ease-in-out;
 	-ms-transition: all 0.30s ease-in-out;
@@ -37,32 +623,48 @@ input[type=text], select {
 	margin: 5px 1px 3px 0px;
 	border: 1px solid #990000;
 }
-input[type=text]:focus, select:focus {
+
+input[type=text]:focus, select:focus
+{
 	box-shadow: 0 0 5px #CC0000;
 	padding: 3px 0px 3px 3px;
 	margin: 5px 1px 3px 0px;
 	border: 1px solid #990000;
 }
-.td-btn {
+
+.td-btn
+{
 	width: 200px;
 }
-.td-text {
+
+.td-text
+{
 }
-th {
+
+th
+{
 	background: #F4F4EA;
 }
-.table tbody>tr>td {
+
+.table tbody>tr>td
+{
 	vertical-align: middle;
 }
-.panel-default > .panel-heading-cxs {
+
+.panel-default > .panel-heading-cxs
+{
 	font-weight: bold;
 	background: #F4F4EA;
 }
-.panel-default > .panel-footer-cxs {
+
+.panel-default > .panel-footer-cxs
+{
 	font-weight: bold;
 	background: #F4F4EA;
 }
-#loader {
+
+#loader
+{
 	position: absolute;
 	left: 50%;
 	top: 50%;
@@ -77,101 +679,146 @@ th {
 	-webkit-animation: spin 2s linear infinite;
 	animation: spin 2s linear infinite;
 }
-@-webkit-keyframes spin {
+
+@-webkit-keyframes spin
+{
 	0% { -webkit-transform: rotate(0deg); }
 	100% { -webkit-transform: rotate(360deg); }
 }
-@keyframes spin {
+
+@keyframes spin
+{
 	0% { transform: rotate(0deg); }
 	100% { transform: rotate(360deg); }
 }	
-.bs-callout {
+
+.bs-callout
+{
     padding: 20px;
     margin: 20px 0;
     border: 1px solid #eee;
     border-left-width: 5px;
     border-radius: 3px;
 }
-.bs-callout h4 {
+
+.bs-callout h4
+{
     margin-top: 0;
     margin-bottom: 5px;
 }
-.bs-callout p:last-child {
+
+.bs-callout p:last-child
+{
     margin-bottom: 0;
 }
-.bs-callout code {
+
+.bs-callout code
+{
     border-radius: 3px;
 }
-.bs-callout+.bs-callout {
+
+.bs-callout+.bs-callout
+{
     margin-top: -5px;
 }
-.bs-callout-success {
+
+.bs-callout-success
+{
     border-left-color: #5cb85c;
 	background-color: #edf7ed;
 }
-.bs-callout-success h4 {
+
+.bs-callout-success h4
+{
     color: #5cb85c;
-}.bs-callout-info {
+}
+
+.bs-callout-info
+{
     border-left-color: #5bc0de;
 	background-color: #eaf7fb;
 }
+
 .bs-callout-info h4 {
     color: #5bc0de;
 }
-.bs-callout-warning {
+
+.bs-callout-warning
+{
     border-left-color: #f0ad4e;
 	background-color: #fdf4e8;
 }
-.bs-callout-warning h4 {
+
+.bs-callout-warning h4
+{
     color: #f0ad4e;
 }
-.bs-callout-danger {
+
+.bs-callout-danger
+{
     border-left-color: #d9534f;
 	background-color: #faebea;
 }
-.bs-callout-danger h4 {
+.bs-callout-danger h4
+{
     color: #d9534f;
 }
-.label-pill {
+
+.label-pill
+{
   padding-right: .6em;
   padding-left: .6em;
   border-radius: 10rem;
 }
-.comment {
+
+.comment
+{
 	border-radius:5px;
 	border: 1px solid #DDDDDD;
 	padding: 10px;
 	font-family: Courier New, Courier;
 	font-size: 14px;
 }
-.value-default {
+
+.value-default
+{
 	background:#F5F5F5;
 	padding:2px;
 	border-radius:5px;
 }
-.value-other {
+
+.value-other
+{
 	background:#F4F4EA;
 	padding:2px;
 	border-radius:5px;
 }
-.value-disabled {
+
+.value-disabled
+{
 	background:#F5F5F5;
 	padding:2px;
 	border-radius:5px;
 }
-.value-warning {
+
+.value-warning
+{
 	background:#FFC0CB;
 	padding:2px;
 	border-radius:5px;
 }
-.section {
+
+.section
+{
 	border-radius:5px;
 	border: 2px solid #990000;
 	padding: 10px;
 	font-size:16px;
 	font-weight:bold;
 }
-.toplink {
+
+.toplink
+{
 	cursor: pointer;
 	position: fixed;
 	top: 20px;
@@ -181,7 +828,9 @@ th {
 	opacity: 0.5;
 	display:none;
 }
-.botlink {
+
+.botlink
+{
 	cursor: pointer;
 	position:fixed;
 	bottom:20px;
@@ -190,4 +839,142 @@ th {
 	font-size: 36px;
 	opacity: 0.5;
 	display:none;
+}
+
+/*
+	Section ›  Footer
+*/
+
+.footer
+{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+	height: 35px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 8px;
+    background-color: var(--panel-footer-background);
+    border-top: 1px solid var(--panel-footer-border);
+    color: var(--panel-footer-text);
+    font-family: "Noto Sans JP", sans-serif;
+    font-size: 14px;
+    box-sizing: border-box;
+    z-index: 999;
+}
+
+/*
+	Section ›  Footer › Inner Left
+*/
+
+.footer .footer-left
+{
+    text-align: left;
+}
+
+/*
+	Section ›  Footer › Copyright <span>
+*/
+
+.footer .footer-left span.copyright
+{
+	padding-left: 7px;
+}
+
+/*
+	Button › Button › Sponsor
+*/
+
+.footer .footer-left button.btn-sponsor
+{
+    background: none;
+    border: none;
+    color: white;
+    min-width: auto;
+}
+
+/*
+	Section ›  Footer › Inner Right
+*/
+
+.footer .footer-right
+{
+    display: flex;
+    gap: 7px;
+}
+
+/*
+	Footer › Standard Button
+*/
+
+.footer .footer-right button,
+.footer .footer-right a.btn-footer
+{
+    padding: 4px 8px;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+    cursor: pointer;
+	margin-right: 5px;
+}
+
+.footer .footer-right .btn-footer
+{
+	min-width: 5px !important;
+}
+
+/*
+	Button › Button › Theme Switcher
+*/
+
+.footer .footer-right button.btn-theme
+{
+    background-color: var(--button-1-background);
+    border-color: var(--button-1-background);
+    color: white;
+    min-width: auto;
+}
+
+/*
+	Button › Button › Github
+*/
+
+.footer .footer-right button.btn-github
+{
+    background-color: var(--button-1-background);
+    border-color: var(--button-1-background);
+    color: white;
+    min-width: auto;
+}
+
+/*
+	Button › Update
+*/
+
+button.btn-update
+{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #44662d;
+    font-size: 11pt;
+    font-weight: 100;
+    padding: 5pt;
+    border: 1px solid #000;
+    border-radius: 6px;
+}
+
+/*
+	Button › Button › Logout
+*/
+
+.footer-right button.btn-logout
+{
+    background-color: #fd0966;
+    border-color: #fd0966;
+    color: white;
+    min-width: auto;
 }
