@@ -9969,6 +9969,7 @@ sub ui {
 
 								my $bootstrapcss = "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css'>";
 								my $csfjs = "<script src='$images/csf.min.js'></script>";
+								my $csfnt = "<script src='$images/csfont.min.js'></script>";
 								my $jqueryjs = "<script src='$images/jquery.min.js'></script>";
 								my $bootstrapjs = "<script src='$images/bootstrap/js/bootstrap.min.js'></script>";
 								my @header;
@@ -10020,6 +10021,7 @@ sub ui {
 
 	$csfjs
 	$jqueryjs
+	$csfnt
 	$bootstrapjs
 
 <style>
@@ -10198,6 +10200,7 @@ EOF
 
 								my $bootstrapcss = "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css'>";
 								my $csfjs = "<script src='$images/csf.min.js'></script>";
+								my $csfnt = "<script src='$images/csfont.min.js'></script>";
 								my $jqueryjs = "<script src='$images/jquery.min.js'></script>";
 								my $bootstrapjs = "<script src='$images/bootstrap/js/bootstrap.min.js'></script>";
 								my $fontawesome = "<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.0.10/css/all.css'>";
@@ -10239,6 +10242,7 @@ EOF
 	$csfjs
 	$fontawesome
 	$jqueryjs
+	$csfnt
 	$bootstrapjs
 
 </head>
