@@ -10,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            09.26.2025
+#   @updated            10.08.2025
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -34,6 +34,22 @@
 #               Dryrun install          sh install.sh --dryrun
 # #
 
+# #
+#    Allow for execution from different relative directories
+# #
+
+script_dir="$(cd "$(dirname "$0")" && pwd)"
+
+# #
+#    Change working directory
+# #
+
+cd "$script_dir" || exit 1
+
+# #
+#    Start script
+# #
+
 echo
 echo "Selecting installer..."
 echo
@@ -41,29 +57,29 @@ echo
 if [ -e "/usr/local/cpanel/version" ]; then
 	echo "Running csf cPanel installer"
 	echo
-	sh install.cpanel.sh
+	sh $script_dir/install.cpanel.sh
 elif [ -e "/usr/local/directadmin/directadmin" ]; then
 	echo "Running csf DirectAdmin installer"
 	echo
-	sh install.directadmin.sh
+	sh $script_dir/install.directadmin.sh
 elif [ -e "/usr/local/interworx" ]; then
 	echo "Running csf InterWorx installer"
 	echo
-	sh install.interworx.sh
+	sh $script_dir/install.interworx.sh
 elif [ -e "/usr/local/cwpsrv" ]; then
 	echo "Running csf CentOS Web Panel installer"
 	echo
-	sh install.cwp.sh
+	sh $script_dir/install.cwp.sh
 elif [ -e "/usr/local/vesta" ]; then
 	echo "Running csf VestaCP installer"
 	echo
-	sh install.vesta.sh
+	sh $script_dir/install.vesta.sh
 elif [ -e "/usr/local/CyberCP" ]; then
 	echo "Running csf CyberPanel installer"
 	echo
-	sh install.cyberpanel.sh
+	sh $script_dir/install.cyberpanel.sh
 else
 	echo "Running csf generic installer"
 	echo
-	sh install.generic.sh
+	sh $script_dir/install.generic.sh
 fi
