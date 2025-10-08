@@ -285,6 +285,12 @@ if [ ! -e "/usr/local/csf/tpl/litespeed.https.txt" ]; then
 fi
 cp -avf x-arf.txt /usr/local/csf/tpl/.
 
+if [ ! -e "/usr/local/csf/bin/csfpre.sh" ]; then
+	cp -avf csfpre.sh /usr/local/csf/bin/.
+fi
+if [ ! -e "/usr/local/csf/bin/csfpost.sh" ]; then
+	cp -avf csfpost.sh /usr/local/csf/bin/.
+fi
 if [ ! -e "/usr/local/csf/bin/regex.custom.pm" ]; then
 	cp -avf regex.custom.pm /usr/local/csf/bin/.
 fi
