@@ -853,7 +853,7 @@ def badgeFileRequires( text: str, page: Page, files: Files ):
 
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW +
           inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' +
-          clr.GREY + str(href) + clr.WHITE)
+          clr.GREY + str(href) + clr.WHITE + ' Text: ' + clr.GREY + text + ' Tooltip: ' + clr.GREY + tooltip + ' Icon: ' + clr.GREY + icon)
 
     return badgeCreate(
         icon = f"[:{icon}:]({href} '{tooltip}')",

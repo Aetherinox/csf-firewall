@@ -1,0 +1,52 @@
+<div id="mkdocs-encrypted-content" style="display:none">{{ ciphertext_bundle }}</div>
+<div id="mkdocs-decrypted-content" style="display:none">
+    <form id="mkdocs-decrypt-form"{% if form_class %} class="{{ form_class }}"{% endif %}>
+        <h1>{{ summary }}</h1>
+        {% if encryption_info_message %}<p>{{ encryption_info_message }}</p>{% endif %}
+        <div class="authentication-form">
+            {%- if obfuscate %}
+            <input type="hidden" id="mkdocs-content-password" value="{{ obfuscate_password }}">
+            {%- else %}
+                {%- if uname %}
+            <input{% if input_class %} class="{{ input_class }}"{% endif %} type="text" id="mkdocs-content-user" placeholder="{{ placeholder_user }}">
+                {%- endif %}
+            <input{% if input_class %} class="{{ input_class }}"{% endif %} type="password" id="mkdocs-content-password" placeholder="{{ placeholder }}">
+            {%- endif %}
+            {% if password_button %}
+            <button{% if button_class %} class="{{ button_class }}"{% endif %} id="mkdocs-decrypt-button">{{ password_button_text }}</button>
+            {% endif %}
+            <p id="mkdocs-decrypt-msg"></p>
+        </div>        
+    </form>
+</div>
+
+<script type="text/javascript">
+var encryptcontent_id = "{{ encryptcontent_id }}";
+var encryptcontent_path = "{{ encryptcontent_path }}";
+var decryption_failure_message = {{ decryption_failure_message }};
+var encryptcontent_keystore = {{ encryptcontent_keystore }};
+var encryptcontent_obfuscate = {{ obfuscate }};
+{% if inject_something %}var inject_something = {{ inject_something }};{% endif -%}
+{% if delete_something %}var delete_something = "{{ delete_something }}";{%- endif %}
+</script>
+{%- if esm %}
+<script type="module">
+if (!window.hasOwnProperty("init_decryptor")) {
+    {%- if not webcrypto %}
+    import("{{ js_libraries[0] }}").then((module) => {
+        window["CryptoJS"] = module.default;
+    {%- endif %}
+    import("{{ base_path }}assets/javascripts/decrypt-contents.js");
+    {%- if not webcrypto %}
+    });
+    {%- endif %}
+} else {
+    init_decryptor();
+}
+</script>
+{%- else %}
+    {%- for library in js_libraries %}
+<script type="text/javascript" src="{{ library }}"></script>
+    {%- endfor %}
+<script type="text/javascript" src="{{ base_path }}assets/javascripts/decrypt-contents.js" defer></script>
+{%- endif %}
