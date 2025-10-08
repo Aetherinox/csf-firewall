@@ -1,5 +1,4 @@
 #!/bin/sh
-#!/bin/sh
 # #
 #   @app                ConfigServer Firewall & Security (CSF)
 #                       Login Failure Daemon (LFD)
