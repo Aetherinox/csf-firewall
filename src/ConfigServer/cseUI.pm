@@ -84,7 +84,8 @@ sub main {
 	<meta charset='utf-8'>
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
 	$bootstrapcss
-	<link href='$images/configserver.css' rel='stylesheet' type='text/css'>
+	<link rel="preload" href="$images/configserver.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript><link rel="stylesheet" href="$images/configserver.css"></noscript>
 	$jqueryjs
 	$bootstrapjs
 </head>
