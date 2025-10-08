@@ -115,7 +115,8 @@ unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq
 	print "	<meta charset='utf-8'>\n";
 	print "	<meta name='viewport' content='width=device-width, initial-scale=1'>\n";
 	print "	$bootstrapcss\n";
-	print "	<link href='$images/configserver.css' rel='stylesheet' type='text/css'>\n";
+	print "<link rel=\"preload\" href=\"\$images/configserver.css\" as=\"style\" onload=\"this.onload=null;this.rel='stylesheet'\">\n";
+	print "<noscript><link rel=\"stylesheet\" href=\"\$images/configserver.css\"></noscript>\n";
 	print "	$jqueryjs\n";
 	print "	$bootstrapjs\n";
 	print "<style>\n";

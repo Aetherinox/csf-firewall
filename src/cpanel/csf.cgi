@@ -161,7 +161,8 @@ unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq
 
 	print <<EOF;
 	<!-- $bootstrapcss -->
-	<link href='$images/configserver.css' rel='stylesheet' type='text/css'>
+	<link rel="preload" href="$images/configserver.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript><link rel="stylesheet" href="$images/configserver.css"></noscript>
 	$jqueryjs
 	$bootstrapjs
 <style>
