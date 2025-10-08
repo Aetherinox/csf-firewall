@@ -1806,6 +1806,74 @@
     color: #9242c0;
 }
 
+/*
+    File Tree Icons
+*/
+
+.icon-clr-tree-folder
+{
+    color: #e7af13;
+}
+
+.icon-clr-tree-cert
+{
+    color: #e7af13;
+}
+
+.icon-clr-tree-key
+{
+    color: #e7af13;
+}
+
+.icon-clr-tree-symlink
+{
+    color: #1381e7;
+}
+
+.icon-clr-tree-img
+{
+    color: #e7af13;
+}
+
+.icon-clr-tree-folder
+{
+    color: #e7af13;
+}
+
+.icon-clr-tree-file
+{
+    color: #8a8a8a;
+}
+
+.icon-clr-tree-file-html
+{
+    color: #eba235;
+}
+
+.icon-clr-tree-file-css
+{
+    color: #4C8BDB;
+}
+
+.icon-clr-tree-file-conf
+{
+    color: #eba235;
+}
+
+.icon-clr-tree-file-binary
+{
+    color: #eba235;
+}
+
+.icon-clr-tree-file-archive
+{
+    color: #ee814e;
+}
+
+/*
+    Icon Sizes
+*/
+
 .icon-size-32
 {
     font-size: 32pt;
@@ -1816,6 +1884,12 @@
     font-size: 48pt;
 }
 
+.png-size-48
+{
+    width: 48pt;
+    height: 48pt;
+}
+
 .icon-dim:hover
 {
     transform: scale(1.2);
@@ -1824,6 +1898,116 @@
     z-index: 1;
     padding-left: 15px;
     padding-right: 15px;
+}
+
+
+.icon-container
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.install-products.white
+{
+    filter: invert(100%) brightness(200%);
+}
+
+/*
+    Icon Tree Codeblock
+*/
+
+.icon-tree code
+{
+    display: block;
+    background-color: inherit !important;
+}
+
+/*
+    Authentication Form
+*/
+
+.authentication-form
+{
+    width: 50%;
+    margin: 0 auto;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    gap: 0;
+}
+
+.authentication-form input[type="password"],
+.authentication-form input[type="text"]
+{
+    flex: 1;
+    padding: 10px;
+    font-size: 1em;
+    background-color: #313131;
+    border-top-left-radius: 4px !important;
+    border-bottom-left-radius: 4px !important;
+    border-right: none;
+    margin: 0;
+    height: 48px;
+    box-sizing: border-box;
+}
+
+.authentication-form input[type="password"]:hover,
+.authentication-form input[type="text"]:hover
+{
+    border-bottom: 1px solid #FFF;
+}
+
+.authentication-form input[type="password"]:focus,
+.authentication-form input[type="text"]:focus
+{
+    border-bottom: 1px solid #ee8e10;
+}
+
+.authentication-form button
+{
+    width: 48px;
+    height: 48px;
+    cursor: pointer;
+    font-size: 1em;
+    border-bottom-right-radius: 4px !important;
+    border-top-right-radius: 4px !important;
+    border-top-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+    border: none !important;
+    margin-left: -2px;
+    margin: 0;
+    padding: 0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
+}
+
+#mkdocs-decrypt-button:hover
+{
+    background-color: #DF1054;
+    border: none;
+}
+
+#mkdocs-decrypt-button:hover svg
+{
+    fill: #FFF;
+}
+
+.authentication-form button svg
+{
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+    flex-shrink: 0;
+}
+
+.authentication-form input,
+.authentication-form button
+{
+    margin: 0;
 }
 
 /*
