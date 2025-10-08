@@ -13,6 +13,19 @@ In the previous section, we covered how to install the required dependencies for
 
 If your tests were successful, you are now ready to install CSF on your server and begin configuring your new firewall. This section focuses on the **basic installation process** — detailed configuration will be covered in a later chapter.
 
+<div align="center" class="icon-container" markdown>
+
+  <a href="#install-generic" class="icon-dim"><img class='install-products white png-size-48' title="Install: Generic" src="../../assets/images/logos/general.png"></a>
+  <a href="#install-cpanel-and-whm" class="icon-dim"><img class='install-products white png-size-48' title="Install: cPanel & WHM" src="../../assets/images/logos/whmcs.png"></a>
+  <a href="#install-cpanel-and-whm" class="icon-dim"><img class='install-products white png-size-48' title="Install: cPanel & WHM" src="../../assets/images/logos/cpanel.png"></a>
+  <a href="#install-webmin" class="icon-dim"><img class='install-products white png-size-48' title="Install: Webmin" src="../../assets/images/logos/webmin.png"></a>
+  <a href="#install-directadmin" class="icon-dim"><img class='install-products white png-size-48' title="Install: DirectAdmin" src="../../assets/images/logos/directadmin.png"></a>
+  <a href="#install-interworx" class="icon-dim"><img class='install-products white png-size-48' title="Install: Interworx" src="../../assets/images/logos/interworx.png"></a>
+  <a href="#install-vestacp" class="icon-dim"><img class='install-products white png-size-48' title="Install: VestaCP" src="../../assets/images/logos/vestacp.png"></a>
+  <a href="#install-cyberpanel" class="icon-dim"><img class='install-products white png-size-48' title="Install: Cyberpanel" src="../../assets/images/logos/cyberpanel.png"></a>
+
+</div>
+
 <br />
 
 ---
@@ -763,6 +776,54 @@ You can now proceed to the [Next Steps](#next-steps) or skip the rest of this se
 <br />
 <br />
 
+## Install: DirectAdmin
+
+This part of the documentation is currently being written.
+
+<br />
+<br />
+
+---
+
+<br />
+<br />
+
+## Install: Interworx
+
+This part of the documentation is currently being written.
+
+<br />
+<br />
+
+---
+
+<br />
+<br />
+
+## Install: VestaCP
+
+This part of the documentation is currently being written.
+
+<br />
+<br />
+
+---
+
+<br />
+<br />
+
+## Install: Cyberpanel
+
+This part of the documentation is currently being written.
+
+<br />
+<br />
+
+---
+
+<br />
+<br />
+
 ## Installer File Summary
 
 This section provides a list of the installer scripts included with CSF and what their role plays in the installation process. This is available within our docs for more advanced users who wish to understand the process.
@@ -798,42 +859,41 @@ This is the generic bare-metal installer for CSF. You should use this script whe
 <br />
 
 ### install.cpanel.sh
-<!-- md:requires `/usr/local/cpanel/version` -->
+
 
 The `install.cpanel.sh` script is ran in order to integrate CSF with an existing cPanel/WHM installation. This file triggers if you run `install.sh`, which checks to see if your server has the file `/usr/local/cpanel/version`. 
 
 <br />
 
 ### install.cwp.sh
-<!-- md:requires `/usr/local/cwpsrv` -->
+
 
 The `install.cwp.sh` script is ran in order to integrate CSF with an existing copy of [CentOS Web Panel (CWP)](https://centos-webpanel.com/). This file triggers when you run `install.sh`, which checks to see if your server has the file `/usr/local/cwpsrv`.
 
 <br />
 
 ### install.cyberpanel.sh
-<!-- md:requires `/usr/local/CyberCP` -->
+
 
 The `install.cyberpanel.sh` script is ran in order to integrate CSF with an existing copy of [Cyber Panel](https://cyberpanel.net/). This file triggers when you run `install.sh`, which checks to see if your server has the file `/usr/local/CyberCP`.
 
 <br />
 
 ### install.directadmin.sh
-<!-- md:requires `/usr/local/directadmin/directadmin` -->
 
 The `install.directadmin.sh` script is ran in order to integrate CSF with an existing copy of [DirectAdmin](https://directadmin.com/). This file triggers when you run `install.sh`, which checks to see if your server has the file `/usr/local/directadmin/directadmin`.
 
 <br />
 
 ### install.interworx.sh
-<!-- md:requires `/usr/local/interworx` -->
+
 
 The `install.interworx.sh` script is ran in order to integrate CSF with an existing copy of [Interworx](https://interworx.com/). This file triggers when you run `install.sh`, which checks to see if your server has the file `/usr/local/interworx`.
 
 <br />
 
 ### install.vesta.sh
-<!-- md:requires `/usr/local/vesta` -->
+
 
 The `install.vesta.sh` script is ran in order to integrate CSF with an existing copy of [VestaCP](https://vestacp.com/). This file triggers when you run `install.sh`, which checks to see if your server has the file `/usr/local/vesta`.
 
