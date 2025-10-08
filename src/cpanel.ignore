@@ -9,7 +9,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            09.26.2025
+#   @updated            10.08.2025
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -26,16 +26,21 @@
 # #
 
 # #
-#   The following IP addresses will be allowed through iptables and ignored by
-#   lfd to allow for unimpeded access to the cPanel license service
+#   The following IP addresses will be ignored by LFD (Login Failure Daemon)
+#   and allowed through iptables to ensure uninterrupted communication with
+#   cPanel license servers.
 #   
-#   Each IP address belongs to cPanel and is responsibly for authenticating
-#   cPanel licenses
+#   These IPs belong to cPanel and are responsible for authenticating licenses
+#   and maintaining proper cPanel service functionality.
 #   
-#   Note:   This file will be replaced when csf is upgraded - do NOT make any
-#           changes to this file. If you do not want to whitelist these IP
-#           addresses you need to remove the Include line from csf.ignore as
-#           this is only added there once
+#   The "ignore" file specifically tells LFD to not block or trigger alerts
+#   for these IPs. Traffic is allowed through the firewall automatically, but
+#   LFD monitoring is bypassed.
+#   
+#   ⚠️ Note:    This file is automatically managed by CSF and will be replaced
+#               during upgrades. Do NOT edit manually. If you do not want these
+#               IPs ignored, remove the "Include" line from csf.ignore in
+#               the main configuration.
 # #
 
 208.74.123.2 # cPanel Auth Server
