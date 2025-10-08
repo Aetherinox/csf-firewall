@@ -67,38 +67,58 @@ print "content-type: text/html\n\n";
 #}
 
 my $bootstrapcss = "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css'>";
+my $csfjs = "<script src='$images/csf.min.js'></script>";
 my $jqueryjs = "<script src='$images/jquery.min.js'></script>";
 my $bootstrapjs = "<script src='$images/bootstrap/js/bootstrap.min.js'></script>";
 
-unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq "logtailcmd" or $FORM{action} eq "loggrepcmd") {
+unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq "logtailcmd" or $FORM{action} eq "loggrepcmd")
+{
 	print <<EOF;
 <!doctype html>
 <html lang='en'>
 <head>
+	<script>
+		(function()
+		{
+			var theme = localStorage.getItem('theme') || 'light';
+			document.documentElement.setAttribute('data-theme', theme);
+		})();
+	</script>
+
+	$bootstrapcss
+
+	<link rel="preload" href="$images/configserver.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript><link rel="stylesheet" href="$images/configserver.css"></noscript>
+	<link rel="icon" type="image/x-icon" href="$images/csf.png">
 	<title>ConfigServer Security &amp; Firewall</title>
 	<meta charset='utf-8'>
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
-	$bootstrapcss
-	<link rel="preload" href="$images/configserver.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	<noscript><link rel="stylesheet" href="$images/configserver.css"></noscript>
+
+	$csfjs
 	$jqueryjs
 	$bootstrapjs
 
 <style>
-.mobilecontainer {
+.mobilecontainer
+{
 	display:none;
 }
-.normalcontainer {
+.normalcontainer
+{
 	display:block;
 }
 EOF
-	if ($config{STYLE_MOBILE}) {
+	if ($config{STYLE_MOBILE})
+	{
 		print <<EOF;
-\@media (max-width: 600px) {
-	.mobilecontainer {
+\@media (max-width: 600px)
+{
+	.mobilecontainer
+	{
 		display:block;
 	}
-	.normalcontainer {
+	.normalcontainer
+	{
 		display:none;
 	}
 }
