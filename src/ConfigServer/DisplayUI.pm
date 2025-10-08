@@ -60,18 +60,24 @@ our ($chart, $ipscidr6, $ipv6reg, $ipv4reg, %config, %ips, $mobile,
 my $slurpreg = ConfigServer::Slurp->slurpreg;
 my $cleanreg = ConfigServer::Slurp->cleanreg;
 
-#
-###############################################################################
-# start main
-sub main {
-	my $form_ref = shift;
-	%FORM = %{$form_ref};
-	$script = shift;
-	$script_da = shift;
-	$images = shift;
-	$myv = shift;
-	$config{THIS_UI} = shift;
-	$| = 1;
+
+sub main
+{
+	my $form_ref 		= shift;
+	%FORM 				= %{$form_ref};
+	$script 			= shift;
+	$script_da 			= shift;
+	$images 			= shift;
+	$myv 				= shift;
+	$config{THIS_UI} 	= shift;
+	$| 					= 1;
+
+	# #
+	#	Date
+	# #
+
+	my @t = localtime;
+	my $year = $t[5] + 1900;
 
 	$ipscidr6 = Net::CIDR::Lite->new;
 
@@ -2626,11 +2632,22 @@ EOF
 
 	}
 
-	unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq "logtailcmd" or $FORM{action} eq "loggrepcmd") {
-		print "<br>\n";
-		print "<div class='well well-sm'>csf: v$myv</div>";
-		print "<p>&copy;2006-2025, <a href='https://github.com/Aetherinox/csf-firewall' target='_blank'>ConfigServer Firewall & LFD</a></p>\n";
-		print "</div>\n";
+	unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq "logtailcmd" or $FORM{action} eq "loggrepcmd")
+	{
+		print "<div class='footer'>";
+			print "<div class='footer-left'>";
+				print "<button id='btn-sponsor' class='btn-footer btn-sponsor'><i class='axs ax-heart heart'></i></button>";
+				print "<span class='copyright'>&copy; $year ConfigServer Firewall - <code>v$myv</code></span>";
+			print "</div>";
+
+			print "<div class='footer-right'>";
+				print "<button id='btn-theme' class='btn-footer btn-theme'>Switch Theme</button>";
+				print "<button id='btn-github' class='btn-footer btn-github'><i class='axb ax-github'></i></button>";
+				print "<button id='btn-logout' class='btn-footer btn-logout' title='Logout'><i class='axs ax-lock'></i></button>";
+			print "</div>";
+		print "</div>";
+
+		print "<div style='padding-bottom: 50px;'></div>";
 	}
 
 	return;
