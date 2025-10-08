@@ -26,16 +26,36 @@
 # #
 
 # #
-#   The following IP addresses will be allowed through iptables and ignored by
-#   lfd to allow for unimpeded access to cPanels free SSL certificate service
-#   available in cPanel v58+
+#   This file contains IP addresses that are explicitly whitelisted in CSF.
+#   These IPs belong to Sectigo (formerly Comodo), the SSL provider used by
+#   cPanel’s free AutoSSL system (available in version 58 and later).
 #   
-#   Each IP address belongs to the Sectigo SSL provider (formerly Comodo)
+#   Whitelisting ensures that connections from Sectigo are never blocked by
+#   firewall rules, allowing SSL certificates to be issued and renewed without
+#   interruption.
 #   
-#   Note:   This file will be replaced when csf is upgraded - do NOT make any
-#           changes to this file. If you do not want to whitelist these IP
-#           addresses you need to remove the Include line from csf.allow as
-#           this is only added there once
+#   If you prefer not to whitelist these IPs, remove the "Include" line for this
+#   file from your csf.allow configuration. That include entry is only added once.
+#   
+#   ⚠️ Note:    This file is automatically managed by cPanel and CSF updates.
+#               Do NOT manually modify or remove entries in this file, as your
+#               changes will be overwritten during updates.
+# #
+
+# #
+#   There is confusion about the difference between the files:
+#       - cpanel.comodo.allow
+#       - cpanel.comodo.ignore
+#   
+#   cpanel.comodo.allow                 Whitelist Sectigo IPs through the firewall.
+#                  Desc:                Ensure cPanel’s AutoSSL servers can reach
+#                                           your server — no firewall blocks.
+#               Affects:                iptables
+#   
+#   cpanel.comodo.ignore                Exclude Sectigo IPs from login/banning checks.
+#                  Desc:                Prevents CSF’s brute-force detection system
+#                                           from accidentally blocking them.
+#               Affects:                lfd (Login Failure Daemon)
 # #
 
 tcp|in|d=80|s=178.255.81.12 # Sectigo SSL Resolver
