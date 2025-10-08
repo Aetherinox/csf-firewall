@@ -9966,12 +9966,15 @@ sub ui {
 								$script = "/$session/";
 								$images = "/$session/images";
 								$config{THIS_UI} = 1;
+
 								my $bootstrapcss = "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css'>";
+								my $csfjs = "<script src='$images/csf.min.js'></script>";
 								my $jqueryjs = "<script src='$images/jquery.min.js'></script>";
 								my $bootstrapjs = "<script src='$images/bootstrap/js/bootstrap.min.js'></script>";
 								my @header;
 								my @footer;
 								my $htmltag = "data-post='$FORM{action}'";
+
 								if (-e "/etc/csf/csf.header") {
 									open (my $HEADER, "<", "/etc/csf/csf.header");
 									flock ($HEADER, LOCK_SH);
@@ -9997,14 +10000,27 @@ sub ui {
 <!doctype html>
 <html lang='en' $htmltag>
 <head>
-<title>ConfigServer Security &amp; Firewall</title>
-<meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'>
-$bootstrapcss
-<link rel="preload" href="$images/configserver.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="$images/configserver.css"></noscript>
-$jqueryjs
-$bootstrapjs
+	<script>
+		(function()
+		{
+			var theme = localStorage.getItem('theme') || 'light';
+			document.documentElement.setAttribute('data-theme', theme);
+		})();
+	</script>
+
+	$bootstrapcss
+
+	<link rel="preload" href="$images/configserver.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript><link rel="stylesheet" href="$images/configserver.css"></noscript>
+	<link rel="icon" type="image/x-icon" href="$images/csf.png">
+	<link href='https://fonts.googleapis.com/css?family=Raleway:400,700' rel='stylesheet' type='text/css'>
+	<title>ConfigServer Security &amp; Firewall</title>
+	<meta charset='utf-8'>
+	<meta name='viewport' content='width=device-width, initial-scale=1'>
+
+	$csfjs
+	$jqueryjs
+	$bootstrapjs
 
 <style>
 .mobilecontainer {
@@ -10136,11 +10152,18 @@ EOF
 									print "</html>\n";
 								}
 							}
-							elsif ($application eq "cxs" and $config{UI_CXS}) {
+							elsif ($application eq "cxs" and $config{UI_CXS})
+							{
 								my @data = &syscommand(__LINE__,"/usr/sbin/cxs","--version");
 								chomp @data;
-								if ($data[0] =~ /v(.*)$/) {$myv = $1}
-								my %ajaxsubs = (
+						
+								if ($data[0] =~ /v(.*)$/)
+								{
+									$myv = $1
+								}
+
+								my %ajaxsubs =
+								(
 									"cc_body" => 1,
 									"cc_dbody" => 1,
 									"cc_restore" => 1,
@@ -10153,7 +10176,9 @@ EOF
 									"tailcmd" => 1,
 									"tailscancmd" => 1,
 								);
-								my %fullsubs = (
+
+								my %fullsubs =
+								(
 									"cc_setup" => 1,
 									"cc_setup1" => 1,
 									"cc_setup2" => 1,
@@ -10170,30 +10195,52 @@ EOF
 								$script = "/$session/";
 								$images = "/$session/images/cxs";
 								$config{THIS_UI} = 1;
+
 								my $bootstrapcss = "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css'>";
+								my $csfjs = "<script src='$images/csf.min.js'></script>";
 								my $jqueryjs = "<script src='$images/jquery.min.js'></script>";
 								my $bootstrapjs = "<script src='$images/bootstrap/js/bootstrap.min.js'></script>";
 								my $fontawesome = "<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.0.10/css/all.css'>";
-								if ($FORM{action} eq "cc_body" or $FORM{action} eq "cc_dbody" or $FORM{action} eq "cc_showreports") {
-								} elsif ($ajaxsubs{$FORM{action}} or $FORM{action} eq "tailcmd" or $FORM{action} eq "tailscancmd") {
+
+								if ($FORM{action} eq "cc_body" or $FORM{action} eq "cc_dbody" or $FORM{action} eq "cc_showreports")
+								{
+								}
+								elsif ($ajaxsubs{$FORM{action}} or $FORM{action} eq "tailcmd" or $FORM{action} eq "tailscancmd")
+								{
 									print "content-type: text/plain\n\n";
-								} else {
+								}
+								else
+								{
 									print "Content-type: text/html\n\n";
-									unless ($FORM{action} eq "RunScan" or ($FORM{action} =~ /^cc_/ and !$fullsubs{$FORM{action}} and $FORM{action} !~ /^cc_\w+bulk$/) or $FORM{action} eq "Run Scan" or $FORM{action} eq "viewq" or $FORM{action} eq "tailcmd" or $FORM{action} eq "tailscancmd") {
+									unless ($FORM{action} eq "RunScan" or ($FORM{action} =~ /^cc_/ and !$fullsubs{$FORM{action}} and $FORM{action} !~ /^cc_\w+bulk$/) or $FORM{action} eq "Run Scan" or $FORM{action} eq "viewq" or $FORM{action} eq "tailcmd" or $FORM{action} eq "tailscancmd") 
+									{
 										print <<EOF;
 <!doctype html>
 <html lang='en'>
 <head>
-<title>ConfigServer eXploit Scanner</title>
-<meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'>
-$bootstrapcss
-$fontawesome
-<link rel="preload" href="$images/configserver.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="$images/configserver.css"></noscript>
-$jqueryjs
-$bootstrapjs
-<link href='https://fonts.googleapis.com/css?family=Raleway:400,700' rel='stylesheet' type='text/css'>
+	<script>
+		(function()
+		{
+			var theme = localStorage.getItem('theme') || 'light';
+			document.documentElement.setAttribute('data-theme', theme);
+		})();
+	</script>
+
+	$bootstrapcss
+
+	<link rel="preload" href="$images/configserver.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript><link rel="stylesheet" href="$images/configserver.css"></noscript>
+	<link rel="icon" type="image/x-icon" href="$images/csf.png">
+	<link href='https://fonts.googleapis.com/css?family=Raleway:400,700' rel='stylesheet' type='text/css'>
+	<title>ConfigServer eXploit Scanner</title>
+	<meta charset='utf-8'>
+	<meta name='viewport' content='width=device-width, initial-scale=1'>
+
+	$csfjs
+	$fontawesome
+	$jqueryjs
+	$bootstrapjs
+
 </head>
 <body>
 <div id="loader"></div>
@@ -10215,14 +10262,26 @@ EOF
 <h3>ConfigServer eXploit Scanner - cxs v$myv</h3>
 </div>
 EOF
-									} else {
+									} # end unless
+									else
+									{
 										print <<EOF;
 <!doctype html>
 <html lang='en'>
 <head>
+	<script>
+		(function()
+		{
+			var theme = localStorage.getItem('theme') || 'light';
+			document.documentElement.setAttribute('data-theme', theme);
+		})();
+	</script>
+
 	$bootstrapcss
+
 	<link rel="preload" href="$images/configserver.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link rel="stylesheet" href="$images/configserver.css"></noscript>
+
 	$jqueryjs
 	$bootstrapjs
 </head>
@@ -10236,9 +10295,11 @@ pre {
 EOF
 									}
 								}
+
 								ConfigServer::cxsUI::displayUI(\%FORM,\%ajaxsubs,$script,"",$images,$myv, "cpsess".$session);
 
-								unless ($ajaxsubs{$FORM{action}}) {
+								unless ($ajaxsubs{$FORM{action}})
+								{
 									print <<EOF;
 <script>
 	\$("#loader").hide();
@@ -10248,14 +10309,16 @@ EOF
 EOF
 								}
 							}
-							elsif ($application eq "cse" and $config{UI_CSE}) {
+							elsif ($application eq "cse" and $config{UI_CSE})
+							{
 								$script = "/$session/";
 								$images = "/$session/images";
 								$config{THIS_UI} = 1;
 								ConfigServer::cseUI::main(\%FORM, $fileinc, $script, 0, $images, $myv, $config{THIS_UI});
 							}
 						}
-						elsif ($file =~ /^\/images\/(\w+\/)?(\w+\/)?(\w+\/)?([\w\-]+\.(gif|png|jpg|[\w\-]+\.js|[\w\-]+\.css|css|[\w\-]+\.woff2|woff2|[\w\-]+\.woff|woff|[\w\-]+\.tff|tff))/i) {
+						elsif ($file =~ /^\/images\/(\w+\/)?(\w+\/)?(\w+\/)?([\w\-]+\.(gif|png|jpg|[\w\-]+\.js|[\w\-]+\.css|css|[\w\-]+\.woff2|woff2|[\w\-]+\.woff|woff|[\w\-]+\.tff|tff))/i)
+						{
 							my $type = $2;
 							if ($type eq "jpg") {$type = "jpeg"}
 							print "HTTP/1.0 200 OK\r\n";
@@ -10282,13 +10345,20 @@ EOF
 							flock ($IMAGE, LOCK_SH);
 							while (<$IMAGE>) {print $_}
 							close ($IMAGE);
-						} else {
+						}
+						else
+						{
 							&ui_403;
 						}
 					}
 					alarm(0);
 				};
-				if ($@) {logfile("*UI* child: [$!] [$@]")}
+
+				if ($@)
+				{
+					logfile("*UI* child: [$!] [$@]")
+				}
+	
 				$client->close();
 				alarm(0);
 				exit;

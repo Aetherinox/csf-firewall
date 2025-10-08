@@ -59,6 +59,7 @@ if ($config{STYLE_CUSTOM} and $ENV{'REQUEST_URI'} =~ /xnavigation=1/ and $ENV{'H
 print "Content-type: text/html\r\n\r\n";
 
 my $bootstrapcss = "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css'>";
+my $csfjs = "<script src='$images/csf.min.js'></script>";
 my $jqueryjs = "<script src='$images/jquery.min.js'></script>";
 my $bootstrapjs = "<script src='$images/bootstrap/js/bootstrap.min.js'></script>";
 
@@ -111,12 +112,30 @@ unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq
 	print "<!doctype html>\n";
 	print "<html lang='en' $htmltag>\n";
 	print "<head>\n";
+
+	# #
+	#   Theme Selector
+	# #
+
+	print "	<script>\n";
+	print "		(function()\n";
+	print "		{\n";
+	print "			var theme = localStorage.getItem('theme') || 'light';\n";
+	print "			document.documentElement.setAttribute('data-theme', theme);\n";
+	print "		})();\n";
+	print "	</script>\n";
+
+	print "	$bootstrapcss\n";
+
+	print " <link rel=\"preload\" href=\"\$images/configserver.css\" as=\"style\" onload=\"this.onload=null;this.rel='stylesheet'\">\n";
+	print " <noscript><link rel=\"stylesheet\" href=\"\$images/configserver.css\"></noscript>\n";
+	print "	<link rel=\"icon\" type=\"image/x-icon\" href=\"\$images/csf.png\">\n";
+
 	print "	<title>ConfigServer Security &amp; Firewall</title>\n";
 	print "	<meta charset='utf-8'>\n";
 	print "	<meta name='viewport' content='width=device-width, initial-scale=1'>\n";
-	print "	$bootstrapcss\n";
-	print "<link rel=\"preload\" href=\"\$images/configserver.css\" as=\"style\" onload=\"this.onload=null;this.rel='stylesheet'\">\n";
-	print "<noscript><link rel=\"stylesheet\" href=\"\$images/configserver.css\"></noscript>\n";
+
+	print "	$csfjs\n";
 	print "	$jqueryjs\n";
 	print "	$bootstrapjs\n";
 	print "<style>\n";

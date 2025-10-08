@@ -73,6 +73,7 @@ sub main {
 	print "Content-type: text/html\r\n\r\n";
 
 	my $bootstrapcss = "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css'>";
+	my $csfjs = "<script src='$images/csf.min.js'></script>";
 	my $jqueryjs = "<script src='$images/jquery.min.js'></script>";
 	my $bootstrapjs = "<script src='$images/bootstrap/js/bootstrap.min.js'></script>";
 
@@ -80,12 +81,24 @@ sub main {
 <!doctype html>
 <html lang='en'>
 <head>
+	<script>
+		(function()
+		{
+			var theme = localStorage.getItem('theme') || 'light';
+			document.documentElement.setAttribute('data-theme', theme);
+		})();
+	</script>
+
+	$bootstrapcss
+
+	<link rel="preload" href="$images/configserver.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+	<noscript><link rel="stylesheet" href="$images/configserver.css"></noscript>
+	<link rel="icon" type="image/x-icon" href="$images/csf.png">
 	<title>ConfigServer Explorer</title>
 	<meta charset='utf-8'>
 	<meta name='viewport' content='width=device-width, initial-scale=1'>
-	$bootstrapcss
-	<link rel="preload" href="$images/configserver.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	<noscript><link rel="stylesheet" href="$images/configserver.css"></noscript>
+
+	$csfjs
 	$jqueryjs
 	$bootstrapjs
 </head>

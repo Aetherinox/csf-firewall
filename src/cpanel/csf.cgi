@@ -97,25 +97,32 @@ close ($IN);
 chomp $myv;
 
 my $bootstrapcss = "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css'>";
+my $csfjs = "<script src='$images/csf.min.js'></script>";
 my $jqueryjs = "<script src='$images/jquery.min.js'></script>";
 my $bootstrapjs = "<script src='$images/bootstrap/js/bootstrap.min.js'></script>";
 
 my @header;
 my @footer;
 my $htmltag = "data-post='$FORM{action}'";
-if (-e "/etc/csf/csf.header") {
+
+if (-e "/etc/csf/csf.header")
+{
 	open (my $HEADER, "<", "/etc/csf/csf.header");
 	flock ($HEADER, LOCK_SH);
 	@header = <$HEADER>;
 	close ($HEADER);
 }
-if (-e "/etc/csf/csf.footer") {
+
+if (-e "/etc/csf/csf.footer")
+{
 	open (my $FOOTER, "<", "/etc/csf/csf.footer");
 	flock ($FOOTER, LOCK_SH);
 	@footer = <$FOOTER>;
 	close ($FOOTER);
 }
-unless ($config{STYLE_CUSTOM}) {
+
+unless ($config{STYLE_CUSTOM})
+{
 	undef @header;
 	undef @footer;
 	$htmltag = "";
@@ -124,19 +131,25 @@ unless ($config{STYLE_CUSTOM}) {
 my $thisapp = "csf";
 my $reregister;
 my $modalstyle;
-if ($Cpanel::Version::Tiny::major_version >= 65) {
-	if (-e "/usr/local/cpanel/whostmgr/docroot/cgi/configserver/${thisapp}/${thisapp}.conf") {
+if ($Cpanel::Version::Tiny::major_version >= 65)
+{
+	if (-e "/usr/local/cpanel/whostmgr/docroot/cgi/configserver/${thisapp}/${thisapp}.conf")
+	{
 		sysopen (my $CONF, "/usr/local/cpanel/whostmgr/docroot/cgi/configserver/${thisapp}/${thisapp}.conf", O_RDWR | O_CREAT);
 		flock ($CONF, LOCK_EX);
 		my @confdata = <$CONF>;
 		chomp @confdata;
-		for (0..scalar(@confdata)) {
-			if ($confdata[$_] =~ /^target=mainFrame/) {
+		for (0..scalar(@confdata))
+		{
+			if ($confdata[$_] =~ /^target=mainFrame/)
+			{
 				$confdata[$_] = "target=_self";
 				$reregister = 1;
 			}
 		}
-		if ($reregister) {
+
+		if ($reregister)
+		{
 			seek ($CONF, 0, 0);
 			truncate ($CONF, 0);
 			foreach (@confdata) {
@@ -154,7 +167,8 @@ print "Content-type: text/html\r\n\r\n";
 
 my $templatehtml;
 my $SCRIPTOUT;
-unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq "logtailcmd" or $FORM{action} eq "loggrepcmd") {
+unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq "logtailcmd" or $FORM{action} eq "loggrepcmd")
+{
 #	open(STDERR, ">&STDOUT");
 	open ($SCRIPTOUT, '>', \$templatehtml);
 	select $SCRIPTOUT;
@@ -163,28 +177,38 @@ unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq
 	<!-- $bootstrapcss -->
 	<link rel="preload" href="$images/configserver.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link rel="stylesheet" href="$images/configserver.css"></noscript>
+
+	$csfjs
 	$jqueryjs
 	$bootstrapjs
+
 <style>
-.toplink {
-top: 140px;
+.toplink
+{
+	top: 140px;
 }
-.mobilecontainer {
-display:none;
-}
-.normalcontainer {
-display:block;
-}
-EOF
-	if ($config{STYLE_MOBILE} or $reseller) {
-		print <<EOF;
-\@media (max-width: 600px) {
-.mobilecontainer {
-	display:block;
-}
-.normalcontainer {
+.mobilecontainer
+{
 	display:none;
 }
+.normalcontainer
+{
+	display:block;
+}
+EOF
+	if ($config{STYLE_MOBILE} or $reseller)
+	{
+		print <<EOF;
+\@media (max-width: 600px)
+{
+	.mobilecontainer
+	{
+		display:block;
+	}
+	.normalcontainer
+	{
+		display:none;
+	}
 }
 EOF
 	}
@@ -192,7 +216,8 @@ EOF
 	print @header;
 }
 
-unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq "logtailcmd" or $FORM{action} eq "loggrepcmd") {
+unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq "logtailcmd" or $FORM{action} eq "loggrepcmd")
+{
 	print <<EOF;
 <div id="loader"></div><br />
 <div class='panel panel-default'>
