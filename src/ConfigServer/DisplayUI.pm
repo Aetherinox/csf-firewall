@@ -60,10 +60,42 @@ our ($chart, $ipscidr6, $ipv6reg, $ipv4reg, %config, %ips, $mobile,
 my $slurpreg = ConfigServer::Slurp->slurpreg;
 my $cleanreg = ConfigServer::Slurp->cleanreg;
 
+# #
+#	Get Codename
+# #
+
+sub getCodename
+{
+    my $generic = "cpanel";
+
+    if ($config{GENERIC})      { $generic = "generic" }
+    if ($config{DIRECTADMIN})  { $generic = "directadmin" }
+    if ($config{INTERWORX})    { $generic = "interworx" }
+    if ($config{CYBERPANEL})   { $generic = "cyberpanel" }
+    if ($config{CWP})          { $generic = "cwp" }
+    if ($config{VESTA})        { $generic = "vestacp" }
+
+	# #
+    #	Optional debug output
+	# #
+
+    print "$generic\n";
+
+	# #
+    #	Return the value so it can be used in conditionals
+	# #
+
+    return $generic;
+}
+
+# #
+#	Main
+# #
 
 sub main
 {
 	my $form_ref 		= shift;
+	my $codename 		= getCodename();
 	%FORM 				= %{$form_ref};
 	$script 			= shift;
 	$script_da 			= shift;
@@ -2643,7 +2675,11 @@ EOF
 			print "<div class='footer-right'>";
 				print "<button id='btn-theme' class='btn-footer btn-theme'>Switch Theme</button>";
 				print "<button id='btn-github' class='btn-footer btn-github'><i class='axb ax-github'></i></button>";
-				print "<button id='btn-logout' class='btn-footer btn-logout' title='Logout'><i class='axs ax-lock'></i></button>";
+				if ( $codename eq " generic" )
+				{
+					print "<button id='btn-logout' class='btn-footer btn-logout' title='Logout'><i class='axs ax-lock'></i></button>";
+				}
+					
 			print "</div>";
 		print "</div>";
 
