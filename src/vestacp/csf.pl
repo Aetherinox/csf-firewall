@@ -70,7 +70,7 @@ sub getCodename
     #	Optional debug output
 	# #
 
-	print "$cname\n";
+	#	print "$cname\n";
 
 	# #
     #	Return the value so it can be used in conditionals
