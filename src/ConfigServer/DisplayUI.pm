@@ -62,30 +62,38 @@ my $cleanreg = ConfigServer::Slurp->cleanreg;
 
 # #
 #	Get Codename
+#	
+#	returns the codename depending on which control panel a user is running.
+#	
+#	@args			$config
+#	@usage			my $codename = getCodename(\%config);
 # #
 
 sub getCodename
 {
-    my $generic = "cpanel";
+	my ($config_ref) = @_;
+	my %config = %{$config_ref};
 
-    if ($config{GENERIC})      { $generic = "generic" }
-    if ($config{DIRECTADMIN})  { $generic = "directadmin" }
-    if ($config{INTERWORX})    { $generic = "interworx" }
-    if ($config{CYBERPANEL})   { $generic = "cyberpanel" }
-    if ($config{CWP})          { $generic = "cwp" }
-    if ($config{VESTA})        { $generic = "vestacp" }
+	my $generic = "cpanel";
+
+	if ($config{GENERIC})      { $generic = "generic" }
+	if ($config{DIRECTADMIN})  { $generic = "directadmin" }
+	if ($config{INTERWORX})    { $generic = "interworx" }
+	if ($config{CYBERPANEL})   { $generic = "cyberpanel" }
+	if ($config{CWP})          { $generic = "cwp" }
+	if ($config{VESTA})        { $generic = "vestacp" }
 
 	# #
     #	Optional debug output
 	# #
 
-    print "$generic\n";
+	print "$generic\n";
 
 	# #
     #	Return the value so it can be used in conditionals
 	# #
 
-    return $generic;
+	return $generic;
 }
 
 # #
@@ -95,7 +103,6 @@ sub getCodename
 sub main
 {
 	my $form_ref 		= shift;
-	my $codename 		= getCodename();
 	%FORM 				= %{$form_ref};
 	$script 			= shift;
 	$script_da 			= shift;
@@ -111,17 +118,35 @@ sub main
 	my @t = localtime;
 	my $year = $t[5] + 1900;
 
-	$ipscidr6 = Net::CIDR::Lite->new;
+	# #
+	#	Load config file
+	# #
 
 	my $thisui = $config{THIS_UI};
 	my $config = ConfigServer::Config->loadconfig();
 	%config = $config->config;
 	$config{THIS_UI} = $thisui;
 
+	# #
+	#	Get codename
+	# #
+
+	my $codename = getCodename(\%config);
+
+	# #
+	#	Get IPs
+	# #
+
+	$ipscidr6 = Net::CIDR::Lite->new;
 	$ipv4reg = $config->ipv4reg;
 	$ipv6reg = $config->ipv6reg;
 
-	if ($config{CF_ENABLE}) {
+	# #
+	#	Cloudflare Services
+	# #
+
+	if ($config{CF_ENABLE})
+	{
 		require ConfigServer::CloudFlare;
 		import ConfigServer::CloudFlare;
 	}
@@ -2674,7 +2699,7 @@ EOF
 		#	
 		# #
 
-		if ( $codename eq " generic" || $codename eq " cpanel" )
+		if ( $codename eq "generic" || $codename eq "cpanel" )
 		{
 			print "<div class='footer'>";
 				print "<div class='footer-left'>";
@@ -2685,7 +2710,7 @@ EOF
 				print "<div class='footer-right'>";
 					print "<button id='btn-theme' class='btn-footer btn-theme'>Switch Theme</button>";
 					print "<button id='btn-github' class='btn-footer btn-github'><i class='axb ax-github'></i></button>";
-					if ( $codename eq " generic" )
+					if ( $codename eq "generic" )
 					{
 						print "<button id='btn-logout' class='btn-footer btn-logout' title='Logout'><i class='axs ax-lock'></i></button>";
 					}
@@ -2697,7 +2722,6 @@ EOF
 		else
 		{
 			print "<br>\n";
-			print "<div class='well well-sm'>csf: v$myv</div>";
 			print "<p>&copy; 2006-$year <a href='https://github.com/Aetherinox/csf-firewall' target='_blank'>ConfigServer Security & Firewall</a> - <code>v$myv</code></p>\n";
 			print "</div>\n";
 		}
