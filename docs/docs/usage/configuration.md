@@ -315,6 +315,46 @@ Keeping this feature enabled is recommended for most setups, as it adds an extra
 CT_LIMIT = "0"
 ```
 
+<br />
+<br />
+
+### UI
+
+<!-- md:flag required --> <!-- md:fileDownload https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf --> <!-- md:source /etc/csf/csf.conf --> <!-- md:default `0` --> <!-- md:version stable-8.00 -->
+
+This setting enables the **CSF Web Interface**, a user-friendly, HTML-based graphical interface for managing **ConfigServer Firewall (CSF)** and **Login Failure Daemon (LFD)**. With the web interface, you can easily configure and monitor your firewall without needing a control panel or separate web server. The interface runs as a subprocess of the LFD daemon, providing direct interaction with CSF.
+
+??? danger "Security Notice"
+
+    Because the web interface runs under the system's root account, a successful login grants full root access to your server. It is essential to configure and use this feature with caution. Additional security measures are included to help make using the interface safer, but careful management is still strongly recommended.
+
+    We recommend placing the CSF web interface behind either a tunnel, or reverse proxy such as Nginx or Traefik.
+
+```ini
+# # 
+#   SECTION:Integrated User Interface
+# # 
+#   Integrated User Interface. This feature provides a HTML UI to csf and lfd,
+#   without requiring a control panel or web server. The UI runs as a sub process
+#   to the lfd daemon
+#   
+#   As it runs under the root account and successful login provides root access
+#   to the server, great care should be taken when configuring and using this
+#   feature. There are additional restrictions to enhance secure access to the UI
+#   
+#   See readme.txt for more information about using this feature BEFORE enabling
+#   it for security and access reasons
+#   
+#   1 to enable, 0 to disable
+# # 
+
+UI = "1"
+```
+
+
+
+
+
 
 <br />
 <br />
