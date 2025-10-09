@@ -145,28 +145,37 @@ sub main
 	#	Cloudflare Services
 	# #
 
-	if ($config{CF_ENABLE})
+	if ( $config{CF_ENABLE} )
 	{
 		require ConfigServer::CloudFlare;
 		import ConfigServer::CloudFlare;
 	}
 
 	$mobile = 0;
-	if ($FORM{mobi}) {$mobile = 1}
-
-	$chart = 1;
-	if ($config{ST_ENABLE}) {
-		if (!defined ConfigServer::ServerStats::init()) {$chart = 0}
+	if ( $FORM{mobi} )
+	{
+		$mobile = 1
 	}
 
-	$urlget = ConfigServer::URLGet->new($config{URLGET}, "csf/$myv", $config{URLPROXY});
-	unless (defined $urlget) {
+	$chart = 1;
+	if ( $config{ST_ENABLE} )
+	{
+		if ( !defined ConfigServer::ServerStats::init( ) )
+		{
+			$chart = 0
+		}
+	}
+
+	$urlget = ConfigServer::URLGet->new( $config{URLGET}, "csf/$myv", $config{URLPROXY} );
+	unless ( defined $urlget )
+	{
 		$config{URLGET} = 1;
-		$urlget = ConfigServer::URLGet->new($config{URLGET}, "csf/$myv", $config{URLPROXY});
+		$urlget = ConfigServer::URLGet->new( $config{URLGET}, "csf/$myv", $config{URLPROXY} );
 		print "<p>*WARNING* URLGET set to use LWP but perl module is not installed, reverting to HTTP::Tiny<p>\n";
 	}
 
-	if ($config{RESTRICT_UI} == 2) {
+	if ( $config{RESTRICT_UI} == 2 )
+	{
 		print "<table class='table table-bordered table-striped'>\n";
 		print "<tr><td><font color='red'>csf UI Disabled via the RESTRICT_UI option in /etc/csf/csf.conf</font></td></tr>\n";
 		print "</tr></table>\n";
@@ -175,71 +184,93 @@ sub main
 
 	if ($FORM{ip} ne "") {$FORM{ip} =~ s/(^\s+)|(\s+$)//g}
 
-	if (($FORM{ip} ne "") and ($FORM{ip} ne "all") and (!checkip(\$FORM{ip}))) {
+	if (($FORM{ip} ne "") and ($FORM{ip} ne "all") and (!checkip(\$FORM{ip}))
+	{
 		print "[$FORM{ip}] is not a valid IP/CIDR";
 	}
-	elsif (($FORM{ignorefile} ne "") and ($FORM{ignorefile} =~ /[^\w\.]/)) {
+	elsif (($FORM{ignorefile} ne "") and ($FORM{ignorefile} =~ /[^\w\.]/))
+	{
 		print "[$FORM{ignorefile}] is not a valid file";
 	}
-	elsif (($FORM{template} ne "") and ($FORM{template} =~ /[^\w\.]/)) {
+	elsif (($FORM{template} ne "") and ($FORM{template} =~ /[^\w\.]/))
+	{
 		print "[$FORM{template}] is not a valid file";
 	}
-	elsif ($FORM{action} eq "manualcheck") {
+	elsif ( $FORM{action} eq "manualcheck" )
+	{
 		print "<div><p>Checking version...</p>\n\n";
-		my ($upgrade, $response) = &manualversion($myv);
-		if ($upgrade) {
+		my ( $upgrade, $response ) = &manualversion( $myv );
+		if ( $upgrade )
+		{
 			print "<form action='$script' method='post'><button name='action' value='upgrade' type='submit' class='btn btn-default'>Upgrade csf</button> A new version of csf (v$response) is available. Upgrading will retain your settings. <a href='https://$config{DOWNLOADSERVER}/csf/changelog.txt' target='_blank'>View ChangeLog</a></form>\n";
-		} else {
-			if ($response ne "") {
+		}
+		else
+		{
+			if ($response ne "")
+			{
 				print "<div class='bs-callout bs-callout-danger'>$response</div>\n";
 			}
-			else {
+			else
+			{
 				print "<div class='bs-callout bs-callout-info'>You are running the latest version of csf (v$myv). An Upgrade button will appear here if a new version becomes available</div>\n";
 			}
 		}
+	
 		print "</div>\n";
 		&printreturn;
 	}
-	elsif ($FORM{action} eq "lfdstatus") {
+	elsif ( $FORM{action} eq "lfdstatus" )
+	{
 		print "<div><p>Show lfd status...</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
 		ConfigServer::Service::statuslfd();
 		print "</pre>\n<p>...<b>Done</b>.</div>\n";
 		&printreturn;
 	}
-	elsif ($FORM{action} eq "ms_list") {
+	elsif ( $FORM{action} eq "ms_list" )
+	{
 		&modsec;
 	}
-	elsif ($FORM{action} eq "chart") {
+	elsif ( $FORM{action} eq "chart" )
+	{
 		&chart;
 	}
-	elsif ($FORM{action} eq "systemstats") {
+	elsif ( $FORM{action} eq "systemstats" )
+	{
 		&systemstats($FORM{graph});
 	}
-	elsif ($FORM{action} eq "lfdstart") {
+	elsif ( $FORM{action} eq "lfdstart" )
+	{
 		print "<div><p>Starting lfd...</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
 		ConfigServer::Service::startlfd();
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
 		&printreturn;
 	}
-	elsif ($FORM{action} eq "lfdrestart") {
-		if ($config{THIS_UI}) {
+	elsif ( $FORM{action} eq "lfdrestart" )
+	{
+		if ( $config{THIS_UI} )
+		{
 			print "<div><p>Signal lfd to <i>restart</i>...</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
 			sysopen (my $OUT, "/var/lib/csf/lfd.restart",, O_WRONLY | O_CREAT) or die "Unable to open file: $!";
 			close ($OUT);
-		} else {
+		}
+		else
+		{
 			print "<div><p>Restarting lfd...</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
 			ConfigServer::Service::restartlfd();
 		}
+	
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
 		&printreturn;
 	}
-	elsif ($FORM{action} eq "lfdstop") {
+	elsif ( $FORM{action} eq "lfdstop" )
+	{
 		print "<div><p>Stopping lfd...</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
 		ConfigServer::Service::stoplfd();
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
 		&printreturn;
 	}
-	elsif ($FORM{action} eq "status") {
+	elsif ( $FORM{action} eq "status" )
+	{
 		&resize("top");
 		print "<pre class='comment' style='white-space: pre-wrap; height: 500px; overflow: auto; resize:both; clear:both' id='output'>\n";
 		&printcmd("/usr/sbin/csf","-l");
@@ -251,7 +282,8 @@ sub main
 		&resize("bot",1);
 		&printreturn;
 	}
-	elsif ($FORM{action} eq "start") {
+	elsif ( $FORM{action} eq "start" )
+	{
 		print "<div><p>Starting csf...</p>\n";
 		&resize("top");
 		print "<pre class='comment' style='white-space: pre-wrap; height: 500px; overflow: auto; resize:both; clear:both' id='output'>\n";
@@ -260,7 +292,8 @@ sub main
 		&resize("bot",1);
 		&printreturn;
 	}
-	elsif ($FORM{action} eq "restart") {
+	elsif ( $FORM{action} eq "restart" )
+	{
 		print "<div><p>Restarting csf...</p>\n";
 		&resize("top");
 		print "<pre class='comment' style='white-space: pre-wrap; height: 500px; overflow: auto; resize:both; clear:both' id='output'>\n";
@@ -269,24 +302,30 @@ sub main
 		&resize("bot",1);
 		&printreturn;
 	}
-	elsif ($FORM{action} eq "restartq") {
+	elsif ( $FORM{action} eq "restartq" )
+	{
 		print "<div><p>Restarting csf via lfd...</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
 		&printcmd("/usr/sbin/csf","-q");
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
 		&printreturn;
 	}
-	elsif ($FORM{action} eq "temp") {
+	elsif ( $FORM{action} eq "temp" )
+	{
 		print "<table class='table table-bordered table-striped'>\n";
 		print "<thead><tr><th>&nbsp;</th><th>A/D</th><th>IP address</th><th>Port</th><th>Dir</th><th>Time To Live</th><th>Comment</th></tr></thead>\n";
 		my @deny;
-		if (! -z "/var/lib/csf/csf.tempban") {
+
+		if (! -z "/var/lib/csf/csf.tempban")
+		{
 			open (my $IN, "<", "/var/lib/csf/csf.tempban") or die $!;
 			flock ($IN, LOCK_SH);
 			@deny = <$IN>;
 			chomp @deny;
 			close ($IN);
 		}
-		foreach my $line (reverse @deny) {
+
+		foreach my $line (reverse @deny)
+		{
 			if ($line eq "") {next}
 			my ($time,$ip,$port,$inout,$timeout,$message) = split(/\|/,$line);
 			$time = $timeout - (time - $time);
@@ -308,23 +347,32 @@ sub main
 			print "<a class='btn btn-danger' href='$script?action=temptoperm&ip=$ip' data-tooltip='tooltip' title='Permanently block $ip'><span class='glyphicon glyphicon-ban-circle'></span></a></td>\n";
 			print "<td>DENY</td><td>$ip</td><td>$port</td><td>$inout</td><td>$time</td><td>$message</td></tr>\n";
 		}
+
 		my @allow;
-		if (! -z "/var/lib/csf/csf.tempallow") {
+		if (! -z "/var/lib/csf/csf.tempallow")
+		{
 			open (my $IN, "<", "/var/lib/csf/csf.tempallow") or die $!;
 			flock ($IN, LOCK_SH);
 			@allow = <$IN>;
 			chomp @allow;
 			close ($IN);
 		}
-		foreach my $line (@allow) {
+
+		foreach my $line (@allow)
+		{
 			if ($line eq "") {next}
 			my ($time,$ip,$port,$inout,$timeout,$message) = split(/\|/,$line);
 			$time = $timeout - (time - $time);
+
 			if ($port eq "") {$port = "*"}
 			if ($inout eq "") {$inout = " *"}
-			if ($time < 1) {
+	
+			if ($time < 1)
+			{
 				$time = "<1";
-			} else {
+			}
+			else
+			{
 				my $days = int($time/(24*60*60));
 				my $hours = ($time/(60*60))%24;
 				my $mins = ($time/60)%60;
@@ -334,18 +382,24 @@ sub main
 				$mins = $mins < 1 ? '' : $mins . 'm ';
 				$time = $days . $hours . $mins . $secs . 's'; 
 			}
+	
 			print "<tr><td style='white-space: nowrap;'><a class='btn btn-success' href='$script?action=temprma&ip=$ip' data-tooltip='tooltip' title='Remove $ip'><span class='glyphicon glyphicon-ok-circle'></span></a> \n";
 			print "<td>ALLOW</td><td>$ip</td><td>$port</td><td>$inout</td><td>$time</td><td>$message</td></tr>\n";
 		}
+
 		print "</table>\n";
-		if (@deny or @allow) {
+		if (@deny or @allow)
+		{
 			print "<div><a class='btn btn-success' href='$script?action=temprm&ip=all'>Flush all temporary blocks</a></div>\n";
-		} else {
+		}
+		else
+		{
 			print "<div>There are no temporary IP entries</div>\n";
 		}
 		&printreturn;
 	}
-	elsif ($FORM{action} eq "temprm") {
+	elsif ($FORM{action} eq "temprm")
+	{
 		print "<div><p>Removing all temporary entries:</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
 		if ($FORM{ip} eq "all") {
 			&printcmd("/usr/sbin/csf","-tf");
@@ -353,41 +407,50 @@ sub main
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
 		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='temp'><input type='submit' class='btn btn-default' value='Return'></form></div>\n";
 	}
-	elsif ($FORM{action} eq "temprmd") {
+	elsif ($FORM{action} eq "temprmd")
+	{
 		print "<div><p>Removing temporary deny entry for $FORM{ip}:</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
 		&printcmd("/usr/sbin/csf","-trd",$FORM{ip});
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
 		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='temp'><input type='submit' class='btn btn-default' value='Return'></form></div>\n";
 	}
-	elsif ($FORM{action} eq "temprma") {
+	elsif ($FORM{action} eq "temprma")
+	{
 		print "<div><p>Removing temporary allow entry for $FORM{ip}:</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
 		&printcmd("/usr/sbin/csf","-tra",$FORM{ip});
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
 		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='temp'><input type='submit' class='btn btn-default' value='Return'></form></div>\n";
 	}
-	elsif ($FORM{action} eq "temptoperm") {
+	elsif ($FORM{action} eq "temptoperm")
+	{
 		print "<div><p>Permanent ban for $FORM{ip}:</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
 		&printcmd("/usr/sbin/csf","-tr",$FORM{ip});
 		&printcmd("/usr/sbin/csf","-d",$FORM{ip});
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
 		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='temp'><input type='submit' class='btn btn-default' value='Return'></form></div>\n";
 	}
-	elsif ($FORM{action} eq "tempdeny") {
+	elsif ($FORM{action} eq "tempdeny")
+	{
 		$FORM{timeout} =~ s/\D//g;
 		if ($FORM{dur} eq "minutes") {$FORM{timeout} = $FORM{timeout} * 60}
 		if ($FORM{dur} eq "hours") {$FORM{timeout} = $FORM{timeout} * 60 * 60}
 		if ($FORM{dur} eq "days") {$FORM{timeout} = $FORM{timeout} * 60 * 60 * 24}
 		if ($FORM{ports} eq "") {$FORM{ports} = "*"}
 		print "<div><p>Temporarily $FORM{do}ing $FORM{ip} for $FORM{timeout} seconds:</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
-		if ($FORM{do} eq "block") {
+		if ($FORM{do} eq "block")
+		{
 			&printcmd("/usr/sbin/csf","-td",$FORM{ip},$FORM{timeout},"-p",$FORM{ports},$FORM{comment});
-		} else {
+		}
+		else
+		{
 			&printcmd("/usr/sbin/csf","-ta",$FORM{ip},$FORM{timeout},"-p",$FORM{ports},$FORM{comment});
 		}
+
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
 		&printreturn;
 	}
-	elsif ($FORM{action} eq "stop") {
+	elsif ($FORM{action} eq "stop")
+	{
 		print "<div><p>Stopping csf...</p>\n";
 		&resize("top");
 		print "<pre class='comment' style='white-space: pre-wrap; height: 500px; overflow: auto; resize:both; clear:both' id='output'>\n";
@@ -396,7 +459,8 @@ sub main
 		&resize("bot",1);
 		&printreturn;
 	}
-	elsif ($FORM{action} eq "disable") {
+	elsif ($FORM{action} eq "disable")
+	{
 		print "<div><p>Disabling csf...</p>\n";
 		&resize("top");
 		print "<pre class='comment' style='white-space: pre-wrap; height: 500px; overflow: auto; resize:both; clear:both' id='output'>\n";
@@ -405,10 +469,14 @@ sub main
 		&resize("bot",1);
 		&printreturn;
 	}
-	elsif ($FORM{action} eq "enable") {
-		if ($config{THIS_UI}) {
+	elsif ($FORM{action} eq "enable")
+	{
+		if ($config{THIS_UI})
+		{
 			print "<div><p>You must login to the root shell to enable csf using:\n<p><b>csf -e</b></p>\n";
-		} else {
+		}
+		else
+		{
 			print "<div><p>Enabling csf...</p>\n";
 			&resize("top");
 			print "<pre class='comment' style='white-space: pre-wrap; height: 500px; overflow: auto; resize:both; clear:both' id='output'>\n";
@@ -419,38 +487,49 @@ sub main
 		print "<p>...<b>Done</b>.</p></div>\n";
 		&printreturn;
 	}
-	elsif ($FORM{action} eq "logtail") {
+	elsif ($FORM{action} eq "logtail")
+	{
 		$FORM{lines} =~ s/\D//g;
 		if ($FORM{lines} eq "" or $FORM{lines} == 0) {$FORM{lines} = 30}
 		my $script_safe = $script;
 		my $CSFfrombot = 120;
 		my $CSFfromright = 10;
-		if ($config{DIRECTADMIN}) {
+
+		if ($config{DIRECTADMIN})
+		{
 			$script = $script_da;
 			$CSFfrombot = 400;
 			$CSFfromright = 150;
 		}
+
 		my @data = slurp("/etc/csf/csf.syslogs");
-		foreach my $line (@data) {
-			if ($line =~ /^Include\s*(.*)$/) {
+		foreach my $line (@data)
+		{
+			if ($line =~ /^Include\s*(.*)$/)
+			{
 				my @incfile = slurp($1);
 				push @data,@incfile;
 			}
 		}
+
 		@data = sort @data;
 		my $options = "<select id='CSFlognum' onchange='CSFrefreshtimer()'>\n";
 		my $cnt = 0;
-		foreach my $file (@data) {
+		foreach my $file (@data)
+		{
 			$file =~ s/$cleanreg//g;
 			if ($file eq "") {next}
 			if ($file =~ /^\s*\#|Include/) {next}
 			my @globfiles;
-			if ($file =~ /\*|\?|\[/) {
+			if ($file =~ /\*|\?|\[/)
+			{
 				foreach my $log (glob $file) {push @globfiles, $log}
 			} else {push @globfiles, $file}
 
-			foreach my $globfile (@globfiles) {
-				if (-f $globfile) {
+			foreach my $globfile (@globfiles)
+			{
+				if (-f $globfile)
+				{
 					my $size = int((stat($globfile))[7]/1024);
 					$options .= "<option value='$cnt'";
 					if ($globfile eq "/var/log/lfd.log") {$options .= " selected"}
@@ -497,33 +576,50 @@ EOF
 		if ($config{DIRECTADMIN}) {$script = $script_safe}
 		&printreturn;
 	}
-	elsif ($FORM{action} eq "logtailcmd") {
+	elsif ($FORM{action} eq "logtailcmd")
+	{
 		$FORM{lines} =~ s/\D//g;
-		if ($FORM{lines} eq "" or $FORM{lines} == 0) {$FORM{lines} = 30}
+		if ($FORM{lines} eq "" or $FORM{lines} == 0)
+		{
+			$FORM{lines} = 30
+		}
 
 		my @data = slurp("/etc/csf/csf.syslogs");
-		foreach my $line (@data) {
-			if ($line =~ /^Include\s*(.*)$/) {
+		foreach my $line (@data)
+		{
+			if ($line =~ /^Include\s*(.*)$/)
+			{
 				my @incfile = slurp($1);
 				push @data,@incfile;
 			}
 		}
+
 		@data = sort @data;
 		my $cnt = 0;
 		my $logfile = "/var/log/lfd.log";
 		my $hit = 0;
-		foreach my $file (@data) {
+		foreach my $file (@data)
+		{
 			$file =~ s/$cleanreg//g;
 			if ($file eq "") {next}
 			if ($file =~ /^\s*\#|Include/) {next}
 			my @globfiles;
-			if ($file =~ /\*|\?|\[/) {
-				foreach my $log (glob $file) {push @globfiles, $log}
-			} else {push @globfiles, $file}
 
-			foreach my $globfile (@globfiles) {
-				if (-f $globfile) {
-					if ($FORM{lognum} == $cnt) {
+			if ($file =~ /\*|\?|\[/)
+			{
+				foreach my $log (glob $file) {push @globfiles, $log}
+			}
+			else
+			{
+				push @globfiles, $file
+			}
+
+			foreach my $globfile (@globfiles)
+			{
+				if (-f $globfile)
+				{
+					if ($FORM{lognum} == $cnt)
+					{
 						$logfile = $globfile;
 						$hit = 1;
 						last;
@@ -531,68 +627,97 @@ EOF
 					$cnt++;
 				}
 			}
-			if ($hit) {last}
+
+			if ($hit)
+			{
+				last
+			}
 		}
-		if (-z $logfile) {
+
+		if (-z $logfile)
+		{
 			print "<---- $logfile is currently empty ---->";
-		} else {
-			if (-x $config{TAIL}) {
+		}
+		else
+		{
+			if (-x $config{TAIL})
+			{
 				my $timeout = 30;
-				eval {
+				eval
+				{
 					local $SIG{__DIE__} = undef;
 					local $SIG{'ALRM'} = sub {die};
 					alarm($timeout);
 					my ($childin, $childout);
 					my $pid = open3($childin, $childout, $childout,$config{TAIL},"-$FORM{lines}",$logfile);
-					while (<$childout>) {
+					while (<$childout>)
+					{
 						my $line = $_;
 						$line =~ s/&/&amp;/g;
 						$line =~ s/</&lt;/g;
 						$line =~ s/>/&gt;/g;
 						print $line;
 					}
+		
 					waitpid ($pid, 0);
 					alarm(0);
 				};
+
 				alarm(0);
 				if ($@) {print "TIMEOUT: tail command took too long. Timed out after $timeout seconds\n"}
-			} else {
+			}
+			else
+			{
 				print "Executable [$config{TAIL}] invalid";
 			}
 		}
 	}
-	elsif ($FORM{action} eq "loggrep") {
+	elsif ($FORM{action} eq "loggrep")
+	{
 		$FORM{lines} =~ s/\D//g;
 		if ($FORM{lines} eq "" or $FORM{lines} == 0) {$FORM{lines} = 30}
 		my $script_safe = $script;
 		my $CSFfrombot = 120;
 		my $CSFfromright = 10;
-		if ($config{DIRECTADMIN}) {
+		if ($config{DIRECTADMIN})
+		{
 			$script = $script_da;
 			$CSFfrombot = 400;
 			$CSFfromright = 150;
 		}
+
 		my @data = slurp("/etc/csf/csf.syslogs");
-		foreach my $line (@data) {
-			if ($line =~ /^Include\s*(.*)$/) {
+		foreach my $line (@data)
+		{
+			if ($line =~ /^Include\s*(.*)$/)
+			{
 				my @incfile = slurp($1);
 				push @data,@incfile;
 			}
 		}
+
 		@data = sort @data;
 		my $options = "<select id='CSFlognum'>\n";
 		my $cnt = 0;
-		foreach my $file (@data) {
+		foreach my $file (@data)
+		{
 			$file =~ s/$cleanreg//g;
 			if ($file eq "") {next}
 			if ($file =~ /^\s*\#|Include/) {next}
 			my @globfiles;
-			if ($file =~ /\*|\?|\[/) {
+			if ($file =~ /\*|\?|\[/)
+			{
 				foreach my $log (glob $file) {push @globfiles, $log}
-			} else {push @globfiles, $file}
+			}
+			else
+			{
+				push @globfiles, $file
+			}
 
-			foreach my $globfile (@globfiles) {
-				if (-f $globfile) {
+			foreach my $globfile (@globfiles)
+			{
+				if (-f $globfile)
+				{
 					my $size = int((stat($globfile))[7]/1024);
 					$options .= "<option value='$cnt'";
 					if ($globfile eq "/var/log/lfd.log") {$options .= " selected"}
@@ -601,6 +726,7 @@ EOF
 				}
 			}
 		}
+
 		$options .= "</select>\n";
 		
 		open (my $AJAX, "<", "/usr/local/csf/lib/csfajaxtail.js");
@@ -2710,6 +2836,11 @@ EOF
 				print "<div class='footer-right'>";
 					print "<button id='btn-theme' class='btn-footer btn-theme'>Switch Theme</button>";
 					print "<button id='btn-github' class='btn-footer btn-github'><i class='axb ax-github'></i></button>";
+
+					# #
+					#	Only show logout button for generic installs; otherwise let the control panel handle it.
+					# #
+
 					if ( $codename eq "generic" )
 					{
 						print "<button id='btn-logout' class='btn-footer btn-logout' title='Logout'><i class='axs ax-lock'></i></button>";
@@ -2731,32 +2862,71 @@ EOF
 
 	return;
 }
-# end main
-###############################################################################
-# start printcmd
-sub printcmd {
+
+# #
+#   Execute Command › Stream Output
+#	
+#   Runs an external command or script using open3(),
+#   captures both STDOUT and STDERR, and printing
+#   all output in real time to the console or UI.
+#	
+#   Halts further script execution until the external
+#	process has completed.
+#	
+#	Accepts as varArg
+#	
+#	@args			varArgs
+#	@usage			&printcmd( '/usr/sbin/csf','--profile','apply','disable_alerts');
+#					/usr/sbin/csf --profile apply disable_alerts
+# #
+
+sub printcmd
+{
 	my @command = @_;
 
-	my ($childin, $childout);
-	my $pid = open3($childin, $childout, $childout, @command);
-	while (<$childout>) {print $_}
-	waitpid ($pid, 0);
+	my ( $childin, $childout );
+	my $pid = open3( $childin, $childout, $childout, @command );
+	while (<$childout>) { print $_ }
+	waitpid ( $pid, 0 );
 
 	return;
 }
-# end printcmd
-###############################################################################
-# start getethdev
-sub getethdev {
-	my $ethdev = ConfigServer::GetEthDev->new();
+
+# #
+#   Network Interfaces › Gather Local IPs
+#	
+#   Retrieves all IPv4 and (optionally) IPv6 addresses
+#   assigned to the server’s network interfaces using
+#   ConfigServer::GetEthDev.
+#	
+#	Each IPv4 address is stored in %ips.
+#	
+#	IPv6 support is enabled ($config{IPV6}), each IPv6
+#	address is added to the $ipscidr6 object.
+#   
+#	Called as &getethdev; during initialization.
+#	
+#	@args			null
+#	@usage			&getethdev;
+# #
+
+sub getethdev
+{
+	my $ethdev = ConfigServer::GetEthDev->new( );
 	my %g_ipv4 = $ethdev->ipv4;
 	my %g_ipv6 = $ethdev->ipv6;
-	foreach my $key (keys %g_ipv4) {
+
+	foreach my $key ( keys %g_ipv4 )
+	{
 		$ips{$key} = 1;
 	}
-	if ($config{IPV6}) {
-		foreach my $key (keys %g_ipv6) {
-			eval {
+
+	if ( $config{IPV6} )
+	{
+		foreach my $key (keys %g_ipv6)
+		{
+			eval
+			{
 				local $SIG{__DIE__} = undef;
 				$ipscidr6->add($key);
 			};
@@ -2765,85 +2935,128 @@ sub getethdev {
 
 	return;
 }
-# end getethdev
-###############################################################################
-# start chart
-sub chart {
+
+# #
+#   Chart › Generate Server Statistics Graphs
+#	
+#   Reads and processes CSF/LFD statistical data from
+#		› `/var/lib/csf/stats/lfdstats`
+#	
+#	Converts it into graphical charts using ConfigServer::ServerStats.
+#	
+#   Automatically determines the correct image directories
+#   and permissions based on the detected control panel
+#   environment (e.g., cPanel, DirectAdmin, InterWorx,
+#   CyberPanel, or CSF web interface mode).
+#	
+#   @args:			null
+#   @usage			&chart;
+#	@notes			› Detects env and sets image paths accordingly
+#       			› Reads / migrates legacy stat files if needed
+#       			› Calls ConfigServer::ServerStats::charts() to build charts
+#       			› Prints generated chart HTML to STDOUT
+#       			› Displays “no data” message if stats unavailable
+# #
+
+sub chart
+{
 	my $img;
 	my $imgdir = "";
 	my $imghddir = "";
-	if (-e "/usr/local/cpanel/version") {
+
+	if ( -e "/usr/local/cpanel/version" )
+	{
 		$imgdir = "/";
 		$imghddir = "";
 	}
-	elsif (-e "/usr/local/directadmin/conf/directadmin.conf") {
+	elsif ( -e "/usr/local/directadmin/conf/directadmin.conf" )
+	{
 		$imgdir = "/CMD_PLUGINS_ADMIN/csf/images/";
 		$imghddir = "plugins/csf/images/";
 		umask(0133);
 	}
-	elsif (-e "/usr/local/interworx") {
+	elsif ( -e "/usr/local/interworx" )
+	{
 		$imgdir = "/configserver/csf/";
 		$imghddir = "/usr/local/interworx/html/configserver/csf/";
 		umask(0133);
 	}
-	elsif (-e "/usr/local/CyberCP/") {
+	elsif ( -e "/usr/local/CyberCP/" )
+	{
 		$imgdir = "/static/configservercsf/";
 		$imghddir = "/usr/local/CyberCP/public/static/configservercsf/";
 		umask(0133);
 	}
-	if ($config{THIS_UI}) {
+
+	if ( $config{THIS_UI} )
+	{
 		$imgdir = "$images/";
 		$imghddir = "/etc/csf/ui/images/";
 	}
 
 	my $STATS;
-	if (-e "/var/lib/csf/stats/lfdstats") {
-		sysopen ($STATS,"/var/lib/csf/stats/lfdstats", O_RDWR | O_CREAT);
+	if (-e "/var/lib/csf/stats/lfdstats")
+	{
+		sysopen ( $STATS,"/var/lib/csf/stats/lfdstats", O_RDWR | O_CREAT );
 	}
-	elsif (-e "/var/lib/csf/stats/lfdmain") {
-		sysopen (my $OLDSTATS,"/var/lib/csf/stats/lfdmain", O_RDWR | O_CREAT);
+	elsif (-e "/var/lib/csf/stats/lfdmain")
+	{
+		sysopen ( my $OLDSTATS,"/var/lib/csf/stats/lfdmain", O_RDWR | O_CREAT );
 		flock ($OLDSTATS, LOCK_EX);
 		my @stats = <$OLDSTATS>;
 		chomp @stats;
 
 		my @newstats;
 		my $cnt = 0;
-		foreach my $line (@stats) {
-			if ($cnt == 55) {push @newstats,""}
+
+		foreach my $line ( @stats )
+		{
+			if ( $cnt == 55 ) {push @newstats,""}
 			push @newstats,$line;
 			$cnt++;
 		}
-		sysopen ($STATS,"/var/lib/csf/stats/lfdstats", O_RDWR | O_CREAT);
-		flock ($STATS, LOCK_EX);
-		seek ($STATS, 0, 0);
-		truncate ($STATS, 0);
-		foreach my $line (@newstats) {
+
+		sysopen ( $STATS,"/var/lib/csf/stats/lfdstats", O_RDWR | O_CREAT );
+		flock ( $STATS, LOCK_EX );
+		seek ( $STATS, 0, 0 );
+		truncate ( $STATS, 0 );
+	
+		foreach my $line ( @newstats )
+		{
 			print $STATS "$line\n";
 		}
-		close ($STATS);
+		close ( $STATS );
 
 		rename "/var/lib/csf/stats/lfdmain", "/var/lib/csf/stats/lfdmain.".time;
-		close ($OLDSTATS);
-		sysopen ($STATS,"/var/lib/csf/stats/lfdstats", O_RDWR | O_CREAT);
-	} else {
-		sysopen ($STATS,"/var/lib/csf/stats/lfdstats", O_RDWR | O_CREAT);
+		close ( $OLDSTATS );
+		sysopen ( $STATS,"/var/lib/csf/stats/lfdstats", O_RDWR | O_CREAT );
 	}
+	else
+	{
+		sysopen ( $STATS,"/var/lib/csf/stats/lfdstats", O_RDWR | O_CREAT );
+	}
+
 	flock ($STATS, LOCK_SH);
 	my @stats = <$STATS>;
 	chomp @stats;
 	close ($STATS);
 
-	if (@stats) {
+	if (@stats)
+	{
 		ConfigServer::ServerStats::charts($config{CC_LOOKUPS},$imghddir);
 		print ConfigServer::ServerStats::charts_html($config{CC_LOOKUPS},$imgdir);
-	} else {
+	}
+	else
+	{
 		print "<table class='table table-bordered table-striped'>\n";
 		print "<tr><td>No statistical data has been collected yet</td></tr></table>\n";
 	}
+
 	&printreturn;
 
 	return;
 }
+
 # end chart
 ###############################################################################
 # start systemstats
