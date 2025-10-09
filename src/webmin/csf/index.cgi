@@ -38,8 +38,53 @@ use ConfigServer::Config;
 
 our ($script, $images, $myv, %FORM, %in);
 
+# #
+#	Load configs
+# #
+
 my $config = ConfigServer::Config->loadconfig();
 my %config = $config->config;
+
+# #
+#	Get Codename
+#	
+#	returns the codename depending on which control panel a user is running.
+#	
+#	@args			$config
+#	@usage			my $codename = getCodename(\%config);
+# #
+
+sub getCodename
+{
+	my ($config_ref) = @_;
+	my %config = %{$config_ref};
+	my $cname = "cpanel";
+
+	if ($config{GENERIC})      { $cname = "generic" }
+	if ($config{DIRECTADMIN})  { $cname = "directadmin" }
+	if ($config{INTERWORX})    { $cname = "interworx" }
+	if ($config{CYBERPANEL})   { $cname = "cyberpanel" }
+	if ($config{CWP})          { $cname = "cwp" }
+	if ($config{VESTA})        { $cname = "vestacp" }
+
+	# #
+    #	Optional debug output
+	# #
+
+	print "$cname\n";
+
+	# #
+    #	Return the value so it can be used in conditionals
+	# #
+
+	return $cname;
+}
+
+my $codename = getCodename(\%config);
+
+# #
+#	open version.txt
+# #
 
 open (my $IN, "<", "/etc/csf/version.txt") or die $!;
 $myv = <$IN>;
@@ -58,8 +103,13 @@ if ($config{STYLE_CUSTOM} and $ENV{'REQUEST_URI'} =~ /xnavigation=1/ and $ENV{'H
 
 print "Content-type: text/html\r\n\r\n";
 
+my $csfjs = qq{
+	<script>
+		var csfCodename = "$codename";
+	</script>
+	<script src="$images/csf.min.js"></script>
+};
 my $bootstrapcss = "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css'>";
-my $csfjs = "<script src='$images/csf.min.js'></script>";
 my $csfnt = "<script src='$images/csfont.min.js'></script>";
 my $jqueryjs = "<script src='$images/jquery.min.js'></script>";
 my $bootstrapjs = "<script src='$images/bootstrap/js/bootstrap.min.js'></script>";
@@ -147,7 +197,8 @@ unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq
 	print ".normalcontainer {\n";
 	print "	display:block;\n";
 	print "}\n";
-	if ($config{STYLE_MOBILE}) {
+	if ($config{STYLE_MOBILE})
+	{
 		print "\@media (max-width: 600px) {\n";
 		print "	.mobilecontainer {\n";
 		print "		display:block;\n";
