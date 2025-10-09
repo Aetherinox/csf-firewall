@@ -902,7 +902,7 @@ th
 .footer .footer-right
 {
     display: flex;
-	gap: 5px;
+	gap: 6px;
 }
 
 /*
@@ -918,7 +918,6 @@ th
 	text-decoration: none;
 	font-size: 14px;
 	cursor: pointer;
-	margin-right: 5px;
 }
 
 /*
@@ -1004,7 +1003,7 @@ button.btn-update
     align-items: center;
     justify-content: center;
     padding: 0;
-    border-radius: 6px;
+    border-radius: 4px;
     cursor: pointer;
 }
 
