@@ -66,8 +66,13 @@ print "content-type: text/html\n\n";
 #	print "$key = [$ENV{$key}]<br>\n";
 #}
 
+my $csfjs = qq{
+	<script>
+		var csfCodename = "$codename";
+	</script>
+	<script src="$images/csf.min.js"></script>
+};
 my $bootstrapcss = "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css'>";
-my $csfjs = "<script src='$images/csf.min.js'></script>";
 my $csfnt = "<script src='$images/csfont.min.js'></script>";
 my $jqueryjs = "<script src='$images/jquery.min.js'></script>";
 my $bootstrapjs = "<script src='$images/bootstrap/js/bootstrap.min.js'></script>";

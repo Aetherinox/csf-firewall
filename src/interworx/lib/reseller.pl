@@ -39,16 +39,67 @@ use ConfigServer::Slurp qw(slurp);
 
 our ($reseller, %rprivs, $script, $images, $myv, %FORM, %in);
 
+# #
+#	Load configs
+# #
+
 my $config = ConfigServer::Config->loadconfig();
 my %config = $config->config;
 my $slurpreg = ConfigServer::Slurp->slurpreg;
 my $cleanreg = ConfigServer::Slurp->cleanreg;
 
-foreach my $line (slurp("/etc/csf/csf.resellers")) {
+# #
+#	Get Codename
+#	
+#	returns the codename depending on which control panel a user is running.
+#	
+#	@args			$config
+#	@usage			my $codename = getCodename(\%config);
+# #
+
+sub getCodename
+{
+	my ($config_ref) = @_;
+	my %config = %{$config_ref};
+	my $cname = "cpanel";
+
+	if ($config{GENERIC})      { $cname = "generic" }
+	if ($config{DIRECTADMIN})  { $cname = "directadmin" }
+	if ($config{INTERWORX})    { $cname = "interworx" }
+	if ($config{CYBERPANEL})   { $cname = "cyberpanel" }
+	if ($config{CWP})          { $cname = "cwp" }
+	if ($config{VESTA})        { $cname = "vestacp" }
+
+	# #
+    #	Optional debug output
+	# #
+
+	print "$cname\n";
+
+	# #
+    #	Return the value so it can be used in conditionals
+	# #
+
+	return $cname;
+}
+
+my $codename = getCodename(\%config);
+
+# #
+#	Resellers
+#	
+#	The following is a list of Reseller accounts that you want to allow access to
+#   limited csf functionality.
+# #
+
+foreach my $line (slurp("/etc/csf/csf.resellers"))
+{
 	$line =~ s/$cleanreg//g;
 	my ($user,$alert,$privs) = split(/\:/,$line);
 	$privs =~ s/\s//g;
-	foreach my $priv (split(/\,/,$privs)) {
+
+	foreach my $priv (split(/\,/,$privs))
+	{
 		$rprivs{$user}{$priv} = 1;
 	}
 	$rprivs{$user}{ALERT} = $alert;
@@ -60,13 +111,20 @@ foreach my $line (slurp("/etc/csf/csf.resellers")) {
 #}
 
 $reseller = 0;
-if ($ENV{REMOTE_USER} ne "" and $rprivs{$ENV{REMOTE_USER}}{USE}) {
+if ($ENV{REMOTE_USER} ne "" and $rprivs{$ENV{REMOTE_USER}}{USE})
+{
 	$reseller = 1;
-} else {
+}
+else
+{
 	print "content-type: text/html\n\n";
 	print "You do not have access to this feature\n";
 	exit();
 }
+
+# #
+#	open version.txt
+# #
 
 open (my $IN, "<", "/etc/csf/version.txt") or die $!;
 $myv = <$IN>;
@@ -95,8 +153,13 @@ print "content-type: text/html\n\n";
 #	print "$key = [$ENV{$key}]<br>\n";
 #}
 
+my $csfjs = qq{
+	<script>
+		var csfCodename = "$codename";
+	</script>
+	<script src="$images/csf.min.js"></script>
+};
 my $bootstrapcss = "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css'>";
-my $csfjs = "<script src='$images/csf.min.js'></script>";
 my $csfnt = "<script src='$images/csfont.min.js'></script>";
 my $jqueryjs = "<script src='$images/jquery.min.js'></script>";
 my $bootstrapjs = "<script src='$images/bootstrap/js/bootstrap.min.js'></script>";

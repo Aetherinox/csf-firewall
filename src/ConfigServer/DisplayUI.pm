@@ -3281,12 +3281,12 @@ EOF
 		#	
 		# #
 
-		if ( $codename eq "generic" || $codename eq "cpanel" )
+		if ( $codename eq "generic" || $codename eq "cpanel" || $codename eq "interworx" )
 		{
 			print "<div class='footer'>";
 				print "<div class='footer-left'>";
 					print "<button id='btn-sponsor' class='btn-footer btn-sponsor'><i class='axs ax-heart heart'></i></button>";
-					print "<span class='copyright'>&copy; $year ConfigServer Firewall - <code>v$myv</code></span>";
+					print "<span class='copyright'>&copy; $year ConfigServer Firewall - <code>v$myv ($codename)</code></span>";
 				print "</div>";
 
 				print "<div class='footer-right'>";
@@ -3309,7 +3309,7 @@ EOF
 		else
 		{
 			print "<br>\n";
-			print "<p>&copy; 2006-$year <a href='https://github.com/Aetherinox/csf-firewall' target='_blank'>ConfigServer Security & Firewall</a> - <code>v$myv</code></p>\n";
+			print "<p>&copy; 2006-$year <a href='https://github.com/Aetherinox/csf-firewall' target='_blank'>ConfigServer Security & Firewall</a> - <code>v$myv ($codename)</code></p>\n";
 			print "</div>\n";
 		}
 
