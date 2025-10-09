@@ -2666,22 +2666,41 @@ EOF
 
 	unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq "logtailcmd" or $FORM{action} eq "loggrepcmd")
 	{
-		print "<div class='footer'>";
-			print "<div class='footer-left'>";
-				print "<button id='btn-sponsor' class='btn-footer btn-sponsor'><i class='axs ax-heart heart'></i></button>";
-				print "<span class='copyright'>&copy; $year ConfigServer Firewall - <code>v$myv</code></span>";
+
+		# #
+		#	@notes			generic loads theme / footer correctly
+		#					webmin does not load configserver.css; uses its own built-in theme and bootstramp
+		#					cpanel loads theme / footer correctly
+		#	
+		# #
+
+		if ( $codename eq " generic" || $codename eq " cpanel" )
+		{
+			print "<div class='footer'>";
+				print "<div class='footer-left'>";
+					print "<button id='btn-sponsor' class='btn-footer btn-sponsor'><i class='axs ax-heart heart'></i></button>";
+					print "<span class='copyright'>&copy; $year ConfigServer Firewall - <code>v$myv</code></span>";
+				print "</div>";
+
+				print "<div class='footer-right'>";
+					print "<button id='btn-theme' class='btn-footer btn-theme'>Switch Theme</button>";
+					print "<button id='btn-github' class='btn-footer btn-github'><i class='axb ax-github'></i></button>";
+					if ( $codename eq " generic" )
+					{
+						print "<button id='btn-logout' class='btn-footer btn-logout' title='Logout'><i class='axs ax-lock'></i></button>";
+					}
+						
+				print "</div>";
 			print "</div>";
 
-			print "<div class='footer-right'>";
-				print "<button id='btn-theme' class='btn-footer btn-theme'>Switch Theme</button>";
-				print "<button id='btn-github' class='btn-footer btn-github'><i class='axb ax-github'></i></button>";
-				if ( $codename eq " generic" )
-				{
-					print "<button id='btn-logout' class='btn-footer btn-logout' title='Logout'><i class='axs ax-lock'></i></button>";
-				}
-					
-			print "</div>";
-		print "</div>";
+		}
+		else
+		{
+			print "<br>\n";
+			print "<div class='well well-sm'>csf: v$myv</div>";
+			print "<p>&copy; 2006-$year <a href='https://github.com/Aetherinox/csf-firewall' target='_blank'>ConfigServer Security & Firewall</a> - <code>v$myv</code></p>\n";
+			print "</div>\n";
+		}
 
 		print "<div style='padding-bottom: 50px;'></div>";
 	}
