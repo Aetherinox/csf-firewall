@@ -87,7 +87,7 @@ sub getCodename
     #	Optional debug output
 	# #
 
-	print "$generic\n";
+	#	print "$generic\n";
 
 	# #
     #	Return the value so it can be used in conditionals
