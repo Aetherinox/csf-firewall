@@ -1,5 +1,7 @@
 <?php
 error_reporting(NULL);
+include($_SERVER['DOCUMENT_ROOT'].'/static/index.html');
+
 $TAB = 'CSF';
 
 include($_SERVER['DOCUMENT_ROOT']."/inc/main.php");
