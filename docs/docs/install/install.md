@@ -766,7 +766,14 @@ Click the text link and you'll be taken to the home screen of CSF.
 <br />
 
 If the interface matches the screenshot above, the CSF integration with Webmin is complete.  
+
 You can now proceed to the [Next Steps](#next-steps) or skip the rest of this section and begin our [Configuration](../usage/configuration.md) chapter to get things set up.
+
+<br />
+
+??? warning "Testing Mode Disables LFD"
+
+    If you have not yet disabled testing mode in the `csf.conf`, lfd will be unable to start. Performing this step is covered in the next [Configuration](../usage/configuration.md) chapter.
 
 <br />
 <br />
@@ -790,7 +797,267 @@ This part of the documentation is currently being written.
 
 ## Install: Interworx
 
-This part of the documentation is currently being written.
+Installing CSF with Interworx integration is simple. First we need to install Interworx, then install CSF, and finally enable the CSF module within Interworx to complete the integration.
+
+<br />
+
+Log in as the `root` user via SSH.
+
+=== ":aetherx-axs-key: Using Password"
+
+    ```shell
+    ssh -vvv root@XX.XX.XX.XX -p 22
+    ```
+
+=== ":aetherx-axs-file: Using Private Key"
+
+    ```shell
+    ssh -i /path/to/private_key -vvv root@XX.XX.XX.XX -p 22
+    ```
+
+<br />
+
+Ensure you have Interworx installed. If not, download the installer script:
+
+??? note "Valid TLD / Host Required"
+
+    Before installing Interworx, you must set your server's hostname to a valid host.
+
+<br />
+
+=== ":aetherx-axd-command: Install (Option 1)"
+
+      ```shell
+      sudo sh <((curl -sL updates.interworx.com/interworx/8/install.sh))
+      ```
+
+=== ":aetherx-axd-command: Install (Option 2)"
+
+      ```shell
+      wget updates.interworx.com/interworx/8/install.sh
+      sudo sh install.sh
+      ```
+
+=== ":aetherx-axs-square-terminal: Output"
+
+      ```shell
+      STATUS: Determining Linux distribution
+      STATUS: Checking network interface names
+
+      -=-=-=-=-= Installing InterWorx-CP =-=-=-=-=-
+
+      This script will install InterWorx-CP on your system.
+      Please make sure that you have backed up any critical
+      data!
+
+      This script may be run multiple times without any
+      problems.  This is helpful if you find an error
+      during installation, you can safely ctrl-c out of
+      this script, fix the error and re-start the script.
+
+      STATUS: Checking Hostname
+      The hostname 'configserver.dev' is valid.
+
+      Details of this installation will be logged in iworx-install.log
+
+      HOSTNAME   : configserver.dev
+      TARGET     : CentOS Linux release 7.9.2009 (Core)
+      PLATFORM   : GNU/Linux
+      PROCESSOR  : x86_64
+      RPM TARGET : rhe7x
+      RPM DISTRO : cos7x
+      RPM DIR    : /usr/src/redhat/RPMS
+      SRPM DIR   : /usr/src/redhat/SRPMS
+      SRPM HOST  : updates.interworx.com
+      IWORX REPO : ga
+      DEFAULT PHP: PHP 8.2
+      MYSQL      : MARIADB 10.6
+      ```
+  
+<br />
+
+While the installation is in progress, you’ll need to have a valid **license key** which Interworx setup wizard will ask for once you access the web control panel. Interworx offers a **2 week** free trial license key which you can [apply for here](https://www.interworx.com/interworx-demos/)
+
+At the end of the installation, you'll be provided with a link you must visit in order to activate Interworx.
+
+=== ":aetherx-axs-square-terminal: Output"
+
+      ```shell
+      -=-=-=-=-= Installation Complete! Next Step: License Activation! =-=-=-=-=-
+
+      To activate your license, go to
+      https://your-ip:2443/nodeworx/
+      or run: ~iworx/bin/goiworx.pex
+      Also, check out https://www.interworx.com for news, updates, and support!
+
+      -=-=-=-=-= THANK YOU FOR USING INTERWORX! =-=-=-=-=-
+      ```
+
+<br />
+
+After installation is complete, open your browser and navigate to:
+
+- `https://your-ip:2443/nodeworx/`
+- `https://127.0.0.1:2443/nodeworx/`
+
+<br />
+
+You should be greeted with a Interworx authentication page. Provide a valid e-mail address, password, and finally, provide your **license key**.
+
+<figure markdown="span">
+    ![Interworx › Login Screen](../assets/images/install/interworx/1.png){ width="700" }
+    <figcaption>Interworx › Login Screen</figcaption>
+</figure>
+
+<br />
+
+Once you input the information asked, Interworx will also ask you to provide valid **nameservers**. For our docs, we will provide:
+
+- `ns1.configserver.dev`
+- `ns2.configserver.dev`
+
+<br />
+
+At this point, Interworx will take anywhere around 5-10 minutes to complete the installation. Afterward, you'll be re-directed to the Interworx dashboard.
+
+<figure markdown="span">
+    ![Interworx › Dashboard](../assets/images/install/interworx/2.png){ width="700" }
+    <figcaption>Interworx › Dashboard</figcaption>
+</figure>
+
+<br />
+
+Set Interworx aside for a moment; we need to make sure that we don't have any existing firewalls that need disabled. If so, run the commands below:
+
+=== ":aetherx-axs-block-brick-fire: UFW"
+
+    Stop and disable `ufw`
+
+    ```bash
+    sudo systemctl stop ufw
+    sudo systemctl disable ufw
+    ```
+
+    Confirm `ufw` is disabled with:
+
+    ```bash
+    sudo systemctl status ufw
+    ```
+
+=== ":aetherx-axs-block-brick-fire: Firewalld"
+
+    Stop and disable `firewalld`
+
+    ```bash
+    sudo systemctl stop firewalld
+    sudo systemctl disable firewalld
+    ```
+
+    Confirm `firewalld` is disabled with:
+
+    ```bash
+    sudo systemctl status firewalld
+    ```
+
+<br />
+
+We are ready to install CSF, which you should already have downloaded to your system. If not; download the latest version of CSF:
+
+=== ":aetherx-axs-file-zipper: .tgz"
+
+    ```shell
+    # Using wget (tgz)
+    wget https://download.configserver.dev/csf.tgz
+
+    # Using curl (tgz)
+    curl -O https://download.configserver.dev/csf.tgz
+    ```
+
+=== ":aetherx-axs-file-zip: .zip"
+
+    ```shell
+    # Using wget (zip)
+    wget https://download.configserver.dev/csf.zip
+
+    # Using curl (zip)
+    curl -O https://download.configserver.dev/csf.zip
+    ```
+
+<br />
+
+Decompress / unzip the downloaded archive file:
+
+=== ":aetherx-axs-file-zipper: .tgz"
+
+    ```bash
+    tar -xzf csf.tgz -C /tmp
+    ```
+
+=== ":aetherx-axs-file-zip: .zip"
+
+    ```bash
+    unzip csf.zip -d /tmp
+    ```
+
+<br />
+
+Run the CSF installation script:
+
+=== ":aetherx-axd-circle-1: Option 1"
+
+    :aetherx-axd-circle-1: Runs `install.sh` :aetherx-axd-dot: uses `sh` shell :aetherx-axd-dot: executable permission not required
+
+    ```bash
+    sudo sh /tmp/csf/install.sh
+    ```
+
+=== ":aetherx-axd-circle-2: Option 2"
+
+    :aetherx-axd-circle-2: Runs `install.sh` :aetherx-axd-dot: uses shebang interpreter :aetherx-axd-dot: requires executable `+x` permission
+
+    ```bash
+    sudo chmod +x /tmp/csf/install.sh
+    sudo /tmp/csf/install.sh
+    ```
+
+<br />
+
+Follow any instructions on-screen. If prompted for any additional information, enter it.
+
+<br />
+
+Log back into Interworx. Once in, navigate to **NodeWorx** › **Plugins** from the left-hand menu. You will be presented with a list of available plugins, scroll down and locate **ConfigServer Security & Firewall**. Click the pencil to the left to edit the status.
+
+<figure markdown="span">
+    ![Interworx › NodeWorx › Plugins › Edit ConfigServer](../assets/images/install/interworx/3.png){ width="700" }
+    <figcaption>Interworx › NodeWorx › Plugins › Edit ConfigServer</figcaption>
+</figure>
+
+<br />
+
+On the right side, change the status of **ConfigServer Security & Firewall** from `disabled` to `enabled` and press **save**.
+
+<figure markdown="span">
+    ![Interworx › NodeWorx › Plugins › Change Status](../assets/images/install/interworx/4.png){ width="700" }
+    <figcaption>Interworx › NodeWorx › Plugins › Change Status</figcaption>
+</figure>
+
+<br />
+
+After enabling the plugin, go back to the Interworx menu on the left, and navigate to
+
+- **ConfigServer Plugins** › **Security and Firewall**
+
+<figure markdown="span">
+    ![Interworx › ConfigServer Security & Firewall › Dashboard](../assets/images/install/interworx/6.png){ width="700" }
+    <figcaption>Interworx › ConfigServer Security & Firewall › Dashboard</figcaption>
+</figure>
+
+<br />
+
+If the interface matches the screenshot above, the CSF integration with Interworx is complete.  
+
+You can now proceed to the [Next Steps](#next-steps) or skip the rest of this section and begin our [Configuration](../usage/configuration.md) chapter to get things set up.
 
 <br />
 <br />
