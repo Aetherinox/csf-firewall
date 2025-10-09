@@ -42,40 +42,97 @@ use ConfigServer::Slurp qw(slurp);
 
 our ($reseller, $script, $script_da, $images, %rprivs, $myv, %FORM, %daconfig);
 
+# #
+#	Load configs
+# #
+
 my $config = ConfigServer::Config->loadconfig();
 my %config = $config->config;
 my $slurpreg = ConfigServer::Slurp->slurpreg;
 my $cleanreg = ConfigServer::Slurp->cleanreg;
 
-foreach my $line (slurp("/etc/csf/csf.resellers")) {
+# #
+#	Get Codename
+#	
+#	returns the codename depending on which control panel a user is running.
+#	
+#	@args			$config
+#	@usage			my $codename = getCodename(\%config);
+# #
+
+sub getCodename
+{
+	my ($config_ref) = @_;
+	my %config = %{$config_ref};
+	my $cname = "cpanel";
+
+	if ($config{GENERIC})      { $cname = "generic" }
+	if ($config{DIRECTADMIN})  { $cname = "directadmin" }
+	if ($config{INTERWORX})    { $cname = "interworx" }
+	if ($config{CYBERPANEL})   { $cname = "cyberpanel" }
+	if ($config{CWP})          { $cname = "cwp" }
+	if ($config{VESTA})        { $cname = "vestacp" }
+
+	# #
+    #	Optional debug output
+	# #
+
+	print "$cname\n";
+
+	# #
+    #	Return the value so it can be used in conditionals
+	# #
+
+	return $cname;
+}
+
+my $codename = getCodename(\%config);
+
+# #
+#	Resellers
+#	
+#	The following is a list of Reseller accounts that you want to allow access to
+#   limited csf functionality.
+# #
+
+foreach my $line (slurp("/etc/csf/csf.resellers"))
+{
 	$line =~ s/$cleanreg//g;
 	my ($user,$alert,$privs) = split(/\:/,$line);
 	$privs =~ s/\s//g;
-	foreach my $priv (split(/\,/,$privs)) {
+
+	foreach my $priv (split(/\,/,$privs))
+	{
 		$rprivs{$user}{$priv} = 1;
 	}
 	$rprivs{$user}{ALERT} = $alert;
 }
 
 my %session;
-if ($ENV{SESSION_ID} =~ /^\w+$/) {
+if ($ENV{SESSION_ID} =~ /^\w+$/)
+{
 	open (my $SESSION, "<", "/usr/local/directadmin/data/sessions/da_sess_".$ENV{SESSION_ID}) or die "Security Error: No valid session ID for [$ENV{SESSION_ID}]";
 	flock ($SESSION, LOCK_SH);
 	my @data = <$SESSION>;
 	close ($SESSION);
 	chomp @data;
-	foreach my $line (@data) {
+
+	foreach my $line (@data)
+	{
 		my ($name, $value) = split(/\=/,$line);
 		$session{$name} = $value;
 	}
 }
-if (($session{key} eq "") or ($session{ip} eq "") or ($session{key} ne $ENV{SESSION_KEY})) {
+
+if (($session{key} eq "") or ($session{ip} eq "") or ($session{key} ne $ENV{SESSION_KEY}))
+{
 	print "Security Error: No valid session key";
 	exit;
 }
 
 my ($ppid, $pexe) = &getexe(getppid());
-if ($pexe ne "/usr/local/directadmin/directadmin") {
+if ($pexe ne "/usr/local/directadmin/directadmin")
+{
 	print "Security Error: Invalid parent";
 	exit;
 }
@@ -104,6 +161,10 @@ if ($ENV{REMOTE_USER} ne "" and $ENV{REMOTE_USER} eq $ENV{CSF_RESELLER} and $rpr
 	exit();
 }
 
+# #
+#	open version.txt
+# #
+
 open (my $IN, "<", "/etc/csf/version.txt") or die $!;
 $myv = <$IN>;
 close ($IN);
@@ -127,13 +188,20 @@ open (my $DIRECTADMIN, "<", "/usr/local/directadmin/conf/directadmin.conf");
 my @data = <$DIRECTADMIN>;
 close ($DIRECTADMIN);
 chomp @data;
-foreach my $line (@data) {
+
+foreach my $line (@data)
+{
 	my ($name,$value) = split(/\=/,$line);
 	$daconfig{$name} = $value;
 }
 
+my $csfjs = qq{
+	<script>
+		var csfCodename = "$codename";
+	</script>
+	<script src="$images/csf.min.js"></script>
+};
 my $bootstrapcss = "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css'>";
-my $csfjs = "<script src='$images/csf.min.js'></script>";
 my $csfnt = "<script src='$images/csfont.min.js'></script>";
 my $jqueryjs = "<script src='$images/jquery.min.js'></script>";
 my $bootstrapjs = "<script src='$images/bootstrap/js/bootstrap.min.js'></script>";

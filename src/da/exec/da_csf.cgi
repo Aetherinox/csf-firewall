@@ -41,36 +41,88 @@ use ConfigServer::Slurp qw(slurp);
 
 our ($script, $script_da, $images, $myv, %FORM, %daconfig);
 
+# #
+#	Load configs
+# #
+
 my $config = ConfigServer::Config->loadconfig();
 my %config = $config->config;
 my $slurpreg = ConfigServer::Slurp->slurpreg;
 my $cleanreg = ConfigServer::Slurp->cleanreg;
 
+# #
+#	Get Codename
+#	
+#	returns the codename depending on which control panel a user is running.
+#	
+#	@args			$config
+#	@usage			my $codename = getCodename(\%config);
+# #
+
+sub getCodename
+{
+	my ($config_ref) = @_;
+	my %config = %{$config_ref};
+	my $cname = "cpanel";
+
+	if ($config{GENERIC})      { $cname = "generic" }
+	if ($config{DIRECTADMIN})  { $cname = "directadmin" }
+	if ($config{INTERWORX})    { $cname = "interworx" }
+	if ($config{CYBERPANEL})   { $cname = "cyberpanel" }
+	if ($config{CWP})          { $cname = "cwp" }
+	if ($config{VESTA})        { $cname = "vestacp" }
+
+	# #
+    #	Optional debug output
+	# #
+
+	print "$cname\n";
+
+	# #
+    #	Return the value so it can be used in conditionals
+	# #
+
+	return $cname;
+}
+
+my $codename = getCodename(\%config);
+
 our %session;
 our @sessiondata;
-unless (-e "/var/lib/csf/csf.da.skip") {
-	if ($ENV{SESSION_ID} =~ /^\w+$/) {
+unless (-e "/var/lib/csf/csf.da.skip")
+{
+	if ($ENV{SESSION_ID} =~ /^\w+$/)
+	{
 		open (my $SESSION, "<", "/usr/local/directadmin/data/sessions/da_sess_".$ENV{SESSION_ID}) or &loginfail("Security Error: No valid session ID for [$ENV{SESSION_ID}]");
 		flock ($SESSION, LOCK_SH);
 		@sessiondata = <$SESSION>;
 		close ($SESSION);
 		chomp @sessiondata;
-		foreach my $line (@sessiondata) {
+
+		foreach my $line (@sessiondata)
+		{
 			my ($name, $value) = split(/\=/,$line);
 			$session{$name} = $value;
 		}
 	}
-	if (($session{key} eq "") or ($session{ip} eq "") or ($session{key} ne $ENV{SESSION_KEY})) {
+
+	if (($session{key} eq "") or ($session{ip} eq "") or ($session{key} ne $ENV{SESSION_KEY}))
+	{
 		&loginfail("Security Error: No valid session key");
 		exit;
 	}
 
 	my ($ppid, $pexe) = &getexe(getppid());
-	if ($pexe ne "/usr/local/directadmin/directadmin") {
+	if ($pexe ne "/usr/local/directadmin/directadmin")
+	{
 		&loginfail("Security Error: Invalid parent");
 		exit;
 	}
 }
+
+# #
+#	open version.txt
+# #
 
 open (my $IN, "<", "/etc/csf/version.txt") or die $!;
 $myv = <$IN>;
@@ -108,8 +160,13 @@ foreach my $line (@data) {
 	$daconfig{$name} = $value;
 }
 
+my $csfjs = qq{
+	<script>
+		var csfCodename = "$codename";
+	</script>
+	<script src="$images/csf.min.js"></script>
+};
 my $bootstrapcss = "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css'>";
-my $csfjs = "<script src='$images/csf.min.js'></script>";
 my $csfnt = "<script src='$images/csfont.min.js'></script>";
 my $jqueryjs = "<script src='$images/jquery.min.js'></script>";
 my $bootstrapjs = "<script src='$images/bootstrap/js/bootstrap.min.js'></script>";
