@@ -167,10 +167,13 @@ status "    Script ${bluel}${app_dir_this}/$app_file_this${greym} loading ${blue
 
 if [ -d "$path_csfpred" ]; then
     for i in "$path_csfpred"/*.sh; do
-        [ -e "$i" ] || continue
-        [ -f "$i" ] && [ -r "$i" ] || continue
+        [ -e "$i" ] || continue      # skip if no files match
+        [ -f "$i" ] || continue      # only regular files
+        [ -r "$i" ] || continue      # must be readable
+
         . "$i"
-       echo "Loaded $1"
+        count_loaded=$((count_loaded + 1))
+        ok "    Loaded pre.d script ${greenl}$1 "
     done
     unset i
 fi
