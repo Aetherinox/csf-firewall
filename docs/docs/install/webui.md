@@ -98,7 +98,7 @@ Each installation method below provides two options:
       perl \
       perl-IO-Socket-SSL.noarch \
       perl-Net-SSLeay \
-      perl-Net-LibIDN \
+      perl-Net-LibIDN2 \
       perl-IO-Socket-Inet6 \
       perl-Socket6 \
       perl-libwww-perl \
@@ -122,7 +122,7 @@ Each installation method below provides two options:
     sudo yum makecache && sudo yum install -y \
       perl-IO-Socket-SSL.noarch \
       perl-Net-SSLeay \
-      perl-Net-LibIDN \
+      perl-Net-LibIDN2 \
       perl-IO-Socket-INET6 \
       perl-Socket6
     ```
