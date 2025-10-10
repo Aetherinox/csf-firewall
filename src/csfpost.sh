@@ -173,6 +173,7 @@ if [ -d "$path_csfpostd" ]; then
 
         . "$i"
         count_loaded=$((count_loaded + 1))
+        ok "    Loaded post.d script ${greenl}$1 "
     done
     unset i
 fi
