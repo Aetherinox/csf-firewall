@@ -7,7 +7,7 @@ tags:
 
 # Usage › Pre and Post Scripts
 
-CSF provides special folders where you can place your own bash scripts to be executed at specific points during the firewall startup process. These scripts make it easy to maintain custom, persistent firewall rules that are automatically applied every time the CSF service is restarted.
+CSF includes dedicated directories where you can place custom Bash scripts to run at specific stages of the firewall’s startup process. This allows you to easily maintain persistent, custom firewall rules that are automatically applied each time the CSF service starts or restarts.
 
 <br />
 
@@ -17,61 +17,133 @@ CSF provides special folders where you can place your own bash scripts to be exe
 
 ## Location and Structure
 
-This section outlines exactly how the pre and post scriptsare initialized and loaded.
+This section outlines exactly how the pre and post scripts are initialized and loaded.
 
 <br />
 
 ### Loader Scripts
 
-When CSF is installed for the first time, two loader files are added to your system. These files are described below:
+When CSF is installed for the first time, two loader :aetherx-axd-file: files are added to your system (if they don't exist).
 
-:aetherx-axd-file: <!-- md:option /usr/local/csf/bin/csfpre.sh -->
+<br />
 
-:   - This file is responsible for iterating over your `/usr/local/include/csf/pre.d/` folder and loading any scripts located in that directory.
-    - Runs **before** any iptables rules are added by CSF, allowing you to prepare the environment or add rules that must exist prior to CSF’s standard rules.
+:aetherx-axd-file: <!-- md:option csfpre.sh -->
 
-:aetherx-axd-file: <!-- md:option /usr/local/csf/bin/csfpost.sh -->
+:   - The file `csfpre.sh` iterates over the loader folder :aetherx-axd-folder: `pre.d` and runs any scripts found there.
+    - There are **two allowed locations** for this loader script — either one is valid:
+        - [x] `/usr/local/csf/bin/csfpre.sh` <small>:aetherx-axd-note: _(default)_</small>
+        - [x] `/etc/csf/csfpre.sh` <small>:aetherx-axd-note: _(alternative)_</small>
+    - Runs **before** all default iptables rules are applied; allows you to add custom rules which persist alongside CSF's defaults.
 
-:   - This file is responsible for iterating over your `/usr/local/include/csf/post.d/` folder and loading any scripts located in that directory.
-    - Runs **after** all iptables rules are applied, letting you append custom rules that should persist alongside CSF's configuration. 
+:aetherx-axd-file: <!-- md:option csfpost.sh -->
+
+:   - The file `post.sh` iterates over the loader folder :aetherx-axd-folder: `post.d` and runs any scripts found there.
+    - There are **two allowed locations** for this loader script — either one is valid:
+        - [x] `/usr/local/csf/bin/csfpost.sh` <small>_(default)_</small>
+        - [x] `/etc/csf/csfpost.sh` <small>_(alternative)_</small>
+    - Runs **after** all default iptables rules are applied, allowing you to add custom rules which persist alongside CSF's defaults.
+
+??? note "**pre/post.sh:** Multiple Allowed Locations"
+
+    By default, installing CSF will create your loader files `pre.d` and `post.d` in the folder `/usr/local/csf/bin/`.  
+    However, this location is **not required**—you can place these loader files in any of the following acceptable paths:
+
+      - :aetherx-axd-file: **csfpre.sh**
+        - `/usr/local/csf/bin/csfpre.sh`
+        - `/usr/local/csf/bin/csfpost.sh`
+      - :aetherx-axd-file: **csfpost.sh**
+        - `/etc/csf/csfpre.sh`
+        - `/etc/csf/csfpost.sh`
+
+    All folders above are automatically scanned when you start or restart CSF. You can add scripts to both locations if you choose.
+
+    You can also add your bash commands directly into the files `csfpre.sh` and `csfpost.sh` themselves.
 
 <br />
 
 ### Loader Folders
 
-When the [loader scripts](#loader-scripts) above are run, they will scan their respective folders. These folders are where you should place your custom scripts, allowing you to create persistent firewall rules that are automatically applied each time CSF starts or restarts.
-
-:aetherx-axd-folder: <!-- md:option /usr/local/include/csf/pre.d/ -->
-
-:   - Stores scripts that are executed **before** CSF applies its default iptables rules.
-    - Any scripts placed in this folder will run automatically every time CSF is started or restarted, allowing you to configure custom rules or settings prior to CSF’s standard firewall rules.
-    - Files in this folder are initialized and loaded by the script `/usr/local/csf/bin/csfpre.sh`
-
-:aetherx-axd-folder: <!-- md:option /usr/local/include/csf/post.d/ -->
-
-:   - Stores scripts that are executed **after** CSF applies its default iptables rules.
-    - Any scripts placed in this folder will run automatically every time CSF is started or restarted, allowing you to configure custom rules or settings after to CSF’s standard firewall rules.
-    - Files in this folder are initialized and loaded by script `/usr/local/csf/bin/csfpost.sh`
+When the [loader scripts](#loader-scripts) run, they check their designated folders for any custom scripts you’ve added. By placing your scripts in these folders, you can create firewall rules that are automatically applied every time CSF starts or restarts, ensuring your custom rules persist.
 
 <br />
 
-We have provided an example structure of how your scripts should be stored. When creating your script files, they can be any name you want.
+:aetherx-axd-folder: <!-- md:option /usr/local/include/csf/pre.d/ -->
 
-```
-📁 usr
-   📁 local
-      📁 csf
-         📁 bin
+:   - Stores bash scripts that run **before** CSF applies its default iptables rules.  
+    - Scripts placed here run automatically every time CSF starts or restarts.
+
+:aetherx-axd-folder: <!-- md:option /usr/local/include/csf/post.d/ -->
+
+:   - Stores bash scripts that run **after** CSF applies its default iptables rules.  
+    - Scripts placed here run automatically every time CSF starts or restarts.
+
+??? note "Defining A New Loader Folder"
+
+    The CSF loader folder which is scanned is defined within the loader files themselves. To change the folder that the loader uses, open `csfpre.sh` and `csfpost.sh` and change the following lines:
+
+    === ":aetherx-axd-command: csfpre.sh"
+
+          ```shell
+          path_csfpred="/usr/local/include/csf/pre.d"
+          ```
+
+    === ":aetherx-axd-command: csfpost.sh"
+
+          ```shell
+          path_csfpostd="/usr/local/include/csf/post.d"
+          ```
+
+<br />
+
+### Loader Example
+
+We have provided both example structures of how your scripts can be set up. Script names can be any name you want, no restrictions.
+
+=== ":aetherx-axd-1: Option 1 (default)"
+
+      This example stores your loader files in:
+
+      - `/usr/local/csf/bin/csfpre.sh`
+      - `/usr/local/csf/bin/csfpost.sh`
+
+      ```
+      📁 usr
+        📁 local
+            📁 csf
+              📁 bin
+                  📄 csfpre.sh
+                  📄 csfpost.sh
+            📁 include
+              📁 csf
+                  📁 pre.d
+                    📄 my_rules_before.sh
+                  📁 post.d
+                    📄 my_docker_rules.sh
+                    📄 openvpn_rules.sh
+      ```
+
+=== ":aetherx-axd-2: Option 2"
+
+      This example stores your loader files in:
+
+      - `/etc/csf/csfpre.sh`
+      - `/etc/csf/csfpost.sh`
+
+      ```
+      📁 etc
+        📁 csf
             📄 csfpre.sh
             📄 csfpost.sh
-      📁 include
-         📁 csf
-            📁 pre.d
-               📄 my_rules_before.sh
-            📁 post.d
-               📄 my_docker_rules.sh
-               📄 openvpn_rules.sh
-```
+      📁 usr
+        📁 local
+            📁 include
+              📁 csf
+                  📁 pre.d
+                    📄 my_rules_before.sh
+                  📁 post.d
+                    📄 my_docker_rules.sh
+                    📄 openvpn_rules.sh
+      ```
 
 <br />
 
