@@ -31,16 +31,16 @@ When CSF is installed for the first time, two loader :aetherx-axd-file: files ar
 
 :   - The file `csfpre.sh` iterates over the loader folder :aetherx-axd-folder: `pre.d` and runs any scripts found there.
     - There are **two allowed locations** for this loader script — either one is valid:
-        - [x] `/usr/local/csf/bin/csfpre.sh` <small>:aetherx-axd-note: _(default)_</small>
-        - [x] `/etc/csf/csfpre.sh` <small>:aetherx-axd-note: _(alternative)_</small>
+        - [x] `/usr/local/csf/bin/csfpre.sh` <small>:aetherx-axd-note-sticky: _(default)_</small>
+        - [x] `/etc/csf/csfpre.sh` <small>:aetherx-axd-note-sticky: _(alternative)_</small>
     - Runs **before** all default iptables rules are applied; allows you to add custom rules which persist alongside CSF's defaults.
 
 :aetherx-axd-file: <!-- md:option csfpost.sh -->
 
 :   - The file `post.sh` iterates over the loader folder :aetherx-axd-folder: `post.d` and runs any scripts found there.
     - There are **two allowed locations** for this loader script — either one is valid:
-        - [x] `/usr/local/csf/bin/csfpost.sh` <small>_(default)_</small>
-        - [x] `/etc/csf/csfpost.sh` <small>_(alternative)_</small>
+        - [x] `/usr/local/csf/bin/csfpost.sh` <small>:aetherx-axd-note-sticky: _(default)_</small>
+        - [x] `/etc/csf/csfpost.sh` <small>:aetherx-axd-note-sticky: _(alternative)_</small>
     - Runs **after** all default iptables rules are applied, allowing you to add custom rules which persist alongside CSF's defaults.
 
 ??? note "**pre/post.sh:** Multiple Allowed Locations"
