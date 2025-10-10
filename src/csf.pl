@@ -10,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            09.26.2025
+#   @updated            10.09.2025
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -953,62 +953,112 @@ sub dostart {
 	&modprobe;
 
 	$noowner = 0;
-	if ($config{VPS} and $config{SMTP_BLOCK}) {
+	if ($config{VPS} and $config{SMTP_BLOCK})
+	{
 		my ($childin, $childout);
 		my $cmdpid = open3($childin, $childout, $childout, "$config{IPTABLES} $config{IPTABLESWAIT} -I OUTPUT -p tcp --dport 9999 -m owner --uid-owner 0 -j $accept");
 		my @ipdata = <$childout>;
+
 		waitpid ($cmdpid, 0);
 		chomp @ipdata;
+
 		if ($ipdata[0] =~ /# Warning: iptables-legacy tables present/) {shift @ipdata}
-		if ($ipdata[0] =~ /^iptables/) {
+		if ($ipdata[0] =~ /^iptables/)
+		{
 			$warning .= "*WARNING* Cannot use SMTP_BLOCK on this VPS as the Monolithic kernel does not support the iptables module ipt_owner/xt_owner - SMTP_BLOCK disabled\n";
 			$config{SMTP_BLOCK} = 0;
 			$noowner = 1;
-		} else {
+		}
+		else
+		{
 			&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} -D OUTPUT -p tcp --dport 9999 -m owner --uid-owner 0 -j $accept",0);
 		}
 	}
 
-	my $path = "PATH=\$PATH:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin";
-	my $csfpre;
-	my $csfpost;
-	if (-e "/usr/local/csf/bin/csfpre.sh") {$csfpre = "/usr/local/csf/bin/csfpre.sh"}
-	elsif (-e "/etc/csf/csfpre.sh") {$csfpre = "/etc/csf/csfpre.sh"}
-	if (-e "/usr/local/csf/bin/csfpost.sh") {$csfpost = "/usr/local/csf/bin/csfpost.sh"}
-	elsif (-e "/etc/csf/csfpost.sh") {$csfpost = "/etc/csf/csfpost.sh"}
+	# #
+	#	Define › csfpre/post › Defaults
+	# #
 
-	if ($csfpre ne "") {
-		chmod (0700,$csfpre);
-		my @conf = slurp($csfpre);
-		if ($conf[0] !~ /^\#\!/) {
-			open (my $CONF, ">", $csfpre);
-			flock ($CONF, LOCK_EX);
+	my $path = "PATH=\$PATH:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin";
+	my @csfpre  = ();
+	my @csfpost = ();
+
+	# #
+	#	Define › csfpre/post › Scripts
+	#	
+	#	All possible pre/post script paths (if exists)
+	# #
+
+	push @csfpre,  "/usr/local/csf/bin/csfpre.sh"  if -e "/usr/local/csf/bin/csfpre.sh";
+	push @csfpre,  "/etc/csf/csfpre.sh"            if -e "/etc/csf/csfpre.sh";
+	push @csfpost, "/usr/local/csf/bin/csfpost.sh" if -e "/usr/local/csf/bin/csfpost.sh";
+	push @csfpost, "/etc/csf/csfpost.sh"           if -e "/etc/csf/csfpost.sh";
+
+    # #
+	#	CSFpre › Sanitize and Execute
+	#	
+	#	csfpre		Initialize rules BEFORE csf adds its own rulesets
+	#	csfpost		Initialize rules BEFORE csf adds its own rulesets
+	#	
+    #   For each csfpre script found in @csfpre:
+    #       › Ensure executable (chmod 0700)
+    #       › Read contents and verify it starts with  valid shebang(#!/bin/bash).
+	#			If missing; rewrite file + add one.
+    #       › Clean each line using $cleanreg before writing it back
+    #       › Execute the script using syscommand() in a clean PATH
+	#	
+	#	@notes		original logic only supported a single csfpre using if/else exists
+	#					csfpre
+	#						/usr/local/csf/bin/csfpre.sh		OR
+	#						/etc/csf/csfpre.sh
+	#					csfpost
+	#						/usr/local/csf/bin/csfpost.sh		OR
+	#						/etc/csf/csfpost.sh
+	#				updated logic supports both csfpre locations
+    # #
+
+	foreach my $pre ( @csfpre )
+	{
+		chmod( 0700, $pre );
+
+		my @conf = slurp( $pre );
+		if ( $conf[0] !~ /^\#\!/ )
+		{
+			open( my $CONF, ">", $pre );
+			flock( $CONF, LOCK_EX );
 			print $CONF "#!/bin/bash\n";
-			foreach my $line (@conf) {
-		        $line =~ s/$cleanreg//g;
+			
+			foreach my $line ( @conf )
+			{
+				$line =~ s/$cleanreg//g;
 				print $CONF "$line\n";
 			}
-			close ($CONF);
+			close( $CONF );
 		}
-		print "Running $csfpre\n";
-		&syscommand(__LINE__,"$path ; $csfpre");
+
+		print "Initializing csfpre: $pre\n";
+		&syscommand( __LINE__, "$path ; $pre" );
 	}
 
-	if ($config{WATCH_MODE}) {
+	if ($config{WATCH_MODE})
+	{
 		&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -N LOGACCEPT");
 		&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -A LOGACCEPT -j ACCEPT");
-		if ($config{IPV6}) {
+		if ($config{IPV6})
+		{
 			&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} $verbose -N LOGACCEPT");
 			&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} $verbose -A LOGACCEPT -j ACCEPT");
 		}
 	}
 
-	foreach my $name (keys %blocklists) {
+	foreach my $name (keys %blocklists)
+	{
 		&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -N $name");
 		if ($config{IPV6}) {
 			&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} $verbose -N $name");
 		}
 	}
+
 	if ($config{CC_ALLOW_FILTER}) {&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -N CC_ALLOWF")}
 	if ($config{CC_ALLOW_PORTS}) {
 		&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -N CC_ALLOWP");
@@ -1315,12 +1365,18 @@ sub dostart {
 			}
 		}
 	}
-	if ($config{FASTSTART}) {&faststart("DNS")}
 
-	if ($config{MESSENGER}) {
+	if ($config{FASTSTART})
+	{
+		&faststart("DNS")
+	}
+
+	if ($config{MESSENGER})
+	{
 		$skipin += 2;
 		$skipout += 2;
-		if ($config{MESSENGER_HTTPS_IN}) {
+		if ($config{MESSENGER_HTTPS_IN})
+		{
 			$skipin += 1;
 			$skipout += 1;
 			&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -I INPUT $ethdevin -p tcp --dport $config{MESSENGER_HTTPS} -m limit --limit $config{MESSENGER_RATE} --limit-burst $config{MESSENGER_BURST} -j $accept");
@@ -1330,10 +1386,12 @@ sub dostart {
 		&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -I INPUT $ethdevin -p tcp --dport $config{MESSENGER_TEXT} -m limit --limit $config{MESSENGER_RATE} --limit-burst $config{MESSENGER_BURST} -j $accept");
 		&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -I OUTPUT $ethdevout -p tcp --sport $config{MESSENGER_HTML} -m limit --limit $config{MESSENGER_RATE} --limit-burst $config{MESSENGER_BURST} -j $accept");
 		&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -I OUTPUT $ethdevout -p tcp --sport $config{MESSENGER_TEXT} -m limit --limit $config{MESSENGER_RATE} --limit-burst $config{MESSENGER_BURST} -j $accept");
-		if ($config{MESSENGER6}) {
+		if ($config{MESSENGER6})
+		{
 			$skipin6 += 2;
 			$skipout6 += 2;
-			if ($config{MESSENGER_HTTPS_IN}) {
+			if ($config{MESSENGER_HTTPS_IN})
+			{
 				$skipin6 += 1;
 				$skipout6 += 1;
 				&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} $verbose -I INPUT $ethdevin -p tcp --dport $config{MESSENGER_HTTPS} -m limit --limit $config{MESSENGER_RATE} --limit-burst $config{MESSENGER_BURST} -j $accept");
@@ -1346,16 +1404,19 @@ sub dostart {
 		}
 	}
 
-	if ($config{DOCKER}) {
+	if ($config{DOCKER})
+	{
 		&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -N DOCKER");
-		if ($config{NAT}) {
+		if ($config{NAT})
+		{
 			&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -t nat -N DOCKER");
 		}
 		&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -t nat -A POSTROUTING -s $config{DOCKER_NETWORK4} ! -o $config{DOCKER_DEVICE} -j MASQUERADE");
 		&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -A FORWARD -o $config{DOCKER_DEVICE} $statemodule RELATED,ESTABLISHED -j ACCEPT");
 		&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -A FORWARD -i $config{DOCKER_DEVICE} ! -o $config{DOCKER_DEVICE} -j ACCEPT");
 		&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -A FORWARD -i $config{DOCKER_DEVICE} -o $config{DOCKER_DEVICE} -j ACCEPT");
-		if ($config{IPV6} and $config{NAT6} and $config{DOCKER_NETWORK6} ne "") {
+		if ($config{IPV6} and $config{NAT6} and $config{DOCKER_NETWORK6} ne "")
+		{
 			&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} $verbose -N DOCKER");
 			&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} $verbose -t nat -A POSTROUTING -s $config{DOCKER_NETWORK6} ! -o $config{DOCKER_DEVICE} -j MASQUERADE");
 			&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} $verbose -A FORWARD -o $config{DOCKER_DEVICE} $statemodule RELATED,ESTABLISHED -j ACCEPT");
@@ -1366,22 +1427,29 @@ sub dostart {
 
 	&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -I OUTPUT $skipout $ethdevout -j LOCALOUTPUT");
 	&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -I INPUT $skipin $ethdevin -j LOCALINPUT");
-	if ($config{IPV6}) {
+	if ($config{IPV6})
+	{
 		&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} $verbose -I OUTPUT $skipout6 $eth6devout -j LOCALOUTPUT");
 		&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} $verbose -I INPUT $skipin6 $eth6devin -j LOCALINPUT");
 	}
 
 	$config{ETH_DEVICE_SKIP} =~ s/\s//g;
-	if ($config{ETH_DEVICE_SKIP} ne "") {
-		foreach my $device (split(/\,/,$config{ETH_DEVICE_SKIP})) {
-			if ($ifaces{$device}) {
+	if ($config{ETH_DEVICE_SKIP} ne "")
+	{
+		foreach my $device (split(/\,/,$config{ETH_DEVICE_SKIP}))
+		{
+			if ($ifaces{$device})
+			{
 				&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -I INPUT  -i $device -j $accept");
 				&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -I OUTPUT -o $device -j $accept");
-				if ($config{IPV6}) {
+				if ($config{IPV6})
+				{
 					&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} $verbose -I INPUT  -i $device -j $accept");
 					&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} $verbose -I OUTPUT -o $device -j $accept");
 				}
-			} else {
+			}
+			else
+			{
 				$warning .= "*WARNING* ETH_DEVICE_SKIP device [$device] not listed in ip/ifconfig\n";
 			}
 		}
@@ -1390,31 +1458,61 @@ sub dostart {
 	&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose --policy INPUT   DROP",1);
 	&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose --policy OUTPUT  DROP",1);
 	&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose --policy FORWARD DROP",1);
-	if ($config{IPV6}) {
+	if ($config{IPV6})
+	{
 		&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} $verbose --policy INPUT   DROP",1);
 		&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} $verbose --policy OUTPUT  DROP",1);
 		&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} $verbose --policy FORWARD DROP",1);
 	}
 
-	if ($csfpost ne "") {
-		chmod (0700,$csfpost);
-		my @conf = slurp($csfpost);
+    # #
+	#	CSFpost › Sanitize and Execute
+	#	
+	#	csfpre		Initialize rules BEFORE csf adds its own rulesets
+	#	csfpost		Initialize rules BEFORE csf adds its own rulesets
+	#	
+    #   For each csfpost script found in @csfpost:
+    #       › Ensure executable (chmod 0700)
+    #       › Read contents and verify it starts with  valid shebang(#!/bin/bash).
+	#			If missing; rewrite file + add one.
+    #       › Clean each line using $cleanreg before writing it back
+    #       › Execute the script using syscommand() in a clean PATH
+	#	
+	#	@notes		original logic only supported a single csfpost using if/else exists
+	#					csfpre
+	#						/usr/local/csf/bin/csfpre.sh		OR
+	#						/etc/csf/csfpre.sh
+	#					csfpost
+	#						/usr/local/csf/bin/csfpost.sh		OR
+	#						/etc/csf/csfpost.sh
+	#				updated logic supports both csfpost locations
+    # #
 
-		if ($conf[0] !~ /^\#\!/) {
-			open (my $CONF, ">", $csfpost);
-			flock ($CONF, LOCK_EX);
+	foreach my $post ( @csfpost )
+	{
+		chmod( 0700, $post );
+
+		my @conf = slurp( $post );
+		if ($conf[0] !~ /^\#\!/)
+		{
+			open( my $CONF, ">", $post );
+			flock( $CONF, LOCK_EX );
 			print $CONF "#!/bin/bash\n";
-			foreach my $line (@conf) {
-		        $line =~ s/$cleanreg//g;
+
+			foreach my $line ( @conf )
+			{
+				$line =~ s/$cleanreg//g;
 				print $CONF "$line\n";
 			}
-			close ($CONF);
+			close( $CONF );
 		}
-		print "Running $csfpost\n";
-		&syscommand(__LINE__,"$path ; $csfpost");
+
+		print "Initializing csfpost: $post\n";
+		&syscommand( __LINE__, "$path ; $post" );
 	}
 
-	if ($config{VPS}) {
+	if ($config{VPS})
+	{
 		open (my $FH, "<", "/proc/sys/kernel/osrelease");
 		flock ($FH, LOCK_SH);
 		my @data = <$FH>;
