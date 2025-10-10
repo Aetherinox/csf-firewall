@@ -50,9 +50,9 @@ When CSF is installed for the first time, two loader :aetherx-axd-file: files ar
 
       - :aetherx-axd-file: **csfpre.sh**
         - `/usr/local/csf/bin/csfpre.sh`
-        - `/usr/local/csf/bin/csfpost.sh`
-      - :aetherx-axd-file: **csfpost.sh**
         - `/etc/csf/csfpre.sh`
+      - :aetherx-axd-file: **csfpost.sh**
+        - `/usr/local/csf/bin/csfpost.sh`
         - `/etc/csf/csfpost.sh`
 
     All folders above are automatically scanned when you start or restart CSF. You can add scripts to both locations if you choose.
