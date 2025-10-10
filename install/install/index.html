@@ -2941,8 +2941,13 @@ To access it, go to the left-hand Webmin menu and navigate to:</p>
     <figcaption>Webmin › <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> › Homepage</figcaption>
 </figure>
 <p><br></p>
-<p>If the interface matches the screenshot above, the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> integration with Webmin is complete.<br>
-You can now proceed to the <a href="#next-steps">Next Steps</a> or skip the rest of this section and begin our <a href="../../usage/configuration/">Configuration</a> chapter to get things set up.</p>
+<p>If the interface matches the screenshot above, the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> integration with Webmin is complete.  </p>
+<p>You can now proceed to the <a href="#next-steps">Next Steps</a> or skip the rest of this section and begin our <a href="../../usage/configuration/">Configuration</a> chapter to get things set up.</p>
+<p><br></p>
+<details class="warning">
+<summary>Testing Mode Disables <abbr title="Login Failure Daemon">LFD</abbr></summary>
+<p>If you have not yet disabled testing mode in the <code>csf.conf</code>, <abbr title="Login Failure Daemon">lfd</abbr> will be unable to start. Performing this step is covered in the next <a href="../../usage/configuration/">Configuration</a> chapter.</p>
+</details>
 <p><br>
 <br></p>
 <hr>
@@ -2956,7 +2961,220 @@ You can now proceed to the <a href="#next-steps">Next Steps</a> or skip the rest
 <p><br>
 <br></p>
 <h2 id="install-interworx">Install: Interworx<a class="headerlink" href="#install-interworx" title="Permanent link">¶</a></h2>
-<p>This part of the documentation is currently being written.</p>
+<p>Installing <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> with Interworx integration is simple. First we need to install Interworx, then install <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>, and finally enable the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> module within Interworx to complete the integration.</p>
+<p><br></p>
+<p>Log in as the <code>root</code> user via SSH.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="26:2"><input checked="checked" id="install-interworx-using-password" name="__tabbed_26" type="radio"><input id="install-interworx-using-private-key" name="__tabbed_26" type="radio"><div class="tabbed-labels"><label for="install-interworx-using-password"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M336 352c97.2 0 176-78.8 176-176S433.2 0 336 0 160 78.8 160 176c0 18.7 2.9 36.8 8.3 53.7L7 391c-4.5 4.5-7 10.6-7 17l0 80c0 13.3 10.7 24 24 24l80 0c13.3 0 24-10.7 24-24l0-40 40 0c13.3 0 24-10.7 24-24l0-40 40 0c6.4 0 12.5-2.5 17-7l33.3-33.3c16.9 5.4 35 8.3 53.7 8.3zM376 96a40 40 0 1 1 0 80 40 40 0 1 1 0-80z"></path></svg></span> Using Password</label><label for="install-interworx-using-private-key"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-277.5c0-17-6.7-33.3-18.7-45.3L258.7 18.7C246.7 6.7 230.5 0 213.5 0L64 0zM325.5 176L232 176c-13.3 0-24-10.7-24-24L208 58.5 325.5 176z"></path></svg></span> Using Private Key</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>ssh<span class="w"> </span>-vvv<span class="w"> </span>root@XX.XX.XX.XX<span class="w"> </span>-p<span class="w"> </span><span class="m">22</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>ssh<span class="w"> </span>-i<span class="w"> </span>/path/to/private_key<span class="w"> </span>-vvv<span class="w"> </span>root@XX.XX.XX.XX<span class="w"> </span>-p<span class="w"> </span><span class="m">22</span>
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>Ensure you have Interworx installed. If not, download the installer script:</p>
+<details class="note">
+<summary>Valid <abbr title="Top-Level Domain. The last segment of a domain name, appearing after the final dot, such as <code>.com</code>, <code>.org</code>, or <code>.net</code>, which indicates the highest level of the domain hierarchy.">TLD</abbr> / Host Required</summary>
+<p>Before installing Interworx, you must set your server's hostname to a valid host.</p>
+</details>
+<p><br></p>
+<div class="tabbed-set tabbed-alternate" data-tabs="27:3"><input checked="checked" id="install-interworx-install-option-1" name="__tabbed_27" type="radio"><input id="install-interworx-install-option-2" name="__tabbed_27" type="radio"><input id="install-interworx-output" name="__tabbed_27" type="radio"><div class="tabbed-labels"><label for="install-interworx-install-option-1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> Install (Option 1)</label><label for="install-interworx-install-option-2"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> Install (Option 2)</label><label for="install-interworx-output"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Output</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>sudo<span class="w"> </span>sh<span class="w"> </span>&lt;<span class="o">((</span>curl<span class="w"> </span>-sL<span class="w"> </span>updates.interworx.com/interworx/8/install.sh<span class="o">))</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>wget<span class="w"> </span>updates.interworx.com/interworx/8/install.sh
+</span><span id="__span-55-2"><a id="__codelineno-55-2" name="__codelineno-55-2" href="#__codelineno-55-2"></a>sudo<span class="w"> </span>sh<span class="w"> </span>install.sh
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>STATUS:<span class="w"> </span>Determining<span class="w"> </span>Linux<span class="w"> </span>distribution
+</span><span id="__span-56-2"><a id="__codelineno-56-2" name="__codelineno-56-2" href="#__codelineno-56-2"></a>STATUS:<span class="w"> </span>Checking<span class="w"> </span>network<span class="w"> </span>interface<span class="w"> </span>names
+</span><span id="__span-56-3"><a id="__codelineno-56-3" name="__codelineno-56-3" href="#__codelineno-56-3"></a>
+</span><span id="__span-56-4"><a id="__codelineno-56-4" name="__codelineno-56-4" href="#__codelineno-56-4"></a>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span><span class="w"> </span>Installing<span class="w"> </span>InterWorx-CP<span class="w"> </span><span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-
+</span><span id="__span-56-5"><a id="__codelineno-56-5" name="__codelineno-56-5" href="#__codelineno-56-5"></a>
+</span><span id="__span-56-6"><a id="__codelineno-56-6" name="__codelineno-56-6" href="#__codelineno-56-6"></a>This<span class="w"> </span>script<span class="w"> </span>will<span class="w"> </span>install<span class="w"> </span>InterWorx-CP<span class="w"> </span>on<span class="w"> </span>your<span class="w"> </span>system.
+</span><span id="__span-56-7"><a id="__codelineno-56-7" name="__codelineno-56-7" href="#__codelineno-56-7"></a>Please<span class="w"> </span>make<span class="w"> </span>sure<span class="w"> </span>that<span class="w"> </span>you<span class="w"> </span>have<span class="w"> </span>backed<span class="w"> </span>up<span class="w"> </span>any<span class="w"> </span>critical
+</span><span id="__span-56-8"><a id="__codelineno-56-8" name="__codelineno-56-8" href="#__codelineno-56-8"></a>data!
+</span><span id="__span-56-9"><a id="__codelineno-56-9" name="__codelineno-56-9" href="#__codelineno-56-9"></a>
+</span><span id="__span-56-10"><a id="__codelineno-56-10" name="__codelineno-56-10" href="#__codelineno-56-10"></a>This<span class="w"> </span>script<span class="w"> </span>may<span class="w"> </span>be<span class="w"> </span>run<span class="w"> </span>multiple<span class="w"> </span><span class="nb">times</span><span class="w"> </span>without<span class="w"> </span>any
+</span><span id="__span-56-11"><a id="__codelineno-56-11" name="__codelineno-56-11" href="#__codelineno-56-11"></a>problems.<span class="w">  </span>This<span class="w"> </span>is<span class="w"> </span>helpful<span class="w"> </span><span class="k">if</span><span class="w"> </span>you<span class="w"> </span>find<span class="w"> </span>an<span class="w"> </span>error
+</span><span id="__span-56-12"><a id="__codelineno-56-12" name="__codelineno-56-12" href="#__codelineno-56-12"></a>during<span class="w"> </span>installation,<span class="w"> </span>you<span class="w"> </span>can<span class="w"> </span>safely<span class="w"> </span>ctrl-c<span class="w"> </span>out<span class="w"> </span>of
+</span><span id="__span-56-13"><a id="__codelineno-56-13" name="__codelineno-56-13" href="#__codelineno-56-13"></a>this<span class="w"> </span>script,<span class="w"> </span>fix<span class="w"> </span>the<span class="w"> </span>error<span class="w"> </span>and<span class="w"> </span>re-start<span class="w"> </span>the<span class="w"> </span>script.
+</span><span id="__span-56-14"><a id="__codelineno-56-14" name="__codelineno-56-14" href="#__codelineno-56-14"></a>
+</span><span id="__span-56-15"><a id="__codelineno-56-15" name="__codelineno-56-15" href="#__codelineno-56-15"></a>STATUS:<span class="w"> </span>Checking<span class="w"> </span>Hostname
+</span><span id="__span-56-16"><a id="__codelineno-56-16" name="__codelineno-56-16" href="#__codelineno-56-16"></a>The<span class="w"> </span>hostname<span class="w"> </span><span class="s1">'configserver.dev'</span><span class="w"> </span>is<span class="w"> </span>valid.
+</span><span id="__span-56-17"><a id="__codelineno-56-17" name="__codelineno-56-17" href="#__codelineno-56-17"></a>
+</span><span id="__span-56-18"><a id="__codelineno-56-18" name="__codelineno-56-18" href="#__codelineno-56-18"></a>Details<span class="w"> </span>of<span class="w"> </span>this<span class="w"> </span>installation<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>logged<span class="w"> </span><span class="k">in</span><span class="w"> </span>iworx-install.log
+</span><span id="__span-56-19"><a id="__codelineno-56-19" name="__codelineno-56-19" href="#__codelineno-56-19"></a>
+</span><span id="__span-56-20"><a id="__codelineno-56-20" name="__codelineno-56-20" href="#__codelineno-56-20"></a>HOSTNAME<span class="w">   </span>:<span class="w"> </span>configserver.dev
+</span><span id="__span-56-21"><a id="__codelineno-56-21" name="__codelineno-56-21" href="#__codelineno-56-21"></a>TARGET<span class="w">     </span>:<span class="w"> </span>CentOS<span class="w"> </span>Linux<span class="w"> </span>release<span class="w"> </span><span class="m">7</span>.9.2009<span class="w"> </span><span class="o">(</span>Core<span class="o">)</span>
+</span><span id="__span-56-22"><a id="__codelineno-56-22" name="__codelineno-56-22" href="#__codelineno-56-22"></a>PLATFORM<span class="w">   </span>:<span class="w"> </span>GNU/Linux
+</span><span id="__span-56-23"><a id="__codelineno-56-23" name="__codelineno-56-23" href="#__codelineno-56-23"></a>PROCESSOR<span class="w">  </span>:<span class="w"> </span>x86_64
+</span><span id="__span-56-24"><a id="__codelineno-56-24" name="__codelineno-56-24" href="#__codelineno-56-24"></a>RPM<span class="w"> </span>TARGET<span class="w"> </span>:<span class="w"> </span>rhe7x
+</span><span id="__span-56-25"><a id="__codelineno-56-25" name="__codelineno-56-25" href="#__codelineno-56-25"></a>RPM<span class="w"> </span>DISTRO<span class="w"> </span>:<span class="w"> </span>cos7x
+</span><span id="__span-56-26"><a id="__codelineno-56-26" name="__codelineno-56-26" href="#__codelineno-56-26"></a>RPM<span class="w"> </span>DIR<span class="w">    </span>:<span class="w"> </span>/usr/src/redhat/RPMS
+</span><span id="__span-56-27"><a id="__codelineno-56-27" name="__codelineno-56-27" href="#__codelineno-56-27"></a>SRPM<span class="w"> </span>DIR<span class="w">   </span>:<span class="w"> </span>/usr/src/redhat/SRPMS
+</span><span id="__span-56-28"><a id="__codelineno-56-28" name="__codelineno-56-28" href="#__codelineno-56-28"></a>SRPM<span class="w"> </span>HOST<span class="w">  </span>:<span class="w"> </span>updates.interworx.com
+</span><span id="__span-56-29"><a id="__codelineno-56-29" name="__codelineno-56-29" href="#__codelineno-56-29"></a>IWORX<span class="w"> </span>REPO<span class="w"> </span>:<span class="w"> </span>ga
+</span><span id="__span-56-30"><a id="__codelineno-56-30" name="__codelineno-56-30" href="#__codelineno-56-30"></a>DEFAULT<span class="w"> </span>PHP:<span class="w"> </span>PHP<span class="w"> </span><span class="m">8</span>.2
+</span><span id="__span-56-31"><a id="__codelineno-56-31" name="__codelineno-56-31" href="#__codelineno-56-31"></a>MYSQL<span class="w">      </span>:<span class="w"> </span>MARIADB<span class="w"> </span><span class="m">10</span>.6
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>While the installation is in progress, you’ll need to have a valid <strong>license key</strong> which Interworx setup wizard will ask for once you access the web control panel. Interworx offers a <strong>2 week</strong> free trial license key which you can <a href="https://www.interworx.com/interworx-demos/">apply for here</a></p>
+<p>At the end of the installation, you'll be provided with a link you must visit in order to activate Interworx.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="28:1"><input checked="checked" id="install-interworx-output_1" name="__tabbed_28" type="radio"><div class="tabbed-labels"><label for="install-interworx-output_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Output</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-57-1"><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span><span class="w"> </span>Installation<span class="w"> </span>Complete!<span class="w"> </span>Next<span class="w"> </span>Step:<span class="w"> </span>License<span class="w"> </span>Activation!<span class="w"> </span><span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-
+</span><span id="__span-57-2"><a id="__codelineno-57-2" name="__codelineno-57-2" href="#__codelineno-57-2"></a>
+</span><span id="__span-57-3"><a id="__codelineno-57-3" name="__codelineno-57-3" href="#__codelineno-57-3"></a>To<span class="w"> </span>activate<span class="w"> </span>your<span class="w"> </span>license,<span class="w"> </span>go<span class="w"> </span>to
+</span><span id="__span-57-4"><a id="__codelineno-57-4" name="__codelineno-57-4" href="#__codelineno-57-4"></a>https://your-ip:2443/nodeworx/
+</span><span id="__span-57-5"><a id="__codelineno-57-5" name="__codelineno-57-5" href="#__codelineno-57-5"></a>or<span class="w"> </span>run:<span class="w"> </span>~iworx/bin/goiworx.pex
+</span><span id="__span-57-6"><a id="__codelineno-57-6" name="__codelineno-57-6" href="#__codelineno-57-6"></a>Also,<span class="w"> </span>check<span class="w"> </span>out<span class="w"> </span>https://www.interworx.com<span class="w"> </span><span class="k">for</span><span class="w"> </span>news,<span class="w"> </span>updates,<span class="w"> </span>and<span class="w"> </span>support!
+</span><span id="__span-57-7"><a id="__codelineno-57-7" name="__codelineno-57-7" href="#__codelineno-57-7"></a>
+</span><span id="__span-57-8"><a id="__codelineno-57-8" name="__codelineno-57-8" href="#__codelineno-57-8"></a>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span><span class="w"> </span>THANK<span class="w"> </span>YOU<span class="w"> </span>FOR<span class="w"> </span>USING<span class="w"> </span>INTERWORX!<span class="w"> </span><span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-<span class="o">=</span>-
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>After installation is complete, open your browser and navigate to:</p>
+<ul>
+<li><code>https://your-ip:2443/nodeworx/</code></li>
+<li><code>https://127.0.0.1:2443/nodeworx/</code></li>
+</ul>
+<p><br></p>
+<p>You should be greeted with a Interworx authentication page. Provide a valid e-mail address, password, and finally, provide your <strong>license key</strong>.</p>
+<figure>
+    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../assets/images/install/interworx/1.png" data-desc-position="bottom"><img alt="Interworx › Login Screen" src="../../assets/images/install/interworx/1.png" width="700"></a>
+    <figcaption>Interworx › Login Screen</figcaption>
+</figure>
+<p><br></p>
+<p>Once you input the information asked, Interworx will also ask you to provide valid <strong>nameservers</strong>. For our docs, we will provide:</p>
+<ul>
+<li><code>ns1.configserver.dev</code></li>
+<li><code>ns2.configserver.dev</code></li>
+</ul>
+<p><br></p>
+<p>At this point, Interworx will take anywhere around 5-10 minutes to complete the installation. Afterward, you'll be re-directed to the Interworx dashboard.</p>
+<figure>
+    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../assets/images/install/interworx/2.png" data-desc-position="bottom"><img alt="Interworx › Dashboard" src="../../assets/images/install/interworx/2.png" width="700"></a>
+    <figcaption>Interworx › Dashboard</figcaption>
+</figure>
+<p><br></p>
+<p>Set Interworx aside for a moment; we need to make sure that we don't have any existing firewalls that need disabled. If so, run the commands below:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="29:2"><input checked="checked" id="install-interworx-ufw" name="__tabbed_29" type="radio"><input id="install-interworx-firewalld" name="__tabbed_29" type="radio"><div class="tabbed-labels"><label for="install-interworx-ufw"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M224 32l192 0 0 80-192 0 0-80zm-32 80l-96 0 0-16c0-35.3 28.7-64 64-64l32 0 0 80zM96 144l208 0 0 96-208 0 0-96zm0 224l0-96 96 0 0 96-96 0zm0 32l176.7 0c-.5 4.7-.7 9.4-.7 14.1 0 22.9 3.7 45.1 10.6 65.9L160 480c-35.3 0-64-28.7-64-64l0-16zM544 144l0 60.2c-12 .3-23.8 3.9-34.1 11-7.9-7.9-15.9-15.6-24.2-23.1-23.8-21.4-60-21.5-83.9-.2-17 15.2-32.9 31.4-47.2 48.1l-18.6 0 0-96 208 0zM224 272l105.2 0c-6.4 8.8-12.3 17.6-17.7 26.3-13.2 21.3-25.1 45.2-32.3 69.7l-55.2 0 0-96zM544 112l-96 0 0-80 32 0c35.3 0 64 28.7 64 64l0 16zM505.7 272.3L518 258.5c5.4-6.1 13.3-8.8 20.9-8.9 7.2 0 14.3 2.6 19.9 7.8 19.7 18.3 39.8 43.2 55 70.6 15.1 27.2 26.2 58.1 26.2 88.1 0 88.7-71.3 159.8-160 159.8-89.6 0-160-71.3-160-159.8 0-37.3 16-73.4 36.8-104.5 20.9-31.3 47.5-59 70.9-80.2 5.7-5.2 13.1-7.7 20.3-7.5s13.4 3.2 18.8 7.5c14.4 11.4 38.9 40.7 38.9 40.7zM544 464.2c0-36.5-37-73-54.8-88.4-5.4-4.7-13.1-4.7-18.5 0-17.7 15.4-54.8 51.9-54.8 88.4 0 35.3 28.7 64 64 64s64-28.7 64-64z"></path></svg></span> UFW</label><label for="install-interworx-firewalld"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M224 32l192 0 0 80-192 0 0-80zm-32 80l-96 0 0-16c0-35.3 28.7-64 64-64l32 0 0 80zM96 144l208 0 0 96-208 0 0-96zm0 224l0-96 96 0 0 96-96 0zm0 32l176.7 0c-.5 4.7-.7 9.4-.7 14.1 0 22.9 3.7 45.1 10.6 65.9L160 480c-35.3 0-64-28.7-64-64l0-16zM544 144l0 60.2c-12 .3-23.8 3.9-34.1 11-7.9-7.9-15.9-15.6-24.2-23.1-23.8-21.4-60-21.5-83.9-.2-17 15.2-32.9 31.4-47.2 48.1l-18.6 0 0-96 208 0zM224 272l105.2 0c-6.4 8.8-12.3 17.6-17.7 26.3-13.2 21.3-25.1 45.2-32.3 69.7l-55.2 0 0-96zM544 112l-96 0 0-80 32 0c35.3 0 64 28.7 64 64l0 16zM505.7 272.3L518 258.5c5.4-6.1 13.3-8.8 20.9-8.9 7.2 0 14.3 2.6 19.9 7.8 19.7 18.3 39.8 43.2 55 70.6 15.1 27.2 26.2 58.1 26.2 88.1 0 88.7-71.3 159.8-160 159.8-89.6 0-160-71.3-160-159.8 0-37.3 16-73.4 36.8-104.5 20.9-31.3 47.5-59 70.9-80.2 5.7-5.2 13.1-7.7 20.3-7.5s13.4 3.2 18.8 7.5c14.4 11.4 38.9 40.7 38.9 40.7zM544 464.2c0-36.5-37-73-54.8-88.4-5.4-4.7-13.1-4.7-18.5 0-17.7 15.4-54.8 51.9-54.8 88.4 0 35.3 28.7 64 64 64s64-28.7 64-64z"></path></svg></span> Firewalld</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>Stop and disable <code>ufw</code></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-58-1"><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"> </span>ufw
+</span><span id="__span-58-2"><a id="__codelineno-58-2" name="__codelineno-58-2" href="#__codelineno-58-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>disable<span class="w"> </span>ufw
+</span></code></pre></div>
+<p>Confirm <code>ufw</code> is disabled with:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>ufw
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>Stop and disable <code>firewalld</code></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-60-1"><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"> </span>firewalld
+</span><span id="__span-60-2"><a id="__codelineno-60-2" name="__codelineno-60-2" href="#__codelineno-60-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>disable<span class="w"> </span>firewalld
+</span></code></pre></div>
+<p>Confirm <code>firewalld</code> is disabled with:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-61-1"><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>firewalld
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>We are ready to install <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>, which you should already have downloaded to your system. If not; download the latest version of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="30:2"><input checked="checked" id="install-interworx-tgz" name="__tabbed_30" type="radio"><input id="install-interworx-zip" name="__tabbed_30" type="radio"><div class="tabbed-labels"><label for="install-interworx-tgz"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 64C0 28.7 28.7 0 64 0L213.5 0c17 0 33.3 6.7 45.3 18.7L365.3 125.3c12 12 18.7 28.3 18.7 45.3L384 448c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 64zm208-5.5l0 93.5c0 13.3 10.7 24 24 24L325.5 176 208 58.5zM64 72c0 13.3 10.7 24 24 24l48 0c13.3 0 24-10.7 24-24s-10.7-24-24-24L88 48C74.7 48 64 58.7 64 72zm0 96c0 13.3 10.7 24 24 24l48 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-48 0c-13.3 0-24 10.7-24 24zm64 72l-32 0c-17.7 0-32 14.3-32 32l0 48c0 26.5 21.5 48 48 48s48-21.5 48-48l0-48c0-17.7-14.3-32-32-32zm-16 64a16 16 0 1 1 0 32 16 16 0 1 1 0-32z"></path></svg></span> .tgz</label><label for="install-interworx-zip"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M128 0C92.7 0 64 28.7 64 64l0 384c0 35.3 28.7 64 64 64l144 0 0-112c0-35.3 28.7-64 64-64l112 0 0-165.5c0-17-6.7-33.3-18.7-45.3L322.7 18.7C310.7 6.7 294.5 0 277.5 0L128 0zM389.5 176L296 176c-13.3 0-24-10.7-24-24L272 58.5 389.5 176zM336 380c-11 0-20 9-20 20s9 20 20 20l31.6 0-49.5 99.1c-3.1 6.2-2.8 13.6 .9 19.5s10.1 9.5 17 9.5l64 0c11 0 20-9 20-20s-9-20-20-20l-31.6 0 49.5-99.1c3.1-6.2 2.8-13.6-.9-19.5s-10.1-9.5-17-9.5l-64 0zm148 20c0-11-9-20-20-20s-20 9-20 20l0 128c0 11 9 20 20 20s20-9 20-20l0-128zm24 0l0 128c0 11 9 20 20 20s20-9 20-20l0-28 12 0c33.1 0 60-26.9 60-60s-26.9-60-60-60l-32 0c-11 0-20 9-20 20zm40 60l0-40 12 0c11 0 20 9 20 20s-9 20-20 20l-12 0z"></path></svg></span> .zip</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-62-1"><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a><span class="c1"># Using wget (tgz)</span>
+</span><span id="__span-62-2"><a id="__codelineno-62-2" name="__codelineno-62-2" href="#__codelineno-62-2"></a>wget<span class="w"> </span>https://download.configserver.dev/csf.tgz
+</span><span id="__span-62-3"><a id="__codelineno-62-3" name="__codelineno-62-3" href="#__codelineno-62-3"></a>
+</span><span id="__span-62-4"><a id="__codelineno-62-4" name="__codelineno-62-4" href="#__codelineno-62-4"></a><span class="c1"># Using curl (tgz)</span>
+</span><span id="__span-62-5"><a id="__codelineno-62-5" name="__codelineno-62-5" href="#__codelineno-62-5"></a>curl<span class="w"> </span>-O<span class="w"> </span>https://download.configserver.dev/csf.tgz
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-63-1"><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a><span class="c1"># Using wget (zip)</span>
+</span><span id="__span-63-2"><a id="__codelineno-63-2" name="__codelineno-63-2" href="#__codelineno-63-2"></a>wget<span class="w"> </span>https://download.configserver.dev/csf.zip
+</span><span id="__span-63-3"><a id="__codelineno-63-3" name="__codelineno-63-3" href="#__codelineno-63-3"></a>
+</span><span id="__span-63-4"><a id="__codelineno-63-4" name="__codelineno-63-4" href="#__codelineno-63-4"></a><span class="c1"># Using curl (zip)</span>
+</span><span id="__span-63-5"><a id="__codelineno-63-5" name="__codelineno-63-5" href="#__codelineno-63-5"></a>curl<span class="w"> </span>-O<span class="w"> </span>https://download.configserver.dev/csf.zip
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>Decompress / unzip the downloaded archive file:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="31:2"><input checked="checked" id="install-interworx-tgz_1" name="__tabbed_31" type="radio"><input id="install-interworx-zip_1" name="__tabbed_31" type="radio"><div class="tabbed-labels"><label for="install-interworx-tgz_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 64C0 28.7 28.7 0 64 0L213.5 0c17 0 33.3 6.7 45.3 18.7L365.3 125.3c12 12 18.7 28.3 18.7 45.3L384 448c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 64zm208-5.5l0 93.5c0 13.3 10.7 24 24 24L325.5 176 208 58.5zM64 72c0 13.3 10.7 24 24 24l48 0c13.3 0 24-10.7 24-24s-10.7-24-24-24L88 48C74.7 48 64 58.7 64 72zm0 96c0 13.3 10.7 24 24 24l48 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-48 0c-13.3 0-24 10.7-24 24zm64 72l-32 0c-17.7 0-32 14.3-32 32l0 48c0 26.5 21.5 48 48 48s48-21.5 48-48l0-48c0-17.7-14.3-32-32-32zm-16 64a16 16 0 1 1 0 32 16 16 0 1 1 0-32z"></path></svg></span> .tgz</label><label for="install-interworx-zip_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M128 0C92.7 0 64 28.7 64 64l0 384c0 35.3 28.7 64 64 64l144 0 0-112c0-35.3 28.7-64 64-64l112 0 0-165.5c0-17-6.7-33.3-18.7-45.3L322.7 18.7C310.7 6.7 294.5 0 277.5 0L128 0zM389.5 176L296 176c-13.3 0-24-10.7-24-24L272 58.5 389.5 176zM336 380c-11 0-20 9-20 20s9 20 20 20l31.6 0-49.5 99.1c-3.1 6.2-2.8 13.6 .9 19.5s10.1 9.5 17 9.5l64 0c11 0 20-9 20-20s-9-20-20-20l-31.6 0 49.5-99.1c3.1-6.2 2.8-13.6-.9-19.5s-10.1-9.5-17-9.5l-64 0zm148 20c0-11-9-20-20-20s-20 9-20 20l0 128c0 11 9 20 20 20s20-9 20-20l0-128zm24 0l0 128c0 11 9 20 20 20s20-9 20-20l0-28 12 0c33.1 0 60-26.9 60-60s-26.9-60-60-60l-32 0c-11 0-20 9-20 20zm40 60l0-40 12 0c11 0 20 9 20 20s-9 20-20 20l-12 0z"></path></svg></span> .zip</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-64-1"><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a>tar<span class="w"> </span>-xzf<span class="w"> </span>csf.tgz<span class="w"> </span>-C<span class="w"> </span>/tmp
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-65-1"><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a>unzip<span class="w"> </span>csf.zip<span class="w"> </span>-d<span class="w"> </span>/tmp
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>Run the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> installation script:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="32:2"><input checked="checked" id="install-interworx-option-1" name="__tabbed_32" type="radio"><input id="install-interworx-option-2" name="__tabbed_32" type="radio"><div class="tabbed-labels"><label for="install-interworx-option-1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 256a256 256 0 1 0 512 0 256 256 0 1 0 -512 0zm176 88c0-13.3 10.7-24 24-24l32 0 0-128-16 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l40 0c13.3 0 24 10.7 24 24l0 152 32 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-112 0c-13.3 0-24-10.7-24-24z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M192 168c0-13.3 10.7-24 24-24l40 0c13.3 0 24 10.7 24 24l0 152 32 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-112 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l32 0 0-128-16 0c-13.3 0-24-10.7-24-24z"></path></svg></span> Option 1</label><label for="install-interworx-option-2"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 256a256 256 0 1 0 512 0 256 256 0 1 0 -512 0zm176 71.6c0-36.2 22.1-68.7 55.8-81.9l44.7-17.6c6.9-2.7 11.4-9.4 11.4-16.8 0-10-8.1-18-18-18l-62 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l62 0c36.5 0 66 29.6 66 66 0 27.1-16.6 51.5-41.9 61.4l-44.7 17.6c-12.9 5.1-22.1 16.3-24.6 29.6l79.3 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-104 0c-13.3 0-24-10.7-24-24l0-16.4z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M184 169.3c0-13.3 10.7-24 24-24l62 0c36.5 0 66 29.6 66 66 0 27.1-16.6 51.5-41.9 61.4l-44.7 17.6c-12.9 5.1-22.1 16.3-24.6 29.6l79.3 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-104 0c-13.3 0-24-10.7-24-24l0-16.4c0-36.2 22.1-68.7 55.8-81.9l44.7-17.6c6.9-2.7 11.4-9.4 11.4-16.8 0-10-8.1-18-18-18l-62 0c-13.3 0-24-10.7-24-24z"></path></svg></span> Option 2</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 256a256 256 0 1 0 512 0 256 256 0 1 0 -512 0zm176 88c0-13.3 10.7-24 24-24l32 0 0-128-16 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l40 0c13.3 0 24 10.7 24 24l0 152 32 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-112 0c-13.3 0-24-10.7-24-24z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M192 168c0-13.3 10.7-24 24-24l40 0c13.3 0 24 10.7 24 24l0 152 32 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-112 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l32 0 0-128-16 0c-13.3 0-24-10.7-24-24z"></path></svg></span> Runs <code>install.sh</code> <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M64 192c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d=""></path></svg></span> uses <code>sh</code> shell <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M64 192c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d=""></path></svg></span> executable permission not required</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-66-1"><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a>sudo<span class="w"> </span>sh<span class="w"> </span>/tmp/csf/install.sh
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 256a256 256 0 1 0 512 0 256 256 0 1 0 -512 0zm176 71.6c0-36.2 22.1-68.7 55.8-81.9l44.7-17.6c6.9-2.7 11.4-9.4 11.4-16.8 0-10-8.1-18-18-18l-62 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l62 0c36.5 0 66 29.6 66 66 0 27.1-16.6 51.5-41.9 61.4l-44.7 17.6c-12.9 5.1-22.1 16.3-24.6 29.6l79.3 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-104 0c-13.3 0-24-10.7-24-24l0-16.4z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M184 169.3c0-13.3 10.7-24 24-24l62 0c36.5 0 66 29.6 66 66 0 27.1-16.6 51.5-41.9 61.4l-44.7 17.6c-12.9 5.1-22.1 16.3-24.6 29.6l79.3 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-104 0c-13.3 0-24-10.7-24-24l0-16.4c0-36.2 22.1-68.7 55.8-81.9l44.7-17.6c6.9-2.7 11.4-9.4 11.4-16.8 0-10-8.1-18-18-18l-62 0c-13.3 0-24-10.7-24-24z"></path></svg></span> Runs <code>install.sh</code> <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M64 192c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d=""></path></svg></span> uses shebang interpreter <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M64 192c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d=""></path></svg></span> requires executable <code>+x</code> permission</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-67-1"><a id="__codelineno-67-1" name="__codelineno-67-1" href="#__codelineno-67-1"></a>sudo<span class="w"> </span>chmod<span class="w"> </span>+x<span class="w"> </span>/tmp/csf/install.sh
+</span><span id="__span-67-2"><a id="__codelineno-67-2" name="__codelineno-67-2" href="#__codelineno-67-2"></a>sudo<span class="w"> </span>/tmp/csf/install.sh
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>Follow any instructions on-screen. If prompted for any additional information, enter it.</p>
+<p><br></p>
+<p>Log back into Interworx. Once in, navigate to <strong>NodeWorx</strong> › <strong>Plugins</strong> from the left-hand menu. You will be presented with a list of available plugins, scroll down and locate <strong>ConfigServer Security &amp; Firewall</strong>. Click the pencil to the left to edit the status.</p>
+<figure>
+    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../assets/images/install/interworx/3.png" data-desc-position="bottom"><img alt="Interworx › NodeWorx › Plugins › Edit ConfigServer" src="../../assets/images/install/interworx/3.png" width="700"></a>
+    <figcaption>Interworx › NodeWorx › Plugins › Edit ConfigServer</figcaption>
+</figure>
+<p><br></p>
+<p>On the right side, change the status of <strong>ConfigServer Security &amp; Firewall</strong> from <code>disabled</code> to <code>enabled</code> and press <strong>save</strong>.</p>
+<figure>
+    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../assets/images/install/interworx/4.png" data-desc-position="bottom"><img alt="Interworx › NodeWorx › Plugins › Change Status" src="../../assets/images/install/interworx/4.png" width="700"></a>
+    <figcaption>Interworx › NodeWorx › Plugins › Change Status</figcaption>
+</figure>
+<p><br></p>
+<p>After enabling the plugin, go back to the Interworx menu on the left, and navigate to</p>
+<ul>
+<li><strong>ConfigServer Plugins</strong> › <strong>Security and Firewall</strong></li>
+</ul>
+<figure>
+    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../assets/images/install/interworx/6.png" data-desc-position="bottom"><img alt="Interworx › ConfigServer Security &amp; Firewall › Dashboard" src="../../assets/images/install/interworx/6.png" width="700"></a>
+    <figcaption>Interworx › ConfigServer Security &amp; Firewall › Dashboard</figcaption>
+</figure>
+<p><br></p>
+<p>If the interface matches the screenshot above, the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> integration with Interworx is complete.  </p>
+<p>You can now proceed to the <a href="#next-steps">Next Steps</a> or skip the rest of this section and begin our <a href="../../usage/configuration/">Configuration</a> chapter to get things set up.</p>
 <p><br>
 <br></p>
 <hr>
@@ -3107,7 +3325,7 @@ and whitelisting your IP for security.  </p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 8, 2025 09:37:58 UTC"><span class="timeago" datetime="2025-10-08T09:37:58+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 8, 2025 09:37:58 UTC">2025-10-08</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 9, 2025 14:00:38 UTC"><span class="timeago" datetime="2025-10-09T14:00:38+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 9, 2025 14:00:38 UTC">2025-10-09</span>
   </span>
 
     
