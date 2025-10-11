@@ -3,5 +3,5 @@ from . import views
 
 urlpatterns = [
     path('', views.configservercsf, name='configservercsf'),
-    path('iframe', views.configservercsfiframe, name='configservercsfiframe'),
+    path('iframe/', views.configservercsfiframe, name='configservercsfiframe'),
 ]
