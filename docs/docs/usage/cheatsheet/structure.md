@@ -7,7 +7,7 @@ tags:
 
 # Cheatsheet: Structure <!-- omit from toc -->
 
-This page provides a summary of the files and folders associated with **ConfigServer Firewall & Security (CSF)**. Use it as a reference to locate and edit specific configuration files or resources.
+This page provides a summary of the files and folders associated with **ConfigServer Security & Firewall (CSF)**. Use it as a reference to locate and edit specific configuration files or resources.
 
 <br />
 
