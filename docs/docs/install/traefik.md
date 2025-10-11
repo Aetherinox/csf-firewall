@@ -206,7 +206,7 @@ By this point in the guide, you should have:
 - A registered domain or a local/LAN domain name
 - A Let's Encrypt or self-signed SSL certificate
 - A running installation of Traefik Reverse Proxy
-- An installed copy of ConfigServer Firewall & Security (CSF)
+- An installed copy of ConfigServer Security & Firewall (CSF)
 
 <br />
 

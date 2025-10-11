@@ -7,7 +7,8 @@
 *[CSF]: ConfigServer Security & Firewall
 *[csf]: ConfigServer Security & Firewall
 *[ConfigServer Firewall]: ConfigServer Security & Firewall Security
-*[ConfigServer Firewall & Security]: A security suite for Linux servers that provides firewall management, intrusion detection, and login failure monitoring.
+*[ConfigServer Security]: ConfigServer Security & Firewall Security
+*[ConfigServer Security & Firewall]: A security suite for Linux servers that provides firewall management, intrusion detection, and login failure monitoring.
 *[LFD]: Login Failure Daemon
 *[lfd]: Login Failure Daemon
 *[lfd daemon]: Login Failure Daemon

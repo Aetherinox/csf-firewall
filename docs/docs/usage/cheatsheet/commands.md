@@ -7,7 +7,7 @@ tags:
 
 # Cheatsheet › Commands <!-- omit from toc -->
 
-This section outlines all of the commands that can be run in your server’s terminal for **ConfigServer Firewall & Security (CSF)** which will allow you to:
+This section outlines all of the commands that can be run in your server’s terminal for **ConfigServer Security & Firewall (CSF)** which will allow you to:
 
 - Manage your firewall  
 - Add whitelisted IPs  
@@ -201,7 +201,7 @@ sudo csf --lfd status
 === "restart"
 
     ```
-    ● lfd.service - ConfigServer Firewall & Security - lfd
+    ● lfd.service - ConfigServer Security & Firewall - lfd
         Loaded: loaded (/lib/systemd/system/lfd.service; enabled; preset: enabled)
         Active: active (running) since 15ms ago
         Process: 3769 ExecStart=/usr/sbin/lfd (code=exited, status=0/SUCCESS)
@@ -213,14 +213,14 @@ sudo csf --lfd status
                 ├─3782 "lfd - starting"
                 └─3784 "lfd - starting"
 
-    systemd[1]: Starting lfd.service - ConfigServer Firewall & Security - lfd...
-    systemd[1]: Started lfd.service - ConfigServer Firewall & Security - lfd.
+    systemd[1]: Starting lfd.service - ConfigServer Security & Firewall - lfd...
+    systemd[1]: Started lfd.service - ConfigServer Security & Firewall - lfd.
     ```
 
 === "status"
 
     ```
-    ● lfd.service - ConfigServer Firewall & Security - lfd
+    ● lfd.service - ConfigServer Security & Firewall - lfd
         Loaded: loaded (/lib/systemd/system/lfd.service; enabled; preset: enabled)
         Active: active (running) since 1min 3s ago
         Process: 3769 ExecStart=/usr/sbin/lfd (code=exited, status=0/SUCCESS)
@@ -232,8 +232,8 @@ sudo csf --lfd status
                 ├─3782 "lfd - sleeping"
                 └─3791 "lfd UI"
 
-    systemd[1]: Starting lfd.service - ConfigServer Firewall & Security - lfd...
-    systemd[1]: Started lfd.service - ConfigServer Firewall & Security - lfd.
+    systemd[1]: Starting lfd.service - ConfigServer Security & Firewall - lfd...
+    systemd[1]: Started lfd.service - ConfigServer Security & Firewall - lfd.
     ```
 
 <br />
