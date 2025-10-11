@@ -4,7 +4,14 @@ tags:
   - install
   - setup
   - cpanel
+  - whm
   - webmin
+  - vestacp
+  - cwp
+  - centos-web-panel
+  - directadmin
+  - interworx
+  - cyberpanel
 ---
 
 # Install CSF <!-- omit from toc -->
@@ -1659,7 +1666,7 @@ Log back into CWP. Once in, navigate to **Security** › **CSF Firewall** from t
 
 <br />
 
-If the interface matches the screenshot above, the CSF integration with Interworx is complete.  
+If the interface matches the screenshot above, the CSF integration with CWP is complete.  
 
 You can now proceed to the [Next Steps](#next-steps) or skip the rest of this section and begin our [Configuration](../usage/configuration.md) chapter to get things set up.
 
