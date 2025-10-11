@@ -1,12 +1,12 @@
 ---
-title: About ConfigServer Firewall Suite
+title: About ConfigServer Firewall & Security Suite
 tags:
   - info
 ---
 
-# About ConfigServer Firewall & Security
+# About ConfigServer Security & Firewall
 
-**ConfigServer Firewall & Security** (_CSF_) is a comprehensive security suite for Linux servers, first released in 2005. At its core, CSF is a **Stateful Packet Inspection** (_SPI_) firewall and intrusion detection system that works as a front-end to iptables or nftables, the standard Linux firewall frameworks.
+**ConfigServer Security & Firewall** (_CSF_) is a comprehensive security suite for Linux servers, first released in 2005. At its core, CSF is a **Stateful Packet Inspection** (_SPI_) firewall and intrusion detection system that works as a front-end to iptables or nftables, the standard Linux firewall frameworks.
 
 <br />
 
@@ -16,7 +16,7 @@ tags:
 
 ## About
 
-**ConfigServer Firewall & Security**, also known as _CSF_, is a **Stateful Packet Inspection** (_SPI_) firewall and Login/Intrusion Detection and Security application for Linux servers which started back in 2005. CSF works as a front-end to iptables or nftables, configuring your server’s firewall rules to lock down public access to services while allowing only approved connections. This provides better security for your server while giving you an advanced, easy-to-use interface for managing firewall settings. With CSF in place, you can safely permit activities such as logging in via FTP or SSH, checking email, and loading websites, while unauthorized access attempts are blocked.
+**ConfigServer Security & Firewall**, also known as _CSF_, is a **Stateful Packet Inspection** (_SPI_) firewall and Login/Intrusion Detection and Security application for Linux servers which started back in 2005. CSF works as a front-end to iptables or nftables, configuring your server’s firewall rules to lock down public access to services while allowing only approved connections. This provides better security for your server while giving you an advanced, easy-to-use interface for managing firewall settings. With CSF in place, you can safely permit activities such as logging in via FTP or SSH, checking email, and loading websites, while unauthorized access attempts are blocked.
 
 <br />
 
@@ -43,7 +43,7 @@ When you install the CSF suite on your server; you will be provided with two ser
 
 ## Features
 
-Interested in Config Server Firewall & Security? Check out a partial list of the included features below:
+Interested in ConfigServer Security & Firewall? Check out a partial list of the included features below:
 
 <br />
 

@@ -40,7 +40,7 @@ sudo csf -ra
 
 ## Full Version
 
-This is a copy of the original CSF `/etc/csf/csf.conf` config file available from our :aetherx-axb-github: [repository](https://github.com/Aetherinox/csf-firewall). It contains all comments and is the version you receive when downloading the latest version of ConfigServer Firewall & Security.
+This is a copy of the original CSF `/etc/csf/csf.conf` config file available from our :aetherx-axb-github: [repository](https://github.com/Aetherinox/csf-firewall). It contains all comments and is the version you receive when downloading the latest version of ConfigServer Security & Firewall.
 
 ```ini
 --8<-- "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf"

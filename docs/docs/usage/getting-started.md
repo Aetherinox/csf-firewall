@@ -7,7 +7,7 @@ tags:
 
 # Usage › Getting Started
 
-In the previous [Installation](../install/dependencies.md) chapter, we covered how to install both the depenencies and **ConfigServer Firewall & Security (CSF)** itself on your server. This chapter covers the fundamentals of configuring CSF and understanding how it operates. 
+In the previous [Installation](../install/dependencies.md) chapter, we covered how to install both the depenencies and **ConfigServer Security & Firewall (CSF)** itself on your server. This chapter covers the fundamentals of configuring CSF and understanding how it operates. 
 
 <br />
 
