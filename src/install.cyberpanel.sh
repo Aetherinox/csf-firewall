@@ -642,7 +642,7 @@ fi
 # #
 
 service lscpd restart
-service lscpd lsws
+service lsws restart
 
 echo
 echo "Installation Completed"
