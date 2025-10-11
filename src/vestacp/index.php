@@ -1,4 +1,9 @@
 <link rel="stylesheet" href="<?php $_SERVER['DOCUMENT_ROOT'] ?>/css/styles.min.css">
+<style>
+.l-header {
+    background-color: #222e44 !important;
+}
+</style>
 
 <?php
 /*
