@@ -21,7 +21,7 @@
     
     
       
-        <title>About ConfigServer Firewall Suite - CSF Firewall</title>
+        <title>About ConfigServer Firewall &amp; Security Suite - CSF Firewall</title>
       
     
     
@@ -90,7 +90,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#about-configserver-firewall-security" class="md-skip">
+        <a href="#about-configserver-security-firewall" class="md-skip">
           Skip to content
         </a>
       
@@ -161,7 +161,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              About ConfigServer Firewall Suite
+              About ConfigServer Firewall &amp; Security Suite
             
           </span>
         </div>
@@ -2105,13 +2105,13 @@
   
 
 
-<h1 id="about-configserver-firewall-security">About <abbr title="A security suite for Linux servers that provides firewall management, intrusion detection, and login failure monitoring.">ConfigServer Firewall &amp; Security</abbr><a class="headerlink" href="#about-configserver-firewall-security" title="Permanent link">¶</a></h1>
-<p><strong><abbr title="A security suite for Linux servers that provides firewall management, intrusion detection, and login failure monitoring.">ConfigServer Firewall &amp; Security</abbr></strong> (<em><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr></em>) is a comprehensive security suite for Linux servers, first released in 2005. At its core, <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> is a <strong>Stateful Packet Inspection</strong> (<em><abbr title="Stateful Packet Inspection">SPI</abbr></em>) firewall and intrusion detection system that works as a front-end to <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> or <abbr title="A Linux firewall framework that replaces iptables with a simpler, faster system.">nftables</abbr>, the standard Linux firewall frameworks.</p>
+<h1 id="about-configserver-security-firewall">About <abbr title="A security suite for Linux servers that provides firewall management, intrusion detection, and login failure monitoring.">ConfigServer Security &amp; Firewall</abbr><a class="headerlink" href="#about-configserver-security-firewall" title="Permanent link">¶</a></h1>
+<p><strong><abbr title="A security suite for Linux servers that provides firewall management, intrusion detection, and login failure monitoring.">ConfigServer Security &amp; Firewall</abbr></strong> (<em><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr></em>) is a comprehensive security suite for Linux servers, first released in 2005. At its core, <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> is a <strong>Stateful Packet Inspection</strong> (<em><abbr title="Stateful Packet Inspection">SPI</abbr></em>) firewall and intrusion detection system that works as a front-end to <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> or <abbr title="A Linux firewall framework that replaces iptables with a simpler, faster system.">nftables</abbr>, the standard Linux firewall frameworks.</p>
 <p><br></p>
 <hr>
 <p><br></p>
 <h2 id="about">About<a class="headerlink" href="#about" title="Permanent link">¶</a></h2>
-<p><strong><abbr title="A security suite for Linux servers that provides firewall management, intrusion detection, and login failure monitoring.">ConfigServer Firewall &amp; Security</abbr></strong>, also known as <em><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr></em>, is a <strong>Stateful Packet Inspection</strong> (<em><abbr title="Stateful Packet Inspection">SPI</abbr></em>) firewall and Login/Intrusion Detection and Security application for Linux servers which started back in 2005. <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> works as a front-end to <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> or <abbr title="A Linux firewall framework that replaces iptables with a simpler, faster system.">nftables</abbr>, configuring your server’s firewall rules to lock down public access to <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> while allowing only approved connections. This provides better security for your server while giving you an advanced, easy-to-use interface for managing firewall settings. With <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> in place, you can safely permit activities such as logging in via FTP or SSH, checking email, and loading websites, while unauthorized access attempts are blocked.</p>
+<p><strong><abbr title="A security suite for Linux servers that provides firewall management, intrusion detection, and login failure monitoring.">ConfigServer Security &amp; Firewall</abbr></strong>, also known as <em><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr></em>, is a <strong>Stateful Packet Inspection</strong> (<em><abbr title="Stateful Packet Inspection">SPI</abbr></em>) firewall and Login/Intrusion Detection and Security application for Linux servers which started back in 2005. <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> works as a front-end to <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> or <abbr title="A Linux firewall framework that replaces iptables with a simpler, faster system.">nftables</abbr>, configuring your server’s firewall rules to lock down public access to <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> while allowing only approved connections. This provides better security for your server while giving you an advanced, easy-to-use interface for managing firewall settings. With <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> in place, you can safely permit activities such as logging in via FTP or SSH, checking email, and loading websites, while unauthorized access attempts are blocked.</p>
 <p><br></p>
 <p>As part of the <abbr title="ConfigServer Security &amp; Firewall Security">ConfigServer Firewall</abbr> suite, <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> includes the companion service <strong>Login Failure Daemon</strong> (<em><abbr title="Login Failure Daemon">LFD</abbr></em>). <abbr title="Login Failure Daemon">LFD</abbr> continuously monitors authentication activity on your server to detect excessive login failures, a common sign of brute force attacks. When repeated failures are detected from the same IP address, <abbr title="Login Failure Daemon">LFD</abbr> will automatically and temporarily block that IP from accessing any <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> on your server. These blocks expire after a set period, but they can also be manually removed through the ConfigServer interface. You can also extend the duration of a blocked IP address, or block an IP indefinitely.</p>
 <p><br></p>
@@ -2140,7 +2140,7 @@
 <hr>
 <p><br></p>
 <h2 id="features">Features<a class="headerlink" href="#features" title="Permanent link">¶</a></h2>
-<p>Interested in Config Server Firewall &amp; Security? Check out a partial list of the included features below:</p>
+<p>Interested in <abbr title="A security suite for Linux servers that provides firewall management, intrusion detection, and login failure monitoring.">ConfigServer Security &amp; Firewall</abbr>? Check out a partial list of the included features below:</p>
 <p><br></p>
 <h3 id="firewall-network-security">Firewall &amp; Network Security<a class="headerlink" href="#firewall-network-security" title="Permanent link">¶</a></h3>
 <ul>
@@ -2245,7 +2245,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 14, 2025 22:06:51 UTC"><span class="timeago" datetime="2025-09-14T22:06:51+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 14, 2025 22:06:51 UTC">2025-09-14</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 11, 2025 01:34:59 UTC"><span class="timeago" datetime="2025-10-11T01:34:59+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 11, 2025 01:34:59 UTC">2025-10-11</span>
   </span>
 
     
