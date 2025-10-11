@@ -3281,7 +3281,7 @@ EOF
 		#	
 		# #
 
-		if ( $codename eq "generic" || $codename eq "cpanel" || $codename eq "interworx" )
+		if ( $codename eq "generic" || $codename eq "cpanel" || $codename eq "interworx" || $codename eq "vestacp" )
 		{
 			print "<div class='footer'>";
 				print "<div class='footer-left'>";
