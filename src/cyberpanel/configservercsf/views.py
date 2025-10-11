@@ -12,7 +12,7 @@ import json
 from plogical.acl import ACLManager
 import plogical.CyberCPLogFileWriter as logging
 import subprocess
-from django.shortcuts import HttpResponse, render
+from plogical.httpProc import httpProc
 from plogical.processUtilities import ProcessUtilities
 from django.views.decorators.csrf import csrf_exempt
 import tempfile
@@ -28,7 +28,8 @@ def configservercsf(request):
     else:
         return ACLManager.loadError()
 
-    return render(request,'configservercsf/index.html')
+    htProc = httpProc(request, 'configservercsf/index.html', None, 'admin')
+    return htProc.render()
 
 @csrf_exempt
 @xframe_options_exempt
