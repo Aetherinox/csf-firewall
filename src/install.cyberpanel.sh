@@ -608,10 +608,12 @@ fi
 #		</a>
 # #
 
-sed -i '/url '\''imunify'\''/ i \
-                <a href="{% url '\''configservercsf'\'' %}" class="menu-item">\
-                    <span>CSF</span>\
-                </a>' /usr/local/CyberCP/baseTemplate/templates/baseTemplate/index.html
+if ! grep -q "configservercsf" /usr/local/CyberCP/baseTemplate/templates/baseTemplate/index.html; then
+	sed -i '/url '\''imunify'\''/ i \
+				<a href="{% url '\''configservercsf'\'' %}" class="menu-item">\
+					<span>CSF</span>\
+				</a>' /usr/local/CyberCP/baseTemplate/templates/baseTemplate/index.html
+fi
 
 # #
 #	Compatibility Tweak
