@@ -26,6 +26,13 @@
 #   along with this program; if not, see <https://www.gnu.org/licenses>.
 # #
 
+# #
+#	v15.02
+#	
+#	Cyberpanel has opted to replace ConfigServer with their own in-house firewall.
+#	However, for users who wish to return to CSF; we will give them a solution
+# #
+
 umask 0177
 
 if [ -e "/usr/local/cpanel/version" ]; then
@@ -543,20 +550,97 @@ cp -avf cyberpanel/configservercsf /usr/local/CyberCP/
 mkdir /home/cyberpanel/plugins
 touch /home/cyberpanel/plugins/configservercsf
 
+# #
+#	Open
+#		/usr/local/CyberCP/CyberCP/settings.py
+#	Find
+#		'pluginHolder',
+#	Add Above
+#		'configservercsf',
+# #
+
 if ! cat /usr/local/CyberCP/CyberCP/settings.py | grep -q configservercsf; then
     sed -i "/pluginHolder/ i \ \ \ \ 'configservercsf'," /usr/local/CyberCP/CyberCP/settings.py
 fi
+
+# #
+#	Open
+#		/usr/local/CyberCP/CyberCP/urls.py
+#	Find
+#		path('plugins/', include('pluginHolder.urls')),
+#	Add Above
+#		path('configservercsf/',include('configservercsf.urls')),
+# #
+
 if ! cat /usr/local/CyberCP/CyberCP/urls.py | grep -q configservercsf; then
-    sed -i "/pluginHolder/ i \ \ \ \ url(r'^configservercsf/',include('configservercsf.urls'))," /usr/local/CyberCP/CyberCP/urls.py
+    sed -i "/pluginHolder/ i \ \ \ \ path('configservercsf/',include('configservercsf.urls'))," /usr/local/CyberCP/CyberCP/urls.py
 fi
-#if ! cat /usr/local/CyberCP/baseTemplate/templates/baseTemplate/index.html | grep -q configservercsf; then
-#    sed -i "/url 'csf'/ i <li><a href='/configservercsf/' title='ConfigServer Security and Firewall'><span>ConfigServer Security \&amp; Firewall</span></a></li>" /usr/local/CyberCP/baseTemplate/templates/baseTemplate/index.html
-#fi
+
+# #
+#	if ! cat /usr/local/CyberCP/baseTemplate/templates/baseTemplate/index.html | grep -q configservercsf; then
+#   	sed -i "/url 'csf'/ i <li><a href='/configservercsf/' title='ConfigServer Security and Firewall'><span>ConfigServer Security \&amp; Firewall</span></a></li>" /usr/local/CyberCP/baseTemplate/templates/baseTemplate/index.html
+#	fi
+# #
+
+# #
+#	Open
+#		/usr/local/CyberCP/baseTemplate/templates/baseTemplate/index.html
+#	Find
+#		path('plugins/', include('pluginHolder.urls')),
+#	Insert New
+#		path('configservercsf/',include('configservercsf.urls')),
+# #
+
 if ! cat /usr/local/CyberCP/baseTemplate/templates/baseTemplate/index.html | grep -q configserver; then
     sed -i "/trans 'Plugins'/ i \{\% include \"/usr/local/CyberCP/configservercsf/templates/configservercsf/menu.html\" \%\}" /usr/local/CyberCP/baseTemplate/templates/baseTemplate/index.html
 fi
 
+# #
+#	Open
+#		/usr/local/CyberCP/baseTemplate/templates/baseTemplate/index.html
+#	Find
+#		<a href="{% url 'imunify' %}" class="menu-item">
+#			<span>Imunify 360</span>
+#		</a>
+#	Add Above
+#		<a href="{% url 'configservercsf' %}" class="menu-item">
+#			<span>CSF</span>
+#		</a>
+# #
+
+sed -i '/url '\''imunify'\''/ i \
+                <a href="{% url '\''configservercsf'\'' %}" class="menu-item">\
+                    <span>CSF</span>\
+                </a>' /usr/local/CyberCP/baseTemplate/templates/baseTemplate/index.html
+
+# #
+#	Compatibility Tweak
+#	
+#	Certain versions of Cyberpanel use the older method url(); newer versions use path().
+#	Check the target file to see if we need to convert back to the old method.
+#	
+#	@target			/usr/local/CyberCP/CyberCP/urls.py
+# #
+
+if grep -q "import url" /usr/local/CyberCP/CyberCP/urls.py; then
+    sed -i \
+        -e "s/from django\.urls import path/from django.conf.urls import url/g" \
+        -e "s|path('', views.configservercsf, name='configservercsf')|url(r'^$', views.configservercsf, name='configservercsf')|g" \
+        -e "s|path('iframe', views.configservercsfiframe, name='configservercsfiframe')|url(r'^iframe/$', views.configservercsfiframe, name='configservercsfiframe')|g" \
+        -e "s/path(/url(/g" \
+        /usr/local/CyberCP/CyberCP/urls.py
+
+    echo "[Cyberpanel] path() => url() applied"
+else
+    echo "[Cyberpanel] path() => url() not needed"
+fi
+
+# #
+#	restart services
+# #
+
 service lscpd restart
+service lscpd lsws
 
 echo
 echo "Installation Completed"
