@@ -3181,7 +3181,320 @@ To access it, go to the left-hand Webmin menu and navigate to:</p>
 <p><br>
 <br></p>
 <h2 id="install-vestacp">Install: VestaCP<a class="headerlink" href="#install-vestacp" title="Permanent link">¶</a></h2>
-<p>This part of the documentation is currently being written.</p>
+<details class="danger">
+<summary>Danger: Security Vulnerabilities</summary>
+<p>As of <strong>10/10/2025</strong>, there are over <strong>20</strong> known <a href="https://www.cve.org/CVERecord/SearchResults?query=vesta">security vulnerabilities listed for VestaCP</a>. Take these warnings serious in terms of your decision to use VestaCP on outdated distros such as CentOS 7, which reached <abbr title="End-of-Life. Stage when a Linux distribution or version no longer receives official updates, patches, or security fixes from its maintainers. Systems running an EOL release are considered unsupported and may be vulnerable unless upgraded or migrated to a maintained version.">EOL</abbr> on <strong>June 30, 2024</strong>.</p>
+</details>
+<details class="bug">
+<summary>Bug: <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> Header Button</summary>
+<p>As of <strong>VestaCP v1.0</strong>, the application was migrated to <strong>React</strong>, which fundamentally changed how the web interface works. The UI is now compiled into a series of <code>.CSS</code> and <code>.JS</code> files, rather than using the older PHP/<abbr title="Hyper Text Markup Language">HTML</abbr> templates.</p>
+<p>Because of this change, <strong><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> does not currently appear in the top menu</strong> of VestaCP, even though the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> page itself is still fully accessible at <code>https://192.168.0.16:5463/list/csf</code>.</p>
+<p>To restore the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> menu link, the <strong>VestaCP developers would need to add a conditional menu item</strong> that detects when <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> is installed and ready to use. After they add this change to their source menu code, they can re-build the React .js file to push for public release.</p>
+<p>Unfortunately, due to the lack of recent updates from the VestaCP team, this integration may never be corrected, and users will need to access <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> directly via its URL.</p>
+</details>
+<details class="note">
+<summary>Note: Project Status Unknown</summary>
+<p>The current status of VestaCP is unknown. The developers <a href="https://vestacp.com/docs/vesta-2-development">announced a release</a> of VestaCP 2.0 in 2024, however, no other information was given after that time.</p>
+<p>The <a href="https://github.com/outroll/vesta">repository</a> has not been updated in over a year.</p>
+</details>
+<p><br></p>
+<p><a href="https://github.com/outroll/vesta">Vesta</a> is an open-source hosting control panel designed to simplify server management tasks. It provides a clean and focused interface without unnecessary clutter, allowing users to efficiently manage their hosting environments. VestaCP supports various features, including:</p>
+<ul>
+<li>Web, DNS, and Mail Management: Easily manage domains, DNS records, and email accounts.</li>
+<li>Database Support: Create and manage MySQL and PostgreSQL databases.</li>
+<li>SSL Integration: Automatically generate SSL/TLS certificates with Let's Encrypt.</li>
+<li>Security Features: Configure firewalls and manage user access.</li>
+<li>Backup Solutions: Schedule and manage backups for your data.</li>
+</ul>
+<p>Vesta is licensed under the <a href="https://github.com/outroll/vesta/blob/master/LICENSE">GPL v3 license</a>, ensuring that it remains free and open for community contributions.</p>
+<p><br></p>
+<table>
+<thead>
+<tr>
+<th>Distro</th>
+<th>Supported Versions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M289.6 97.5l31.6 31.7-76.3 76.5 0-108.2 44.7 0zM127.2 129.2l76.3 76.5 0-108.2-44.7 0-31.6 31.7zm41.5-41.6l44.7 0 0 127.9 10.8 10.8 10.8-10.8 0-127.9 44.7 0-55.5-55.6-55.5 55.6zm26.2 168.1l-10.8-10.8-128.6 0 0-44.8-55.5 55.6 55.5 55.6 0-44.8 128.6 0 10.8-10.8zM274.2 235l107.9 0 0-44.8-31.6-31.7-76.3 76.5zm173.3 20.7l-55.5-55.6 0 44.8-127.7 0-10.8 10.8 10.8 10.8 127.7 0 0 44.8 55.5-55.6zM65.4 176.2l32.5-31.7 90.3 90.5 15.3 0 0-15.3-90.3-90.5 31.6-31.7-79.4 0 0 78.7zM382.1 97.5l-78.5 0 31.6 31.7-90.3 90.5 0 15.3 15.3 0 90.3-90.5 31.6 31.7 0-78.7zM203.5 413.9l0-108.1-76.3 76.5 31.6 31.7 44.7 0 0-.1zM65.4 235l108.8 0-76.3-76.5-32.5 31.7 0 44.8zM382.1 335.2l-31.6 31.7-90.3-90.5-15.3 0 0 15.3 90.3 90.5-31.6 31.7 78.5 0 0-78.7zm0-58.8l-107.9 0 76.3 76.5 31.6-31.7 0-44.8zM321.2 382.2l-76.3-76.5 0 108.1 44.7 0 31.6-31.6zM97.9 352.9l76.3-76.5-108.8 0 0 44.8 32.5 31.7zm181.8 70.9l-44.7 0 0-127.9-10.8-10.8-10.8 10.8 0 127.9-44.7 0 55.5 55.6 55.5-55.6zM113.2 382.2l90.3-90.5 0-15.3-15.3 0-90.3 90.5-32.5-31.7 0 78.7 79.4 0-31.6-31.7z"></path></svg></span> RHEL / CentOS</td>
+<td>5, 6, 7</td>
+</tr>
+<tr>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M380.4 245.6c3-7.6 5.5-14 5.2-24.4l-4.3 9c4.4-13.2 4-27.1 3.6-40.4-.2-6-.3-11.8 0-17.4l-1.8-.5c-1.5-45.2-40.6-93.1-75.3-109.4-30-13.8-76.1-16.2-97.3-5.8 1.3-1.1 4.2-2 6.8-2.7l.3-.1c3.3-1 6-1.7 4-2.9-19.2 1.9-24.9 5.5-31.1 9.4l-.1 0c-4.6 2.9-9.5 6-20.3 8.7-3.5 3.4 1.7 2 5.8 .9s7.2-1.9-.1 2.4c-3.5 1-6.6 1.3-9.6 1.6l-.1 0c-8.3 .8-15.8 1.6-30.7 17 .8 1.3 3.4-.2 5.3-1.3l.1-.1c2.3-1.4 3.4-2-1.7 4.4-19.1-2.4-60.3 43.7-69.1 59l4.6 .8c-3.2 8-6.8 14.8-10 20.8-4.3 8.1-7.9 14.9-8.7 21.3-.3 5.1-1 11-1.7 17.3-.1 1-.2 2-.3 3l-.1 .6c-3 27.3-6.7 60.8 3.9 73l-1.3 13c.6 1.2 1.1 2.3 1.6 3.5 .2 .4 .4 .8 .5 1.1 1 2.1 2 4.2 3.3 6.2l-3 .2c7 22.1 10.8 22.5 15.1 22.9 4.4 .4 9.3 .9 18.7 24.2-2.7-.9-5.5-1.9-9.4-7.2-.5 4.1 5.8 16.3 13.1 25.8l-3.1 3.6c2.1 3.7 4.8 6.2 7.6 8.8 1 .9 2.1 1.9 3.1 2.9-11.9-6.5 3.2 13.7 11.9 25.2 .8 1.1 1.5 2 2.2 2.9 1.4 1.9 2.5 3.4 2.9 4.1l2.4-4.2c-.3 6.1 4.3 13.9 13.1 24.7l7.3-.3c3 6 14 16.7 20.7 17.2l-4.4 5.8c8.1 2.6 10.3 4.3 12.7 6.2 2.6 2.1 5.4 4.3 16.1 8.1l-4.2-7.4c3.5 3 6.2 5.9 8.8 8.7l.1 .1c5.2 5.6 9.9 10.6 19.7 15.3 10.7 3.7 16.6 4.7 22.7 5.8 .3 0 .6 .1 .9 .1 5.4 .8 11.2 1.8 20.8 4.5-1.1-.1-2.2-.1-3.3-.1-2.3-.1-4.7-.1-7-.1-14.4-.2-29.2-.4-42.7-5.2-96.6-25.7-184.9-139-178.4-255.6-.6-9.9-.3-20.9 0-30.7 .4-13.5 .7-24.8-1.6-28.3l1-3.1c5.3-17.4 11.7-38.2 23.8-62.8l-.1-.2 0-.1c.4 .4 3.4 3.4 8.8-5.8 .8-1.8 1.6-3.7 2.4-5.6 .5-1.1 .9-2.2 1.4-3.2 2.5-6.1 5.1-12.3 8.4-17.9l2.6-.6c1.7-10.1 17-23.8 29.8-35.2l1.1-1c5.7-5.1 10.7-9.7 13.6-13.1l.7 4.4c17-15.9 44.6-27.5 65.6-36.4l.5-.2c4.8-2 9.3-3.9 13.3-5.7-3.4 3.8 2.2 2.7 10 1 4.8-1 10.4-2.1 15.3-2.4l-3.9 2.1c-2.7 1.4-5.4 2.8-8 4.6 8.1-2 11.7-1.4 15.7-.8l.3 0c3.5 .6 7.3 1.2 14.6 .2-5.6 .8-12.3 3-11.2 3.8 7.9 .9 12.8-.1 17.2-1l.2 0c5.5-1.1 10.3-2 19.3 .9l-1-4.8c7.3 2.6 12.7 4.3 17.5 5.8l.5 .1c10 3 17.6 5.3 34.2 14.1 3.2 .2 5.3-.5 7.4-1.2l.1 0c3.6-1.1 7-2.1 15.2 1.2 .3 .5 .5 1 .7 1.4 .1 .2 .2 .5 .3 .7l0 .1c1 2.6 1.8 4.6 14.6 12.1 1.7-.7-2.7-4.7-6.4-8.2l-.1-.1c-.2-.1-.3-.3-.5-.4 32.2 17.3 67.3 54.1 78 93.5-6-11.1-5.2-5.5-4.3 .5 .6 4 1.2 8.1-.2 7.5 4.5 12.1 8.1 24.5 10.4 37.4l-.8-2.9-.1-.3c-3.3-11.9-9.6-34.3-19.9-49.3-.4 4.3-2.8 3.9-5.2 3.5l-.1 0c-3.3-.6-6.2-1.1-1.9 12.6 2.6 3.8 3.1 2.4 3.5 1.1 .5-1.5 .9-2.7 4.7 5.2 .1 4.1 1 8.2 2.1 12.7l.1 .6c.1 .3 .1 .5 .2 .8l.1 .6c.6 2.6 1.3 5.4 1.8 8.4-1.1-.2-2.3-2.2-3.4-4.2-1.4-2.4-2.8-4.7-3.7-3.2 2.4 11.5 6.5 17.4 8 18.3-.3 .6-.6 .7-1.1 .7-.8 0-1.8 .1-1.9 5.3 .7 13.7 3.3 12.5 5.3 11.6 .6-.3 1.2-.6 1.7-.4-.6 2.5-1.6 5.1-2.7 7.9-2.8 7.1-6 15.4-3.4 26.1-.8-3-2-6-3.1-8.9l-.1-.4c-.2-.5-.4-1-.6-1.5-.3-.8-.6-1.6-.9-2.3-.6 4.4-.3 7.7-.1 10.6l0 .7c.4 5.3 .7 10-3 19.9 4.3-14.2 3.8-26.9-.2-20.8 1 10.9-3.7 20.4-8 28.9l-.1 .2c-3.6 7.1-6.8 13.5-5.9 19.3l-5.2-7.1c-7.5 10.9-7 13.3-6.5 15.5l0 .1c.5 1.9 1 3.8-3.4 10.8 1.7-2.9 1.3-3.6 1-4.2-.4-.8-.7-1.5 1.7-5.1-1.6 .1-5.5 3.9-10.1 8.5-3.9 3.9-8.5 8.4-12.8 11.8-37.5 30.1-82.3 34-125.6 17.8 .2-1-.2-2.1-3.1-4.1-36.8-28.2-58.5-52.1-50.9-107.5 2.1-1.6 3.6-5.8 5.3-10.8l.2-.4 .1-.3 0-.1c2.9-8.4 6.5-18.8 14.3-23.8 7.8-17.3 31.3-33.3 56.4-33.7 25.6-1.4 47.2 13.7 58.1 27.9-19.8-18.4-52.1-24-79.7-10.4-28.2 12.7-45 43.8-42.5 74.7 .3-.4 .6-.6 .9-.8l.2-.2c.6-.5 1.1-.9 1.4-3.3-.9 60.2 64.8 104.3 112.1 82l.6 1.3c12.7-3.5 15.9-6.5 20.3-10.7l.1-.1c2.2-2.1 4.7-4.5 8.9-7.3-.3 .7-1.3 1.7-2.4 2.7-2.2 2.1-4.6 4.5-1.6 4.6 5-1.3 18.5-13.4 28.5-22.3 .6-.5 1.2-1 1.7-1.5 1.5-1.3 2.8-2.5 4-3.6l.3-.3c1.9-4.2 1.6-5.6 1.3-7l0-.1c-.4-1.6-.8-3.3 2.4-9.6l7.3-3.7c.8-2.1 1.5-4.1 2.2-6 .2-.6 .5-1.2 .7-1.8l-.4-.2-.1-.1zM248 334.1c-6-3-13.7-8.9-14.8-11.4l-.4 .3c-.3 .6-.5 1.3-.2 2.2-12.2-5.7-23.4-14.3-32.6-24.9 4.9 7.1 10.1 14.1 17 19.5-6.9-2.3-15.1-11.8-21.6-19.3l-.1-.1c-4.3-5-7.9-9.1-9.7-9.5 19.8 35.5 80.5 62.3 112.3 49-14.7 .5-33.4 .3-49.9-5.8zm79.3-119.7l-.1-.2c-.5-1.5-1.1-3.1-1.7-3.4 1.4-5.8 5.4-10.7 4.4 4.6-1 3.8-1.8 1.5-2.6-1zm-4.2 22.2c-1.3 7.9-5 15.5-10.1 22.5 .2-2-1.2-2.4-2.6-2.8-2.9-.8-5.9-1.6 5.6-16.1-.5 1.9-2.1 4.6-3.7 7.3l-.3 .4c-3.6 5.9-6.7 11 4 4.3l1-1.8c2.6-4.5 5-8.8 6-13.8l.1 0zm-55.6 33.9c7.1 .6 14.1 .6 21-1.1-2.5 2.4-5.2 4.8-8.3 7.2-11.1-1.7-21.2-6-12.7-6.1zm-92.6 11.6c3.6 7.1 6.4 11.5 9 15.7l.1 .2c2.3 3.7 4.4 7.1 6.8 11.7-5.1-4.2-8.7-9.5-12.5-15l-.3-.5c-1.4-2.1-2.8-4.2-4.4-6.2l1.2-5.9 .1 0zm7.5-9.6c1.6 3.3 3.2 6.4 5.7 9.1l2.6 7.7-1.3-2.1c-3.2-5.3-6.3-10.6-8-16.7l1 2zm238.9-41.6c-2.3 17.4-7.7 34.6-16 50.3 7.6-14.9 12.5-30.9 14.8-47.2l1.2-3.1zM35.8 110.6c.4 .8 1.4 .5 2.3 .3 1.9-.5 3.6-.9-.1 7.6-.5 .3-1 .7-1.5 1-1.4 .9-2.8 1.9-3.9 3 1.9-3.8 3.5-7.4 3.2-11.9zM25.5 152.3c-.7 3.7-1.5 7.9-3.4 13.9 .2-1.9 0-3.5-.2-4.9l0-.1c-.4-3.4-.7-6.3 4.3-12.8-.3 1.2-.5 2.5-.7 3.8l0 .1z"></path></svg></span> Debian</td>
+<td>7, 8, 9</td>
+</tr>
+<tr>
+<td><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M469.2 75c0-20.1-8-39.3-22.2-53.5s-33.4-22.2-53.5-22.2-39.3 8-53.5 22.2-22.2 33.4-22.2 53.5c0 20.1 8 39.3 22.1 53.5s33.4 22.1 53.5 22.1 39.3-8 53.5-22.1 22.1-33.4 22.1-53.5l.1 0zm-315 165.7a75.6 75.6 0 1 0 -151.2 0 75.6 75.6 0 1 0 151.2 0zM57 346c18.6 46.9 51 87 93 115.1s91.5 42.6 142 41.7c-14.7-18.6-22.9-41.5-23.2-65.2-6.8-.9-13.3-2.1-19.5-3.4-26.8-5.7-51.9-17.3-73.6-34s-39.3-38.1-51.7-62.5c-20.9 9.9-44.5 12.8-67.1 8.2l.1 .1zm395.1 89.8a75.6 75.6 0 1 0 -151.2 0 75.6 75.6 0 1 0 151.2 0zM444 351.6c18.5 14.8 31.6 35.2 37.2 58.2 33.3-41.3 52.6-92.2 54.8-145.2s-12.5-105.4-42.2-149.4c-8.6 21.5-24 39.6-43.8 51.6 15.4 28.6 22.9 60.8 21.9 93.2s-10.7 64-28 91.6l.1 0zM101.1 135.4c12.4 2.7 24.3 7.5 35.1 14.3 16.6-24.2 38.9-44.1 64.8-58S255.8 70.4 285.2 70c.2-5.9 .9-11.9 2-17.7 3.6-16.7 11.1-32.3 21.8-45.5-47.7-3.8-95.4 6-137.6 28.5S94.3 91.7 70.8 133.4c2.7-.2 5.3-.3 8-.3 7.5 0 15 .8 22.4 2.3l-.1 0z"></path></svg></span> Ubuntu</td>
+<td>12.04 - 18.10</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>The installation of VestaCP is a bit different than our other instructions. We will need to generate a build command using their website, and then use that command to install VestaCP to your server.</p>
+<p><br></p>
+<p>Log in as the <code>root</code> user via SSH.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="33:2"><input checked="checked" id="install-vestacp-using-password" name="__tabbed_33" type="radio"><input id="install-vestacp-using-private-key" name="__tabbed_33" type="radio"><div class="tabbed-labels"><label for="install-vestacp-using-password"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M336 352c97.2 0 176-78.8 176-176S433.2 0 336 0 160 78.8 160 176c0 18.7 2.9 36.8 8.3 53.7L7 391c-4.5 4.5-7 10.6-7 17l0 80c0 13.3 10.7 24 24 24l80 0c13.3 0 24-10.7 24-24l0-40 40 0c13.3 0 24-10.7 24-24l0-40 40 0c6.4 0 12.5-2.5 17-7l33.3-33.3c16.9 5.4 35 8.3 53.7 8.3zM376 96a40 40 0 1 1 0 80 40 40 0 1 1 0-80z"></path></svg></span> Using Password</label><label for="install-vestacp-using-private-key"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-277.5c0-17-6.7-33.3-18.7-45.3L258.7 18.7C246.7 6.7 230.5 0 213.5 0L64 0zM325.5 176L232 176c-13.3 0-24-10.7-24-24L208 58.5 325.5 176z"></path></svg></span> Using Private Key</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-68-1"><a id="__codelineno-68-1" name="__codelineno-68-1" href="#__codelineno-68-1"></a>ssh<span class="w"> </span>-vvv<span class="w"> </span>root@XX.XX.XX.XX<span class="w"> </span>-p<span class="w"> </span><span class="m">22</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-69-1"><a id="__codelineno-69-1" name="__codelineno-69-1" href="#__codelineno-69-1"></a>ssh<span class="w"> </span>-i<span class="w"> </span>/path/to/private_key<span class="w"> </span>-vvv<span class="w"> </span>root@XX.XX.XX.XX<span class="w"> </span>-p<span class="w"> </span><span class="m">22</span>
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>Head over to their website so that you can generate an installation command that you will run in your shell:</p>
+<ul>
+<li><a href="https://vestacp.com/install#install-configure">https://vestacp.com/install#install-configure</a></li>
+</ul>
+<p><br></p>
+<p>We did a very basic configuration:</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked><span class="task-list-indicator"></span></label> Web: <code>Apache</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked><span class="task-list-indicator"></span></label> FTP: <code>No</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked><span class="task-list-indicator"></span></label> Mail: <code>No</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked><span class="task-list-indicator"></span></label> DNS: <code>No</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked><span class="task-list-indicator"></span></label> Firewall: <code>Iptables</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked><span class="task-list-indicator"></span></label> Softaculous: <code>Yes</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked><span class="task-list-indicator"></span></label> Additional Repository: <code>Yes</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked><span class="task-list-indicator"></span></label> File System Quota: <code>No</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked><span class="task-list-indicator"></span></label> DB : <code>None</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked><span class="task-list-indicator"></span></label> Hostname: <code>panel.configserver.dev</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked><span class="task-list-indicator"></span></label> Email: <code>user@configserver.dev</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked><span class="task-list-indicator"></span></label> Port: <code>5463</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked><span class="task-list-indicator"></span></label> Password: <code>*********************************</code></li>
+</ul>
+<p><br></p>
+<p>Download the VestaCP installation script:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="34:1"><input checked="checked" id="install-vestacp-command" name="__tabbed_34" type="radio"><div class="tabbed-labels"><label for="install-vestacp-command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> Command</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-70-1"><a id="__codelineno-70-1" name="__codelineno-70-1" href="#__codelineno-70-1"></a>curl<span class="w"> </span>-O<span class="w"> </span>https://vestacp.com/pub/vst-install.sh
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>Next, we must use the command we generated earlier:</p>
+<details class="danger">
+<summary><strong>DANGER</strong>: Plain-text Passwords in Terminal Commands</summary>
+<p>Supplying passwords directly in plain-text commands is strongly discouraged. Unfortunately, this is how VestaCP is currently configured.</p>
+<p>To reduce the risk, it is recommended to set <code>HISTCONTROL</code> to <code>ignorespace</code> and then prefix your command with a <span class="keys"><kbd class="key-space">Space</kbd></span>. This prevents the command from being recorded in your shell history.</p>
+<p>The codeblock below includes this command, and starts with a space character.</p>
+</details>
+<div class="tabbed-set tabbed-alternate" data-tabs="35:1"><input checked="checked" id="install-vestacp-command_1" name="__tabbed_35" type="radio"><div class="tabbed-labels"><label for="install-vestacp-command_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> Command</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-71-1"><a id="__codelineno-71-1" name="__codelineno-71-1" href="#__codelineno-71-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">HISTCONTROL</span><span class="o">=</span>ignorespace
+</span><span id="__span-71-2"><a id="__codelineno-71-2" name="__codelineno-71-2" href="#__codelineno-71-2"></a>
+</span><span id="__span-71-3"><a id="__codelineno-71-3" name="__codelineno-71-3" href="#__codelineno-71-3"></a><span class="w"> </span>bash<span class="w"> </span>vst-install.sh<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-71-4"><a id="__codelineno-71-4" name="__codelineno-71-4" href="#__codelineno-71-4"></a><span class="w">   </span>--nginx<span class="w"> </span>no<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-71-5"><a id="__codelineno-71-5" name="__codelineno-71-5" href="#__codelineno-71-5"></a><span class="w">   </span>--apache<span class="w"> </span>yes<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-71-6"><a id="__codelineno-71-6" name="__codelineno-71-6" href="#__codelineno-71-6"></a><span class="w">   </span>--phpfpm<span class="w"> </span>no<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-71-7"><a id="__codelineno-71-7" name="__codelineno-71-7" href="#__codelineno-71-7"></a><span class="w">   </span>--vsftpd<span class="w"> </span>no<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-71-8"><a id="__codelineno-71-8" name="__codelineno-71-8" href="#__codelineno-71-8"></a><span class="w">   </span>--proftpd<span class="w"> </span>no<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-71-9"><a id="__codelineno-71-9" name="__codelineno-71-9" href="#__codelineno-71-9"></a><span class="w">   </span>--exim<span class="w"> </span>no<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-71-10"><a id="__codelineno-71-10" name="__codelineno-71-10" href="#__codelineno-71-10"></a><span class="w">   </span>--dovecot<span class="w"> </span>no<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-71-11"><a id="__codelineno-71-11" name="__codelineno-71-11" href="#__codelineno-71-11"></a><span class="w">   </span>--spamassassin<span class="w"> </span>no<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-71-12"><a id="__codelineno-71-12" name="__codelineno-71-12" href="#__codelineno-71-12"></a><span class="w">   </span>--clamav<span class="w"> </span>no<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-71-13"><a id="__codelineno-71-13" name="__codelineno-71-13" href="#__codelineno-71-13"></a><span class="w">   </span>--named<span class="w"> </span>no<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-71-14"><a id="__codelineno-71-14" name="__codelineno-71-14" href="#__codelineno-71-14"></a><span class="w">   </span>--iptables<span class="w"> </span>yes<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-71-15"><a id="__codelineno-71-15" name="__codelineno-71-15" href="#__codelineno-71-15"></a><span class="w">   </span>--fail2ban<span class="w"> </span>no<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-71-16"><a id="__codelineno-71-16" name="__codelineno-71-16" href="#__codelineno-71-16"></a><span class="w">   </span>--softaculous<span class="w"> </span>yes<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-71-17"><a id="__codelineno-71-17" name="__codelineno-71-17" href="#__codelineno-71-17"></a><span class="w">   </span>--remi<span class="w"> </span>yes<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-71-18"><a id="__codelineno-71-18" name="__codelineno-71-18" href="#__codelineno-71-18"></a><span class="w">   </span>--quota<span class="w"> </span>no<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-71-19"><a id="__codelineno-71-19" name="__codelineno-71-19" href="#__codelineno-71-19"></a><span class="w">   </span>--mysql<span class="w"> </span>no<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-71-20"><a id="__codelineno-71-20" name="__codelineno-71-20" href="#__codelineno-71-20"></a><span class="w">   </span>--postgresql<span class="w"> </span>no<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-71-21"><a id="__codelineno-71-21" name="__codelineno-71-21" href="#__codelineno-71-21"></a><span class="w">   </span>--hostname<span class="w"> </span>panel.configserver.dev<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-71-22"><a id="__codelineno-71-22" name="__codelineno-71-22" href="#__codelineno-71-22"></a><span class="w">   </span>--email<span class="w"> </span>user@email.com<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-71-23"><a id="__codelineno-71-23" name="__codelineno-71-23" href="#__codelineno-71-23"></a><span class="w">   </span>--port<span class="w"> </span><span class="m">5463</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-71-24"><a id="__codelineno-71-24" name="__codelineno-71-24" href="#__codelineno-71-24"></a><span class="w">   </span>--password<span class="w"> </span>*********************************
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>You will be given the following response in terminal:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="36:1"><input checked="checked" id="install-vestacp-output" name="__tabbed_36" type="radio"><div class="tabbed-labels"><label for="install-vestacp-output"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Output</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-72-1"><a id="__codelineno-72-1" name="__codelineno-72-1" href="#__codelineno-72-1"></a>_<span class="p">|</span><span class="w">      </span>_<span class="p">|</span><span class="w">  </span>_<span class="p">|</span>_<span class="p">|</span>_<span class="p">|</span>_<span class="p">|</span><span class="w">    </span>_<span class="p">|</span>_<span class="p">|</span>_<span class="p">|</span><span class="w">  </span>_<span class="p">|</span>_<span class="p">|</span>_<span class="p">|</span>_<span class="p">|</span>_<span class="p">|</span><span class="w">    </span>_<span class="p">|</span>_<span class="p">|</span>
+</span><span id="__span-72-2"><a id="__codelineno-72-2" name="__codelineno-72-2" href="#__codelineno-72-2"></a>_<span class="p">|</span><span class="w">      </span>_<span class="p">|</span><span class="w">  </span>_<span class="p">|</span><span class="w">        </span>_<span class="p">|</span><span class="w">            </span>_<span class="p">|</span><span class="w">      </span>_<span class="p">|</span><span class="w">    </span>_<span class="p">|</span>
+</span><span id="__span-72-3"><a id="__codelineno-72-3" name="__codelineno-72-3" href="#__codelineno-72-3"></a>_<span class="p">|</span><span class="w">      </span>_<span class="p">|</span><span class="w">  </span>_<span class="p">|</span>_<span class="p">|</span>_<span class="p">|</span><span class="w">      </span>_<span class="p">|</span>_<span class="p">|</span><span class="w">        </span>_<span class="p">|</span><span class="w">      </span>_<span class="p">|</span>_<span class="p">|</span>_<span class="p">|</span>_<span class="p">|</span>
+</span><span id="__span-72-4"><a id="__codelineno-72-4" name="__codelineno-72-4" href="#__codelineno-72-4"></a><span class="w">  </span>_<span class="p">|</span><span class="w">  </span>_<span class="p">|</span><span class="w">    </span>_<span class="p">|</span><span class="w">              </span>_<span class="p">|</span><span class="w">      </span>_<span class="p">|</span><span class="w">      </span>_<span class="p">|</span><span class="w">    </span>_<span class="p">|</span>
+</span><span id="__span-72-5"><a id="__codelineno-72-5" name="__codelineno-72-5" href="#__codelineno-72-5"></a><span class="w">    </span>_<span class="p">|</span><span class="w">      </span>_<span class="p">|</span>_<span class="p">|</span>_<span class="p">|</span>_<span class="p">|</span><span class="w">  </span>_<span class="p">|</span>_<span class="p">|</span>_<span class="p">|</span><span class="w">        </span>_<span class="p">|</span><span class="w">      </span>_<span class="p">|</span><span class="w">    </span>_<span class="p">|</span>
+</span><span id="__span-72-6"><a id="__codelineno-72-6" name="__codelineno-72-6" href="#__codelineno-72-6"></a>
+</span><span id="__span-72-7"><a id="__codelineno-72-7" name="__codelineno-72-7" href="#__codelineno-72-7"></a><span class="w">                                  </span>Vesta<span class="w"> </span>Control<span class="w"> </span>Panel
+</span><span id="__span-72-8"><a id="__codelineno-72-8" name="__codelineno-72-8" href="#__codelineno-72-8"></a>
+</span><span id="__span-72-9"><a id="__codelineno-72-9" name="__codelineno-72-9" href="#__codelineno-72-9"></a>
+</span><span id="__span-72-10"><a id="__codelineno-72-10" name="__codelineno-72-10" href="#__codelineno-72-10"></a>
+</span><span id="__span-72-11"><a id="__codelineno-72-11" name="__codelineno-72-11" href="#__codelineno-72-11"></a>The<span class="w"> </span>following<span class="w"> </span>software<span class="w"> </span>will<span class="w"> </span>be<span class="w"> </span>installed<span class="w"> </span>on<span class="w"> </span>your<span class="w"> </span>system:
+</span><span id="__span-72-12"><a id="__codelineno-72-12" name="__codelineno-72-12" href="#__codelineno-72-12"></a><span class="w">  </span>-<span class="w"> </span>Apache<span class="w"> </span>Web<span class="w"> </span>Server
+</span><span id="__span-72-13"><a id="__codelineno-72-13" name="__codelineno-72-13" href="#__codelineno-72-13"></a><span class="w">  </span>-<span class="w"> </span>Softaculous<span class="w"> </span>Plugin
+</span><span id="__span-72-14"><a id="__codelineno-72-14" name="__codelineno-72-14" href="#__codelineno-72-14"></a><span class="w">  </span>-<span class="w"> </span>Iptables<span class="w"> </span>Firewall
+</span><span id="__span-72-15"><a id="__codelineno-72-15" name="__codelineno-72-15" href="#__codelineno-72-15"></a>
+</span><span id="__span-72-16"><a id="__codelineno-72-16" name="__codelineno-72-16" href="#__codelineno-72-16"></a>
+</span><span id="__span-72-17"><a id="__codelineno-72-17" name="__codelineno-72-17" href="#__codelineno-72-17"></a>Would<span class="w"> </span>you<span class="w"> </span>like<span class="w"> </span>to<span class="w"> </span><span class="k">continue</span><span class="w"> </span><span class="o">[</span>y/n<span class="o">]</span>:<span class="w"> </span>y
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>The installation of VestaCP will take anywhere from <strong>5 - 15 minutes</strong> depending on the specs of your server. Once the installation is complete, you'll see the following:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="37:1"><input checked="checked" id="install-vestacp-output_1" name="__tabbed_37" type="radio"><div class="tabbed-labels"><label for="install-vestacp-output_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Output</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-73-1"><a id="__codelineno-73-1" name="__codelineno-73-1" href="#__codelineno-73-1"></a>_<span class="p">|</span><span class="w">      </span>_<span class="p">|</span><span class="w">  </span>_<span class="p">|</span>_<span class="p">|</span>_<span class="p">|</span>_<span class="p">|</span><span class="w">    </span>_<span class="p">|</span>_<span class="p">|</span>_<span class="p">|</span><span class="w">  </span>_<span class="p">|</span>_<span class="p">|</span>_<span class="p">|</span>_<span class="p">|</span>_<span class="p">|</span><span class="w">    </span>_<span class="p">|</span>_<span class="p">|</span><span class="w">   </span>
+</span><span id="__span-73-2"><a id="__codelineno-73-2" name="__codelineno-73-2" href="#__codelineno-73-2"></a>_<span class="p">|</span><span class="w">      </span>_<span class="p">|</span><span class="w">  </span>_<span class="p">|</span><span class="w">        </span>_<span class="p">|</span><span class="w">            </span>_<span class="p">|</span><span class="w">      </span>_<span class="p">|</span><span class="w">    </span>_<span class="p">|</span><span class="w"> </span>
+</span><span id="__span-73-3"><a id="__codelineno-73-3" name="__codelineno-73-3" href="#__codelineno-73-3"></a>_<span class="p">|</span><span class="w">      </span>_<span class="p">|</span><span class="w">  </span>_<span class="p">|</span>_<span class="p">|</span>_<span class="p">|</span><span class="w">      </span>_<span class="p">|</span>_<span class="p">|</span><span class="w">        </span>_<span class="p">|</span><span class="w">      </span>_<span class="p">|</span>_<span class="p">|</span>_<span class="p">|</span>_<span class="p">|</span><span class="w"> </span>
+</span><span id="__span-73-4"><a id="__codelineno-73-4" name="__codelineno-73-4" href="#__codelineno-73-4"></a><span class="w">  </span>_<span class="p">|</span><span class="w">  </span>_<span class="p">|</span><span class="w">    </span>_<span class="p">|</span><span class="w">              </span>_<span class="p">|</span><span class="w">      </span>_<span class="p">|</span><span class="w">      </span>_<span class="p">|</span><span class="w">    </span>_<span class="p">|</span><span class="w"> </span>
+</span><span id="__span-73-5"><a id="__codelineno-73-5" name="__codelineno-73-5" href="#__codelineno-73-5"></a><span class="w">    </span>_<span class="p">|</span><span class="w">      </span>_<span class="p">|</span>_<span class="p">|</span>_<span class="p">|</span>_<span class="p">|</span><span class="w">  </span>_<span class="p">|</span>_<span class="p">|</span>_<span class="p">|</span><span class="w">        </span>_<span class="p">|</span><span class="w">      </span>_<span class="p">|</span><span class="w">    </span>_<span class="p">|</span><span class="w"> </span>
+</span><span id="__span-73-6"><a id="__codelineno-73-6" name="__codelineno-73-6" href="#__codelineno-73-6"></a>
+</span><span id="__span-73-7"><a id="__codelineno-73-7" name="__codelineno-73-7" href="#__codelineno-73-7"></a>
+</span><span id="__span-73-8"><a id="__codelineno-73-8" name="__codelineno-73-8" href="#__codelineno-73-8"></a>Congratulations,<span class="w"> </span>you<span class="w"> </span>have<span class="w"> </span>just<span class="w"> </span>successfully<span class="w"> </span>installed<span class="w"> </span>Vesta<span class="w"> </span>Control<span class="w"> </span>Panel
+</span><span id="__span-73-9"><a id="__codelineno-73-9" name="__codelineno-73-9" href="#__codelineno-73-9"></a>
+</span><span id="__span-73-10"><a id="__codelineno-73-10" name="__codelineno-73-10" href="#__codelineno-73-10"></a><span class="w">    </span>https://192.168.0.16:5463
+</span><span id="__span-73-11"><a id="__codelineno-73-11" name="__codelineno-73-11" href="#__codelineno-73-11"></a><span class="w">    </span>username:<span class="w"> </span>admin
+</span><span id="__span-73-12"><a id="__codelineno-73-12" name="__codelineno-73-12" href="#__codelineno-73-12"></a><span class="w">    </span>password:<span class="w"> </span>*********************************
+</span><span id="__span-73-13"><a id="__codelineno-73-13" name="__codelineno-73-13" href="#__codelineno-73-13"></a>
+</span><span id="__span-73-14"><a id="__codelineno-73-14" name="__codelineno-73-14" href="#__codelineno-73-14"></a>We<span class="w"> </span>hope<span class="w"> </span>that<span class="w"> </span>you<span class="w"> </span>enjoy<span class="w"> </span>your<span class="w"> </span>installation<span class="w"> </span>of<span class="w"> </span>Vesta.<span class="w"> </span>Please<span class="w"> </span>feel<span class="w"> </span>free<span class="w"> </span>to<span class="w"> </span>contact<span class="w"> </span>us<span class="w"> </span>anytime<span class="w"> </span><span class="k">if</span><span class="w"> </span>you<span class="w"> </span>have<span class="w"> </span>any<span class="w"> </span>questions.
+</span><span id="__span-73-15"><a id="__codelineno-73-15" name="__codelineno-73-15" href="#__codelineno-73-15"></a>Thank<span class="w"> </span>you.
+</span><span id="__span-73-16"><a id="__codelineno-73-16" name="__codelineno-73-16" href="#__codelineno-73-16"></a>
+</span><span id="__span-73-17"><a id="__codelineno-73-17" name="__codelineno-73-17" href="#__codelineno-73-17"></a>--
+</span><span id="__span-73-18"><a id="__codelineno-73-18" name="__codelineno-73-18" href="#__codelineno-73-18"></a>Sincerely<span class="w"> </span>yours
+</span><span id="__span-73-19"><a id="__codelineno-73-19" name="__codelineno-73-19" href="#__codelineno-73-19"></a>vestacp.com<span class="w"> </span>team
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>At the end of the installation, you can now access the VestaCP dashboard by opening your browser and going to the URL:</p>
+<ul>
+<li><code>https://192.168.0.16:5463</code></li>
+</ul>
+<p><br></p>
+<p>You should be greeted with a VestaCP authentication page. Provide your system username and password:</p>
+<figure>
+    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../assets/images/install/vestacp/1.png" data-desc-position="bottom"><img alt="VestaCP › Login Screen" src="../../assets/images/install/vestacp/1.png" width="700"></a>
+    <figcaption>VestaCP › Login Screen</figcaption>
+</figure>
+<p><br></p>
+<p>Once you sign in with the system username and password you provided within the <strong>build command</strong>, you'll be taken to the VestaCP dashboard:</p>
+<figure>
+    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../assets/images/install/vestacp/2.png" data-desc-position="bottom"><img alt="VestaCP › Dashboard" src="../../assets/images/install/vestacp/2.png" width="700"></a>
+    <figcaption>VestaCP › Dashboard</figcaption>
+</figure>
+<p><br></p>
+<p>Set VestaCP aside for a moment; we need to make sure that we don't have any existing firewalls that need disabled. If so, run the commands below:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="38:2"><input checked="checked" id="install-vestacp-ufw" name="__tabbed_38" type="radio"><input id="install-vestacp-firewalld" name="__tabbed_38" type="radio"><div class="tabbed-labels"><label for="install-vestacp-ufw"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M224 32l192 0 0 80-192 0 0-80zm-32 80l-96 0 0-16c0-35.3 28.7-64 64-64l32 0 0 80zM96 144l208 0 0 96-208 0 0-96zm0 224l0-96 96 0 0 96-96 0zm0 32l176.7 0c-.5 4.7-.7 9.4-.7 14.1 0 22.9 3.7 45.1 10.6 65.9L160 480c-35.3 0-64-28.7-64-64l0-16zM544 144l0 60.2c-12 .3-23.8 3.9-34.1 11-7.9-7.9-15.9-15.6-24.2-23.1-23.8-21.4-60-21.5-83.9-.2-17 15.2-32.9 31.4-47.2 48.1l-18.6 0 0-96 208 0zM224 272l105.2 0c-6.4 8.8-12.3 17.6-17.7 26.3-13.2 21.3-25.1 45.2-32.3 69.7l-55.2 0 0-96zM544 112l-96 0 0-80 32 0c35.3 0 64 28.7 64 64l0 16zM505.7 272.3L518 258.5c5.4-6.1 13.3-8.8 20.9-8.9 7.2 0 14.3 2.6 19.9 7.8 19.7 18.3 39.8 43.2 55 70.6 15.1 27.2 26.2 58.1 26.2 88.1 0 88.7-71.3 159.8-160 159.8-89.6 0-160-71.3-160-159.8 0-37.3 16-73.4 36.8-104.5 20.9-31.3 47.5-59 70.9-80.2 5.7-5.2 13.1-7.7 20.3-7.5s13.4 3.2 18.8 7.5c14.4 11.4 38.9 40.7 38.9 40.7zM544 464.2c0-36.5-37-73-54.8-88.4-5.4-4.7-13.1-4.7-18.5 0-17.7 15.4-54.8 51.9-54.8 88.4 0 35.3 28.7 64 64 64s64-28.7 64-64z"></path></svg></span> UFW</label><label for="install-vestacp-firewalld"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M224 32l192 0 0 80-192 0 0-80zm-32 80l-96 0 0-16c0-35.3 28.7-64 64-64l32 0 0 80zM96 144l208 0 0 96-208 0 0-96zm0 224l0-96 96 0 0 96-96 0zm0 32l176.7 0c-.5 4.7-.7 9.4-.7 14.1 0 22.9 3.7 45.1 10.6 65.9L160 480c-35.3 0-64-28.7-64-64l0-16zM544 144l0 60.2c-12 .3-23.8 3.9-34.1 11-7.9-7.9-15.9-15.6-24.2-23.1-23.8-21.4-60-21.5-83.9-.2-17 15.2-32.9 31.4-47.2 48.1l-18.6 0 0-96 208 0zM224 272l105.2 0c-6.4 8.8-12.3 17.6-17.7 26.3-13.2 21.3-25.1 45.2-32.3 69.7l-55.2 0 0-96zM544 112l-96 0 0-80 32 0c35.3 0 64 28.7 64 64l0 16zM505.7 272.3L518 258.5c5.4-6.1 13.3-8.8 20.9-8.9 7.2 0 14.3 2.6 19.9 7.8 19.7 18.3 39.8 43.2 55 70.6 15.1 27.2 26.2 58.1 26.2 88.1 0 88.7-71.3 159.8-160 159.8-89.6 0-160-71.3-160-159.8 0-37.3 16-73.4 36.8-104.5 20.9-31.3 47.5-59 70.9-80.2 5.7-5.2 13.1-7.7 20.3-7.5s13.4 3.2 18.8 7.5c14.4 11.4 38.9 40.7 38.9 40.7zM544 464.2c0-36.5-37-73-54.8-88.4-5.4-4.7-13.1-4.7-18.5 0-17.7 15.4-54.8 51.9-54.8 88.4 0 35.3 28.7 64 64 64s64-28.7 64-64z"></path></svg></span> Firewalld</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>Stop and disable <code>ufw</code></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-74-1"><a id="__codelineno-74-1" name="__codelineno-74-1" href="#__codelineno-74-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"> </span>ufw
+</span><span id="__span-74-2"><a id="__codelineno-74-2" name="__codelineno-74-2" href="#__codelineno-74-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>disable<span class="w"> </span>ufw
+</span></code></pre></div>
+<p>Confirm <code>ufw</code> is disabled with:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-75-1"><a id="__codelineno-75-1" name="__codelineno-75-1" href="#__codelineno-75-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>ufw
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>Stop and disable <code>firewalld</code></p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-76-1"><a id="__codelineno-76-1" name="__codelineno-76-1" href="#__codelineno-76-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>stop<span class="w"> </span>firewalld
+</span><span id="__span-76-2"><a id="__codelineno-76-2" name="__codelineno-76-2" href="#__codelineno-76-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>disable<span class="w"> </span>firewalld
+</span></code></pre></div>
+<p>Confirm <code>firewalld</code> is disabled with:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-77-1"><a id="__codelineno-77-1" name="__codelineno-77-1" href="#__codelineno-77-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>firewalld
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>We are ready to install <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>, which you should already have downloaded to your system. If not; download the latest version of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="39:2"><input checked="checked" id="install-vestacp-tgz" name="__tabbed_39" type="radio"><input id="install-vestacp-zip" name="__tabbed_39" type="radio"><div class="tabbed-labels"><label for="install-vestacp-tgz"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 64C0 28.7 28.7 0 64 0L213.5 0c17 0 33.3 6.7 45.3 18.7L365.3 125.3c12 12 18.7 28.3 18.7 45.3L384 448c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 64zm208-5.5l0 93.5c0 13.3 10.7 24 24 24L325.5 176 208 58.5zM64 72c0 13.3 10.7 24 24 24l48 0c13.3 0 24-10.7 24-24s-10.7-24-24-24L88 48C74.7 48 64 58.7 64 72zm0 96c0 13.3 10.7 24 24 24l48 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-48 0c-13.3 0-24 10.7-24 24zm64 72l-32 0c-17.7 0-32 14.3-32 32l0 48c0 26.5 21.5 48 48 48s48-21.5 48-48l0-48c0-17.7-14.3-32-32-32zm-16 64a16 16 0 1 1 0 32 16 16 0 1 1 0-32z"></path></svg></span> .tgz</label><label for="install-vestacp-zip"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M128 0C92.7 0 64 28.7 64 64l0 384c0 35.3 28.7 64 64 64l144 0 0-112c0-35.3 28.7-64 64-64l112 0 0-165.5c0-17-6.7-33.3-18.7-45.3L322.7 18.7C310.7 6.7 294.5 0 277.5 0L128 0zM389.5 176L296 176c-13.3 0-24-10.7-24-24L272 58.5 389.5 176zM336 380c-11 0-20 9-20 20s9 20 20 20l31.6 0-49.5 99.1c-3.1 6.2-2.8 13.6 .9 19.5s10.1 9.5 17 9.5l64 0c11 0 20-9 20-20s-9-20-20-20l-31.6 0 49.5-99.1c3.1-6.2 2.8-13.6-.9-19.5s-10.1-9.5-17-9.5l-64 0zm148 20c0-11-9-20-20-20s-20 9-20 20l0 128c0 11 9 20 20 20s20-9 20-20l0-128zm24 0l0 128c0 11 9 20 20 20s20-9 20-20l0-28 12 0c33.1 0 60-26.9 60-60s-26.9-60-60-60l-32 0c-11 0-20 9-20 20zm40 60l0-40 12 0c11 0 20 9 20 20s-9 20-20 20l-12 0z"></path></svg></span> .zip</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-78-1"><a id="__codelineno-78-1" name="__codelineno-78-1" href="#__codelineno-78-1"></a><span class="c1"># Using wget (tgz)</span>
+</span><span id="__span-78-2"><a id="__codelineno-78-2" name="__codelineno-78-2" href="#__codelineno-78-2"></a>wget<span class="w"> </span>https://download.configserver.dev/csf.tgz
+</span><span id="__span-78-3"><a id="__codelineno-78-3" name="__codelineno-78-3" href="#__codelineno-78-3"></a>
+</span><span id="__span-78-4"><a id="__codelineno-78-4" name="__codelineno-78-4" href="#__codelineno-78-4"></a><span class="c1"># Using curl (tgz)</span>
+</span><span id="__span-78-5"><a id="__codelineno-78-5" name="__codelineno-78-5" href="#__codelineno-78-5"></a>curl<span class="w"> </span>-O<span class="w"> </span>https://download.configserver.dev/csf.tgz
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-79-1"><a id="__codelineno-79-1" name="__codelineno-79-1" href="#__codelineno-79-1"></a><span class="c1"># Using wget (zip)</span>
+</span><span id="__span-79-2"><a id="__codelineno-79-2" name="__codelineno-79-2" href="#__codelineno-79-2"></a>wget<span class="w"> </span>https://download.configserver.dev/csf.zip
+</span><span id="__span-79-3"><a id="__codelineno-79-3" name="__codelineno-79-3" href="#__codelineno-79-3"></a>
+</span><span id="__span-79-4"><a id="__codelineno-79-4" name="__codelineno-79-4" href="#__codelineno-79-4"></a><span class="c1"># Using curl (zip)</span>
+</span><span id="__span-79-5"><a id="__codelineno-79-5" name="__codelineno-79-5" href="#__codelineno-79-5"></a>curl<span class="w"> </span>-O<span class="w"> </span>https://download.configserver.dev/csf.zip
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>Decompress / unzip the downloaded archive file:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="40:2"><input checked="checked" id="install-vestacp-tgz_1" name="__tabbed_40" type="radio"><input id="install-vestacp-zip_1" name="__tabbed_40" type="radio"><div class="tabbed-labels"><label for="install-vestacp-tgz_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 64C0 28.7 28.7 0 64 0L213.5 0c17 0 33.3 6.7 45.3 18.7L365.3 125.3c12 12 18.7 28.3 18.7 45.3L384 448c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 64zm208-5.5l0 93.5c0 13.3 10.7 24 24 24L325.5 176 208 58.5zM64 72c0 13.3 10.7 24 24 24l48 0c13.3 0 24-10.7 24-24s-10.7-24-24-24L88 48C74.7 48 64 58.7 64 72zm0 96c0 13.3 10.7 24 24 24l48 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-48 0c-13.3 0-24 10.7-24 24zm64 72l-32 0c-17.7 0-32 14.3-32 32l0 48c0 26.5 21.5 48 48 48s48-21.5 48-48l0-48c0-17.7-14.3-32-32-32zm-16 64a16 16 0 1 1 0 32 16 16 0 1 1 0-32z"></path></svg></span> .tgz</label><label for="install-vestacp-zip_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M128 0C92.7 0 64 28.7 64 64l0 384c0 35.3 28.7 64 64 64l144 0 0-112c0-35.3 28.7-64 64-64l112 0 0-165.5c0-17-6.7-33.3-18.7-45.3L322.7 18.7C310.7 6.7 294.5 0 277.5 0L128 0zM389.5 176L296 176c-13.3 0-24-10.7-24-24L272 58.5 389.5 176zM336 380c-11 0-20 9-20 20s9 20 20 20l31.6 0-49.5 99.1c-3.1 6.2-2.8 13.6 .9 19.5s10.1 9.5 17 9.5l64 0c11 0 20-9 20-20s-9-20-20-20l-31.6 0 49.5-99.1c3.1-6.2 2.8-13.6-.9-19.5s-10.1-9.5-17-9.5l-64 0zm148 20c0-11-9-20-20-20s-20 9-20 20l0 128c0 11 9 20 20 20s20-9 20-20l0-128zm24 0l0 128c0 11 9 20 20 20s20-9 20-20l0-28 12 0c33.1 0 60-26.9 60-60s-26.9-60-60-60l-32 0c-11 0-20 9-20 20zm40 60l0-40 12 0c11 0 20 9 20 20s-9 20-20 20l-12 0z"></path></svg></span> .zip</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-80-1"><a id="__codelineno-80-1" name="__codelineno-80-1" href="#__codelineno-80-1"></a>tar<span class="w"> </span>-xzf<span class="w"> </span>csf.tgz<span class="w"> </span>-C<span class="w"> </span>/tmp
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-81-1"><a id="__codelineno-81-1" name="__codelineno-81-1" href="#__codelineno-81-1"></a>unzip<span class="w"> </span>csf.zip<span class="w"> </span>-d<span class="w"> </span>/tmp
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>Run the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> installation script:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="41:2"><input checked="checked" id="install-vestacp-option-1" name="__tabbed_41" type="radio"><input id="install-vestacp-option-2" name="__tabbed_41" type="radio"><div class="tabbed-labels"><label for="install-vestacp-option-1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 256a256 256 0 1 0 512 0 256 256 0 1 0 -512 0zm176 88c0-13.3 10.7-24 24-24l32 0 0-128-16 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l40 0c13.3 0 24 10.7 24 24l0 152 32 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-112 0c-13.3 0-24-10.7-24-24z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M192 168c0-13.3 10.7-24 24-24l40 0c13.3 0 24 10.7 24 24l0 152 32 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-112 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l32 0 0-128-16 0c-13.3 0-24-10.7-24-24z"></path></svg></span> Option 1</label><label for="install-vestacp-option-2"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 256a256 256 0 1 0 512 0 256 256 0 1 0 -512 0zm176 71.6c0-36.2 22.1-68.7 55.8-81.9l44.7-17.6c6.9-2.7 11.4-9.4 11.4-16.8 0-10-8.1-18-18-18l-62 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l62 0c36.5 0 66 29.6 66 66 0 27.1-16.6 51.5-41.9 61.4l-44.7 17.6c-12.9 5.1-22.1 16.3-24.6 29.6l79.3 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-104 0c-13.3 0-24-10.7-24-24l0-16.4z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M184 169.3c0-13.3 10.7-24 24-24l62 0c36.5 0 66 29.6 66 66 0 27.1-16.6 51.5-41.9 61.4l-44.7 17.6c-12.9 5.1-22.1 16.3-24.6 29.6l79.3 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-104 0c-13.3 0-24-10.7-24-24l0-16.4c0-36.2 22.1-68.7 55.8-81.9l44.7-17.6c6.9-2.7 11.4-9.4 11.4-16.8 0-10-8.1-18-18-18l-62 0c-13.3 0-24-10.7-24-24z"></path></svg></span> Option 2</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 256a256 256 0 1 0 512 0 256 256 0 1 0 -512 0zm176 88c0-13.3 10.7-24 24-24l32 0 0-128-16 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l40 0c13.3 0 24 10.7 24 24l0 152 32 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-112 0c-13.3 0-24-10.7-24-24z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M192 168c0-13.3 10.7-24 24-24l40 0c13.3 0 24 10.7 24 24l0 152 32 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-112 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l32 0 0-128-16 0c-13.3 0-24-10.7-24-24z"></path></svg></span> Runs <code>install.sh</code> <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M64 192c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d=""></path></svg></span> uses <code>sh</code> shell <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M64 192c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d=""></path></svg></span> executable permission not required</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-82-1"><a id="__codelineno-82-1" name="__codelineno-82-1" href="#__codelineno-82-1"></a>sudo<span class="w"> </span>sh<span class="w"> </span>/tmp/csf/install.sh
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 256a256 256 0 1 0 512 0 256 256 0 1 0 -512 0zm176 71.6c0-36.2 22.1-68.7 55.8-81.9l44.7-17.6c6.9-2.7 11.4-9.4 11.4-16.8 0-10-8.1-18-18-18l-62 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l62 0c36.5 0 66 29.6 66 66 0 27.1-16.6 51.5-41.9 61.4l-44.7 17.6c-12.9 5.1-22.1 16.3-24.6 29.6l79.3 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-104 0c-13.3 0-24-10.7-24-24l0-16.4z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M184 169.3c0-13.3 10.7-24 24-24l62 0c36.5 0 66 29.6 66 66 0 27.1-16.6 51.5-41.9 61.4l-44.7 17.6c-12.9 5.1-22.1 16.3-24.6 29.6l79.3 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-104 0c-13.3 0-24-10.7-24-24l0-16.4c0-36.2 22.1-68.7 55.8-81.9l44.7-17.6c6.9-2.7 11.4-9.4 11.4-16.8 0-10-8.1-18-18-18l-62 0c-13.3 0-24-10.7-24-24z"></path></svg></span> Runs <code>install.sh</code> <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M64 192c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d=""></path></svg></span> uses shebang interpreter <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M64 192c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d=""></path></svg></span> requires executable <code>+x</code> permission</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-83-1"><a id="__codelineno-83-1" name="__codelineno-83-1" href="#__codelineno-83-1"></a>sudo<span class="w"> </span>chmod<span class="w"> </span>+x<span class="w"> </span>/tmp/csf/install.sh
+</span><span id="__span-83-2"><a id="__codelineno-83-2" name="__codelineno-83-2" href="#__codelineno-83-2"></a>sudo<span class="w"> </span>/tmp/csf/install.sh
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>Follow any instructions on-screen. If prompted for any additional information, enter it.</p>
+<p><br></p>
+<p>Log back into VestaCP.  At this point, you're probably asking <em>"Where is the menu link to <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>?"</em>. Here comes the bad news ...</p>
+<figure>
+    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../assets/images/install/vestacp/3.png" data-desc-position="bottom"><img alt="VestaCP › CSF" src="../../assets/images/install/vestacp/3.png" width="700"></a>
+    <figcaption>VestaCP › <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr></figcaption>
+</figure>
+<p><br></p>
+<div class="admonition bug inline end">
+<p class="admonition-title">Bug: VestaCP Header Fix</p>
+<p><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> <a href="../../about/changelog/#15.02">v15.02</a> introduced a fix which allows the VestaCP header to once again show on the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> page. </p>
+<p>However, this does not address the VestaCP top nav menu not showing <strong><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr></strong>.</p>
+</div>
+<p>As of <strong>VestaCP v1.0</strong>, the application was migrated to <strong>React</strong>, which fundamentally changes how the web interface works. The UI is now compiled into a series of <code>.CSS</code> and <code>.JS</code> files, rather than using the older PHP/<abbr title="Hyper Text Markup Language">HTML</abbr> templates.</p>
+<p>Because of this change, <strong><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> does not currently appear in the top menu</strong> of VestaCP, even though the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> page itself is still fully accessible at <code>https://192.168.0.16:5463/list/csf</code>.</p>
+<p>To restore the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> menu link, the <strong>VestaCP developers would need to add a conditional menu item</strong> that detects when <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> is installed and ready to use. </p>
+<p>Unfortunately, due to the lack of recent updates from the VestaCP team, this integration may never be corrected, and users will need to access <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> directly via its URL.</p>
+<ul>
+<li><code>https://192.168.0.16:5463/list/csf</code></li>
+</ul>
+<p><br></p>
+<p>By manually going to the link within VestaCP, you should see the following page:</p>
+<figure>
+    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../assets/images/install/vestacp/4.png" data-desc-position="bottom"><img alt="VestaCP › CSF" src="../../assets/images/install/vestacp/4.png" width="700"></a>
+    <figcaption>VestaCP › <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr></figcaption>
+</figure>
+<p><br></p>
+<p>If the interface matches the screenshot above, the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> integration with VestaCP is complete.  </p>
+<p>You can now proceed to the <a href="#next-steps">Next Steps</a> or skip the rest of this section and begin our <a href="../../usage/configuration/">Configuration</a> chapter to get things set up.</p>
 <p><br>
 <br></p>
 <hr>
@@ -3325,7 +3638,7 @@ and whitelisting your IP for security.  </p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 9, 2025 14:00:38 UTC"><span class="timeago" datetime="2025-10-09T14:00:38+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 9, 2025 14:00:38 UTC">2025-10-09</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 11, 2025 01:06:38 UTC"><span class="timeago" datetime="2025-10-11T01:06:38+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 11, 2025 01:06:38 UTC">2025-10-11</span>
   </span>
 
     
