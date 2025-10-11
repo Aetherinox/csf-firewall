@@ -1079,7 +1079,7 @@ You can now proceed to the [Next Steps](#next-steps) or skip the rest of this se
 
 ??? danger "Danger: Security Vulnerabilities"
 
-    As of **10/10/2025**, there are over **20** known [security vulnerabilities listed for VestaCP](https://www.cve.org/CVERecord/SearchResults?query=vesta). Take these warnings serious in terms of your decision to use VestaCP on outdated distros such as CentOS 7, which reached EOL on **June 30, 2024**.
+    As of **10/10/2025**, there are over **20** known [security vulnerabilities listed for VestaCP](https://cve.org/CVERecord/SearchResults?query=vesta). Take these warnings serious in terms of your decision to use VestaCP on outdated distros such as CentOS 7, which reached EOL on **June 30, 2024**.
 
 ??? bug "Bug: CSF Header Button"
 
@@ -1092,6 +1092,8 @@ You can now proceed to the [Next Steps](#next-steps) or skip the rest of this se
     If you absolutely must have **CSF** in your main VestaCP top menu, follow the [instructions below](#add-csf-to-vestacp-menu).
 
     Unfortunately, due to the lack of recent updates from the VestaCP team, this integration may never be corrected, and users will need to access CSF directly via its URL.
+
+    We have however, provided instructions on how you can get CSF to appear in the top menu, but it involves you re-building VestaCP yourself. If you are interested in this patch; [view the instructions below](#add-csf-to-vestacp-menu).
 
 ??? note "Note: Project Status Unknown"
 
@@ -1406,7 +1408,9 @@ Log back into VestaCP.  At this point, you're probably asking _"Where is the men
 
     CSF [v15.02](../about/changelog.md#15.02) introduced a fix which allows the VestaCP header to once again show on the CSF page. 
     
-    However, this does not address the VestaCP top nav menu not showing **CSF**. A fix for this has been provided as instructions [below](#add-csf-to-vestacp-menu).
+    However, this does not address the VestaCP top nav menu not showing **CSF**.
+    
+    A fix for this has been provided as instructions [below](#add-csf-to-vestacp-menu).
 
 As of **VestaCP v1.0**, the application was migrated to **React**, which fundamentally changes how the web interface works. The UI is now compiled into a series of `.CSS` and `.JS` files, rather than using the older PHP/HTML templates.
 
@@ -1738,6 +1742,271 @@ While we'd love to have a much simplier solution, this is about as close to a so
 <br />
 <br />
 
+## Install: Cyberpanel
+
+??? note "Automatic Installation Discontinued"
+
+    When the original developer of CSF announced their plans to stop support for CSF in August 2025, Cyberpanel made the decision to remove automatic integration for CSF from their suite.
+
+    If you would like to see CSF re-added, [reach out to Cyberpanel](https://cyberpanel.net/contact-us) and let them know.
+
+Installing CSF with Cyberpanel integration is fairly straight-forward, but with a few notes. We need to download their official installation script under the `root` user, and then run the installation script.
+
+First, download the script:
+
+=== ":aetherx-axd-command: Command"
+
+      ```bash
+      sudo wget -O - https://cyberpanel.net/install.sh > install.sh
+      ```
+
+<br />
+
+There a few requirements to take note of when running the Cyberpanel installation script
+
+1. You must run `install.sh` as root; sudo is not enough.
+2. You are not allowed to run the installation script if you are within a DE (desktop environment) such as Gnome or KDE.
+    - We're not sure of the reasoning behind this, but we'll play by the rules for our installation.
+
+If you are currently within a desktop environment, you must go into the CLI. For this, we'll use:
+
+=== ":aetherx-axd-command: Command"
+
+    ``` shell
+    sudo systemctl isolate multi-user.target
+    ```
+
+<br />
+
+After you are in the CLI for your server, we'll login as root. If you accidentally log in as your normal user, you can simply `su` and then enter your root password.
+
+=== ":aetherx-axd-command: Command"
+
+    ``` shell
+    su
+    sh install.sh
+    ```
+
+<br />
+
+This `install.sh` script will then download another script via curl named `cyberpanel.sh`. This script will download all of the required packages and install Cyberpanel.
+
+You will be asked a series of questions. Follow the instructions on-screen, and press ++y++ or ++n++ depending on which packages you want installed.
+
+The entire installation process takes roughly **5 to 15 minutes**. For this guide, we'll fast-forward to the final steps of installing Cyberpanel. One of the last things to print within your CLI will be credentials and the IP / port you'll use to access the Cyberpanel web interface.
+
+Write all of this down in a secure place.
+
+=== ":aetherx-axs-square-terminal: Output"
+
+      ```shell
+      [INFO] WebAdmin console password regenerated
+      [FUNCTION] Starting: Post_Install_Setup_Watchdog
+      [FUNCTION] Starting: Post_Install_Tweak
+      [INFO] Applying post-installation tweaks and configurations Admin password successfully changed!
+  
+      Finalizing...
+  
+      Cleaning up...
+
+      [INFO] Cleaning up temporary installation files
+      [FUNCTION] Starting: Post_Install_Display_Final_Info
+      [INFO] Preparing final installation information
+      ######################################################
+              CyberPanel Successfully Installed
+
+              Current Disk usage: 3/997GB (0%)
+ 
+              Current RAM usage: 655/63171MB (1.04%)
+      
+              Installation time : 0 hrs 9 min 0 sec
+
+              Visit: https://0.0.0.0:8090
+              Panel username: admin
+              Panel password: XXXXXXXXXXXXXXXXX
+
+          Run cyberpanel help to get FAQ info
+          Run cyberpanel upgrade to upgrade it to latest version.
+          Run cyberpanel utility to access some handy tools.
+
+              Website: https://www.cyberpanel.net
+              Forums: https://forums.cyberpanel.net
+              Wikipage: https://cyberpanel.net/KnowledgeBase/
+              Docs: https://cyberpanel.net/docs/
+
+          Enjoy your accelerated Internet by
+          CyberPanel & OpenLiteSpeed
+      ######################################################
+          Microsoft Azure detected...
+          This provider has a network-level firewall
+          Please make sure you have opened following port for both in/out:
+
+              TCP: 8090 for CyberPanel
+              TCP: 80, TCP: 443 and UDP: 443 for webserver
+              TCP: 21 and TCP: 40110-40210 for FTP
+              TCP: 25, TCP: 587, TCP: 465, TCP: 110, TCP: 143 and TCP: 993 for mail service
+              TCP: 53 and UDP: 53 for DNS service
+
+          Would you like to restart your server now? [y/N]:
+      ```
+
+<br />
+
+<br />
+
+After installation is complete, open your browser and navigate to:
+
+- `https://127.0.0.1:8090/`
+
+<br />
+
+You should be greeted with a Cyberpanel authentication page. Provide the username and password you were given during setup.
+
+<figure markdown="span">
+    ![Cyberpanel › Login](../assets/images/install/cyberpanel/1.png){ width="700" }
+    <figcaption>Cyberpanel › Login</figcaption>
+</figure>
+
+<br />
+
+Once signed in, you'll be on the Cyberpanel Dashboard:
+
+<figure markdown="span">
+    ![Cyberpanel › Dashboard](../assets/images/install/cyberpanel/2.png){ width="700" }
+    <figcaption>Cyberpanel › Dashboard</figcaption>
+</figure>
+
+<br />
+
+Set Cyberpanel aside for a moment; we need to make sure that we don't have any existing firewalls that need disabled. If so, run the commands below:
+
+=== ":aetherx-axs-block-brick-fire: UFW"
+
+    Stop and disable `ufw`
+
+    ```bash
+    sudo systemctl stop ufw
+    sudo systemctl disable ufw
+    ```
+
+    Confirm `ufw` is disabled with:
+
+    ```bash
+    sudo systemctl status ufw
+    ```
+
+=== ":aetherx-axs-block-brick-fire: Firewalld"
+
+    Stop and disable `firewalld`
+
+    ```bash
+    sudo systemctl stop firewalld
+    sudo systemctl disable firewalld
+    ```
+
+    Confirm `firewalld` is disabled with:
+
+    ```bash
+    sudo systemctl status firewalld
+    ```
+
+<br />
+
+We are ready to install CSF, which you should already have downloaded to your system. If not; download the latest version of CSF:
+
+=== ":aetherx-axs-file-zipper: .tgz"
+
+    ```shell
+    # Using wget (tgz)
+    wget https://download.configserver.dev/csf.tgz
+
+    # Using curl (tgz)
+    curl -O https://download.configserver.dev/csf.tgz
+    ```
+
+=== ":aetherx-axs-file-zip: .zip"
+
+    ```shell
+    # Using wget (zip)
+    wget https://download.configserver.dev/csf.zip
+
+    # Using curl (zip)
+    curl -O https://download.configserver.dev/csf.zip
+    ```
+
+<br />
+
+Decompress / unzip the downloaded archive file:
+
+=== ":aetherx-axs-file-zipper: .tgz"
+
+    ```bash
+    tar -xzf csf.tgz -C /tmp
+    ```
+
+=== ":aetherx-axs-file-zip: .zip"
+
+    ```bash
+    unzip csf.zip -d /tmp
+    ```
+
+<br />
+
+Run the CSF installation script:
+
+=== ":aetherx-axd-circle-1: Option 1"
+
+    :aetherx-axd-circle-1: Runs `install.sh` :aetherx-axd-dot: uses `sh` shell :aetherx-axd-dot: executable permission not required
+
+    ```bash
+    sudo sh /tmp/csf/install.sh
+    ```
+
+=== ":aetherx-axd-circle-2: Option 2"
+
+    :aetherx-axd-circle-2: Runs `install.sh` :aetherx-axd-dot: uses shebang interpreter :aetherx-axd-dot: requires executable `+x` permission
+
+    ```bash
+    sudo chmod +x /tmp/csf/install.sh
+    sudo /tmp/csf/install.sh
+    ```
+
+<br />
+
+Follow any instructions on-screen. If prompted for any additional information, enter it.
+
+<br />
+
+Log back into Cyberpanel. Once in, navigate to **Plugins** › **Installed** from the left-hand menu. You should see **CSF** in your plugin list:
+
+<figure markdown="span">
+    ![Cyberpanel › Plugins](../assets/images/install/cyberpanel/3.png){ width="700" }
+    <figcaption>Cyberpanel › Plugins</figcaption>
+</figure>
+
+<br />
+
+Next, on the left-side menu, navigate to **Security** › **CSF** and you should see the following:
+
+<figure markdown="span">
+    ![Cyberpanel › Security › CSF](../assets/images/install/cyberpanel/4.png){ width="700" }
+    <figcaption>Cyberpanel › Security › CSF</figcaption>
+</figure>
+
+<br />
+
+If the interface matches the screenshot above, the CSF integration with Cyberpanel is complete.  
+
+You can now proceed to the [Next Steps](#next-steps) or skip the rest of this section and begin our [Configuration](../usage/configuration.md) chapter to get things set up.
+
+<br />
+<br />
+
+---
+
+<br />
+<br />
+
 ## Install: CentOS Web Panel
 
 ??? note "Automatic Legacy Installation"
@@ -1748,6 +2017,8 @@ While we'd love to have a much simplier solution, this is about as close to a so
     To get the most recent version from our repository, you’ll need to perform a **manual upgrade**.
 
     Instructions for doing so are provided below.
+
+    If you would like to see CSF's latest version supported, [reach out to CentOS Web Panel](https://centos-webpanel.com/contact) and let them know.
 
 Installing CSF with CWP integration is fairly straight-forward, with a few things to note. When installing CWP, they automatically install a copy of CSF as a bundle to your server. However, after this repository took over development; you will need to perform a manual upgrade if you want to utilize the latest version.
 
