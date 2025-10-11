@@ -1089,6 +1089,8 @@ You can now proceed to the [Next Steps](#next-steps) or skip the rest of this se
 
     To restore the CSF menu link, the **VestaCP developers would need to add a conditional menu item** that detects when CSF is installed and ready to use. After they add this change to their source menu code, they can re-build the React .js file to push for public release.
 
+    If you absolutely must have **CSF** in your main VestaCP top menu, follow the [instructions below](#add-csf-to-vestacp-menu).
+
     Unfortunately, due to the lack of recent updates from the VestaCP team, this integration may never be corrected, and users will need to access CSF directly via its URL.
 
 ??? note "Note: Project Status Unknown"
@@ -1404,7 +1406,7 @@ Log back into VestaCP.  At this point, you're probably asking _"Where is the men
 
     CSF [v15.02](../about/changelog.md#15.02) introduced a fix which allows the VestaCP header to once again show on the CSF page. 
     
-    However, this does not address the VestaCP top nav menu not showing **CSF**.
+    However, this does not address the VestaCP top nav menu not showing **CSF**. A fix for this has been provided as instructions [below](#add-csf-to-vestacp-menu).
 
 As of **VestaCP v1.0**, the application was migrated to **React**, which fundamentally changes how the web interface works. The UI is now compiled into a series of `.CSS` and `.JS` files, rather than using the older PHP/HTML templates.
 
@@ -1430,6 +1432,303 @@ By manually going to the link within VestaCP, you should see the following page:
 If the interface matches the screenshot above, the CSF integration with VestaCP is complete.  
 
 You can now proceed to the [Next Steps](#next-steps) or skip the rest of this section and begin our [Configuration](../usage/configuration.md) chapter to get things set up.
+
+<br />
+<br />
+
+### Add CSF to VestaCP Menu
+
+If you absolutely need CSF to appear in your VestaCP top nav menu, you're going to have to change the source file, re-build VestaCP, and replace your existing `index.html`, `.css` and `.js` files. We will provide very brief instructions.
+
+<br />
+
+If you already have VestaCP running on your server, then you should find everything in the folder:
+
+- `/usr/local/vesta/`
+
+<br />
+
+If you need to clone the VestaCP repo to your server, run:
+
+=== ":aetherx-axd-command: Command"
+
+      ```bash
+      sudo mkdir vestacp
+      cd vestacp
+      git clone https://github.com/outroll/vesta.git .
+      ```
+
+<br />
+
+You should now have the full source to VestaCP on your server. We need to add a new menu item so that we can access CSF from the main VestaCP menu.
+
+Open the file `/usr/local/vesta/src/react/src/components/MainNav/Panel/Panel.jsx`, and then find / replace with the codeblocks below:
+
+=== ":aetherx-axs-file-magnifying-glass: Find"
+
+    ``` jsx title="/usr/local/vesta/src/react/src/components/MainNav/Panel/Panel.jsx"
+          {userName === 'admin' && (<>
+            <div className={className("/list/updates/")}>
+              <Link to="/list/updates/" onClick={event => handleState("/list/updates/", event)} onKeyPress={event => event.preventDefault()}>{i18n.Updates}</Link>
+            </div>
+            {session.FIREWALL_SYSTEM && <div className={className("/list/firewall/")}>
+              <Link to="/list/firewall/" onClick={event => handleState("/list/firewall/", event)} onKeyPress={event => event.preventDefault()}>{i18n.Firewall}</Link>
+            </div>}
+          </>)}
+    ```
+
+=== ":aetherx-axs-file-pen: Change To"
+
+    ``` jsx title="/usr/local/vesta/src/react/src/components/MainNav/Panel/Panel.jsx"
+          {userName === 'admin' && (<>
+            <div className={className("/list/updates/")}>
+              <Link to="/list/updates/" onClick={event => handleState("/list/updates/", event)} onKeyPress={event => event.preventDefault()}>{i18n.Updates}</Link>
+            </div>
+            {session.FIREWALL_SYSTEM && <div className={className("/list/firewall/")}>
+              <Link to="/list/firewall/" onClick={event => handleState("/list/firewall/", event)} onKeyPress={event => event.preventDefault()}>{i18n.Firewall}</Link>
+            </div>}
+            <div className={className("/list/csf/")}>
+              <Link to="/list/csf/" onClick={event => handleState("/list/csf/", event)} onKeyPress={event => event.preventDefault()}>CSF</Link>
+            </div>
+          </>)}
+    ```
+
+<br />
+
+In the code above, we've added a new **CSF** button to the right of the **Firewall** button. Save the file and exit. Next, we need to install the packages required to re-build VestaCP. For this, you will need [NodeJS](https://nodejs.org/en/download) installed. 
+
+Once you have [NodeJS](https://nodejs.org/en/download) installed, navigate to the `/usr/local/vesta/src/react` folder with the `package.json` file:
+
+=== ":aetherx-axd-command: Command"
+
+      ```bash
+      cd /usr/local/vesta/src/react
+      ```
+
+<br />
+
+The folder `/usr/local/vesta/src/react` should contain the following structure:
+
+```
+📁 usr
+   📁 local
+      📁 vesta
+          📁 src
+              📁 react
+                📁 build
+                📁 public
+                📁 src
+                📄 jsconfig.json
+                📄 package.json
+                📄 package-lock.json
+                📄 README.md
+```
+
+<br />
+
+We need to install the NodeJS dependencies that will be used to re-build VestaCP:
+
+=== ":aetherx-axd-command: Command"
+
+      ```bash
+      sudo npm install --legacy-peer-deps
+      ```
+
+??? warning "Must Use `--legacy-peer-deps`"
+
+    You **MUST** append `--legacy-peer-deps` to the `npm install` command; otherwise you will get the error:
+
+    === ":aetherx-axs-square-terminal: Output"
+
+          ```shell
+          npm ERR! code 1
+          npm ERR! path /usr/local/vesta/src/react/node_modules/node-sass
+          npm ERR! command failed
+          npm ERR! command sh -c -- node scripts/build.js
+          npm ERR! Building: /usr/bin/node /usr/local/vesta/src/react/node_modules/node-gyp/bin/node-gyp.js rebuild --verbose --libsass_ext= --libsass_cflags= --libsass_ldflags= --libsass_library=
+          npm ERR! gyp info it worked if it ends with ok
+          npm ERR! gyp verb cli [
+          npm ERR! gyp verb cli   '/usr/bin/node',
+          npm ERR! gyp verb cli   '/usr/local/vesta/src/react/node_modules/node-gyp/bin/node-gyp.js',
+          npm ERR! gyp verb cli   'rebuild',
+          npm ERR! gyp verb cli   '--verbose',
+          npm ERR! gyp verb cli   '--libsass_ext=',
+          npm ERR! gyp verb cli   '--libsass_cflags=',
+          npm ERR! gyp verb cli   '--libsass_ldflags=',
+          npm ERR! gyp verb cli   '--libsass_library='
+          npm ERR! gyp verb cli ]
+          npm ERR! gyp info using node-gyp@3.8.0
+          npm ERR! gyp info using node@16.20.2 | linux | x64
+          npm ERR! gyp verb command rebuild []
+          npm ERR! gyp verb command clean []
+          npm ERR! gyp verb clean removing "build" directory
+          npm ERR! gyp verb command configure []
+          npm ERR! gyp verb check python checking for Python executable "/usr/bin/python3" in the PATH
+          npm ERR! gyp verb `which` failed Error: not found: /usr/bin/python3
+          npm ERR! gyp verb `which` failed     at getNotFoundError (/usr/local/vesta/src/react/node_modules/which/which.js:13:12)
+          npm ERR! gyp verb `which` failed     at F (/usr/local/vesta/src/react/node_modules/which/which.js:68:19)
+          npm ERR! gyp verb `which` failed     at E (/usr/local/vesta/src/react/node_modules/which/which.js:80:29)
+          npm ERR! gyp verb `which` failed     at /usr/local/vesta/src/react/node_modules/which/which.js:89:16
+          npm ERR! gyp verb `which` failed     at /usr/local/vesta/src/react/node_modules/isexe/index.js:42:5
+          npm ERR! gyp verb `which` failed     at /usr/local/vesta/src/react/node_modules/isexe/mode.js:8:5
+          npm ERR! gyp verb `which` failed     at FSReqCallback.oncomplete (node:fs:202:21)
+          npm ERR! gyp verb `which` failed  /usr/bin/python3 Error: not found: /usr/bin/python3
+          npm ERR! gyp verb `which` failed     at getNotFoundError (/usr/local/vesta/src/react/node_modules/which/which.js:13:12)
+          npm ERR! gyp verb `which` failed     at F (/usr/local/vesta/src/react/node_modules/which/which.js:68:19)
+          npm ERR! gyp verb `which` failed     at E (/usr/local/vesta/src/react/node_modules/which/which.js:80:29)
+          npm ERR! gyp verb `which` failed     at /usr/local/vesta/src/react/node_modules/which/which.js:89:16
+          npm ERR! gyp verb `which` failed     at /usr/local/vesta/src/react/node_modules/isexe/index.js:42:5
+          npm ERR! gyp verb `which` failed     at /usr/local/vesta/src/react/node_modules/isexe/mode.js:8:5
+          npm ERR! gyp verb `which` failed     at FSReqCallback.oncomplete (node:fs:202:21) {
+          npm ERR! gyp verb `which` failed   code: 'ENOENT'
+          npm ERR! gyp verb `which` failed }
+          npm ERR! gyp ERR! configure error 
+          npm ERR! gyp ERR! stack Error: Can't find Python executable "/usr/bin/python3", you can set the PYTHON env variable.
+          npm ERR! gyp ERR! stack     at PythonFinder.failNoPython (/usr/local/vesta/src/react/node_modules/node-gyp/lib/configure.js:484:19)
+          npm ERR! gyp ERR! stack     at PythonFinder.<anonymous> (/usr/local/vesta/src/react/node_modules/node-gyp/lib/configure.js:406:16)
+          npm ERR! gyp ERR! stack     at F (/usr/local/vesta/src/react/node_modules/which/which.js:68:16)
+          npm ERR! gyp ERR! stack     at E (/usr/local/vesta/src/react/node_modules/which/which.js:80:29)
+          npm ERR! gyp ERR! stack     at /usr/local/vesta/src/react/node_modules/which/which.js:89:16
+          npm ERR! gyp ERR! stack     at /usr/local/vesta/src/react/node_modules/isexe/index.js:42:5
+          npm ERR! gyp ERR! stack     at /usr/local/vesta/src/react/node_modules/isexe/mode.js:8:5
+          npm ERR! gyp ERR! stack     at FSReqCallback.oncomplete (node:fs:202:21)
+          npm ERR! gyp ERR! System Linux 3.10.0-1160.119.1.el7.x86_64
+          npm ERR! gyp ERR! command "/usr/bin/node" "/usr/local/vesta/src/react/node_modules/node-gyp/bin/node-gyp.js" "rebuild" "--verbose" "--libsass_ext=" "--libsass_cflags=" "--libsass_ldflags=" "--libsass_library="
+          npm ERR! gyp ERR! cwd /usr/local/vesta/src/react/node_modules/node-sass
+          npm ERR! gyp ERR! node -v v16.20.2
+          npm ERR! gyp ERR! node-gyp -v v3.8.0
+          npm ERR! gyp ERR! not ok 
+          npm ERR! Build failed with error code: 1
+
+          npm ERR! A complete log of this run can be found in:
+          npm ERR!     /root/.npm/_logs/2025-10-11T03_14_22_078Z-debug-0.log
+          ```
+
+          <br >
+
+          To fix the error, you must run the commands:
+
+          ```bash
+          sudo npm uninstall node-sass
+          sudo npm install sass --legacy-peer-deps
+          ```
+
+<br />
+
+Next, we need to run the react build command:
+
+=== ":aetherx-axd-command: Command"
+
+      ```bash
+      sudo npm run build
+      ```
+
+<br />
+
+You will see a large number of warnings such as the following:
+
+=== ":aetherx-axs-square-terminal: Output"
+
+      ```shell
+      Deprecation Warning [legacy-js-api]: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
+      More info: https://sass-lang.com/d/legacy-js-api
+
+      Deprecation Warning [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+      More info and automated migrator: https://sass-lang.com/d/import
+
+        ╷
+      1 │ @import 'src/utils/scss/variables';
+        │         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+        ╵
+          stdin 1:9  root stylesheet
+
+      Deprecation Warning [legacy-js-api]: The legacy JS API is deprecated and will be removed in Dart Sass 2.0.0.
+      More info: https://sass-lang.com/d/legacy-js-api
+
+      Deprecation Warning [import]: Sass @import rules are deprecated and will be removed in Dart Sass 3.0.0.
+      More info and automated migrator: https://sass-lang.com/d/import
+
+      ./src/containers/Firewalls/Banlist/index.jsx
+        Line 50:6:  React Hook useEffect has missing dependencies: 'dispatch' and 'fetchData'. Either include them or remove the dependency array                                    react-hooks/exhaustive-deps
+        Line 60:6:  React Hook useEffect has missing dependencies: 'handleContentSelection' and 'handleFocusedElementShortcuts'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+      ```
+
+<br />
+
+You can ignore these warnings, they are only displaying because the packages for VestaCP are extremely outdated. What you are looking for when you finish building with the command above is the following output:
+
+=== ":aetherx-axs-square-terminal: Output"
+
+      ```shell
+      File sizes after gzip:
+
+        303.56 KB  build/static/js/2.d216ae63.chunk.js
+        73.42 KB   build/static/js/main.37cff9da.chunk.js
+        24.99 KB   build/static/css/2.6c9f324a.chunk.css
+        13.71 KB   build/static/css/main.5bd9cb31.chunk.css
+        781 B      build/static/js/runtime-main.cb963cd4.js
+
+      The project was built assuming it is hosted at /.
+      You can control this with the homepage field in your package.json.
+
+      The build folder is ready to be deployed.
+      You may serve it with a static server:
+
+        npm install -g serve
+        serve -s build
+      ```
+
+<br />
+
+The build above should give you some new files located in `/usr/local/vesta/src/react/build/`. The ones you need are:
+
+- 📁 `/usr/local/vesta/src/react/build/static`
+- 📄 `/usr/local/vesta/src/react/build/index.html`
+
+<br />
+
+To replace the old VestaCP files with your new copies, run the following commands in order:
+
+=== ":aetherx-axd-command: Command"
+
+      ```bash
+      # backup your existing static folder
+      sudo cp -rf /usr/local/vesta/web/static/ /usr/local/vesta/web/static.backup/
+
+      # remove the old files
+      sudo rm -rf /usr/local/vesta/web/static/css /usr/local/vesta/web/static/js /usr/local/vesta/web/static/index.html
+
+      # copy the static folder
+      sudo cp -rf /usr/local/vesta/src/react/build/static/ /usr/local/vesta/web/
+
+      # copy the index.html
+      sudo cp /usr/local/vesta/src/react/build/index.html /usr/local/vesta/web/static/
+      ```
+
+<br />
+
+Give VestCP's dashboard page a hard refresh:
+
+| Browser | Hotkey |
+| --- | --- |
+| :aetherx-axb-chrome: **Chrome** | ++f5++ |
+| :aetherx-axb-edge: **Edge** | ++f5++ |
+| :aetherx-axb-firefox: **Firefox** | ++ctrl+f5++ |
+| :aetherx-axb-opera: **Opera** | ++f5++ |
+| :aetherx-axb-safari: **Safari** | ++cmd+option+r++ |
+
+<br />
+
+You should now see **CSF** at the top-right in the VestCP navigation menu.
+
+<figure markdown="span">
+    ![VestaCP › Nav Menu](../assets/images/install/vestacp/5.png){ width="700" }
+    <figcaption>VestaCP › Nav Menu</figcaption>
+</figure>
+
+<br />
+
+While we'd love to have a much simplier solution, this is about as close to a solution as we will get unless the developers of VestaCP decide to release a fix.
 
 <br />
 <br />
