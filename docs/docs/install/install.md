@@ -23,6 +23,7 @@ If your tests were successful, you are now ready to install CSF on your server a
   <a href="#install-interworx" class="icon-dim"><img class='install-products white png-size-48' title="Install: Interworx" src="../../assets/images/logos/interworx.png"></a>
   <a href="#install-vestacp" class="icon-dim"><img class='install-products white png-size-48' title="Install: VestaCP" src="../../assets/images/logos/vestacp.png"></a>
   <a href="#install-cyberpanel" class="icon-dim"><img class='install-products white png-size-48' title="Install: Cyberpanel" src="../../assets/images/logos/cyberpanel.png"></a>
+  <a href="#install-centos-web-panel" class="icon-dim"><img class='install-products white png-size-48' title="Install: CentOS Control Web Panel (CWP)" src="../../assets/images/logos/cwp.png"></a>
 
 </div>
 
@@ -1431,9 +1432,236 @@ You can now proceed to the [Next Steps](#next-steps) or skip the rest of this se
 <br />
 <br />
 
-## Install: Cyberpanel
+## Install: CentOS Web Panel
 
-This part of the documentation is currently being written.
+??? note "Automatic Legacy Installation"
+
+    CentOS Web Panel (CWP) automatically installs CSF as part of its base installation.
+    However, as of **October 10, 2025**, CWP does **not** pull CSF from our official repository and instead installs the **legacy v15.00** release.
+
+    To get the most recent version from our repository, you’ll need to perform a **manual upgrade**.
+
+    Instructions for doing so are provided below.
+
+Installing CSF with CWP integration is fairly straight-forward, with a few things to note. When installing CWP, they automatically install a copy of CSF as a bundle to your server. However, after this repository took over development; you will need to perform a manual upgrade if you want to utilize the latest version.
+
+If this changes, we'll keep you updated.
+
+<br />
+
+Log in as the `root` user via SSH.
+
+=== ":aetherx-axs-key: Using Password"
+
+    ```shell
+    ssh -vvv root@XX.XX.XX.XX -p 22
+    ```
+
+=== ":aetherx-axs-file: Using Private Key"
+
+    ```shell
+    ssh -i /path/to/private_key -vvv root@XX.XX.XX.XX -p 22
+    ```
+
+<br />
+
+Ensure you have CWP installed. If not, we need to prepare the server by performing some updates.
+
+=== ":aetherx-axb-centos: CentOS 7"
+
+    ```bash
+    sudo yum -y install wget
+    curl http://centos-webpanel.com/centos7_fix_repository|sudo sh
+    sudo yum -y update
+    reboot
+    ```
+  
+=== ":aetherx-axs-8: CentOS 8/Alma/Rocky"
+
+    ```bash
+    sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+    sudo dnf install wget -y
+    sudo yum -y update
+    reboot
+    ```
+
+<br />
+
+Once your server is back online, you can proceed with the installation of CWP:
+
+=== ":aetherx-axb-centos: CentOS 7"
+
+    ```bash
+    cd /usr/local/src
+    wget http://centos-webpanel.com/cwp-el7-latest
+    sh cwp-el7-latest
+    ```
+  
+=== ":aetherx-axs-8: CentOS 8/Alma/Rocky (recommended)"
+
+    ```bash
+    cd /usr/local/src
+    wget http://centos-webpanel.com/cwp-el8-latest
+    sh cwp-el8-latest
+    ```
+
+=== ":aetherx-axs-9: CentOS 9/Alma 9/Rocky 9 (beta)"
+
+    ```bash
+    cd /usr/local/src
+    wget http://centos-webpanel.com/cwp-el9-latest
+    sh cwp-el9-latest
+    ```
+
+<br />
+
+At the end of the installation, you can now access the CWP dashboard by opening your browser and going to the URL:
+
+- `https://127.0.0.1:2031`
+
+<br />
+
+You should be greeted with the CWP authentication page. Provide a valid system username and password.
+
+<figure markdown="span">
+    ![CWP › Login Screen](../assets/images/install/cwp/1.png){ width="700" }
+    <figcaption>CWP › Login Screen</figcaption>
+</figure>
+
+<br />
+
+After signing in, you should be presented with the CWP dashboard:
+
+<figure markdown="span">
+    ![CWP › Dashboard](../assets/images/install/cwp/2.png){ width="700" }
+    <figcaption>CWP › Dashboard</figcaption>
+</figure>
+
+<br />
+
+When CWP is installed, it automatically includes CSF along with other essential packages required for proper functionality. However, at the time of writing, CWP does **not** bundle the latest version of CSF from this repository.  
+
+Instead, you will receive version **`v15.00`**, which is downloaded from the following external source:
+
+- [http://static.cdn-cwp.com/files/csf.tgz](http://static.cdn-cwp.com/files/csf.tgz)
+
+<br />
+
+If you wish to use the latest copy of CSF from our repository, you'll have to perform an update by downloading the latest copy of CSF from us, and installing it over-top of the original.
+
+<br />
+
+To do this, set aside CWP for a moment; we need to make sure that we don't have any existing firewalls that need disabled. If so, run the commands below:
+
+=== ":aetherx-axs-block-brick-fire: UFW"
+
+    Stop and disable `ufw`
+
+    ```bash
+    sudo systemctl stop ufw
+    sudo systemctl disable ufw
+    ```
+
+    Confirm `ufw` is disabled with:
+
+    ```bash
+    sudo systemctl status ufw
+    ```
+
+=== ":aetherx-axs-block-brick-fire: Firewalld"
+
+    Stop and disable `firewalld`
+
+    ```bash
+    sudo systemctl stop firewalld
+    sudo systemctl disable firewalld
+    ```
+
+    Confirm `firewalld` is disabled with:
+
+    ```bash
+    sudo systemctl status firewalld
+    ```
+
+<br />
+
+We are ready to install or update CSF, which you should already have downloaded to your system. If not; download the latest version of CSF:
+
+=== ":aetherx-axs-file-zipper: .tgz"
+
+    ```shell
+    # Using wget (tgz)
+    wget https://download.configserver.dev/csf.tgz
+
+    # Using curl (tgz)
+    curl -O https://download.configserver.dev/csf.tgz
+    ```
+
+=== ":aetherx-axs-file-zip: .zip"
+
+    ```shell
+    # Using wget (zip)
+    wget https://download.configserver.dev/csf.zip
+
+    # Using curl (zip)
+    curl -O https://download.configserver.dev/csf.zip
+    ```
+
+<br />
+
+Decompress / unzip the downloaded archive file:
+
+=== ":aetherx-axs-file-zipper: .tgz"
+
+    ```bash
+    tar -xzf csf.tgz -C /tmp
+    ```
+
+=== ":aetherx-axs-file-zip: .zip"
+
+    ```bash
+    unzip csf.zip -d /tmp
+    ```
+
+<br />
+
+Run the CSF installation script:
+
+=== ":aetherx-axd-circle-1: Option 1"
+
+    :aetherx-axd-circle-1: Runs `install.sh` :aetherx-axd-dot: uses `sh` shell :aetherx-axd-dot: executable permission not required
+
+    ```bash
+    sudo sh /tmp/csf/install.sh
+    ```
+
+=== ":aetherx-axd-circle-2: Option 2"
+
+    :aetherx-axd-circle-2: Runs `install.sh` :aetherx-axd-dot: uses shebang interpreter :aetherx-axd-dot: requires executable `+x` permission
+
+    ```bash
+    sudo chmod +x /tmp/csf/install.sh
+    sudo /tmp/csf/install.sh
+    ```
+
+<br />
+
+Follow any instructions on-screen. If prompted for any additional information, enter it.
+
+<br />
+
+Log back into CWP. Once in, navigate to **Security** › **CSF Firewall** from the left-hand menu.
+
+<figure markdown="span">
+    ![CWP › Security › CSF Firewall](../assets/images/install/cwp/4.png){ width="700" }
+    <figcaption>CWP › Security › CSF Firewall</figcaption>
+</figure>
+
+<br />
+
+If the interface matches the screenshot above, the CSF integration with Interworx is complete.  
+
+You can now proceed to the [Next Steps](#next-steps) or skip the rest of this section and begin our [Configuration](../usage/configuration.md) chapter to get things set up.
 
 <br />
 <br />
