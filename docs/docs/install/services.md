@@ -142,7 +142,7 @@ Check the current status of CSF by running the command:
 === ":aetherx-axs-square-terminal: Output"
 
       ```shell
-      ● csf.service - ConfigServer Firewall & Security - csf
+      ● csf.service - ConfigServer Security & Firewall - csf
           Loaded: loaded (/lib/systemd/system/csf.service; enabled; vendor preset: enabled)
           Active: active (exited) since Mon 2025-09-15 23:45:04 UTC; 14 seconds ago
         Main PID: 597 (code=exited, status=0/SUCCESS)
@@ -164,7 +164,7 @@ If you notice that CSF is not running or has the status `inactive (dead)` like t
 === ":aetherx-axs-square-terminal: Output"
 
       ```shell
-      ○ csf.service - ConfigServer Firewall & Security - csf
+      ○ csf.service - ConfigServer Security & Firewall - csf
           Loaded: loaded (/usr/lib/systemd/system/csf.service; enabled; preset: enabled)
           Active: inactive (dead)
       ```
@@ -193,7 +193,7 @@ Confirm that the service is up and running:
 === ":aetherx-axs-square-terminal: Output"
 
       ```shell
-      ● csf.service - ConfigServer Firewall & Security - csf
+      ● csf.service - ConfigServer Security & Firewall - csf
           Loaded: loaded (/usr/lib/systemd/system/csf.service; enabled; preset: enabled)
           Active: active (exited) since Sun 2025-09-21 01:35:45 UTC; 4s ago
           Process: 449564 ExecStart=/usr/sbin/csf --initup (code=exited, status=0/SUCCESS)
@@ -237,7 +237,7 @@ Check the current status of LFD by running the command:
 === ":aetherx-axs-square-terminal: Output"
 
       ```shell
-      ● lfd.service - ConfigServer Firewall & Security - lfd
+      ● lfd.service - ConfigServer Security & Firewall - lfd
           Loaded: loaded (/usr/lib/systemd/system/lfd.service; enabled; preset: enabled)
           Active: active (running) since Sun 2025-09-21 01:11:21 UTC; 1min 17s ago
           Process: 335736 ExecStart=/usr/sbin/lfd (code=exited, status=0/SUCCESS)
@@ -256,7 +256,7 @@ If you see the status `failed` like the following example, this could be for any
 === ":aetherx-axs-square-terminal: Output"
 
       ```shell
-      × lfd.service - ConfigServer Firewall & Security - lfd
+      × lfd.service - ConfigServer Security & Firewall - lfd
           Loaded: loaded (/usr/lib/systemd/system/lfd.service; enabled; preset: enabled)
           Active: failed (Result: signal) since Sun 2025-09-21 01:52:34 UTC; 20min ago
           Process: 115504 ExecStart=/usr/sbin/lfd (code=killed, signal=KILL)
@@ -342,7 +342,7 @@ You should now be able to confirm that LFD is running:
 === ":aetherx-axs-square-terminal: Output"
 
       ```shell
-      ● lfd.service - ConfigServer Firewall & Security - lfd
+      ● lfd.service - ConfigServer Security & Firewall - lfd
           Loaded: loaded (/usr/lib/systemd/system/lfd.service; enabled; preset: enabled)
           Active: active (running) since Sun 2025-09-21 01:44:00 UTC; 53min ago
           Process: 335736 ExecStart=/usr/sbin/lfd (code=exited, status=0/SUCCESS)

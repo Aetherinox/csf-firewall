@@ -175,7 +175,7 @@ Confirm the status of `csf` by running:
 === ":aetherx-axs-square-terminal: Output"
 
       ```shell
-      ● csf.service - ConfigServer Firewall & Security - csf
+      ● csf.service - ConfigServer Security & Firewall - csf
           Loaded: loaded (/lib/systemd/system/csf.service; enabled; vendor preset: enabled)
           Active: active (exited) since Mon 2025-09-15 23:45:04 UTC; 14 seconds ago
         Main PID: 597 (code=exited, status=0/SUCCESS)
@@ -446,7 +446,7 @@ Confirm the status of `csf` by running:
 === ":aetherx-axs-square-terminal: Output"
 
       ```shell
-      ● csf.service - ConfigServer Firewall & Security - csf
+      ● csf.service - ConfigServer Security & Firewall - csf
           Loaded: loaded (/lib/systemd/system/csf.service; enabled; vendor preset: enabled)
           Active: active (exited) since Mon 2025-09-15 23:45:04 UTC; 14 seconds ago
         Main PID: 597 (code=exited, status=0/SUCCESS)

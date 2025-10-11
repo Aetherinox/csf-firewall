@@ -13,7 +13,7 @@ tags:
 
 # Dependencies <!-- omit from toc -->
 
-To ensure ConfigServer Firewall & Security (CSF) functions correctly, all required dependencies must be installed. Some dependencies are essential for the core operation of CSF, while others are only necessary if you plan to use specific optional features.
+To ensure ConfigServer Security & Firewall (CSF) functions correctly, all required dependencies must be installed. Some dependencies are essential for the core operation of CSF, while others are only necessary if you plan to use specific optional features.
 
 <br />
 

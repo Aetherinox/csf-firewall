@@ -366,7 +366,7 @@ sudo service lfd status
 You should see the following:
 
 ```console
-● lfd.service - ConfigServer Firewall & Security - lfd
+● lfd.service - ConfigServer Security & Firewall - lfd
      Loaded: loaded (/lib/systemd/system/lfd.service; enabled; preset: enabled)
      Active: active (running) since Mon 2025-19-21 11:59:38 UTC; 1s ago
     Process: 46393 ExecStart=/usr/sbin/lfd (code=exited, status=0/SUCCESS)
@@ -390,7 +390,7 @@ sudo service csf status
 Check the output for any errors; which there should be none.
 
 ```console
-● csf.service - ConfigServer Firewall & Security - csf
+● csf.service - ConfigServer Security & Firewall - csf
      Loaded: loaded (/lib/systemd/system/csf.service; enabled; preset: enabled)
      Active: active (exited) since Mon 2024-08-05 12:04:09 UTC; 1s ago
     Process: 46916 ExecStart=/usr/sbin/csf --initup (code=exited, status=0/SUCCESS)

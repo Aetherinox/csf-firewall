@@ -11,7 +11,7 @@ tags:
 
 <h1 align="center">
 
-<b>ConfigServer Firewall & Security</b>
+<b>ConfigServer Security & Firewall</b>
 
 </h1>
 
@@ -26,7 +26,7 @@ tags:
 
 ## About Us
 
-:aetherx-axs-csf-logo-1: **ConfigServer Firewall & Security** _(CSF)_ is a comprehensive security solution for Linux servers that functions as a **Stateful Packet Inspection** (SPI) firewall and intrusion detection system. 
+:aetherx-axs-csf-logo-1: **ConfigServer Security & Firewall** _(CSF)_ is a comprehensive security solution for Linux servers that functions as a **Stateful Packet Inspection** (SPI) firewall and intrusion detection system. 
 
 Originally released in 2005, CSF acts as a front-end for iptables or nftables, allowing you to configure firewall rules in a way that protects your server from unauthorized access while permitting legitimate traffic. With CSF, you can safely manage access to services such as SSH, FTP, email, and web applications, while minimizing the risk of attacks from malicious IP addresses.
 
