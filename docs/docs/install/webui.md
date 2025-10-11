@@ -52,27 +52,27 @@ Each installation method below provides two options:
 
 === ":aetherx-axb-debian: Debian/Ubuntu (apt-get)"
 
-    ```bash
+    ``` shell
     # #
     #   Full Dependencies
     # #
 
     sudo apt-get update && sudo apt-get install -y \
-      perl \
-      libio-socket-ssl-perl \
-      libwww-perl \
-      libjson-perl \
-      libnet-ssleay-perl \
+      dnsutils \
+      ipset \
       libcrypt-ssleay-perl \
-      liblwp-protocol-https-perl \
       libgd-graph-perl \
       libio-socket-inet6-perl \
-      libsocket6-perl \
+      libio-socket-ssl-perl \
+      libjson-perl \
+      liblwp-protocol-https-perl \
       libnet-libidn-perl \
+      libnet-ssleay-perl \
+      libsocket6-perl \
       libtime-hires-perl \
-      sendmail-bin \
-      dnsutils \
-      unzip \
+      libwww-perl \
+      perl \
+      sendmail \
       wget
 
     # #
@@ -80,104 +80,123 @@ Each installation method below provides two options:
     # #
 
     sudo apt-get update && sudo apt-get install -y \
-      libio-socket-ssl-perl \
+      ipset \
       libcrypt-ssleay-perl \
-      libnet-libidn-perl \
       libio-socket-inet6-perl \
-      libsocket6-perl
+      libio-socket-ssl-perl \
+      libnet-libidn-perl \
+      libsocket6-perl \
+      perl \
+      wget
     ```
 
 === ":aetherx-axb-redhat: CentOS/RHEL (yum/dnf)"
 
-    ```bash
+    ``` shell
     # #
     #   Full Dependencies
     # #
 
-    sudo yum install -y \
-      perl \
-      perl-IO-Socket-SSL.noarch \
-      perl-Net-SSLeay \
-      perl-Net-LibIDN2 \
-      perl-IO-Socket-Inet6 \
-      perl-Socket6 \
-      perl-libwww-perl \
-      perl-JSON \
-      perl-Crypt-SSLeay \
-      perl-LWP-Protocol-https.noarch \
-      perl-GDGraph \
-      perl-Math-BigInt \
-      perl-Time-HiRes \
-      perl-Socket \
-      net-tools \
-      ipset \
+    sudo yum makecache && sudo yum install -y \
       bind-utils \
-      wget \
-      unzip
+      ipset \
+      net-tools \
+      perl \
+      perl-Crypt-SSLeay \
+      perl-GDGraph \
+      perl-IO-Socket-INET6 \
+      perl-IO-Socket-SSL.noarch \
+      perl-JSON \
+      perl-libwww-perl \
+      perl-LWP-Protocol-https.noarch \
+      perl-Math-BigInt \
+      perl-Net-LibIDN2 \
+      perl-Net-SSLeay \
+      perl-Socket \
+      perl-Socket6 \
+      perl-Time-HiRes \
+      sendmail \
+      wget
 
     # #
     #   Minimum Dependencies
     # #
 
     sudo yum makecache && sudo yum install -y \
-      perl-IO-Socket-SSL.noarch \
-      perl-Net-SSLeay \
-      perl-Net-LibIDN2 \
+      ipset \
+      perl \
       perl-IO-Socket-INET6 \
-      perl-Socket6
+      perl-IO-Socket-SSL.noarch \
+      perl-libwww-perl \
+      perl-Net-LibIDN2 \
+      perl-Net-SSLeay \
+      perl-Socket6 \
+      wget
     ```
 
 === ":aetherx-axs-onion: Perl (CPAN)"
 
-    ```bash
+    ``` shell
+    # #
+    #   Debian/Ubuntu
+    # #
+
+    sudo apt-get update && sudo apt-get install -y perl build-essential
+
+    # #
+    #   CentOS/RHEL
+    # #
+
+    sudo yum makecache && sudo yum groupinstall 'Development Tools' && sudo yum install -y perl cpan
+
     # #
     #   Full Dependencies
     # #
 
     sudo cpan -i \
-      IO::Socket::SSL \
-      IO::Socket::INET6 \
-      Socket6 \
-      Net::LibIDN \
-      LWP \
-      LWP::Protocol::https \
-      LWP::UserAgent \
-      JSON \
-      Net::SSLeay \
       Crypt::SSLeay \
       Digest::MD5 \
       Digest::SHA \
       Email::Valid \
       GD::Graph \
-      Time::HiRes \
-      Socket
+      IO::Socket::INET6 \
+      IO::Socket::SSL \
+      JSON \
+      LWP \
+      LWP::Protocol::https \
+      LWP::UserAgent \
+      Net::LibIDN \
+      Net::SSLeay \
+      Socket \
+      Socket6 \
+      Time::HiRes
 
     # #
     #   Minimum Dependencies
     # #
 
     sudo cpan -i \
-      IO::Socket::SSL \
-      Net::SSLeay \
-      Net::LibIDN \
       IO::Socket::INET6 \
+      IO::Socket::SSL \
+      Net::LibIDN \
+      Net::SSLeay \
       Socket6
     ```
 
 === ":aetherx-axs-onion: Perl (CPANMINUS)"
 
-    ```bash
+    ``` shell
     # #
     #   Debian/Ubuntu
     # #
 
-    sudo apt-get update && sudo apt-get install -y cpanminus
+    sudo apt-get update && sudo apt-get install -y perl cpanminus
 
     # #
     #   CentOS/RHEL
     # #
 
-    sudo yum makecache && sudo yum install -y perl-App-cpanminus
+    sudo yum makecache && sudo yum install -y perl perl-App-cpanminus
 
     # #
     #   Full Dependencies
