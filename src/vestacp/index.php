@@ -1,6 +1,10 @@
 <?php
 error_reporting(NULL);
-include($_SERVER['DOCUMENT_ROOT'].'/static/index.html');
+/*
+    VestaCP migrated to React in their v1.0 update.
+    All pages are pre-compiled into .js / .css bundle and then pushed
+    to the VestaCP repo.
+*/
 
 $TAB = 'CSF';
 
