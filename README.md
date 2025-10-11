@@ -296,14 +296,14 @@ To install the latest version of CSF manually, run the following commands:
 
     ```shell
     sudo apt-get update && sudo apt-get install -y \
-      perl \
-      libwww-perl \
-      libio-socket-ssl-perl \
+      ipset \
       libcrypt-ssleay-perl \
-      libnet-libidn-perl \
       libio-socket-inet6-perl \
+      libio-socket-ssl-perl \
+      libnet-libidn-perl \
       libsocket6-perl \
-      ipsets
+      perl \
+      wget
     ```
 
 <br />
@@ -312,14 +312,15 @@ To install the latest version of CSF manually, run the following commands:
 
     ```shell
     sudo yum makecache && sudo yum install -y \
+      ipset \
       perl \
-      perl-libwww-perl \
-      perl-IO-Socket-SSL \
-      perl-Net-SSLeay \
-      perl-Net-LibIDN \
       perl-IO-Socket-INET6 \
+      perl-IO-Socket-SSL.noarch \
+      perl-libwww-perl \
+      perl-Net-LibIDN2 \
+      perl-Net-SSLeay \
       perl-Socket6 \
-      ipsets
+      wget
     ```
 
 <br />
