@@ -1069,7 +1069,359 @@ You can now proceed to the [Next Steps](#next-steps) or skip the rest of this se
 
 ## Install: VestaCP
 
-This part of the documentation is currently being written.
+??? danger "Danger: Security Vulnerabilities"
+
+    As of **10/10/2025**, there are over **20** known [security vulnerabilities listed for VestaCP](https://www.cve.org/CVERecord/SearchResults?query=vesta). Take these warnings serious in terms of your decision to use VestaCP on outdated distros such as CentOS 7, which reached EOL on **June 30, 2024**.
+
+??? bug "Bug: CSF Header Button"
+
+    As of **VestaCP v1.0**, the application was migrated to **React**, which fundamentally changed how the web interface works. The UI is now compiled into a series of `.CSS` and `.JS` files, rather than using the older PHP/HTML templates.
+
+    Because of this change, **CSF does not currently appear in the top menu** of VestaCP, even though the CSF page itself is still fully accessible at `https://192.168.0.16:5463/list/csf`.
+
+    To restore the CSF menu link, the **VestaCP developers would need to add a conditional menu item** that detects when CSF is installed and ready to use. After they add this change to their source menu code, they can re-build the React .js file to push for public release.
+
+    Unfortunately, due to the lack of recent updates from the VestaCP team, this integration may never be corrected, and users will need to access CSF directly via its URL.
+
+??? note "Note: Project Status Unknown"
+
+    The current status of VestaCP is unknown. The developers [announced a release](https://vestacp.com/docs/vesta-2-development) of VestaCP 2.0 in 2024, however, no other information was given after that time.
+
+    The [repository](https://github.com/outroll/vesta) has not been updated in over a year.
+
+<br />
+
+[Vesta](https://github.com/outroll/vesta) is an open-source hosting control panel designed to simplify server management tasks. It provides a clean and focused interface without unnecessary clutter, allowing users to efficiently manage their hosting environments. VestaCP supports various features, including:
+
+- Web, DNS, and Mail Management: Easily manage domains, DNS records, and email accounts.
+- Database Support: Create and manage MySQL and PostgreSQL databases.
+- SSL Integration: Automatically generate SSL/TLS certificates with Let's Encrypt.
+- Security Features: Configure firewalls and manage user access.
+- Backup Solutions: Schedule and manage backups for your data.
+
+Vesta is licensed under the [GPL v3 license](https://github.com/outroll/vesta/blob/master/LICENSE), ensuring that it remains free and open for community contributions.
+
+<br />
+
+| Distro | Supported Versions |
+| --- | --- |
+| :aetherx-axb-centos: RHEL / CentOS | 5, 6, 7 |
+| :aetherx-axb-debian: Debian | 7, 8, 9 |
+| :aetherx-axb-ubuntu: Ubuntu | 12.04 - 18.10 |
+
+<br />
+
+The installation of VestaCP is a bit different than our other instructions. We will need to generate a build command using their website, and then use that command to install VestaCP to your server.
+
+<br />
+
+Log in as the `root` user via SSH.
+
+=== ":aetherx-axs-key: Using Password"
+
+    ```shell
+    ssh -vvv root@XX.XX.XX.XX -p 22
+    ```
+
+=== ":aetherx-axs-file: Using Private Key"
+
+    ```shell
+    ssh -i /path/to/private_key -vvv root@XX.XX.XX.XX -p 22
+    ```
+
+<br />
+
+Head over to their website so that you can generate an installation command that you will run in your shell:
+
+- https://vestacp.com/install#install-configure
+
+<br />
+
+We did a very basic configuration:
+
+- [x] Web: `Apache`
+- [x] FTP: `No`
+- [x] Mail: `No`
+- [x] DNS: `No`
+- [x] Firewall: `Iptables`
+- [x] Softaculous: `Yes`
+- [x] Additional Repository: `Yes`
+- [x] File System Quota: `No`
+- [x] DB : `None`
+- [x] Hostname: `panel.configserver.dev`
+- [x] Email: `user@configserver.dev`
+- [x] Port: `5463`
+- [x] Password: `*********************************`
+
+<br />
+
+Download the VestaCP installation script:
+
+=== ":aetherx-axd-command: Command"
+
+    ```shell
+    curl -O https://vestacp.com/pub/vst-install.sh
+    ```
+
+<br />
+
+Next, we must use the command we generated earlier:
+
+??? danger "**DANGER**: Plain-text Passwords in Terminal Commands"
+
+    Supplying passwords directly in plain-text commands is strongly discouraged. Unfortunately, this is how VestaCP is currently configured.
+
+    To reduce the risk, it is recommended to set `HISTCONTROL` to `ignorespace` and then prefix your command with a ++space++. This prevents the command from being recorded in your shell history.
+
+    The codeblock below includes this command, and starts with a space character.
+
+=== ":aetherx-axd-command: Command"
+
+    ```shell
+    export HISTCONTROL=ignorespace
+
+     bash vst-install.sh \
+       --nginx no \
+       --apache yes \
+       --phpfpm no \
+       --vsftpd no \
+       --proftpd no \
+       --exim no \
+       --dovecot no \
+       --spamassassin no \
+       --clamav no \
+       --named no \
+       --iptables yes \
+       --fail2ban no \
+       --softaculous yes \
+       --remi yes \
+       --quota no \
+       --mysql no \
+       --postgresql no \
+       --hostname panel.configserver.dev \
+       --email user@email.com \
+       --port 5463 \
+       --password *********************************
+    ```
+
+<br />
+
+You will be given the following response in terminal:
+
+=== ":aetherx-axs-square-terminal: Output"
+
+      ```shell
+      _|      _|  _|_|_|_|    _|_|_|  _|_|_|_|_|    _|_|
+      _|      _|  _|        _|            _|      _|    _|
+      _|      _|  _|_|_|      _|_|        _|      _|_|_|_|
+        _|  _|    _|              _|      _|      _|    _|
+          _|      _|_|_|_|  _|_|_|        _|      _|    _|
+
+                                        Vesta Control Panel
+
+
+
+      The following software will be installed on your system:
+        - Apache Web Server
+        - Softaculous Plugin
+        - Iptables Firewall
+
+
+      Would you like to continue [y/n]: y
+      ```
+
+<br />
+
+The installation of VestaCP will take anywhere from **5 - 15 minutes** depending on the specs of your server. Once the installation is complete, you'll see the following:
+
+=== ":aetherx-axs-square-terminal: Output"
+
+      ```shell
+      _|      _|  _|_|_|_|    _|_|_|  _|_|_|_|_|    _|_|   
+      _|      _|  _|        _|            _|      _|    _| 
+      _|      _|  _|_|_|      _|_|        _|      _|_|_|_| 
+        _|  _|    _|              _|      _|      _|    _| 
+          _|      _|_|_|_|  _|_|_|        _|      _|    _| 
+
+
+      Congratulations, you have just successfully installed Vesta Control Panel
+
+          https://192.168.0.16:5463
+          username: admin
+          password: *********************************
+
+      We hope that you enjoy your installation of Vesta. Please feel free to contact us anytime if you have any questions.
+      Thank you.
+
+      --
+      Sincerely yours
+      vestacp.com team
+      ```
+
+<br />
+
+At the end of the installation, you can now access the VestaCP dashboard by opening your browser and going to the URL:
+
+- `https://192.168.0.16:5463`
+
+<br />
+
+You should be greeted with a VestaCP authentication page. Provide your system username and password:
+
+<figure markdown="span">
+    ![VestaCP › Login Screen](../assets/images/install/vestacp/1.png){ width="700" }
+    <figcaption>VestaCP › Login Screen</figcaption>
+</figure>
+
+<br />
+
+Once you sign in with the system username and password you provided within the **build command**, you'll be taken to the VestaCP dashboard:
+
+<figure markdown="span">
+    ![VestaCP › Dashboard](../assets/images/install/vestacp/2.png){ width="700" }
+    <figcaption>VestaCP › Dashboard</figcaption>
+</figure>
+
+<br />
+
+Set VestaCP aside for a moment; we need to make sure that we don't have any existing firewalls that need disabled. If so, run the commands below:
+
+=== ":aetherx-axs-block-brick-fire: UFW"
+
+    Stop and disable `ufw`
+
+    ```bash
+    sudo systemctl stop ufw
+    sudo systemctl disable ufw
+    ```
+
+    Confirm `ufw` is disabled with:
+
+    ```bash
+    sudo systemctl status ufw
+    ```
+
+=== ":aetherx-axs-block-brick-fire: Firewalld"
+
+    Stop and disable `firewalld`
+
+    ```bash
+    sudo systemctl stop firewalld
+    sudo systemctl disable firewalld
+    ```
+
+    Confirm `firewalld` is disabled with:
+
+    ```bash
+    sudo systemctl status firewalld
+    ```
+
+<br />
+
+We are ready to install CSF, which you should already have downloaded to your system. If not; download the latest version of CSF:
+
+=== ":aetherx-axs-file-zipper: .tgz"
+
+    ```shell
+    # Using wget (tgz)
+    wget https://download.configserver.dev/csf.tgz
+
+    # Using curl (tgz)
+    curl -O https://download.configserver.dev/csf.tgz
+    ```
+
+=== ":aetherx-axs-file-zip: .zip"
+
+    ```shell
+    # Using wget (zip)
+    wget https://download.configserver.dev/csf.zip
+
+    # Using curl (zip)
+    curl -O https://download.configserver.dev/csf.zip
+    ```
+
+<br />
+
+Decompress / unzip the downloaded archive file:
+
+=== ":aetherx-axs-file-zipper: .tgz"
+
+    ```bash
+    tar -xzf csf.tgz -C /tmp
+    ```
+
+=== ":aetherx-axs-file-zip: .zip"
+
+    ```bash
+    unzip csf.zip -d /tmp
+    ```
+
+<br />
+
+Run the CSF installation script:
+
+=== ":aetherx-axd-circle-1: Option 1"
+
+    :aetherx-axd-circle-1: Runs `install.sh` :aetherx-axd-dot: uses `sh` shell :aetherx-axd-dot: executable permission not required
+
+    ```bash
+    sudo sh /tmp/csf/install.sh
+    ```
+
+=== ":aetherx-axd-circle-2: Option 2"
+
+    :aetherx-axd-circle-2: Runs `install.sh` :aetherx-axd-dot: uses shebang interpreter :aetherx-axd-dot: requires executable `+x` permission
+
+    ```bash
+    sudo chmod +x /tmp/csf/install.sh
+    sudo /tmp/csf/install.sh
+    ```
+
+<br />
+
+Follow any instructions on-screen. If prompted for any additional information, enter it.
+
+<br />
+
+Log back into VestaCP.  At this point, you're probably asking _"Where is the menu link to CSF?"_. Here comes the bad news ...
+
+<figure markdown="span">
+    ![VestaCP › CSF](../assets/images/install/vestacp/3.png){ width="700" }
+    <figcaption>VestaCP › CSF</figcaption>
+</figure>
+
+<br />
+
+!!! bug inline end "Bug: VestaCP Header Fix"
+
+    CSF [v15.02](../about/changelog.md#15.02) introduced a fix which allows the VestaCP header to once again show on the CSF page. 
+    
+    However, this does not address the VestaCP top nav menu not showing **CSF**.
+
+As of **VestaCP v1.0**, the application was migrated to **React**, which fundamentally changes how the web interface works. The UI is now compiled into a series of `.CSS` and `.JS` files, rather than using the older PHP/HTML templates.
+
+Because of this change, **CSF does not currently appear in the top menu** of VestaCP, even though the CSF page itself is still fully accessible at `https://192.168.0.16:5463/list/csf`.
+
+To restore the CSF menu link, the **VestaCP developers would need to add a conditional menu item** that detects when CSF is installed and ready to use. 
+
+Unfortunately, due to the lack of recent updates from the VestaCP team, this integration may never be corrected, and users will need to access CSF directly via its URL.
+
+- `https://192.168.0.16:5463/list/csf`
+
+<br />
+
+By manually going to the link within VestaCP, you should see the following page:
+
+<figure markdown="span">
+    ![VestaCP › CSF](../assets/images/install/vestacp/4.png){ width="700" }
+    <figcaption>VestaCP › CSF</figcaption>
+</figure>
+
+<br />
+
+If the interface matches the screenshot above, the CSF integration with VestaCP is complete.  
+
+You can now proceed to the [Next Steps](#next-steps) or skip the rest of this section and begin our [Configuration](../usage/configuration.md) chapter to get things set up.
 
 <br />
 <br />
