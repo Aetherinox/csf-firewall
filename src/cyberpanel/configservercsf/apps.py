@@ -7,4 +7,4 @@ class configservercsfConfig(AppConfig):
     name = 'configservercsf'
 
     def ready(self):
-        import signals
+        import configservercsf.signals
