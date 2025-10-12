@@ -34,7 +34,7 @@ Included with CSF is the Login Failure Daemon (LFD), which continuously monitors
 
 Overall, CSF provides a balance of advanced security and ease of use. It gives server administrators a powerful interface for managing firewall rules, monitoring suspicious activity, and protecting servers from both external attacks and internal misconfigurations. By implementing CSF and LFD together, users can enhance their server’s security posture while maintaining the accessibility and functionality needed for everyday operations.
 
-To learn more about our software, visit the about page.
+To learn more about our software, visit the [About](./about/csf.md) page.
 
 <br />
 
