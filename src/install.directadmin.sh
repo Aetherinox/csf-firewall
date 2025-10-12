@@ -285,12 +285,24 @@ if [ ! -e "/usr/local/csf/tpl/litespeed.https.txt" ]; then
 fi
 cp -avf x-arf.txt /usr/local/csf/tpl/.
 
-if [ ! -e "/usr/local/csf/bin/csfpre.sh" ]; then
-	cp -avf csfpre.sh /usr/local/csf/bin/.
+# #
+#	Only creates pre and post autoloader if it doesn't exist in either location
+# #
+
+if [ ! -e "/usr/local/csf/bin/csfpre.sh" ] && [ ! -e "/etc/csf/csfpre.sh" ]; then
+	echo "No existing csfpre.sh found — installing a fresh copy..."
+    cp -avf csfpre.sh /usr/local/csf/bin/.
+else
+    echo "csfpre.sh already exists in one of the valid locations — skipping copy."
 fi
-if [ ! -e "/usr/local/csf/bin/csfpost.sh" ]; then
-	cp -avf csfpost.sh /usr/local/csf/bin/.
+
+if [ ! -e "/usr/local/csf/bin/csfpost.sh" ] && [ ! -e "/etc/csf/csfpost.sh" ]; then
+	echo "No existing csfpost.sh found — installing a fresh copy..."
+    cp -avf csfpost.sh /usr/local/csf/bin/.
+else
+    echo "csfpost.sh already exists in one of the valid locations — skipping copy."
 fi
+
 if [ ! -e "/usr/local/csf/bin/regex.custom.pm" ]; then
 	cp -avf regex.custom.pm /usr/local/csf/bin/.
 fi
