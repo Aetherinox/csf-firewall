@@ -17,12 +17,12 @@
 #                         pip install --upgrade --force-reinstall mkdocs-material
 # #
 
-site_name: !!python/object/apply:os.getenv ["DOCS_NAME", "ConfigServer and Firewall"]
-repo_url: https://github.com/Aetherinox/csf-firewall
+site_name: !!python/object/apply:os.getenv ["DOCS_NAME", "ConfigServer Security and Firewall"]
+repo_url: https://github.com/aetherinox/csf-firewall
 repo_name: Aetherinox/csf-firewall
 edit_uri: edit/main/docs/docs/
 site_author: Aetherinox
-site_url: 'https://Aetherinox.github.io/csf-firewall/'
+site_url: 'https://aetherinox.github.io/csf-firewall/'
 
 # #
 #   Section › Markdown Extensions
