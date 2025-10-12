@@ -1,11 +1,11 @@
 ---
-title: "Usage › Pre.d/Post.d Scripts"
+title: "Usage › Pre/Post Loader Scripts"
 tags:
   - usage
   - configure
 ---
 
-# Usage › Pre and Post Scripts
+# Usage › Pre and Post Loader Scripts
 
 CSF includes dedicated directories where you can place custom Bash scripts to run at specific stages of the firewall’s startup process. This allows you to easily maintain persistent, custom firewall rules that are automatically applied each time the CSF service starts or restarts.
 
@@ -23,7 +23,9 @@ This section outlines exactly how the pre and post scripts are initialized and l
 
 ### Loader Scripts
 
-When CSF is installed for the first time, two loader :aetherx-axd-file: files are added to your system (if they don't exist).
+- When CSF is installed for the first time, two starter files :aetherx-axd-file: `/usr/local/csf/bin/csfpre.sh` and :aetherx-axd-file: `/usr/local/csf/bin/csfpost.sh` are automatically created on your system (only if they don’t already exist). These serve as base loader scripts, giving you a foundation to add your own custom logic later on.
+    - You must create your own pre/post loader folders :aetherx-axd-folder: `/usr/local/include/csf/pre.d/` and :aetherx-axd-folder: `/usr/local/include/csf/post.d/`
+- If you already have existing pre/post loader files in place, CSF will respect your current setup and skip creating the starter versions — allowing you to continue using your existing scripts without interruption.
 
 <br />
 
