@@ -1,0 +1,33 @@
+{#-
+    This file was automatically generated - do not edit
+-#}
+{% extends "main.html" %}
+{% block tabs %}
+  {{ super() }}
+  <style>.md-header{position:initial}.md-main__inner{margin:0}.md-content{display:none}@media screen and (min-width:60em){.md-sidebar--secondary{display:none}}@media screen and (min-width:76.25em){.md-sidebar--primary{display:none}}</style>
+  <section class="mdx-container">
+      <div class="md-grid md-typeset">
+          <div class="mdx-hero">
+              <div class="mdx-hero__image">
+                  <img src="" alt="" width="1659" height="1200" draggable="false">
+              </div>
+              <div class="mdx-hero__content">
+                  <h1>ConfigServer Security & Firewall</h1>
+                  <p>
+                      CSF a Stateful Packet Inspection (SPI) firewall and Login/Intrusion Detection and Security application for Linux servers 
+                      which started back in 2005. CSF works as a front-end to iptables or nftables, configuring your server’s firewall rules to 
+                      lock down public access to services while allowing only approved connections.
+                  </p>
+                  <a href="./home/" title="{{ page.next_page.title | e }}" class="md-button md-button--primary">
+                      Read Docs
+                  </a>
+                  <a href="https://github.com/Aetherinox/csf-firewall/" title="ConfigServer Firewall" class="md-button">
+                      View Github
+                  </a>
+              </div>
+          </div>
+      </div>
+  </section>
+{% endblock %}
+{% block content %}{% endblock %}
+{% block footer %}{% endblock %}
