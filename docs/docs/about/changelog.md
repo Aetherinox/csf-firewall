@@ -38,6 +38,9 @@ tags:
     - Introduced new flags: `--dryrun`, `--detect`, `--help`, `--version`
 - `chore`: Update CSF SSL certificate and key
 - `perf`: Implement CSS optimization to pre-load required stylesheets
+- `docs`: Completed several pages, including:
+    - Installation instructions for: vestacp, cyberpanel, cpanel, interworx, centos web panel (cwp)
+    - Revised package / depenency commands to fix inconsistencies
 - `fix`: Resolved missing VestaCP header on the `/list/csf` admin page
 - `fix`: Restored CyberPanel integration functionality
 - `fix`: Resolved regex pattern issues when dealing with strict conditions
