@@ -295,6 +295,8 @@ nav:
                 - Configure: 'extras/configure.md'
     - Services: 'services.md'
     - Changelog: 'about/changelog.md'
+    - Blog:
+        - blog/index.md
     - Create Ticket: 'https://tickets.configserver.dev'
     - Sponsor: 'https://buymeacoffee.com/aetherinox'
 
@@ -303,6 +305,18 @@ nav:
 # #
 
 plugins:
+    - link-embeds:
+        enabled: true
+        name_default: "Untitled Link"
+        desc_default: "No description found"
+        image_default: "https://github.com/Aetherinox/mkdocs-link-embeds/assets/118329232/c0298d98-0910-4235-a88f-0c3e2f704ba7"
+        image_disabled: false
+        favicon_default: "https://github.com/Aetherinox/mkdocs-link-embeds/assets/118329232/b37da9c6-6f17-4c3f-9c94-c346a6f31bfa"
+        favicon_disabled: false
+        favicon_size: 25
+        target: "blank"
+        accent: "FFFFFF1A"
+        verbose: false
     - search:
           separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
     - tags:
@@ -318,7 +332,30 @@ plugins:
           token: !!python/object/apply:os.getenv [GH_TOKEN, "NULL"]
     - blog:
           authors: true
-          authors_file: .authors.yml
+          authors_file: "{blog}/.authors.yml"
+          blog_dir: blog
+          blog_toc: true
+          post_dir: "{blog}/posts"
+          post_date_format: full
+          post_url_date_format: yyyy
+          post_url_format: "{date}/{slug}"
+          post_url_max_categories: 2
+          post_slugify: !!python/object/apply:pymdownx.slugs.slugify
+              kwds:
+                  case: lower
+          post_slugify_separator: "-"
+          post_excerpt_max_authors: 2
+          post_readtime: true
+          post_readtime_words_per_minute: 265
+          archive: true
+          archive_name: Archive
+          archive_date_format: MMMM yyyy
+          archive_url_date_format: yyyy
+          archive_url_format: "{date}"
+          archive_toc: true
+          categories: true
+          categories_name: Categories
+          categories_url_format: "{slug}"
     - encryptcontent:
           title_prefix: '[🔒]'
           summary: 'Restricted Access'
