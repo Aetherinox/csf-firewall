@@ -688,6 +688,7 @@
     {
         background-color: #dfdfdf;
         border: none;
+        white-space: nowrap;
     }
 
     table code
@@ -1508,6 +1509,7 @@
     {
         background-color: var( --md-code-bg-color );
         border: none;
+        white-space: nowrap;
     }
 
     table .md-typeset code
