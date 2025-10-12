@@ -21,7 +21,26 @@ tags:
 
 ### <!-- md:version stable- --> 15.02 <small>Coming Soon</small> { id="15.02" }
 
-- This version has not been released yet
+- `feat`: New footer design for improved consistency and navigation
+    - Added logout button to footer for `generic` installations
+- `feat`: Integrated `csfpre.sh` and `csfpost.sh` directly into CSF for native pre/post script support
+- `feat`: Configuration files now include headers visible in the GUI for easier file identification; called with `HEADER:`
+- `feat`: New codename detection helper func for conditional statements depending on the installer used by end-user
+- `feat`: Added an official help page to the download service
+    - https://download.configserver.dev/help
+- `feat`: Implemented Light/Dark mode toggle in the footer for better theme control
+- `style`: Rewrote configuration file comments for clarity; now more descriptive, organized, and include practical examples
+- `refactor`: re-write `ports-blacklist` to be POSIX compliant
+- `refactor`: Download service now fetches version from Github repo; no longer requires manual bumps
+- `refactor`: Overhauled the base `install.sh` script
+    - Ensured full POSIX compliance
+    - Added support for both absolute and relative execution paths
+    - Introduced new flags: `--dryrun`, `--detect`, `--help`, `--version`
+- `chore`: Update CSF SSL certificate and key
+- `perf`: Implement CSS optimization to pre-load required stylesheets
+- `fix`: Resolved missing VestaCP header on the `/list/csf` admin page
+- `fix`: Restored CyberPanel integration functionality
+- `fix`: Resolved regex pattern issues when dealing with strict conditions
 
 <br />
 
