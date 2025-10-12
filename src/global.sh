@@ -10,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            10.05.2025
+#   @updated            10.11.2025
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -43,118 +43,182 @@ SCRIPT_DIR=$(pwd)                                   # get absolute path
 cd "$OLDPWD" || exit 1                              # restore previous working directory
 
 # #
-#   standard files
+#   Define › General
 # #
 
+APP_NAME="ConfigServer Security & Firewall"
+APP_DESC="Robust linux iptables/nftables firewall"
+APP_REPO="https://github.com/aetherinox/csf-firewall"
 FILE_INSTALL_TXT="install.txt"
 CSF_ETC="/etc/csf"
 CSF_BIN="/usr/local/csf/bin"
 CSF_TPL="/usr/local/csf/tpl"
 
 # #
-#   get current version
+#   Define › Files
+# #
+
+app_file_this=$(basename "$0")                                          # global.sh         (with ext)
+app_file_bin="${app_file_this%.*}"                                      # global            (without ext)
+
+# #
+#   Define › Folders
+# #
+
+app_dir_this="$(cd "$(dirname "$0")" >/dev/null 2>&1 && pwd)"           # path where script was last found in
+app_dir_this_usr="${PWD}"                                               # path where script is called from
+
+# #
+#   Define › Current version
 # #
 
 VERSION_FILE="$SCRIPT_DIR/version.txt"
 
-# extract ver from version.txt; fallback 'unknown'
-VERSION=$( [ -f "$VERSION_FILE" ] && grep -v '^[[:space:]]*$' "$VERSION_FILE" | sed -n '1s/^[[:space:]]*//;s/[[:space:]]*$//p' || true )
-: "${VERSION:=unknown}"
-
 # #
-#   ANSI color codes (POSIX-compatible)
+#   Extract ver from version.txt; fallback 'unknown'
 # #
 
-ESC=$(printf '\033')
-END="${ESC}[0m"
+APP_VERSION=$( [ -f "$VERSION_FILE" ] && grep -v '^[[:space:]]*$' "$VERSION_FILE" | sed -n '1s/^[[:space:]]*//;s/[[:space:]]*$//p' || true )
+: "${APP_VERSION:=unknown}"
 
 # #
-#   Styles
+#   Define › Colors
+#   
+#   Use the color table at:
+#       - https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
 # #
 
-BOLD="${ESC}[1m"
-DIM="${ESC}[2m"
-UNDERLINE="${ESC}[4m"
-BLINK="${ESC}[5m"
-STRIKE="${ESC}[9m"
+esc=$(printf '\033')
+end="${esc}[0m"
+bold="${esc}[1m"
+dim="${esc}[2m"
+underline="${esc}[4m"
+blink="${esc}[5m"
+white="${esc}[97m"
+black="${esc}[0;30m"
+redl="${esc}[0;91m"
+redd="${esc}[38;5;196m"
+magental="${esc}[0;95m"
+magentad="${esc}[0;35m"
+fuchsial="${esc}[38;5;198m"
+fuchsiad="${esc}[38;5;161m"
+bluel="${esc}[38;5;75m"
+blued="${esc}[38;5;33m"
+greenl="${esc}[38;5;76m"
+greend="${esc}[38;5;2m"
+orangel="${esc}[0;93m"
+oranged="${esc}[38;5;202m"
+yellowl="${esc}[38;5;190m"
+yellowd="${esc}[38;5;184m"
+greyl="${esc}[38;5;250m"
+greym="${esc}[38;5;244m"
+greyd="${esc}[0;90m"
+navy="${esc}[38;5;62m"
+olive="${esc}[38;5;144m"
+peach="${esc}[38;5;210m"
+cyan="${esc}[38;5;6m"
 
 # #
-#   Basic colors (foreground)
+#   Define › Logging functions
 # #
 
-BLACK="${ESC}[38;5;0m"
-WHITE="${ESC}[97m"
-
-# #
-#   Extended colors
-# #
-
-REDD="${ESC}[38;5;160m"
-REDL="${ESC}[38;5;196m"
-
-ORANGED="${ESC}[38;5;202m"
-ORANGEL="${ESC}[38;5;215m"
-
-FUCHSIAL="${ESC}[38;5;205m"
-FUCHSIAD="${ESC}[38;5;198m"
-
-BLUED="${ESC}[38;5;33m"
-BLUEL="${ESC}[38;5;39m"
-
-GREEND="${ESC}[38;5;2m"
-GREENL="${ESC}[38;5;76m"
-
-YELLOWD="${ESC}[38;5;184m"
-YELLOWL="${ESC}[38;5;190m"
-
-GREYD="${ESC}[38;5;240m"
-GREYL="${ESC}[38;5;244m"
-
-MAGENTA="${ESC}[38;5;5m"
-CYAN="${ESC}[38;5;51m"
-
-# #
-#   Helper function: copy a file if missing
-# #
-
-copy_if_missing()
+error( )
 {
-    SRC="$1"
-    DEST="$2"
+    printf '%-28s %-65s\n' "  ${redl} ERROR ${end}" "${greym} $1 ${end}"
+    exit 1
+}
 
-    if [ ! -e "$DEST" ]; then
-        if cp -avf "$SRC" "$DEST"; then
-            echo "   ${GREYD}Copied ${GREYL}$SRC${GREYD} to ${GREYL}$DEST${END}"
-        else
-            echo "   ${REDL}FAILED: Cannot copy ${YELLOWD}$SRC${REDL}$DEST${END}" >&2
-            exit 1
-        fi
-    else
-        echo "   ${GREYD}Already existing copy ${GREYL}$SRC${GREYD} to ${GREYL}$DEST${END}"
+warn( )
+{
+    printf '%-32s %-65s\n' "  ${yellowl} WARN ${end}" "${greym} $1 ${end}"
+}
+
+status( )
+{
+    printf '%-31s %-65s\n' "  ${bluel} STATUS ${end}" "${greym} $1 ${end}"
+}
+
+ok( )
+{
+    printf '%-31s %-65s\n' "  ${greenl} OK ${end}" "${greym} $1 ${end}"
+}
+
+debug( )
+{
+    if [ "$argDevMode" = "true" ]; then
+        printf '%-28s %-65s\n' "  ${greyd} DEBUG ${end}" "${greym} $1 ${end}"
+    fi
+}
+
+label( )
+{
+    printf '%-31s %-65s\n' "  ${peach}        ${end}" "${peach} $1 ${end}"
+}
+
+print( )
+{
+    echo "${end}$1${end}"
+}
+
+# #
+#   Check Sudo
+# #
+
+check_sudo( )
+{
+    if [ "$(id -u)" != "0" ]; then
+        error "    ❌ Must run script with ${redl}sudo"
+        exit 1
     fi
 }
 
 # #
-#   Special copy: copy to DEST or DEST.new if DEST exists
+#   Copy If Missing
+#   Copies a src file to dest only if missing
+#   
+#   @arg            src                         File to copy
+#   @arg            dest                        Where to copy file
+#   @usage			copy_if_missing "install.cpanel.sh" "csf cPanel installer"
 # #
 
-copy_or_new()
+copy_if_missing( )
 {
-    SRC="$1"
-    DEST="$2"
+    src="$1"
+    dest="$2"
 
-    if [ ! -e "$DEST" ]; then
-        if cp -avf "$SRC" "$DEST"; then
-            echo "   ${GREYD}Copied ${GREYL}$SRC${GREYD} to ${GREYL}$DEST${END}"
+    if [ ! -e "$dest" ]; then
+        if cp -avf "$src" "$dest"; then
+            ok "    Copied ${greenl}$src${greym} to ${greenl}$dest${greym} "
         else
-            echo "   ${REDL}FAILED: Cannot copy ${YELLOWD}$SRC${REDL}$DEST${END}" >&2
+            error "    ❌ Cannot copy ${redl}$src${greym} to ${redl}$dest${greym}"
             exit 1
         fi
     else
-        if cp -avf "$SRC" "${DEST}.new"; then
-            echo "   ${GREYD}Copied ${GREYL}$SRC${GREYD} to ${GREYL}$DEST.new${GREYD} (destination already existed)${END}"
+        status "    Already existing copy ${bluel}${src}${greym} to ${bluel}$dest${greym}"
+    fi
+}
+
+# #
+#   Special copy: copy to dest or dest.new if dest exists
+# #
+
+copy_or_new( )
+{
+    src="$1"
+    dest="$2"
+
+    if [ ! -e "$dest" ]; then
+        if cp -avf "$src" "$dest"; then
+            ok "    Copied ${greenl}$src${greym} to ${greenl}$dest${greym} "
         else
-            echo "   ${REDL}FAILED: Cannot copy ${YELLOWD}$SRC${REDL}$DEST.new${REDL}${END}" >&2
+            error "    ❌ Cannot copy ${redl}$src${greym} to ${redl}$dest${greym}"
+            exit 1
+        fi
+    else
+        if cp -avf "$src" "${dest}.new"; then
+            ok "    Copied ${greenl}$src${greym} to ${greenl}$dest.new${greym} (destination already existed) "
+        else
+            error "    ❌ Cannot copy ${redl}$src${greym} to ${redl}$des.newt${greym}"
             exit 1
         fi
     fi
