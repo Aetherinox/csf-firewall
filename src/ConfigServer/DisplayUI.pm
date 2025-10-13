@@ -97,6 +97,41 @@ sub getCodename
 }
 
 # #
+#   Whitelisted HTML tags for comments
+# #
+
+my %allowed_tags = map { $_ => 1 } qw(b u span);
+
+# #
+#   Function to sanitize a line but allow whitelisted tags
+# #
+
+sub sanitize_line
+{
+    my ($line) = @_;
+
+	# #
+    #	Escape everything
+	# #
+
+    $line =~ s/&/&amp;/g;
+    $line =~ s/</&lt;/g;
+    $line =~ s/>/&gt;/g;
+
+	# #
+    #	Restore allowed tags
+	# #
+
+    foreach my $tag (keys %allowed_tags)
+	{
+        $line =~ s/&lt;($tag)(\s*[^&]*?)&gt;/<$1$2>/gi;			# opening tag with optional attributes
+        $line =~ s/&lt;\/($tag)&gt;/<\/$1>/gi;					# closing tag
+    }
+
+    return $line;
+}
+
+# #
 #	Main
 # #
 
@@ -1634,6 +1669,10 @@ EOF
 		my $header_title  = '';
 		my @header_lines  = ();
 
+		# #
+		#   Loop config data
+		# #
+
 		for ( my $i = 0; $i <= $#confdata; $i++ )
 		{
 			my $line = $confdata[$i];
@@ -1927,15 +1966,10 @@ EOF
 				$line =~ s/^\s*#+\s*//;
 
 				# #
-				#	Escape plain text if no HTML tags
+				#   Sanitize line but allow only whitelisted tags
 				# #
 
-				unless ($line =~ /<[^>]+>/)
-				{
-					$line =~ s/&/&amp;/g;
-					$line =~ s/</&lt;/g;
-					$line =~ s/>/&gt;/g;
-				}
+				$line = sanitize_line($line);
 
 				# #
 				#	Prepend indentation (only if > 4 spaces)
