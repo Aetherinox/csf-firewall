@@ -10,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            10.09.2025
+#   @updated            10.13.2025
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -879,8 +879,8 @@ if ($config{LF_DIRWATCH}) {
 			}
 		}
 	}
-	if (-e "/var/lib/csf/csf.tempfiles") {unlink ("/var/lib/csf/csf.tempfiles")}
-	if (-e "/var/lib/csf/csf.dwdisable") {unlink ("/var/lib/csf/csf.dwdisable")}
+	if (-e "/var/lib/csf/csf.tempfiles") { unlink ("/var/lib/csf/csf.tempfiles")}
+	if (-e "/var/lib/csf/csf.dwdisable") { unlink ("/var/lib/csf/csf.dwdisable")}
 	logfile("Directory Watching...");
 	$dirwatchtimeout = 0;
 }
@@ -3302,7 +3302,7 @@ sub csfcheck {
 
 						logfile("cPanel upgrade detected, restarting ConfigServer services...");
 
-						if (-e "/var/lib/csf/cpanel.new") {unlink "/var/lib/csf/cpanel.new"}
+						if (-e "/var/lib/csf/cpanel.new") { unlink "/var/lib/csf/cpanel.new"}
 						open (my $CPANELNEW, ">", "/var/lib/csf/cpanel.new");
 						flock ($CPANELNEW, LOCK_EX);
 						print $CPANELNEW time;
@@ -4981,7 +4981,7 @@ sub blocklist {
 					if ($listtime < 7200) {
 						logfile("Unable to retrieve blocklist $name for the next ".(7200 - $listtime)." secs");
 						$getlist = 0;
-					} else {unlink $tmpfile}
+					} else { unlink $tmpfile}
 				} else {
 					sysopen (my $OUT, $tmpfile, O_WRONLY | O_CREAT);
 					flock ($OUT, LOCK_EX);
@@ -5274,7 +5274,7 @@ sub countrycode {
 				if ($status) {
 					logfile("CC Error: Unable to retrieve $config{cc_src} Country database [$config{cc_country}] - $text");
 				} else {
-					if (-e "/var/lib/csf/Geo/GeoLite2-Country-Blocks-IPv4.csv") {unlink "/var/lib/csf/Geo/GeoLite2-Country-Blocks-IPv4.csv"}
+					if (-e "/var/lib/csf/Geo/GeoLite2-Country-Blocks-IPv4.csv") { unlink "/var/lib/csf/Geo/GeoLite2-Country-Blocks-IPv4.csv"}
 					my @data;
 					eval {
 						local $SIG{__DIE__} = undef;
@@ -5302,7 +5302,7 @@ sub countrycode {
 				if ($status) {
 					logfile("CC Error: Unable to retrieve $config{asn_src} ASN database [$config{cc_asn}] - $text");
 				} else {
-					if (-e "/var/lib/csf/Geo/GeoLite2-ASN-Blocks-IPv4.csv") {unlink "/var/lib/csf/Geo/GeoLite2-ASN-Blocks-IPv4.csv"}
+					if (-e "/var/lib/csf/Geo/GeoLite2-ASN-Blocks-IPv4.csv") { unlink "/var/lib/csf/Geo/GeoLite2-ASN-Blocks-IPv4.csv"}
 					my @data;
 					eval {
 						local $SIG{__DIE__} = undef;
@@ -5438,7 +5438,7 @@ sub countrycode {
 				if ($status) {
 					logfile("CC Error: Unable to retrieve $config{asn_src} ASN database [$config{cc_asn}] - $text");
 				} else {
-					if (-e "/var/lib/csf/Geo/ip2asn-combined.tsv") {unlink "/var/lib/csf/Geo/ip2asn-combined.tsv"}
+					if (-e "/var/lib/csf/Geo/ip2asn-combined.tsv") { unlink "/var/lib/csf/Geo/ip2asn-combined.tsv"}
 					my @data;
 					eval {
 						local $SIG{__DIE__} = undef;
@@ -6080,7 +6080,7 @@ sub countrycodelookups {
 					if ($status) {
 						logfile("CCL Error: Unable to retrieve $config{cc_src} City database [$config{cc_city}] - $text");
 					} else {
-						if (-e "/var/lib/csf/Geo/dbip-city-lite.csv") {unlink "/var/lib/csf/Geo/dbip-city-lite.csv"}
+						if (-e "/var/lib/csf/Geo/dbip-city-lite.csv") { unlink "/var/lib/csf/Geo/dbip-city-lite.csv"}
 						my @data;
 						eval {
 							local $SIG{__DIE__} = undef;
@@ -6103,7 +6103,7 @@ sub countrycodelookups {
 						if ($status) {
 							logfile("CCL Error: Unable to retrieve $config{asn_src} ASN database [$config{cc_asn}] - $text");
 						} else {
-							if (-e "/var/lib/csf/Geo/ip2asn-combined.tsv") {unlink "/var/lib/csf/Geo/ip2asn-combined.tsv"}
+							if (-e "/var/lib/csf/Geo/ip2asn-combined.tsv") { unlink "/var/lib/csf/Geo/ip2asn-combined.tsv"}
 							my @data;
 							eval {
 								local $SIG{__DIE__} = undef;
@@ -6127,7 +6127,7 @@ sub countrycodelookups {
 					if ($status) {
 						logfile("CCL Error: Unable to retrieve $config{cc_src} Country database [$config{cc_country}] - $text");
 					} else {
-						if (-e "/var/lib/csf/Geo/dbip-country-lite.csv") {unlink "/var/lib/csf/Geo/dbip-country-lite.csv"}
+						if (-e "/var/lib/csf/Geo/dbip-country-lite.csv") { unlink "/var/lib/csf/Geo/dbip-country-lite.csv"}
 						my @data;
 						eval {
 							local $SIG{__DIE__} = undef;
@@ -9895,7 +9895,9 @@ sub ui {
 							close ($client);
 							alarm(0);
 							exit;
-						} else {
+						}
+						else
+						{
 							my $time = time;
 							sysopen (my $SESSION,"/var/lib/csf/ui/ui.session", O_WRONLY | O_APPEND | O_CREAT) or &childcleanup(__LINE__,"UI: unable to open csf.session: $!");
 							flock ($SESSION, LOCK_EX);
@@ -9903,10 +9905,12 @@ sub ui {
 							close ($SESSION);
 							$valid = "login";
 							logfile("UI: *Invalid login* attempt from $peeraddress [$fails{$peeraddress}/$config{UI_RETRY}]");
-							if ($config{UI_ALERT} >= 2) {
+							if ($config{UI_ALERT} >= 2)
+							{
 								my @message;
 								my $tip = iplookup($peeraddress);
-								foreach my $line (@alert) {
+								foreach my $line (@alert)
+								{
 									$line =~ s/\[ip\]/$tip/ig;
 									$line =~ s/\[alert\]/Login failure \[$fails{$peeraddress}\/$config{UI_RETRY}]/ig;
 									$line =~ s/\[text\]/Login failure from IP address $tip \[$fails{$peeraddress}\/$config{UI_RETRY}] - denied/ig;
@@ -9916,7 +9920,9 @@ sub ui {
 							}
 						}
 					}
-					if ($valid eq "yes") {
+
+					if ($valid eq "yes")
+					{
 						srand;
 						$session = join '', map {$chars[rand(@chars)]} (1..(15 + int(rand(15))));
 						$cookie = join '', map {$chars[rand(@chars)]} (1..(15 + int(rand(15))));
@@ -9968,11 +9974,497 @@ sub ui {
 						print "<table align='center' border='0' cellspacing='0' cellpadding='4' bgcolor='#FFFFFF' style='border:1px solid #990000'>\n";
 						print "<tr bgcolor='#F4F4EA'><td>Username:</td><td><input id='user' name='csflogin' type='text' size='15'></td></tr>\n";
 						print "<tr bgcolor='#F4F4EA'><td>Password:</td><td><input name='csfpassword' type='password' size='15'></td></tr>\n";
-						print "<tr bgcolor='#FFFFFF'><td colspan='2' align='center'><input type='submit' value='Enter'></td></tr>\n";
-						print "<", "/table></div></form>\n";
-						print "\n</BODY>\n</HTML>\n";
+						print '<script>
+						(function()
+						{
+							var theme = localStorage.getItem("theme") || "light";
+							document.documentElement.setAttribute("data-theme", theme);
+						})();
+						</script>' . "\n";
+						print "<title>ConfigServer Security & Firewall</title>\n";
+						print <<EOF;
+
+<link rel="icon" type="image/x-icon" href="https://github.com/user-attachments/assets/ba005563-da8b-456c-8c4d-19f4ee31eb71">
+<style>
+
+\@-webkit-keyframes fade-in
+{
+    from { opacity: 0.6; }
+    to { opacity: 1; }
+}
+
+\@-moz-keyframes fade-in
+{
+    from { opacity: 0.6; }
+    to { opacity: 1; }
+}
+
+\@keyframes fade-in
+{
+    from { opacity: 0.6; }
+    to { opacity: 1; }
+}
+
+.fade
+{
+	animation-name:             fade-in, scale-in;
+	animation-duration:         1s, 0.5s;
+	animation-timing-function:  ease-in, linear;
+	animation-direction:        alternate, alternate;
+	animation-iteration-count:  infinite, 1;
+	transition: 				all 0.2s;
+	transform: 					scale(1);
+}
+
+\@keyframes scale-in
+{
+    from {
+        transform: scale(1, 1);
+    }
+    to {
+        transform: scale(1.1, 1.1);
+    }
+}
+
+/*
+	Animations › Pulsate
+*/
+
+\@-webkit-keyframes pulsate
+{
+    0% { transform: scale(0.8); opacity: 0.5; }
+    50% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(0.8); opacity: 0.5; }
+}
+
+\@keyframes pulsate
+{
+    0% { transform: scale(0.8); opacity: 0.5; }
+    50% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(0.8); opacity: 0.5; }
+}
+
+.pulsate
+{
+    -webkit-animation: pulsate 3s ease-out;
+    -webkit-animation-iteration-count: infinite; 
+    animation: pulsate 3s ease-out;
+    animation-iteration-count: infinite;
+    opacity: 0.5;
+}
+
+:root,
+[data-theme="light"]
+{
+    --main-bg: 						#E2E2E2;
+	--main-text:					#242424;
+	--login-container-bg: 			#E2E2E2;
+	--login-container-border:		#e3e3e31a;
+	--login-footer-text-n: 			#868686;
+	--login-footer-text-l:			#dd761c;
+	--login-footer-text-h:			#ffa354;
+
+	--input-normal-text: 			#646464;
+	--input-normal-bg: 				#FFFFFF;
+	--input-normal-border: 			#f7f7f7;
+	--input-focus-line: 			#1F85DE;
+	--input-focus-bg: 				#FFFFFF;
+	--input-focus-border: 			#FFFFFF;
+	--input-focus-text: 			#353535;
+	--input-hover-line: 			#F82561;
+	--input-placeholder-text-n:		#707070;
+	--input-placeholder-text-f:		#000;
+	--theme-icon-svg:				#000;
+	--theme-icon-btn-bg-n:			#CCC;
+	--theme-icon-btn-bg-h:			#2168C5;
+	--theme-icon-btn-icon-n:		#fff;
+	--theme-icon-btn-icon-h:		#FFFFFF;
+	--login-failed-bg: 				#DD6969;
+	--login-failed-border: 			#e3e3e31a;
+	--login-failed-text: 			#FFF;
+	--login-failed-icon-warning: 	#FFF;
+	--login-failed-text-count: 		#FFF;
+	--login-btn-bg: 				#ca2956;
+	--login-btn-text: 				#FFFFFF;
+	--login-btn-border: 			#e3e3e31a;
+
+	.global-container-main
+	{
+		height:						100%;
+		background:					url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1123 258'><path d='M327 115c95-9 218 57 337 39C778 136 803 90 912 41c51-19 141-38 195-38C1122 2 1137 2 1152 2c253-1 326 236 0 256l-1125 0L-31 257l-36-74c-34-60 43 23 104 24 116 0 198-83 290-92' style='fill: rgb(220, 220, 220, 0.8)' /></svg>") no-repeat bottom,linear-gradient(to bottom,#fff,#fff 100%,#202020 100%);
+	}
+}
+
+[data-theme="dark"]
+{
+	--main-bg: 						#1c1c1c;
+	--main-text:					#FFFFFF;
+	--login-container-bg: 			#282828;
+	--login-container-border:		#e3e3e31a;
+	--login-footer-text-n: 			#868686;
+	--login-footer-text-l:			#dd761c;
+	--login-footer-text-h:			#ffa354;
+
+	--input-normal-text: 			#C4C4C4;
+	--input-normal-bg: 				#393939;
+	--input-normal-border: 			#e3e3e31a;
+	--input-focus-line: 			#1F85DE;
+	--input-focus-bg: 				#393939;
+	--input-focus-border: 			#e3e3e31a;
+	--input-focus-text: 			#F5F5F5;
+	--input-hover-line: 			#F82561;
+	--input-placeholder-text-n:		#707070;
+	--input-placeholder-text-f:		#919191;
+	--theme-icon-svg:				#FFF;
+	--theme-icon-btn-bg-n:			#383838;
+	--theme-icon-btn-bg-h:			#F11C63;
+	--theme-icon-btn-icon-n:		#707070;
+	--theme-icon-btn-icon-h:		#FFFFFF;
+	--login-failed-bg: 				#991b3f;
+	--login-failed-border: 			#e3e3e31a;
+	--login-failed-text: 			#FFF;
+	--login-failed-icon-warning: 	#FFF;
+	--login-failed-text-count: 		#FFF;
+	--login-btn-bg: 				#ca2956;
+	--login-btn-text: 				#FFFFFF;
+	--login-btn-border: 			#e3e3e31a;
+
+	.global-container-main
+	{
+		height: 					100%;
+		background: 				url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1123 258'><path d='M327 115c95-9 218 57 337 39C778 136 803 90 912 41c51-19 141-38 195-38C1122 2 1137 2 1152 2c253-1 326 236 0 256l-1125 0L-31 257l-36-74c-34-60 43 23 104 24 116 0 198-83 290-92' style='fill: rgb(5, 5, 5, 0.6)' /></svg>") no-repeat bottom,linear-gradient(to bottom,#151515,#202020 100%,#202020 100%);
+	}
+}
+
+html, body
+{
+	height: 						100%;
+	margin:							0px;
+}
+
+body
+{
+	background-color: 				var( --main-bg );
+	color:							var( --main-text );
+	font-family:					"Ubuntu", "Corbel", "Calibri", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+.login-container
+{
+	background-color: 				var( --login-container-bg );
+	border:							1px solid var( --login-container-border );
+	border-radius:					4px;
+	padding:						15px;
+}
+
+.login-footer
+{
+	font-size: 						8pt;
+	padding-top: 					20px;
+	color: 							var( --login-footer-text-n );
+}
+
+.login-footer a
+{
+	color: 							var( --login-footer-text-l );
+	text-decoration: 				none;
+}
+
+.login-footer a:hover
+{
+	color: 							var( --login-footer-text-h );
+	transition: 					all 0.3s;
+}
+
+.btn-login
+{
+	background-color: 				var( --login-btn-bg );
+	color: 							var( --login-btn-text );
+	border: 						1px solid var( --login-btn-border );
+	border-radius: 					4px;
+	padding-left: 					4px;
+	padding-right: 					4px;
+	padding-top: 					7px;
+	padding-bottom: 				7px;
+	min-width: 						100px;
+	margin-top: 					15px;
+	cursor: 						pointer;
+	font-size: 						10pt;
+	font-weight: 					400;
+}
+
+.btn-login:hover
+{
+	transition: 					all 0.3s;
+	border: 						1px solid var( --login-btn-bg );
+	background:						var( --login-btn-bg );
+	filter: 						brightness( 120% );
+}
+
+input:not(.btn-login)
+{
+	width:							clamp( 200px, 35vw, 400px );
+	max-width: 						400px;
+	min-width: 						200px
+    padding-left:					10px;
+    padding-right:					10px;
+    padding-top:					4px;
+    padding-bottom:					4px;
+	color:							var( --input-normal-text );
+    font-size:						16pt;
+    font-family:					"Ubuntu", "Corbel", "Calibri", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    font-weight:					300;
+    cursor:							pointer;
+    text-align:						center;
+    background: 					var( --input-normal-bg );
+    background-image: 				linear-gradient( var( --input-hover-line ), var( --input-hover-line ) );
+    background-position: 			bottom;
+    background-repeat: 				no-repeat;
+    background-size: 				0% 2px;
+    transition: 					background-size 0.3s ease, color 0.3s ease;
+    border: 						1px solid var( --input-normal-border );
+}
+
+input:hover
+{
+	background-size: 				calc( 100% - 4px ) 2px;
+}
+
+input:focus
+{
+	color:							var( --input-focus-text );
+    background-image:				linear-gradient( var( --input-focus-line ) 0 0 );
+    background-color:				var( --input-focus-bg );
+    background-size:				calc( 100% - 4px ) 2px;
+	border-left: 					1px solid var( --input-focus-border );
+	border-top: 					1px solid var( --input-focus-border );
+	border-right: 					1px solid var( --input-focus-border );
+	border-bottom: 					1px solid var( --input-focus-border );
+}
+
+input::placeholder
+{
+	font-weight: 					lighter;
+	opacity: 						0.8;
+	color: 							var( --input-placeholder-text-n );
+}
+
+input:focus::placeholder
+{
+	opacity: 						0.2;
+	color: 							var( --input-placeholder-text-f );
+	transition: 					0.7s;
+}
+
+input:focus
+{
+	outline:						none;
+}
+
+img.login-logo
+{
+	width: 							100px;
+	animation-name:             	fade-in, scale-in;
+	animation-duration:         	1s, 0.5s;
+	animation-timing-function:  	ease-in, linear;
+	animation-direction:        	alternate, alternate;
+	animation-iteration-count:  	infinite, 1;
+	transition: 					all 0.3s;
+	opacity: 						0.5;
+	transform: 						scale( 1.1 );
+}
+
+img.login-logo:not(:hover)
+{
+	transition: 					all 0.3s;
+	opacity: 						1;
+	transform: 						scale( 1 );
+}
+
+img.login-logo:hover
+{
+	animation-name:             	fade-in, scale-in;
+	animation-duration:         	1s, 0.5s;
+	animation-timing-function:  	ease-in, linear;
+	animation-direction:        	alternate, alternate;
+	animation-iteration-count:  	infinite, 1;
+	transition: 					all 0.3s;
+	opacity: 						0.5;
+	transform: 						scale( 1.1 );
+}
+
+.login-form
+{
+	display: 						flex;
+	flex-direction: 				column;
+	align-items: 					center;
+}
+
+.login-container-logo
+{
+	margin-top: 					-75px;
+	margin-bottom:					20px;
+}
+
+.login-container-main
+{
+	position: 						fixed;
+	top: 							50%;
+	left: 							50%;
+	transform: 						translate( -50%, -50% );
+}
+
+.login-notify-failure
+{
+	background-color: 				var( --login-failed-bg );
+	border: 						0px solid var( --login-failed-border );
+	border-radius: 					4px;
+	display: 						flex;
+	justify-content: 				center;
+	align-items: 					center;
+	width: 							clamp( 150px, 35vw, 350px );
+	margin: 						0 auto;
+	color: 							var( --login-failed-text );
+	padding-top: 					clamp( 5px, 40vh, 8px );
+	padding-bottom: 				clamp( 5px, 40vh, 8px );
+	padding-left: 					clamp( 0.1em, 0.5vw, 1.5em );
+	padding-right: 					clamp( 0.1em, 0.5vw, 1.5em );
+	position: 						relative;
+	top: 							20px;
+}
+
+.login-notify-failure-icon
+{
+	text-align: 					left;
+	position: 						absolute;
+	left: 							5px;
+	width: 							18px;
+	padding: 						5px;
+	fill: 							var( --login-failed-icon-warning );
+	height: 						18px;
+	animation-name:             	fade-in, scale-in;
+	animation-duration:         	1s, 0.5s;
+	animation-timing-function:  	ease-in, linear;
+	animation-direction:        	alternate, alternate;
+	animation-iteration-count:  	infinite, 1;
+	transition: 					all 0.3s;
+	opacity: 						0.5;
+}
+
+.login-notify-failure-text
+{
+	font-size: 						0.9rem;
+	font-weight: 					300;
+}
+
+.login-notify-failure-count
+{
+	color: 							var( --login-failed-text-count );
+	right: 							10px;
+	font-size: 						0.8rem;
+	opacity: 						0.8;
+	position: 						absolute;
+}
+
+#theme-toggle
+{
+    position: 						fixed;
+    top: 							16px;
+    right: 							20px;
+	width: 							40px;
+	height: 						40px;
+    border: 						none;
+    border-radius: 					50%;
+    background-color: 				var( --theme-icon-btn-bg-n );
+    cursor: 						pointer;
+    display:						flex;
+    align-items: 					center;
+    justify-content: 				center;
+    z-index: 						1000;
+    transition: 					background-color 0.3s;
+}
+
+#theme-toggle:hover
+{
+    background-color: 				var( --theme-icon-btn-bg-h );
+}
+
+#theme-toggle svg
+{
+	width: 							20px;
+	height: 						20px;
+    pointer-events: 				none;
+    transition: 					transform 0.3s;
+	fill: 							var( --theme-icon-btn-icon-n );
+}
+
+#theme-toggle:hover svg
+{
+	width: 							20px;
+	height: 						20px;
+    pointer-events: 				none;
+    transition: 					transform 0.3s;
+	fill: 							var( --theme-icon-btn-icon-h );
+}
+
+</style>
+EOF
+						print "</head>\n";
+						print "<body onload='document.getElementById(\"user\").focus()'>\n";
+
+						print '<button id="theme-toggle">
+							<svg id="theme-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="48" height="48" fill="currentColor">
+								<!-- placeholder icon -->
+							</svg>
+						</button>';
+
+						print '<script>
+						(function()
+						{
+							const sunPath = `<path d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z"></path>`;
+							const moonPath = `<path d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"></path><path class="fa-secondary" d=""></path>`;
+
+							const button = document.getElementById( "theme-toggle" );
+							const icon = document.getElementById( "theme-icon" );
+
+							function setTheme( theme )
+							{
+								document.documentElement.setAttribute( "data-theme", theme );
+								localStorage.setItem( "theme", theme );
+								icon.innerHTML = theme === "dark" ? sunPath : moonPath;
+							}
+
+							let currentTheme = localStorage.getItem( "theme" ) || "light";
+							setTheme( currentTheme );
+
+							button.addEventListener( "click", () =>
+							{
+								const newTheme = document.documentElement.getAttribute( "data-theme" ) === "dark" ? "light" : "dark";
+								setTheme( newTheme );
+							});
+						})();
+						</script>';
+
+						print "<div class='global-container-main'>";
+
+
+						print "<div class='login-container-main'>";
+						print "<form action='/' method='post'><div class='login-form' align='center'>\n";
+						print "<div class='login-container-logo'><a href='$app_github_url' target='_blank'><img class='login-logo' src='https://github.com/user-attachments/assets/ba005563-da8b-456c-8c4d-19f4ee31eb71'></a></div>";
+						print "<table align='center' cellspacing='0' cellpadding='4' class='login-container'>\n";
+						print "<tr><td><input placeholder='Username' id='user' name='csflogin' type='text' class='input' size='25'></td></tr>\n";
+						print "<tr><td><input placeholder='Password' name='csfpassword' type='password' class='input' size='25'></td></tr>\n";
+						print "<tr><td colspan='2' align='center'><input type='submit' value='Enter' class='btn-login'></td></tr>\n";
+						print "<", "/table>";
+						print "<div class='login-footer'><a href='$app_github_url'>ConfigServer Firewall</a> v$version</div>";
+						print "</div></form>\n";
+						print "</div>";
+						print "</div>";
+						print "\n</body>\n</html>\n";
 					}
-					if ($valid eq "session") {
+	
+					if ($valid eq "session")
+					{
 						if (defined $FORM{csfapp} and ($FORM{csfapp} ne $application)) {
 							my $newapp = $application;
 							if ($FORM{csfapp} eq "csf") {$newapp = "csf"}
@@ -11458,10 +11950,9 @@ sub ipsetswap {
 	}
 	return;
 }
-# end ipsetswap
-###############################################################################
-# start ipsetadd
-sub ipsetadd {
+
+sub ipsetadd
+{
 	my $set = shift;
 	my $ip = shift;
 	if ($set =~ /GDENY/ or $set =~ /GALLOW/) {
@@ -11488,10 +11979,9 @@ sub ipsetadd {
 	}
 	return;
 }
-# end ipsetadd
-###############################################################################
-# start ipsetdel
-sub ipsetdel {
+
+sub ipsetdel
+{
 	my $set = shift;
 	my $ip = shift;
 	if ($set =~ /^chain(_6)?_NEW(\w+)$/) {$set = "chain".$1."_".$2}
@@ -11505,15 +11995,16 @@ sub ipsetdel {
 	my @results = <$childout>;
 	waitpid ($cmdpid, 0);
 	chomp @results;
-	if ($results[0] =~ /^ipset/) {
+	if ($results[0] =~ /^ipset/)
+	{
 		logfile("*Error* [$set] IPSET: [$results[0]]");
 	}
 	return;
 }
-# end ipsetadd
-###############################################################################
-# start ipsetflush
-sub ipsetflush {
+
+
+sub ipsetflush
+{
 	my $set = shift;
 	logfile("IPSET: flushing set $set");
 
