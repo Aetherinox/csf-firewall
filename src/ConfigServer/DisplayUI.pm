@@ -73,27 +73,31 @@ sub getCodename
 {
 	my ($config_ref) = @_;
 	my %config = %{$config_ref};
+	my $cname = "cpanel";
 
-	my $generic = "cpanel";
+	if ($config{GENERIC})      { $cname = "generic" }
+	if ($config{DIRECTADMIN})  { $cname = "directadmin" }
+	if ($config{INTERWORX})    { $cname = "interworx" }
+	if ($config{CYBERPANEL})   { $cname = "cyberpanel" }
+	if ($config{CWP})          { $cname = "cwp" }
+	if ($config{VESTA})        { $cname = "vestacp" }
 
-	if ($config{GENERIC})      { $generic = "generic" }
-	if ($config{DIRECTADMIN})  { $generic = "directadmin" }
-	if ($config{INTERWORX})    { $generic = "interworx" }
-	if ($config{CYBERPANEL})   { $generic = "cyberpanel" }
-	if ($config{CWP})          { $generic = "cwp" }
-	if ($config{VESTA})        { $generic = "vestacp" }
+	if (-e "/usr/share/webmin/miniserv.pl")
+	{
+		$cname = "webmin";
+	}
 
 	# #
     #	Optional debug output
 	# #
 
-	#	print "$generic\n";
+	#	print "$cname\n";
 
 	# #
     #	Return the value so it can be used in conditionals
 	# #
 
-	return $generic;
+	return $cname;
 }
 
 # #
