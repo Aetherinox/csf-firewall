@@ -21,14 +21,23 @@ tags:
 
 ### <!-- md:version stable- --> 15.02 <small>Coming Soon</small> { id="15.02" }
 
+- `feat`: New login page for **Generic** installations
+    - Light & Dark theme
+    - New **csf.conf** setting:
+        - `UI_RETRY_SHOW_REMAINING`
 - `feat`: New footer design for improved consistency and navigation
-    - Added logout button to footer for `generic` installations
+    - Added logout button to footer for **Generic** installations
 - `feat`: Integrated `csfpre.sh` and `csfpost.sh` directly into CSF for native pre/post script support
 - `feat`: Configuration files now include headers visible in the GUI for easier file identification; called with `HEADER:`
 - `feat`: New codename detection helper func for conditional statements depending on the installer used by end-user
 - `feat`: Added an official help page to the download service
     - https://download.configserver.dev/help
 - `feat`: Implemented Light/Dark mode toggle in the footer for better theme control
+- `feat`: Added optional `Content Security Policy (CSP)` protection to web interface
+    - New **csf.conf** settings:
+        - `UI_CSP_ENABLED`
+        - `UI_CSP_ADVANCED_ENABLED`
+        - `UI_CSP_ADVANCED_RULE`
 - `style`: Rewrote configuration file comments for clarity; now more descriptive, organized, and include practical examples
 - `refactor`: re-write `ports-blacklist` to be POSIX compliant
 - `refactor`: Download service now fetches version from Github repo; no longer requires manual bumps
