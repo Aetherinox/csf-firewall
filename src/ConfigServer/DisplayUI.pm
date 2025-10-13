@@ -240,11 +240,36 @@ sub main
 	}
 	elsif ( $FORM{action} eq "manualcheck" )
 	{
-		print "<div><p>Checking version...</p>\n\n";
+		print "<div>\n";
+
 		my ( $upgrade, $response ) = &manualversion($myv);
-		if ( $upgrade )
+
+		print "<div>Gathering results</div>\n\n";
+
+		if ($upgrade)
 		{
-			print "<form action='$script' method='post'><button name='action' value='upgrade' type='submit' class='btn btn-default'>Upgrade csf</button> A new version of csf (v$response) is available. Upgrading will retain your settings. <a href='https://$config{DOWNLOADSERVER}/csf/changelog.txt' target='_blank'>View ChangeLog</a></form>\n";
+			print "<span style='color:#429654;'>New version of CSF (v$response) available. Upgrading will retain your settings.</span>\n";
+			print "You can view the list of changes <a href='https://$config{DOWNLOADSERVER}/csf/changelog.txt' target='_blank'>here</a>";
+		}
+		else
+		{
+			if ( $response ne "" )
+			{
+				print "An issue occurred; returned response $response\n";
+			}
+			else
+			{
+				print "You are running the latest version of CSF (v$myv). Nothing to do.\n";
+			}
+		}
+
+		print "</pre>\n</div>\n\n";
+
+		if ($upgrade)
+		{
+			print "<form action='$script' method='post'>\n";
+			print "<button name='action' value='upgrade' type='submit' class='btn btn-success'><i class='axs ax-box-open'></i> Update $myv › v$response</button>\n";
+			print "</form>\n";
 		}
 		else
 		{
@@ -257,6 +282,7 @@ sub main
 				print "<div class='bs-callout bs-callout-info'>You are running the latest version of csf (v$myv). An Upgrade button will appear here if a new version becomes available</div>\n";
 			}
 		}
+	
 		print "</div>\n";
 		&printreturn;
 	}
@@ -4054,6 +4080,11 @@ sub csgetversion
 	return ($upgrade, $newversion);
 }
 
+# #
+#	Version Check
+#		Stable				https://$config{DOWNLOADSERVER}/csf/version.txt
+#		Alpha / RC			https://$config{DOWNLOADSERVER}/csf/version.txt?channel=dev
+# #
 
 sub manualversion
 {
@@ -4061,18 +4092,27 @@ sub manualversion
 	my $upgrade = 0;
 	my $url = "https://$config{DOWNLOADSERVER}/csf/version.txt";
 
-	if ($config{URLGET} == 1)
+	if ( $config{URLGET} == 1 )
 	{
 		$url = "http://$config{DOWNLOADSERVER}/csf/version.txt";
 	}
 
-	my ($status, $newversion) = $urlget->urlget($url);
-	if (!$status and $newversion ne "" and $newversion =~ /^[\d\.]*$/ and $newversion > $current)
+	print "<div><pre class='comment' style='white-space: pre-wrap;'>\n";
+	print "Connecting to <a href='$url'>$url</a>\n";
+	print "Fetching <code>csf/version.txt</code> from update server\n";
+
+	my ( $status, $newversion ) = $urlget->urlget( $url );
+
+	if ( !$status and $newversion ne "" and $newversion =~ /^[\d\.]*$/ and $newversion > $current )
 	{
-		$upgrade = 1} else {$newversion = ""
+		$upgrade = 1
+	}
+	else
+	{
+		$newversion = ""
 	}
 
-	return ($upgrade, $newversion);
+	return ( $upgrade, $newversion );
 }
 
 1;
