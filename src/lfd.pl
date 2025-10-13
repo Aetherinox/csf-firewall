@@ -82,12 +82,14 @@ our (@cccidrs, @cidrs, @faststart4, @faststart4nat, @faststart6,
 
 $pidfile = "/var/run/lfd.pid";
 
-if (-e "/etc/csf/csf.disable") {
+if (-e "/etc/csf/csf.disable")
+{
 	print "csf and lfd have been disabled\n";
 	exit 1;
 }
 
-if (-e "/etc/csf/csf.error") {
+if (-e "/etc/csf/csf.error")
+{
 	print "\nError: You have an unresolved error when starting csf. You need to restart csf successfully before starting lfd (see /etc/csf/csf.error)\n";
 	exit 1;
 }
@@ -9903,7 +9905,7 @@ sub ui {
 							flock ($SESSION, LOCK_EX);
 							print $SESSION "fail|$time||||$peeraddress||\n";
 							close ($SESSION);
-							$valid = "login";
+							$valid = "login-retry";
 							logfile("UI: *Invalid login* attempt from $peeraddress [$fails{$peeraddress}/$config{UI_RETRY}]");
 							if ($config{UI_ALERT} >= 2)
 							{
@@ -9963,13 +9965,15 @@ sub ui {
 							ConfigServer::Sendmail::relay("", "", @message);
 						}
 					}
-					if ($valid eq "login") {
+
+					if ( $valid eq "login" || $valid eq "login-retry" )
+					{
 						print "HTTP/1.0 200 OK\r\n";
 						print "Content-type: text/html\r\n";
 						print "\r\n";
 						print "<!DOCTYPE html>\n";
-						print "<HTML>\n<TITLE>ConfigServer Security & Firewall</TITLE>\n<BODY style='font-family:Arial, Helvetica, sans-serif;' onload='document.getElementById(\"user\").focus()'>\n";
-						if ($valid eq "failed") {print "<div align='center'><h2>Login Failed</h2></div>\n"}
+						print "<html>\n";
+						print "<head>";
 						print "<form action='/' method='post'><div align='center'>\n";
 						print "<table align='center' border='0' cellspacing='0' cellpadding='4' bgcolor='#FFFFFF' style='border:1px solid #990000'>\n";
 						print "<tr bgcolor='#F4F4EA'><td>Username:</td><td><input id='user' name='csflogin' type='text' size='15'></td></tr>\n";
@@ -10447,6 +10451,29 @@ EOF
 
 						print "<div class='global-container-main'>";
 
+						# #
+						#	Login failed
+						# #
+
+						if ($valid eq "fail" || $valid eq "login-retry")
+						{
+							if ( $config{UI_RETRY_SHOW_REMAINING} == 1 )
+							{
+								print "<div class='login-notify-failure'>\n";
+								print "		<span class='login-notify-failure-icon'><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 576 512'><path d='M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z'/></svg></span>\n";
+								print "		<span class='login-notify-failure-text'>Authentication failed</span>\n";
+								print "		<span class='login-notify-failure-count'>$fails{$peeraddress} / $config{UI_RETRY}</span>\n";
+								print "</div>\n";
+							}
+							else
+							{
+								print "<div class='login-notify-failure'>\n";
+								print "		<span class='login-notify-failure-icon'><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 576 512'><path d='M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z'/></svg></span>\n";
+								print "		<span class='login-notify-failure-text'>Authentication failed</span>\n";
+								print "		<span class='login-notify-failure-count'></span>\n";
+								print "</div>\n";
+							}
+						}
 
 						print "<div class='login-container-main'>";
 						print "<form action='/' method='post'><div class='login-form' align='center'>\n";
