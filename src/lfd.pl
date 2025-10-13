@@ -31,6 +31,7 @@ use strict;
 use lib '/usr/local/csf/lib';
 use Fcntl qw(:DEFAULT :flock);
 use IO::Handle;
+# use URI::Escape;
 use IPC::Open3;
 use Net::CIDR::Lite;
 use POSIX qw(:sys_wait_h sysconf strftime setsid);
@@ -143,67 +144,194 @@ sub getCodename
 
 my $codename = getCodename(\%config);
 
-unless ($config{LF_DAEMON}) {&cleanup(__LINE__,"*Error* LF_DAEMON not enabled in /etc/csf/csf.conf")}
-if ($config{TESTING}) {&cleanup(__LINE__,"*Error* lfd will not run with TESTING enabled in /etc/csf/csf.conf")}
+# #
+#	Helper > Clean
+# #
 
-if ($config{UI}) {
+sub uriClean
+{
+    my ($str) = @_;
+    $str =~ s/([^A-Za-z0-9\-_.!~*'()])/sprintf("%%%02X", ord($1))/eg;
+    return $str;
+}
+
+
+# #
+#   Enable login failure detection daemon (lfd). If set to 0 none of the
+#   following settings will have any effect as the daemon won't start.
+# #
+
+unless ($config{LF_DAEMON})
+{
+	&cleanup(__LINE__,"*Error* LF_DAEMON not enabled in /etc/csf/csf.conf")
+}
+
+# #
+#   Testing flag. Enables a cron job to clear iptables if CSF has startup
+#   configuration issues, preventing server lockout.
+#	
+#   Keep enabled until firewall operation is confirmed. Then set to 0 and
+#   restart CSF. Stopping CSF removes the cron job from /etc/crontab.
+#	
+#   Note: LFD will not start while this flag is enabled.
+# #
+
+if ($config{TESTING})
+{
+	&cleanup(__LINE__,"*Error* lfd will not run with TESTING enabled in /etc/csf/csf.conf")
+}
+
+# #
+#   Integrated HTML UI for CSF/LFD without a control panel or web server.
+#   Runs as a subprocess of lfd under root; successful login grants root access.
+#	
+#   Use caution when enabling. Additional security restrictions apply.
+#   Refer to readme.txt before enabling.
+#	
+#   Set to 1 to enable, 0 to disable.
+# #
+
+if ($config{UI})
+{
 	require ConfigServer::DisplayUI;
 	import ConfigServer::DisplayUI;
 	require ConfigServer::cseUI;
 	import ConfigServer::cseUI;
-	eval {
+	eval
+	{
 		local $SIG{__DIE__} = undef;
 		require IO::Socket::SSL;
 		import IO::Socket::SSL;
 	};
 }
-if ($config{LF_DIRWATCH}) {
+
+# #
+#   Enable directory monitoring for /tmp and /dev/shm to detect suspicious files.
+#   Sends one email alert per file per LF_FLUSH interval.
+#	
+#   Set the checking interval in seconds to enable. Set to "0" to disable.
+# #
+
+if ($config{LF_DIRWATCH})
+{
 	require File::Find;
 	import File::Find;
 }
-if ($config{UI} or $config{LF_DIRWATCH_FILE}) {
+
+# #
+#   Watch a file or directory for changes. Sends an email alert via watchalert.txt
+#   when changes are detected.
+#	
+#   Set the checking interval in seconds (e.g., 60) and add entries to csf.dirwatch.
+#   Set to "0" to disable.
+# #
+
+if ($config{UI} or $config{LF_DIRWATCH_FILE})
+{
 	require Digest::MD5;
 	import Digest::MD5;
 }
-if ($config{SYSLOG} or $config{SYSLOG_CHECK}) {
+
+# #
+#   SYSLOG        		Log LFD messages to SYSLOG as well as /var/log/lfd.log.
+#                 		Requires the Perl module Sys::Syslog.
+#
+#   SYSLOG_CHECK  		Verify syslog is running. Sends a coded message every SYSLOG_CHECK
+#                 		seconds and checks it appears in SYSLOG_LOG. If not, an alert is sent.
+#                 		Recommended: 300–3600 seconds. Set to 0 to disable.
+# #
+
+
+if ($config{SYSLOG} or $config{SYSLOG_CHECK})
+{
 	eval('use Sys::Syslog;'); ##no critic
 	unless ($@) {$sys_syslog = 1}
 }
-if ($config{DEBUG}) {
+
+# # 
+#   For internal use only. You should not enable this option as it could cause
+#   instability in csf and lfd
+# # 
+
+if ($config{DEBUG})
+{
 	require Time::HiRes;
 	import Time::HiRes;
 }
-if ($config{CLUSTER_SENDTO} or $config{CLUSTER_RECVFROM}) {
+
+# #
+#   CLUSTER_SENDTO   	Configure LFD cluster: send requests to other servers.
+#                     	Use a comma-separated list of IPs or a file (/etc/csf/cluster_sendto.txt).
+#	
+#   CLUSTER_RECVFROM 	Configure LFD cluster: receive requests from other servers.
+#                     	Use a comma-separated list of IPs or a file (/etc/csf/cluster_recvfrom.txt).
+#   					See readme.txt for setup details and security considerations.
+# #
+
+
+if ($config{CLUSTER_SENDTO} or $config{CLUSTER_RECVFROM})
+{
 	require Crypt::CBC;
 	import Crypt::CBC;
 	require File::Basename;
 	import File::Basename;
-}
-if ($config{CLUSTER_SENDTO} or $config{CLUSTER_RECVFROM}) {
 	require IO::Socket::INET;
 	import IO::Socket::INET;
 }
-if ($config{MESSENGER}) {
+
+# #
+#   Messenger service: displays a message to blocked IPs (HTML or TEXT).
+#   Requires iptables ipt_REDIRECT module; IPv6 needs IO::Socket::INET6.
+#   See csf readme.txt for details. Test with /etc/csf/csftest.pl.
+#   1 = enable, 0 = disable
+# #
+
+
+if ($config{MESSENGER})
+{
 	require ConfigServer::Messenger;
 	import ConfigServer::Messenger;
 }
-if ($config{CF_ENABLE}) {
+
+# #
+#   CloudFlare Firewall integration
+#	
+#   CloudFlare acts as a reverse proxy, so attacking IPs appear as CloudFlare
+#   IPs in iptables. Modules like mod_cloudflare (or equivalents) can obtain
+#   the true attacker IP from HTTP headers, but iptables cannot block it directly.
+#	
+#   This feature uses the CloudFlare API to add/remove attacking IPs from the
+#   CloudFlare firewall and provides CLI/UI commands for management.
+#	
+#   See /etc/csf/readme.txt for usage details and restrictions BEFORE enabling.
+# #
+
+if ($config{CF_ENABLE})
+{
 	require ConfigServer::CloudFlare;
 	import ConfigServer::CloudFlare;
 }
-if (-e "/etc/cxs/cxs.reputation" and -e "/usr/local/csf/lib/ConfigServer/cxs.pm") {
+
+if (-e "/etc/cxs/cxs.reputation" and -e "/usr/local/csf/lib/ConfigServer/cxs.pm")
+{
 	require ConfigServer::cxs;
 	import ConfigServer::cxs;
 	$cxsreputation = 1;
 	%cxsports = ConfigServer::cxs::Rports();
 }
+
 $SIG{CHLD} = 'IGNORE';
 
-if ($pid = fork)  {
+if ($pid = fork)
+{
 	exit 0;
-} elsif (defined($pid)) {
+}
+elsif (defined($pid))
+{
 	$pid = $$;
-} else {
+}
+else
+{
 	die "*Error* Unable to fork: $!";
 }
 
@@ -217,26 +345,58 @@ open STDOUT, ">","/dev/null";
 open STDERR, ">","/dev/null";
 setsid();
 
+# #
+#	Define › App vars
+# #
+
+my $app_github_url = "https://github.com/Aetherinox/csf-firewall";
+my $app_svg_logo_raw = <<'SVG';
+<svg class="login-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="120" height="auto" preserveAspectRatio="xMidYMid meet">
+	<g id="transformGroup" transform="scale(1) translate(0 0) rotate(0)">
+		<path d="M 153.171 309.301 C 148.062 327.815, 138.987 342.266, 119.133 363.500 C 109.551 373.749, 107.194 376.959, 102.985 385.500 C 100.275 391, 97.535 397.965, 96.897 400.979 C 95.424 407.931, 96.292 425.010, 98.416 430.876 C 100.650 437.047, 100.462 439.887, 97.750 440.926 C 95.766 441.686, 96.504 442.273, 104 445.893 C 132.088 459.458, 175.989 459.768, 204.481 446.604 C 210.886 443.645, 212.098 442.722, 211.493 441.263 C 210.463 438.780, 210.501 438.470, 212.999 429.045 C 214.880 421.949, 215.157 418.895, 214.727 410.045 C 213.852 392.089, 209.622 383.465, 192.358 364.444 C 173.286 343.430, 166.546 332.810, 160.138 313.672 C 157.960 307.167, 156.010 301.677, 155.806 301.472 C 155.601 301.268, 154.415 304.791, 153.171 309.301" stroke="none" fill="#ffffff" fill-rule="evenodd"/>
+		<path d="M 120.443 42.092 C 120.072 42.692, 120.334 48.892, 121.025 55.868 C 122.734 73.123, 121.834 101.029, 119.098 115.650 C 113.658 144.719, 102.901 172.578, 86.723 199.500 C 79.301 211.850, 71.923 222.169, 58.657 238.756 C 46.630 253.794, 40.414 263.476, 35.702 274.509 C 28.692 290.924, 26 305.061, 26 325.455 C 26 359.052, 35.782 385.759, 56.918 409.867 C 67.788 422.265, 88.355 438.659, 95.136 440.331 C 99.522 441.412, 100.624 438.988, 98.594 432.724 C 93.944 418.376, 94.445 403.998, 100.066 390.496 C 104.313 380.295, 107.276 376.029, 119.039 363.175 C 133.842 347.001, 139.451 339.666, 144.411 330 C 148.769 321.509, 153.300 309.246, 154.557 302.548 C 154.923 300.597, 155.510 299.003, 155.861 299.007 C 156.213 299.011, 157.235 302.048, 158.133 305.757 C 163.479 327.837, 171.047 340.053, 198.553 371 C 206.162 379.561, 211.611 389.038, 214.079 398 C 216.152 405.531, 215.660 421.296, 213.056 430.746 C 209.570 443.393, 211.350 444.796, 222.095 437.873 C 244.494 423.441, 262.315 404.262, 272.925 383.171 C 277.465 374.146, 282.641 358.067, 284.570 347 C 286.561 335.581, 286.034 313.718, 283.487 302 C 278.365 278.442, 267.866 256.933, 252.003 237.500 C 225.216 204.685, 206.613 159.041, 204.156 120.105 C 203.619 111.600, 203.171 109.510, 201.691 108.605 C 199.052 106.992, 197.527 109.581, 196.129 118.050 C 195.486 121.940, 191.811 133.439, 187.961 143.602 C 184.112 153.765, 179.940 165.620, 178.691 169.947 L 176.420 177.814 173.725 163.521 C 168.619 136.444, 157.730 102.947, 146.074 78.467 C 140.130 65.984, 128.918 45.801, 126.231 42.750 C 124.499 40.784, 121.465 40.439, 120.443 42.092" stroke="none" fill="#cc1414" fill-rule="evenodd"/>
+		<path d="M 255.366 195.488 C 254.607 197.466, 258.183 203.384, 267.458 215.500 C 285.451 239.004, 288.248 242.987, 293.242 252.222 L 298.500 261.943 317.782 261.972 C 340.632 262.005, 343.009 261.400, 346.010 254.788 C 347.749 250.956, 347.958 248.130, 347.978 228.218 C 348.002 203.832, 347.410 200.562, 342.199 196.286 C 339.510 194.080, 339.342 194.072, 297.719 194.036 C 261.634 194.005, 255.859 194.203, 255.366 195.488 M 378.164 195.689 C 371.640 198.904, 371.500 199.581, 371.500 228 C 371.500 256.524, 371.638 257.177, 378.326 260.351 C 381.406 261.812, 387.258 262, 429.651 261.996 C 475.880 261.993, 477.612 261.924, 480.810 259.974 C 486.469 256.524, 487 253.781, 487 228 C 487 202.219, 486.469 199.476, 480.810 196.026 C 477.610 194.075, 475.902 194.008, 429.500 194.027 C 387.011 194.043, 381.117 194.234, 378.164 195.689 M 307.499 284.001 C 307.159 284.552, 307.902 289.615, 309.151 295.251 C 311.112 304.102, 311.444 308.638, 311.579 328.500 L 311.735 351.500 394.784 351.756 L 477.833 352.011 481.052 349.302 C 486.590 344.643, 487 342.435, 486.998 317.282 C 486.997 291.276, 486.516 289.226, 479.500 285.282 L 475.500 283.033 391.809 283.016 C 336.993 283.006, 307.904 283.346, 307.499 284.001 M 124.437 357.250 L 121.500 360.500 124.750 357.563 C 126.537 355.948, 128 354.485, 128 354.313 C 128 353.540, 127.175 354.221, 124.437 357.250 M 191 363.313 C 191 363.485, 192.463 364.948, 194.250 366.563 L 197.500 369.500 194.563 366.250 C 191.825 363.221, 191 362.540, 191 363.313 M 306.233 374.250 C 305.676 374.938, 303.326 380, 301.011 385.500 C 293.737 402.778, 283.812 418.621, 270.668 433.940 C 268.101 436.932, 266 440.004, 266 440.767 C 266 441.929, 271.858 442.100, 302.250 441.827 C 334.949 441.532, 338.860 441.321, 342.173 439.673 C 348.608 436.471, 349 434.525, 349 405.802 L 349 380.406 345.208 376.703 L 341.416 373 324.330 373 C 311.868  373, 306.971 373.338, 306.233 374.250 M 376.697 376.798 L 372.905 380.682 373.203 407.262 L 373.500 433.842 376 436.516 C 381.224 442.103, 380.227 442, 429.200 441.994 C 457.195 441.991, 475.917 441.595, 478.209 440.959 C 480.248 440.392, 483.286 438.560, 484.959 436.887 L 488 433.846 488 408.324 C 488 387.712, 487.712 382.194, 486.500 379.642 C 483.497 373.312, 485.379 373.529, 430.495 373.207 L 380.489 372.915 376.697 376.798 M 95.286 412.500 C 95.294 415.250, 95.488 416.256, 95.718 414.736 C  95.947 413.216, 95.941  410.966, 95.704 409.736 C 95.467 408.506, 95.279 409.750, 95.286 412.500 M 215.286 412.500 C 215.294 415.250, 215.488 416.256, 215.718 414.736 C 215.947 413.216, 215.941 410.966, 215.704 409.736 C 215.467 408.506, 215.279 409.750, 215.286 412.500" stroke="none" fill="#b3b3b3" fill-rule="evenodd"/>
+	</g>
+</svg>
+SVG
+my $svg_logo = "data:image/svg+xml," . uriClean($app_svg_logo_raw);
+
 my $oldfh = select STDERR; ##no critic
 $| = 1;
 select $oldfh; ##no critic
 
-if ($config{DEBUG}) {
+if ($config{DEBUG})
+{
 	open (STDERR, ">>", "/var/log/lfd.log");
 }
 
-if (-e "/proc/sys/kernel/hostname") {
+if (-e "/proc/sys/kernel/hostname")
+{
 	open (my $IN, "<", "/proc/sys/kernel/hostname");
 	flock ($IN, LOCK_SH);
 	$hostname = <$IN>;
 	chomp $hostname;
 	close ($IN);
-} else {
+}
+else
+{
 	$hostname = "unknown";
 }
+
 $hostshort = (split(/\./,$hostname))[0];
 $clock_ticks = sysconf( &POSIX::_SC_CLK_TCK ) || 100;
 $tz = strftime("%z", localtime);
+
+my $hostip;
+my $pack = gethostbyname($hostname);
+if ($pack)
+{
+    $hostip = inet_ntoa($pack);
+}
+else
+{
+    $hostip = '127.0.0.1';
+}
 
 sysopen ($PIDFILE, $pidfile, O_RDWR | O_CREAT) or &childcleanup(__LINE__,"*Error* unable to create lfd PID file [$pidfile] $!");
 flock ($PIDFILE, LOCK_EX | LOCK_NB) or &childcleanup(__LINE__,"*Error* attempt to start lfd when it is already running");
@@ -265,72 +425,127 @@ $gcidr6 = Net::CIDR::Lite->new;
 eval {local $SIG{__DIE__} = undef; $ipscidr6->add("::1/128")};
 eval {local $SIG{__DIE__} = undef; $ipscidr->add("127.0.0.0/8")};
 
+# #
+#	Content Security Policy
+#	
+#	Inserts csp headers into csf page. Increases security to ensure that no external assets can be loaded.
+# #
+
+my $csp_rule;
+if ($config{UI_CSP_ENABLED} == 1) 
+{
+	# #
+    #	User defined CSP rule
+	# #
+
+    if ($config{UI_CSP_ADVANCED_ENABLED} == 1 && $config{UI_CSP_ADVANCED_RULE} ne '') 
+    {
+        $csp_rule = $config{UI_CSP_ADVANCED_RULE};
+    } 
+
+	# #
+    #	Default CSP rule
+	# #
+
+    else 
+    {
+		$csp_rule = "default-src 'none'; img-src 'self' data: https://*.[HOSTNAME] https://*.[HOSTIP]; script-src 'self' 'unsafe-inline' https://*.[HOSTNAME] https://*.[HOSTIP]; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://*.[HOSTNAME] https://*.[HOSTIP]; form-action 'self'; font-src 'self' https://fonts.gstatic.com;";
+    }
+
+	$csp_rule =~ s/\[HOSTNAME\]/$hostname/g;	# Replace [HOSTNAME] template var with real host name
+	$csp_rule =~ s/\[HOSTIP\]/$hostip/g;		# Replace [HOSTIP] template var with real host ip address
+    $csp_rule =~ s/"/&quot;/g;					# Escape any quotes to prevent breaking HTML
+}
+
 $faststart = 0;
 
-eval {
+eval
+{
 	local $SIG{__DIE__} = undef;
 	$urlget = ConfigServer::URLGet->new($config{URLGET}, "csf/$version", $config{URLPROXY});
 };
-unless (defined $urlget) {
-	if (-e $config{CURL} or -e $config{WGET}) {
+
+unless (defined $urlget)
+{
+	if (-e $config{CURL} or -e $config{WGET})
+	{
 		$config{URLGET} = 3;
 		$urlget = ConfigServer::URLGet->new($config{URLGET}, "csf/$version", $config{URLPROXY});
 		logfile("*WARNING* URLGET set to use LWP but perl module is not installed, fallback to using CURL/WGET");
-	} else {
+	}
+	else
+	{
 		$config{URLGET} = 1;
 		$urlget = ConfigServer::URLGet->new($config{URLGET}, "csf/$version", $config{URLPROXY});
 		logfile("*WARNING* URLGET set to use LWP but perl module is not installed, CURL and WGET not installed - reverting to HTTP::Tiny");
 	}
 }
 
-if (-e "/etc/wwwacct.conf") {
-	foreach my $line (slurp("/etc/wwwacct.conf")) {
+if (-e "/etc/wwwacct.conf")
+{
+	foreach my $line (slurp("/etc/wwwacct.conf"))
+	{
 		$line =~ s/$cleanreg//g;
 		if ($line =~ /^(\s|\#|$)/) {next}
 		my ($name,$value) = split (/ /,$line,2);
 		$cpconfig{$name} = $value;
 	}
 }
-if (-e "/usr/local/cpanel/version") {
-	foreach my $line (slurp("/usr/local/cpanel/version")) {
+
+if (-e "/usr/local/cpanel/version")
+{
+	foreach my $line (slurp("/usr/local/cpanel/version"))
+	{
 		$line =~ s/$cleanreg//g;
 		if ($line =~ /\d/) {$cpconfig{version} = $line}
 	}
 }
 
-if (-e "/var/lib/csf/csf.tempconf") {unlink ("/var/lib/csf/csf.tempconf")}
-if (-e "/var/lib/csf/lfd.enable") {unlink "/var/lib/csf/lfd.enable"}
-if (-e "/var/lib/csf/lfd.start") {unlink "/var/lib/csf/lfd.start"}
-if (-e "/var/lib/csf/lfd.restart") {unlink "/var/lib/csf/lfd.restart"}
-if (-e "/var/lib/csf/csf.4.saved") {unlink "/var/lib/csf/csf.4.saved"}
-if (-e "/var/lib/csf/csf.4.ipsets") {unlink "/var/lib/csf/csf.4.ipsets"}
-if (-e "/var/lib/csf/csf.6.saved") {unlink "/var/lib/csf/csf.6.saved"}
-if (-e "/var/lib/csf/csf.dnscache") {unlink "/var/lib/csf/csf.dnscache"}
-if (-e "/var/lib/csf/csf.gignore") {unlink "/var/lib/csf/csf.gignore"}
+if (-e "/var/lib/csf/csf.tempconf") { unlink ("/var/lib/csf/csf.tempconf") }
+if (-e "/var/lib/csf/lfd.enable") { unlink "/var/lib/csf/lfd.enable" }
+if (-e "/var/lib/csf/lfd.start") { unlink "/var/lib/csf/lfd.start" }
+if (-e "/var/lib/csf/lfd.restart") { unlink "/var/lib/csf/lfd.restart" }
+if (-e "/var/lib/csf/csf.4.saved") { unlink "/var/lib/csf/csf.4.saved" }
+if (-e "/var/lib/csf/csf.4.ipsets") { unlink "/var/lib/csf/csf.4.ipsets" }
+if (-e "/var/lib/csf/csf.6.saved") { unlink "/var/lib/csf/csf.6.saved" }
+if (-e "/var/lib/csf/csf.dnscache") { unlink "/var/lib/csf/csf.dnscache" }
+if (-e "/var/lib/csf/csf.gignore") { unlink "/var/lib/csf/csf.gignore" }
 
 &getethdev;
+
+# #
+#	open version.txt
+# #
 
 open (my $IN, "<", "/etc/csf/version.txt") or &cleanup(__LINE__,"Unable to open version.txt: $!");
 flock ($IN, LOCK_SH);
 $version = <$IN>;
 close ($IN);
 chomp $version;
-my $generic = " (cPanel)";
-if ($config{GENERIC}) {$generic = " (generic)"}
-if ($config{DIRECTADMIN}) {$generic = " (DirectAdmin)"}
-if ($config{INTERWORX}) {$generic = " (InterWorx)"}
-if ($config{CYBERPANEL}) {$generic = " (CyberPanel)"}
-if ($config{CWP}) {$generic = " (CentOS Web Panel)"}
-if ($config{VESTA}) {$generic = " (VestaCP)"}
-logfile("daemon started on $hostname - csf v$version$generic");
+
+# #
+#	Logs › Start Daemon
+# #
+
+logfile( "Daemon started on $hostname - csf v$version ($codename)" );
 if ($config{DEBUG} >= 1) {logfile("Clock Ticks: $clock_ticks")}
 if ($config{DEBUG} >= 1) {logfile("debug: **** DEBUG LEVEL $config{DEBUG} ENABLED ****")}
 
-unless (-e $config{SENDMAIL}) {
+# #
+#	Logs › Sendmail Not Found
+# #
+
+unless (-e $config{SENDMAIL})
+{
 	logfile("*WARNING* Unable to send email reports - [$config{SENDMAIL}] not found");
 }
 
-if (ConfigServer::Service::type() eq "systemd") {
+# #
+#	Exit › Firewalld Found & Running
+# #
+
+if (ConfigServer::Service::type() eq "systemd")
+{
 	my @reply = &syscommand(__LINE__,$config{SYSTEMCTL},"is-active","firewalld");
 	chomp @reply;
 	if ($reply[0] eq "active" or $reply[0] eq "activating") {
@@ -410,29 +625,38 @@ if ($cxsreputation and -e "/etc/cxs/cxs.blocklists") {
 	}
 }
 
-if (-e "/etc/csf/csf.ignore") {
+if (-e "/etc/csf/csf.ignore")
+{
 	my @ignore = slurp("/etc/csf/csf.ignore");
-	foreach my $line (@ignore) {
-		if ($line =~ /^Include\s*(.*)$/) {
+	foreach my $line (@ignore)
+	{
+		if ($line =~ /^Include\s*(.*)$/)
+		{
 			my @incfile = slurp($1);
 			push @ignore,@incfile;
 		}
 	}
-	foreach my $line (@ignore) {
+	foreach my $line (@ignore)
+	{
 		$line =~ s/$cleanreg//g;
 		if ($line eq "") {next}
 		if ($line =~ /^\s*\#|Include/) {next}
 		my ($first,undef) = split(/\s/,$line);
 		my ($ip,$iscidr) = split(/\//,$first);
-		if (checkip(\$first)) {
+		if (checkip(\$first))
+		{
 			if ($iscidr) {push @cidrs,$first} else {$ignoreips{$ip} = 1}
 		}
 		elsif ($ip ne "127.0.0.1") {logfile("Invalid entry in csf.ignore: [$first]")}
 	}
-	foreach my $entry (@cidrs) {
-		if (checkip(\$entry) == 6) {
+	foreach my $entry (@cidrs)
+	{
+		if (checkip(\$entry) == 6)
+		{
 			eval {local $SIG{__DIE__} = undef; $cidr6->add($entry)};
-		} else {
+		}
+		else
+		{
 			eval {local $SIG{__DIE__} = undef; $cidr->add($entry)};
 		}
 		if ($@) {logfile("Invalid entry in csf.ignore: $entry")}
@@ -547,40 +771,56 @@ if (-e "/usr/local/cpanel/version" and -e "/etc/cpanel/ea4/is_ea4" and -e "/etc/
 	}
 }
 
-if ($config{LOGSCANNER}) {
+if ($config{LOGSCANNER})
+{
 	my @entries = slurp("/etc/csf/csf.logfiles");
-	foreach my $line (@entries) {
-		if ($line =~ /^Include\s*(.*)$/) {
+	foreach my $line (@entries)
+	{
+		if ($line =~ /^Include\s*(.*)$/)
+		{
 			my @incfile = slurp($1);
 			push @entries,@incfile;
 		}
 	}
-	foreach my $file (@entries) {
+
+	foreach my $file (@entries)
+	{
         $file =~ s/$cleanreg//g;
 		if ($file eq "") {next}
 		if ($file =~ /^\s*\#|Include/) {next}
-		if ($file =~ /\*|\?|\[/) {
-			foreach my $log (glob $file) {
-				if (-e $log) {
+		if ($file =~ /\*|\?|\[/)
+		{
+			foreach my $log (glob $file)
+			{
+				if (-e $log)
+				{
 					$logfiles{$log} = 1;
 					$logscannerfiles{$log} = 1;
 				}
 			}
-		} else {
-			if (-e $file) {
+		}
+		else
+		{
+			if (-e $file)
+			{
 				$logfiles{$file} = 1;
 				$logscannerfiles{$file} = 1;
 			}
 		}
 	}
+
 	my @entries2 = slurp("/etc/csf/csf.logignore");
-	foreach my $line (@entries2) {
-		if ($line =~ /^Include\s*(.*)$/) {
+	foreach my $line (@entries2)
+	{
+		if ($line =~ /^Include\s*(.*)$/)
+		{
 			my @incfile = slurp($1);
 			push @entries2,@incfile;
 		}
 	}
-	foreach my $line (@entries2) {
+
+	foreach my $line (@entries2)
+	{
 		$line =~ s/$cleanreg//g;
 		if ($line eq "") {next}
 		if ($line =~ /^\s*\#|Include/) {next}
@@ -590,10 +830,14 @@ if ($config{LOGSCANNER}) {
 	logfile("Log Scanner...");
 }
 
-unless (-d "/var/spool/exim") {$config{LF_QUEUE_ALERT} = 0}
+unless (-d "/var/spool/exim")
+{
+	$config{LF_QUEUE_ALERT} = 0
+}
 
 $accept = "ACCEPT";
-if ($config{WATCH_MODE}) {
+if ($config{WATCH_MODE})
+{
 	$accept = "LOGACCEPT";
 	$config{DROP_NOLOG} = "";
 	$config{DROP_LOGGING} = "1";
@@ -605,13 +849,14 @@ if ($config{WATCH_MODE}) {
 	logfile("WATCH_MODE enabled...");
 }
 
-if (-e "/var/lib/csf/csf.restart") {
+if (-e "/var/lib/csf/csf.restart")
+{
 	unlink "/var/lib/csf/csf.restart";
 	&csfrestart;
 }
 
 if ($config{LF_CSF}) {
-	if (-e "/var/lib/csf/cpanel.new") {unlink "/var/lib/csf/cpanel.new"}
+	if (-e "/var/lib/csf/cpanel.new") { unlink "/var/lib/csf/cpanel.new"}
 	logfile("CSF Tracking...");
 	&csfcheck;
 	$csftimeout = 0;
@@ -827,7 +1072,7 @@ if ($config{LF_INTEGRITY}) {
 }
 
 if ($config{LF_EXPLOIT}) {
-	if (-e "/var/lib/csf/csf.tempexploit") {unlink ("/var/lib/csf/csf.tempexploit")}
+	if (-e "/var/lib/csf/csf.tempexploit") { unlink ("/var/lib/csf/csf.tempexploit")}
 	if (-e "/etc/csf/csf.suignore") {
 		my @entries = slurp("/etc/csf/csf.suignore");
 		foreach my $line (@entries) {
@@ -1086,8 +1331,8 @@ if ($config{PT_LIMIT}) {
 			}
 		}
 	}
-	if (-e "/var/lib/csf/csf.temppids") {unlink ("/var/lib/csf/csf.temppids")}
-	if (-e "/var/lib/csf/csf.tempusers") {unlink ("/var/lib/csf/csf.tempusers")}
+	if (-e "/var/lib/csf/csf.temppids") { unlink ("/var/lib/csf/csf.temppids")}
+	if (-e "/var/lib/csf/csf.tempusers") { unlink ("/var/lib/csf/csf.tempusers")}
 	logfile("Process Tracking...");
 	&processtracking;
 	$pttimeout = 0;
@@ -3220,7 +3465,7 @@ sub lfdrestart {
 	$SIG{CHLD} = 'IGNORE';
 	$0 = "lfd - stopping";
 
-	logfile("daemon restart requested");
+	logfile( "Daemon restart requested" );
 
 	close($PIDFILE);
 	unlink $pidfile;
@@ -4045,9 +4290,11 @@ sub processtracking {
 		my %users;
 		my %net;
 
-		unless ($config{GENERIC}) {
+		unless ($config{GENERIC})
+		{
 			opendir (DIR, "/var/cpanel/users");
-			while (my $user = readdir (DIR)) {
+			while (my $user = readdir (DIR))
+			{
 				if ($user =~ /^\./) {next}
 				$users{$user} = 1;
 			}
@@ -7795,30 +8042,33 @@ sub ipv4in6 {
 	
 	return $out;
 }
-## end ipv4in6
-###############################################################################
-# start cleanup
-sub cleanup {
+
+
+sub cleanup
+{
 	$SIG{INT} = 'IGNORE';
 	$SIG{TERM} = 'IGNORE';
 	$SIG{HUP} = 'IGNORE';
 	my $line = shift;
 	my $message = shift;
 
-	if (($message eq "") and $line) {
+	if (($message eq "") and $line)
+	{
 		$message = "Main Process: $line";
 		$line = "";
 	}
 
 	$0 = "lfd - stopping";
 
-	if ($message) {
+	if ($message)
+	{
 		if ($line ne "") {$message .= ", at line $line"}
 		logfile("$message");
 	}
-	logfile("daemon stopped");
+	logfile( "Daemon stopped" );
 
-	if ($PIDFILE and fileno($PIDFILE)) {
+	if ($PIDFILE and fileno($PIDFILE))
+	{
 		close($PIDFILE);
 		unlink $pidfile;
 	}
@@ -9974,10 +10224,11 @@ sub ui {
 						print "<!DOCTYPE html>\n";
 						print "<html>\n";
 						print "<head>";
-						print "<form action='/' method='post'><div align='center'>\n";
-						print "<table align='center' border='0' cellspacing='0' cellpadding='4' bgcolor='#FFFFFF' style='border:1px solid #990000'>\n";
-						print "<tr bgcolor='#F4F4EA'><td>Username:</td><td><input id='user' name='csflogin' type='text' size='15'></td></tr>\n";
-						print "<tr bgcolor='#F4F4EA'><td>Password:</td><td><input name='csfpassword' type='password' size='15'></td></tr>\n";
+						print "<meta charset=\"UTF-8\">\n";
+						if ($config{UI_CSP_ENABLED} == 1 && $csp_rule ne '' )
+						{
+							print "<meta http-equiv=\"Content-Security-Policy\" content=\"$csp_rule\">\n";
+						}
 						print '<script>
 						(function()
 						{
@@ -9988,7 +10239,8 @@ sub ui {
 						print "<title>ConfigServer Security & Firewall</title>\n";
 						print <<EOF;
 
-<link rel="icon" type="image/x-icon" href="https://github.com/user-attachments/assets/ba005563-da8b-456c-8c4d-19f4ee31eb71">
+<link rel='icon' type='image/svg+xml' href='$svg_logo'>
+
 <style>
 
 \@-webkit-keyframes fade-in
@@ -10477,16 +10729,11 @@ EOF
 
 						print "<div class='login-container-main'>";
 						print "<form action='/' method='post'><div class='login-form' align='center'>\n";
+
 print <<"SVG_EOF";
 <div class='login-container-logo'>
 	<a href='$app_github_url' target='_blank'>
-		<svg class="login-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="120" height="auto" preserveAspectRatio="xMidYMid meet">
-			<g id="transformGroup" transform="scale(1) translate(0 0) rotate(0)">
-				<path d="M 153.171 309.301 C 148.062 327.815, 138.987 342.266, 119.133 363.500 C 109.551 373.749, 107.194 376.959, 102.985 385.500 C 100.275 391, 97.535 397.965, 96.897 400.979 C 95.424 407.931, 96.292 425.010, 98.416 430.876 C 100.650 437.047, 100.462 439.887, 97.750 440.926 C 95.766 441.686, 96.504 442.273, 104 445.893 C 132.088 459.458, 175.989 459.768, 204.481 446.604 C 210.886 443.645, 212.098 442.722, 211.493 441.263 C 210.463 438.780, 210.501 438.470, 212.999 429.045 C 214.880 421.949, 215.157 418.895, 214.727 410.045 C 213.852 392.089, 209.622 383.465, 192.358 364.444 C 173.286 343.430, 166.546 332.810, 160.138 313.672 C 157.960 307.167, 156.010 301.677, 155.806 301.472 C 155.601 301.268, 154.415 304.791, 153.171 309.301" stroke="none" fill="#ffffff" fill-rule="evenodd"/>
-				<path d="M 120.443 42.092 C 120.072 42.692, 120.334 48.892, 121.025 55.868 C 122.734 73.123, 121.834 101.029, 119.098 115.650 C 113.658 144.719, 102.901 172.578, 86.723 199.500 C 79.301 211.850, 71.923 222.169, 58.657 238.756 C 46.630 253.794, 40.414 263.476, 35.702 274.509 C 28.692 290.924, 26 305.061, 26 325.455 C 26 359.052, 35.782 385.759, 56.918 409.867 C 67.788 422.265, 88.355 438.659, 95.136 440.331 C 99.522 441.412, 100.624 438.988, 98.594 432.724 C 93.944 418.376, 94.445 403.998, 100.066 390.496 C 104.313 380.295, 107.276 376.029, 119.039 363.175 C 133.842 347.001, 139.451 339.666, 144.411 330 C 148.769 321.509, 153.300 309.246, 154.557 302.548 C 154.923 300.597, 155.510 299.003, 155.861 299.007 C 156.213 299.011, 157.235 302.048, 158.133 305.757 C 163.479 327.837, 171.047 340.053, 198.553 371 C 206.162 379.561, 211.611 389.038, 214.079 398 C 216.152 405.531, 215.660 421.296, 213.056 430.746 C 209.570 443.393, 211.350 444.796, 222.095 437.873 C 244.494 423.441, 262.315 404.262, 272.925 383.171 C 277.465 374.146, 282.641 358.067, 284.570 347 C 286.561 335.581, 286.034 313.718, 283.487 302 C 278.365 278.442, 267.866 256.933, 252.003 237.500 C 225.216 204.685, 206.613 159.041, 204.156 120.105 C 203.619 111.600, 203.171 109.510, 201.691 108.605 C 199.052 106.992, 197.527 109.581, 196.129 118.050 C 195.486 121.940, 191.811 133.439, 187.961 143.602 C 184.112 153.765, 179.940 165.620, 178.691 169.947 L 176.420 177.814 173.725 163.521 C 168.619 136.444, 157.730 102.947, 146.074 78.467 C 140.130 65.984, 128.918 45.801, 126.231 42.750 C 124.499 40.784, 121.465 40.439, 120.443 42.092" stroke="none" fill="#cc1414" fill-rule="evenodd"/>
-				<path d="M 255.366 195.488 C 254.607 197.466, 258.183 203.384, 267.458 215.500 C 285.451 239.004, 288.248 242.987, 293.242 252.222 L 298.500 261.943 317.782 261.972 C 340.632 262.005, 343.009 261.400, 346.010 254.788 C 347.749 250.956, 347.958 248.130, 347.978 228.218 C 348.002 203.832, 347.410 200.562, 342.199 196.286 C 339.510 194.080, 339.342 194.072, 297.719 194.036 C 261.634 194.005, 255.859 194.203, 255.366 195.488 M 378.164 195.689 C 371.640 198.904, 371.500 199.581, 371.500 228 C 371.500 256.524, 371.638 257.177, 378.326 260.351 C 381.406 261.812, 387.258 262, 429.651 261.996 C 475.880 261.993, 477.612 261.924, 480.810 259.974 C 486.469 256.524, 487 253.781, 487 228 C 487 202.219, 486.469 199.476, 480.810 196.026 C 477.610 194.075, 475.902 194.008, 429.500 194.027 C 387.011 194.043, 381.117 194.234, 378.164 195.689 M 307.499 284.001 C 307.159 284.552, 307.902 289.615, 309.151 295.251 C 311.112 304.102, 311.444 308.638, 311.579 328.500 L 311.735 351.500 394.784 351.756 L 477.833 352.011 481.052 349.302 C 486.590 344.643, 487 342.435, 486.998 317.282 C 486.997 291.276, 486.516 289.226, 479.500 285.282 L 475.500 283.033 391.809 283.016 C 336.993 283.006, 307.904 283.346, 307.499 284.001 M 124.437 357.250 L 121.500 360.500 124.750 357.563 C 126.537 355.948, 128 354.485, 128 354.313 C 128 353.540, 127.175 354.221, 124.437 357.250 M 191 363.313 C 191 363.485, 192.463 364.948, 194.250 366.563 L 197.500 369.500 194.563 366.250 C 191.825 363.221, 191 362.540, 191 363.313 M 306.233 374.250 C 305.676 374.938, 303.326 380, 301.011 385.500 C 293.737 402.778, 283.812 418.621, 270.668 433.940 C 268.101 436.932, 266 440.004, 266 440.767 C 266 441.929, 271.858 442.100, 302.250 441.827 C 334.949 441.532, 338.860 441.321, 342.173 439.673 C 348.608 436.471, 349 434.525, 349 405.802 L 349 380.406 345.208 376.703 L 341.416 373 324.330 373 C 311.868  373, 306.971 373.338, 306.233 374.250 M 376.697 376.798 L 372.905 380.682 373.203 407.262 L 373.500 433.842 376 436.516 C 381.224 442.103, 380.227 442, 429.200 441.994 C 457.195 441.991, 475.917 441.595, 478.209 440.959 C 480.248 440.392, 483.286 438.560, 484.959 436.887 L 488 433.846 488 408.324 C 488 387.712, 487.712 382.194, 486.500 379.642 C 483.497 373.312, 485.379 373.529, 430.495 373.207 L 380.489 372.915 376.697 376.798 M 95.286 412.500 C 95.294 415.250, 95.488 416.256, 95.718 414.736 C  95.947 413.216, 95.941  410.966, 95.704 409.736 C 95.467 408.506, 95.279 409.750, 95.286 412.500 M 215.286 412.500 C 215.294 415.250, 215.488 416.256, 215.718 414.736 C 215.947 413.216, 215.941 410.966, 215.704 409.736 C 215.467 408.506, 215.279 409.750, 215.286 412.500" stroke="none" fill="#b3b3b3" fill-rule="evenodd"/>
-			</g>
-		</svg>
+		$app_svg_logo_raw
 	</a>
 </div>
 SVG_EOF
@@ -12080,5 +12327,3 @@ sub ipsetflush
 	}
 	return;
 }
-# end ipsetflush
-###############################################################################
