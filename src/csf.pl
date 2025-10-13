@@ -3922,29 +3922,49 @@ sub doupdate {
 	return;
 }
 # end doupdate
-###############################################################################
-# start docheck
-sub docheck {
+
+# #
+#	Check for Updates
+#		Stable				https://$config{DOWNLOADSERVER}/csf/version.txt
+#		Alpha / RC			https://$config{DOWNLOADSERVER}/csf/version.txt?channel=dev
+# #
+
+sub docheck
+{
 	my $url = "https://$config{DOWNLOADSERVER}/csf/version.txt";
-	if ($config{URLGET} == 1) {$url = "http://$config{DOWNLOADSERVER}/csf/version.txt";}
+	if ($config{URLGET} == 1)
+	{
+		$url = "http://$config{DOWNLOADSERVER}/csf/version.txt";
+	}
+
 	my ($status, $text) = $urlget->urlget($url);
-	if ($status) {print "Oops: $text\n"; exit 1}
+	if ($status)
+	{
+		print "Oops: $text\n"; exit 1
+	}
 
 	my $actv = $text;
 	my $up = 0;
 
-	if (($actv ne "") and ($actv =~ /^[\d\.]*$/)) {
-		if ($actv > $version) {
+	if (($actv ne "") and ($actv =~ /^[\d\.]*$/))
+	{
+		if ($actv > $version)
+		{
 			print "A newer version of csf is available - Current:v$version New:v$actv\n";
-		} else {
+		}
+		else
+		{
 			print "csf is already at the latest version: v$version\n";
 		}
-	} else {
+	}
+	else
+	{
 		print "Unable to verify the latest version of csf at this time\n";
 	}
+
 	return;
 }
-# end docheck
+
 ###############################################################################
 # start doiplookup
 sub doiplookup {
