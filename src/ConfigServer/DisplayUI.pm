@@ -4146,7 +4146,7 @@ sub csgetversion
 #	Version > Get Manual
 #	
 #		Stable				https://$config{DOWNLOADSERVER}/csf/version.txt
-#		Alpha / RC			https://$config{DOWNLOADSERVER}/csf/version.txt?channel=dev
+#		Alpha / RC			https://$config{DOWNLOADSERVER}/csf/version.txtchannel=alpha
 # #
 
 sub manualversion
@@ -4158,6 +4158,20 @@ sub manualversion
 	if ( $config{URLGET} == 1 )
 	{
 		$url = "http://$config{DOWNLOADSERVER}/csf/version.txt";
+	}
+
+	# #
+	#	Alpha Release Channel
+	#	
+	#	This should NOT be used on production servers.
+	#	
+	#	Enabled by defining the following in your csf.conf:
+	#		RELEASE_ALPHA = "1"
+	# #
+
+	if ( $config{RELEASE_ALPHA} == 1 )
+	{
+		$url .= "channel=alpha";
 	}
 
 	print "<div><pre class='comment' style='white-space: pre-wrap;'>\n";

@@ -3862,16 +3862,41 @@ END
 # end autoupdates
 ###############################################################################
 # start doupdate
-sub doupdate {
+sub doupdate
+{
 	my $force = 0;
 	my $actv = "";
-	if ($input{command} eq "-uf") {
+	if ($input{command} eq "-uf")
+	{
 		$force = 1;
-	} else {
+	}
+	else
+	{
 		my $url = "https://$config{DOWNLOADSERVER}/csf/version.txt";
-		if ($config{URLGET} == 1) {$url = "http://$config{DOWNLOADSERVER}/csf/version.txt";}
+		if ( $config{URLGET} == 1 )
+		{
+			$url = "http://$config{DOWNLOADSERVER}/csf/version.txt";
+		}
+
+		# #
+		#	Alpha Release Channel
+		#	
+		#	This should NOT be used on production servers.
+		#	
+		#	Enabled by defining the following in your csf.conf:
+		#		RELEASE_ALPHA = "1"
+		# #
+
+		if ( $config{RELEASE_ALPHA} == 1 )
+		{
+			$url .= "?channel=alpha";
+		}
+
 		my ($status, $text) = $urlget->urlget($url);
-		if ($status) {print "Oops: $text\n"; exit 1}
+		if ($status)
+		{
+			print "Oops: $text\n"; exit 1
+		}
 		$actv = $text;
 	}
 
@@ -3893,6 +3918,20 @@ sub doupdate {
 			if ($config{URLGET} == 1)
 			{
 				$url = "http://$config{DOWNLOADSERVER}/csf.tgz";
+			}
+
+			# #
+			#	Alpha Release Channel
+			#	
+			#	This should NOT be used on production servers.
+			#	
+			#	Enabled by defining the following in your csf.conf:
+			#		RELEASE_ALPHA = "1"
+			# #
+
+			if ( $config{RELEASE_ALPHA} == 1 )
+			{
+				$url .= "?channel=alpha";
 			}
 
 			my ($status, $text) = $urlget->urlget($url,"/usr/src/csf.tgz");
@@ -3926,7 +3965,7 @@ sub doupdate {
 # #
 #	Check for Updates
 #		Stable				https://$config{DOWNLOADSERVER}/csf/version.txt
-#		Alpha / RC			https://$config{DOWNLOADSERVER}/csf/version.txt?channel=dev
+#		Alpha / RC			https://$config{DOWNLOADSERVER}/csf/version.txt?channel=alpha
 # #
 
 sub docheck
@@ -3935,6 +3974,20 @@ sub docheck
 	if ($config{URLGET} == 1)
 	{
 		$url = "http://$config{DOWNLOADSERVER}/csf/version.txt";
+	}
+
+	# #
+	#	Alpha Release Channel
+	#	
+	#	This should NOT be used on production servers.
+	#	
+	#	Enabled by defining the following in your csf.conf:
+	#		RELEASE_ALPHA = "1"
+	# #
+
+	if ( $config{RELEASE_ALPHA} == 1 )
+	{
+		$url .= "?channel=alpha";
 	}
 
 	my ($status, $text) = $urlget->urlget($url);
