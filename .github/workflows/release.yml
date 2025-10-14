@@ -870,8 +870,14 @@ jobs:
 
             - name: '📝 Changelog › Pre Setup (Categorized Commits)'
               run: |
-                  echo "TAG_LAST=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
-                  echo "COMMIT_LAST=$(git rev-parse HEAD)" >> $GITHUB_ENV
+                  TAG_LAST=$(git describe --tags --abbrev=0)
+                  COMMIT_LAST=$(git rev-parse HEAD)
+              
+                  echo "TAG_LAST=$TAG_LAST" >> $GITHUB_ENV
+                  echo "COMMIT_LAST=$COMMIT_LAST" >> $GITHUB_ENV
+              
+                  echo "TAG_LAST: $TAG_LAST"
+                  echo "COMMIT_LAST: $COMMIT_LAST"
 
             # #
             #   Release › Changelog › Build (Categorized)
@@ -907,13 +913,13 @@ jobs:
 
             # #
             #   Release › Changelog › Build (Uncategorized)
-            #
+            #   
             #   generates a changelog from the github api. requires a TAG_LAST in order to figure
             #   out the changes made between the two versions.
-            #
+            #   
             #   outputs:
             #       ${{ steps.task_release_changelog_categorized.outputs.changelog }}
-            #
+            #   
             #   shows only categorized commits using the commit standards
             #                type(scope): description
             #                type: description
