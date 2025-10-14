@@ -701,17 +701,24 @@ sub main
 	csfTimerInitialize();
 
 	var myFont = 14;
-	\$("#fontplus-btn").on('click', function ()
+	\$( "#fontplus-btn" ).on( 'click', function ( )
 	{
 		myFont++;
-		if (myFont > 20) {myFont = 20}
-		\$('#csfAjax').css("font-size",myFont+"px");
+		if ( myFont > 20 )
+		{
+			myFont = 20
+		}
+		\$( '#csfAjax' ).css( "font-size", myFont + "px" );
 	});
-	\$("#fontminus-btn").on('click', function ()
+
+	\$( "#fontminus-btn" ).on( 'click', function ( )
 	{
 		myFont--;
-		if (myFont < 12) {myFont = 12}
-		\$('#csfAjax').css("font-size",myFont+"px");
+		if ( myFont < 10 )
+		{
+			myFont = 10
+		}
+		\$( '#csfAjax' ).css( "font-size", myFont + "px" );
 	});
 </script>
 EOF
@@ -938,17 +945,24 @@ Please Note:
 	csfScript = '$script?action=loggrepcmd';
 
 	var myFont = 14;
-	\$("#fontplus-btn").on('click', function ()
+	\$( "#fontplus-btn" ).on( 'click', function ( )
 	{
 		myFont++;
-		if (myFont > 20) {myFont = 20}
-		\$('#csfAjax').css("font-size",myFont+"px");
+		if ( myFont > 20 )
+		{
+			myFont = 20
+		}
+		\$( '#csfAjax' ).css( "font-size", myFont + "px" );
 	});
-	\$("#fontminus-btn").on('click', function ()
+
+	\$( "#fontminus-btn" ).on( 'click', function ( )
 	{
 		myFont--;
-		if (myFont < 12) {myFont = 12}
-		\$('#csfAjax').css("font-size",myFont+"px");
+		if ( myFont < 10 )
+		{
+			myFont = 10
+		}
+		\$( '#csfAjax' ).css( "font-size", myFont + "px" );
 	});
 </script>
 EOF
@@ -1825,15 +1839,15 @@ EOF
 		#   Print header (if found)
 		# #
 
-		if ($header_found)
+		if ( $header_found )
 		{
 			print "<div class='header-block'>\n";
 			print "<div class='section'>$header_title</div>\n";
 			print "<div class='section-body comment'>\n";
 
-			foreach my $hl (@header_lines)
+			foreach my $hl ( @header_lines )
 			{
-				if ($hl eq '')
+				if ( $hl eq '' )
 				{
 					print "<br>\n";
 					next;
@@ -1843,15 +1857,15 @@ EOF
 				#	Count leading spaces/tabs
 				# #
 
-				my ($spaces) = $hl =~ /^([ \t]*)/;
+				my ( $spaces ) = $hl =~ /^([ \t]*)/;
 
 				# #
 				#	Convert to &nbsp; if more than 4 spaces
 				# #
 	
-				if ($spaces && length($spaces) > 4)
+				if ( $spaces && length( $spaces ) > 4 )
 				{
-					my $nbsp = '&nbsp;' x length($spaces);
+					my $nbsp = '&nbsp;' x length( $spaces );
 					$hl =~ s/^[ \t]+/$nbsp/;
 				}
 
@@ -1871,9 +1885,9 @@ EOF
 		#   Main configuration parsing loop
 		# #
 
-		foreach my $line (@confdata)
+		foreach my $line ( @confdata )
 		{
-			if (($line !~ /^\#/) and ($line =~ /=/))
+			if ( ( $line !~ /^\#/ ) and ( $line =~ /=/ ) )
 			{
 				if ($comment)
 				{
@@ -3794,39 +3808,53 @@ sub editfile
 	var editor = ace.edit("editor");
 	editor.setTheme("ace/theme/tomorrow");
 	editor.setShowPrintMargin(false);
-	editor.setOptions({
+	editor.setOptions(
+	{
 		fontFamily: "Courier New, Courier",
 		fontSize: "14px"
 	});
 	editor.getSession().setMode("ace/mode/space");
 
-	editor.getSession().on('change', function () {
+	editor.getSession().on('change', function ( )
+	{
 		textarea.val(editor.getSession().getValue());
 	});
 
-	textarea.on('change', function () {
+	textarea.on('change', function ( )
+	{
 		editor.getSession().setValue(textarea.val());
 	});
 
 	editor.getSession().setValue(textarea.val());
-	\$('#textarea').hide();
-	editordiv.show();
+	\$( '#textarea' ).hide( );
+	editordiv.show( );
 
-	\$("#toggletextarea-btn").on('click', function () {
+	\$( "#toggletextarea-btn" ).on( 'click', function ( )
+	{
 		\$('#textarea').toggle();
 		editordiv.toggle();
 	});
-	\$("#fontplus-btn").on('click', function () {
+
+	\$( "#fontplus-btn" ).on( 'click', function ( )
+	{
 		myFont++;
-		if (myFont > 20) {myFont = 20}
-		editor.setFontSize(myFont)
-		textarea.css("font-size",myFont+"px");
+		if ( myFont > 20 )
+		{
+			myFont = 20
+		}
+		editor.setFontSize( myFont )
+		textarea.css( "font-size", myFont + "px" );
 	});
-	\$("#fontminus-btn").on('click', function () {
+
+	\$( "#fontminus-btn" ).on( 'click', function ( )
+	{
 		myFont--;
-		if (myFont < 12) {myFont = 12}
-		editor.setFontSize(myFont)
-		textarea.css("font-size",myFont+"px");
+		if ( myFont < 10 )
+		{
+			myFont = 10
+		}
+		editor.setFontSize( myFont )
+		textarea.css( "font-size", myFont + "px" );
 	});
 </script>
 EOF
@@ -3985,7 +4013,7 @@ sub resize
 {
 	my $part = shift;
 	my $scroll = shift;
-	if ($part eq "top")
+	if ( $part eq "top" )
 	{
 		print "<div class='pull-right btn-group'><button class='btn btn-default' id='fontminus-btn'><strong>a</strong><span class='glyphicon glyphicon-arrow-down icon-configserver'></span></button>\n";
 		print "<button class='btn btn-default' id='fontplus-btn'><strong>A</strong><span class='glyphicon glyphicon-arrow-up icon-configserver'></span></button></div>\n";
@@ -3993,22 +4021,31 @@ sub resize
 	else
 	{
 		print "<script>\n";
-		if ($scroll)
+		if ( $scroll )
 		{
 			print "\$('#output').scrollTop(\$('#output')[0].scrollHeight);\n";
 		}
 		print <<EOF;
 
 	var myFont = 14;
-	\$("#fontplus-btn").on('click', function () {
+	\$( "#fontplus-btn" ).on( 'click', function ( )
+	{
 		myFont++;
-		if (myFont > 20) {myFont = 20}
-		\$('#output').css("font-size",myFont+"px");
+		if ( myFont > 20 )
+		{
+			myFont = 20
+		}
+		\$( '#output' ).css( "font-size", myFont + "px" );
 	});
-	\$("#fontminus-btn").on('click', function () {
+
+	\$( "#fontminus-btn" ).on( 'click', function ( )
+	{
 		myFont--;
-		if (myFont < 12) {myFont = 12}
-		\$('#output').css("font-size",myFont+"px");
+		if ( myFont < 10 )
+		{
+			myFont = 10
+		}
+		\$( '#output' ).css( "font-size", myFont + "px" );
 	});
 </script>
 EOF
@@ -4051,7 +4088,7 @@ sub confirmmodal
 	print "</div>\n";
 	print "</div>\n";
 	print "<script>\n";
-	print "	\$('button.confirmButton').on('click', function(e) {\n";
+	print "	\$('button.confirmButton').on( 'click', function(e) {\n";
 	print "	var dataquery = \$(this).attr('data-query');\n";
 	print "	var datahref = \$(this).attr('data-href');\n";
 	print "	\$('#modal-text').html(dataquery);\n";
@@ -4115,15 +4152,15 @@ sub csgetversion
 		close ($VERSION);
 		chomp $newversion;
 
-		if ($newversion eq "")
+		if ( $newversion eq "" )
 		{
 			$newversion = "Failed to retrieve latest version from ConfigServer";
 		}
 		else
 		{
-			if ($newversion =~ /^[\d\.]*$/)
+			if ( $newversion =~ /^[\d\.]*$/ )
 			{
-				if ($newversion > $current)
+				if ( $newversion > $current )
 				{
 					$upgrade = 1
 				}
