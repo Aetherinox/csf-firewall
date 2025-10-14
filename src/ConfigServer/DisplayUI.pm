@@ -3373,6 +3373,7 @@ EOF
 		else
 		{
 			print "<br>\n";
+			print "<div class='well well-sm'>csf: v$myv</div>";
 			print "<p>&copy; 2006-$year <a href='https://github.com/Aetherinox/csf-firewall' target='_blank'>ConfigServer Security & Firewall</a> - <code>v$myv ($codename)</code></p>\n";
 			print "</div>\n";
 		}
