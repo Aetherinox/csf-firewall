@@ -3330,7 +3330,7 @@ EOF
 
 		print "<div class='panel panel-info'>\n";
 		print "<div class='panel-heading'>Development Contribution</div>";
-		print "<div class='panel-body'>CSF will always remain free, however, it does take time to develop, as well as server costs to license the various control panels for testing. If you would like to support us to offset these costs, visit <a href='https://buymeacoffee.com/aetherinox'>BuyMeACoffee</a>.</div>\n";
+		print "<div class='panel-body'>CSF will always remain free, however, it does take time to develop, as well as server costs to license the various control panels for testing. If you would like to support us to offset these costs, visit <a href='https://buymeacoffee.com/aetherinox' target='_blank'>BuyMeACoffee</a>.<br /><br />View our latest blog update <a href='https://docs.configserver.dev/blog/' target='_blank'>here</a></div>\n";
 		print "</div>\n";
 
 	}
