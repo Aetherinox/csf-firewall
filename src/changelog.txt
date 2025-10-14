@@ -1,5 +1,43 @@
 ChangeLog:
 
+15.02 - New login page for Generic installations
+        New csf.conf settings:
+                UI_RETRY_SHOW_REMAINING
+
+        New footer design for improved consistency and navigation
+
+        Integrate csfpre.sh and csfpost.sh for native pre/post
+        script support
+
+        Added new "HEADER:" flag to config files
+
+        Added help page to the download service
+
+        Added Light/Dark mode toggle in the footer
+
+        Added optional Content Security Policy (CSP) protection to web interface
+        New csf.conf settings:
+                UI_CSP_ENABLED
+                UI_CSP_ADVANCED_ENABLED
+                UI_CSP_ADVANCED_RULE
+
+        Modified config file comments for clarity; more descriptive, 
+        organized, and include practical examples
+
+        Modified "ports-blacklist"; now POSIX compliant
+
+        Overhaul base `install.sh` script
+
+        Update CSF SSL certificate and key
+
+        Added CSS optimization to pre-load required stylesheets
+
+        Fixed missing VestaCP header on the "/list/csf" admin page
+
+        Fixed CyberPanel integration
+
+        Fixed regex pattern issues when dealing with strict conditions
+
 15.01 - First version released by Aetherinox
         https://github.com/Aetherinox/csf-firewall
 
@@ -10,9 +48,6 @@ ChangeLog:
         Bring new update server online at https://download.configserver.dev
 
         Changed csf update server code to point to new csf domain
-
-        Fixed bug with "All" tab not properly displaying correct sections in
-        web interface
 
         Fixed bug with invalid sessions still being able to access backend
         web interface assets
