@@ -2231,6 +2231,39 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#alpha-release-channel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Alpha Release Channel
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Alpha Release Channel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enable-alpha-releases" class="md-nav__link">
+    <span class="md-ellipsis">
+      Enable Alpha Releases
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#download-service-updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      Download Service Updates
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#cyberpanel" class="md-nav__link">
     <span class="md-ellipsis">
       Cyberpanel
@@ -2483,7 +2516,7 @@
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7h1.5Z"></path></svg>
                           <span class="md-ellipsis">
                             
-                              10 min read
+                              11 min read
                             
                           </span>
                         </div>
@@ -2556,13 +2589,45 @@
 <h3 id="new-login-page">New Login Page<a class="headerlink" href="#new-login-page" title="Permanent link">¶</a></h3>
 <p>This update re-introduces the login page that original users of the repository came to enjoy, with the added bonus that there is now a <strong>Theme Selector</strong> in the top-right.</p>
 <p>The theme selector changes the login page theme for the moment; however, it will tie into the main web interface in an upcoming version when the <strong>Dark Theme</strong> is re-added.</p>
-<p>Only <strong>Generic</strong> installation users will see the login screen, as that has always been the case. Control panels such as <abbr title="A Linux-based control panel used to manage your web hosting.">cPanel</abbr>, VestaCP, Interworx, etc., never showed a login page because authentication was tied into the control panel itself.</p>
+<p>Only <strong>Generic</strong> installation users will see the login screen, as that has always been the case. Control panels such as <abbr title="A Linux-based control panel used to manage your web hosting.">cPanel</abbr>, VestaCP, Interworx, etc., never show a login page because authentication being tied into the control panel itself.</p>
 <p>I wanted to keep the login page simple, and not turn it into a commercialized stock layout. It's a simple, revised login page that keeps the original white appearance but adds a dark theme and a simple background.</p>
-<p>Users should note that when the dark theme returns to <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>, the white theme will remain. The goal is to preserve the original <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> look and avoid confusing the end-user. We're simply adding a dark theme for the web interface as an alternative option for users who would like it. The white theme will remain untouched aside from some style optimizations.</p>
+<p>Users should note that when the dark theme returns to <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>, the white theme will remain. The goal is to preserve the original <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> look and avoid confusing the end-user. We're simply adding a dark theme to the web interface as an alternative option for users who would like it. The white theme will remain untouched aside from some style optimizations.</p>
 <figure>
     <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../assets/images/showcase/1.gif" data-desc-position="bottom"><img alt="CSF › Login" src="../../../assets/images/showcase/1.gif" width="700"></a>
     <figcaption><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> › Login</figcaption>
 </figure>
+<p><br></p>
+<hr>
+<p><br></p>
+<h3 id="alpha-release-channel">Alpha Release Channel<a class="headerlink" href="#alpha-release-channel" title="Permanent link">¶</a></h3>
+<p>The <strong>Alpha Release Channel</strong> provides access to early builds of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> that include experimental features, performance improvements, or upcoming functionality that has not yet been finalized for stable release.</p>
+<p>Alpha releases are highly experimental and not intended for production servers.
+These builds may contain incomplete features, untested changes, or critical bugs that could lead to system instability or security issues.</p>
+<p>The primary purpose of the alpha channel is to allow users and developers to test new functionality and provide feedback before the features are merged into the stable release channel.</p>
+<p>Only use the alpha channel in a controlled testing or development environment.</p>
+<p>If you wish to test an alpha release, it is strongly recommended that you do so on a virtual machine (such as Hyper-V, VMWare, or VirtualBox) or on a secondary barebones server that has no critical role in your primary infrastructure or homelab. This ensures that any potential bugs or regressions in the alpha build do not disrupt your production environment.</p>
+<p><br></p>
+<h4 id="enable-alpha-releases">Enable Alpha Releases<a class="headerlink" href="#enable-alpha-releases" title="Permanent link">¶</a></h4>
+<p>To enable the Alpha channel, edit your <code>/etc/csf/csf.conf</code> file and add the following line:</p>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="na">RELEASE_ALPHA</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"1"</span>
+</span></code></pre></div>
+<details class="danger">
+<summary>⚠️ <strong>DANGER</strong> ⚠️ Alpha Releases</summary>
+<p>This setting is not included by default to prevent accidental use on production systems.</p>
+</details>
+<p><br></p>
+<h4 id="download-service-updates">Download Service Updates<a class="headerlink" href="#download-service-updates" title="Permanent link">¶</a></h4>
+<p>Our <a href="">download.configserver.dev</a> update service has been enhanced to now include alpha releases. You can view the latest version of an alpha release by opening your browser and going to:</p>
+<ul>
+<li><a href="https://download.configserver.dev/csf/version.txt?channel=alpha"><abbr title="Hypertext Transfer Protocol Secure, the encrypted version of HTTP.">https</abbr>://download.configserver.dev/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>/version.txt?channel=alpha</a></li>
+</ul>
+<p><br></p>
+<p>When you enable the <code>csf.conf</code> setting <code>RELEASE_ALPHA</code>, <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> will download new alpha releases from the url:</p>
+<ul>
+<li><a href="https://download.configserver.dev/csf.tgz?channel=alpha"><abbr title="Hypertext Transfer Protocol Secure, the encrypted version of HTTP.">https</abbr>://download.configserver.dev/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>.tgz?channel=alpha</a></li>
+</ul>
+<p><br></p>
+<hr>
 <p><br></p>
 <h3 id="cyberpanel">Cyberpanel<a class="headerlink" href="#cyberpanel" title="Permanent link">¶</a></h3>
 <p>Recently, it seems that the Cyberpanel team has removed <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> as their default firewall solution. This change is understandable, especially given the transition to new developers and the natural concerns around trust and support.</p>
@@ -2724,29 +2789,29 @@
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="example-output-output-example-1" name="__tabbed_1" type="radio"><input id="example-output-output-example-2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="example-output-output-example-1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l64 0 0 320-64 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l192 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0 0-352c0-17.7-14.3-32-32-32L32 32z"></path></svg></span> Output Example 1</label><label for="example-output-output-example-2"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M48 64c0-17.7 14.3-32 32-32l171 0c60.2 0 109 48.8 109 109 0 43.8-26.2 83.3-66.4 100.4l-139.1 59C119 315.4 96 350.2 96 388.7l0 27.3 224 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L64 480c-17.7 0-32-14.3-32-32l0-59.3c0-64.2 38.4-122.2 97.5-147.3l139.1-59c16.6-7.1 27.4-23.4 27.4-41.4 0-24.9-20.2-45-45-45L80 96C62.3 96 48 81.7 48 64z"></path></svg></span> Output Example 2</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-console highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="gp">$ </span>sudo<span class="w"> </span>sh<span class="w"> </span>src/install.sh<span class="w"> </span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="gp"># </span><span class="c1">#</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="gp">#  </span>ConfigServer<span class="w"> </span>Security<span class="w"> </span><span class="p">&amp;</span><span class="w"> </span>Firewall<span class="w"> </span>›<span class="w"> </span>Installer
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="gp">#  </span>version:<span class="w"> </span><span class="m">15</span>.02
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="gp"># </span><span class="c1">#</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="go">OK                  Starting installer CyberPanel › install.cyberpanel.sh </span>
+<div class="language-console highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="gp">$ </span>sudo<span class="w"> </span>sh<span class="w"> </span>src/install.sh<span class="w"> </span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="gp"># </span><span class="c1">#</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="gp">#  </span>ConfigServer<span class="w"> </span>Security<span class="w"> </span><span class="p">&amp;</span><span class="w"> </span>Firewall<span class="w"> </span>›<span class="w"> </span>Installer
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="gp">#  </span>version:<span class="w"> </span><span class="m">15</span>.02
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="gp"># </span><span class="c1">#</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="go">OK                  Starting installer CyberPanel › install.cyberpanel.sh </span>
 </span></code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="language-console highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="gp">$ </span>sudo<span class="w"> </span>sh<span class="w"> </span>src/install.sh<span class="w"> </span>--help
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="go">ConfigServer Security &amp; Firewall</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="go">Robust linux iptables/nftables firewall</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="go">version: 15.02</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="go">install.sh [ --detect | --dryrun |  --version | --help ]</span>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="go">Flags:                                         </span>
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="go">      -D,  --detect             returns installer script that will run; does not install csf &lt;default&gt; false</span>
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="go">      -d,  --dryrun             simulates installation, does not install csf &lt;default&gt; false</span>
-</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="go">      -v,  --version            current version of this utilty &lt;current&gt; 15.02</span>
-</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="go">      -h,  --help               show this help menu</span>
+<div class="language-console highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="gp">$ </span>sudo<span class="w"> </span>sh<span class="w"> </span>src/install.sh<span class="w"> </span>--help
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="go">ConfigServer Security &amp; Firewall</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="go">Robust linux iptables/nftables firewall</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="go">version: 15.02</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="go">install.sh [ --detect | --dryrun |  --version | --help ]</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="go">Flags:                                         </span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="go">      -D,  --detect             returns installer script that will run; does not install csf &lt;default&gt; false</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="go">      -d,  --dryrun             simulates installation, does not install csf &lt;default&gt; false</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="go">      -v,  --version            current version of this utilty &lt;current&gt; 15.02</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="go">      -h,  --help               show this help menu</span>
 </span></code></pre></div>
 </div>
 </div>
@@ -2824,7 +2889,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 13, 2025 10:41:12 UTC"><span class="timeago" datetime="2025-10-13T10:41:12+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 13, 2025 10:41:12 UTC">2025-10-13</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 14, 2025 01:56:26 UTC"><span class="timeago" datetime="2025-10-14T01:56:26+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 14, 2025 01:56:26 UTC">2025-10-14</span>
   </span>
 
     
