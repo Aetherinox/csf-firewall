@@ -2946,7 +2946,7 @@ These builds may contain incomplete features, untested changes, or critical bugs
 
 
   <h2 id="__comments">Comments</h2>
-  <script src="https://giscus.app/client.js" data-repo="aetherinox/csf-firewall" data-repo-id="R_kgDOMFyd8g" data-category="General" data-category-id="DIC_kwDOMFyd8s4Cu8-z" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="1" data-input-position="bottom" data-theme="dark" data-lang="en" crossorigin="anonymous" async>
+  <script src="https://giscus.app/client.js" data-repo="aetherinox/csf-firewall" data-repo-id="R_kgDOMFyd8g" data-category="Blogs" data-category-id="DIC_kwDOMFyd8s4CwoZv" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="1" data-input-position="bottom" data-theme="preferred_color_scheme" data-lang="en" crossorigin="anonymous" async>
   </script>
 
   <!-- Synchronize Giscus theme with palette -->
@@ -2956,7 +2956,7 @@ These builds may contain incomplete features, untested changes, or critical bugs
     // Set palette on initial load
     var palette = __md_get("__palette")
     if (palette && typeof palette.color === "object") {
-      var theme = palette.color.scheme === "slate"
+      var theme = palette.color.scheme === "slate" || palette.color.scheme === "main"
         ? "transparent_dark"
         : "light"
 
@@ -2970,7 +2970,7 @@ These builds may contain incomplete features, untested changes, or critical bugs
       ref.addEventListener("change", function() {
         var palette = __md_get("__palette")
         if (palette && typeof palette.color === "object") {
-          var theme = palette.color.scheme === "slate"
+          var theme = palette.color.scheme === "slate" || palette.color.scheme === "main"
             ? "transparent_dark"
             : "light"
 
