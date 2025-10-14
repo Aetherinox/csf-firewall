@@ -5,8 +5,8 @@
 #   @source         https://raw.githubusercontent.com/Aetherinox/blocklists/main/blocklists/isp/isp_aol.ipset
 #   @id             isp_aol_ipset
 #   @uuid           a97ea50e-08b1-3984-a6a4-2cce03dfc7dc
-#   @updated        Fri 10 Oct 2025 06:01:45 AM UTC
-#   @entries        73,728 ips
+#   @updated        Tue Oct 14 11:40:25 UTC 2025
+#   @entries        73728 ips
 #                   2 subnets
 #                   2 lines
 #   @expires        7 days

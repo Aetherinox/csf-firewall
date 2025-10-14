@@ -5,8 +5,8 @@
 #   @source         https://raw.githubusercontent.com/Aetherinox/dev-kw/main/blocklists/02_privacy_general.ipset
 #   @id             privacy_general_ipset
 #   @uuid           6a2bb2a1-edca-33d8-9dd5-75c3ec3c6ef7
-#   @updated        Fri 10 Oct 2025 06:00:52 AM UTC
-#   @entries        125,098 ips
+#   @updated        Tue Oct 14 11:40:00 UTC 2025
+#   @entries        125098 ips
 #                   72 subnets
 #                   243 lines
 #   @expires        6 hours
