@@ -4171,7 +4171,7 @@ sub manualversion
 
 	if ( $config{RELEASE_ALPHA} == 1 )
 	{
-		$url .= "channel=alpha";
+		$url .= "?channel=alpha";
 	}
 
 	print "<div><pre class='comment' style='white-space: pre-wrap;'>\n";
