@@ -3338,13 +3338,3 @@ figure img
     animation: heart 1s infinite;
     transform-origin: center;
 }
-
-/*
-    Side by Side Images
-*/
-
-.md-typeset figure img
-{
-    display: inline-flex;
-    margin: 0 auto;
-}
