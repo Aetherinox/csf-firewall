@@ -144,6 +144,7 @@ jobs:
             version_csf: ${{ steps.task_build_env.outputs.VERSION_CSF }}
             version_build: ${{ steps.task_build_env.outputs.VERSION_BUILD }}
             version_tag_prev: ${{ steps.task_build_env.outputs.VERSION_TAG_PREV }}
+            version_commit_last: ${{ steps.task_build_env.outputs.VERSION_COMMIT_LAST }}
         steps:
 
             # #
@@ -289,20 +290,41 @@ jobs:
                   🔨 Get Build Variables
               id: task_build_env
               run: |
+                  # #
                   #  current csf version
+                  # #
+                
                   version_csf=$(grep -m1 -o '.*' src/version.txt | xargs)
                   echo "VERSION_CSF=$version_csf" >> $GITHUB_OUTPUT
 
+                  # #
                   #  build nmber
+                  # #
+  
                   version_build=$(date -u '+%y%m-%d')
                   echo "VERSION_BUILD=$version_build" >> $GITHUB_OUTPUT
 
+                  # #
                   #  previous tag
+                  # #
+  
                   echo "VERSION_TAG_PREV=${{ steps.task_tag_prev.outputs.tag }}" >> $GITHUB_OUTPUT
+
+                  # #
+                  #   Last commit
+                  # #
+
+                  commit_last=$(git rev-parse HEAD)
+                  echo "VERSION_COMMIT_LAST=$commit_last" >> $GITHUB_OUTPUT
+
+                  # #
+                  #   Output
+                  # #
 
                   echo -e "CSF Version ........... $version_csf"
                   echo -e "CSF Build ............. $version_build"
                   echo -e "Previous Tag .......... ${{ steps.task_tag_prev.outputs.tag }}"
+                  echo -e "Last Commit ........... $commit_last"
 
             # #
             #   Upload › Verbose › List Tree
@@ -344,6 +366,7 @@ jobs:
             VERSION_CSF: ${{ needs.job-precheck.outputs.version_csf }}
             VERSION_BUILD: ${{ needs.job-precheck.outputs.version_build }}
             VERSION_TAG_PREV: ${{ needs.job-precheck.outputs.version_tag_prev }}
+            VERSION_COMMIT_LAST: ${{ needs.job-precheck.outputs.version_tag_prev }}
         steps:
 
             # #
@@ -373,9 +396,10 @@ jobs:
                   ⚙️ Debug › Passed Values
               run: |
                   echo "TAG VERSION (Previous) ........... ${{ env.VERSION_TAG_PREV }}"
-                  echo "CSF VERSION ...................... ${{ env.VERSION_CSF }}"
+                  echo "TAG VERSION (Next) ............... ${{ env.VERSION_CSF }}"
                   echo "RELEASE BUILD .................... ${{ env.VERSION_BUILD }}"
-
+                  echo "LAST COMMIT ...................... ${{ env.VERSION_COMMIT_LAST }}"
+                  
             # #
             #   Release › Summary Digest
             # #
@@ -840,7 +864,6 @@ jobs:
                   echo "‎"
                   echo " ${{ env.FILE_CSF_ZIP }} .................... ${{ env.SHA256SUM_CSF_ZIP }}"
                   echo " ${{ env.FILE_EXTRA_HELPERS }} ............... ${{ env.SHA256SUM_EXTRA_HELPERS }}"
-                  echo " ${{ env.FILE_EXTRA_DARK }} .................. ${{ env.SHA256SUM_EXTRA_DARK }}"
                   echo "‎"
                   echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
                   echo "‎"
@@ -859,30 +882,9 @@ jobs:
                   avatarSize: 42
 
             # #
-            #   Release › Changelog › Pre-setup
-            #
-            #   generates a changelog from the github api. requires a PREVIOUS_TAG in order to figure
-            #   out the changes made between the two versions.
-            #
-            #   outputs:
-            #       ${{ steps.changelog.outputs.changelog }}
-            # #
-
-            - name: '📝 Changelog › Pre Setup (Categorized Commits)'
-              run: |
-                  TAG_LAST=$(git describe --tags --abbrev=0)
-                  COMMIT_LAST=$(git rev-parse HEAD)
-              
-                  echo "TAG_LAST=$TAG_LAST" >> $GITHUB_ENV
-                  echo "COMMIT_LAST=$COMMIT_LAST" >> $GITHUB_ENV
-              
-                  echo "TAG_LAST: $TAG_LAST"
-                  echo "COMMIT_LAST: $COMMIT_LAST"
-
-            # #
             #   Release › Changelog › Build (Categorized)
             #
-            #   generates a changelog from the github api. requires a TAG_LAST in order to figure
+            #   generates a changelog from the github api. requires a VERSION_TAG_PREV in order to figure
             #   out the changes made between the two versions.
             #
             #   outputs:
@@ -897,7 +899,7 @@ jobs:
                   startsWith( env.SHOW_UNCATEGORIZED, false )
               with:
                   token: ${{ secrets.ADMINSERV_TOKEN }}
-                  #fromTag: "${{ env.TAG_LAST }}"
+                  fromTag: "${{ env.VERSION_TAG_PREV }}"
                   #toTag: "${{ github.ref }}"
                   configuration: ".github/changelog-configuration.json"
                   ignorePreReleases: false
@@ -914,7 +916,7 @@ jobs:
             # #
             #   Release › Changelog › Build (Uncategorized)
             #   
-            #   generates a changelog from the github api. requires a TAG_LAST in order to figure
+            #   generates a changelog from the github api. requires a VERSION_TAG_PREV in order to figure
             #   out the changes made between the two versions.
             #   
             #   outputs:
@@ -933,7 +935,7 @@ jobs:
                   startsWith( env.SHOW_UNCATEGORIZED, true )
               with:
                   token: ${{ secrets.ADMINSERV_TOKEN }}
-                  #fromTag: "${{ env.TAG_LAST }}"
+                  fromTag: "${{ env.VERSION_TAG_PREV }}"
                   #toTag: "${{ github.ref }}"
                   configuration: ".github/changelog-configuration.json"
                   ignorePreReleases: false
@@ -1242,9 +1244,10 @@ jobs:
                   echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
                   echo "‎"
                   echo " Package Version ............................. ${{ env.VERSION_CSF }}"
-                  echo " Tag: Previous ............................... ${{ env.TAG_LAST }}"
-                  echo " Tag: Now .................................... ${{ github.ref }}"
-                  echo " Last Commit ................................. ${{ env.COMMIT_LAST }}"
+                  echo " Tag: Previous ............................... ${{ env.VERSION_TAG_PREV }}"
+                  echo " Tag: Now .................................... ${{ env.VERSION_CSF }}"
+                  echo " GH: Ref ..................................... ${{ github.ref }}"
+                  echo " Last Commit ................................. ${{ env.VERSION_COMMIT_LAST }}"
                   echo " ST Output ID ................................ ${{ steps.task_release_bundle_st.outputs.id }}"
                   echo " RC Output ID ................................ ${{ steps.task_release_bundle_rc.outputs.id }}"
                   echo "‎"
@@ -1265,9 +1268,10 @@ jobs:
                   echo "| ----------------------------------- | --------------------------------------- |" >> $GITHUB_STEP_SUMMARY
                   echo "| 📦 **Project**                      | ${{ env.PROJECT_NAME }}                 |" >> $GITHUB_STEP_SUMMARY
                   echo "| 🕛 **Build Time**                   | ${{ env.NOW }}                          | " >> $GITHUB_STEP_SUMMARY
-                  echo "| 🏷️ Tag (Previous)                   | ${{ env.TAG_LAST }}                     |" >> $GITHUB_STEP_SUMMARY
+                  echo "| 🏷️ Tag (Previous)                   | ${{ env.VERSION_TAG_PREV }}             |" >> $GITHUB_STEP_SUMMARY
+                  echo "| 🏷️ Tag (Next)                       | ${{ env.VERSION_CSF }}                  |" >> $GITHUB_STEP_SUMMARY
                   echo "| ↔️ Branch                           | ${{ github.ref }}                       |" >> $GITHUB_STEP_SUMMARY
-                  echo "| 🖍️ Last Commit                      | ${{ env.COMMIT_LAST }}                  |" >> $GITHUB_STEP_SUMMARY
+                  echo "| 🖍️ Last Commit                      | ${{ env.VERSION_COMMIT_LAST }}          |" >> $GITHUB_STEP_SUMMARY
                   echo "| 🆔 ST Output ID                     | ${{ steps.task_release_bundle_st.outputs.id }} |" >> $GITHUB_STEP_SUMMARY
                   echo "| 🆔 RC Output ID                     | ${{ steps.task_release_bundle_rc.outputs.id }} |" >> $GITHUB_STEP_SUMMARY
                   echo "\n\n\n"
