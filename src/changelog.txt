@@ -1,5 +1,10 @@
 ChangeLog:
 
+15.03 - Fixed "module config" and "help" buttons missing in 
+        header of Webmin control panel.
+
+        Updated csfajaxtail.js module
+
 15.02 - New login page for Generic installations
         New csf.conf settings:
                 UI_RETRY_SHOW_REMAINING
