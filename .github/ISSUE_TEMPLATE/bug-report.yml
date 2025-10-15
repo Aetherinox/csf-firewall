@@ -151,6 +151,8 @@ body:
             label: "Issue Description"
             description: |
                 Please provide a description of your issue here.
+            placeholder: |
+                Explain your issue ...
         validations:
             required: true
 
@@ -167,11 +169,11 @@ body:
             label: "Steps To Reproduce"
             description: |
                 Describe the steps that need taken by the developer to get the error / issue you're experiencing.
-            value: |
-                -
-                -
-                -
-                -
+            placeholder: |
+                - 1. Go to '...'
+                - 2. Click on '....'
+                - 3. Scroll down to '....'
+                - 4. See error
         validations:
             required: true
 
@@ -188,6 +190,10 @@ body:
             label: "Logs › Lfd"
             description: |
                 Copy the logs from `/var/log/lfd.log` in the box below.
+            placeholder: |
+                Oct  30 00:00:03 configserv lfd[1565089]: Main Process: TERM
+                Oct  30 00:00:03 configserv lfd[1565089]: daemon stopped
+                Oct  30 00:00:04 configserv lfd[1792111]: daemon started on configserver.dev - csf v15.03 (generic)
         validations:
             required: false
 
@@ -205,6 +211,14 @@ body:
             description: |
                 Copy the relevant settings from `/etc/csf/csf.conf` in the box below. <br />
                 You can also drag + drop your `csf.conf` to attach it.
+            placeholder: |
+                # # 
+                #   SECTION:Integrated User Interface
+                # # 
+
+                UI = "0"
+
+                ...
         validations:
             required: false
 
@@ -221,5 +235,7 @@ body:
             label: "Screenshots"
             description: |
                 Provide any relevant screenshots of your issue.
+            placeholder: |
+                Drop screenshots here ...
         validations:
             required: false
