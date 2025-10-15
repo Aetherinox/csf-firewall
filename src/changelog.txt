@@ -1,9 +1,15 @@
 ChangeLog:
 
-15.03 - Fixed "module config" and "help" buttons missing in 
-        header of Webmin control panel.
+15.03 - Fixed missing header buttons Module Config and Help
+        in the Webmin header
 
-        Updated csfajaxtail.js module
+        Rewrote the JavaScript library csfajaxtail.js for 
+        improved optimization and maintainability
+
+        Reduced the minimum font size allowed for FontMinus 
+        and FontPlus from 12px to 10px
+
+        Release blogs now support comments integrated from Github
 
 15.02 - New login page for Generic installations
         New csf.conf settings:

@@ -19,7 +19,20 @@ tags:
 
 <br />
 
-### <!-- md:version stable- --> 15.02 <small>Coming Soon</small> { id="15.02" }
+### <!-- md:version stable- --> 15.03 <small>Oct 15 2025</small> { id="15.03" }
+
+- `feat`: Reduced the minimum font size allowed for FontMinus / FontPlus from 12px to `10px`
+- `refactor`: Rewrote the JavaScript library `csfajaxtail.js` for improved optimization and maintainability
+- `fix`: Restored missing **Module Config** and **Help** buttons in the Webmin header
+- `docs`: Release blogs now support comments integrated from Github
+
+<br />
+
+---
+
+<br />
+
+### <!-- md:version stable- --> 15.02 <small>Oct 14 2025</small> { id="15.02" }
 
 - `feat`: New login page for **Generic** installations
     - Light & Dark theme
