@@ -1,5 +1,14 @@
 ChangeLog:
 
+15.04 - Fixed log output textbox height for Webmin control panel
+
+        Added new csf.conf setting UI_LOGS_REFRESH_TIME
+            Determines how often logs are refreshed
+
+        Added new csf.conf setting UI_LOGS_START_PAUSED
+            Determines if automatic log refresh starts in the
+            running or paused state.
+
 15.03 - Fixed missing header buttons Module Config and Help
         in the Webmin header
 
@@ -12,8 +21,8 @@ ChangeLog:
         Release blogs now support comments integrated from Github
 
 15.02 - New login page for Generic installations
-        New csf.conf settings:
-                UI_RETRY_SHOW_REMAINING
+        New csf.conf setting:
+            UI_RETRY_SHOW_REMAINING
 
         New footer design for improved consistency and navigation
 
@@ -28,9 +37,9 @@ ChangeLog:
 
         Added optional Content Security Policy (CSP) protection to web interface
         New csf.conf settings:
-                UI_CSP_ENABLED
-                UI_CSP_ADVANCED_ENABLED
-                UI_CSP_ADVANCED_RULE
+            UI_CSP_ENABLED
+            UI_CSP_ADVANCED_ENABLED
+            UI_CSP_ADVANCED_RULE
 
         Modified config file comments for clarity; more descriptive, 
         organized, and include practical examples
