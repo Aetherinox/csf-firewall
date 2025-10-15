@@ -775,6 +775,28 @@ Click the text link and you'll be taken to the home screen of CSF.
 
 If the interface matches the screenshot above, the CSF integration with Webmin is complete.  
 
+<br />
+
+While CSF is in testing mode, several options on the Webmin home page will be hidden for users who have enabled the [Authentic theme](https://github.com/webmin/authentic-theme).  To unlock the full interface, edit `/etc/csf/csf.conf` and set `TESTING = "0"`.  
+
+Until testing mode is disabled, the **Configuration** section and its related buttons will not appear.
+
+- Check Server Security
+- Watch System Logs
+- Search System Logs
+- View Listening Ports
+- Check for IPs in RBLs
+- View Iptables Log
+
+<br />
+
+<figure markdown="span">
+    ![Webmin › CSF › Testing Mode](../assets/images/install/webmin/7.png){ width="700" }
+    <figcaption>Webmin › CSF › Testing Mode</figcaption>
+</figure>
+
+<br />
+
 You can now proceed to the [Next Steps](#next-steps) or skip the rest of this section and begin our [Configuration](../usage/configuration.md) chapter to get things set up.
 
 <br />

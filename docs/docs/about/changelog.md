@@ -19,6 +19,21 @@ tags:
 
 <br />
 
+### <!-- md:version stable- --> 15.04 <small>Oct 15 2025</small> { id="15.04" }
+
+- `feat`: Added new setting `UI_LOGS_REFRESH_TIME`
+    - How frequently CSF automatically refreshes the displayed logs
+- `feat`: Added new setting `UI_LOGS_START_PAUSED`
+    - Define if automatic log refreshing on page load starts off running ++0++ or paused ++1++
+- `fix`: Corrected an issue in the Webmin control panel where the log textbox height was set incorrectly on page load
+- `docs`: Update Webmin installation
+
+<br />
+
+---
+
+<br />
+
 ### <!-- md:version stable- --> 15.03 <small>Oct 15 2025</small> { id="15.03" }
 
 - `feat`: Reduced the minimum font size allowed for FontMinus / FontPlus from 12px to `10px`
