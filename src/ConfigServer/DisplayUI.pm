@@ -594,10 +594,11 @@ sub main
 		{
 			$FORM{lines} = 30
 		}
+
 		my $script_safe = $script;
 		my $csfFromBot = 120;
 		my $csfFromRight = 10;
-		if ($config{DIRECTADMIN})
+		if ( $config{DIRECTADMIN} )
 		{
 			$script = $script_da;
 			$csfFromBot = 400;
@@ -657,18 +658,17 @@ sub main
 			}
 		}
 		$options .= "</select>\n";
-
+		
 		my $timer_duration = $config{UI_LOGS_REFRESH_TIME} || 7;
 
 		print "<script>\n";
-		
+
 		# Inject Perl values first
 		print "var csfDuration = $timer_duration;\n";
 		print "var csfFromBot = $csfFromBot;\n";
 		print "var csfFromRight = $csfFromRight;\n";
 		print "var csfScript = '$script?action=logtailcmd';\n";
 
-		# Include the JS file
 		open (my $AJAX, "<", "/usr/local/csf/lib/csfajaxtail.js");
 		flock ($AJAX, LOCK_SH);
 		my @jsdata = <$AJAX>;
@@ -683,7 +683,7 @@ sub main
 </div>
 
 <div>
-	Next Refresh <span id="csfTimer">0</span> 
+	Next Refresh <span id="csfTimer">0</span>
 	<button class='btn btn-default' id="csfPauseId" onclick="csfTimerPause()" style="width:80px;">Pause</button> <img src="$images/loader.gif" id="csfRefreshing" style="display:none" />
 </div>
 
@@ -697,7 +697,7 @@ sub main
 <script>
 	csfFromBot = $csfFromBot;
 	csfFromRight = $csfFromRight;
-	csfScript = '$script?action=loggrepcmd';
+	csfScript = '$script?action=logtailcmd';
 	csfTimerInitialize();
 
 	var myFont = 14;
@@ -847,9 +847,11 @@ EOF
 		{
 			$FORM{lines} = 30
 		}
+
 		my $script_safe = $script;
 		my $csfFromBot = 120;
 		my $csfFromRight = 10;
+
 		if ($config{DIRECTADMIN})
 		{
 			$script = $script_da;
@@ -4158,9 +4160,9 @@ sub csgetversion
 		}
 		else
 		{
-			if ( $newversion =~ /^[\d\.]*$/ )
+			if ($newversion =~ /^[\d\.]*$/)
 			{
-				if ( $newversion > $current )
+				if ($newversion > $current)
 				{
 					$upgrade = 1
 				}
