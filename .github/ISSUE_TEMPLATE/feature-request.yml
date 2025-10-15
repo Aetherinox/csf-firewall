@@ -1,0 +1,100 @@
+name: "\U0001F4A1 Feature Request"
+description: Have a suggestion?  Submit your request here.
+title: "\U0001F4A1 Feature: <title>"
+labels:
+    - Type › Feature
+body:
+    -
+        type: markdown
+        attributes:
+            value: |
+                1.  Please speak `English`.
+                2.  Take a moment to check that your feature hasn't already been suggested.
+                3.  Be detailed, but to the point.
+
+                  <br />
+
+    -
+        type: dropdown
+        id: cp-name
+        attributes:
+            label: "Control Panel › Name"
+            description: |
+                Select the control panel associated with this feature request. <br />
+                If not, select **All**.
+            options:
+                - "All"
+                - "Generic"
+                - "cPanel"
+                - "CentOS Web Panel (CWP)"
+                - "Cyberpanel"
+                - "DirectAdmin"
+                - "InterWorx"
+                - "VestaCP"
+                - "Webmin"
+        validations:
+            required: true
+
+    -
+        type: markdown
+        attributes:
+            value: |
+                  <br />
+
+    -
+        type: dropdown
+        id: feature-category
+        attributes:
+            label: "Category"
+            description: |
+                What type of feature is this? <br />
+                If nothing matches, select **Other**.
+            options:
+                - "💡 Other"
+                - "📄 Blocklists / IPSETs"
+                - "⚙️ Control Panel / Integration"
+                - "🗔 Cosmetic / Web Interface"
+                - "📗 Documentation"
+                - "📀 Download.configserver"
+                - "🧱 Firewall / Security"
+                - "📦 Installation"
+        validations:
+            required: true
+
+    -
+        type: markdown
+        attributes:
+            value: |
+                  <br />
+
+    -
+        type: textarea
+        id: description
+        attributes:
+            label: "Feature Description"
+            description: |
+                What feature would you like to request?
+            placeholder: |
+                I would like to request ...
+        validations:
+            required: true
+
+    -
+        type: markdown
+        attributes:
+            value: |
+                  <br />
+
+    -
+        type: textarea
+        id: screenshots
+        attributes:
+            label: "Screenshots"
+            description: |
+                If possible, provide screenshots. <br />
+                Want a feature placed in a specific location? Mark it in a screenshot. <br />
+                Want something modified? Try creating a mockup. <br />
+                The more details about how it should look, the better. <br />
+                Not required, but appreciated.
+        validations:
+            required: false

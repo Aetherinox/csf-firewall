@@ -1,0 +1,225 @@
+name: "\U0001F41B Bug Report"
+description: Found something you weren't expecting? Report it here!
+title: "\U0001F41B Bug: <title>"
+labels:
+    - Type › Bug
+body:
+    -
+        type: markdown
+        attributes:
+            value: |
+                1.  Please speak `English`.
+                2.  Provide pertinent details and logs, incomplete details will be handled as an invalid report.
+                3.  Before creating this report, ensure CSF is updated to the latest version.
+                4.  Check your `csf.conf` for typos or errors.
+                5.  To get detailed logs of the issue, open:
+                        `/var/log/lfd.log`
+
+                  <br />
+
+    -
+        type: input
+        id: csf-version
+        attributes:
+            label: "CSF › Version"
+            description: |
+                Current version of CSF installed.<br />
+                Version shown in footer of web interface.<br />
+                Or un `sudo csf -v` in Terminal.<br />
+                Or open `/etc/csf/version.txt`.
+            placeholder: "Ex: 15.03"
+        validations:
+            required: true
+
+    -
+        type: markdown
+        attributes:
+            value: |
+                  <br />
+
+    -
+        type: dropdown
+        id: csf-release
+        attributes:
+            label: "CSF › Release"
+            description: |
+                Most users will select **Stable**. <br />
+                Alpha releases are available by adding `RELEASE_ALPHA = "1"` to your `/etc/csf/csf.conf`
+            options:
+                - "Stable"
+                - "Alpha"
+        validations:
+            required: true
+
+    -
+        type: markdown
+        attributes:
+            value: |
+                  <br />
+
+    -
+        type: dropdown
+        id: system-os
+        attributes:
+            label: "System › OS"
+            description: |
+                Which OS are you running
+            options:
+                - "Linux"
+                - "MacOSX"
+        validations:
+            required: true
+
+    -
+        type: markdown
+        attributes:
+            value: |
+                  <br />
+
+    -
+        type: input
+        id: system-distro
+        attributes:
+            label: "System › Distro & Version"
+            description: |
+                Specify your OS distribution and version.
+                e.g., `Ubuntu 22.04`, `CentOS 7.9`.
+            placeholder: "Ex: Ubuntu 26.04"
+        validations:
+            required: true
+
+    -
+        type: markdown
+        attributes:
+            value: |
+                  <br />
+
+    -
+        type: dropdown
+        id: cp-name
+        attributes:
+            label: "Control Panel › Name"
+            description: |
+                Select the control panel you are using with CSF. <br />
+                If not, select **Generic**.
+            options:
+                - "Generic (None)"
+                - "cPanel"
+                - "CentOS Web Panel (CWP)"
+                - "Cyberpanel"
+                - "DirectAdmin"
+                - "InterWorx"
+                - "VestaCP"
+                - "Webmin"
+        validations:
+            required: true
+
+    -
+        type: markdown
+        attributes:
+            value: |
+                  <br />
+
+    -
+        type: dropdown
+        id: priority-type
+        attributes:
+            label: "Priority"
+            description: |
+                How critical is the issue? Do not abuse this. <br />
+                Cosmetic bugs are **Low**. <br />
+                Bugs in minor features are **Normal**. <br />
+                Issues that break CSF integration or the firewall are **High** to **Urgent**.
+            options:
+                - "Low"
+                - "Normal"
+                - "High"
+                - "Urgent"
+        validations:
+            required: true
+
+    -
+        type: markdown
+        attributes:
+            value: |
+                  <br />
+
+    -
+        type: textarea
+        id: description
+        attributes:
+            label: "Issue Description"
+            description: |
+                Please provide a description of your issue here.
+        validations:
+            required: true
+
+    -
+        type: markdown
+        attributes:
+            value: |
+                  <br />
+
+    -
+        type: textarea
+        id: steps-reproduce
+        attributes:
+            label: "Steps To Reproduce"
+            description: |
+                Describe the steps that need taken by the developer to get the error / issue you're experiencing.
+            value: |
+                -
+                -
+                -
+                -
+        validations:
+            required: true
+
+    -
+        type: markdown
+        attributes:
+            value: |
+                  <br />
+
+    -
+        type: textarea
+        id: logs-lfd
+        attributes:
+            label: "Logs › Lfd"
+            description: |
+                Copy the logs from `/var/log/lfd.log` in the box below.
+        validations:
+            required: false
+
+    -
+        type: markdown
+        attributes:
+            value: |
+                  <br />
+
+    -
+        type: textarea
+        id: config-csf
+        attributes:
+            label: "Config › csf.conf"
+            description: |
+                Copy the relevant settings from `/etc/csf/csf.conf` in the box below. <br />
+                You can also drag + drop your `csf.conf` to attach it.
+        validations:
+            required: false
+
+    -
+        type: markdown
+        attributes:
+            value: |
+                  <br />
+
+    -
+        type: textarea
+        id: screenshots
+        attributes:
+            label: "Screenshots"
+            description: |
+                Provide any relevant screenshots of your issue.
+        validations:
+            required: false
