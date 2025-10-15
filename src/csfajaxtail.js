@@ -96,8 +96,17 @@ function csfHandleResp( )
     {
         if ( csfAjaxHttp.responseText )
         {
+
+            /*
+                I despise using !important, but we must do this to force
+                the minimum height and resize for Webmin.
+            */
+
             const csfObj = document.getElementById( 'csfAjax' );
             csfObj.innerHTML = csfAjaxHttp.responseText;
+            csfObj.style.setProperty('min-height', '500px');
+            csfObj.style.setProperty('resize', 'vertical', 'important');
+            csfObj.style.setProperty('overflow', 'auto', 'important');
 
             waitForElement( 'csfAjax', function( )
             {
