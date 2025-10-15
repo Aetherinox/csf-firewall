@@ -9,7 +9,7 @@
                         Copyright (C) 2006-2025 Jonathan Michaelson
                         Copyright (C) 2006-2025 Way to the Web Ltd.
     @license            GPLv3
-    @updated            09.26.2025
+    @updated            10.15.2025
     
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -40,11 +40,22 @@ var csfFromBot = 120;
 var csfFromRight = 10;
 let csfCounter;
 let csfCount = 1;
-let csfPause = 0;
+var csfStartPaused = (typeof csfStartPaused !== 'undefined') ? csfStartPaused : 0;
+let csfPause = csfStartPaused;
 let csfTimerSet = 0;
 let csfHeight = 0;
 let csfWidth = 0;
 const csfAjaxHttp = csfCreateReqObject( );
+
+/*
+    Initial state of pause button
+*/
+
+const pauseBtn = document.getElementById( 'csfPauseId' );
+if ( pauseBtn )
+{
+    pauseBtn.textContent = csfPause ? 'Continue' : 'Pause';
+}
 
 /*
     Creates and returns a compatible XMLHttpRequest object
@@ -182,37 +193,43 @@ function csfTimerInitialize( )
     if ( !timerEl ) return;
 
     /*
-        When user pauses timer on "system logs" page, display status to user in interface
+        Ensure interval is only set once
     */
 
-    if ( csfPause )
+    if ( !csfCounter )
     {
-        timerEl.textContent = 'Paused';
-        return;
+        csfCounter = setInterval( function( )
+        {
+            /*
+                If paused, just update the display and skip decrement
+            */
+
+            if ( csfPause )
+            {
+                timerEl.textContent = 'Paused';
+                return;
+            }
+
+            csfCount--;
+            timerEl.textContent = csfCount;
+
+            if ( csfCount <= 0 )
+            {
+                const logObj = document.getElementById( 'csfLogNum' );
+                const linesVal = document.getElementById( 'csfLines' ).value;
+                const logNum = logObj ? `&lognum=${ logObj.value }` : '';
+
+                csfSendReq( `${ csfScript }&lines=${ linesVal }${ logNum }` );
+                csfCount = csfDuration;
+            }
+        }, 1000 );
     }
 
     /*
-        Decrement timer / update display
+        Initialize display
     */
 
-    csfCount--;
-    timerEl.textContent = csfCount;
-
-    /*
-        When timer hits zero, perform request and then reset for next cycle
-    */
-
-    if ( csfCount <= 0 )
-    {
-        clearInterval( csfCounter );
-
-        const logObj = document.getElementById( 'csfLogNum' );
-        const linesVal = document.getElementById( 'csfLines' ).value;
-        const logNum = logObj ? `&lognum=${ logObj.value }` : '';
-
-        csfSendReq( `${ csfScript }&lines=${ linesVal }${ logNum }` );
-        csfCount = csfDuration;
-    }
+    timerEl.textContent = csfPause ? 'Paused' : csfCount;
 }
 
 /*
