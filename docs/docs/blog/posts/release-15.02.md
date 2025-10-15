@@ -1,13 +1,20 @@
 ---
-date: 2025-10-12
+date: 2025-10-13
 authors:
     - aetherinox
 categories:
     - release
     - changelog
     - v15.x
+    - web-inteface
+    - web-login
+    - web-theme-dark
+    - release-alpha
+    - vestacp
+    - cyberpanel
+    - download.configserver.dev
 description: >
-    Details regarding upcoming CSF release v15.02
+    Details regarding CSF release v15.02
 title: >
     Release v15.02
 comments: true
@@ -15,7 +22,7 @@ comments: true
 
 # Release: v15.02
 
-The next release of ConfigServer Security & Firewall (CSF) is currently in development, and I wanted to take a moment to share an update on what’s coming next — including fixes, plans, and our broader direction moving forward. This post will cover integration improvements for both **VestaCP** and **CyberPanel**, as well as a look into the ongoing goals behind CSF’s continued progression.
+The next release of ConfigServer Security & Firewall (CSF) is here, and I wanted to take a moment to share an update on what’s coming next — including fixes, plans, and our broader direction moving forward. This post will cover integration improvements for both **VestaCP** and **CyberPanel**, as well as a look into the ongoing goals behind CSF’s continued progression.
 
 Our focus remains on transparency, stability, and community involvement. Users deserve to know not only what’s changing, but why. By keeping everyone informed and maintaining compatibility across control panels, we aim to ensure that CSF continues to be the trusted, secure, and reliable firewall solution it has always been.
 
@@ -230,7 +237,7 @@ image:          https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/d
 favicon:        https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/docs/images/logos/csf.png
 favicon_size:   25
 target:         new
-accent:         E6114DE0
+accent:         353535E0
 ```
 
 <br />
@@ -271,7 +278,7 @@ image:          https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/d
 favicon:        https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/docs/images/logos/csf.png
 favicon_size:   25
 target:         new
-accent:         E6114DE0
+accent:         353535E0
 ```
 
 <br />
@@ -365,7 +372,7 @@ The following shows the output provided by the `install.sh` script:
 Every configuration file now features a header displayed at the top of the **Firewall Configuration** page. This header shows which configuration file was generated during the initial CSF installation. It addresses user confusion reported on various forums regarding how config files are processed and helps users quickly identify the active config file within the file system.
 
 <figure markdown="span">
-    ![CSF › Configuration File](../../assets/images/blog/release-v1502/1.png){ width="700" }
+    ![CSF › Configuration File](../../assets/images/blog/release-1502/1.png){ width="700" }
     <figcaption>CSF › Configuration File</figcaption>
 </figure>
 
@@ -395,7 +402,7 @@ image:          https://i.pinimg.com/564x/5c/2b/c5/5c2bc53db08acad9c2c1162e5cfd8
 favicon:        https://i.pinimg.com/564x/5c/2b/c5/5c2bc53db08acad9c2c1162e5cfd87ba.jpg
 favicon_size:   25
 target:         new
-accent:         E6114DE0
+accent:         353535E0
 ```
 
 <br />
