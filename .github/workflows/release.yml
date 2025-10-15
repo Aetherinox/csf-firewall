@@ -2,7 +2,7 @@
 #   @type               github workflow
 #   @author             Aetherinox
 #   @url                https://github.com/Aetherinox
-#   @updated            09.05.25
+#   @updated            10.14.25
 #   @usage              releases a new public copy of ConfigServer Firewall
 #
 #   @secrets            secrets.SELF_TOKEN                                          self github personal access token (fine-grained)
@@ -134,8 +134,8 @@ jobs:
     job-precheck:
         name: >-
             📦 Package › Precheck
-      # runs-on: ubuntu-latest
-        runs-on: apollo-x64
+        runs-on: ubuntu-latest
+      # runs-on: apollo-x64
         timeout-minutes: 15
         permissions:
             contents: write
@@ -332,9 +332,9 @@ jobs:
 
     job-release:
         name: >-
-          📦 Package › Release
-        # runs-on: ubuntu-latest
-        runs-on: apollo-x64
+            📦 Package › Release
+        runs-on: ubuntu-latest
+      # runs-on: apollo-x64
         timeout-minutes: 10
         needs: [ job-precheck ]
         permissions:
