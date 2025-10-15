@@ -660,11 +660,13 @@ sub main
 		$options .= "</select>\n";
 		
 		my $timer_duration = $config{UI_LOGS_REFRESH_TIME} || 7;
+		my $timer_pause = $config{UI_LOGS_START_PAUSED} || 0;
 
 		print "<script>\n";
 
 		# Inject Perl values first
 		print "var csfDuration = $timer_duration;\n";
+		print "var csfStartPaused = $timer_pause;\n";
 		print "var csfFromBot = $csfFromBot;\n";
 		print "var csfFromRight = $csfFromRight;\n";
 		print "var csfScript = '$script?action=logtailcmd';\n";
@@ -692,7 +694,7 @@ sub main
 	<button class='btn btn-default' id='fontplus-btn'><strong>A</strong><span class='glyphicon glyphicon-arrow-up icon-configserver'></span></button>
 </div>
 
-<pre class='comment' id="csfAjax" style="overflow:auto;height:500px;resize:both; white-space: pre-wrap;clear:both"> &nbsp; </pre>
+<pre class='comment' id="csfAjax" style="overflow:auto; height:500px !important; resize:both; white-space: pre-wrap;clear:both"> &nbsp; </pre>
 
 <script>
 	csfFromBot = $csfFromBot;
