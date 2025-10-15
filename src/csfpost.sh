@@ -51,7 +51,7 @@ count_loaded=0
 
 app_name="CSF Script › Post.d Initialization"                           # name of app
 app_desc="Loads custom scripts into CSF before adding iptable rules."
-app_ver="15.10.0"                                                       # current script version
+app_ver="15.03"                                                         # current script version
 app_repo="Aetherinox/csf-firewall"                                      # repository
 app_repo_branch="main"                                                  # repository branch
 

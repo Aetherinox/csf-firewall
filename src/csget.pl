@@ -42,7 +42,7 @@
 #       
 #       After the latest version is fetched from @downloadserver, a file is
 #       created in /var/lib/configserver/csf.txt with contents like:
-#           15.10
+#           15.03
 #       
 #       If you run the script using:
 #           sudo perl /etc/cron.daily/csget
