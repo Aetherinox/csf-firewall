@@ -19,6 +19,16 @@ tags:
 
 <br />
 
+### <!-- md:version stable- --> 15.06 <small>Oct 16 2025</small> { id="15.06" }
+
+- `fix`: Backwards compatibility issue related to older versions of Webmin control panel. Specifically v2.111 and Authentic theme v21.10. Webmin detected as "Generic" installation; header icon missing; generic footer loaded.
+
+<br />
+
+---
+
+<br />
+
 ### <!-- md:version stable- --> 15.05 <small>Oct 16 2025</small> { id="15.05" }
 
 - `fix`: Correct HTML escaping in the **Firewall Configuration** page to ensure settings are processed safely and correctly.
