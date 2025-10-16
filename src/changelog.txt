@@ -1,5 +1,11 @@
 ChangeLog:
 
+15.06 - Fixed backwards compatibility issue related to older
+        versions of Webmin control panel. Specifically v2.111
+        and Authentic theme v21.10. Webmin detected as "Generic"
+        installation; header icon missing; generic footer 
+        loaded.
+
 15.05 - Fixed HTML escaping in the Firewall Configuration 
         page to ensure settings are processed safely and
         correctly.
