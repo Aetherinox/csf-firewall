@@ -274,11 +274,20 @@ jobs:
             # #
 
             - name: >-
-                  🏷️ Get Previous tag
-              id: task_tag_prev
-              uses: 'WyriHaximus/github-action-get-previous-tag@v1'
-              with:
-                  fallback: 1.0.0
+                🏷️ Get Previous tag (Remote)
+            id: task_tag_prev
+            run: |
+                echo "Fetching remote tags..."
+                prev_tag=$(git ls-remote --tags origin \
+                  | awk -F/ '{print $3}' \
+                  | grep -E '^[0-9]+\.[0-9]+$' \
+                  | sort -V \
+                  | tail -n 1)
+                if [ -z "$prev_tag" ]; then
+                    prev_tag="1.0.0"
+                fi
+                echo "Found previous tag: $prev_tag"
+                echo "tag=$prev_tag" >> $GITHUB_OUTPUT
 
             # #
             #   Upload › Get Build Variables
