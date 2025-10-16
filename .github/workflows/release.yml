@@ -746,27 +746,26 @@ jobs:
                   startsWith( inputs.RC_RELEASE, false ) ||
                   startsWith( env.RC_RELEASE, false )
               run: |
-                  #  Filename › Csf › zip
-                  file_csf_zip="${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.zip"
-                  echo "FILE_CSF_ZIP=${file_csf_zip}" >> $GITHUB_ENV
-
                   #  Filename › Csf › tgz
                   file_csf_tgz="${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.tgz"
                   echo "FILE_CSF_TGZ=${file_csf_tgz}" >> $GITHUB_ENV
+
+                  #  Filename › Csf › zip
+                  file_csf_zip="${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.zip"
+                  echo "FILE_CSF_ZIP=${file_csf_zip}" >> $GITHUB_ENV
 
                   #  Filename › Extra › Helpers
                   file_extra_helpers="${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-helpers.zip"
                   echo "FILE_EXTRA_HELPERS=${file_extra_helpers}" >> $GITHUB_ENV
 
 
+                  #  SHA1SUM › Csf › tgz
+                  sha1sum_csf_tgz="$(shasum --algorithm 1 ${file_csf_tgz} | awk '{ print $1 }')"
+                  echo "SHA1SUM_CSF_TGZ=${sha1sum_csf_tgz}" >> $GITHUB_ENV
 
                   #  SHA1SUM › Csf › zip
                   sha1sum_csf_zip="$(shasum --algorithm 1 ${file_csf_zip} | awk '{ print $1 }')"
                   echo "SHA1SUM_CSF_ZIP=${sha1sum_csf_zip}" >> $GITHUB_ENV
-
-                  #  SHA1SUM › Csf › tgz
-                  sha1sum_csf_tgz="$(shasum --algorithm 1 ${file_csf_tgz} | awk '{ print $1 }')"
-                  echo "SHA1SUM_CSF_TGZ=${sha1sum_csf_tgz}" >> $GITHUB_ENV
   
                   #  SHA1SUM › Extra › Helpers
                   sha1sum_extra_helpers="$(shasum --algorithm 1 ${file_extra_helpers} | awk '{ print $1 }')"
@@ -774,13 +773,13 @@ jobs:
 
 
 
-                  #  SHA256SUM › Csf › zip
-                  sha256sum_csf_zip="$(shasum --algorithm 256 "$file_csf_zip" | awk '{ print $1 }')"
-                  echo "SHA256SUM_CSF_ZIP=$sha256sum_csf_zip" >> $GITHUB_ENV
-
                   #  SHA256SUM › Csf › tgz
                   sha256sum_csf_tgz="$(shasum --algorithm 256 "$file_csf_tgz" | awk '{ print $1 }')"
                   echo "SHA256SUM_CSF_TGZ=$sha256sum_csf_tgz" >> $GITHUB_ENV
+
+                  #  SHA256SUM › Csf › zip
+                  sha256sum_csf_zip="$(shasum --algorithm 256 "$file_csf_zip" | awk '{ print $1 }')"
+                  echo "SHA256SUM_CSF_ZIP=$sha256sum_csf_zip" >> $GITHUB_ENV
 
                   #  SHA256SUM › Extra › Helpers 
                   sha256sum_extra_helpers="$(shasum --algorithm 256 "$file_extra_helpers" | awk '{ print $1 }')"
@@ -835,13 +834,13 @@ jobs:
 
 
 
-                  #  SHA256SUM › Csf › zip
-                  sha256sum_csf_zip="$(shasum --algorithm 256 "$file_csf_zip" | awk '{ print $1 }')"
-                  echo "SHA256SUM_CSF_ZIP=$sha256sum_csf_zip" >> $GITHUB_ENV
-
                   #  SHA256SUM › Csf › tgz
                   sha256sum_csf_tgz="$(shasum --algorithm 256 "$file_csf_tgz" | awk '{ print $1 }')"
                   echo "SHA256SUM_CSF_TGZ=$sha256sum_csf_tgz" >> $GITHUB_ENV
+
+                  #  SHA256SUM › Csf › zip
+                  sha256sum_csf_zip="$(shasum --algorithm 256 "$file_csf_zip" | awk '{ print $1 }')"
+                  echo "SHA256SUM_CSF_ZIP=$sha256sum_csf_zip" >> $GITHUB_ENV
 
                   #  SHA256SUM › Extra › Helpers 
                   sha256sum_extra_helpers="$(shasum --algorithm 256 "$file_extra_helpers" | awk '{ print $1 }')"
@@ -850,8 +849,8 @@ jobs:
 
                   
                   #  get sha1 and sha256 for .zip and .gz files
-                  find . -maxdepth 1 \( -name '*.zip' -o -name '*.gz' \) -printf '%P\n' | xargs -r sha1sum | gpg --digest-algo sha256 --clearsign > sha1sum.txt.asc
-                  find . -maxdepth 1 \( -name '*.zip' -o -name '*.gz' \) -printf '%P\n' | xargs -r sha256sum | gpg --digest-algo sha256 --clearsign > sha256sum.txt.asc
+                  find . -maxdepth 1 \( -name '*.zip' -o -name '*.tgz' \) -printf '%P\n' | xargs -r sha1sum | gpg --digest-algo sha256 --clearsign > sha1sum.txt.asc
+                  find . -maxdepth 1 \( -name '*.zip' -o -name '*.tgz' \) -printf '%P\n' | xargs -r sha256sum | gpg --digest-algo sha256 --clearsign > sha256sum.txt.asc
 
 
 
@@ -871,6 +870,7 @@ jobs:
                   echo " 🆔 CHECKSUMS"
                   echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
                   echo "‎"
+                  echo " ${{ env.FILE_CSF_TGZ }} .................... ${{ env.SHA256SUM_CSF_TGZ }}"
                   echo " ${{ env.FILE_CSF_ZIP }} .................... ${{ env.SHA256SUM_CSF_ZIP }}"
                   echo " ${{ env.FILE_EXTRA_HELPERS }} ............... ${{ env.SHA256SUM_EXTRA_HELPERS }}"
                   echo "‎"
@@ -889,6 +889,18 @@ jobs:
                   filter-author: (renovate\[bot\]|renovate-bot|dependabot\[bot\])
                   output: CONTRIBUTORS.svg
                   avatarSize: 42
+
+            # #
+            #   Release › Variables
+            # #
+
+            - name: >-
+                  ✅ Release Variables
+              run: |
+                  YEAR="$(date +'%Y')"
+                  VERSION_CLEAN="$(echo "${VERSION_CSF}" | tr -d '.')"
+                  echo "YEAR=${YEAR}" >> $GITHUB_ENV
+                  echo "VERSION_CLEAN=${VERSION_CLEAN}" >> $GITHUB_ENV
 
             # #
             #   Release › Changelog › Build (Categorized)
@@ -917,7 +929,7 @@ jobs:
                   fetchViaCommits: true
                   configurationJson: |
                     {
-                      "template": "## Release Info \n| Item | Value |\n| --- | --- |\n| <sub>🏷️ Version</sub> | <sub>v${{ env.VERSION_CSF }}</sub>|\n| <sub>📄 ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.zip</sub> | <sub>ConfigServer Firewall main app</sub><br /><sub>${{ env.SHA256SUM_CSF_ZIP }}</sub>|\n| <sub>📄 ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-helpers.zip</sub> | <sub>Helper patches. View README for instructions</sub><br /><sub>${{ env.SHA256SUM_EXTRA_HELPERS }}</sub>|\n| <sub>📄 ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-theme-dark.zip</sub> | <sub>Dark theme</sub><br /><sub>${{ env.SHA256SUM_EXTRA_DARK }}</sub>|\n| <sub>🕟 Stamp</sub>| <sub>`#{{FROM_TAG}}-#{{FROM_TAG_DATE}} 🔺 #{{TO_TAG}}-#{{TO_TAG_DATE}}`</sub>|\n| <sub>📅 Last Release</sub>| <sub>`#{{DAYS_SINCE}} days ago`</sub>|\n\n<br>\n\n---\n\n<br>\n\n### What's New\nThis release contains the following changes:\n\n<br>\n\n---\n\n<br>\n\n### Statistics\nHow the files have changed:\n<ul><li><a href='#{{RELEASE_DIFF}}'>Changed files</a>  : <b>#{{CHANGED_FILES}}</b> </li><li>Changes  : <b>#{{CHANGES}}</b> </li><li>Commits : <b>#{{COMMITS}}</b> </li><li>Additions : <b>#{{ADDITIONS}}</b></li><li>Deletions : <b>#{{DELETIONS}}</b></li><li>PRs (categorized) : <b>#{{CATEGORIZED_COUNT}}</b></li><li>PRs (uncategorized) : <b>#{{UNCATEGORIZED_COUNT}}</b></li><li>PRs (open) : <b>#{{OPEN_COUNT}}</b></li>\n<br />\n</ul>\n\n<br>\n\n---\n\n<br>\n\n### Pull Requests\nThis release is associated with the following pull requests:\n#{{CHANGELOG}}\n\n<br>\n\n---\n\n<br>\n\n"
+                      "template": "## Release Info \n| Item | Value |\n| --- | --- |\n| 🏷️ Version | v${{ env.VERSION_CSF }} |\n| 📕 Blog | [https://docs.configserver.dev/blog/${{ env.YEAR }}/release-v${{ env.VERSION_CLEAN }}/](https://docs.configserver.dev/blog/${{ env.YEAR }}/release-v${{ env.VERSION_CLEAN }}) |\n| 🕟 Stamp | `#{{FROM_TAG}}-#{{FROM_TAG_DATE}} 🔺 #{{TO_TAG}}-#{{TO_TAG_DATE}}` |\n| 📅 Last Release | `#{{DAYS_SINCE}} days ago` |\n| 📄 ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.tgz | ConfigServer Firewall app<br /><sub>${{ env.SHA256SUM_CSF_TGZ }}</sub> |\n| 📄 ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.zip | ConfigServer Firewall app<br /><sub>${{ env.SHA256SUM_CSF_ZIP }}</sub> |\n| 📄 ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-helpers.zip | Helper patches. View README for instructions<br /><sub>${{ env.SHA256SUM_EXTRA_HELPERS }}</sub> |\n\n<br>\n\n---\n\n<br>\n\n### What's New\nThis release contains the following changes:\n\n<br>\n\n---\n\n<br>\n\n### Statistics\nHow the files have changed:\n<ul><li><a href='#{{RELEASE_DIFF}}'>Changed files</a>  : <b>#{{CHANGED_FILES}}</b> </li><li>Changes  : <b>#{{CHANGES}}</b> </li><li>Commits : <b>#{{COMMITS}}</b> </li><li>Additions : <b>#{{ADDITIONS}}</b></li><li>Deletions : <b>#{{DELETIONS}}</b></li><li>PRs (categorized) : <b>#{{CATEGORIZED_COUNT}}</b></li><li>PRs (uncategorized) : <b>#{{UNCATEGORIZED_COUNT}}</b></li><li>PRs (open) : <b>#{{OPEN_COUNT}}</b></li>\n<br />\n</ul>\n\n<br>\n\n---\n\n<br>\n\n### Statistics\nHow the files have changed:\n<ul><li><a href='#{{RELEASE_DIFF}}'>Changed files</a>  : <b>#{{CHANGED_FILES}}</b> </li><li>Changes  : <b>#{{CHANGES}}</b> </li><li>Commits : <b>#{{COMMITS}}</b> </li><li>Additions : <b>#{{ADDITIONS}}</b></li><li>Deletions : <b>#{{DELETIONS}}</b></li><li>PRs (categorized) : <b>#{{CATEGORIZED_COUNT}}</b></li><li>PRs (uncategorized) : <b>#{{UNCATEGORIZED_COUNT}}</b></li><li>PRs (open) : <b>#{{OPEN_COUNT}}</b></li>\n<br />\n</ul>\n\n<br>\n\n---\n\n<br>\n\n### Pull Requests\nThis release is associated with the following pull requests:\n#{{CHANGELOG}}\n\n<br>\n\n---\n\n<br>\n\n"
                     }
               env:
                   GITHUB_TOKEN: ${{ secrets.ADMINSERV_TOKEN }}
@@ -953,7 +965,7 @@ jobs:
                   fetchViaCommits: true
                   configurationJson: |
                     {
-                      "template": "## Release Info \n| Item | Value |\n| --- | --- |\n| <sub>🏷️ Version</sub> | <sub>v${{ env.VERSION_CSF }}</sub>|\n| <sub>📄 ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.zip</sub> | <sub>ConfigServer Firewall main app</sub><br /><sub>${{ env.SHA256SUM_CSF_ZIP }}</sub>|\n| <sub>📄 ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-helpers.zip</sub> | <sub>Helper patches. View README for instructions</sub><br /><sub>${{ env.SHA256SUM_EXTRA_HELPERS }}</sub>|\n| <sub>📄 ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-theme-dark.zip</sub> | <sub>Dark theme</sub><br /><sub>${{ env.SHA256SUM_EXTRA_DARK }}</sub>|\n| <sub>🕟 Stamp</sub>| <sub>`#{{FROM_TAG}}-#{{FROM_TAG_DATE}} 🔺 #{{TO_TAG}}-#{{TO_TAG_DATE}}`</sub>|\n| <sub>📅 Last Release</sub>| <sub>`#{{DAYS_SINCE}} days ago`</sub>|\n\n<br>\n\n---\n\n<br>\n\n### What's New\nThis release contains the following changes:\n\n<br>\n\n---\n\n<br>\n\n### Statistics\nHow the files have changed:\n<ul><li><a href='#{{RELEASE_DIFF}}'>Changed files</a>  : <b>#{{CHANGED_FILES}}</b> </li><li>Changes  : <b>#{{CHANGES}}</b> </li><li>Commits : <b>#{{COMMITS}}</b> </li><li>Additions : <b>#{{ADDITIONS}}</b></li><li>Deletions : <b>#{{DELETIONS}}</b></li><li>PRs (categorized) : <b>#{{CATEGORIZED_COUNT}}</b></li><li>PRs (uncategorized) : <b>#{{UNCATEGORIZED_COUNT}}</b></li><li>PRs (open) : <b>#{{OPEN_COUNT}}</b></li>\n<br />\n</ul>\n\n<br>\n\n---\n\n<br>\n\n### Pull Requests\nThis release is associated with the following pull requests:\n#{{CHANGELOG}}\n\n<br>\n\n"
+                      "template": "## Release Info \n| Item | Value |\n| --- | --- |\n| 🏷️ Version | v${{ env.VERSION_CSF }} |\n| 📕 Blog | [https://docs.configserver.dev/blog/${{ env.YEAR }}/release-v${{ env.VERSION_CLEAN }}/](https://docs.configserver.dev/blog/${{ env.YEAR }}/release-v${{ env.VERSION_CLEAN }}) |\n| 🕟 Stamp | `#{{FROM_TAG}}-#{{FROM_TAG_DATE}} 🔺 #{{TO_TAG}}-#{{TO_TAG_DATE}}` |\n| 📅 Last Release | `#{{DAYS_SINCE}} days ago` |\n| 📄 ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.tgz | ConfigServer Firewall app<br /><sub>${{ env.SHA256SUM_CSF_TGZ }}</sub> |\n| 📄 ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.zip | ConfigServer Firewall app<br /><sub>${{ env.SHA256SUM_CSF_ZIP }}</sub> |\n| 📄 ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-helpers.zip | Helper patches. View README for instructions<br /><sub>${{ env.SHA256SUM_EXTRA_HELPERS }}</sub> |\n\n<br>\n\n---\n\n<br>\n\n### What's New\nThis release contains the following changes:\n\n<br>\n\n---\n\n<br>\n\n### Statistics\nHow the files have changed:\n<ul><li><a href='#{{RELEASE_DIFF}}'>Changed files</a>  : <b>#{{CHANGED_FILES}}</b> </li><li>Changes  : <b>#{{CHANGES}}</b> </li><li>Commits : <b>#{{COMMITS}}</b> </li><li>Additions : <b>#{{ADDITIONS}}</b></li><li>Deletions : <b>#{{DELETIONS}}</b></li><li>PRs (categorized) : <b>#{{CATEGORIZED_COUNT}}</b></li><li>PRs (uncategorized) : <b>#{{UNCATEGORIZED_COUNT}}</b></li><li>PRs (open) : <b>#{{OPEN_COUNT}}</b></li>\n<br />\n</ul>\n\n<br>\n\n---\n\n<br>\n\n### Pull Requests\nThis release is associated with the following pull requests:\n#{{CHANGELOG}}\n\n<br>\n\n"
                     }
               env:
                   GITHUB_TOKEN: ${{ secrets.ADMINSERV_TOKEN }}
@@ -1283,6 +1295,14 @@ jobs:
                   echo "| 🖍️ Last Commit                      | ${{ env.VERSION_COMMIT_LAST }}          |" >> $GITHUB_STEP_SUMMARY
                   echo "| 🆔 ST Output ID                     | ${{ steps.task_release_bundle_st.outputs.id }} |" >> $GITHUB_STEP_SUMMARY
                   echo "| 🆔 RC Output ID                     | ${{ steps.task_release_bundle_rc.outputs.id }} |" >> $GITHUB_STEP_SUMMARY
+                  echo "\n\n\n"
+                  echo ""
+                  echo "### 📄 File (${{ env.FILE_CSF_TGZ }})                                    " >> $GITHUB_STEP_SUMMARY
+                  echo "The main application release" >> $GITHUB_STEP_SUMMARY
+                  echo "| File                                | Result                                 |" >> $GITHUB_STEP_SUMMARY
+                  echo "| ----------------------------------- | -------------------------------------- |" >> $GITHUB_STEP_SUMMARY
+                  echo "| 🆔 **SHA1**                         | ${{ env.SHA1SUM_CSF_TGZ }}            |" >> $GITHUB_STEP_SUMMARY
+                  echo "| 🆔 **SHA256**                       | ${{ env.SHA256SUM_CSF_TGZ }}          |" >> $GITHUB_STEP_SUMMARY
                   echo "\n\n\n"
                   echo ""
                   echo "### 📄 File (${{ env.FILE_CSF_ZIP }})                                    " >> $GITHUB_STEP_SUMMARY
