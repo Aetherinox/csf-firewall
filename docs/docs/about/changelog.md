@@ -19,6 +19,17 @@ tags:
 
 <br />
 
+### <!-- md:version stable- --> 15.05 <small>Oct 16 2025</small> { id="15.05" }
+
+- `fix`: Correct HTML escaping in the **Firewall Configuration** page to ensure settings are processed safely and correctly.
+- `refactor`: Refactored `csf.sh` init.d script; POSIX compliant.
+
+<br />
+
+---
+
+<br />
+
 ### <!-- md:version stable- --> 15.04 <small>Oct 15 2025</small> { id="15.04" }
 
 - `feat`: Added new setting `UI_LOGS_REFRESH_TIME`
