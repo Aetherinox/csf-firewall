@@ -82,7 +82,7 @@ sub getCodename
 	if ($config{CWP})          { $cname = "cwp" }
 	if ($config{VESTA})        { $cname = "vestacp" }
 
-	if (-e "/usr/share/webmin/miniserv.pl")
+	if ( -e "/usr/share/webmin/miniserv.pl" || -e "/usr/libexec/webmin/bin/webmin" || -e "/usr/bin/webmin" )
 	{
 		$cname = "webmin";
 	}
