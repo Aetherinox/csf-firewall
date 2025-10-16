@@ -107,7 +107,17 @@ sub getCodename
 my %allowed_tags = map { $_ => 1 } qw(b u span);
 
 # #
-#   Function to sanitize a line but allow whitelisted tags
+#   Sanitize lines but allow whitelisted HTML tags
+#	
+#   This subroutine is intended for rendering comment or
+#   documentation lines inside the HTML interface.
+#     - Escapes all HTML-sensitive characters ( &, <, > )
+#     - Restores a whitelist of safe HTML tags ( <b>, <i>, <a> )
+#	
+#   Use this for lines that may contain markup to preserve
+#   for display purposes, such as comments or notes.
+#	
+#	Primarily used for the csf.conf HEADER: feature.
 # #
 
 sub sanitize_line
@@ -133,6 +143,31 @@ sub sanitize_line
     }
 
     return $line;
+}
+
+# #
+#   Function to fully escape text for safe use in HTML attributes
+#	
+#   This subroutine is intended for user-input or config values
+#   that will be inserted into HTML elements (e.g., <input value="...">).
+#	
+#   Escapes all HTML-sensitive characters (&, <, >, ", ')
+#   Used to prevent any possibility of HTML or JavaScript injection, 
+#	and do NOT want to allow any tags.
+#	
+#	Built for use with settings such as CSP (Content Security Policy).
+# #
+
+sub html_escape
+{
+    my ($text) = @_;
+    return '' unless defined $text;
+    $text =~ s/&/&amp;/g;
+    $text =~ s/</&lt;/g;
+    $text =~ s/>/&gt;/g;
+    $text =~ s/"/&quot;/g;
+    $text =~ s/'/&#39;/g;
+    return $text;
 }
 
 # #
@@ -1895,7 +1930,7 @@ EOF
 			{
 				if ($comment)
 				{
-					print "</div>\n"
+					print "</div>\n";
 				}
 
 				$comment = 0;
@@ -1907,9 +1942,11 @@ EOF
 	
 				if ($end =~ /\"(.*)\"/)
 				{
-					$end = $1
+					$end = $1;
 				}
 	
+				my $escaped_end = html_escape($end);
+
 				my $size = length($end) + 4;
 				my $class = "value-default";
 				my ($status,$range,$default) = sanity($start,$end);
@@ -1976,7 +2013,7 @@ EOF
 					}
 					else
 					{
-						print "<div class='$class'><b>$start</b> = <input type='text' onFocus='CSFexpand(this);' onkeyup='CSFexpand(this);' name='$name' value='$end' size='$size'>$showrange</div>\n";
+						print "<div class='$class'><b>$start</b> = <input type='text' onFocus='CSFexpand(this);' onkeyup='CSFexpand(this);' name='$name' value='$escaped_end' size='$size'>$showrange</div>\n";
 					}
 				}
 			}
