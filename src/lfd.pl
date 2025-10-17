@@ -10353,6 +10353,7 @@ sub ui {
 	{
 		height:						100%;
 		background:					url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1123 258'><path d='M327 115c95-9 218 57 337 39C778 136 803 90 912 41c51-19 141-38 195-38C1122 2 1137 2 1152 2c253-1 326 236 0 256l-1125 0L-31 257l-36-74c-34-60 43 23 104 24 116 0 198-83 290-92' style='fill: rgb(220, 220, 220, 0.8)' /></svg>") no-repeat bottom,linear-gradient(to bottom,#fff,#fff 100%,#202020 100%);
+		background-size: 			contain;
 	}
 }
 
@@ -10394,6 +10395,7 @@ sub ui {
 	{
 		height: 					100%;
 		background: 				url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1123 258'><path d='M327 115c95-9 218 57 337 39C778 136 803 90 912 41c51-19 141-38 195-38C1122 2 1137 2 1152 2c253-1 326 236 0 256l-1125 0L-31 257l-36-74c-34-60 43 23 104 24 116 0 198-83 290-92' style='fill: rgb(5, 5, 5, 0.6)' /></svg>") no-repeat bottom,linear-gradient(to bottom,#151515,#202020 100%,#202020 100%);
+		background-size: 			contain;
 	}
 }
 
@@ -10464,62 +10466,59 @@ body
 
 input:not(.btn-login)
 {
-	width:							clamp( 200px, 35vw, 400px );
-	max-width: 						400px;
-	min-width: 						200px
-    padding-left:					10px;
-    padding-right:					10px;
-    padding-top:					4px;
-    padding-bottom:					4px;
-	color:							var( --input-normal-text );
-    font-size:						16pt;
-    font-family:					"Ubuntu", "Corbel", "Calibri", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-    font-weight:					300;
-    cursor:							pointer;
-    text-align:						center;
-    background: 					var( --input-normal-bg );
-    background-image: 				linear-gradient( var( --input-hover-line ), var( --input-hover-line ) );
-    background-position: 			bottom;
-    background-repeat: 				no-repeat;
-    background-size: 				0% 2px;
-    transition: 					background-size 0.3s ease, color 0.3s ease;
-    border: 						1px solid var( --input-normal-border );
+    width:                          clamp(200px, 35vw, 400px);
+    max-width:                      400px;
+    min-width:                      200px;
+    padding:                        4px 10px;
+    color:                          var( --input-normal-text );
+    font-size:                      16pt;
+    font-family:                    "Ubuntu", "Corbel", "Calibri", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    font-weight:                    300;
+    cursor:                         pointer;
+    text-align:                     center;
+    background-image:               linear-gradient( var( --input-hover-line ), var( --input-hover-line ) ), none;
+    background-repeat:              no-repeat;
+    background-position:            50% 100%;
+    background-size:                0% 2px;
+    background-color:               var( --input-normal-bg );
+    border:                         1px solid var( --input-normal-border );
+    transition:
+        background-size 0.3s ease,
+        background-position 0.3s ease,
+        color 0.3s ease,
+        border-color 0.3s ease;
 }
 
 input:hover
 {
-	background-size: 				calc( 100% - 4px ) 2px;
+    background-size:                100% 2px;
+    background-position:            50% 100%;
+    background-color:               var( --input-hover-bg, var( --input-normal-bg ) );
 }
 
 input:focus
 {
-	color:							var( --input-focus-text );
-    background-image:				linear-gradient( var( --input-focus-line ) 0 0 );
-    background-color:				var( --input-focus-bg );
-    background-size:				calc( 100% - 4px ) 2px;
-	border-left: 					1px solid var( --input-focus-border );
-	border-top: 					1px solid var( --input-focus-border );
-	border-right: 					1px solid var( --input-focus-border );
-	border-bottom: 					1px solid var( --input-focus-border );
+    color:                          var( --input-focus-text );
+    background-color:               var( --input-focus-bg );
+    background-image:               linear-gradient(var( --input-focus-line ), var( --input-focus-line ) ), none;
+    background-size:                100% 2px;
+    background-position:            50% 100%;
+    border-color:                   var( --input-focus-border );
+    outline:                        none;
 }
 
 input::placeholder
 {
-	font-weight: 					lighter;
-	opacity: 						0.8;
-	color: 							var( --input-placeholder-text-n );
+    font-weight:                    lighter;
+    opacity:                        0.8;
+    color:                          var( --input-placeholder-text-n );
 }
 
 input:focus::placeholder
 {
-	opacity: 						0.2;
-	color: 							var( --input-placeholder-text-f );
-	transition: 					0.7s;
-}
-
-input:focus
-{
-	outline:						none;
+    opacity:                        0.2;
+    color:                          var( --input-placeholder-text-f );
+    transition:                     0.7s;
 }
 
 img.login-logo, svg.login-logo
