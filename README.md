@@ -22,6 +22,13 @@
 [![View Official Documentation](https://img.shields.io/badge/View_Official_Documentation-526CFE?style=for-the-badge&logo=MaterialForMkDocs&logoColor=white)](https://docs.configserver.dev)
 <!-- prettier-ignore-end -->
 
+<div align="center">
+
+[![View](https://img.shields.io/discord/1428601317361848412?style=for-the-badge&color=de1f68)](https://discord.gg/NjumtSAkGS)[![View](https://img.shields.io/badge/Join%20Discord-2d5e97?style=for-the-badge&logo=discord&logoColor=FFFFFF)](https://discord.gg/HGv4eGr2kg)
+
+</div>
+
+
 <br />
 <br />
 
