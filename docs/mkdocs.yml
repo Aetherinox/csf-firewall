@@ -228,6 +228,9 @@ extra:
         - icon: fontawesome/brands/github
           link: https://github.com/Aetherinox/csf-firewall
           name: View Github Repo
+        - icon: aetherx/axb/discord
+          link: https://discord.configserver.dev
+          name: Discord
         - icon: aetherx/axs/heart
           link: https://buymeacoffee.com/aetherinox
           name: Sponsor
@@ -297,6 +300,7 @@ nav:
     - Changelog: 'about/changelog.md'
     - Blog:
         - blog/index.md
+    - Discord: 'https://discord.configserver.dev'
     - Create Ticket: 'https://tickets.configserver.dev'
     - Sponsor: 'https://buymeacoffee.com/aetherinox'
 
