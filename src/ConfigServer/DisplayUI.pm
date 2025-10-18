@@ -3121,13 +3121,17 @@ EOF
 		print "<li><a data-toggle='tab' href='#csf'>csf</a></li>\n";
 		print "<li><a data-toggle='tab' href='#lfd'>lfd</a></li>\n";
 
-		if ($config{CLUSTER_SENDTO})
+		if ( $config{CLUSTER_SENDTO} )
 		{
 			print "<li><a data-toggle='tab' href='#cluster'>Cluster</a></li>\n";
 		}
 
 		print "<li><a data-toggle='tab' href='#other'>Other</a></li>\n";
 		print "</ul><br>\n";
+
+		# #
+		#	Tab > Home
+		# #
 
 		print "<div class='tab-content'>\n";
 		print "<div id='home' class='tab-pane active'>\n";
@@ -3191,6 +3195,10 @@ EOF
 		}
 		print "</div>\n";
 
+		# #
+		#	Tab > csf
+		# #
+
 		print "<div id='csf' class='tab-pane active'>\n";
 		print "<table class='table table-bordered table-striped'>\n";
 		print "<thead><tr><th colspan='2'>csf - Quick Actions</th></tr></thead>";
@@ -3222,6 +3230,10 @@ EOF
 		print "<script>function fillfield (myitem,myip) {document.getElementById(myitem).value = myip;}</script>\n";
 		print "</div>\n";
 
+		# #
+		#	Tab > Lfd
+		# #
+
 		print "<div id='lfd' class='tab-pane active'>\n";
 		print "<table class='table table-bordered table-striped'>\n";
 		print "<thead><tr><th colspan='2'>lfd - Login Failure Daemon</th></tr></thead>";
@@ -3248,6 +3260,10 @@ EOF
 		print "<tr><td><form action='$script' method='post'><button name='action' value='syslogusers' type='submit' class='btn btn-default'>lfd Syslog Users</button></form></td><td style='width:100%'>Edit the syslog/rsyslog allowed users file (csf.syslogusers)</td></tr>\n";
 		print "</table>\n";
 		print "</div>\n";
+
+		# #
+		#	Tab > Cluster
+		# #
 
 		if ($config{CLUSTER_SENDTO})
 		{
@@ -3301,6 +3317,10 @@ EOF
 			print "</div>\n";
 		}
 
+		# #
+		#	Tab > Other > Cloudflare
+		# #
+
 		print "<div id='other' class='tab-pane active'>\n";
 		if ($config{CF_ENABLE})
 		{
@@ -3311,6 +3331,10 @@ EOF
 			print "</table>\n";
 		}
 
+		# #
+		#	Tab > Other > SMTP Auth
+		# #
+
 		if ($config{SMTPAUTH_RESTRICT})
 		{
 			print "<table class='table table-bordered table-striped'>\n";
@@ -3318,6 +3342,10 @@ EOF
 			print "<tr><td><form action='$script' method='post'><button name='action' value='smtpauth' type='submit' class='btn btn-default'>Edit SMTP AUTH</button></form></td><td style='width:100%'>Edit the file that allows SMTP AUTH to be advertised to listed IP addresses (csf.smtpauth)</td></tr>\n";
 			print "</table>\n";
 		}
+
+		# #
+		#	Tab > Other > DirectAdmin / InterWorx
+		# #
 
 		if (-e "/usr/local/cpanel/version" or $config{DIRECTADMIN} or $config{INTERWORX})
 		{
@@ -3335,6 +3363,10 @@ EOF
 			print "<tr><td><form action='$script' method='post'><button name='action' value='reseller' type='submit' class='btn btn-default'>Edit Reseller Privs</button></form></td><td style='width:100%'>Privileges can be assigned to $resellers accounts by editing this file (csf.resellers)</td></tr>\n";
 			print "</table>\n";
 		}
+
+		# #
+		#	Tab > Extra
+		# #
 
 		print "<table class='table table-bordered table-striped'>\n";
 		print "<thead><tr><th colspan='2'>Extra</th></tr></thead>";
