@@ -62,26 +62,26 @@ CSF supports **two** different methods for handling blocklists, and the choice d
 
 <br />
 
-### :aetherx-axd-1: <!-- md:option IPSETs Enabled -->
+### :aetherx-axd-1: <!-- md:option IPSETs Disabled -->
 
 Blocklists are processed line-by-line, and each entry becomes its own rule in iptables. This option should be selected if you plan to have very large lists containing thousands of entries in your blocklist
   
+  - :aetherx-axd-thumbs-up:{ .icon-clr-green } **Pros**: Simple, no extra dependencies, works out of box.
+  - :aetherx-axd-thumbs-down:{ .icon-clr-red } **Cons**: Becomes slow and inefficient with large blocklists.
+
+<br />
+
+### :aetherx-axd-2: <!-- md:option IPSETs Enabled -->
+
+Blocklists are imported into kernel-managed sets, allowing CSF to check connections against a single set rather than thousands of rules.  This option is acceptable if your blocklists contain less than a thousand entries in your blocklist.
+
   - :aetherx-axd-thumbs-up:{ .icon-clr-green } **Pros**: Extremely efficient and scalable, can handle very large lists.
   - :aetherx-axd-thumbs-down:{ .icon-clr-red } **Cons**: Extra dependencies required such as `ipset`.
   - :aetherx-axd-note-sticky:{ .icon-clr-yellow } **Requires**: installing package `ipset`.
 
 <br />
 
-### :aetherx-axd-2: <!-- md:option IPSETs Disabled -->
-
-Blocklists are imported into kernel-managed sets, allowing CSF to check connections against a single set rather than thousands of rules.  This option is acceptable if your blocklists contain less than a thousand entries in your blocklist.
-
-  - :aetherx-axd-thumbs-up:{ .icon-clr-green } **Pros**: Simple, no extra dependencies, works out of box.
-  - :aetherx-axd-thumbs-down:{ .icon-clr-red } **Cons**: Becomes slow and inefficient with large blocklists.
-
-<br />
-
-If you wish to utilize option :aetherx-axd-1: and enable IPSET, please review our documentation regarding the installation and configuration of IPSET on your server.
+If you wish to utilize option :aetherx-axd-2: and enable IPSET, please review our documentation regarding the installation and configuration of IPSET on your server.
 
 <br />
 
