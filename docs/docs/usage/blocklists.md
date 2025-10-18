@@ -64,7 +64,7 @@ CSF supports **two** different methods for handling blocklists, and the choice d
 
 ### :aetherx-axd-1: <!-- md:option IPSETs Disabled -->
 
-Blocklists are processed line-by-line, and each entry becomes its own rule in iptables. This option should be selected if you plan to have very large lists containing thousands of entries in your blocklist
+Blocklists are processed line-by-line, and each entry becomes its own rule in iptables. This option should be selected if you plan to have very small lists that do not contain more than a few thousand entries.
   
   - :aetherx-axd-thumbs-up:{ .icon-clr-green } **Pros**: Simple, no extra dependencies, works out of box.
   - :aetherx-axd-thumbs-down:{ .icon-clr-red } **Cons**: Becomes slow and inefficient with large blocklists.
@@ -73,7 +73,7 @@ Blocklists are processed line-by-line, and each entry becomes its own rule in ip
 
 ### :aetherx-axd-2: <!-- md:option IPSETs Enabled -->
 
-Blocklists are imported into kernel-managed sets, allowing CSF to check connections against a single set rather than thousands of rules.  This option is acceptable if your blocklists contain less than a thousand entries in your blocklist.
+Blocklists are imported into kernel-managed sets, allowing CSF to check connections against a single set rather than thousands of rules.  This option is acceptable if your blocklists contain thousands or more of IP addresses to block.
 
   - :aetherx-axd-thumbs-up:{ .icon-clr-green } **Pros**: Extremely efficient and scalable, can handle very large lists.
   - :aetherx-axd-thumbs-down:{ .icon-clr-red } **Cons**: Extra dependencies required such as `ipset`.
