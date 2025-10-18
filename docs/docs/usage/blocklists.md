@@ -81,7 +81,7 @@ Blocklists are imported into kernel-managed sets, allowing CSF to check connecti
 
 <br />
 
-If you wish to utilize option :aetherx-axd-2: and enable IPSET, please review our documentation regarding the installation and configuration of IPSET on your server.
+If you wish to utilize option :aetherx-axd-1: and enable IPSET, please review our documentation regarding the installation and configuration of IPSET on your server.
 
 <br />
 
