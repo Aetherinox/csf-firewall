@@ -83,7 +83,7 @@ class clr( ):
 # #
 
 PAGE_CHANGELOG ="about/changelog.md"
-PAGE_BACKERS = "about/backers.md"
+PAGE_BACKERS = "insiders/index.md"
 PAGE_CONVENTIONS = "about/conventions.md"
 
 # #
@@ -137,7 +137,7 @@ def on_page_markdown(markdown: str, *, page: Page, config: MkDocsConfig, files: 
         elif type == "flag":            return badgeFlag(args, page, files )
         elif type == "option":          return badgeOption(args)
         elif type == "setting":         return badgeSetting(args)
-        elif type == "support":         return badgeBackers( page, files )
+        elif type == "sponsor":         return badgeSponsors( page, files )
         elif type == "command":         return badgeCommand(args, page, files )
         elif type == "feature":         return badgeFeature(args, page, files )
         elif type == "plugin":          return badgePlugin(args, page, files )
@@ -584,10 +584,10 @@ def badgeColorPalette( icon: str, text: str = "", type: str = "" ):
     ])
 
 # #
-#   Badge › Supporter / Backers
+#   Badge › Insiders Sponsor
 #   
-#       In order for the supporter / backers badge to work, you must have a backers page created in your mkdocs.
-#       add a new file; usually about/backers.md
+#       In order for the sponsor badge to work, you must have a sponsors page created in mkdocs.
+#       add a new file; usually about/sponsors.md
 #       create a new entry in your mkdocs.yml to add the page to your navigation
 #   
 #   Normal Badges:
@@ -595,12 +595,12 @@ def badgeColorPalette( icon: str, text: str = "", type: str = "" ):
 #       <!-- md:sponsors -->
 # #
 
-def badgeBackers( page: Page, files: Files ):
+def badgeSponsors( page: Page, files: Files ):
     icon = "material-heart"
     href = _resolve_path( PAGE_BACKERS, page, files )
 
     return badgeCreate(
-        icon = f"[:{icon}:]({href} 'Supporter')",
+        icon = f"[:{icon}:]({href} 'Sponsors')",
         type = "heart"
     )
 
