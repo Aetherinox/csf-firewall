@@ -292,7 +292,7 @@ The badges in this section are for general use.
 <br />
 
 
-### <!-- md:support -->  Supporter { #supporter data-toc-label="Supporter" }
+### <!-- md:sponsor -->  Insiders Sponsor { #sponsor data-toc-label="Sponsor" }
 
 === "Description"
 
@@ -301,7 +301,7 @@ The badges in this section are for general use.
 
     `Examples`
 
-    :   <!-- md:support --> Backer <!-- @md:support --> 
+    :   <!-- md:sponsor --> Sponsor <!-- @md:sponsor --> 
 
 
 <br />
