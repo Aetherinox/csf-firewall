@@ -200,6 +200,7 @@ extra_javascript:
     - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
     - javascripts/tablesort.js
     - javascripts/all.js?v7.000
+    - javascripts/sponsors.js
 
 # #
 #   Section › Extras
@@ -298,6 +299,9 @@ nav:
                 - Configure: 'extras/configure.md'
     - Services: 'services.md'
     - Changelog: 'about/changelog.md'
+    - Insiders:
+          - insiders/index.md
+          - Our Sponsors: insiders/sponsors.md
     - Blog:
         - blog/index.md
     - Discord: 'https://discord.configserver.dev'
