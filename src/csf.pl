@@ -10,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            10.09.2025
+#   @updated            10.21.2025
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -175,6 +175,7 @@ elsif ($input{command} eq "--initdown") {&doinitdown}
 elsif ($input{command} eq "--profile") {&doprofile}
 elsif ($input{command} eq "--mregen") {&domessengerv2}
 elsif ($input{command} eq "--trace") {&dotrace}
+elsif (($input{command} eq "--insiders") or ($input{command} eq "-in")) {&doinsiders}
 else {&dohelp}
 
 if ($config{TESTING}) {print "*WARNING* TESTING mode is enabled - do not forget to disable it in the configuration\n"}
@@ -3895,17 +3896,17 @@ sub doupdate
 		}
 
 		# #
-		#	Alpha Release Channel
+		#	Insiders Release Channel
 		#	
 		#	This should NOT be used on production servers.
 		#	
 		#	Enabled by defining the following in your csf.conf:
-		#		RELEASE_ALPHA = "1"
+		#		SPONSOR_RELEASE_INSIDERS = "1"
 		# #
 
-		if ( $config{RELEASE_ALPHA} == 1 )
+		if ( ($config{SPONSOR_RELEASE_INSIDERS} // 0) == 1 && ($config{SPONSOR_LICENSE} // '') ne '' )
 		{
-			$url .= "?channel=alpha";
+			$url .= "?channel=insiders&license=$config{SPONSOR_LICENSE}";
 		}
 
 		my ($status, $text) = $urlget->urlget($url);
@@ -3937,17 +3938,17 @@ sub doupdate
 			}
 
 			# #
-			#	Alpha Release Channel
+			#	Insiders Release Channel
 			#	
 			#	This should NOT be used on production servers.
 			#	
 			#	Enabled by defining the following in your csf.conf:
-			#		RELEASE_ALPHA = "1"
+			#		SPONSOR_RELEASE_INSIDERS = "1"
 			# #
 
-			if ( $config{RELEASE_ALPHA} == 1 )
+			if ( ( $config{SPONSOR_RELEASE_INSIDERS} // 0 ) == 1 && ( $config{SPONSOR_LICENSE} // '' ) ne '' )
 			{
-				$url .= "?channel=alpha";
+				$url .= "?channel=insiders&license=$config{SPONSOR_LICENSE}";
 			}
 
 			my ($status, $text) = $urlget->urlget($url,"/usr/src/csf.tgz");
@@ -3993,17 +3994,17 @@ sub docheck
 	}
 
 	# #
-	#	Alpha Release Channel
+	#	Insiders Release Channel
 	#	
 	#	This should NOT be used on production servers.
 	#	
 	#	Enabled by defining the following in your csf.conf:
-	#		RELEASE_ALPHA = "1"
+	#		SPONSOR_RELEASE_INSIDERS = "1"
 	# #
 
-	if ( $config{RELEASE_ALPHA} == 1 )
+	if ( ( $config{SPONSOR_RELEASE_INSIDERS} // 0 ) == 1 && ( $config{SPONSOR_LICENSE} // '' ) ne '' )
 	{
-		$url .= "?channel=alpha";
+		$url .= "?channel=insiders&license=$config{SPONSOR_LICENSE}";
 	}
 
 	my ($status, $text) = $urlget->urlget($url);
@@ -5584,10 +5585,12 @@ sub doprofile {
 	}
 	return;
 }
+
 # end doprofile
 ###############################################################################
 # start doports
-sub doports {
+sub doports
+{
 	my ($fport,$fopen,$fconn,$fpid,$fexe,$fcmd);
 	format PORTS =
 @<<<<<<<<< @<<< @<<<< @<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<... @*
@@ -5615,10 +5618,86 @@ $fport,    $fopen,$fconn,$fpid,            $fcmd,                               
 	}
 	return;
 }
-# end doports
-###############################################################################
+
+# #
+#	Insiders Program / Sponsor
+#	
+#	Returns the status of the end-users Sponsorship status and if they are
+#	subscribed to the insider's release channel.
+# #
+
+sub doinsiders
+{
+    print "\n  Checking CSF sponsorship and Insiders access\n";
+
+    my $license = $config{SPONSOR_LICENSE} // '';
+    my ($license_status, $insiders_status, $message) = ( 'Invalid', 'Disabled', '' );
+
+    # #
+    #    Check if license key is empty
+    # #
+
+    if ( $license eq '' )
+    {
+        $message = 'License key not specified in /etc/csf/csf.conf';
+    }
+    else
+    {
+        print "  Connecting to license server ...\n";
+
+        # #
+        #    Query license server
+        # #
+
+        my ($status, $resp) = $urlget->urlget("https://license.configserver.dev/?license=$license");
+
+        # #
+        #    Handle URL fetch error
+        # #
+
+        if ( $status )
+        {
+            $message = "An error occurred checking for sponsorship status: $resp";
+        }
+        else
+        {
+            # #
+            #    Check JSON manually
+            # #
+		
+            my $valid = ( $resp =~ /"valid"\s*:\s*true/ ) ? 1 : 0;
+            $license_status = $valid ? 'Valid' : 'Invalid';
+            $insiders_status = ( $valid && ( $config{SPONSOR_RELEASE_INSIDERS} // '' ) eq '1' ) ? 'Enabled' : 'Disabled';
+
+            # #
+            #    Extract error message if invalid
+            # #
+		
+            if ( !$valid && $resp =~ /"error"\s*:\s*"([^"]+)"/ )
+            {
+                $message = $1;
+            }
+	
+            $message ||= $valid ? 'Success' : 'License key is empty or invalid';
+        }
+    }
+
+    # #
+    #    Print status at the end
+    # #
+    print "\n";
+    print "      Status ..................... " . ( $license_status eq 'Valid' ? 'OK' : 'Failed' ) . "\n";
+    print "      Sponsorship License ........ $license_status\n";
+    print "      Insiders Channel ........... $insiders_status\n";
+    print "      Message .................... " . ( $message || '-' ) . "\n";
+    print "\n";
+
+    return;
+}
+
 # start domessengerv2
-sub domessengerv2 {
+sub domessengerv2
+{
 	print "csf - MESSENGERV2 /etc/apache2/conf.d/csf_messenger.conf regeneration:\n\n";
 	ConfigServer::Messenger::messengerv2();
 	print "\n...Done.\n";

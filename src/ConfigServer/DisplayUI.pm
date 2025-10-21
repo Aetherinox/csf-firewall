@@ -482,8 +482,8 @@ sub main
 			}
 			else
 			{
-				my $days = int($time/(24*60*60));
-				my $hours = ($time/(60*60))%24;
+				my $days = int($time/(24*60*60) );
+				my $hours = ($time/(60*60) )%24;
 				my $mins = ($time/60)%60;
 				my $secs = $time%60;
 				$days = $days < 1 ? '' : $days .'d ';
@@ -529,8 +529,8 @@ sub main
 			}
 			else
 			{
-				my $days = int($time/(24*60*60));
-				my $hours = ($time/(60*60))%24;
+				my $days = int($time/(24*60*60) );
+				my $hours = ($time/(60*60) )%24;
 				my $mins = ($time/60)%60;
 				my $secs = $time%60;
 				$days = $days < 1 ? '' : $days .'d ';
@@ -690,7 +690,7 @@ sub main
 		my $options = "<select id='csfLogNum' onchange='csfTimerRefresh()'>\n";
 		my $cnt = 0;
 
-		foreach my $file (@data)
+		foreach my $file ( @data )
 		{
 			$file =~ s/$cleanreg//g;
 			if ($file eq "")
@@ -720,7 +720,7 @@ sub main
 			{
 				if (-f $globfile)
 				{
-					my $size = int((stat($globfile))[7]/1024);
+					my $size = int( (stat($globfile) )[7]/1024);
 					$options .= "<option value='$cnt'";
 					if ($globfile eq "/var/log/lfd.log") {$options .= " selected"}
 					$options .= ">$globfile ($size kb)</option>\n";
@@ -932,8 +932,8 @@ EOF
 			$csfFromRight = 150;
 		}
 
-		my @data = slurp("/etc/csf/csf.syslogs");
-		foreach my $line (@data)
+		my @data = slurp( "/etc/csf/csf.syslogs" );
+		foreach my $line ( @data )
 		{
 			if ($line =~ /^Include\s*(.*)$/)
 			{
@@ -945,7 +945,7 @@ EOF
 		@data = sort @data;
 		my $options = "<select id='csfLogNum'>\n";
 		my $cnt = 0;
-		foreach my $file (@data)
+		foreach my $file ( @data )
 		{
 			$file =~ s/$cleanreg//g;
 			if ($file eq "")
@@ -975,7 +975,7 @@ EOF
 			{
 				if ( -f $globfile )
 				{
-					my $size = int((stat($globfile))[7]/1024);
+					my $size = int( (stat($globfile) )[7]/1024);
 					$options .= "<option value='$cnt'";
 					if ($globfile eq "/var/log/lfd.log") {$options .= " selected"}
 					$options .= ">$globfile ($size kb)</option>\n";
@@ -1050,7 +1050,7 @@ EOF
 	elsif ($FORM{action} eq "loggrepcmd")
 	{
 		my @data = slurp("/etc/csf/csf.syslogs");
-		foreach my $line (@data)
+		foreach my $line ( @data )
 		{
 			if ($line =~ /^Include\s*(.*)$/)
 			{
@@ -1263,7 +1263,7 @@ EOF
 
 		my $optionselected = "never";
 		my $email;
-		if (my @ls = grep {$_ =~ /csf \-m/} @data)
+		if (my @ls = grep {$_ =~ /csf \-m/} @data )
 		{
 			if ($ls[0] =~ /\@(\w+)\s+root\s+\/usr\/sbin\/csf \-m (.*)/)
 			{
@@ -1316,29 +1316,41 @@ EOF
 		seek ($CRON, 0, 0);
 		truncate ($CRON, 0);
 		my $done = 0;
-		foreach my $line (@data) {
-			if ($line =~ /csf \-m/) {
-				if ($freq and ($freq ne "never") and !$done) {
+		foreach my $line ( @data )
+		{
+			if ($line =~ /csf \-m/)
+			{
+				if ($freq and ($freq ne "never") and !$done)
+				{
 					print $CRON "\@$freq root /usr/sbin/csf -m $email\n";
 					$done = 1;
 				}
-			} else {
+			}
+			else
+			{
 				print $CRON "$line\n";
 			}
 		}
-		if (!$done and ($freq ne "never")) {
+
+		if (!$done and ($freq ne "never") )
+		{
 				print $CRON "\@$freq root /usr/sbin/csf -m $email\n";
 		}
+	
 		close ($CRON);
 
-		if ($freq and $freq ne "never") {
+		if ($freq and $freq ne "never")
+		{
 			print "<div>Report scheduled to be emailed to $email $freq</div>\n";
-		} else {
+		}
+		else
+		{
 			print "<div>Report schedule cancelled $extra</div>\n";
 		}
 		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='servercheck'><input type='submit' class='btn btn-default' value='Return'></form></div>\n";
 	}
-	elsif ($FORM{action} eq "rblcheck") {
+	elsif ($FORM{action} eq "rblcheck")
+	{
 		my ($status, undef) = ConfigServer::RBLCheck::report($FORM{verbose},$images,1);
 
 		print "<div><b>These options can take a long time to run</b> (several minutes) depending on the number of IP addresses to check and the response speed of the DNS requests:</div>\n";
@@ -1353,25 +1365,45 @@ EOF
 		chomp @data;
 		my $optionselected = "never";
 		my $email;
-		if (my @ls = grep {$_ =~ /csf \-\-rbl/} @data) {
+		if (my @ls = grep {$_ =~ /csf \-\-rbl/} @data )
+		{
 			if ($ls[0] =~ /\@(\w+)\s+root\s+\/usr\/sbin\/csf \-\-rbl (.*)/) {$optionselected = $1; $email = $2}
 		}
 		print "<br><div><form action='$script' method='post'><input type='hidden' name='action' value='rblchecksave'>\n";
 		print "Generate and email this report <select name='freq'>\n";
-		foreach my $option ("never","hourly","daily","weekly","monthly") {
+		foreach my $option ("never","hourly","daily","weekly","monthly")
+		{
 			if ($option eq $optionselected) {print "<option selected>$option</option>\n"} else {print "<option>$option</option>\n"}
 		}
 		print "</select> to the email address <input type='text' name='email' value='$email'> <input type='submit' class='btn btn-default' value='Schedule'></form></div>\n";
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "rblchecksave") {
+	elsif ($FORM{action} eq "rblchecksave")
+	{
 		my $extra = "";
 		my $freq = "daily";
 		my $email;
-		if ($FORM{email} ne "") {$email = "root"}
-		if ($FORM{email} =~ /^[a-zA-Z0-9\-\_\.\@\+]+$/) {$email = $FORM{email}}
-		foreach my $option ("never","hourly","daily","weekly","monthly") {if ($FORM{freq} eq $option) {$freq = $option}}
-		unless ($email) {$freq = "never"; $extra = "(no valid email address supplied)";}
+	
+		if ($FORM{email} ne "")
+		{
+			$email = "root"
+		}
+	
+		if ($FORM{email} =~ /^[a-zA-Z0-9\-\_\.\@\+]+$/)
+		{
+			$email = $FORM{email}
+		}
+	
+		foreach my $option ("never","hourly","daily","weekly","monthly")
+		{
+			if ($FORM{freq} eq $option) {$freq = $option}
+		}
+	
+		unless ($email)
+		{
+			$freq = "never"; $extra = "(no valid email address supplied)";
+		}
+	
 		sysopen (my $CRON, "/etc/cron.d/csf-cron", O_RDWR | O_CREAT) or die "Unable to open file: $!";
 		flock ($CRON, LOCK_EX);
 		my @data = <$CRON>;
@@ -1379,55 +1411,76 @@ EOF
 		seek ($CRON, 0, 0);
 		truncate ($CRON, 0);
 		my $done = 0;
-		foreach my $line (@data) {
-			if ($line =~ /csf \-\-rbl/) {
-				if ($freq and ($freq ne "never") and !$done) {
+	
+		foreach my $line ( @data )
+		{
+			if ($line =~ /csf \-\-rbl/)
+			{
+				if ($freq and ($freq ne "never") and !$done)
+				{
 					print $CRON "\@$freq root /usr/sbin/csf --rbl $email\n";
 					$done = 1;
 				}
-			} else {
+			}
+			else
+			{
 				print $CRON "$line\n";
 			}
 		}
-		if (!$done and ($freq ne "never")) {
+
+		if (!$done and ($freq ne "never") )
+		{
 				print $CRON "\@$freq root /usr/sbin/csf --rbl $email\n";
 		}
+	
 		close ($CRON);
 
-		if ($freq and $freq ne "never") {
+		if ($freq and $freq ne "never")
+		{
 			print "<div>Report scheduled to be emailed to $email $freq</div>\n";
-		} else {
+		}
+		else
+		{
 			print "<div>Report schedule cancelled $extra</div>\n";
 		}
+	
 		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='rblcheck'><input type='submit' class='btn btn-default' value='Return'></form></div>\n";
 	}
-	elsif ($FORM{action} eq "rblcheckedit") {
+	elsif ($FORM{action} eq "rblcheckedit")
+	{
 		&editfile("/etc/csf/csf.rblconf","saverblcheckedit");
 		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='rblcheck'><input type='submit' class='btn btn-default' value='Return'></form></div>\n";
 	}
-	elsif ($FORM{action} eq "saverblcheckedit") {
+	elsif ($FORM{action} eq "saverblcheckedit")
+	{
 		&savefile("/etc/csf/csf.rblconf","");
 		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='rblcheck'><input type='submit' class='btn btn-default' value='Return'></form></div>\n";
 	}
-	elsif ($FORM{action} eq "cloudflareedit") {
+	elsif ($FORM{action} eq "cloudflareedit")
+	{
 		&editfile("/etc/csf/csf.cloudflare","savecloudflareedit");
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "savecloudflareedit") {
+	elsif ($FORM{action} eq "savecloudflareedit")
+	{
 		&savefile("/etc/csf/csf.cloudflare","");
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "restartboth") {
+	elsif ($FORM{action} eq "restartboth")
+	{
 		print "<div><p>Restarting csf...</p>\n";
 		&resize("top");
 		print "<pre class='comment' style='white-space: pre-wrap; height: 500px; overflow: auto; resize:both; clear:both' id='output'>\n";
 		&printcmd("/usr/sbin/csf","-sf");
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
-		if ($config{THIS_UI}) {
+		if ($config{THIS_UI})
+		{
 			print "<div><p>Signal lfd to <i>restart</i>...</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
 			sysopen (my $OUT, "/var/lib/csf/lfd.restart",, O_WRONLY | O_CREAT) or die "Unable to open file: $!";
 			close ($OUT);
-		} else {
+		}
+		else
+		{
 			print "<div><p>Restarting lfd...</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
 			ConfigServer::Service::restartlfd();
 		}
@@ -1435,44 +1488,52 @@ EOF
 		&resize("bot",1);
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "remapf") {
+	elsif ($FORM{action} eq "remapf")
+	{
 		print "<div><p>Removing APF/BFD...</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
 		&printcmd("sh","/usr/local/csf/bin/remove_apf_bfd.sh");
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
 		print "<div><p><b>Note: You should check the root cron and /etc/crontab to ensure that there are no apf or bfd related cron jobs remaining</b></p></div>\n";
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "qallow") {
+	elsif ($FORM{action} eq "qallow")
+	{
 		print "<div><p>Allowing $FORM{ip}...</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
 		&printcmd("/usr/sbin/csf","-a",$FORM{ip},$FORM{comment});
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "qdeny") {
+	elsif ($FORM{action} eq "qdeny")
+	{
 		print "<div><p>Blocking $FORM{ip}...</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
 		&printcmd("/usr/sbin/csf","-d",$FORM{ip},$FORM{comment});
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "qignore") {
+	elsif ($FORM{action} eq "qignore")
+	{
 		print "<div><p>Ignoring $FORM{ip}...\n";
 		open (my $OUT, ">>", "/etc/csf/csf.ignore");
 		flock ($OUT, LOCK_EX);
 		print $OUT "$FORM{ip}\n";
 		close ($OUT);
 		print "<b>Done</b>.</p></div>\n";
-		if ($config{THIS_UI}) {
+		if ($config{THIS_UI})
+		{
 			print "<div><p>Signal lfd to <i>restart</i>...</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
 			sysopen (my $OUT, "/var/lib/csf/lfd.restart",, O_WRONLY | O_CREAT) or die "Unable to open file: $!";
 			close ($OUT);
-		} else {
+		}
+		else
+		{
 			print "<div><p>Restarting lfd...</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
 			ConfigServer::Service::restartlfd();
 		}
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "kill") {
+	elsif ($FORM{action} eq "kill")
+	{
 		print "<div><p>Unblock $FORM{ip}, trying permanent blocks...</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
 		&printcmd("/usr/sbin/csf","-dr",$FORM{ip});
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
@@ -1481,7 +1542,8 @@ EOF
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "killallow") {
+	elsif ($FORM{action} eq "killallow")
+	{
 		print "<div><p>Unblock $FORM{ip}, trying permanent blocks...</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
 		&printcmd("/usr/sbin/csf","-ar",$FORM{ip});
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
@@ -1490,7 +1552,8 @@ EOF
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "grep") {
+	elsif ($FORM{action} eq "grep")
+	{
 		print "<div><p>Searching for $FORM{ip}...</p>\n";
 		&resize("top");
 		print "<pre class='comment' style='white-space: pre-wrap; height: 500px; overflow: auto; resize:both; clear:both' id='output'>\n";
@@ -1498,7 +1561,8 @@ EOF
 		my $pid = open3($childin, $childout, $childout, "/usr/sbin/csf","-g",$FORM{ip});
 		my $unblock;
 		my $unallow;
-		while (<$childout>) {
+		while (<$childout>)
+		{
 			my $line = $_;
 			if ($line =~ /^csf.deny:\s(\S+)\s*/) {$unblock = 1}
 			if ($line =~ /^Temporary Blocks: IP:(\S+)\s*/) {$unblock = 1}
@@ -1513,52 +1577,61 @@ EOF
 		if ($unallow) {print "<div><a class='btn btn-success' href='$script?action=killallow&ip=$FORM{ip}'>Remove $FORM{ip} allow</a></div>\n"}
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "callow") {
+	elsif ($FORM{action} eq "callow")
+	{
 		print "<div><p>Cluster Allow $FORM{ip}...</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
 		&printcmd("/usr/sbin/csf","-ca",$FORM{ip},$FORM{comment});
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "cignore") {
+	elsif ($FORM{action} eq "cignore")
+	{
 		print "<div><p>Cluster Ignore $FORM{ip}...</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
 		&printcmd("/usr/sbin/csf","-ci",$FORM{ip},$FORM{comment});
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "cirm") {
+	elsif ($FORM{action} eq "cirm")
+	{
 		print "<div><p>Cluster Remove ignore $FORM{ip}...</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
 		&printcmd("/usr/sbin/csf","-cir",$FORM{ip});
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "cloudflare") {
+	elsif ($FORM{action} eq "cloudflare")
+	{
 		&cloudflare;
 	}
-	elsif ($FORM{action} eq "cflist") {
+	elsif ($FORM{action} eq "cflist")
+	{
 		print "<div class='panel panel-info'><div class='panel-heading'>CloudFlare list $FORM{type} rules for user(s) $FORM{domains}:</div>\n";
 		print "<div class='panel-body'><pre class='comment' style='white-space: pre-wrap;'>";
 		&printcmd("/usr/sbin/csf","--cloudflare","list",$FORM{type},$FORM{domains});
 		print "</pre>\n</div></div>\n";
 	}
-	elsif ($FORM{action} eq "cftempdeny") {
+	elsif ($FORM{action} eq "cftempdeny")
+	{
 		print "<div class='panel panel-info'><div class='panel-heading'>CloudFlare $FORM{do} $FORM{target} for user(s) $FORM{domains}:</div>\n";
 		print "<div class='panel-body'><pre class='comment' style='white-space: pre-wrap;'>\n";
 		&printcmd("/usr/sbin/csf","--cloudflare","tempadd",$FORM{do},$FORM{target},$FORM{domains});
 		print "</pre>\n</div></div>\n";
 	}
-	elsif ($FORM{action} eq "cfadd") {
+	elsif ($FORM{action} eq "cfadd")
+	{
 		print "<div class='panel panel-info'><div class='panel-heading'>CloudFlare Add $FORM{type} $FORM{target} for user(s) $FORM{domains}:</div>\n";
 		print "<div class='panel-body'><pre class='comment' style='white-space: pre-wrap;'>";
 		&printcmd("/usr/sbin/csf","--cloudflare","add",$FORM{type},$FORM{target},$FORM{domains});
 		print "</pre>\n</div></div>\n";
 	}
-	elsif ($FORM{action} eq "cfremove") {
+	elsif ($FORM{action} eq "cfremove")
+	{
 		print "<div class='panel panel-info'><div class='panel-heading'>CloudFlare Delete $FORM{type} $FORM{target} for user(s) $FORM{domains}:</div>\n";
 		print "<div class='panel-body'><pre class='comment' style='white-space: pre-wrap;'>";
 		&printcmd("/usr/sbin/csf","--cloudflare","del", $FORM{target},$FORM{domains});
 		print "</pre>\n</div></div>\n";
 	}
-	elsif ($FORM{action} eq "cdeny") {
+	elsif ($FORM{action} eq "cdeny")
+	{
 		print "<div><p>Cluster Deny $FORM{ip}...</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
 		&printcmd("/usr/sbin/csf","-cd",$FORM{ip},$FORM{comment});
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
@@ -1570,178 +1643,226 @@ EOF
 		if ($FORM{dur} eq "hours") {$FORM{timeout} = $FORM{timeout} * 60 * 60}
 		if ($FORM{dur} eq "days") {$FORM{timeout} = $FORM{timeout} * 60 * 60 * 24}
 		if ($FORM{ports} eq "") {$FORM{ports} = "*"}
+	
 		print "<div><p>cluster Temporarily $FORM{do}ing $FORM{ip} for $FORM{timeout} seconds:</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
-		if ($FORM{do} eq "block") {
+	
+		if ($FORM{do} eq "block")
+		{
 			&printcmd("/usr/sbin/csf","-ctd",$FORM{ip},$FORM{timeout},"-p",$FORM{ports},$FORM{comment});
-		} else {
+		}
+		else
+		{
 			&printcmd("/usr/sbin/csf","-cta",$FORM{ip},$FORM{timeout},"-p",$FORM{ports},$FORM{comment});
 		}
+	
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "crm") {
+	elsif ($FORM{action} eq "crm")
+	{
 		print "<div><p>Cluster Remove Deny $FORM{ip}...</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
 		&printcmd("/usr/sbin/csf","-cr",$FORM{ip});
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "carm") {
+	elsif ($FORM{action} eq "carm")
+	{
 		print "<div><p>Cluster Remove Allow $FORM{ip}...</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
 		&printcmd("/usr/sbin/csf","-car",$FORM{ip});
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "cping") {
+	elsif ($FORM{action} eq "cping")
+	{
 		print "<div><p>Cluster PING...</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
 		&printcmd("/usr/sbin/csf","-cp");
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "cgrep") {
+	elsif ($FORM{action} eq "cgrep")
+	{
 		print "<div><p>Cluster GREP for $FORM{ip}...</p>\n";
 		print "<pre class='comment' style='white-space: pre-wrap;'>\n";
 		my ($childin, $childout);
 		my $pid = open3($childin, $childout, $childout, "/usr/sbin/csf","-cg",$FORM{ip});
 		my $unblock;
 		my $start = 0;
-		while (<$childout>) {
+		while (<$childout>)
+		{
 			my $line = $_;
-			if ($line =~ /^====/) {
-				if ($start) {
+			if ($line =~ /^====/)
+			{
+				if ($start)
+				{
 					print "$line</pre><pre class='comment' style='white-space: pre-wrap;'>";
 					$start = 0;
-				} else {
+				}
+				else
+				{
 					print "</pre><pre class='comment' style='white-space: pre-wrap;background:#F4F4EA'>$line";
 					$start = 1;
 				}
-			} else {
+			}
+			else
+			{
 				print $line;
 			}
 		}
+	
 		waitpid ($pid, 0);
 		print "...Done\n</pre></div>\n";
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "cconfig") {
+	elsif ($FORM{action} eq "cconfig")
+	{
 		$FORM{option} =~ s/\s*//g;
 		my %restricted;
-		if ($config{RESTRICT_UI}) {
+		if ($config{RESTRICT_UI})
+		{
 			sysopen (my $IN, "/usr/local/csf/lib/restricted.txt", O_RDWR | O_CREAT) or die "Unable to open file: $!";
 			flock ($IN, LOCK_SH);
-			while (my $entry = <$IN>) {
+			while (my $entry = <$IN>)
+			{
 				chomp $entry;
 				$restricted{$entry} = 1;
 			}
 			close ($IN);
 		}
-		if ($restricted{$FORM{option}}) {
+		if ($restricted{$FORM{option}})
+		{
 			print "<div>Option $FORM{option} cannot be set with RESTRICT_UI enabled</div>\n";
 			exit;
 		}
+	
 		print "<div><p>Cluster configuration option...</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
 		&printcmd("/usr/sbin/csf","-cc",$FORM{option},$FORM{value});
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "crestart") {
+	elsif ($FORM{action} eq "crestart")
+	{
 		print "<div><p>Cluster restart csf and lfd...</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
 		&printcmd("/usr/sbin/csf --crestart");
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "allow") {
+	elsif ($FORM{action} eq "allow")
+	{
 		&editfile("/etc/csf/csf.allow","saveallow");
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "saveallow") {
+	elsif ($FORM{action} eq "saveallow")
+	{
 		&savefile("/etc/csf/csf.allow","both");
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "redirect") {
+	elsif ($FORM{action} eq "redirect")
+	{
 		&editfile("/etc/csf/csf.redirect","saveredirect");
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "saveredirect") {
+	elsif ($FORM{action} eq "saveredirect")
+	{
 		&savefile("/etc/csf/csf.redirect","both");
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "smtpauth") {
+	elsif ($FORM{action} eq "smtpauth")
+	{
 		&editfile("/etc/csf/csf.smtpauth","savesmtpauth");
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "savesmtpauth") {
+	elsif ($FORM{action} eq "savesmtpauth")
+	{
 		&savefile("/etc/csf/csf.smtpauth","both");
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "reseller") {
+	elsif ($FORM{action} eq "reseller")
+	{
 		&editfile("/etc/csf/csf.resellers","savereseller");
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "savereseller") {
+	elsif ($FORM{action} eq "savereseller")
+	{
 		&savefile("/etc/csf/csf.resellers","");
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "dirwatch") {
+	elsif ($FORM{action} eq "dirwatch")
+	{
 		&editfile("/etc/csf/csf.dirwatch","savedirwatch");
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "savedirwatch") {
+	elsif ($FORM{action} eq "savedirwatch")
+	{
 		&savefile("/etc/csf/csf.dirwatch","lfd");
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "dyndns") {
+	elsif ($FORM{action} eq "dyndns")
+	{
 		&editfile("/etc/csf/csf.dyndns","savedyndns");
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "savedyndns") {
+	elsif ($FORM{action} eq "savedyndns")
+	{
 		&savefile("/etc/csf/csf.dyndns","lfd");
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "blocklists") {
+	elsif ($FORM{action} eq "blocklists")
+	{
 		&editfile("/etc/csf/csf.blocklists","saveblocklists");
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "saveblocklists") {
+	elsif ($FORM{action} eq "saveblocklists")
+	{
 		&savefile("/etc/csf/csf.blocklists","both");
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "syslogusers") {
+	elsif ($FORM{action} eq "syslogusers")
+	{
 		&editfile("/etc/csf/csf.syslogusers","savesyslogusers");
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "savesyslogusers") {
+	elsif ($FORM{action} eq "savesyslogusers")
+	{
 		&savefile("/etc/csf/csf.syslogusers","lfd");
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "logfiles") {
+	elsif ($FORM{action} eq "logfiles")
+	{
 		&editfile("/etc/csf/csf.logfiles","savelogfiles");
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "savelogfiles") {
+	elsif ($FORM{action} eq "savelogfiles")
+	{
 		&savefile("/etc/csf/csf.logfiles","lfd");
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "deny") {
+	elsif ($FORM{action} eq "deny")
+	{
 		&editfile("/etc/csf/csf.deny","savedeny");
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "savedeny") {
+	elsif ($FORM{action} eq "savedeny")
+	{
 		&savefile("/etc/csf/csf.deny","both");
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "templates") {
+	elsif ($FORM{action} eq "templates")
+	{
 		&editfile("/usr/local/csf/tpl/$FORM{template}","savetemplates","template");
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "savetemplates") {
+	elsif ($FORM{action} eq "savetemplates")
+	{
 		&savefile("/usr/local/csf/tpl/$FORM{template}","",1);
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "ignorefiles") {
+	elsif ($FORM{action} eq "ignorefiles")
+	{
 		&editfile("/etc/csf/$FORM{ignorefile}","saveignorefiles","ignorefile");
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "saveignorefiles") {
+	elsif ($FORM{action} eq "saveignorefiles")
+	{
 		&savefile("/etc/csf/$FORM{ignorefile}","lfd");
 		&renderBtnReturn;
 	}
@@ -1749,7 +1870,8 @@ EOF
 	{
 
 	}
-	elsif ($FORM{action} eq "conf") {
+	elsif ($FORM{action} eq "conf")
+	{
 		sysopen (my $IN, "/etc/csf/csf.conf", O_RDWR | O_CREAT) or die "Unable to open file: $!";
 		flock ($IN, LOCK_SH);
 		my @confdata = <$IN>;
@@ -1757,10 +1879,12 @@ EOF
 		chomp @confdata;
 
 		my %restricted;
-		if ($config{RESTRICT_UI}) {
+		if ($config{RESTRICT_UI})
+		{
 			sysopen (my $IN, "/usr/local/csf/lib/restricted.txt", O_RDWR | O_CREAT) or die "Unable to open file: $!";
 			flock ($IN, LOCK_SH);
-			while (my $entry = <$IN>) {
+			while (my $entry = <$IN>)
+			{
 				chomp $entry;
 				$restricted{$entry} = 1;
 			}
@@ -2012,7 +2136,7 @@ EOF
 					$showrange = " Recommended range: $range (Default: $default)";
 				}
 	
-				if ($config{RESTRICT_UI} and ($cleanname eq "CLUSTER_KEY" or $cleanname eq "UI_PASS" or $cleanname eq "UI_USER"))
+				if ($config{RESTRICT_UI} and ($cleanname eq "CLUSTER_KEY" or $cleanname eq "UI_PASS" or $cleanname eq "UI_USER") )
 				{
 					print "<div class='$class'><b>$start</b> = <input type='text' value='********' size='14' disabled> (hidden restricted UI item)</div>\n";
 				}
@@ -2186,15 +2310,15 @@ EOD
 		truncate ($OUT, 0);
 		for (my $x = 0; $x < @confdata;$x++)
 		{
-			if (($confdata[$x] !~ /^\#/) and ($confdata[$x] =~ /=/))
+			if ( ($confdata[$x] !~ /^\#/) and ( $confdata[$x] =~ /=/) )
 			{
-				my ($start,$end) = split (/=/,$confdata[$x],2);
-				if ($end =~ /\"(.*)\"/) {$end = $1}
+				my ( $start,$end) = split (/=/,$confdata[$x],2);
+				if ( $end =~ /\"(.*)\"/) {$end = $1}
 				my $name = $start;
 				my $sanity_name = $start;
 				$name =~ s/\s/\_/g;
 				$sanity_name =~ s/\s//g;
-				if ($restricted{$sanity_name})
+				if ( $restricted{$sanity_name})
 				{
 					print $OUT "$confdata[$x]\n";
 				}
@@ -2209,29 +2333,29 @@ EOD
 				print $OUT "$confdata[$x]\n";
 			}
 		}
-		close ($OUT);
+		close ( $OUT);
 
 		ConfigServer::Config::resetconfig();
 		my $newconfig = ConfigServer::Config->loadconfig();
 		my %newconfig = $config->config;
 		foreach my $key (keys %newconfig)
 		{
-			my ($insane,$range,$default) = sanity($key,$newconfig{$key});
-			if ($insane) {print "<br>WARNING: $key sanity check. $key = \"$newconfig{$key}\". Recommended range: $range (Default: $default)\n"}
+			my ( $insane,$range,$default) = sanity( $key,$newconfig{$key});
+			if ( $insane) {print "<br>WARNING: $key sanity check. $key = \"$newconfig{$key}\". Recommended range: $range (Default: $default)\n"}
 		}
 
 		print "<div>Changes saved. You should restart both csf and lfd.</div>\n";
 		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='restartboth'><input type='submit' class='btn btn-default' value='Restart csf+lfd'></form></div>\n";
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "viewlogs")
+	elsif ( $FORM{action} eq "viewlogs" )
 	{
 		if (-e "/var/lib/csf/stats/iptables_log")
 		{
-			open (my $IN, "<", "/var/lib/csf/stats/iptables_log") or die "Unable to open file: $!";
-			flock ($IN, LOCK_SH);
+			open (my $IN, "<", "/var/lib/csf/stats/iptables_log" ) or die "Unable to open file: $!";
+			flock ( $IN, LOCK_SH);
 			my @iptables = <$IN>;
-			close ($IN);
+			close ( $IN);
 			chomp @iptables;
 			@iptables = reverse @iptables;
 	
@@ -2240,12 +2364,12 @@ EOD
 			my $divcnt = 0;
 			my $expcnt = @iptables;
 
-			if ($iptables[0] =~ /\|(\S+\s+\d+\s+\S+)/)
+			if ( $iptables[0] =~ /\|(\S+\s+\d+\s+\S+)/)
 			{
 				$from = $1
 			}
 	
-			if ($iptables[-1] =~ /\|(\S+\s+\d+\s+\S+)/)
+			if ( $iptables[-1] =~ /\|(\S+\s+\d+\s+\S+)/)
 			{
 				$to = $1
 			}
@@ -2258,7 +2382,7 @@ EOD
 
 			my $size = scalar @iptables;
 
-			if ($size > $config{ST_IPTABLES})
+			if ( $size > $config{ST_IPTABLES})
 			{
 				$size = $config{ST_IPTABLES}
 			}
@@ -2268,37 +2392,37 @@ EOD
 				my $line = $iptables[$x];
 				$divcnt++;
 	
-				my ($text,$log) = split(/\|/,$line);
-				my ($time,$desc,$in,$out,$src,$dst,$spt,$dpt,$proto,$inout);
-				if ($log =~ /IN=(\S+)/) {$in = $1}
-				if ($log =~ /OUT=(\S+)/) {$out = $1}
-				if ($log =~ /SRC=(\S+)/) {$src = $1}
-				if ($log =~ /DST=(\S+)/) {$dst = $1}
-				if ($log =~ /SPT=(\d+)/) {$spt = $1}
-				if ($log =~ /DPT=(\d+)/) {$dpt = $1}
-				if ($log =~ /PROTO=(\S+)/) {$proto = $1}
+				my ( $text,$log) = split(/\|/,$line);
+				my ( $time,$desc,$in,$out,$src,$dst,$spt,$dpt,$proto,$inout);
+				if ( $log =~ /IN=(\S+)/) {$in = $1}
+				if ( $log =~ /OUT=(\S+)/) {$out = $1}
+				if ( $log =~ /SRC=(\S+)/) {$src = $1}
+				if ( $log =~ /DST=(\S+)/) {$dst = $1}
+				if ( $log =~ /SPT=(\d+)/) {$spt = $1}
+				if ( $log =~ /DPT=(\d+)/) {$dpt = $1}
+				if ( $log =~ /PROTO=(\S+)/) {$proto = $1}
 
-				if ($text ne "")
+				if ( $text ne "" )
 				{
 					$text =~ s/\(/\<br\>\(/g;
-					if ($in and $src)
+					if ( $in and $src)
 					{
 						$src = $text ; $dst .= " <br>(server)"
 					}
-					elsif ($out and $dst)
+					elsif ( $out and $dst)
 					{
 						$dst = $text ; $src .= " <br>(server)"
 					}
 				}
 		
-				if ($log =~ /^(\S+\s+\d+\s+\S+)/)
+				if ( $log =~ /^(\S+\s+\d+\s+\S+)/)
 				{
 					$time = $1
 				}
 
 				$inout = "n/a";
-				if ($in) {$inout = "in"}
-				elsif ($out) {$inout = "out"}
+				if ( $in) {$inout = "in"}
+				elsif ( $out) {$inout = "out"}
 
 				print "<tr><td style='white-space: nowrap;'><button type='button' class='btn btn-primary glyphicon glyphicon-resize-vertical' data-tooltip='tooltip' title='Toggle Info' onClick='\$(\"#s$divcnt\").toggle()'></button> $time</td><td>$src</td><td>$spt</td><td>$inout</td><td>$dst</td><td>$dpt</td><td>$proto</td></tr>\n";
 
@@ -2316,12 +2440,12 @@ EOD
 		}
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "sips")
+	elsif ( $FORM{action} eq "sips")
 	{
 		sysopen (my $IN, "/etc/csf/csf.sips", O_RDWR | O_CREAT) or die "Unable to open file: $!";
-		flock ($IN, LOCK_SH);
+		flock ( $IN, LOCK_SH);
 		my @confdata = <$IN>;
-		close ($IN);
+		close ( $IN);
 		chomp @confdata;
 
 		print "<form action='$script' method='post'><input type='hidden' name='action' value='sipsave'><br>\n";
@@ -2330,14 +2454,14 @@ EOD
 
 		my %sips;
 		open (my $SIPS, "<","/etc/csf/csf.sips");
-		flock ($SIPS, LOCK_SH);
+		flock ( $SIPS, LOCK_SH);
 		my @data = <$SIPS>;
-		close ($SIPS);
+		close ( $SIPS);
 		chomp @data;
 
-		foreach my $line (@data)
+		foreach my $line ( @data )
 		{
-			if ($line =~ /^(\s|\#|$)/) {next}
+			if ( $line =~ /^(\s|\#|$)/) {next}
 			$sips{$line} = 1;
 		}
 
@@ -2348,7 +2472,7 @@ EOD
 		foreach my $key (sort keys %g_ipv4)
 		{
 			my $ip = $key;
-			if ($ip =~ /^127\.0\.0/)
+			if ( $ip =~ /^127\.0\.0/)
 			{
 				next
 			}
@@ -2356,7 +2480,7 @@ EOD
 			my $chk = "ip_$ip";
 			$chk =~ s/\./\_/g;
 			my $checked = "";
-			if ($sips{$ip})
+			if ( $sips{$ip})
 			{
 				$checked = "checked"
 			}
@@ -2370,7 +2494,7 @@ EOD
 			my $chk = "ip_$ip";
 			$chk =~ s/\./\_/g;
 			my $checked = "";
-			if ($sips{$ip})
+			if ( $sips{$ip})
 			{
 				$checked = "checked"
 			}
@@ -2382,39 +2506,39 @@ EOD
 		print "</table></form>\n";
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "sipsave")
+	elsif ( $FORM{action} eq "sipsave" )
 	{
 		open (my $IN,"<","/etc/csf/csf.sips");
-		flock ($IN, LOCK_SH);
+		flock ( $IN, LOCK_SH);
 		my @data = <$IN>;
-		close ($IN);
+		close ( $IN);
 		chomp @data;
 
 		open (my $OUT,">","/etc/csf/csf.sips");
-		flock ($OUT, LOCK_EX);
-		foreach my $line (@data)
+		flock ( $OUT, LOCK_EX);
+		foreach my $line ( @data )
 		{
-			if ($line =~ /^\#/) {print $OUT "$line\n"} else {last}
+			if ( $line =~ /^\#/) {print $OUT "$line\n"} else {last}
 		}
 
 		foreach my $key (keys %FORM)
 		{
-			if ($key =~ /^ip_(.*)/)
+			if ( $key =~ /^ip_(.*)/)
 			{
 				my $ip = $1;
 				$ip =~ s/\_/\./g;
 				print $OUT "$ip\n";
 			}
 		}
-		close($OUT);
+		close( $OUT);
 
 		print "<div>Changes saved. You should restart csf.</div>\n";
 		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='restart'><input type='submit' class='btn btn-default' value='Restart csf'></form></div>\n";
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "upgrade")
+	elsif ( $FORM{action} eq "upgrade" )
 	{
-		if ($config{THIS_UI})
+		if ( $config{THIS_UI})
 		{
 			print "<div>You cannot upgrade through the UI as restarting lfd will interrupt this session. You must login to the root shell to upgrade csf using:\n<p><b>csf -u</b></div>\n";
 		}
@@ -2428,15 +2552,15 @@ EOD
 			&resize("bot",1);
 
 			open (my $IN, "<", "/etc/csf/version.txt") or die $!;
-			flock ($IN, LOCK_SH);
+			flock ( $IN, LOCK_SH);
 			$myv = <$IN>;
-			close ($IN);
+			close ( $IN);
 			chomp $myv;
 		}
 
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "denyf")
+	elsif ( $FORM{action} eq "denyf" )
 	{
 		print "<div><p>Removing all entries from csf.deny...</p>\n";
 		&resize("top");
@@ -2447,7 +2571,7 @@ EOD
 		&resize("bot",1);
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "csftest")
+	elsif ( $FORM{action} eq "csftest" )
 	{
 		print "<div><p>Testing iptables...</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
 		&printcmd("/usr/local/csf/bin/csftest.pl");
@@ -2456,7 +2580,7 @@ EOD
 		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='restart'><input type='submit' class='btn btn-default' value='Restart csf'></form></div>\n";
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "profiles")
+	elsif ( $FORM{action} eq "profiles" )
 	{
 		my @profiles = sort glob("/usr/local/csf/profiles/*");
 		my @backups = reverse glob("/var/lib/csf/backup/*");
@@ -2466,24 +2590,24 @@ EOD
 		print "<thead><tr><th>Preconfigured Profiles</th><th style='border-left:1px solid #990000'>&nbsp;</th></tr></thead>\n";
 		foreach my $profile (@profiles)
 		{
-			my ($file, undef) = fileparse($profile);
+			my ( $file, undef) = fileparse( $profile);
 			$file =~ s/\.conf$//;
 			my $text;
 			open (my $IN, "<", $profile);
-			flock ($IN, LOCK_SH);
+			flock ( $IN, LOCK_SH);
 			my @profiledata = <$IN>;
-			close ($IN);
+			close ( $IN);
 			chomp @profiledata;
 
-			if ($file eq "reset_to_defaults")
+			if ( $file eq "reset_to_defaults" )
 			{
 				$text = "This is the installation default profile and will reset all csf.conf settings, including enabling TESTING mode";
 			}
-			elsif ($profiledata[0] =~ /^\# Profile:/)
+			elsif ( $profiledata[0] =~ /^\# Profile:/)
 			{
-				foreach my $line (@profiledata)
+				foreach my $line ( @profiledata )
 				{
-					if ($line =~ /^\# (.*)$/)
+					if ( $line =~ /^\# (.*)$/)
 					{
 						$text .= "$1 "
 					}
@@ -2511,9 +2635,9 @@ EOD
 
 		foreach my $backup (@backups)
 		{
-			my ($file, undef) = fileparse($backup);
-			my ($stamp,undef) = split(/_/,$file);
-			print "<optgroup label='".localtime($stamp).":'><option>$file</option></optgroup>\n";
+			my ( $file, undef ) = fileparse( $backup );
+			my ( $stamp, undef ) = split(/_/,$file );
+			print "<optgroup label='".localtime( $stamp).":'><option>$file</option></optgroup>\n";
 		}
 
 		print "</select></td></tr>\n";
@@ -2529,7 +2653,7 @@ EOD
 
 		foreach my $profile (@profiles)
 		{
-			my ($file, undef) = fileparse($profile);
+			my ( $file, undef) = fileparse( $profile);
 			$file =~ s/\.conf$//;
 			print "<option>$file</option>\n";
 		}
@@ -2537,9 +2661,9 @@ EOD
 		print "</optgroup>\n";
 		foreach my $backup (@backups)
 		{
-			my ($file, undef) = fileparse($backup);
-			my ($stamp,undef) = split(/_/,$file);
-			print "<optgroup label='".localtime($stamp).":'><option>$file</option></optgroup>\n";
+			my ( $file, undef ) = fileparse( $backup );
+			my ( $stamp,undef ) = split(/_/, $file );
+			print "<optgroup label='".localtime( $stamp).":'><option>$file</option></optgroup>\n";
 		}
 
 		print "</select></td></tr>\n";
@@ -2549,7 +2673,7 @@ EOD
 
 		foreach my $profile (@profiles)
 		{
-			my ($file, undef) = fileparse($profile);
+			my ( $file, undef) = fileparse( $profile);
 			$file =~ s/\.conf$//;
 			print "<option>$file</option>\n";
 		}
@@ -2558,9 +2682,9 @@ EOD
 
 		foreach my $backup (@backups)
 		{
-			my ($file, undef) = fileparse($backup);
-			my ($stamp,undef) = split(/_/,$file);
-			print "<optgroup label='".localtime($stamp).":'><option>$file</option></optgroup>\n";
+			my ( $file, undef ) = fileparse( $backup );
+			my ( $stamp, undef ) = split( /_/, $file );
+			print "<optgroup label='".localtime( $stamp).":'><option>$file</option></optgroup>\n";
 		}
 
 		print "</select></td></tr>\n";
@@ -2570,18 +2694,18 @@ EOD
 
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "profileapply")
+	elsif ( $FORM{action} eq "profileapply" )
 	{
 		my $profile = $FORM{profile};
 		$profile =~ s/\W/_/g;
-		print "<div><p>Applying profile ($profile)...</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
+		print "<div><p>Applying profile ( $profile)...</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
 		&printcmd("/usr/sbin/csf","--profile","apply",$profile);
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
 		print "<div>You should restart both csf and lfd.</div>\n";
 		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='restartboth'><input type='submit' class='btn btn-default' value='Restart csf+lfd'></form></div>\n";
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "profilebackup")
+	elsif ( $FORM{action} eq "profilebackup" )
 	{
 		my $profile = $FORM{backup};
 		$profile =~ s/\W/_/g;
@@ -2590,18 +2714,18 @@ EOD
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "profilerestore")
+	elsif ( $FORM{action} eq "profilerestore" )
 	{
 		my $profile = $FORM{backup};
 		$profile =~ s/\W/_/g;
-		print "<div><p>Restoring backup ($profile)...</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
+		print "<div><p>Restoring backup ( $profile)...</p>\n<pre class='comment' style='white-space: pre-wrap;'>\n";
 		&printcmd("/usr/sbin/csf","--profile","restore",$profile);
 		print "</pre>\n<p>...<b>Done</b>.</p></div>\n";
 		print "<div>You should restart both csf and lfd.</div>\n";
 		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='restartboth'><input type='submit' class='btn btn-default' value='Restart csf+lfd'></form></div>\n";
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "profilediff")
+	elsif ( $FORM{action} eq "profilediff" )
 	{
 		my $profile1 = $FORM{profile1};
 		my $profile2 = $FORM{profile2};
@@ -2610,16 +2734,16 @@ EOD
 
 		print "<table class='table table-bordered table-striped'>\n";
 
-		my ($childin, $childout);
-		my $pid = open3($childin, $childout, $childout, "/usr/sbin/csf","--profile","diff",$profile1,$profile2);
+		my ( $childin, $childout);
+		my $pid = open3( $childin, $childout, $childout, "/usr/sbin/csf","--profile","diff",$profile1,$profile2);
 		while (<$childout>)
 		{
 			$_ =~ s/\[|\]//g;
-			my ($var,$p1,$p2) = split(/\s+/,$_);
-			if ($var eq "") {
+			my ( $var,$p1,$p2) = split(/\s+/,$_);
+			if ( $var eq "" ) {
 				next;
 			}
-			elsif ($var eq "SETTING")
+			elsif ( $var eq "SETTING" )
 			{
 				print "<tr><td><b>$var</b></td><td><b>$p1</b></td><td><b>$p2</b></td></tr>\n";
 			}
@@ -2629,12 +2753,12 @@ EOD
 			}
 		}
 
-		waitpid ($pid, 0);
+		waitpid ( $pid, 0);
 		print "</table>\n";
 
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "viewports")
+	elsif ( $FORM{action} eq "viewports" )
 	{
 		print "<div><h4>Ports listening for external connections and the executables running behind them:</h4></div>\n";
 		print "<table class='table table-bordered table-striped'>\n";
@@ -2648,7 +2772,7 @@ EOD
 				foreach my $pid (sort {$a <=> $b} keys %{$listen{$protocol}{$port}})
 				{
 					my $fopen;
-					if ($ports{$protocol}{$port})
+					if ( $ports{$protocol}{$port})
 					{
 						$fopen = "4"
 					}
@@ -2657,12 +2781,12 @@ EOD
 						$fopen = "-"
 					}
 
-					if ($config{IPV6} and $ports{$protocol."6"}{$port})
+					if ( $config{IPV6} and $ports{$protocol."6"}{$port})
 					{
 						$fopen .= "/6"} else {$fopen .= "/-"
 					}
 
-					my $fcmd = ($listen{$protocol}{$port}{$pid}{cmd});
+					my $fcmd = ( $listen{$protocol}{$port}{$pid}{cmd});
 					$fcmd =~ s/\</\&lt;/g;
 					$fcmd =~ s/\&/\&amp;/g;
 
@@ -2679,7 +2803,7 @@ EOD
 
 		&renderBtnReturn;
 	}
-	elsif ($mobile)
+	elsif ( $mobile)
 	{
 		print "<table class='table table-bordered table-striped'>\n";
 		print "<tr><td><form action='$script' method='post'><input type='hidden' name='mobi' value='$mobile'><input type='hidden' name='action' value='qallow'><input type='submit' class='btn btn-default' value='Quick Allow'></td><td style='width:100%'><input type='text' name='ip' value='' size='18' style='background-color: #BDECB6'></form></td></tr>\n";
@@ -2688,13 +2812,13 @@ EOD
 		print "<tr><td><form action='$script' method='post'><input type='hidden' name='mobi' value='$mobile'><input type='hidden' name='action' value='kill'><input type='submit' class='btn btn-default' value='Quick Unblock'></td><td style='width:100%'><input type='text' name='ip' value='' size='18'></form></td></tr>\n";
 		print "</table>\n";
 	}
-	elsif ($FORM{action} eq "fix")
+	elsif ( $FORM{action} eq "fix" )
 	{
 		print "<div class='bs-callout bs-callout-warning'>These options should only be used as a last resort as most of them will reduce the effectiveness of csf and lfd to protect the server</div>\n";
 		print "<table class='table table-bordered table-striped'>\n";
 		print "<thead><tr><th colspan='2'>Fix Common Problems</th></tr></thead>";
 
-		if ($config{LF_SPI} == 0)
+		if ( $config{LF_SPI} == 0)
 		{
 			print "<tr><td><button class='btn btn-default' disabled>Disable SPI</button>\n";
 		}
@@ -2704,13 +2828,13 @@ EOD
 		}
 		print "</td><td style='width:100%'>If you find that ports listed in TCP_IN/UDP_IN are being blocked by iptables (e.g. port 80) as seen in /var/log/messages and users can only connect to the server if entered in csf.allow, then it could be that the kernel (usually on virtual servers) is broken and cannot perform connection tracking. In this case, disabling the Stateful Packet Inspection functionality of csf (LF_SPI) may help\n";
 
-		if ($config{LF_SPI} == 0)
+		if ( $config{LF_SPI} == 0)
 		{
 			print "<br><strong>Note: LF_SPI is already disabled</strong>";
 		}
 		print "</td></tr>\n";
 
-		if ($config{TCP_IN} =~ /30000:35000/)
+		if ( $config{TCP_IN} =~ /30000:35000/)
 		{
 			print "<tr><td><button class='btn btn-default' disabled>Open PASV FTP Hole</button>\n";
 		}
@@ -2720,13 +2844,13 @@ EOD
 		}
 
 		print "</td><td style='width:100%'>If the kernel (usually on virtual servers) is broken and cannot perform ftp connection tracking, or if you are trying to use FTP over SSL, this option will open a hole in the firewall to allow PASV connections through\n";
-		if ($config{TCP_IN} =~ /30000:35000/)
+		if ( $config{TCP_IN} =~ /30000:35000/)
 		{
 			print "<br><strong>Note: The port range 30000 to 35000 is already open in csf</strong>\n";
 		}
 		print "</td></tr>\n";
 
-		if ($config{PT_USERKILL} == 0)
+		if ( $config{PT_USERKILL} == 0)
 		{
 			print "<tr><td><button class='btn btn-default' disabled>Disable PT_USERKILL</button>\n";
 		}
@@ -2736,13 +2860,13 @@ EOD
 		}
 		print "</td><td style='width:100%'>If lfd is killing running processes and you have PT_USERKILL enabled, then we recommend that you disable this feature\n";
 
-		if ($config{PT_USERKILL} == 0)
+		if ( $config{PT_USERKILL} == 0)
 		{
 			print "<br><strong>Note: PT_USERKILL is already disabled</strong>";
 		}
 		print "</td></tr>\n";
 
-		if ($config{SMTP_BLOCK} == 0)
+		if ( $config{SMTP_BLOCK} == 0)
 		{
 			print "<tr><td><button class='btn btn-default' disabled>Disable SMTP_BLOCK</button>\n";
 		}
@@ -2752,7 +2876,7 @@ EOD
 		}
 		print "</td><td style='width:100%'>If scripts on the server are unable to send out email via external SMTP connections and you have SMTP_BLOCK enabled then those scripts should be configured to send email either through /usr/sbin/sendmail or localhost on the server. If this is not possible then disabling SMTP_BLOCK can fix this\n";
 
-		if ($config{SMTP_BLOCK} == 0)
+		if ( $config{SMTP_BLOCK} == 0)
 		{
 			print "<br><strong>Note: SMTP_BLOCK is already disabled</strong>";
 		}
@@ -2770,7 +2894,7 @@ EOD
 		&renderBtnReturn;
 		&confirmmodal;
 	}
-	elsif ($FORM{action} eq "fixpasvftp")
+	elsif ( $FORM{action} eq "fixpasvftp" )
 	{
 		print "<div class='panel panel-default'>\n";
 		print "<div class='panel-heading panel-heading'>Enabling pure-ftpd PASV hole:</div>\n";
@@ -2784,22 +2908,22 @@ EOD
 			require Cpanel::Config;
 			import Cpanel::Config;
 			my $cpconf = Cpanel::Config::loadcpconf();
-			if ($cpconf->{ftpserver} eq "pure-ftpd")
+			if ( $cpconf->{ftpserver} eq "pure-ftpd" )
 			{
 				copy("/etc/pure-ftpd.conf","/etc/pure-ftpd.conf-".time."_prefixpasvftp");
 				sysopen (my $PUREFTP,"/etc/pure-ftpd.conf", O_RDWR | O_CREAT);
-				flock ($PUREFTP, LOCK_EX);
+				flock ( $PUREFTP, LOCK_EX);
 				my @ftp = <$PUREFTP>;
 				chomp @ftp;
-				seek ($PUREFTP, 0, 0);
-				truncate ($PUREFTP, 0);
+				seek ( $PUREFTP, 0, 0);
+				truncate ( $PUREFTP, 0);
 				my $hit = 0;
 
 				foreach my $line (@ftp)
 				{
-					if ($line =~ /^#?\s*PassivePortRange/i)
+					if ( $line =~ /^#?\s*PassivePortRange/i)
 					{
-						if ($hit)
+						if ( $hit)
 						{
 							next
 						}
@@ -2809,18 +2933,18 @@ EOD
 					print $PUREFTP "$line\n";
 				}
 	
-				unless ($hit)
+				unless ( $hit)
 				{
 					print $PUREFTP "PassivePortRange 30000 35000"
 				}
-				close ($PUREFTP);
+				close ( $PUREFTP);
 
-				&printcmd("/scripts/restartsrv_pureftpd");
+				&printcmd( "/scripts/restartsrv_pureftpd" );
 				$ftpdone = 1;
 			}
 		}
 
-		if ($config{TCP_IN} =~ /30000:35000/)
+		if ( $config{TCP_IN} =~ /30000:35000/ )
 		{
 			print "PASV port range 30000:35000 already exists in TCP_IN/TCP6_IN\n";
 		}
@@ -2872,22 +2996,23 @@ EOD
 		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='restartboth'><input type='submit' class='btn btn-default' value='Restart csf+lfd'></form></div>\n";
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "fixspi")
+	elsif ( $FORM{action} eq "fixspi" )
 	{
 		print "<div class='panel panel-default'>\n";
 		print "<div class='panel-heading panel-heading'>Disabling LF_SPI:</div>\n";
 		print "<div class='panel-body'>";
 
-		copy("/etc/csf/csf.conf","/var/lib/csf/backup/".time."_prefixspi");
-		sysopen (my $CSFCONF,"/etc/csf/csf.conf", O_RDWR | O_CREAT);
-		flock ($CSFCONF, LOCK_EX);
+		copy( "/etc/csf/csf.conf","/var/lib/csf/backup/".time."_prefixspi" );
+		sysopen ( my $CSFCONF,"/etc/csf/csf.conf", O_RDWR | O_CREAT );
+		flock ( $CSFCONF, LOCK_EX );
 		my @csf = <$CSFCONF>;
 		chomp @csf;
-		seek ($CSFCONF, 0, 0);
-		truncate ($CSFCONF, 0);
-		foreach my $line (@csf)
+		seek ( $CSFCONF, 0, 0 );
+		truncate ( $CSFCONF, 0 );
+
+		foreach my $line ( @csf )
 		{
-			if ($line =~ /^LF_SPI /)
+			if ( $line =~ /^LF_SPI / )
 			{
 				print $CSFCONF "LF_SPI = \"0\"\n";
 				print "*** LF_SPI disabled ***\n";
@@ -2897,7 +3022,7 @@ EOD
 				print $CSFCONF $line."\n";
 			}
 		}
-		close ($CSFCONF);
+		close ( $CSFCONF);
 
 		print "</div>\n";
 		print "<div class='panel-footer panel-footer'>Completed</div>\n";
@@ -2906,23 +3031,23 @@ EOD
 		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='restartboth'><input type='submit' class='btn btn-default' value='Restart csf+lfd'></form></div>\n";
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "fixkill")
+	elsif ( $FORM{action} eq "fixkill" )
 	{
 		print "<div class='panel panel-default'>\n";
 		print "<div class='panel-heading panel-heading'>Disabling PT_USERKILL:</div>\n";
 		print "<div class='panel-body'>";
 
-		copy("/etc/csf/csf.conf","/var/lib/csf/backup/".time."_prefixkill");
-		sysopen (my $CSFCONF,"/etc/csf/csf.conf", O_RDWR | O_CREAT);
-		flock ($CSFCONF, LOCK_EX);
+		copy( "/etc/csf/csf.conf","/var/lib/csf/backup/".time."_prefixkill" );
+		sysopen ( my $CSFCONF,"/etc/csf/csf.conf", O_RDWR | O_CREAT );
+		flock ( $CSFCONF, LOCK_EX);
 		my @csf = <$CSFCONF>;
 		chomp @csf;
-		seek ($CSFCONF, 0, 0);
-		truncate ($CSFCONF, 0);
+		seek ( $CSFCONF, 0, 0 );
+		truncate ( $CSFCONF, 0 );
 
-		foreach my $line (@csf)
+		foreach my $line ( @csf )
 		{
-			if ($line =~ /^PT_USERKILL /)
+			if ( $line =~ /^PT_USERKILL /)
 			{
 				print $CSFCONF "PT_USERKILL = \"0\"\n";
 				print "*** PT_USERKILL disabled ***\n";
@@ -2930,7 +3055,7 @@ EOD
 				print $CSFCONF $line."\n";
 			}
 		}
-		close ($CSFCONF);
+		close ( $CSFCONF );
 
 		print "</div>\n";
 		print "<div class='panel-footer panel-footer'>Completed</div>\n";
@@ -2939,22 +3064,22 @@ EOD
 		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='restartboth'><input type='submit' class='btn btn-default' value='Restart csf+lfd'></form></div>\n";
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "fixsmtp")
+	elsif ( $FORM{action} eq "fixsmtp" )
 	{
 		print "<div class='panel panel-default'>\n";
 		print "<div class='panel-heading panel-heading'>Disabling SMTP_BLOCK:</div>\n";
 		print "<div class='panel-body'>";
 
-		copy("/etc/csf/csf.conf","/var/lib/csf/backup/".time."_prefixsmtp");
-		sysopen (my $CSFCONF,"/etc/csf/csf.conf", O_RDWR | O_CREAT);
-		flock ($CSFCONF, LOCK_EX);
+		copy( "/etc/csf/csf.conf","/var/lib/csf/backup/".time."_prefixsmtp" );
+		sysopen ( my $CSFCONF,"/etc/csf/csf.conf", O_RDWR | O_CREAT );
+		flock ( $CSFCONF, LOCK_EX );
 		my @csf = <$CSFCONF>;
 		chomp @csf;
-		seek ($CSFCONF, 0, 0);
-		truncate ($CSFCONF, 0);
-		foreach my $line (@csf)
+		seek ( $CSFCONF, 0, 0 );
+		truncate ( $CSFCONF, 0 );
+		foreach my $line ( @csf )
 		{
-			if ($line =~ /^SMTP_BLOCK /)
+			if ( $line =~ /^SMTP_BLOCK / )
 			{
 				print $CSFCONF "SMTP_BLOCK = \"0\"\n";
 				print "*** SMTP_BLOCK disabled ***\n";
@@ -2964,7 +3089,7 @@ EOD
 				print $CSFCONF $line."\n";
 			}
 		}
-		close ($CSFCONF);
+		close ( $CSFCONF );
 
 		print "</div>\n";
 		print "<div class='panel-footer panel-footer'>Completed</div>\n";
@@ -2973,7 +3098,7 @@ EOD
 		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='restartboth'><input type='submit' class='btn btn-default' value='Restart csf+lfd'></form></div>\n";
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "fixalerts")
+	elsif ( $FORM{action} eq "fixalerts" )
 	{
 		print "<div class='panel panel-default'>\n";
 		print "<div class='panel-heading panel-heading'>Disabling All Alerts:</div>\n";
@@ -2992,15 +3117,15 @@ EOD
 		print "<div><form action='$script' method='post'><input type='hidden' name='action' value='restartboth'><input type='submit' class='btn btn-default' value='Restart csf+lfd'></form></div>\n";
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "fixnuclear")
+	elsif ( $FORM{action} eq "fixnuclear" )
 	{
 		print "<div class='panel panel-default'>\n";
 		print "<div class='panel-heading panel-heading'>Nuclear Option:</div>\n";
 		print "<div class='panel-body'>";
 
 		my $time = time;
-		sysopen (my $REINSTALL, "/usr/src/reinstall_$time.sh", O_WRONLY | O_CREAT | O_TRUNC);
-		flock ($REINSTALL, LOCK_EX);
+		sysopen ( my $REINSTALL, "/usr/src/reinstall_$time.sh", O_WRONLY | O_CREAT | O_TRUNC );
+		flock ( $REINSTALL, LOCK_EX );
 		print $REINSTALL <<EOF;
 #!/usr/bin/bash
 bash /etc/csf/uninstall.sh
@@ -3012,13 +3137,13 @@ tar -xzf csf.tgz
 cd csf
 sh install.sh
 EOF
-		close ($REINSTALL);
-		&resize("top");
+		close ( $REINSTALL );
+		&resize( "top" );
 		print "<pre class='comment' style='white-space: pre-wrap; height: 500px; overflow: auto; resize:both; clear:both' id='output'>\n";
-		&printcmd("bash","/usr/src/reinstall_$time.sh");
+		&printcmd( "bash","/usr/src/reinstall_$time.sh" );
 		unlink "/usr/src/reinstall_$time.sh";
 		print "</pre>\n";
-		&resize("bot",1);
+		&resize( "bot", 1 );
 		print "</div>\n";
 		print "<div class='panel-footer panel-footer'>Completed</div>\n";
 		print "</div>\n";
@@ -3029,15 +3154,15 @@ EOF
 		if (defined $ENV{WEBMIN_VAR} and defined $ENV{WEBMIN_CONFIG} and -e "module.info")
 		{
 			my @data = slurp("module.info");
-			foreach my $line (@data)
+			foreach my $line ( @data )
 			{
-				if ($line =~ /^name=csf$/)
+				if ( $line =~ /^name=csf$/)
 				{
 					unless (-l "index.cgi")
 					{
 						unlink "index.cgi";
 						my $status = symlink ("/usr/local/csf/lib/webmin/csf/index.cgi","index.cgi");
-						if ($status and -l "index.cgi")
+						if ( $status and -l "index.cgi" )
 						{
 							symlink ("/usr/local/csf/lib/webmin/csf/images","csfimages");
 							print "<p><b>csf updated to symlink webmin module to /usr/local/csf/lib/webmin/csf/. Click <a href='index.cgi'>here</a> to continue<p></b>\n";
@@ -3054,38 +3179,38 @@ EOF
 		}
 
 		&getethdev;
-		my ($childin, $childout);
-		my $pid = open3($childin, $childout, $childout, "$config{IPTABLES} $config{IPTABLESWAIT} -L LOCALINPUT -n");
+		my ( $childin, $childout);
+		my $pid = open3( $childin, $childout, $childout, "$config{IPTABLES} $config{IPTABLESWAIT} -L LOCALINPUT -n");
 		my @iptstatus = <$childout>;
-		waitpid ($pid, 0);
+		waitpid ( $pid, 0 );
 		chomp @iptstatus;
 
-		if ($iptstatus[0] =~ /# Warning: iptables-legacy tables present/)
+		if ( $iptstatus[0] =~ /# Warning: iptables-legacy tables present/ )
 		{
 			shift @iptstatus
 		}
 
 		my $status = "<div class='bs-callout bs-callout-success text-center'><h4>Firewall Status: Enabled and Running</h4></div>";
 
-		if (-e "/etc/csf/csf.disable")
+		if ( -e "/etc/csf/csf.disable" )
 		{
 			$status = "<div class='bs-callout bs-callout-danger text-center'><form action='$script' method='post'><h4>Firewall Status: Disabled and Stopped <input type='hidden' name='action' value='enable'><input type='submit' class='btn btn-default' value='Enable'></form></h4></div>\n"
 		}
-		elsif ($config{TESTING})
+		elsif ( $config{TESTING} )
 		{
 			$status = "<div class='bs-callout bs-callout-warning text-center'><form action='$script' method='post'><h4>Firewall Status: Enabled but in Test Mode - Don't forget to disable TESTING in the Firewall Configuration</h4></div>";
 		}
-		elsif ($iptstatus[0] !~ /^Chain LOCALINPUT/)
+		elsif ( $iptstatus[0] !~ /^Chain LOCALINPUT/ )
 		{
 			$status = "<div class='bs-callout bs-callout-danger text-center'><form action='$script' method='post'><h4>Firewall Status: Enabled but Stopped <input type='hidden' name='action' value='start'><input type='submit' class='btn btn-default' value='Start'></form></h4></div>"
 		}
 	
-		if (-e "/var/lib/csf/lfd.restart")
+		if ( -e "/var/lib/csf/lfd.restart" )
 		{
 			$status .= "<div class='bs-callout bs-callout-info text-center'><h4>lfd restart request pending</h4></div>"
 		}
 
-		unless ($config{RESTRICT_SYSLOG})
+		unless ( $config{RESTRICT_SYSLOG} )
 		{
 			$status .= "<div class='bs-callout bs-callout-warning text-center'><h4>WARNING: RESTRICT_SYSLOG is disabled. See SECURITY WARNING in Firewall Configuration</h4></div>\n"
 		}
@@ -3093,10 +3218,10 @@ EOF
 		my $tempcnt = 0;
 		if (! -z "/var/lib/csf/csf.tempban")
 		{
-			sysopen (my $IN, "/var/lib/csf/csf.tempban", O_RDWR);
-			flock ($IN, LOCK_EX);
+			sysopen ( my $IN, "/var/lib/csf/csf.tempban", O_RDWR );
+			flock ( $IN, LOCK_EX );
 			my @data = <$IN>;
-			close ($IN);
+			close ( $IN );
 			chomp @data;
 			$tempcnt = scalar @data;
 		}
@@ -3106,9 +3231,9 @@ EOF
 		if (! -z "/var/lib/csf/csf.tempallow")
 		{
 			sysopen (my $IN, "/var/lib/csf/csf.tempallow", O_RDWR);
-			flock ($IN, LOCK_EX);
+			flock ( $IN, LOCK_EX);
 			my @data = <$IN>;
-			close ($IN);
+			close ( $IN);
 			chomp @data;
 			$tempcnt = scalar @data;
 		}
@@ -3118,14 +3243,14 @@ EOF
 		if (! -z "/etc/csf/csf.deny")
 		{
 			sysopen (my $IN, "/etc/csf/csf.deny", O_RDWR);
-			flock ($IN, LOCK_SH);
+			flock ( $IN, LOCK_SH);
 			while (my $line = <$IN>)
 			{
 				chomp $line;
-				if ($line =~ /^(\#|\n|\r)/) {next}
-				if ($line =~ /$ipv4reg|$ipv6reg/) {$permcnt++}
+				if ( $line =~ /^(\#|\n|\r)/) {next}
+				if ( $line =~ /$ipv4reg|$ipv6reg/) {$permcnt++}
 			}
-			close ($IN);
+			close ( $IN);
 		}
 		my $permbans = "(Currently: <code>$permcnt</code> permanent IP bans)";
 
@@ -3133,20 +3258,20 @@ EOF
 		if (! -z "/etc/csf/csf.allow")
 		{
 			sysopen (my $IN, "/etc/csf/csf.allow", O_RDWR);
-			flock ($IN, LOCK_SH);
+			flock ( $IN, LOCK_SH);
 			while (my $line = <$IN>)
 			{
 				chomp $line;
-				if ($line =~ /^(\#|\n|\r)/)
+				if ( $line =~ /^(\#|\n|\r)/)
 				{
 					next
 				}
-				if ($line =~ /$ipv4reg|$ipv6reg/)
+				if ( $line =~ /$ipv4reg|$ipv6reg/)
 				{
 					$permcnt++
 				}
 			}
-			close ($IN);
+			close ( $IN);
 		}
 		my $permallows = "(Currently: <code>$permcnt</code> permanent IP allows)";
 
@@ -3168,6 +3293,7 @@ EOF
 
 		print "<li><a data-toggle='tab' href='#other'>Other</a></li>\n";
 		print "<li><a data-toggle='tab' href='#resources'>Resources</a></li>\n";
+		print "<li><a data-toggle='tab' href='#insiders'>Insiders</a></li>\n";
 		print "</ul><br>\n";
 
 		# #
@@ -3185,13 +3311,13 @@ EOF
 		__ 					"<tr><td><button name='action' value='loggrep' type='submit' class='btn btn-default'>Search System Logs</button></td><td style='width:100%'>Search (grep) various system log files (listed in csf.syslogs)</td></tr>\n";
 		__ 					"<tr><td><button name='action' value='viewports' type='submit' class='btn btn-default'>View Listening Ports</button></td><td style='width:100%'>View ports on the server that have a running process behind them listening for external connections</td></tr>\n";
 		__ 					"<tr><td><button name='action' value='rblcheck' type='submit' class='btn btn-default'>Check for IPs in RBLs</button></td><td style='width:100%'>Check whether any of the servers IP addresses are listed in RBLs</td></tr>\n";
-		if ($config{ST_ENABLE})
+		if ( $config{ST_ENABLE})
 		{
 			__ 				"<tr><td><button name='action' value='viewlogs' type='submit' class='btn btn-default'>View iptables Log</button></td><td style='width:100%'>View the last $config{ST_IPTABLES} iptables log lines</td></tr>\n";
-			if ($chart)
+			if ( $chart)
 			{
 				__ 			"<tr><td><button name='action' value='chart' type='submit' class='btn btn-default'>View lfd Statistics</button></td><td style='width:100%'>View lfd blocking statistics</td></tr>\n";
-				if ($config{ST_SYSTEM})
+				if ( $config{ST_SYSTEM})
 				{
 					__ 		"<tr><td><button name='action' value='systemstats' type='submit' class='btn btn-default'>View System Statistics</button></td><td style='width:100%'>View basic system statistics</td></tr>\n";
 				}
@@ -3208,7 +3334,7 @@ EOF
 		#	response (str)		upgrade status or version
 		my ( $upgrade, $response ) = &csgetversion( "csf", $myv );
 
-		if ($upgrade)
+		if ( $upgrade)
 		{
 		__ 					"<tr><td><button name='action' value='upgrade' type='submit' class='btn btn-default'>Upgrade csf</button></td><td style='width:100%'><b>A new version of csf (v$response) is available. Upgrading will retain your settings<br><a href='https://$config{DOWNLOADSERVER}/csf/changelog.txt' target='_blank'>View ChangeLog</a></b></td></tr>\n";
 		}
@@ -3224,7 +3350,7 @@ EOF
 							}
 		}
 
-							if (!$config{INTERWORX} and (-e "/etc/apf" or -e "/usr/local/bfd"))
+							if (!$config{INTERWORX} and (-e "/etc/apf" or -e "/usr/local/bfd") )
 							{
 		__ 						"<tr><td><button name='action' value='remapf' type='submit' class='btn btn-default'>Remove APF/BFD</button></td><td style='width:100%'>Remove APF/BFD from the server. You must not run both APF or BFD with csf on the same server</td></tr>\n";
 							}
@@ -3340,7 +3466,7 @@ EOF
 
 						if ($config{CLUSTER_CONFIG})
 						{
-							if ($ips{$config{CLUSTER_MASTER}} or $ipscidr6->find($config{CLUSTER_MASTER}) or ($config{CLUSTER_MASTER} eq $config{CLUSTER_NAT}))
+							if ($ips{$config{CLUSTER_MASTER}} or $ipscidr6->find($config{CLUSTER_MASTER}) or ($config{CLUSTER_MASTER} eq $config{CLUSTER_NAT}) )
 							{
 								my $options;
 								my %restricted;
@@ -3442,45 +3568,109 @@ EOF
 		__		"</div> <!-- end other tab-pane active -->\n";
 
 		# #
-		#	Tab > Sponsor
+		#	Tab > Resources
 		# #
 
 		__		"<div id='resources' class='tab-pane active'>\n";
 		__			"<form action='$script' method='post'>\n";
 		__ 				"<table class='table table-bordered table-striped'>\n";
 		__ 					"<thead><tr><th colspan='2'>Resources</th></tr></thead>";
-		__ 						"<tr><td><a href='https://github.com/aetherinox/csf-firewall' target='_blank' class='btn btn-default' style='width: 150px;'>Repository</a></td><td style='width:100%'>View our source code; submit issues to the developers</td></tr>\n";
-		__ 						"<tr><td><a href='https://docs.configserver.dev' target='_blank' class='btn btn-default' style='width: 150px;'>Documentation</a></td><td style='width:100%'>View the CSF documentation</td></tr>\n";
-		__ 						"<tr><td><a href='https://download.configserver.dev' target='_blank' class='btn btn-default' style='width: 150px;'>Download</a></td><td style='width:100%'>Manually download the latest version of CSF</td></tr>\n";
-		__ 						"<tr><td><a href='https://blocklist.configserver.dev/master.ipset' target='_blank' class='btn btn-default' style='width: 150px;'>Blocklist</a></td><td style='width:100%'>Utilize our blocklist service with <code>csf.blocklists</code> to restrict malicious traffic and bad actors</td></tr>\n";
-		__ 						"<tr><td><a href='https://discord.configserver.dev' target='_blank' class='btn btn-default' style='width: 150px;'>Discord</a></td><td style='width:100%'>Speak to others in the community, ask questions, share setups</td></tr>\n";
-		__ 					"<tr><td>";
+		__					"<tr><td><a href='https://github.com/aetherinox/csf-firewall' target='_blank' class='btn btn-default' style='width: 200px;'>Repository</a></td><td style='width:100%'>View our source code; submit issues to the developers</td></tr>\n";
+		__					"<tr><td><a href='https://docs.configserver.dev' target='_blank' class='btn btn-default' style='width: 200px;'>Documentation</a></td><td style='width:100%'>View the CSF documentation</td></tr>\n";
+		__					"<tr><td><a href='https://download.configserver.dev' target='_blank' class='btn btn-default' style='width: 200px;'>Download</a></td><td style='width:100%'>Manually download the latest version of CSF</td></tr>\n";
+		__					"<tr><td><a href='https://blocklist.configserver.dev/master.ipset' target='_blank' class='btn btn-default' style='width: 200px;'>Blocklist</a></td><td style='width:100%'>Utilize our blocklist service with <code>csf.blocklists</code> to restrict malicious traffic and bad actors</td></tr>\n";
+		__					"<tr><td><a href='https://discord.configserver.dev' target='_blank' class='btn btn-default' style='width: 200px;'>Discord</a></td><td style='width:100%'>Speak to others in the community, ask questions, share setups</td></tr>\n";
+		__					"<tr><td><a href='https://docs.configserver.dev/insiders' target='_blank' class='btn btn-default' style='width: 200px;'>Insiders</a></td><td style='width:100%'>Learn more about our insiders program</td></tr>\n";
 		__				"</table>\n";
 		__ 			"</form>\n";
+		__		"</div> <!-- end id='resources' -->\n"; # end TAB id='resources'
+
+		# #
+		#	Tab > Insiders
+		# #
+
+		__		"<div id='insiders' class='tab-pane active'>\n";
 		__ 			"<div id='sponsor' class='tab-pane'>\n";
 		__ 				"<div class='panel panel-default'>\n";
-		__ 					"<div class='panel-heading text-center'><h4>Sponsorship & Insiders</h4></div>\n";
-		__ 						"<div class='panel-body'>\n";
-		__ 							"ConfigServer Security & Firewall (csf) will always remain free and fully functional and all users will be given the same features. ";
-		__ 							"However, if you would like to support ongoing development, hosting, and maintenance costs, please consider becoming a sponsor.\n";
-		__ 							"<br><br><strong>Sponsor perks include:</strong>\n";
-		__ 							"<ul style='text-align:left;'>\n";
-		__ 								"<li>Early test access to new major features with our <b>Insiders branch</b></li>\n";
-		__ 								"<li>A special Discord role with exclusive benefits</li>\n";
-		__ 								"<li>Recognition on our project sponsor page</li>\n";
-		__ 								"<li>Future additional perks</li>\n";
-		__ 								"<li>A huge thank you</li>\n";
-		__ 							"</ul>\n";
-		__ 							"<br><br>\n";
-		__ 							"<a href='https://buymeacoffee.com/aetherinox' target='_blank' class='btn btn-success'>Become a Sponsor</a>\n";
-		__ 						"</div>\n";
-		__ 					"</div>\n";
-		__ 				"</div>\n";
-		__ 			"</div> <!-- end id='home' -->\n"; # end TAB id='home'
+		__ 					"<div class='panel-heading text-center'><h4>Insiders Program & Sponsorship</h4></div>\n";
+		__					"<div class='panel-body'>\n";
+		__						"The ConfigServer Security & Firewall <b>Insiders Program</b> is for users who want to help support and shape the future of ConfigServer Security & Firewall. As an Insider, you’ll gain early access to upcoming features and experimental functionality before it is released to the public.<br><br />\n";
+		__						"We don’t believe in putting security behind a paywall because your safety shouldn’t depend on your wallet. The Insiders Program simply gives people a way to contribute to CSF by testing upcoming versions, keeping our lights on, and helping us catch bugs before a release rolls out to the public channel.\n";
+		__						"<br><br><strong>By sponsoring our project, you will receive the following:</strong>\n";
+		__						"<ul style='text-align:left;'>\n";
+		__							"<li><a href='https://docs.configserver.dev/insiders'>Insiders</a> access to ConfigServer Security and Firewall release channel</b></li>\n";
+		__							"<li><a href='https://discord.configserver.dev'>Discord</a> <b>Sponsor</b> role</li>\n";
+		__							"<li>Listed on our project <a href='https://docs.configserver.dev/insiders/sponsors/'>Sponsor</a> page</li>\n";
+		__							"<li>Tell us additional perks you'd like to see as a Sponsor</li>\n";
+		__							"<li>A huge thank you</li>\n";
+		__						"</ul>\n";
+		__					"</div>\n";
+		__					"<form action='$script' method='post'>\n";
+		__ 						"<table class='table table-bordered table-striped' style='margin-bottom:0px;'>\n";
+		__ 							"<tr><td><a href='https://docs.configserver.dev/insiders/sponsors/' target='_blank' class='btn btn-default' style='width: 200px;'>Sponsor Status</a></td><td style='width:100%'><div id='license-status' class='panel-body'>Checking license…</div></td></tr>\n";
+		__ 							"<tr><td><a href='https://docs.configserver.dev/insiders/' target='_blank' class='btn btn-default' style='width: 200px;'>Insiders Channel</a></td><td style='width:100%'><div id='insiders-status' class='panel-body'> Status Here </div></td></tr>\n";
+		__						"</table>\n";
+		__ 					"</form>\n";
+		__				"</div>\n";
+		__			"</div>\n";
+		__		"</div> <!-- end id='insiders' -->\n"; # end TAB id='insiders'
 
 		__ "</div> <!-- end tab-content -->\n"; # end class="tab-content"
 
-		if ($config{STYLE_MOBILE})
+# #
+#	Sponsorship License
+# #
+
+print <<END_JS;
+<script>
+(async function()
+{
+    const license = '$sponsorLicense';
+    const url = 'https://license.configserver.dev/?license=' + license;
+
+    try
+	{
+        const res = await fetch(url);
+        const data = await res.json();
+
+		/*
+			Status > License
+		*/
+
+        const licenseDiv = document.getElementById('license-status');
+	
+        if ( data.valid )
+		{
+            licenseDiv.innerHTML = "<tr><td colspan='2'>✅ You are a sponsor</td></tr>";
+        }
+		else
+		{
+            licenseDiv.innerHTML = "<tr><td colspan='2'>❌ No sponsorship (" + ( data.error || 'unknown') + ")<br><div style='padding-top:10px;'><a href='https://docs.configserver.dev/insiders/sponsors/' target='_blank' class='btn btn-success'>Become a Sponsor</a></div></td></tr>";
+        }
+
+		/*
+			Status > Insiders Channel
+		*/
+
+        const insidersDiv = document.getElementById( 'insiders-status' );
+        const insidersEnabled = data.valid && ( '$config{SPONSOR_RELEASE_INSIDERS}' === "1" );
+
+        insidersDiv.innerHTML = insidersEnabled ? "✅ Enabled" : "❌ Disabled";
+
+    }
+	catch (err)
+	{
+        const licenseDiv = document.getElementById( 'license-status' );
+        licenseDiv.innerHTML = "<tr><td colspan='2'>⚠️ License check failed: " + err.message + "</td></tr>";
+
+        const insidersDiv = document.getElementById( 'insiders-status' );
+        insidersDiv.innerHTML = "⚠️ Status check failed";
+    }
+})();
+</script>
+END_JS
+
+		if ( $config{STYLE_MOBILE} )
 		{
 			if (-e "/usr/local/cpanel/version" and !$config{THIS_UI})
 			{
@@ -3959,12 +4149,12 @@ sub editfile
 		print "<form action='$script' method='post'>\n";
 		print "<input type='hidden' name='action' value='$save'>\n";
 		print "<input type='hidden' name='ace' value='1'>\n";
-		if ($extra) {print "<input type='hidden' name='$extra' value='$FORM{$extra}'>\n";}
+		if ($extra ) {print "<input type='hidden' name='$extra' value='$FORM{$extra}'>\n";}
 		print "<div id='editor' style='width:100%;height:500px;border: 1px solid #000;display:none;'>";
 		print "Loading...</div>\n";
 		print "<div id='textarea'><textarea class='textarea' name='formdata' id='formdata' style='width:100%;height:500px;border: 1px solid #000;font-family:\"Courier New\", Courier;font-size:14px;line-height:1.1' wrap='off'>";
 		print "# Do not remove or change this line as it is a safeguard for the UI editor\n";
-		foreach my $line (@confdata)
+		foreach my $line ( @confdata )
 		{
 			$line =~ s/\</\&lt\;/g;
 			$line =~ s/\>/\&gt\;/g;
@@ -3990,15 +4180,15 @@ sub editfile
 
 	editor.getSession().on('change', function ( )
 	{
-		textarea.val(editor.getSession().getValue());
+		textarea.val(editor.getSession().getValue() );
 	});
 
 	textarea.on('change', function ( )
 	{
-		editor.getSession().setValue(textarea.val());
+		editor.getSession().setValue(textarea.val() );
 	});
 
-	editor.getSession().setValue(textarea.val());
+	editor.getSession().setValue(textarea.val() );
 	\$( '#textarea' ).hide( );
 	editordiv.show( );
 
@@ -4037,20 +4227,24 @@ EOF
 		if ($config{DIRECTADMIN})
 		{
 			print "<form action='$script?pipe_post=yes' method='post'>\n<div class='panel panel-default'>\n";
-		} else {
+		}
+		else
+		{
 			print "<form action='$script' method='post'>\n<div class='panel panel-default'>\n";
 		}
 		print "<div class='panel-heading panel-heading-cxs'>Edit <code>$file</code></div>\n";
 		print "<div class='panel-body'>\n";
 		print "<input type='hidden' name='action' value='$save'>\n";
-		if ($extra) {print "<input type='hidden' name='$extra' value='$FORM{$extra}'>\n";}
+		if ( $extra ) {print "<input type='hidden' name='$extra' value='$FORM{$extra}'>\n";}
 		print "<textarea class='textarea' name='formdata' style='width:100%;height:500px;border: 1px solid #000;' wrap='off'>";
-		foreach my $line (@confdata)
+	
+		foreach my $line ( @confdata )
 		{
 			$line =~ s/\</\&lt\;/g;
 			$line =~ s/\>/\&gt\;/g;
 			print $line."\n";
 		}
+	
 		print "</textarea></div>\n";
 		print "<div class='panel-footer text-center'><input type='submit' class='btn btn-default' value='Change'></div>\n";
 		print "</div></form>\n";
@@ -4394,17 +4588,17 @@ sub manualversion
 	}
 
 	# #
-	#	Alpha Release Channel
+	#	Insiders Release Channel
 	#	
 	#	This should NOT be used on production servers.
 	#	
 	#	Enabled by defining the following in your csf.conf:
-	#		RELEASE_ALPHA = "1"
+	#		SPONSOR_RELEASE_INSIDERS = "1"
 	# #
 
-	if ( $config{RELEASE_ALPHA} == 1 )
+	if ( ( $config{SPONSOR_RELEASE_INSIDERS} // 0 ) == 1 && ( $config{SPONSOR_LICENSE} // '' ) ne '' )
 	{
-		$url .= "?channel=alpha";
+		$url .= "?channel=insiders&license=$config{SPONSOR_LICENSE}";
 	}
 
 	print "<div><pre class='comment' style='white-space: pre-wrap;'>\n";
