@@ -712,6 +712,33 @@ The following are a list of common issues or errors, and potential solutions for
 
 <br />
 
+### IPSET blocklist max IP count change does not take affect on next restart
+
+When you enable a blocklist for the first, it must be defined within `/etc/csf/csf.blocklists` as the following:
+
+```shell title="/etc/csf/csf.blocklists"
+CSF_HIGHRISK|43200|200|http://blocklist.configserver.dev/highrisk.ipset
+```
+
+<br />
+
+In the example above:
+
+| Value                                                     | Description                                                                             |
+| --------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `CSF_HIGHRISK`                                            | Name of the blocklist                                                                   |
+| `43200`                                                   | Blocklist cache time. List will not be refreshed until this time expires.               |
+| `200`                                                     | Max IPs to load in a blocklist                                                          |
+| `http://blocklist.configserver.dev/highrisk.ipset`        | Blocklist to load                                                                       |
+
+<br />
+
+After CSF is started, a list of IPs are fetched from the above URL and stored as a cached file within `/var/lib/csf/`. The cached file will take on the name of your loaded blocklist, such as `/var/lib/csf/csf.block.CSF_HIGHRISK`.
+
+If you change the maximum number of IPs to load and want it to take affect immediately, you MUST delete the cached file `/var/lib/csf/csf.block.CSF_HIGHRISK`.
+
+<br />
+
 ### open3: exec of /sbin/ipset flush failed: No such file or directory at /usr/sbin/csf
 
 This error means that you have enabled IPSET within CSF, but do not have the package itself installed. Open terminal and run the command:
