@@ -3607,8 +3607,8 @@ EOF
 		__					"</div>\n";
 		__					"<form action='$script' method='post'>\n";
 		__ 						"<table class='table table-bordered table-striped' style='margin-bottom:0px;'>\n";
-		__ 							"<tr><td><a href='https://docs.configserver.dev/insiders/sponsors/' target='_blank' class='btn btn-default' style='width: 200px;'>Sponsor Status</a></td><td style='width:100%'><div id='license-status' class='panel-body'>Checking license…</div></td></tr>\n";
-		__ 							"<tr><td><a href='https://docs.configserver.dev/insiders/' target='_blank' class='btn btn-default' style='width: 200px;'>Insiders Channel</a></td><td style='width:100%'><div id='insiders-status' class='panel-body'> Status Here </div></td></tr>\n";
+		__ 							"<tr><td><a href='https://docs.configserver.dev/insiders/sponsors/' target='_blank' class='btn btn-default' style='width: 200px;'>Sponsor Status</a></td><td style='width:100%'><div id='license-status' class='panel-body'>Checking license ... </div></td></tr>\n";
+		__ 							"<tr><td><a href='https://docs.configserver.dev/insiders/' target='_blank' class='btn btn-default' style='width: 200px;'>Insiders Channel</a></td><td style='width:100%'><div id='insiders-status' class='panel-body'>Checking status ... </div></td></tr>\n";
 		__						"</table>\n";
 		__ 					"</form>\n";
 		__				"</div>\n";

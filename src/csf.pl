@@ -3982,7 +3982,7 @@ sub doupdate
 # #
 #	Check for Updates
 #		Stable				https://$config{DOWNLOADSERVER}/csf/version.txt
-#		Alpha / RC			https://$config{DOWNLOADSERVER}/csf/version.txt?channel=alpha
+#		Insiders			https://$config{DOWNLOADSERVER}/csf/version.txt?channel=insiders
 # #
 
 sub docheck
