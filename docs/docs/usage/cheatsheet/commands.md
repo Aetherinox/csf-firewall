@@ -239,6 +239,7 @@ sudo csf --lfd status
 <br />
 
 ### Check for Updates
+
 <!-- md:command `-c,  --check` -->
 
 Check for updates to csf but do not upgrade
