@@ -842,6 +842,24 @@ th
 }
 
 /*
+	Configuration Page
+*/
+
+.cfg-hl-y
+{
+	background-color: #dfd882;
+	padding:0 4px;
+	border-radius: 4px;
+}
+
+.cfg-hl-f
+{
+	background-color: #ffcede;
+	padding:0 4px;
+	border-radius: 4px;
+}
+
+/*
 	Footer › Main Container
 */
 
