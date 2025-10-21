@@ -514,22 +514,6 @@
         color: #ff4592;
     }
 
-    /*
-        Center align buttons
-    */
-
-    .btn-aln-center
-    {
-        text-align: center;
-    }
-
-    p > a.btn-aln-center
-    {
-        display: block;
-        width: fit-content;
-        margin: 0 auto;
-    }
-
     .md-typeset .md-button
     {
         color: #4051b5;
@@ -1330,22 +1314,6 @@
         color: #ff4592;
     }
 
-    /*
-        Center align buttons
-    */
-
-    .btn-aln-center
-    {
-        text-align: center;
-    }
-
-    p > a.btn-aln-center
-    {
-        display: block;
-        width: fit-content;
-        margin: 0 auto;
-    }
-
     .md-typeset .md-button
     {
         color: #c43563;
@@ -1861,6 +1829,54 @@
 }
 
 /*
+    Buttons > Filled Background
+*/
+
+.buttons-fill
+{
+    background-color: #62458c !important;
+    color: #FFF !important;
+    border: 1px solid #62458c !important;
+}
+
+.buttons-fill:hover
+{
+    background-color: #FFF !important;
+    color: #62458c !important;
+    border: 1px solid #fff !important;
+}
+
+/*
+    Center align buttons
+*/
+
+.valign-buttons
+{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.btn-aln-center, .btn-aln-center-inline
+{
+    text-align: center;
+}
+
+p > a.btn-aln-center
+{
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+p > a.btn-aln-center-inline
+{
+    width: fit-content;
+    margin: 0 auto;
+}
+
+/*
     Icon Sizes
 */
 
@@ -2038,6 +2054,23 @@
 }
 
 */
+
+/*
+    Forces subfolders back to their original position
+
+    Example:
+
+      - Insiders:
+            - insiders/index.md
+            - Our Sponsors: insiders/sponsors.md
+            - Using Insiders:
+              - Getting started: insiders/getting-started.md
+*/
+
+[id^="__nav_"]::before
+{
+    content: none !important;
+}
 
 .md-nav--primary .md-nav__title
 {
