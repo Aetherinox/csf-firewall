@@ -272,18 +272,27 @@ sub load_config {
 	}
 
 	my @entries = slurp("/etc/csf/csf.blocklists");
-	foreach my $line (@entries) {
+	foreach my $line (@entries)
+	{
 		if ($line =~ /^Include\s*(.*)$/) {
 			my @incfile = slurp($1);
 			push @entries,@incfile;
 		}
 	}
-	foreach my $line (@entries) {
+
+	foreach my $line (@entries)
+	{
 		$line =~ s/$cleanreg//g;
-		if ($line eq "") {next}
-		if ($line =~ /^\s*\#|Include/) {next}
+		if ($line eq "") { next }
+		if ($line =~ /^\s*\#|Include/) { next }
+
 		my ($name,$interval,$max,$url) = split(/\|/,$line);
-		if ($name =~ /^\w+$/) {
+
+		# Trim whitespace
+		for ($name, $interval, $max, $url) { s/^\s+|\s+$//g; }
+
+		if ($name =~ /^\w+$/)
+		{
 			$name = substr(uc $name, 0, 25);
 			if ($name =~ /^CXS_/) {$name =~ s/^CXS_/X_CXS_/}
 			if ($interval < 3600) {$interval = 3600}
@@ -293,11 +302,13 @@ sub load_config {
 			$blocklists{$name}{url} = $url;
 		}
 	}
+
 	if (-e "/etc/cxs/cxs.reputation" and -e "/usr/local/csf/lib/ConfigServer/cxs.pm") {
 		require ConfigServer::cxs;
 		import ConfigServer::cxs;
 		$cxsreputation = 1;
-		if (-e "/etc/cxs/cxs.blocklists") {
+		if (-e "/etc/cxs/cxs.blocklists")
+		{
 			my $all = 0;
 			my @lines = slurp("/etc/cxs/cxs.blocklists");
 			if (grep {$_ =~ /^CXS_ALL/} @lines) {$all = 1}
@@ -305,8 +316,13 @@ sub load_config {
 				$line =~ s/$cleanreg//g;
 				if ($line =~ /^(\s|\#|$)/) {next}
 				my ($name,$interval,$max,$url) = split(/\|/,$line);
+
+				# Trim whitespace
+				for ($name, $interval, $max, $url) { s/^\s+|\s+$//g; }
+
 				if ($all and $name ne "CXS_ALL") {next}
-				if ($name =~ /^\w+$/) {
+				if ($name =~ /^\w+$/)
+				{
 					$name = substr(uc $name, 0, 25);
 					if ($max eq "") {$max = 0}
 					$blocklists{$name}{interval} = $interval;
