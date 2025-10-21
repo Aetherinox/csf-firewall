@@ -303,6 +303,9 @@ nav:
     - Insiders:
           - insiders/index.md
           - Our Sponsors: insiders/sponsors.md
+          - Using Insiders:
+              - Setup: insiders/setup.md
+              - Disable: insiders/disable.md
     - Blog:
         - blog/index.md
     - Discord: 'https://discord.configserver.dev'
