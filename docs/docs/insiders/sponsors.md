@@ -5,9 +5,9 @@ tags:
     - sponsor
 ---
 
-## Our Sponsors
+A big thank you to everyone who has sponsored ConfigServer Security & Firewall!  
 
-A huge thank you to the following people who have sponsored ConfigServer Security & Firewall.
+Want to be featured on our Sponsor list and join the **Insiders Program**? Learn more about our [Insiders](../insiders/index.md) program.
 
 <br />
 
