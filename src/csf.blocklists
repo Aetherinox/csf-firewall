@@ -94,13 +94,6 @@
 #   SPAMDROPV6|86400|0|https://spamhaus.org/drop/dropv6.txt
 
 # #
-#   @blocklist              Spamhaus Extended DROP List (EDROP)
-#   @details:               http://spamhaus.org/drop
-# #
-
-#   SPAMEDROP|86400|0|http://spamhaus.org/drop/edrop.txt
-
-# #
 #   @blocklist              DShield.org Recommended Block List
 #   @details:               https://dshield.org
 # #
