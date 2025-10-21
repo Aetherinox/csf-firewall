@@ -262,6 +262,7 @@ nav:
           - Introduction: 'about/csf.md'
           - Contributing: 'about/contributing.md'
           - License: 'about/license.md'
+          - Privacy: 'about/privacy.md'
           - Wiki:
                 - Conventions: 'about/conventions.md'
                 - Tags: 'about/tags.md'
