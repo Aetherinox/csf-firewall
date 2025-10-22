@@ -10,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            10.05.2025
+#   @updated            10.22.2025
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -565,8 +565,10 @@ touch /home/cyberpanel/plugins/configservercsf
 # #
 #	Open
 #		/usr/local/CyberCP/CyberCP/settings.py
+#	
 #	Find
 #		'pluginHolder',
+#	
 #	Add Above
 #		'configservercsf',
 # #
@@ -578,14 +580,27 @@ fi
 # #
 #	Open
 #		/usr/local/CyberCP/CyberCP/urls.py
+#	
 #	Find
 #		path('plugins/', include('pluginHolder.urls')),
+#	
 #	Add Above
 #		path('configservercsf/',include('configservercsf.urls')),
 # #
 
-if ! cat /usr/local/CyberCP/CyberCP/urls.py | grep -q configservercsf; then
-    sed -i "/pluginHolder/ i \ \ \ \ path('configservercsf/',include('configservercsf.urls'))," /usr/local/CyberCP/CyberCP/urls.py
+URLS_FILE="/usr/local/CyberCP/CyberCP/urls.py"
+
+# #
+#	Only add line if not already present
+# #
+
+if ! grep "configservercsf" "$URLS_FILE" >/dev/null 2>&1; then
+    URLS_TEMP="/tmp/urls.py.$$"
+
+    sed "/pluginHolder/ i \
+    \ \ \ \ path('configservercsf/',include('configservercsf.urls'))," "$URLS_FILE" > "$URLS_TEMP" \
+    && mv "$URLS_TEMP" "$URLS_FILE"
+	chmod 644 "$URLS_FILE"
 fi
 
 # #
@@ -597,10 +612,14 @@ fi
 # #
 #	Open
 #		/usr/local/CyberCP/baseTemplate/templates/baseTemplate/index.html
+#	
 #	Find
 #		path('plugins/', include('pluginHolder.urls')),
+#	
 #	Insert New
 #		path('configservercsf/',include('configservercsf.urls')),
+#	
+#	@todo			Make POSIX compliant
 # #
 
 if ! cat /usr/local/CyberCP/baseTemplate/templates/baseTemplate/index.html | grep -q configserver; then
@@ -610,14 +629,18 @@ fi
 # #
 #	Open
 #		/usr/local/CyberCP/baseTemplate/templates/baseTemplate/index.html
+#	
 #	Find
 #		<a href="{% url 'imunify' %}" class="menu-item">
 #			<span>Imunify 360</span>
 #		</a>
+#	
 #	Add Above
 #		<a href="{% url 'configservercsf' %}" class="menu-item">
 #			<span>CSF</span>
 #		</a>
+#	
+#	@todo			Make POSIX compliant
 # #
 
 if ! grep -q "configservercsf" /usr/local/CyberCP/baseTemplate/templates/baseTemplate/index.html; then
@@ -628,12 +651,21 @@ if ! grep -q "configservercsf" /usr/local/CyberCP/baseTemplate/templates/baseTem
 fi
 
 # #
-#	Compatibility Tweak
+#	Cyberpanel > Backardards Compatibility > path to url
 #	
-#	Certain versions of Cyberpanel use the older method url(); newer versions use path().
-#	Check the target file to see if we need to convert back to the old method.
+#	In Django 2.x+, URL routing switched from the old url() function to the newer path().
+#	which means older versions of Cyberpabel require url().
+#	
+#	Check the target file to see if we need to convert back to the old url() method.
+#	
+#	Change
+#		from django.urls import path
+#	
+#	To
+#		from django.conf.urls import url
 #	
 #	@target			/usr/local/CyberCP/CyberCP/urls.py
+#	@todo			Make POSIX compliant
 # #
 
 if grep -q "import url" /usr/local/CyberCP/CyberCP/urls.py; then
@@ -644,9 +676,98 @@ if grep -q "import url" /usr/local/CyberCP/CyberCP/urls.py; then
         -e "s/path(/url(/g" \
         /usr/local/CyberCP/CyberCP/urls.py
 
-    echo "[Cyberpanel] path() => url() applied"
+    echo "CSF: [Cyberpanel] - Backwards Compaibility - path() => url() applied"
 else
-    echo "[Cyberpanel] path() => url() not needed"
+    echo "CSF: [Cyberpanel] - Backwards Compaibility - using path()"
+fi
+
+# #
+#	Saving form on "Firewall Configuration" page will toss the following error:
+#		{"error_message": "Data supplied is not accepted, following characters are not allowed in the input ` $ & ( ) [ ] { } ; : 
+#			\u2018 < >.", "errorMessage": "Data supplied is not accepted, following characters are not allowed in the input ` $ & ( ) [ ] { } ; : \u2018 < >."}
+#	
+#	Around 07/25, Cyberpabel removed path "configservercsf" from whitelisted path.
+#	Manually re-add exception.
+#	
+#	Adds:
+#                   if not isAPIEndpoint and valueAlreadyChecked == 0:
+#	
+#                       if 'configservercsf' in pathActual:
+#                           continue
+# #
+
+SEC_FILE="/usr/local/CyberCP/CyberCP/secMiddleware.py"
+TARGET_IF="if not isAPIEndpoint and valueAlreadyChecked == 0:"
+BYPASS_LINE="                        if 'configservercsf' in pathActual:"
+BYPASS_CONT="                            continue"
+
+if [ -f "$SEC_FILE" ]; then
+    printf '\n'
+    printf 'CSF: [Cyberpanel] - Patching %s to insert CSF exception...\n' "$SEC_FILE"
+
+	# #
+    #	backup original
+	# #
+
+    BACKUP="${SEC_FILE}.bak.$$"
+    cp -p "$SEC_FILE" "$BACKUP" ||
+	{
+        printf '  CSF: [Cyberpanel] - Failed to create backup %s\n' "$BACKUP"
+        exit 1
+    }
+
+	# #
+    #	skip if exception already present
+	# #
+
+    if grep "if 'configservercsf' in pathActual" "$SEC_FILE" >/dev/null 2>&1; then
+        printf '  CSF: [Cyberpanel] - Exception already present — skipping.\n'
+    else
+        SEC_TEMP="${SEC_FILE}.tmp.$$"
+        i=1
+
+        while [ -e "$SEC_TEMP" ]; do
+            SEC_TEMP="${SEC_FILE}.tmp.$$.$i"
+            i=$((i + 1))
+        done
+
+        trap 'rm -f "$SEC_TEMP"' EXIT INT TERM
+
+        while IFS= read -r line || [ -n "$line" ]; do
+            printf '%s\n' "$line" >>"$SEC_TEMP"
+
+            case "$line" in
+                *"$TARGET_IF"*)
+                    printf '%s\n' '' >>"$SEC_TEMP"
+                    printf '%s\n' "$BYPASS_LINE" >>"$SEC_TEMP"
+                    printf '%s\n' "$BYPASS_CONT" >>"$SEC_TEMP"
+                    printf '%s\n' '' >>"$SEC_TEMP"
+                    ;;
+            esac
+        done <"$SEC_FILE"
+
+        if cp -p "$SEC_TEMP" "$SEC_FILE"; then
+
+			# #
+            #	Force correct CyberPanel permissions
+			#	
+			#	can throw error in /home/cyberpanel/stderr.log
+			#		PermissionError: [Errno 13] Permission denied: '/usr/local/CyberCP/CyberCP/secMiddleware.py'
+			# #
+
+            chmod 644 "$SEC_FILE"
+            printf '  CSF: [Cyberpanel] - Exception inserted after every %s occurrence.\n' "'$TARGET_IF'"
+        else
+            printf '  CSF: [Cyberpanel] - Failed to write patched file — restoring backup.\n'
+            cp -p "$BACKUP" "$SEC_FILE" >/dev/null 2>&1 || true
+            exit 1
+        fi
+
+        trap - EXIT INT TERM
+        rm -f "$SEC_TEMP"
+    fi
+else
+    printf '  CSF: [Cyberpanel] - secMiddleware.py not found at %s — skipping exception.\n' "$SEC_FILE"
 fi
 
 # #
