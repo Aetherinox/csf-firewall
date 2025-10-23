@@ -13,10 +13,6 @@
          <lastmod>2025-10-23</lastmod>
     </url>
     <url>
-         <loc>https://aetherinox.github.io/csf-firewall/services/</loc>
-         <lastmod>2025-10-23</lastmod>
-    </url>
-    <url>
          <loc>https://aetherinox.github.io/csf-firewall/about/backers/</loc>
          <lastmod>2025-10-23</lastmod>
     </url>
@@ -50,18 +46,6 @@
     </url>
     <url>
          <loc>https://aetherinox.github.io/csf-firewall/about/tags/</loc>
-         <lastmod>2025-10-23</lastmod>
-    </url>
-    <url>
-         <loc>https://aetherinox.github.io/csf-firewall/advanced/services/blocklist.configserver/</loc>
-         <lastmod>2025-10-23</lastmod>
-    </url>
-    <url>
-         <loc>https://aetherinox.github.io/csf-firewall/advanced/services/download.configserver/</loc>
-         <lastmod>2025-10-23</lastmod>
-    </url>
-    <url>
-         <loc>https://aetherinox.github.io/csf-firewall/advanced/services/get.configserver/</loc>
          <lastmod>2025-10-23</lastmod>
     </url>
     <url>
@@ -109,15 +93,7 @@
          <lastmod>2025-10-23</lastmod>
     </url>
     <url>
-         <loc>https://aetherinox.github.io/csf-firewall/install/authentik/</loc>
-         <lastmod>2025-10-23</lastmod>
-    </url>
-    <url>
          <loc>https://aetherinox.github.io/csf-firewall/install/dependencies/</loc>
-         <lastmod>2025-10-23</lastmod>
-    </url>
-    <url>
-         <loc>https://aetherinox.github.io/csf-firewall/install/docker/</loc>
          <lastmod>2025-10-23</lastmod>
     </url>
     <url>
@@ -137,10 +113,6 @@
          <lastmod>2025-10-23</lastmod>
     </url>
     <url>
-         <loc>https://aetherinox.github.io/csf-firewall/install/traefik/</loc>
-         <lastmod>2025-10-23</lastmod>
-    </url>
-    <url>
          <loc>https://aetherinox.github.io/csf-firewall/install/uninstall/</loc>
          <lastmod>2025-10-23</lastmod>
     </url>
@@ -149,11 +121,43 @@
          <lastmod>2025-10-23</lastmod>
     </url>
     <url>
+         <loc>https://aetherinox.github.io/csf-firewall/install/integrations/</loc>
+         <lastmod>2025-10-23</lastmod>
+    </url>
+    <url>
+         <loc>https://aetherinox.github.io/csf-firewall/install/integrations/authentik/</loc>
+         <lastmod>2025-10-23</lastmod>
+    </url>
+    <url>
+         <loc>https://aetherinox.github.io/csf-firewall/install/integrations/docker/</loc>
+         <lastmod>2025-10-23</lastmod>
+    </url>
+    <url>
+         <loc>https://aetherinox.github.io/csf-firewall/install/integrations/traefik/</loc>
+         <lastmod>2025-10-23</lastmod>
+    </url>
+    <url>
          <loc>https://aetherinox.github.io/csf-firewall/patcher/configure/</loc>
          <lastmod>2025-10-23</lastmod>
     </url>
     <url>
          <loc>https://aetherinox.github.io/csf-firewall/patcher/download/</loc>
+         <lastmod>2025-10-23</lastmod>
+    </url>
+    <url>
+         <loc>https://aetherinox.github.io/csf-firewall/services/</loc>
+         <lastmod>2025-10-23</lastmod>
+    </url>
+    <url>
+         <loc>https://aetherinox.github.io/csf-firewall/services/blocklist.configserver/</loc>
+         <lastmod>2025-10-23</lastmod>
+    </url>
+    <url>
+         <loc>https://aetherinox.github.io/csf-firewall/services/download.configserver/</loc>
+         <lastmod>2025-10-23</lastmod>
+    </url>
+    <url>
+         <loc>https://aetherinox.github.io/csf-firewall/services/get.configserver/</loc>
          <lastmod>2025-10-23</lastmod>
     </url>
     <url>
