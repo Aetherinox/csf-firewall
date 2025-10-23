@@ -10,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            09.26.2025
+#   @updated            10.23.2025
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -56,6 +56,12 @@
 #           sudo perl -d:Trace /etc/cron.daily/csget --nosleep
 #       The action will run immediately with no lingering process.
 #       All output will be logged to /var/log/csf/csget_daemon.log
+#   
+#           Requires:
+#               DEBIAN/UBUNTU               sudo apt update
+#                                           sudo apt install libdevel-trace-perl
+#               REDHAT                      sudo yum makecache
+#                                           sudo dnf install perl-Devel-Trace
 #       
 #       If you run the script using:
 #           sudo perl -d:Trace /etc/cron.daily/csget --debug
@@ -192,6 +198,32 @@ sub dbg
 }
 
 # #
+#   Load /etc/csf/csf.conf
+#   
+#   grabs a few csf config settings we'll need in order to confirm the release channel
+#   to use when downloading updates.
+# # 
+
+my %CONFIG;
+my $CONFIG_FILE = "/etc/csf/csf.conf";
+
+if ( -e $CONFIG_FILE )
+{
+    open my $fh, '<', $CONFIG_FILE or die "Cannot open $CONFIG_FILE: $!";
+    while (<$fh>)
+    {
+        chomp;
+        s/#.*$//;              # remove comments
+        next if /^\s*$/;       # skip empty lines
+        if (/^\s*(\w+)\s*=\s*["']?([^"']+)["']?/)
+        {
+            $CONFIG{$1} = $2;
+        }
+    }
+    close $fh;
+}
+
+# #
 #   arguments
 #       --debug
 #           enables debug logging; disables forked child process daemonization
@@ -216,7 +248,7 @@ foreach my $arg (@ARGV)
         $DEBUG = 1;
         next;
     }
-    elsif ($arg eq '--kill')
+    elsif ( $arg eq '--kill' )
     {
         # #
         #   @usage          sudo perl /etc/cron.daily/csget --kill
@@ -225,7 +257,7 @@ foreach my $arg (@ARGV)
 
         my @pids = fetch_csget_pids();
 
-        if (@pids)
+        if ( @pids )
         {
             kill 9, @pids;
             print "csget processes terminated: @pids\n";
@@ -237,7 +269,7 @@ foreach my $arg (@ARGV)
     
         exit 0;
     }
-    elsif ($arg eq '--list')
+    elsif ( $arg eq '--list' )
     {
         # #
         #   @usage          sudo perl /etc/cron.daily/csget --list
@@ -254,9 +286,12 @@ foreach my $arg (@ARGV)
             && !/\b$parent_pid\b/           # skip parent (sudo)
         } `ps aux`;
 
-        if (@lines) {
+        if (@lines)
+        {
             print "csget processes currently running:\n", @lines;
-        } else {
+        }
+        else
+        {
             print "No csget processes found.\n";
         }
 
@@ -274,16 +309,17 @@ mkdir $log_dir unless -d $log_dir;
 #   debugging
 # #
 
-if ($DEBUG)
+if ( $DEBUG )
 {
     mkdir $log_dir unless -d $log_dir;
 
     open $dbg, '>>', $log_debug or die "Cannot open debug log: $!";
     select((select($dbg), $|=1)[0]);        # auto-flush
 
-    my $script_path = `readlink -f $0`; chomp $script_path;
-    dbg("=== csget started at " . localtime() . " ===\n");
-    dbg("Script absolute path: $script_path\n");
+    my $script_path = `readlink -f $0`;
+    chomp $script_path;
+    dbg( "=== csget started at " . localtime() . " ===\n" );
+    dbg( "Script absolute path: $script_path\n" );
 }
 
 # #
@@ -295,20 +331,20 @@ if ($DEBUG)
 #   Child continues 			runs in background
 # #
 
-unless ($DEBUG)
+unless ( $DEBUG )
 {
-    if (my $pid = fork) { exit 0; }         # parent
-    elsif (defined($pid)) { $pid = $$; }    # child
-    else { die "Unable to fork: $!"; }      # cannot fork
+    if ( my $pid = fork ) { exit 0; }               # parent
+    elsif ( defined( $pid ) ) { $pid = $$; }        # child
+    else { die "Unable to fork: $!"; }              # cannot fork
 
-    chdir("/");
-    close(STDIN);
-    close(STDOUT);
-    close(STDERR);
-    open(STDIN,  "<", "/dev/null");
-    open(STDOUT, ">>", "$log_daemon")
+    chdir( "/" );
+    close( STDIN );
+    close( STDOUT );
+    close( STDERR );
+    open( STDIN,  "<", "/dev/null" );
+    open( STDOUT, ">>", "$log_daemon" )
         or die "Cannot open STDOUT log: $!";
-    open(STDERR, ">>", "$log_daemon")
+    open( STDERR, ">>", "$log_daemon" )
         or die "Cannot open STDERR log: $!";
 }
 
@@ -317,15 +353,15 @@ unless ($DEBUG)
 # #
 
 my $script_path = `readlink -f /etc/cron.daily/csget`;
-chomp($script_path);                        # remove trailing newline
+chomp( $script_path ); # remove trailing newline
 print "Script absolute path: $script_path\n";
 
 # #
 #   create required folders and files
 # #
 
-system("mkdir -p /var/lib/configserver/");
-system("rm -f /var/lib/configserver/*.txt /var/lib/configserver/*error");
+system( "mkdir -p /var/lib/configserver/" );
+system( "rm -f /var/lib/configserver/*.txt /var/lib/configserver/*error" );
 
 # #
 #   determine which binary to use for fetching server info
@@ -343,9 +379,9 @@ elsif ( -e "/usr/bin/wget" )
 }
 else
 {
-	open (my $ERROR, ">", "/var/lib/configserver/error");
+	open ( my $ERROR, ">", "/var/lib/configserver/error" );
 	print $ERROR "Cannot find /usr/bin/curl or /usr/bin/wget to retrieve product versions\n";
-	close ($ERROR);
+	close ( $ERROR );
 	exit;
 }
 
@@ -353,7 +389,7 @@ else
 #   used as an alternative to curl / wget
 # #
 
-if (-e "/usr/bin/GET")
+if ( -e "/usr/bin/GET" )
 {
 	$GET = "/usr/bin/GET -sd -t 120"
 }
@@ -372,47 +408,47 @@ if (-e "/usr/bin/GET")
 
 if ( -e "/etc/csf/csf.pl" )
 {
-	$versions{"/csf/version.txt"} = "/var/lib/configserver/csf.txt"
+	$versions{ "/csf/version.txt" } = "/var/lib/configserver/csf.txt"
 }
 
-if (-e "/etc/cxs/cxs.pl")
+if ( -e "/etc/cxs/cxs.pl" )
 {
-	$versions{"/cxs/version.txt"} = "/var/lib/configserver/cxs.txt"
+	$versions{ "/cxs/version.txt" } = "/var/lib/configserver/cxs.txt"
 }
 
-if (-e "/usr/local/cpanel/whostmgr/docroot/cgi/configserver/cmm.cgi")
+if ( -e "/usr/local/cpanel/whostmgr/docroot/cgi/configserver/cmm.cgi" )
 {
-	$versions{"/cmm/cmmversion.txt"} = "/var/lib/configserver/cmm.txt"
+	$versions{ "/cmm/cmmversion.txt" } = "/var/lib/configserver/cmm.txt"
 }
 
-if (-e "/usr/local/cpanel/whostmgr/docroot/cgi/configserver/cse.cgi")
+if ( -e "/usr/local/cpanel/whostmgr/docroot/cgi/configserver/cse.cgi" )
 {
-	$versions{"/cse/cseversion.txt"} = "/var/lib/configserver/cse.txt"
+	$versions{ "/cse/cseversion.txt" } = "/var/lib/configserver/cse.txt"
 }
 
-if (-e "/usr/local/cpanel/whostmgr/docroot/cgi/configserver/cmq.cgi")
+if ( -e "/usr/local/cpanel/whostmgr/docroot/cgi/configserver/cmq.cgi" )
 {
-	$versions{"/cmq/cmqversion.txt"} = "/var/lib/configserver/cmq.txt"
+	$versions{ "/cmq/cmqversion.txt" } = "/var/lib/configserver/cmq.txt"
 }
 
-if (-e "/usr/local/cpanel/whostmgr/docroot/cgi/configserver/cmc.cgi")
+if ( -e "/usr/local/cpanel/whostmgr/docroot/cgi/configserver/cmc.cgi" )
 {
-	$versions{"/cmc/cmcversion.txt"} = "/var/lib/configserver/cmc.txt"
+	$versions{ "/cmc/cmcversion.txt" } = "/var/lib/configserver/cmc.txt"
 }
 
 if ( -e "/etc/osm/osmd.pl" )
 {
-	$versions{"/osm/osmversion.txt"} = "/var/lib/configserver/osm.txt"
+	$versions{ "/osm/osmversion.txt" } = "/var/lib/configserver/osm.txt"
 }
 
 if ( -e "/usr/msfe/version.txt" )
 {
-	$versions{"/version.txt"} = "/var/lib/configserver/msinstall.txt"
+	$versions{ "/version.txt" } = "/var/lib/configserver/msinstall.txt"
 }
 
 if ( -e "/usr/msfe/msfeversion.txt" )
 {
-	$versions{"/msfeversion.txt"} = "/var/lib/configserver/msfe.txt"
+	$versions{ "/msfeversion.txt" } = "/var/lib/configserver/msfe.txt"
 }
 
 # #
@@ -420,25 +456,25 @@ if ( -e "/usr/msfe/msfeversion.txt" )
 #       originally, this function would unlink the cron
 # #
 
-if (scalar(keys %versions) == 0)
+if ( scalar( keys %versions ) == 0 )
 {
 
     # unlink $0;
 
-    if ($DEBUG)
+    if ( $DEBUG )
 	{
-        dbg("=== csget: No version files to fetch — exiting ===\n");
+        dbg( "=== csget: No version files to fetch — exiting ===\n" );
     }
 
     # mark last run with no versions
     my $status_file = "/var/lib/configserver/last_run_no_versions";
-    if (!-d "/var/lib/configserver")
+    if ( !-d "/var/lib/configserver" )
 	{
-        system("mkdir -p /var/lib/configserver") == 0
+        system( "mkdir -p /var/lib/configserver" ) == 0
             or die "Failed to create /var/lib/configserver for status file";
     }
 
-    system("touch $status_file") == 0
+    system( "touch $status_file" ) == 0
         or warn "Failed to create status file $status_file";
 
     exit 0;
@@ -468,11 +504,11 @@ unless ( defined $ARGV[0] && $ARGV[0] eq '--nosleep' )
 #       Randomize order of @downloadservers.
 # #
 
-for (my $x = @downloadservers; --$x;)
+for ( my $x = @downloadservers; --$x; )
 {
-	my $y = int(rand($x+1));
-	if ($x == $y) {next}
-	@downloadservers[$x,$y] = @downloadservers[$y,$x];
+	my $y = int( rand( $x+1 ) );
+	if ( $x == $y ) { next }
+	@downloadservers[ $x,$y ] = @downloadservers[ $y,$x ];
 }
 
 # #
@@ -481,50 +517,67 @@ for (my $x = @downloadservers; --$x;)
 
 foreach my $server ( @downloadservers )
 {
+    dbg( "DEBUG: Checking server: $server\n" );
     foreach my $version ( keys %versions )
     {
+        dbg( "DEBUG: Checking version: $version -> $versions{$version}\n" );
         unless ( -e $versions{ $version } )
         {
             if ( -e $versions{ $version }.".error" )
             {
                 unlink $versions{ $version }.".error";
-                dbg("DEBUG: Removed previous error file: $versions{ $version }.error\n");
+                dbg( "DEBUG: Removed previous error file: $versions{ $version }.error\n" );
             }
 
-            dbg("DEBUG: Attempting to download $version from $server\n");
+            my $url = "$server$version";
 
-            my $status = system("$cmd $versions{ $version } $server$version");
-            dbg("DEBUG: Command executed: $cmd $versions{ $version } $server$version\n");
-            dbg("DEBUG: Command exit code: " . ($status >> 8) . "\n");
+            # Enable insiders channel if allowed
+            if ( ( $CONFIG{SPONSOR_RELEASE_INSIDERS} // 0 ) == 1 
+                && ( $CONFIG{SPONSOR_LICENSE} // '' ) ne '' 
+                && $version eq "/csf/version.txt" )
+            {
+                $url .= "?channel=insiders&license=$CONFIG{SPONSOR_LICENSE}";
+                dbg( "DEBUG: Using Insiders release channel, URL: $url\n" );
+            }
+            else
+            {
+                dbg( "DEBUG: Using Stable release channel, URL: $url\n" );
+            }
+
+            dbg( "DEBUG: Preparing to download $version from $url ($server)\n" );
+
+            my $status = system( "$cmd $versions{ $version } $url" );
+            dbg( "DEBUG: Command executed: $cmd $versions{ $version } $url\n" );
+            dbg( "DEBUG: Command exit code: " . ( $status >> 8 ) . "\n" );
 
             if ( $status )
             {
-                if ($GET ne "")
+                if ( $GET ne "" )
                 {
-                    open (my $ERROR, ">", $versions{ $version }.".error");
+                    open ( my $ERROR, ">", $versions{ $version }.".error" );
                     print $ERROR "$server$version - ";
-                    close ($ERROR);
+                    close ( $ERROR );
 
-                    dbg("DEBUG: Curl/wget failed, trying GET command: $GET $server$version\n");
-                    my $GETstatus = system("$GET $server$version >> $versions{ $version }.error");
-                    dbg("DEBUG: GET command exit code: " . ($GETstatus >> 8) . "\n");
+                    dbg( "DEBUG: Curl/wget failed, trying GET command: $GET $server$version\n" );
+                    my $GETstatus = system( "$GET $server$version >> $versions{ $version }.error" );
+                    dbg( "DEBUG: GET command exit code: " . ( $GETstatus >> 8 ) . "\n" );
                 }
                 else
                 {
-                    open (my $ERROR, ">", $versions{ $version }.".error");
+                    open ( my $ERROR, ">", $versions{ $version }.".error" );
                     print $ERROR "Failed to retrieve latest version from ConfigServer";
-                    close ($ERROR);
-                    dbg("DEBUG: Failed to retrieve $version from $server and no GET command available\n");
+                    close ( $ERROR );
+                    dbg( "DEBUG: Failed to retrieve $version from $server and no GET command available\n" );
                 }
             }
             else
             {
-                dbg("DEBUG: Successfully downloaded $version from $server\n");
+                dbg( "DEBUG: Successfully downloaded $version from $server\n" );
             }
         }
         else
         {
-            dbg("DEBUG: $versions{ $version } already exists, skipping download\n");
+            dbg( "DEBUG: $versions{ $version } already exists, skipping download\n" );
         }
     }
 }
