@@ -3,7 +3,6 @@ title: Usage › IPSETs
 tags:
     - usage
     - configure
-status: new
 ---
 
 # Introduction to IPSETs
