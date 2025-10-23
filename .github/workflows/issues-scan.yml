@@ -106,11 +106,12 @@ env:
           { "name": "Status › Locked",              "color": "550F45", "description": "Automatically locked by AdminServ for a prolonged period of inactivity" },
           { "name": "Status › Need Info",           "color": "2E3C4C", "description": "Not enough information to resolve" },
           { "name": "Status › No Action",           "color": "030406", "description": "Closed without any action being taken" },
-          { "name": "Status › Pending",             "color": "984b12", "description": "Pending pull request" },
+          { "name": "Status › Pending Pull",        "color": "984b12", "description": "Pending pull request" },
           { "name": "Status › Released",            "color": "1b6626", "description": "Issues or PR has been implemented and is now live" },
           { "name": "Status › Reopened",            "color": "8a6f14", "description": "A previously closed PR which has been re-opened" },
-          { "name": "Status › Review",              "color": "9e1451", "description": "Currently pending review" },
+          { "name": "Status › Under Review",        "color": "9e1451", "description": "Currently pending review" },
           { "name": "Status › Stale",               "color": "928282", "description": "Has not had any activity in over 30 days" },
+          { "name": "Status › Hold",                "color": "d93f0b", "description": "Awaiting additional feedback or issues" },
           { "name": "Type › Bug",                   "color": "9a2c2c", "description": "Something isn't working" },
           { "name": "Type › Dependency",            "color": "243759", "description": "Item is associated to dependency" },
           { "name": "Type › Lock Maintenance",      "color": "FBCA04", "description": "Sync package-lock.json" },
@@ -118,7 +119,7 @@ env:
           { "name": "Type › Feature",               "color": "3c4e93", "description": "Feature request" },
           { "name": "Type › Git Action",            "color": "030406", "description": "GitHub Action / workflow" },
           { "name": "Type › Pull Request",          "color": "8F1784", "description": "Normal pull request" },
-          { "name": "Type › Roadmap",               "color": "8F1784", "description": "Feature or bug currently planned for implementation" },
+          { "name": "Type › Roadmap",               "color": "8F1784", "description": "Accepted feature or bug currently planned for implementation" },
           { "name": "Type › Internal",              "color": "A51994", "description": "Assigned items are for internal developer use" },
           { "name": "Build › Desktop",              "color": "c7ca4a", "description": "Specific to desktop" },
           { "name": "Build › Linux",                "color": "c7ca4a", "description": "Specific to Linux" },
@@ -126,11 +127,21 @@ env:
           { "name": "Build › Mobile",               "color": "c7ca4a", "description": "Specific to mobile" },
           { "name": "Build › Web",                  "color": "c7ca4a", "description": "Specific to web" },
           { "name": "Build › Windows",              "color": "c7ca4a", "description": "Specific to Windows" },
+          { "name": "CP › All",                     "color": "0a2968", "description": "Control Panel › Affects all web panels" },
+          { "name": "CP › Generic",                 "color": "0a2968", "description": "Control Panel › Generic" },
+          { "name": "CP › Other",                   "color": "0a2968", "description": "Control Panel › Other" },
+          { "name": "CP › CyberPanel",              "color": "0a2968", "description": "Control Panel › Cyberpanel" },
+          { "name": "CP › cPanel",                  "color": "0a2968", "description": "Control Panel › cPanel / WHM" },
+          { "name": "CP › VestaCP",                 "color": "0a2968", "description": "Control Panel › VestaCP" },
+          { "name": "CP › Interworx",               "color": "0a2968", "description": "Control Panel › Interworx" },
+          { "name": "CP › DirectAdmin",             "color": "0a2968", "description": "Control Panel › DirectAdmin" },
+          { "name": "CP › CWP",                     "color": "0a2968", "description": "Control Panel › CentOS Web Panel" },
           { "name": "› API",                        "color": "F99B50", "description": "Plugin API, CLI, browser JS API" },
           { "name": "› Auto-type",                  "color": "9141E0", "description": "Auto-type functionality in desktop apps" },
+          { "name": "› Bots",                       "color": "E3F0FC", "description": "Affects CSF bot services (discord, etc)" },
           { "name": "› Browser",                    "color": "9141E0", "description": "Browser plugins and passing data to <=> from app" },
           { "name": "› Customization",              "color": "E3F0FC", "description": "Customizations: plugins, themes, configs" },
-          { "name": "› Design",                     "color": "FA70DE", "description": "Design related queries" },
+          { "name": "› Design/UI",                  "color": "FA70DE", "description": "Design related queries" },
           { "name": "› Dist",                       "color": "FA70DE", "description": "Installers and other forms of software distribution" },
           { "name": "› Enterprise",                 "color": "11447a", "description": "Issues about collaboration, administration, and so on" },
           { "name": "› Hardware",                   "color": "5a7503", "description": "YubiKey, other tokens, biometrics" },
@@ -167,8 +178,8 @@ jobs:
     job-pr-scan:
         name: >-
             🎫 Issues › Autoscan
-      # runs-on: ubuntu-latest
-        runs-on: apollo-x64
+        runs-on: ubuntu-latest
+        # runs-on: apollo-x64
         timeout-minutes: 5
         permissions:
             contents: read
