@@ -273,10 +273,11 @@ nav:
           - Install: 'install/install.md'
           - Start Services: 'install/services.md'
           - Enable Web Interface: 'install/webui.md'
-          - Docker Integration: 'install/docker.md'
-          - Traefik Integration: 'install/traefik.md'
-          - Authentik Integration: 'install/authentik.md'
           - Uninstall: 'install/uninstall.md'
+          - Integrations:
+                - Authentik: 'install/integrations/authentik.md'
+                - Docker: 'install/integrations/docker.md'
+                - Traefik: 'install/integrations/traefik.md'
     - Usage:
           - Getting Started: 'usage/getting-started.md'
           - Configuration: 'usage/configuration.md'
@@ -290,18 +291,15 @@ nav:
           - Cheatsheet:
                 - Home: 'usage/cheatsheet/home.md'
                 - Commands: 'usage/cheatsheet/commands.md'
+                - Control Panels: 'usage/cheatsheet/control_panels.md'
                 - Example Configs: 'usage/cheatsheet/conf.md'
                 - Ports: 'usage/cheatsheet/ports.md'
                 - Structure: 'usage/cheatsheet/structure.md'
-    - Advanced:
-          - Services:
-                - blocklist.configserver.dev: 'advanced/services/blocklist.configserver.md'
-                - download.configserver.dev: 'advanced/services/download.configserver.md'
-                - get.configserver.dev: 'advanced/services/get.configserver.md'
-          - Patcher:
-                - Download: 'extras/download.md'
-                - Configure: 'extras/configure.md'
-    - Services: 'services.md'
+    - Services:
+            - services/index.md
+            - blocklist.configserver.dev: 'services/blocklist.configserver.md'
+            - download.configserver.dev: 'services/download.configserver.md'
+            - get.configserver.dev: 'services/get.configserver.md'
     - Changelog: 'about/changelog.md'
     - Insiders:
           - insiders/index.md

@@ -146,7 +146,7 @@ Select what documentation you would like to proceed with next ...
 
 <div class="grid cards" markdown>
 
--   :aetherx-axb-authentik: &nbsp; __[Authentik Integration](../install/authentik.md)__
+-   :aetherx-axb-authentik: &nbsp; __[Authentik Integration](../install/integrations/authentik.md)__
 
     ---
 
