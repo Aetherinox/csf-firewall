@@ -511,7 +511,7 @@ By this point in the guide, you should have:
 
 ---
 
-The next section will show you how to put the CSF web interface behind third-party apps such as [Traefik Reverse Proxy](../install/traefik.md) and secure it with [Authentik](../install/authentik.md).  
+The next section will show you how to put the CSF web interface behind third-party apps such as [Traefik Reverse Proxy](../install/integrations/traefik.md) and secure it with [Authentik](../install/integrations/authentik.md).  
 
 These steps are **optional**. They enhance the security of your web interface and help prevent unauthorized access, but you do not need to perform them to continue using CSF.
 
@@ -531,7 +531,7 @@ Select what documentation you would like to proceed with next ...
 
 <div class="grid cards" markdown>
 
--   :aetherx-axb-docker: &nbsp; __[Docker Integration](../install/docker.md)__
+-   :aetherx-axb-docker: &nbsp; __[Docker Integration](../install/integrations/docker.md)__
 
     ---
 
@@ -543,7 +543,7 @@ Select what documentation you would like to proceed with next ...
     We’ve provided a detailed set of instructions along with troubleshooting 
     guidance to help you resolve any issues that may arise during setup.
 
--   :aetherx-axb-traefikproxy: &nbsp; __[Traefik Integration](../install/traefik.md)__
+-   :aetherx-axb-traefikproxy: &nbsp; __[Traefik Integration](../install/integrations/traefik.md)__
 
     ---
 
@@ -556,7 +556,7 @@ Select what documentation you would like to proceed with next ...
     With middleware, you can whitelist your own IP for secure access and enforce
     geographic restrictions to allow or block traffic from specific countries.
 
--   :aetherx-axb-authentik: &nbsp; __[Authentik Integration](../install/authentik.md)__
+-   :aetherx-axb-authentik: &nbsp; __[Authentik Integration](../install/integrations/authentik.md)__
 
     ---
 
