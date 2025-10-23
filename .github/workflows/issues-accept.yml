@@ -83,8 +83,8 @@ jobs:
             🎫 Issue › Accept
         if: |
             contains(github.event.comment.body, '!accept') && github.event.comment.user.login == 'Aetherinox'
-      # runs-on: ubuntu-latest
-        runs-on: apollo-x64
+        runs-on: ubuntu-latest
+      # runs-on: apollo-x64
         timeout-minutes: 5
         steps:
 
