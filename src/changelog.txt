@@ -1,5 +1,31 @@
 ChangeLog:
 
+15.07 - Add new tab "Resources" to tab interface.
+
+        Add Privacy Policy to CSF.
+
+        Add Discord server
+        https://discord.configserver.dev
+
+        Add "Insiders" releases.
+
+        Remove spamhaus edrop list, merged with drop.
+
+        Refactor cyberpanel installation script to ensure
+        POSIX compliant.
+
+        Refactor update functionality to support both numerical
+        and tagged releases.
+
+        Fix cyberpanel integration error:
+        "address form post error Data supplied is not accepted"
+
+        Fix dark-reader causing login page to not render 
+        properly.
+
+        Fix whitespace in ipset blocklist definitions causing
+        entire blocklist to not load.
+
 15.06 - Fixed backwards compatibility issue related to older
         versions of Webmin control panel. Specifically v2.111
         and Authentic theme v21.10. Webmin detected as "Generic"
@@ -10,7 +36,7 @@ ChangeLog:
         page to ensure settings are processed safely and
         correctly.
 
-        Refactored "csf.sh" init.d script; POSIX compliant.
+        Refactor "csf.sh" init.d script; POSIX compliant.
 
 15.04 - Fixed log output textbox height for Webmin control panel
 

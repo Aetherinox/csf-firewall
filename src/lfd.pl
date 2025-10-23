@@ -10752,7 +10752,7 @@ SVG_EOF
 						print "</div>";
 						print "\n</body>\n</html>\n";
 					}
-	
+
 					if ($valid eq "session")
 					{
 						if (defined $FORM{csfapp} and ($FORM{csfapp} ne $application)) {
