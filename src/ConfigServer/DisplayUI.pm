@@ -4474,99 +4474,77 @@ sub confirmmodal
 
 sub csgetversion
 {
-	my $product = shift;
-	my $current = shift;
-	my $upgrade = 0;
-	my $newversion;
+    my $product = shift;
+    my $current = shift;
+    my $upgrade = 0;
+    my $newversion;
 
-	if ( -e "/var/lib/configserver/" . $product . ".txt.error" )
-	{
-		open (my $VERSION, "<", "/var/lib/configserver/" . $product . ".txt.error");
-		flock ($VERSION, LOCK_SH);
+    my $file_error = "/var/lib/configserver/${product}.txt.error";
+    my $file_main  = "/var/lib/configserver/${product}.txt";
+    my $file_fallback = "/var/lib/configserver/error";
 
-		$newversion = <$VERSION>;
+    if (-e $file_error)
+    {
+        open(my $VERSION, "<", $file_error);
+        flock($VERSION, LOCK_SH);
+        $newversion = <$VERSION>;
+        close($VERSION);
+        chomp $newversion;
 
-		close ($VERSION);
-		chomp $newversion;
+        $newversion = $newversion eq "" 
+            ? "Failed to retrieve latest version from ConfigServer"
+            : "Failed to retrieve latest version from ConfigServer: $newversion";
+    }
+    elsif (-e $file_main)
+    {
+        open(my $VERSION, "<", $file_main);
+        flock($VERSION, LOCK_SH);
+        $newversion = <$VERSION>;
+        close($VERSION);
+        chomp $newversion;
 
-		if ( $newversion eq "" )
-		{
-			$newversion = "Failed to retrieve latest version from ConfigServer";
-		}
-		else
-		{
-			$newversion = "Failed to retrieve latest version from ConfigServer: $newversion";
-		}
-	}
+        if ($newversion eq "")
+        {
+            $newversion = "Failed to retrieve latest version from ConfigServer";
+        }
+        else
+        {
+            # Split numeric part and optional suffix
+            my ($num_version, $suffix) = split /-/, $newversion, 2;
+            my @current_parts = split /\./, $current;
+            my @new_parts     = split /\./, $num_version;
+            my $is_newer = 0;
 
-	# #
-	#	@files				/var/lib/configserver/csf.txt
-	#						/var/lib/configserver/cxs.txt
-	#						/var/lib/configserver/cmm.txt
-	#						/var/lib/configserver/cse.txt
-	#						/var/lib/configserver/cmq.txt
-	#						/var/lib/configserver/cmc.txt
-	#						/var/lib/configserver/osm.txt
-	#						/var/lib/configserver/msinstall.txt
-	#						/var/lib/configserver/msfe.txt
-	# #
+            for (my $i = 0; $i < @new_parts || $i < @current_parts; $i++)
+            {
+                my $n = $new_parts[$i] // 0;
+                my $c = $current_parts[$i] // 0;
+                if ($n > $c) { $is_newer = 1; last; }
+                if ($n < $c) { $is_newer = 0; last; }
+            }
 
-	elsif (-e "/var/lib/configserver/".$product.".txt")
-	{
-		open (my $VERSION, "<", "/var/lib/configserver/".$product.".txt");
-		flock ($VERSION, LOCK_SH);
-		$newversion = <$VERSION>;
-		close ($VERSION);
-		chomp $newversion;
+            $upgrade = $is_newer ? 1 : 0;
+            $newversion = $upgrade ? $newversion : "";
+        }
+    }
+    elsif ( -e $file_fallback )
+    {
+        open( my $VERSION, "<", $file_fallback );
+        flock( $VERSION, LOCK_SH );
+        $newversion = <$VERSION>;
+        close($VERSION);
+        chomp $newversion;
 
-		if ( $newversion eq "" )
-		{
-			$newversion = "Failed to retrieve latest version from ConfigServer";
-		}
-		else
-		{
-			if ($newversion =~ /^[\d\.]*$/)
-			{
-				if ($newversion > $current)
-				{
-					$upgrade = 1
-				}
-				else
-				{
-					$newversion = ""
-				}
-			}
-			else
-			{
-				$newversion = ""
-			}
-		}
-	}
-	elsif (-e "/var/lib/configserver/error")
-	{
-		open (my $VERSION, "<", "/var/lib/configserver/error");
-		flock ($VERSION, LOCK_SH);
+        $newversion = $newversion eq "" 
+            ? "Failed to retrieve latest version from ConfigServer"
+            : "Failed to retrieve latest version from ConfigServer: $newversion";
+    }
+    else
+    {
+        $newversion = "Failed to retrieve latest version from ConfigServer";
+    }
 
-		$newversion = <$VERSION>;
-
-		close ($VERSION);
-		chomp $newversion;
-
-		if ( $newversion eq "" )
-		{
-			$newversion = "Failed to retrieve latest version from ConfigServer";
-		}
-		else
-		{
-			$newversion = "Failed to retrieve latest version from ConfigServer: $newversion";
-		}
-	}
-	else
-	{
-		$newversion = "Failed to retrieve latest version from ConfigServer";
-	}
-
-	return ( $upgrade, $newversion );
+    return ( $upgrade, $newversion );
 }
 
 # #
@@ -4578,45 +4556,62 @@ sub csgetversion
 
 sub manualversion
 {
-	my $current = shift;
-	my $upgrade = 0;
-	my $url = "https://$config{DOWNLOADSERVER}/csf/version.txt";
+    my $current = shift;
+    my $upgrade = 0;
+    my $url = "https://$config{DOWNLOADSERVER}/csf/version.txt";
 
-	if ( $config{URLGET} == 1 )
-	{
-		$url = "http://$config{DOWNLOADSERVER}/csf/version.txt";
-	}
+    if ($config{URLGET} == 1)
+    {
+        $url = "http://$config{DOWNLOADSERVER}/csf/version.txt";
+    }
 
-	# #
-	#	Insiders Release Channel
-	#	
-	#	This should NOT be used on production servers.
-	#	
-	#	Enabled by defining the following in your csf.conf:
-	#		SPONSOR_RELEASE_INSIDERS = "1"
-	# #
+    # Insiders Release Channel
+    if ( ( $config{SPONSOR_RELEASE_INSIDERS} // 0 ) == 1 && ( $config{SPONSOR_LICENSE} // '' ) ne '' )
+    {
+        $url .= "?channel=insiders&license=$config{SPONSOR_LICENSE}";
+    }
 
-	if ( ( $config{SPONSOR_RELEASE_INSIDERS} // 0 ) == 1 && ( $config{SPONSOR_LICENSE} // '' ) ne '' )
-	{
-		$url .= "?channel=insiders&license=$config{SPONSOR_LICENSE}";
-	}
+    print "<div><pre class='comment' style='white-space: pre-wrap;'>\n";
+    print "Connecting to <a href='$url'>$url</a>\n";
+    print "Fetching <code>csf/version.txt</code> from update server\n";
 
-	print "<div><pre class='comment' style='white-space: pre-wrap;'>\n";
-	print "Connecting to <a href='$url'>$url</a>\n";
-	print "Fetching <code>csf/version.txt</code> from update server\n";
+    my ($status, $newversion) = $urlget->urlget($url);
 
-	my ( $status, $newversion ) = $urlget->urlget( $url );
+    if (!$status && $newversion ne "")
+    {
+        # Split numeric part and optional suffix
+        my ($num_version, $suffix) = split /-/, $newversion, 2;
 
-	if ( !$status and $newversion ne "" and $newversion =~ /^[\d\.]*$/ and $newversion > $current )
-	{
-		$upgrade = 1
-	}
-	else
-	{
-		$newversion = ""
-	}
+        my $current_num = $current;
+        my $is_newer = 0;
 
-	return ( $upgrade, $newversion );
+        # Compare numeric parts
+        my @current_parts = split /\./, $current_num;
+        my @new_parts     = split /\./, $num_version;
+
+        for (my $i = 0; $i < @new_parts || $i < @current_parts; $i++)
+        {
+            my $n = $new_parts[$i] // 0;
+            my $c = $current_parts[$i] // 0;
+            if ($n > $c) { $is_newer = 1; last; }
+            if ($n < $c) { $is_newer = 0; last; }
+        }
+
+        if ($is_newer)
+        {
+            $upgrade = 1;
+        }
+        else
+        {
+            $newversion = "";   # no upgrade
+        }
+    }
+    else
+    {
+        $newversion = "";
+    }
+
+    return ( $upgrade, $newversion );
 }
 
 1;

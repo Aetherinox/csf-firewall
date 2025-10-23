@@ -3881,102 +3881,127 @@ END
 # start doupdate
 sub doupdate
 {
-	my $force = 0;
-	my $actv = "";
-	if ($input{command} eq "-uf")
-	{
-		$force = 1;
-	}
-	else
-	{
-		my $url = "https://$config{DOWNLOADSERVER}/csf/version.txt";
-		if ( $config{URLGET} == 1 )
-		{
-			$url = "http://$config{DOWNLOADSERVER}/csf/version.txt";
-		}
+    my $force = 0;
+    my $actv  = "";
 
-		# #
-		#	Insiders Release Channel
-		#	
-		#	This should NOT be used on production servers.
-		#	
-		#	Enabled by defining the following in your csf.conf:
-		#		SPONSOR_RELEASE_INSIDERS = "1"
-		# #
+    if ($input{command} eq "-uf")
+    {
+        $force = 1;
+    }
+    else
+    {
+        my $url = "https://$config{DOWNLOADSERVER}/csf/version.txt";
+        if ($config{URLGET} == 1)
+        {
+            $url = "http://$config{DOWNLOADSERVER}/csf/version.txt";
+        }
 
-		if ( ($config{SPONSOR_RELEASE_INSIDERS} // 0) == 1 && ($config{SPONSOR_LICENSE} // '') ne '' )
-		{
-			$url .= "?channel=insiders&license=$config{SPONSOR_LICENSE}";
-		}
+        # #
+        #   Insiders Release Channel
+        #   
+        #   This should NOT be used on production servers.
+        #   
+        #   Enabled by defining the following in your csf.conf:
+        #       SPONSOR_RELEASE_INSIDERS = "1"
+        # #
 
-		my ($status, $text) = $urlget->urlget($url);
-		if ($status)
-		{
-			print "Oops: $text\n"; exit 1
-		}
-		$actv = $text;
-	}
+        if ( ($config{SPONSOR_RELEASE_INSIDERS} // 0) == 1 && ($config{SPONSOR_LICENSE} // '') ne '' )
+        {
+            $url .= "?channel=insiders&license=$config{SPONSOR_LICENSE}";
+        }
 
-	if ((($actv ne "") and ($actv =~ /^[\d\.]*$/)) or $force)
-	{
-		if (($actv > $version) or $force)
-		{
-			local $| = 1;
+        my ($status, $text) = $urlget->urlget($url);
+        if ($status)
+        {
+            print "Oops: $text\n";
+            exit 1;
+        }
 
-			unless ($force) {print "Upgrading csf from v$version to $actv...\n"}
-			if (-e "/usr/src/csf.tgz")
-			{
-				unlink ("/usr/src/csf.tgz") or die $!
-			}
+        $actv = $text;
+    }
 
-			print "Retrieving new csf package...\n";
+    # #
+    #	Normalize version string (allow suffixes like -insiders, -beta)
+    # #
 
-			my $url = "https://$config{DOWNLOADSERVER}/csf.tgz";
-			if ($config{URLGET} == 1)
-			{
-				$url = "http://$config{DOWNLOADSERVER}/csf.tgz";
-			}
+    $actv =~ s/^\s+|\s+$//g;                      # Trim whitespace
+    my ($actv_num) = $actv =~ /^([\d.]+)/;        # Extract numeric portion (e.g. "15.07" from "15.07-insiders")
+    my ($curr_num) = $version =~ /^([\d.]+)/;     # Current version numeric portion
 
-			# #
-			#	Insiders Release Channel
-			#	
-			#	This should NOT be used on production servers.
-			#	
-			#	Enabled by defining the following in your csf.conf:
-			#		SPONSOR_RELEASE_INSIDERS = "1"
-			# #
+    if ((defined $actv_num && $actv_num ne '') || $force)
+    {
+        my $newer = 0;
 
-			if ( ( $config{SPONSOR_RELEASE_INSIDERS} // 0 ) == 1 && ( $config{SPONSOR_LICENSE} // '' ) ne '' )
-			{
-				$url .= "?channel=insiders&license=$config{SPONSOR_LICENSE}";
-			}
+        #
+        # Compare numeric parts
+        #
+        my @a = split /\./, $curr_num // '0';
+        my @b = split /\./, $actv_num  // '0';
 
-			my ($status, $text) = $urlget->urlget($url,"/usr/src/csf.tgz");
+        for (my $i = 0; $i < @a || $i < @b; $i++)
+        {
+            my $c = $a[$i] // 0;
+            my $n = $b[$i] // 0;
+            if ($n > $c) { $newer = 1; last; }
+            if ($n < $c) { $newer = 0; last; }
+        }
 
-			print "Downloading csf update from server: $url\n";
-			if (! -z "/usr/src/csf/csf.tgz")
-			{
-				print "\nUnpacking new csf package...\n";
-				system ("cd /usr/src ; tar -xzf csf.tgz ; cd csf ; sh install.sh");
-				print "\nPerforming housekeeping on temp files...\n";
-				system ("rm -Rfv /usr/src/csf*");
-				print "\nRestarting csf and lfd...\n";
-				system ("/usr/sbin/csf -r");
-				ConfigServer::Service::restartlfd();
-				print "\nUpdate complete.\n\nView Changelog: https://$config{DOWNLOADSERVER}/csf/changelog.txt\n";
-			}
-		}
-		else
-		{
-			if (-t STDOUT) {print "csf is already at the latest version: v$version\n"} ##no critic
-		}
-	}
-	else
-	{
-		print "Unable to verify the latest version of csf at this time\n";
-	}
-	return;
+        if ($newer or $force)
+        {
+            local $| = 1;
+
+            unless ($force)
+            {
+                print "Upgrading csf from v$version to $actv...\n";
+            }
+
+            if (-e "/usr/src/csf.tgz")
+            {
+                unlink("/usr/src/csf.tgz") or die $!;
+            }
+
+            print "Retrieving new csf package...\n";
+
+            my $url = "https://$config{DOWNLOADSERVER}/csf.tgz";
+            if ($config{URLGET} == 1)
+            {
+                $url = "http://$config{DOWNLOADSERVER}/csf.tgz";
+            }
+
+            if ( ($config{SPONSOR_RELEASE_INSIDERS} // 0) == 1 && ($config{SPONSOR_LICENSE} // '') ne '' )
+            {
+                $url .= "?channel=insiders&license=$config{SPONSOR_LICENSE}";
+            }
+
+            my ($status, $text) = $urlget->urlget($url, "/usr/src/csf.tgz");
+
+            print "Downloading csf update from server: $url\n";
+
+            if (! -z "/usr/src/csf/csf.tgz")
+            {
+                print "\nUnpacking new csf package...\n";
+                system("cd /usr/src ; tar -xzf csf.tgz ; cd csf ; sh install.sh");
+                print "\nPerforming housekeeping on temp files...\n";
+                system("rm -Rfv /usr/src/csf*");
+                print "\nRestarting csf and lfd...\n";
+                system("/usr/sbin/csf -r");
+                ConfigServer::Service::restartlfd();
+                print "\nUpdate complete.\n\nView Changelog: https://$config{DOWNLOADSERVER}/csf/changelog.txt\n";
+            }
+        }
+        else
+        {
+            print "csf is already at the latest version: v$version\n";
+        }
+    }
+    else
+    {
+        print "Unable to verify the latest version of csf at this time\n";
+    }
+
+    return;
 }
+
 # end doupdate
 
 # #
@@ -3987,52 +4012,68 @@ sub doupdate
 
 sub docheck
 {
-	my $url = "https://$config{DOWNLOADSERVER}/csf/version.txt";
-	if ($config{URLGET} == 1)
-	{
-		$url = "http://$config{DOWNLOADSERVER}/csf/version.txt";
-	}
+	# Stable Release Channel
+    my $url = "https://$config{DOWNLOADSERVER}/csf/version.txt";
+    if ($config{URLGET} == 1)
+    {
+        $url = "http://$config{DOWNLOADSERVER}/csf/version.txt";
+    }
 
-	# #
-	#	Insiders Release Channel
-	#	
-	#	This should NOT be used on production servers.
-	#	
-	#	Enabled by defining the following in your csf.conf:
-	#		SPONSOR_RELEASE_INSIDERS = "1"
-	# #
+    # Insiders Release Channel
+    if ( ( $config{SPONSOR_RELEASE_INSIDERS} // 0 ) == 1 && ( $config{SPONSOR_LICENSE} // '' ) ne '' )
+    {
+        $url .= "?channel=insiders&license=$config{SPONSOR_LICENSE}";
+    }
 
-	if ( ( $config{SPONSOR_RELEASE_INSIDERS} // 0 ) == 1 && ( $config{SPONSOR_LICENSE} // '' ) ne '' )
-	{
-		$url .= "?channel=insiders&license=$config{SPONSOR_LICENSE}";
-	}
+    my ($status, $text) = $urlget->urlget($url);
+    if ($status)
+    {
+        print "Oops: $text\n"; 
+        exit 1;
+    }
 
-	my ($status, $text) = $urlget->urlget($url);
-	if ($status)
-	{
-		print "Oops: $text\n"; exit 1
-	}
+    my $actv = $text;
+    my $up = 0;
 
-	my $actv = $text;
-	my $up = 0;
+    if ($actv ne "")
+    {
+        # Split version into numeric and optional suffix
+        my ($num_version, $suffix) = split /-/, $actv, 2;    # "15.07-insiders" → "15.07", "insiders"
 
-	if (($actv ne "") and ($actv =~ /^[\d\.]*$/))
-	{
-		if ($actv > $version)
-		{
-			print "A newer version of csf is available - Current:v$version New:v$actv\n";
-		}
-		else
-		{
-			print "csf is already at the latest version: v$version\n";
-		}
-	}
-	else
-	{
-		print "Unable to verify the latest version of csf at this time\n";
-	}
+        # Compare numeric versions
+        my $current = $version;                              # current version
+        my $newer = 0;
 
-	return;
+		# #
+        #	Split numeric parts by dot
+		# #
+
+        my @current_parts = split /\./, $current;
+        my @new_parts     = split /\./, $num_version;
+
+        for (my $i = 0; $i < @new_parts || $i < @current_parts; $i++)
+        {
+            my $n = $new_parts[$i] // 0;
+            my $c = $current_parts[$i] // 0;
+            if ($n > $c) { $newer = 1; last; }
+            if ($n < $c) { $newer = 0; last; }
+        }
+
+        if ($newer)
+        {
+            print "A newer version of csf is available - Current:v$version New:v$actv\n";
+        }
+        else
+        {
+            print "csf is already at the latest version: v$version\n";
+        }
+    }
+    else
+    {
+        print "Unable to verify the latest version of csf at this time\n";
+    }
+
+    return;
 }
 
 ###############################################################################
