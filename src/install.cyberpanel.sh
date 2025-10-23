@@ -10,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            10.22.2025
+#   @updated            10.23.2025
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -470,8 +470,7 @@ chmod 700 /etc/cron.daily/csget
 chmod -v 700 auto.cyberpanel.pl
 ./auto.cyberpanel.pl $OLDVERSION
 
-if test `cat /proc/1/comm` = "systemd"
-then
+if test `cat /proc/1/comm` = "systemd"; then
     if [ -e /etc/init.d/lfd ]; then
         if [ -f /etc/redhat-release ]; then
             /sbin/chkconfig csf off
@@ -563,6 +562,19 @@ mkdir /home/cyberpanel/plugins
 touch /home/cyberpanel/plugins/configservercsf
 
 # #
+#	Cyberpanel Structure Reference
+#		
+#	stat -c "%n %U:%G %a" /usr/local/CyberCP/CyberCP/*
+#		/usr/local/CyberCP/CyberCP/__init__.py 			root:root 		644
+#		/usr/local/CyberCP/CyberCP/__pycache__ 			root:root 		755
+#		/usr/local/CyberCP/CyberCP/secMiddleware.py 	root:root 		644
+#		/usr/local/CyberCP/CyberCP/SecurityLevel.py 	root:root 		644
+#		/usr/local/CyberCP/CyberCP/settings.py 			root:cyberpanel 640
+#		/usr/local/CyberCP/CyberCP/urls.py 				root:root 		644
+#		/usr/local/CyberCP/CyberCP/wsgi.py 				root:root 		644
+# #
+
+# #
 #	Open
 #		/usr/local/CyberCP/CyberCP/settings.py
 #	
@@ -571,10 +583,61 @@ touch /home/cyberpanel/plugins/configservercsf
 #	
 #	Add Above
 #		'configservercsf',
+#	
+#	
+#	@target			/usr/local/CyberCP/CyberCP/settings.py
+#	@perms			root:cyberpanel 640
 # #
 
-if ! cat /usr/local/CyberCP/CyberCP/settings.py | grep -q configservercsf; then
-    sed -i "/pluginHolder/ i \ \ \ \ 'configservercsf'," /usr/local/CyberCP/CyberCP/settings.py
+SETTINGSPY_FILE="/usr/local/CyberCP/CyberCP/settings.py"
+if [ -f "$SETTINGSPY_FILE" ]; then
+    if ! grep "configservercsf" "$SETTINGSPY_FILE" >/dev/null 2>&1; then
+        SETTINGSPY_TEMP="/tmp/settings.py.$$"
+        i=1
+
+		# #
+        #	Ensure temp file does not collide
+		# #
+
+        while [ -e "$SETTINGSPY_TEMP" ]; do
+            SETTINGSPY_TEMP="/tmp/settings.py.$$.$i"
+            i=$((i + 1))
+        done
+
+		# #
+        #	Store original file permission + owner:group to restore after patched
+		#		settings.py requires root:cyberpanel 0640
+		# #
+
+        if stat --version >/dev/null 2>&1; then
+            # GNU stat (Linux)
+            FILE_MODE=$(stat -c %a "$SETTINGSPY_FILE")
+            FILE_OWNER=$(stat -c %u "$SETTINGSPY_FILE")
+            FILE_GROUP=$(stat -c %g "$SETTINGSPY_FILE")
+        else
+            # BSD/macOS stat
+            FILE_MODE=$(stat -f %Lp "$SETTINGSPY_FILE")
+            FILE_OWNER=$(stat -f %u "$SETTINGSPY_FILE")
+            FILE_GROUP=$(stat -f %g "$SETTINGSPY_FILE")
+        fi
+
+        trap 'rm -f "$SETTINGSPY_TEMP"' EXIT INT TERM
+
+		# #
+        #	Insert 'configservercsf' above pluginHolder
+		# #
+
+        sed "/pluginHolder/ i \
+    \ \ \ \ 'configservercsf'," "$SETTINGSPY_FILE" > "$SETTINGSPY_TEMP" \
+            && mv "$SETTINGSPY_TEMP" "$SETTINGSPY_FILE" \
+            && chown "$FILE_OWNER:$FILE_GROUP" "$SETTINGSPY_FILE" \
+            && chmod "$FILE_MODE" "$SETTINGSPY_FILE"
+
+        echo "  CSF [CyberPanel]: Add configservercsf above pluginHolder in $SETTINGSPY_FILE"
+        trap - EXIT INT TERM
+    else
+        echo "  CSF [CyberPanel]: Skip configservercsf above pluginHolder in $SETTINGSPY_FILE"
+    fi
 fi
 
 # #
@@ -586,21 +649,53 @@ fi
 #	
 #	Add Above
 #		path('configservercsf/',include('configservercsf.urls')),
+#	
+#	@target			/usr/local/CyberCP/CyberCP/urls.py
+#	@perms			root:root 644
 # #
 
-URLS_FILE="/usr/local/CyberCP/CyberCP/urls.py"
+URLSPY_FILE="/usr/local/CyberCP/CyberCP/urls.py"
+if [ -f "$URLSPY_FILE" ]; then
+    if ! grep "configservercsf" "$URLSPY_FILE" >/dev/null 2>&1; then
+        URLSPY_TEMP="/tmp/urls.py.$$"
+        i=1
 
-# #
-#	Only add line if not already present
-# #
+		# #
+        #	Ensure temp file does not collide
+		# #
 
-if ! grep "configservercsf" "$URLS_FILE" >/dev/null 2>&1; then
-    URLS_TEMP="/tmp/urls.py.$$"
+        while [ -e "$URLSPY_TEMP" ]; do
+            URLSPY_TEMP="/tmp/urls.py.$$.$i"
+            i=$((i + 1))
+        done
 
-    sed "/pluginHolder/ i \
-    \ \ \ \ path('configservercsf/',include('configservercsf.urls'))," "$URLS_FILE" > "$URLS_TEMP" \
-    && mv "$URLS_TEMP" "$URLS_FILE"
-	chmod 644 "$URLS_FILE"
+		# #
+        #	Store original file permission to restore after patched
+		# #
+
+        if stat --version >/dev/null 2>&1; then
+            FILE_MODE=$(stat -c %a "$URLSPY_FILE")		# GNU stat
+        else
+            FILE_MODE=$(stat -f %Lp "$URLSPY_FILE")		# BSD/macOS stat
+        fi
+
+        trap 'rm -f "$URLSPY_TEMP"' EXIT INT TERM
+
+		# #
+        #	Insert the CSF URL above pluginHolder
+		# #
+
+        sed "/pluginHolder/ i \
+    \ \ \ \ path('configservercsf/',include('configservercsf.urls'))," \
+            "$URLSPY_FILE" > "$URLSPY_TEMP" \
+            && mv "$URLSPY_TEMP" "$URLSPY_FILE" \
+            && chmod "$FILE_MODE" "$URLSPY_FILE"
+
+        echo "  CSF [CyberPanel]: Add configservercsf.urls above pluginHolder.urls in $URLSPY_FILE"
+        trap - EXIT INT TERM
+    else
+        echo "  CSF [CyberPanel]: Skip configservercsf.urls above pluginHolder.urls in $URLSPY_FILE"
+    fi
 fi
 
 # #
@@ -610,20 +705,65 @@ fi
 # #
 
 # #
-#	Open
-#		/usr/local/CyberCP/baseTemplate/templates/baseTemplate/index.html
+#	This is for older versions of Cyberpanel, not needed in newer releases.
 #	
-#	Find
-#		path('plugins/', include('pluginHolder.urls')),
+#   Open:
+#       /usr/local/CyberCP/baseTemplate/templates/baseTemplate/index.html
 #	
-#	Insert New
-#		path('configservercsf/',include('configservercsf.urls')),
+#   Find:
+#       <a href="#" title="{% trans 'Plugins' %}">
 #	
-#	@todo			Make POSIX compliant
+#   Insert New (above it):
+#       {% include "/usr/local/CyberCP/configservercsf/templates/configservercsf/menu.html" %}
+#	
+#	@target			/usr/local/CyberCP/baseTemplate/templates/baseTemplate/index.html
+#	@perms			root:root 644
 # #
 
-if ! cat /usr/local/CyberCP/baseTemplate/templates/baseTemplate/index.html | grep -q configserver; then
-    sed -i "/trans 'Plugins'/ i \{\% include \"/usr/local/CyberCP/configservercsf/templates/configservercsf/menu.html\" \%\}" /usr/local/CyberCP/baseTemplate/templates/baseTemplate/index.html
+BASEINDEX_FILE="/usr/local/CyberCP/baseTemplate/templates/baseTemplate/index.html"
+if [ -f "$BASEINDEX_FILE" ]; then
+    if ! grep "configserver" "$BASEINDEX_FILE" >/dev/null 2>&1; then
+        BASEINDEX_TEMP="/tmp/index.html.$$"
+        i=1
+
+		# #
+        #	Ensure temp file does not collide
+		# #
+
+        while [ -e "$BASEINDEX_TEMP" ]; do
+            BASEINDEX_TEMP="/tmp/index.html.$$.$i"
+            i=$((i + 1))
+        done
+
+		# #
+        #	Store original file permission to restore after patched
+		# #
+
+        if stat --version >/dev/null 2>&1; then
+            FILE_MODE=$(stat -c %a "$BASEINDEX_FILE")		# GNU stat
+        else
+            FILE_MODE=$(stat -f %Lp "$BASEINDEX_FILE")		# BSD/macOS stat
+        fi
+
+        trap 'rm -f "$BASEINDEX_TEMP"' EXIT INT TERM
+
+		# #
+        #	Insert the CSF menu include above the Plugins line
+		# #
+
+        sed "/trans 'Plugins'/ i \
+\{\% include \"/usr/local/CyberCP/configservercsf/templates/configservercsf/menu.html\" \%\}" \
+            "$BASEINDEX_FILE" > "$BASEINDEX_TEMP" \
+            && mv "$BASEINDEX_TEMP" "$BASEINDEX_FILE" \
+            && chmod "$FILE_MODE" "$BASEINDEX_FILE"
+
+        echo "  CSF [CyberPanel]: Add legacy csf menu include in $BASEINDEX_FILE"
+        trap - EXIT INT TERM
+    else
+        echo "  CSF [CyberPanel]: Skip legacy csf menu include - already present in ($BASEINDEX_FILE)"
+    fi
+else
+    echo "  CSF [CyberPanel]: Skip legacy csf menu include - file not found ($BASEINDEX_FILE)"
 fi
 
 # #
@@ -640,6 +780,8 @@ fi
 #			<span>CSF</span>
 #		</a>
 #	
+#	@target			/usr/local/CyberCP/baseTemplate/templates/baseTemplate/index.html
+#	@perms			root:root 644
 #	@todo			Make POSIX compliant
 # #
 
@@ -665,6 +807,7 @@ fi
 #		from django.conf.urls import url
 #	
 #	@target			/usr/local/CyberCP/CyberCP/urls.py
+#	@perms			root:root 644
 #	@todo			Make POSIX compliant
 # #
 
@@ -676,9 +819,9 @@ if grep -q "import url" /usr/local/CyberCP/CyberCP/urls.py; then
         -e "s/path(/url(/g" \
         /usr/local/CyberCP/CyberCP/urls.py
 
-    echo "CSF: [Cyberpanel] - Backwards Compaibility - path() => url() applied"
+    echo "  CSF [CyberPanel]: Add Backwards Compaibility - path() => url()"
 else
-    echo "CSF: [Cyberpanel] - Backwards Compaibility - using path()"
+    echo "  CSF [CyberPanel]: Skip Backwards Compaibility - using path()"
 fi
 
 # #
@@ -694,80 +837,94 @@ fi
 #	
 #                       if 'configservercsf' in pathActual:
 #                           continue
+#	
+#	@target			/usr/local/CyberCP/CyberCP/secMiddleware.py
+#	@perms			root:root 644
 # #
 
-SEC_FILE="/usr/local/CyberCP/CyberCP/secMiddleware.py"
-TARGET_IF="if not isAPIEndpoint and valueAlreadyChecked == 0:"
+SECMID_FILE="/usr/local/CyberCP/CyberCP/secMiddleware.py"
+SECMID_TARGET_IF="if not isAPIEndpoint and valueAlreadyChecked == 0:"
 BYPASS_LINE="                        if 'configservercsf' in pathActual:"
 BYPASS_CONT="                            continue"
 
-if [ -f "$SEC_FILE" ]; then
+if [ -f "$SECMID_FILE" ]; then
     printf '\n'
-    printf 'CSF: [Cyberpanel] - Patching %s to insert CSF exception...\n' "$SEC_FILE"
+    printf '  CSF [CyberPanel]: Start secMiddleware.py - security exception...\n'
 
 	# #
-    #	backup original
+    #	Skip if exception already present
 	# #
 
-    BACKUP="${SEC_FILE}.bak.$$"
-    cp -p "$SEC_FILE" "$BACKUP" ||
-	{
-        printf '  CSF: [Cyberpanel] - Failed to create backup %s\n' "$BACKUP"
-        exit 1
-    }
-
-	# #
-    #	skip if exception already present
-	# #
-
-    if grep "if 'configservercsf' in pathActual" "$SEC_FILE" >/dev/null 2>&1; then
-        printf '  CSF: [Cyberpanel] - Exception already present — skipping.\n'
+    if grep "if 'configservercsf' in pathActual" "$SECMID_FILE" >/dev/null 2>&1; then
+        printf '  CSF [CyberPanel]: Skip secMiddleware.py - security exception already present\n'
     else
-        SEC_TEMP="${SEC_FILE}.tmp.$$"
+		# #
+		#	Backup
+		# #
+
+		SECMID_BACKUP="${SECMID_FILE}.bak.$$"
+		cp -p "$SECMID_FILE" "$SECMID_BACKUP" ||
+		{
+			printf '  CSF [CyberPanel]: Fail secMiddleware.py - cannot create backup %s\n' "$SECMID_BACKUP"
+			exit 1
+		}
+
+        SECMID_TEMP="${SECMID_FILE}.tmp.$$"
         i=1
 
-        while [ -e "$SEC_TEMP" ]; do
-            SEC_TEMP="${SEC_FILE}.tmp.$$.$i"
+        while [ -e "$SECMID_TEMP" ]; do
+            SECMID_TEMP="${SECMID_FILE}.tmp.$$.$i"
             i=$((i + 1))
         done
 
-        trap 'rm -f "$SEC_TEMP"' EXIT INT TERM
+		# #
+        #	Store original file permission to restore after patched
+		# #
+
+        if stat --version >/dev/null 2>&1; then
+            FILE_MODE=$(stat -c %a "$SECMID_FILE")		# GNU stat
+        else
+            FILE_MODE=$(stat -f %Lp "$SECMID_FILE")		# BSD/macOS stat
+        fi
+
+        trap 'rm -f "$SECMID_TEMP"' EXIT INT TERM
+
+		# #
+        #	Insert bypass after every target line
+		# #
 
         while IFS= read -r line || [ -n "$line" ]; do
-            printf '%s\n' "$line" >>"$SEC_TEMP"
+            printf '%s\n' "$line" >>"$SECMID_TEMP"
 
             case "$line" in
-                *"$TARGET_IF"*)
-                    printf '%s\n' '' >>"$SEC_TEMP"
-                    printf '%s\n' "$BYPASS_LINE" >>"$SEC_TEMP"
-                    printf '%s\n' "$BYPASS_CONT" >>"$SEC_TEMP"
-                    printf '%s\n' '' >>"$SEC_TEMP"
+                *"$SECMID_TARGET_IF"*)
+                    printf '%s\n' '' >>"$SECMID_TEMP"
+                    printf '%s\n' "$BYPASS_LINE" >>"$SECMID_TEMP"
+                    printf '%s\n' "$BYPASS_CONT" >>"$SECMID_TEMP"
+                    printf '%s\n' '' >>"$SECMID_TEMP"
                     ;;
             esac
-        done <"$SEC_FILE"
+        done <"$SECMID_FILE"
 
-        if cp -p "$SEC_TEMP" "$SEC_FILE"; then
+        if cp -p "$SECMID_TEMP" "$SECMID_FILE"; then
 
 			# #
-            #	Force correct CyberPanel permissions
-			#	
-			#	can throw error in /home/cyberpanel/stderr.log
-			#		PermissionError: [Errno 13] Permission denied: '/usr/local/CyberCP/CyberCP/secMiddleware.py'
+            #	Restore original permissions
 			# #
 
-            chmod 644 "$SEC_FILE"
-            printf '  CSF: [Cyberpanel] - Exception inserted after every %s occurrence.\n' "'$TARGET_IF'"
+            chmod "$FILE_MODE" "$SECMID_FILE"
+            printf '  CSF [CyberPanel]: Add secMiddleware.py - exception after every occurrence of %s.\n' "'$SECMID_TARGET_IF'"
         else
-            printf '  CSF: [Cyberpanel] - Failed to write patched file — restoring backup.\n'
-            cp -p "$BACKUP" "$SEC_FILE" >/dev/null 2>&1 || true
+            printf '  CSF [CyberPanel]: Fail secMiddleware.py - cannot write patched file — restoring backup.\n'
+            cp -p "$SECMID_BACKUP" "$SECMID_FILE" >/dev/null 2>&1 || true
             exit 1
         fi
 
         trap - EXIT INT TERM
-        rm -f "$SEC_TEMP"
+        rm -f "$SECMID_TEMP"
     fi
 else
-    printf '  CSF: [Cyberpanel] - secMiddleware.py not found at %s — skipping exception.\n' "$SEC_FILE"
+    printf '  CSF [CyberPanel]: Skip secMiddleware.py  -- target file not found (%s)\n' "$SECMID_FILE"
 fi
 
 # #
