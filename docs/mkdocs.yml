@@ -284,6 +284,9 @@ nav:
           - Ipsets: 'usage/ipset.md'
           - Blocklists: 'usage/blocklists.md'
           - Geographical Blocks: 'usage/geoip.md'
+          - Troubleshooting:
+                - usage/troubleshooting/index.md
+                - Cyberpanel: usage/troubleshooting/cyberpanel.md
           - Cheatsheet:
                 - Home: 'usage/cheatsheet/home.md'
                 - Commands: 'usage/cheatsheet/commands.md'
