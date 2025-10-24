@@ -26,8 +26,6 @@ The next release of ConfigServer Security & Firewall (CSF) is here, and I wanted
 
 Our focus remains on transparency, stability, and community involvement. Users deserve to know not only what’s changing, but why. By keeping everyone informed and maintaining compatibility across control panels, we aim to ensure that CSF continues to be the trusted, secure, and reliable firewall solution it has always been.
 
-The full changelog is available [here](../../about/changelog.md).
-
 <!-- more -->
 
 <br />
@@ -405,4 +403,15 @@ target:         new
 accent:         353535E0
 ```
 
+<br />
+
+---
+
+<br />
+
+## Full Changelog
+
+The full changelog is available [here](../../about/changelog.md).
+
+<br />
 <br />
