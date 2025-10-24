@@ -68,11 +68,11 @@ When you join the **[Insiders Program](https://docs.configserver.dev/insiders)**
 Depending on the method of participation or donation, we may collect:
 
 - Your **GitHub username**
-  - Used to publically broadcast sponsors on our [Sponsors](https://docs.configserver.dev/insiders/sponsors/) page
+    - Used to publically broadcast sponsors on our [Sponsors](https://docs.configserver.dev/insiders/sponsors/) page
 - Your **Discord user ID**
-  - Used give Insiders special perks and a role on our [Discord](https://discord.configserver.dev) server
+    - Used give Insiders special perks and a role on our [Discord](https://discord.configserver.dev) server
 - Your **email address** (if provided during signup or donation)
-  - Used as a backup communication method
+    - Used as a backup communication method
 - The **timestamp of your sponsorship** with our licensing server
 - The **timestamp of your last communication** with our licensing server
 

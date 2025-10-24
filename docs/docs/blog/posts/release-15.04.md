@@ -19,8 +19,6 @@ comments: true
 
 This update addresses a textbox height bug for the Webmin control panel which affects the **log** viewing pages. Two new settings have also been added to the CSF config file `/etc/csf/csf.conf` which affects logging.
 
-The full changelog is available [here](../../about/changelog.md).
-
 <!-- more -->
 
 <br />
@@ -88,7 +86,6 @@ This setting allows you to define if automatic log refreshing on page load start
 
 :   - A value of ++1++ means that as soon as a log page is loaded, it will start in the **paused** state. To start the automatic refresh functionality and timer, you  need to press the ++"Continue"++ button toward the top of the window.
 
-
 ``` perl
 # #
 #   Determines whether the log timer starts paused when the page loads.
@@ -97,6 +94,16 @@ This setting allows you to define if automatic log refreshing on page load start
 
 UI_LOGS_START_PAUSED = "0"
 ```
+
+<br />
+
+---
+
+<br />
+
+## Full Changelog
+
+The full changelog is available [here](../../about/changelog.md).
 
 <br />
 <br />
