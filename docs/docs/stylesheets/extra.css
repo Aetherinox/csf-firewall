@@ -3274,10 +3274,15 @@ figure img
 .md-typeset .mdx-sponsorship__item img
 {
     display:block;
-    filter:grayscale(100%) opacity(75%);
+    filter: none !important;
     height:auto;
     transition:filter 125ms;
     width:100%
+}
+
+.md-typeset .mdx-sponsorship__item:focus, .md-typeset .mdx-sponsorship__item:hover
+{
+    transform: scale(1.3);
 }
 
 .md-typeset .mdx-sponsorship-button
@@ -3440,9 +3445,43 @@ figure img
 }
 
 /*
-    Preloader
+    Sponsor section wrapper
+*/
 
-    used on the docs sponsors page
+.sponsor-container
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 16px 0;
+}
+
+/*
+    Left-align the header
+*/
+
+.sponsor-container h2
+{
+    align-self: flex-start;
+    margin-bottom: 8px;
+}
+
+/*
+    Avatars grid
+*/
+
+.sponsor-avatars
+{
+    display: flex; 
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    padding: 16px 0;
+}
+
+/*
+    Loader dots
 */
 
 .sponsor-loader

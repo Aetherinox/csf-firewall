@@ -19,8 +19,6 @@ comments: true
 
 This update fixes an issue where HTML in the **Firewall Configuration** page was not properly escaped, and rewrites the `init.d` script for POSIX compatibility with added functionality.
 
-The full changelog is available [here](../../about/changelog.md).
-
 <!-- more -->
 
 <br />
@@ -74,6 +72,13 @@ This init script manages the CSF service on systems without `systemd`. During in
 
 <br />
 
+---
+
+<br />
+
+## Full Changelog
+
+The full changelog is available [here](../../about/changelog.md).
 
 <br />
 <br />

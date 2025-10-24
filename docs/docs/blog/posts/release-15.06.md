@@ -19,8 +19,6 @@ comments: true
 
 This update fixes a backwards compatibility bug between CSF and older versions of Webmin such as v2.111.
 
-The full changelog is available [here](../../about/changelog.md).
-
 <!-- more -->
 
 <br />
@@ -80,6 +78,15 @@ After resolution, older versions of Webmin should appear identical to newer vers
     <figcaption>Webmin › Fixed Header</figcaption>
 </figure>
 
+<br />
+
+---
+
+<br />
+
+## Full Changelog
+
+The full changelog is available [here](../../about/changelog.md).
 
 <br />
 <br />

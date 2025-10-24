@@ -19,8 +19,6 @@ comments: true
 
 This update includes several minor improvements without adding major new features. It also fixes an issue in the Webmin control panel, restoring the **Configuration** and **Help** menus that were missing from the header in [v15.02](release-15.02.md).
 
-The full changelog is available [here](../../about/changelog.md).
-
 <!-- more -->
 
 <br />
@@ -111,4 +109,15 @@ To change the font-size, click the icons <svg xmlns="http://www.w3.org/2000/svg"
     <figcaption>CSF › Decrease Minimum Font Size</figcaption>
 </figure>
 
+<br />
+
+---
+
+<br />
+
+## Full Changelog
+
+The full changelog is available [here](../../about/changelog.md).
+
+<br />
 <br />
