@@ -16,13 +16,47 @@ In addition to this Privacy Policy, your use of our services is governed by our 
 
 ## 1. Information We Do Not Collect
 
-CSF does **not** collect, log, or retain any personal information from users who access or use:
+Outlines what information is **NOT** collected by us on our website:
 
-- The root domain [https://configserver.dev](https://configserver.dev) 
-- The download service subdomain: [https://download.configserver.dev](https://download.configserver.dev)
-- The blocklist service subdomain: [https://blocklist.configserver.dev](https://blocklist.configserver.dev)
+<br />
 
-We do not collect IP addresses, payment information, geographical data, device information, or other personally identifiable information (PII) from visitors to these subdomains.
+### Website
+
+CSF does **not** collect, log, or retain any information such as IP addresses, payment details, geographic data, device identifiers, or any other personally identifiable information (PII) from users who visit or interact with:
+
+- The main domain: [https://configserver.dev](https://configserver.dev)  
+- The download service: [https://download.configserver.dev](https://download.configserver.dev)  
+- The blocklist service: [https://blocklist.configserver.dev](https://blocklist.configserver.dev)
+
+<br />
+
+### CSF Application
+
+The CSF application does **not** transmit or collect any personal or server-related information. Specifically:
+
+- We do **not** log the IP address of any server running CSF.  
+- We do **not** collect configuration data, version information, or any personal server details.  
+- We do **not** access or transmit your local CSF logs — all logs remain securely stored on your own system.  
+- We do **not** perform remote telemetry, analytics, or background reporting of any kind.  
+- We do **not** automatically send diagnostic or crash data to external servers.  
+- We do **not** fetch or scan any system files, user directories, or third-party applications.  
+- We do **not** collect information about your firewall rules, ports, or network traffic.  
+- We do **not** use any tracking identifiers, unique installation IDs, or hardware fingerprints.
+
+<br />
+
+### Payment Processors
+
+When you sponsor CSF or join the [Insiders](https://docs.configserver.dev/insiders) program, all payment processing is handled securely by trusted third-party services such as [GitHub Sponsors](https://github.com/sponsors/Aetherinox) and [BuyMeACoffee](https://buymeacoffee.com/aetherinox).  
+
+We do **not** handle or store any sensitive payment information ourselves.
+
+- We do **not** log, copy, or retain any personal, financial, or payment details on our servers.  
+- We do **not** have access to your full credit card or banking information — all transactions are securely managed by our payment partners.  
+- We do **not** share, sell, or trade any supporter or payment data with third parties.  
+- We do **not** collect analytics or behavioral data from users making donations or sponsorship payments.  
+- We do **not** perform recurring billing unless explicitly managed and authorized through the payment provider’s platform.
+- We only store minimal, non-sensitive data (such as your GitHub username or public display name) to verify active sponsorships or Insiders status.  
 
 <br />
 
@@ -36,19 +70,21 @@ When visiting our [documentation site](https://docs.configserver.dev) or partici
 
 <br />
 
-### A. General Website Usage
+### A. Domain
 
-Our main website and associated subdomains do **not** actively collect or store any personal information.
+Our main domain https://configserver.dev and its subdomains do **not** actively collect, store, or track any personal information from visitors.  
 
-We do not track user activity, browser fingerprints, or connection metadata.  
+However, we do use the third-party service [Cloudflare](https://cloudflare.com) to improve performance and security. Cloudflare may collect certain information about visitors to our site. This data is managed entirely by Cloudflare, and we do not have access to or control over it. 
+
+For information on what Cloudflare collects and how it is used, please refer to their [Privacy Policy](https://cloudflare.com/privacypolicy/).
 
 <br />
 
 ### B. Documentation Subdomain
 
-Our [documentation](https://docs.configserver.dev) site uses a third-party framework called [**MkDocs**](https://mkdocs.org/), along with the **[Material for MkDocs](https://github.com/squidfunk/mkdocs-material)** theme, which may store local cookies in your browser.  
+Our [documentation](https://docs.configserver.dev) subdomain uses a third-party framework called [**MkDocs**](https://mkdocs.org/), along with the **[Material for MkDocs](https://github.com/squidfunk/mkdocs-material)** theme, which may store local cookies in your browser.  
 
-When you first visit our documentation site, MkDocs will prompt you to **consent to cookies** before any optional or analytics-related cookies are set. This ensures compliance with data privacy regulations such as the GDPR.  
+When you first visit our documentation site, MkDocs will prompt you to **consent to cookies** before any optional or analytics-related cookies are set [^1]. This ensures compliance with data privacy regulations such as the GDPR.  
 
 The cookies used are **strictly functional** and are limited to the following purposes:
 
@@ -61,20 +97,20 @@ We do **not** use cookies for advertising, behavioral tracking, or any form of u
 
 <br />
 
-### C. Insiders Program Participation
+### C. Insiders Program
 
 When you join the **[Insiders Program](https://docs.configserver.dev/insiders)**, limited personal information is collected to manage and verify your membership and licensing status.
 
-Depending on the method of participation or donation, we may collect:
+Depending on the payment processor you use to sign up for our [Insiders Program](https://docs.configserver.dev/insiders) or to become a [sponsor](https://docs.configserver.dev/insiders/sponsors/), we may collect:
 
-- Your **GitHub username**
+- Your **GitHub** or **BuyMeACoffee username**
     - Used to publically broadcast sponsors on our [Sponsors](https://docs.configserver.dev/insiders/sponsors/) page
 - Your **Discord user ID**
     - Used give Insiders special perks and a role on our [Discord](https://discord.configserver.dev) server
 - Your **email address** (if provided during signup or donation)
     - Used as a backup communication method
-- The **timestamp of your sponsorship** with our licensing server
-- The **timestamp of your last communication** with our licensing server
+- The **timestamp** your sponsorship began
+- The **timestamp** your last communication with our licensing server was
 
 This information is used exclusively for program administration, including license validation, member communication, and early-release access.
 
@@ -139,7 +175,7 @@ We utilize a minimal number of third-party services, each serving a specific ope
     - PayPal  
     - BuyMeACoffee  
 - **Cloudflare** — Provides network security, caching, and DDoS protection for our websites and services. Cloudflare may temporarily process connection-related data (such as IP addresses and request metadata) to detect abuse, manage traffic, and ensure reliable service delivery.
-- **Discord** — Used for community support and communication. Discord may store information including your Discord username, ID, and any messages or interactions you have within our official CSF servers.
+- **Discord** — Used for community support and communication. Discord may store information including your Discord username, ID, and any messages or interactions you have within our official CSF servers. Refer to Discord's [Privacy Policy](https://discord.com/privacy) for more information on what they collect and how they use it.
 
 <br />
 
