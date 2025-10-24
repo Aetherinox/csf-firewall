@@ -1,93 +1,169 @@
 document$.subscribe( async function( )
 {
-    /*
-        Load sponsor data dynamically into the sponsorship list
-    */
-
     const sponsorList = document.querySelector( '.mdx-sponsorship__list' );
     if ( !sponsorList )
-    {
-        return; // No sponsor container found on this page
-    }
+        return;
 
     /*
-        Create a temporary loading spinner
+        Clear existing content and add loaders for both sections
     */
 
     sponsorList.innerHTML = `
-        <div class="sponsor-loader">
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
+        <div class="sponsor-container" id="github-container">
+            <h2>Insiders Participants</h2>
+            <div class="sponsor-loader" id="github-loader">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+            <div class="sponsor-avatars" id="github-avatars"></div>
+        </div>
+
+        <div class="sponsor-container" id="bmac-container">
+            <h2>BuyMeACoffee Sponsors</h2>
+            <div class="sponsor-loader" id="bmac-loader">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+            <div class="sponsor-avatars" id="bmac-avatars"></div>
         </div>
     `;
 
+    /*
+        Service > Insiders Members
+    */
+    
     try
     {
-        /*
-            Fetch sponsor JSON
-        */
-
         const response = await fetch( 'https://license.configserver.dev/users' );
+
         if ( !response.ok )
-        {
-            throw new Error( 'Failed to fetch sponsor list: ' + response.status );
-        }
+            throw new Error( 'Failed to fetch GitHub sponsors: ' + response.status );
 
-        const sponsors = await response.json( );
+        const sponsors          = await response.json( );
+        const loader            = document.getElementById('github-loader');
+        const avatars           = document.getElementById('github-avatars');
 
-        /*
-            Clear preloader
-        */
+        loader.style.display    = 'none'; // hide loader once data loads
 
-        sponsorList.innerHTML = '';
-
-        /*
-            If no sponsors found
-        */
-  
         if ( !Array.isArray( sponsors ) || sponsors.length === 0 )
         {
-            sponsorList.innerHTML = '<em>No sponsors yet</em>';
-            return;
+            avatars.innerHTML   = '<em>No GitHub sponsors yet</em>';
         }
-
-        /*
-            Create sponsor entries
-        */
-
-        sponsors.forEach( sponsor =>
+        else
         {
-            const username = sponsor.github_id;
-            if (!username) return;
+            sponsors.forEach( sponsor =>
+            {
+                const username          = sponsor.github_id;
+                if ( !username )
+                    return;
 
-            const githubUrl = `https://github.com/${ username }`;
-            const avatarUrl = `https://github.com/${ username }.png?size=100`;
+                const githubUrl         = `https://github.com/${ username }`;
+                const avatarUrl         = `https://github.com/${ username }.png?size=100`;
 
-            const a = document.createElement( 'a' );
-            a.href = githubUrl;
-            a.title = `@${username}`;
-            a.className = 'mdx-sponsorship__item';
-            a.target = '_blank';
-            a.rel = 'noopener';
+                const a                 = document.createElement('a');
+                a.href                  = githubUrl;
+                a.title                 = `@${ username }`;
+                a.className             = 'mdx-sponsorship__item';
+                a.target                = '_blank';
+                a.rel                   = 'noopener';
 
-            const img = document.createElement( 'img' );
-            img.src = avatarUrl;
-            img.alt = `@${username}`;
-            img.loading = 'lazy';
-            img.width = 100;
-            img.height = 100;
-            img.style.borderRadius = '50%';
-            img.style.margin = '6px';
-            img.style.boxShadow = '0 2px 6px rgba(0,0,0,0.1)';
+                const img               = document.createElement('img');
+                img.src                 = avatarUrl;
+                img.alt                 = `@${ username }`;
+                img.loading             = 'lazy';
+                img.width               = 100;
+                img.height              = 100;
+                img.style.borderRadius  = '50%';
+                img.style.boxShadow     = '0 2px 6px rgba(0,0,0,0.1)';
 
-            a.appendChild( img );
-            sponsorList.appendChild( a );
-        });
+                a.appendChild( img );
+                avatars.appendChild( a );
+            });
+        }
     }
     catch (err)
     {
-        console.error( 'Error loading sponsors:', err );
-        sponsorList.innerHTML = '<em>Unable to load sponsor list.</em>';
+        console.error( 'Error loading GitHub sponsors:', err );
+        document.getElementById( 'github-avatars' ).innerHTML = '<em>Unable to load GitHub sponsors.</em>';
+    }
+
+    /*
+        Service > BuyMeACoffee
+    */
+
+    try
+    {
+        const response = await fetch( 'https://sponsors.configserver.dev/buymeacoffee' );
+
+        if ( !response.ok )
+            throw new Error( 'Failed to fetch BuyMeACoffee supporters: ' + response.status );
+
+        const data              = await response.json( );
+        const supporters        = Array.isArray( data.supporters ) ? data.supporters : [];
+        const loader            = document.getElementById( 'bmac-loader' );
+        const avatars           = document.getElementById( 'bmac-avatars' );
+
+        loader.style.display    = 'none'; // hide loader once data loads
+
+        if ( supporters.length === 0 )
+        {
+            avatars.innerHTML   = '<em>No BuyMeACoffee supporters yet</em>';
+        }
+        else
+        {
+            supporters.forEach( item =>
+            {
+                const username          = item.supporter_name || 'Unknown';
+                const avatarUrl         = item.avatar_url || getBmacAvatar( username );
+
+                const a                 = document.createElement( 'a' );
+                a.href                  = '#';
+                a.title                 = username;
+                a.className             = 'mdx-sponsorship__item';
+                a.target                = '_blank';
+                a.rel                   = 'noopener';
+
+                const img               = document.createElement( 'img' );
+                img.src                 = avatarUrl;
+                img.alt                 = username;
+                img.loading             = 'lazy';
+                img.width               = 100;
+                img.height              = 100;
+                img.style.borderRadius  = '50%';
+                img.style.boxShadow     = '0 2px 6px rgba(0,0,0,0.1)';
+
+                a.appendChild( img );
+                avatars.appendChild( a );
+            });
+        }
+    }
+    catch (err)
+    {
+        console.error( 'Error loading BuyMeACoffee supporters:', err );
+        document.getElementById( 'bmac-avatars' ).innerHTML = '<em>Unable to load BuyMeACoffee supporters.</em>';
     }
 });
+
+/*
+    Helper: generate BuyMeACoffee avatar
+*/
+
+function getBmacAvatar( name )
+{
+    if ( !name )
+        return `https://api.dicebear.com/9.x/avataaars/svg?seed=Unknown`;
+
+    name = name.trim( ).replace(/^[^a-zA-Z0-9]+/, '');
+    const words = name.split(' ');
+    let initials = words.length >= 2
+        ? words[ 0 ][ 0 ].toUpperCase( ) + words[ 1 ][ 0 ].toUpperCase( )
+        : words[ 0 ].substring(0, 2).toUpperCase( );
+
+    const colors        = [ 'FAC799', 'FFB3A0', 'EC9689', 'DEBBB9', 'EFC16D', 'FFD8CF' ];
+    const colorIndex    = Array.from( name ).reduce( ( sum, c ) => sum + c.charCodeAt( 0 ), 0 ) % colors.length;
+    const color         = colors[ colorIndex ];
+
+    return `https://cdn.buymeacoffee.com/uploads/profile_pictures/default/v2/${ color }/${ initials }.png@200w_0e.webp`;
+}
