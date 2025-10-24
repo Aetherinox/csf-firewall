@@ -3334,13 +3334,13 @@ EOF
 		#	response (str)		upgrade status or version
 		my ( $upgrade, $response ) = &csgetversion( "csf", $myv );
 
-		if ( $upgrade)
+		if ( $upgrade )
 		{
-		__ 					"<tr><td><button name='action' value='upgrade' type='submit' class='btn btn-default'>Upgrade csf</button></td><td style='width:100%'><b>A new version of csf (v$response) is available. Upgrading will retain your settings<br><a href='https://$config{DOWNLOADSERVER}/csf/changelog.txt' target='_blank'>View ChangeLog</a></b></td></tr>\n";
+		__ 					"<tr><td><button name='action' value='upgrade' type='submit' class='btn btn-default' style='width: 200px;'>Upgrade</button></td><td style='width:100%'><b>A new version of csf (v$response) is available. Upgrading will retain your settings<br><a href='https://$config{DOWNLOADSERVER}/csf/changelog.txt' target='_blank'>View ChangeLog</a></b></td></tr>\n";
 		}
 		else
 		{
-		__ 					"<tr><td><button name='action' value='manualcheck' type='submit' class='btn btn-default'>Manual Check</button></td><td>";
+		__ 					"<tr><td><button name='action' value='manualcheck' type='submit' class='btn btn-default' style='width: 200px;'>Manual Check</button></td><td>";
 							if ($response ne "") {
 		__ 						"(csget cron check) $response</td></tr>\n";
 							}
