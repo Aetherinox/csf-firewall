@@ -3,20 +3,18 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Details regarding CSF release v15.05
+        <meta name="description" content="Details regarding CSF release v15.07
 ">
       
       
         <meta name="author" content="Aetherinox">
       
       
-        <link rel="canonical" href="https://aetherinox.github.io/csf-firewall/blog/2025/release-v1505/">
+        <link rel="canonical" href="https://aetherinox.github.io/csf-firewall/blog/2025/release-v1507/">
       
       
-        <link rel="prev" href="../release-v1504/">
+        <link rel="prev" href="../release-v1506/">
       
-      
-        <link rel="next" href="../release-v1506/">
       
       
       <link rel="icon" href="../../../assets/favicon.png">
@@ -24,7 +22,7 @@
     
     
       
-        <title>Release v15.05
+        <title>Release v15.07
  - ConfigServer Security &amp; Firewall</title>
       
     
@@ -94,7 +92,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#release-v1505" class="md-skip">
+        <a href="#release-v1507" class="md-skip">
           Skip to content
         </a>
       
@@ -165,7 +163,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Release v15.05
+              Release v15.07
 
             
           </span>
@@ -2782,18 +2780,54 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#fix-html-escaping" class="md-nav__link">
+  <a href="#introducing-the-insiders-program" class="md-nav__link">
     <span class="md-ellipsis">
-      Fix HTML Escaping
+      Introducing the Insiders Program
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#posix-compliant-init-script" class="md-nav__link">
+  <a href="#launched-discord-server" class="md-nav__link">
     <span class="md-ellipsis">
-      POSIX-Compliant Init Script
+      Launched Discord Server
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removed-spamhaus-edrop-list" class="md-nav__link">
+    <span class="md-ellipsis">
+      Removed Spamhaus edrop list
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed-cyberpanel-error-data-supplied-is-not-accepted-forbidden-characters" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fixed Cyberpanel error: Data supplied is not accepted - forbidden characters
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fixed-whitespace-breaking-ipsets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Fixed whitespace breaking ipsets
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#added-privacy-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Added Privacy Policy
     </span>
   </a>
   
@@ -2869,7 +2903,7 @@
                     <li class="md-nav__item">
                       <div class="md-nav__link">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5v-5Z"></path></svg>
-                        <time datetime="2025-10-16 00:00:00+00:00" class="md-ellipsis">Thursday, October 16, 2025</time>
+                        <time datetime="2025-10-23 00:00:00+00:00" class="md-ellipsis">Thursday, October 23, 2025</time>
                       </div>
                     </li>
                     
@@ -2883,8 +2917,7 @@
                               <a href="../../release/">release</a>, 
                               <a href="../../changelog/">changelog</a>, 
                               <a href="../../v15x/">v15.x</a>, 
-                              <a href="../../csp/">csp</a>, 
-                              <a href="../../initd/">init.d</a></span>
+                              <a href="../../cyberpanel/">cyberpanel</a></span>
                         </div>
                       </li>
                     
@@ -2895,7 +2928,7 @@
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7h1.5Z"></path></svg>
                           <span class="md-ellipsis">
                             
-                              1 min read
+                              4 min read
                             
                           </span>
                         </div>
@@ -2919,7 +2952,7 @@
 
 
   
-    <a href="https://github.com/aetherinox/csf-firewall/edit/main/docs/docs/blog/posts/release-15.05.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/aetherinox/csf-firewall/edit/main/docs/docs/blog/posts/release-15.07.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"></path></svg>
     </a>
@@ -2928,15 +2961,16 @@
     
       
     
-    <a href="https://github.com/aetherinox/csf-firewall/raw/main/docs/docs/blog/posts/release-15.05.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/aetherinox/csf-firewall/raw/main/docs/docs/blog/posts/release-15.07.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"></path></svg>
     </a>
   
 
 
-<h1 id="release-v1505">Release: v15.05<a class="headerlink" href="#release-v1505" title="Permanent link">¶</a></h1>
-<p>This update fixes an issue where <abbr title="Hyper Text Markup Language">HTML</abbr> in the <strong>Firewall Configuration</strong> page was not properly escaped, and rewrites the <code>init.d</code> script for POSIX compatibility with added functionality.</p>
+<h1 id="release-v1507">Release: v15.07<a class="headerlink" href="#release-v1507" title="Permanent link">¶</a></h1>
+<p>This update publicly launches our <a href="../../../insiders/">Insiders Program</a>, offering early access to upcoming features and exclusive benefits.  </p>
+<p>It also resolves a CyberPanel integration issue that caused errors when saving your <strong>Firewall Configuration</strong>, alongside several minor bug fixes, maintenance improvements, and code refactoring.</p>
 <!-- more -->
 
 <p><br></p>
@@ -2945,32 +2979,77 @@
 <h2 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">¶</a></h2>
 <p>A list of the most important changes are listed below.</p>
 <p><br></p>
-<h3 id="fix-html-escaping">Fix <abbr title="Hyper Text Markup Language">HTML</abbr> Escaping<a class="headerlink" href="#fix-html-escaping" title="Permanent link">¶</a></h3>
-<p>We have corrected an issue where <abbr title="Hyper Text Markup Language">HTML</abbr> in the <strong>Firewall Configuration</strong> page was not properly escaped. This ensures that CSP (Content Security Policy) settings are applied correctly and safely when editing configuration files via the web interface.</p>
-<p><br></p>
-<figure>
-    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../assets/images/blog/release-1505/1.png" data-desc-position="bottom"><img alt="Bug › Escaped Input" src="../../../assets/images/blog/release-1505/1.png" width="700"></a>
-    <figcaption>Bug › Escaped Input</figcaption>
-</figure>
-<p><br></p>
-<hr>
-<p><br></p>
-<h3 id="posix-compliant-init-script">POSIX-Compliant Init Script<a class="headerlink" href="#posix-compliant-init-script" title="Permanent link">¶</a></h3>
-<p>The <code>csf.sh</code> <code>init.d</code> script has been fully rewritten to be <strong>POSIX-compliant</strong>, ensuring compatibility across various Linux distributions and shell environments.</p>
-<p>It now supports all standard service commands:</p>
+<h3 id="introducing-the-insiders-program">Introducing the Insiders Program<a class="headerlink" href="#introducing-the-insiders-program" title="Permanent link">¶</a></h3>
+<p>The <abbr title="A security suite for Linux servers that provides firewall management, intrusion detection, and login failure monitoring.">ConfigServer Security &amp; Firewall</abbr> <span class="mdx-badge mdx-badge--heart"><span class="mdx-badge__icon"><a href="../../../insiders/" title="Sponsors"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12 21.35-1.45-1.32C5.4 15.36 2 12.27 2 8.5 2 5.41 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.08C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.41 22 8.5c0 3.77-3.4 6.86-8.55 11.53L12 21.35Z"></path></svg></span></a></span></span> <strong>Insiders Program</strong> is designed for users who want to actively support, test, and shape the future of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>. As an Insider, you’ll gain <strong>early access</strong> to new features and experimental functionality before they’re released publicly.</p>
+<p>We’ll never place essential security features behind a paywall — your protection should never depend on your wallet. The Insiders Program simply gives you the opportunity to contribute to development by testing new versions, supporting the project, and helping us identify issues before public release.  </p>
+<p>If you’re unable to donate, no problem. You’ll still have access to the same core features as our Insiders, and the project will remain fully open-source.</p>
+<p>By joining our Insiders Program as a sponsor, you’ll receive the following benefits:</p>
 <ul>
-<li><code>start</code></li>
-<li><code>stop</code></li>
-<li><code>status</code></li>
-<li><code>restart</code></li>
-<li><code>force-reload</code></li>
-<li><code>reload</code></li>
-<li><code>restart-all</code></li>
-<li><code>enable</code></li>
-<li><code>disable</code></li>
+<li><strong>Exclusive early access</strong> to the <abbr title="A security suite for Linux servers that provides firewall management, intrusion detection, and login failure monitoring.">ConfigServer Security &amp; Firewall</abbr> release channel  </li>
+<li><strong>Sponsor role</strong> on our <a href="https://discord.configserver.dev">Discord</a> server  </li>
+<li>Your GitHub avatar featured on our <a href="../insiders/sponsors.md">Sponsors</a> page  </li>
+<li>The opportunity to <strong>suggest new perks</strong> and help shape the future of the program  </li>
 </ul>
-<p>The script also includes enhancements for manual execution, allowing it to be run directly from the command-line when needed.</p>
-<p>This init script manages the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> service on systems without <code>systemd</code>. During installation, it is copied from <code>/src/csf.sh</code> to <code>/etc/init.d/csf</code>.</p>
+<p><br>
+<br></p>
+<h3 id="launched-discord-server">Launched Discord Server<a class="headerlink" href="#launched-discord-server" title="Permanent link">¶</a></h3>
+<p>We have launched a Discord server for users who wish to sit back and communicate with others who share the same interests. Stop by and join us in discussion about <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>, as well as other topics such as firewalls, self-hosted software, and homelabs.</p>
+<p><br></p>
+<div class="valign-buttons">
+<p><a href="https://discord.configserver.dev"><img alt="View" src="https://img.shields.io/discord/1428601317361848412?style=for-the-badge&amp;color=de1f68"></a><a href="https://discord.configserver.dev"><img alt="View" src="https://img.shields.io/badge/Join%20Discord-2d5e97?style=for-the-badge&amp;logo=discord&amp;logoColor=FFFFFF"></a></p>
+</div>
+<p><br>
+<br></p>
+<h3 id="removed-spamhaus-edrop-list">Removed Spamhaus edrop list<a class="headerlink" href="#removed-spamhaus-edrop-list" title="Permanent link">¶</a></h3>
+<p>The <strong>Spamhaus edrop</strong> list has been removed from <code>/etc/csf/csf.blocklists</code>. All edrop entries have been moved into the <code>drop</code> list:</p>
+<ul>
+<li><a href="http://spamhaus.org/drop/drop.txt">http://spamhaus.org/drop/drop.txt</a></li>
+</ul>
+<p><br>
+<br></p>
+<h3 id="fixed-cyberpanel-error-data-supplied-is-not-accepted-forbidden-characters">Fixed Cyberpanel error: Data supplied is not accepted - forbidden characters<a class="headerlink" href="#fixed-cyberpanel-error-data-supplied-is-not-accepted-forbidden-characters" title="Permanent link">¶</a></h3>
+<p>We have fixed an issue which triggered the following error to occur when accessing the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> <strong>Firewall Configuration</strong> page and attempting to save any changes made to the application:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>{"error_message": "Data supplied is not accepted, following characters are not allowed in the input ` $ &amp; ( ) [ ] { } ; : 
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  \u2018 &lt; &gt;.", "errorMessage": "Data supplied is not accepted, following characters are not allowed in the input 
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  ` $ &amp; ( ) [ ] { } ; : \u2018 &lt; &gt;."}
+</span></code></pre></div>
+<p><br></p>
+<p>To resolve this issue, you must run the installation script <code>src/install.sh</code> for <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> <code>v15.07</code> or newer, which applies the necessary fixes to allow you to save your <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> settings correctly.</p>
+<p>The alternative to this is that all input fields within your settings must not contain a <span class="keys"><kbd class="key-colon">:</kbd></span>, this includes the following settings:</p>
+<ul>
+<li>DROP_NOLOG</li>
+<li>PT_APACHESTATUS</li>
+<li>PS_PORTS</li>
+<li>UID_PORTS</li>
+<li>UI_CIPHER</li>
+<li>UI_SSL_VERSION</li>
+<li>DOCKER_NETWORK6</li>
+</ul>
+<p><br>
+<br></p>
+<h3 id="fixed-whitespace-breaking-ipsets">Fixed whitespace breaking ipsets<a class="headerlink" href="#fixed-whitespace-breaking-ipsets" title="Permanent link">¶</a></h3>
+<p>A bug has been resolved that previously caused IPSet-based blocklists to fail loading when the blocklist definitions in <code>/etc/csf/csf.blocklists</code> were formatted with extra whitespace for readability.  </p>
+<p>For example, the following style would previously break IPSet loading:</p>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="na">CSF_HIGHRISK        |43200      | 5 |   http</span><span class="o">:</span><span class="s">//blocklist.configserver.dev/highrisk.ipset</span>
+</span></code></pre></div>
+<p><br></p>
+<p>Many users prefer to align entries for clarity, such as:</p>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="na">CSF_MASTER      | 43200 | 0 | http</span><span class="o">:</span><span class="s">//blocklist.configserver.dev/master.ipset</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="na">CSF_HIGHRISK    | 43200 | 5 | http</span><span class="o">:</span><span class="s">//blocklist.configserver.dev/highrisk.ipset</span>
+</span></code></pre></div>
+<p><br></p>
+<p>This issue has now been fixed — you can safely use aligned or “pretty-print” your blocklist definitions without affecting IPSet loading.</p>
+<p><br>
+<br></p>
+<h3 id="added-privacy-policy">Added Privacy Policy<a class="headerlink" href="#added-privacy-policy" title="Permanent link">¶</a></h3>
+<p>We’ve introduced a new <a href="../../../about/privacy/">Privacy Policy</a> that clearly explains how we collect and use information in a minimal and transparent way to operate our <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr>.</p>
+<p>We remain committed to collecting <strong>only what’s necessary</strong> — nothing more. Here’s how we protect your privacy:</p>
+<ul>
+<li>We <strong>do not</strong> log IP addresses, geographic data, or any other identifying metadata when you access our <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr>, such as <a href="https://download.configserver.dev">download.configserver.dev</a> or <a href="https://blocklist.configserver.dev">blocklist.configserver.dev</a>.  </li>
+<li>We <strong>do not</strong> route or proxy connections from servers running <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> through our infrastructure. Even if our servers were to go offline, your server would continue to operate without interruption.  </li>
+<li>We <strong>do not</strong> store donation or payment information on our servers. All transactions are securely handled by trusted third parties like <a href="https://github.com/sponsors/Aetherinox">GitHub Sponsors</a> and <a href="https://buymeacoffee.com/aetherinox">BuyMeACoffee</a>. We only use their REST APIs to verify Insiders status linked to your license key.  </li>
+<li>We <strong>do not</strong> use analytics cookies or tracking scripts in your browser when visiting any of our <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr>.</li>
+</ul>
 <p><br></p>
 <hr>
 <p><br></p>
@@ -3116,7 +3195,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer">
         
           
-          <a href="../release-v1504/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Release v15.04
+          <a href="../release-v1506/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Release v15.06
 ">
             <div class="md-footer__button md-icon">
               
@@ -3127,30 +3206,12 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Release v15.04
-
-              </div>
-            </div>
-          </a>
-        
-        
-          
-          <a href="../release-v1506/" class="md-footer__link md-footer__link--next" aria-label="Next: Release v15.06
-">
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              <div class="md-ellipsis">
                 Release v15.06
 
               </div>
             </div>
-            <div class="md-footer__button md-icon">
-              
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
-            </div>
           </a>
+        
         
       </nav>
     
