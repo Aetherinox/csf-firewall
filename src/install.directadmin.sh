@@ -10,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            10.05.2025
+#   @updated            10.25.2025
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -554,6 +554,50 @@ chown -f root:root /usr/sbin/csf /usr/sbin/lfd /etc/logrotate.d/lfd /etc/cron.d/
 
 cd webmin ; tar -czf /usr/local/csf/csfwebmin.tgz ./*
 ln -svf /usr/local/csf/csfwebmin.tgz /etc/csf/
+
+# #
+#   Update csf.conf file; set default values
+#   
+#   SYSLOG_LOG          By default, RHEL systems use /var/log/messages
+#                       Debian systems use /var/log/syslog
+# #
+
+# #
+#   Detect system log file path
+# #
+
+SYSLOG_PATH=""
+
+if [ -f /var/log/syslog ]; then
+    SYSLOG_PATH="/var/log/syslog"
+elif [ -f /var/log/messages ]; then
+    SYSLOG_PATH="/var/log/messages"
+else
+    SYSLOG_PATH="/dev/null"
+fi
+
+# #
+#   Update SYSLOG_LOG and IPTABLES_LOG defaults
+#   
+#   Only change these values during installation.
+#   Users can manually edit csf.conf later, and those
+#   settings will not be overridden by updates.
+# #
+
+CSF_CONF="/etc/csf/csf.conf"
+
+for KEY in SYSLOG_LOG IPTABLES_LOG
+do
+    if grep -qE "^${KEY}" "${CSF_CONF}"; then
+        # Update existing line
+        sed -i "s|^${KEY}.*|${KEY} = \"${SYSLOG_PATH}\"|" "${CSF_CONF}"
+		echo "  Updating ${CSF_CONF} setting ${KEY}=\"${SYSLOG_PATH}\""
+    else
+        # Append if missing
+        echo "${KEY} = \"${SYSLOG_PATH}\"" >> "${CSF_CONF}"
+		echo "  Appending ${CSF_CONF} setting ${KEY}=\"${SYSLOG_PATH}\""
+    fi
+done
 
 echo
 echo "Installation Completed"
