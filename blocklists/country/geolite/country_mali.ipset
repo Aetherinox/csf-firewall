@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_mali_ipset
 #   @uuid           fed0fb03-3c9f-3e5f-9398-a3971cd09107
-#   @updated        Tue 07 Oct 2025 12:15:50 PM UTC
-#   @entries        97,742 ips
-#                   179 subnets
-#                   179 lines
+#   @updated        Sat Oct 25 00:20:57 UTC 2025
+#   @entries        96720 ips
+#                   180 subnets
+#                   180 lines
 #   @country        Mali (ML)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -22,7 +22,6 @@
 
 5.62.62.253/32
 5.62.62.254/31
-38.182.68.0/22
 41.73.96.0/19
 41.203.192.0/20
 41.221.176.0/20
@@ -76,6 +75,7 @@
 140.248.62.144/32
 140.248.63.144/32
 146.75.182.44/31
+146.75.210.44/31
 154.70.192.0/22
 154.118.128.0/18
 157.5.101.123/32
@@ -167,6 +167,7 @@
 2a04:4e41:4089::/52
 2a04:4e41:410e::/48
 2a04:4e41:4810::/48
+2a04:4e41:780e::/48
 2a07:d887:9000::/40
 2a09:bac1:4a80::/64
 2a09:bac1:4aa0::/64
