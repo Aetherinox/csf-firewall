@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_mauritania_ipset
 #   @uuid           06c0688c-1972-358e-b78f-7c481016ad00
-#   @updated        Tue 07 Oct 2025 12:15:53 PM UTC
-#   @entries        58,628 ips
-#                   186 subnets
-#                   186 lines
+#   @updated        Sat Oct 25 00:20:58 UTC 2025
+#   @entries        58630 ips
+#                   188 subnets
+#                   188 lines
 #   @country        Mauritania (MR)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -74,6 +74,7 @@
 140.248.63.150/32
 146.75.166.114/31
 146.75.182.46/31
+146.75.210.46/31
 150.48.151.108/30
 150.48.186.6/31
 150.48.186.8/29
@@ -173,6 +174,7 @@
 2a04:4e41:4089:6000::/52
 2a04:4e41:410f::/48
 2a04:4e41:5216::/48
+2a04:4e41:780f::/48
 2a07:d887:9600::/40
 2a09:bac1:4d80::/64
 2a09:bac1:4da0::/64
