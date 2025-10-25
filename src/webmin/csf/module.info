@@ -1,3 +1,4 @@
 name=csf
 desc=ConfigServer Security & Firewall
+longdesc=Mmanage firewall rules, bans, and system protection.
 category=system
