@@ -47,12 +47,36 @@ cd "$OLDPWD" || exit 1                              # restore previous working d
 # #
 
 APP_NAME="ConfigServer Security & Firewall"
+APP_NAME_SHORT="CSF"
 APP_DESC="Robust linux iptables/nftables firewall"
 APP_REPO="https://github.com/aetherinox/csf-firewall"
+APP_LINK_DOCS="https://docs.configserver.dev"
+APP_LINK_DOWNLOAD="https://download.configserver.dev"
 FILE_INSTALL_TXT="install.txt"
+
+# #
+#   Define › Files & Dirs
+# #
+
 CSF_ETC="/etc/csf"
 CSF_BIN="/usr/local/csf/bin"
 CSF_TPL="/usr/local/csf/tpl"
+CSF_CONF="/etc/csf/csf.conf"
+CSF_WEBMIN_HOME="/usr/share/webmin"
+CSF_WEBMIN_TARBALL="/usr/local/csf/csfwebmin.tgz"
+CSF_WEBMIN_SYMBOLIC="${CSF_ETC}/csfwebmin.tgz"
+CSF_WEBMIN_SRC="webmin"
+CSF_WEBMIN_DESC="${CSF_WEBMIN_HOME}/csf"
+CSF_WEBMIN_ETC="/etc/webmin"
+CSF_WEBMIN_FILE_ACL="${CSF_WEBMIN_ETC}/webmin.acl"
+CSF_WEBMIN_ACL_USER="root"
+CSF_WEBMIN_ACL_MODULE="csf"
+
+# #
+#   Define › Server
+# #
+
+SERVER_HOST=$(hostname -f 2>/dev/null || hostname)
 
 # #
 #   Define › Files
@@ -124,40 +148,185 @@ cyan="${esc}[38;5;6m"
 
 error( )
 {
-    printf '%-28s %-65s\n' "  ${redl} ERROR ${end}" "${greym} $1 ${end}"
-    exit 1
+    printf '%-28s %-65s\n' "   ${redl} ERROR ${end}" "${greym} $1 ${end}"
 }
 
 warn( )
 {
-    printf '%-32s %-65s\n' "  ${yellowl} WARN ${end}" "${greym} $1 ${end}"
+    printf '%-32s %-65s\n' "   ${yellowl} WARN ${end}" "${greym} $1 ${end}"
+}
+
+info( )
+{
+    printf '%-31s %-65s\n' "   ${bluel} INFO ${end}" "${greym} $1 ${end}"
 }
 
 status( )
 {
-    printf '%-31s %-65s\n' "  ${bluel} STATUS ${end}" "${greym} $1 ${end}"
+    printf '%-31s %-65s\n' "   ${bluel} STATUS ${end}" "${greym} $1 ${end}"
 }
 
 ok( )
 {
-    printf '%-31s %-65s\n' "  ${greenl} OK ${end}" "${greym} $1 ${end}"
+    printf '%-31s %-65s\n' "   ${greenl} OK ${end}" "${greym} $1 ${end}"
 }
 
 debug( )
 {
     if [ "$argDevMode" = "true" ]; then
-        printf '%-28s %-65s\n' "  ${greyd} DEBUG ${end}" "${greym} $1 ${end}"
+        printf '%-28s %-65s\n' "   ${greyd} DEBUG ${end}" "${greym} $1 ${end}"
+    fi
+}
+
+verbose( )
+{
+    if [ "$VERBOSE" -eq 1 ]; then
+        printf '%-28s %-65s\n' "   ${greyd} VERBOSE ${end}" "${greym} $1 ${end}"
     fi
 }
 
 label( )
 {
-    printf '%-31s %-65s\n' "  ${peach}        ${end}" "${peach} $1 ${end}"
+    printf '%-31s %-65s\n' "   ${navy}        ${end}" "${navy} $1 ${end}"
 }
 
 print( )
 {
-    echo "${end}$1${end}"
+    echo "${greym}$1${end}"
+}
+
+# #
+#   Print > Line
+#   
+#   Prints single line
+#   
+#   @usage          prinb
+# #
+
+prinl()
+{
+    local indent="   "
+    local box_width=90
+    local line_width=$(( box_width + 2 ))
+
+    local line
+    line=$(printf '─%.0s' $(seq 1 "$line_width"))
+
+    print
+    printf "%b%s%s%b\n" "${greyd}" "$indent" "$line" "${reset}"
+    print
+}
+
+# #
+#   Print > Box > Single
+#   
+#   Prints single line with a box surrounding it.
+#   
+#   @usage          prinb "${APP_NAME_SHORT:-CSF} › Customize csf.config"
+# #
+
+prinb( )
+{
+    # #
+    #   Dynamic boxed title printer
+    # #
+
+    local title="$*"
+    local indent="   "                              # Left padding
+    local padding=6                                 # Extra horizontal space around text
+    local title_length=${#title}
+    local inner_width=$(( title_length + padding ))
+    local box_width=90
+
+    # #
+    #   Minimum width for aesthetics
+    # #
+
+    [ "$inner_width" -lt ${box_width} ] && inner_width=${box_width}
+
+    # #
+    #   Horizontal border
+    # #
+
+    local line
+    line=$(printf '─%.0s' $(seq 1 "$inner_width"))
+
+    # #
+    #   Draw box
+    # #
+
+    print
+    print
+    printf "%b%s┌%s┐\n" "${greym}" "$indent" "$line"
+    printf "%b%s│  %-${inner_width}s│\n" "${greym}" "$indent" "$title"
+    printf "%b%s└%s┘%b\n" "${greym}" "$indent" "$line" "${reset}"
+    print
+}
+
+# #
+#   Print > Box > Paragraph
+#   
+#   Prints multiple lines with a box surrounding it.
+#   
+#   @usage          prinp "CSF › Title" "This is a really long paragraph that will wrap multiple lines and align properly under the title. Second line of text, same alignment, with multiple words."
+# #
+
+prinp()
+{
+    local title="$1"
+    shift
+    local text="$*"
+
+    local indent="   "
+    local box_width=90
+    local pad=2
+
+    local content_width=$(( box_width ))
+    local inner_width=$(( box_width - pad*2 ))
+
+    print
+    print
+    local hline
+    hline=$(printf '─%.0s' $(seq 1 "$content_width"))
+
+    printf "${greyd}%s┌%s┐\n" "$indent" "$hline"
+
+    # #
+    #   title
+    # #
+
+    local title_width=$(( content_width - pad ))
+    printf "${greym}%s│%*s${bluel}%-${title_width}s${greym}│\n" "$indent" "$pad" "" "$title"
+
+    printf "${greyd}%s│%-${content_width}s│\n" "$indent" ""
+
+    local line=""
+    set -- $text
+    for word; do
+        if [ ${#line} -eq 0 ]; then
+            line="$word"
+        elif [ $(( ${#line} + 1 + ${#word} )) -le $inner_width ]; then
+            line="$line $word"
+        else
+            printf "${greyd}%s│%*s%-*s%*s│\n" "$indent" "$pad" "" "$inner_width" "$line" "$pad" ""
+            line="$word"
+        fi
+    done
+    [ -n "$line" ] && printf "${greyd}%s│%*s%-*s%*s│\n" "$indent" "$pad" "" "$inner_width" "$line" "$pad" ""
+
+    printf "${greyd}%s└%s┘${reset}\n" "$indent" "$hline"
+    print
+}
+
+# #
+#   Define › Logging › Verbose
+# #
+
+log()
+{
+    if [ "$VERBOSE" -eq 1 ]; then
+		verbose "    $@ "
+    fi
 }
 
 # #
