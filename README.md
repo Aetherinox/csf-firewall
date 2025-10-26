@@ -522,7 +522,7 @@ By leveraging blocklists, CSF empowers users to proactively defend their infrast
 
 ### Official Blocklists
 
-CSF hosts our own set of blocklists which are are automatically updated every `6 hours`. You may add these sets to your ConfigServer Firewall `/etc/csf/csf.blocklists` with the following new lines:
+CSF hosts our own set of blocklists which are are automatically updated every `12 hours`. You may add these sets to your ConfigServer Firewall `/etc/csf/csf.blocklists` with the following new lines:
 
 ```
 CSF_MASTER|43200|400000|https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/blocklists/master.ipset
