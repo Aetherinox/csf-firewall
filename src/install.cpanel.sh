@@ -36,6 +36,31 @@
 
 umask 0177
 
+# #
+#	Allow for execution from different relative directories
+# #
+
+case $0 in
+    /*) script="$0" ;;                       # Absolute path
+    *)  script="$(pwd)/$0" ;;                # Relative path
+esac
+
+# #
+#	Find script directory
+# #
+
+script_dir=$(dirname "$script")
+
+# #
+#   Include global
+# #
+
+. "$script_dir/global.sh" ||
+{
+    echo "    Error: cannot source $script_dir/global.sh. Aborting." >&2
+    exit 1
+}
+
 echo "Installing csf and lfd"
 echo
 
@@ -603,18 +628,162 @@ if [ -e "/usr/local/cpanel/3rdparty/bin/perl" ]; then
     sed -i 's%^#\!/usr/local/cpanel/3rdparty/bin/perl%#\!/usr/bin/perl%' webmin/csf/index.cgi
 fi
 
-chown -Rf root:root /etc/csf /var/lib/csf /usr/local/csf
-chown -f root:root /usr/sbin/csf /usr/sbin/lfd /etc/logrotate.d/lfd /etc/cron.d/csf-cron /etc/cron.d/lfd-cron /usr/local/man/man1/csf.1 /usr/lib/systemd/system/lfd.service /usr/lib/systemd/system/csf.service /etc/init.d/lfd /etc/init.d/csf
+# #
+#	Step > Permissions
+# #
 
-cd webmin ; tar -czf /usr/local/csf/csfwebmin.tgz ./*
-ln -svf /usr/local/csf/csfwebmin.tgz /etc/csf/
+prinp "${APP_NAME_SHORT:-CSF} > File Permissions" \
+       "This step ensures that your ${APP_NAME_SHORT:-CSF} files contain the correct folder and file permissions."
 
 # #
-#   Update csf.conf file; set default values
+#   List of directories to set ownership
+# #
+
+dirs="/etc/csf /var/lib/csf /usr/local/csf"
+
+# #
+#   List of individual files to set ownership
+# #
+
+files="/usr/sbin/csf /usr/sbin/lfd /etc/logrotate.d/lfd /etc/cron.d/csf-cron /etc/cron.d/lfd-cron /usr/local/man/man1/csf.1 /usr/lib/systemd/system/lfd.service /usr/lib/systemd/system/csf.service /etc/init.d/lfd /etc/init.d/csf"
+
+# #
+#   Set ownership for directories
+# #
+
+CSF_CHOWN_GENERAL="root:root"
+
+for dir in $dirs; do
+    if [ -d "$dir" ]; then
+        chown -Rf "${CSF_CHOWN_GENERAL}" "$dir"
+		ok "    Set ownership ${greenl}${CSF_CHOWN_GENERAL}${greym} for folder ${bluel}${dir}${greym}"
+    else
+		warn "    Could not set ownership ${yellowl}${CSF_CHOWN_GENERAL}${greym}; folder does not exist: ${yellowl}${dir}${greym}"
+    fi
+done
+
+# #
+#   Set ownership for individual files
+# #
+
+for file in $files; do
+    if [ -e "$file" ]; then
+        chown -f "${CSF_CHOWN_GENERAL}" "$file"
+		ok "    Set ownership ${greenl}${CSF_CHOWN_GENERAL}${greym} for file ${bluel}${file}${greym}"
+    else
+		warn "    Could not set ownership ${yellowl}${CSF_CHOWN_GENERAL}${greym}; file does not exist: ${yellowl}${file}${greym}"
+    fi
+done
+
+# #
+#	Step > Webmin
+#		- create tarball of webmin files
+#		- Detect /usr/share/webmin
+#		- Extract tarball to /usr/share/webmin/csf
+# #
+
+prinp "${APP_NAME_SHORT:-CSF} > Webmin" \
+       "We will now check your system and see if Webmin integration needs enabled."
+
+cd "${CSF_WEBMIN_SRC}"
+tar -czf "${CSF_WEBMIN_TARBALL}" ./*
+if [ -f "$CSF_WEBMIN_TARBALL" ]; then
+    ok "    Created ${greenl}$CSF_WEBMIN_TARBALL"
+else
+    error "    Failed to create ${redl}$CSF_WEBMIN_TARBALL"
+fi
+
+ln -sf "${CSF_WEBMIN_TARBALL}" "${CSF_ETC}/"
+if [ -L "${CSF_WEBMIN_SYMBOLIC}" ] && [ -f "${CSF_WEBMIN_SYMBOLIC}" ]; then
+	ok "    Created symbolic link ${greenl}${CSF_WEBMIN_SYMBOLIC}"
+else
+    error "    Failed to create symbolic link ${redl}${CSF_WEBMIN_SYMBOLIC}"
+fi
+
+# #
+#   Copy Webmin files if destination exists
+# #
+
+if [ -d "${CSF_WEBMIN_HOME}" ]; then
+    mkdir -p "$CSF_WEBMIN_DESC"                     		# Ensure destination exists
+	cp -a csf/* "$CSF_WEBMIN_DESC"/							# Copy all files from current folder
+	ok "    CSF Webmin module installed to ${greenl}${CSF_WEBMIN_DESC}${greym}"
+else
+    echo "Directory ${CSF_WEBMIN_HOME} does not exist. Skipping copy."
+	error "    Webmin home folder ${redl}${CSF_WEBMIN_HOME}${greym} does not exist; skipping Webmin install"
+fi
+
+# #
+#	Webmin > Install CSF to webmin.acl
+#	This is what makes CSF appear in Webmin menu
+# #
+
+if [ -f "$CSF_WEBMIN_FILE_ACL" ]; then
+
+	# #
+	#	Get Webmin connection info
+	# #
+
+	WEBMIN_CONF="/etc/webmin/miniserv.conf"
+	WEBMIN_PROTO=$(grep '^ssl=' "$WEBMIN_CONF" | cut -d= -f2 | grep -qx '1' && echo "https" || echo "http")
+	WEBMIN_PORT=$(grep '^port=' "$WEBMIN_CONF" | cut -d= -f2)
+
+	# #
+	#   Check if 'csf' is already listed for root
+	# #
+
+	if grep -Eq "^${CSF_WEBMIN_ACL_USER}:.*\b${CSF_WEBMIN_ACL_MODULE}\b" "$CSF_WEBMIN_FILE_ACL"; then
+		info "    CSF Webmin module already registered in ${bluel}${CSF_WEBMIN_FILE_ACL}${greym}"
+		print
+
+		print "   Webmin already contains ${APP_NAME_SHORT:-CSF} module"
+		print "   "
+		print "   To access ${APP_NAME_SHORT:-CSF}, open your browser and navigate to"
+		print "       ${yellowd}${WEBMIN_PROTO}://${SERVER_HOST}:${WEBMIN_PORT}/"
+		print "   "
+		print "   On the left-side menu, navigate to ${yellowd}System ${greym} > ${yellowd}${APP_NAME:-ConfigServer Security & Firewall}"
+	else
+		CSF_WEBMIN_TEMP=$(mktemp)
+		awk -v user="$CSF_WEBMIN_ACL_USER" -v mod="$CSF_WEBMIN_ACL_MODULE" '
+			BEGIN {found=0}
+			$0 ~ "^"user":" {
+				$0 = $0 " " mod
+				found=1
+			}
+			{print}
+			END {
+				if (found == 0) {
+					print user ": " mod
+				}
+			}
+		' "$CSF_WEBMIN_FILE_ACL" > "$CSF_WEBMIN_TEMP" && mv "$CSF_WEBMIN_TEMP" "$CSF_WEBMIN_FILE_ACL"
+
+		ok "    Added CSF Webmin module installed to ${greenl}${CSF_WEBMIN_FILE_ACL}${greym}"
+		print
+	
+		print "   CSF has been integrated into Webmin"
+		print "   "
+		print "   To access ${APP_NAME_SHORT:-CSF}, open your browser and navigate to"
+		print "       ${yellowd}${WEBMIN_PROTO}://${SERVER_HOST}:${WEBMIN_PORT}/"
+		print "   "
+		print "   On the left-side menu, navigate to ${yellowd}System ${greym} > ${yellowd}${APP_NAME:-ConfigServer Security & Firewall}"
+	fi
+else
+	info "    CSF Webmin skipped; could not find ${bluel}${CSF_WEBMIN_FILE_ACL}${greym}"
+fi
+
+# #
+#	Step > csf.conf Modified Settings
 #   
 #   SYSLOG_LOG          By default, RHEL systems use /var/log/messages
 #                       Debian systems use /var/log/syslog
+#	
+#	IPTABLES_LOG		The same as SYSLOG_LOG
 # #
+
+prinp "${APP_NAME_SHORT:-CSF} > Customize csf.config" \
+       "This step will check which Linux distribution family you are running, RHEL (Red Hat) or a Debian-based system. This determines what your default " \
+	   "logging paths will be."
 
 # #
 #   Detect system log file path
@@ -638,21 +807,55 @@ fi
 #   settings will not be overridden by updates.
 # #
 
-CSF_CONF="/etc/csf/csf.conf"
-
-for KEY in SYSLOG_LOG IPTABLES_LOG
-do
+for KEY in SYSLOG_LOG IPTABLES_LOG; do
     if grep -qE "^${KEY}" "${CSF_CONF}"; then
         # Update existing line
         sed -i "s|^${KEY}.*|${KEY} = \"${SYSLOG_PATH}\"|" "${CSF_CONF}"
-		echo "  Updating ${CSF_CONF} setting ${KEY}=\"${SYSLOG_PATH}\""
+		ok "    Updating ${greenl}${CSF_CONF}${greym} setting ${fuchsial}${KEY}=${white}\"${bluel}${SYSLOG_PATH}${white}\"${greym}"
     else
         # Append if missing
         echo "${KEY} = \"${SYSLOG_PATH}\"" >> "${CSF_CONF}"
-		echo "  Appending ${CSF_CONF} setting ${KEY}=\"${SYSLOG_PATH}\""
+		ok "    Appending ${greenl}${CSF_CONF}${greym} setting ${fuchsial}${KEY}=${white}\"${bluel}${SYSLOG_PATH}${white}\"${greym}"
     fi
 done
 
-echo
-echo "Installation Completed"
-echo
+# #
+#	Check current value of
+#		TESTING="0"
+# #
+
+TESTING_VALUE=$(grep '^[[:space:]]*TESTING[[:space:]]*=' "$CSF_CONF" | awk -F= '{gsub(/ /,"",$2); print $2}' | tr -d '"')
+
+prinp "${APP_NAME_SHORT:-CSF} > Installation Complete" \
+       "Your installation is complete. Read important notes below."
+
+print "    For more information on how to use ${APP_NAME_SHORT:-CSF}; visit"
+print "        ${yellowd}${APP_LINK_DOCS:-https://docs.configserver.dev}"
+if [ -f "$CSF_CONF" ]; then
+	print "    "
+	print "    The next step in the process should be to open the config file located at"
+	print "        ${yellowd}${CSF_CONF}"
+	if [ "$TESTING_VALUE" = "1" ]; then
+	print "    "
+	print "    The setting ${yellowd}TESTING${greym} is currently ${greenl}enabled${greym}; you should open your config and"
+	print "    disable this setting before to you begin using your new firewall."
+	print "    To disable this setting, open ${yellowd}${CSF_CONF}${greym} and set the following:"
+	print "        ${fuchsial}TESTING = ${white}\"${bluel}0${white}\"${greym}"
+	else
+	print "    "
+	print "    The setting ${yellowd}TESTING${greym} is currently ${redl}disabled${greym}; which is the"
+	print "    correct setting if you plan to start using your firewall."
+	fi
+else
+	print "    "
+	print "    An error has occured; we cannot locate your ${APP_NAME_SHORT:-CSF} config file:"
+	print "        ${yellowd}${CSF_CONF}"
+	print "    "
+	print "    You must have a valid config in the correct location before ${APP_NAME_SHORT:-CSF} will"
+	print "    function properly."
+fi
+print
+print "    After editing or adding a new ${yellowd}${CSF_CONF}${greym}, restart ${APP_NAME_SHORT:-CSF} with:"
+print "        ${yellowd}sudo csf -ra"
+print
+print
