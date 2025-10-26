@@ -117,7 +117,7 @@
 
 ## Summary
 
-ConfigServer Firewall & Security, also known as CSF, is a Stateful Packet Inspection (SPI) firewall and Login/Intrusion Detection and Security application for Linux servers which started back in 2005. CSF works as a front-end to iptables or nftables, configuring your server’s firewall rules to lock down public access to services while allowing only approved connections.
+ConfigServer Security & Firewall, also known as CSF, is a Stateful Packet Inspection (SPI) firewall and Login/Intrusion Detection and Security application for Linux servers which started back in 2005. CSF works as a front-end to iptables or nftables, configuring your server’s firewall rules to lock down public access to services while allowing only approved connections.
 
 This provides better security for your server while giving you an advanced, easy-to-use interface for managing firewall settings. With CSF in place, you can safely permit activities such as logging in via FTP or SSH, checking email, and loading websites, while unauthorized access attempts are blocked.
 
@@ -134,7 +134,7 @@ This provides better security for your server while giving you an advanced, easy
 
 ## Features
 
-Interested in Config Server Firewall & Security? Check out a partial list of the included features below:
+Interested in ConfigServer Security & Firewall? Check out a partial list of the included features below:
 
 <br />
 
@@ -464,7 +464,7 @@ sudo systemctl status csf
 You should see:
 
 ```shell
-● csf.service - ConfigServer Firewall & Security - csf
+● csf.service - ConfigServer Security & Firewall - csf
     Loaded: loaded (/usr/lib/systemd/system/csf.service; enabled; preset: enabled)
     Active: active (exited) since Sun 2025-09-21 01:35:45 UTC; 4s ago
     Process: 449564 ExecStart=/usr/sbin/csf --initup (code=exited, status=0/SUCCESS)
@@ -485,7 +485,7 @@ sudo systemctl status lfd
 You should see:
 
 ```shell
-● lfd.service - ConfigServer Firewall & Security - lfd
+● lfd.service - ConfigServer Security & Firewall - lfd
     Loaded: loaded (/usr/lib/systemd/system/lfd.service; enabled; preset: enabled)
     Active: active (running) since Sun 2025-09-21 01:44:00 UTC; 53min ago
     Process: 335736 ExecStart=/usr/sbin/lfd (code=exited, status=0/SUCCESS)
