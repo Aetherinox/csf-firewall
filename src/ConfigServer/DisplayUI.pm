@@ -3363,7 +3363,7 @@ EOF
 		print "</table>\n";
 		print "</form>\n";
 		if ($upgrade) {print "<script>\$('\#upgradebs').show();</script>\n"}
-		print "</div>gggg\n";
+		print "</div>\n";
 
 		# #
 		#	Tab > csf
