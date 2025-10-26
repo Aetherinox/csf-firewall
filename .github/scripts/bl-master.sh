@@ -506,8 +506,8 @@ download_list()
     #   so we will count every IP in the block.
     # #
 
-    echo -e "  📊 Fetching statistics for clean file ${ORANGE2}${fnFileTemp}${RESET}"
-    for line in $(cat ${fnFileTemp}); do
+    info "    📊 Fetching statistics for clean file ${bluel}${PWD}/${fnFileTemp}${greym}"
+    while IFS= read -r line; do
         # is ipv6
         if [ "$line" != "${line#*:[0-9a-fA-F]}" ]; then
             COUNT_TOTAL_IP=$(( COUNT_TOTAL_IP + 1 ))                           # GLOBAL count subnet
@@ -530,7 +530,7 @@ download_list()
             COUNT_TOTAL_IP=$(( COUNT_TOTAL_IP + 1 ))
             DL_COUNT_TOTAL_IP=$(( DL_COUNT_TOTAL_IP + 1 ))
         fi
-    done
+    done < "${fnFileTemp}"
 
     DL_COUNT_TOTAL_IP=$(printf "%'d" "$DL_COUNT_TOTAL_IP")                      # LOCAL add commas to thousands
     DL_COUNT_TOTAL_SUBNET=$(printf "%'d" "$DL_COUNT_TOTAL_SUBNET")              # LOCAL add commas to thousands
