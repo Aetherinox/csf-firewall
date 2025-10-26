@@ -693,7 +693,17 @@ if [ -f "$CSF_WEBMIN_FILE_ACL" ]; then
 	# #
 
 	WEBMIN_CONF="/etc/webmin/miniserv.conf"
-	WEBMIN_PROTO=$(grep '^ssl=' "$WEBMIN_CONF" | cut -d= -f2 | grep -qx '1' && echo "https" || echo "http")
+
+	# #
+	#	fetch webmin port and protocol
+	# #
+
+	if grep '^ssl=' "$WEBMIN_CONF" | cut -d= -f2 | grep -q '^1$'; then
+		WEBMIN_PROTO="https"
+	else
+		WEBMIN_PROTO="http"
+	fi
+
 	WEBMIN_PORT=$(grep '^port=' "$WEBMIN_CONF" | cut -d= -f2)
 
 	# #
