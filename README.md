@@ -584,29 +584,29 @@ These blocklists help you control which third-party services can access your ser
 
 <br />
 
-| Set | Description | Severity | View |
-| --- | --- | --- | --- |
-| `privacy_general.ipset` | Servers which scan ports for data collection and research purposes. <br> <sub><sup>List includes [Censys](https://censys.io), [Shodan](https://shodan.io/), [Project25499](https://blogproject25499.wordpress.com/), [InternetArchive](https://archive.org/), [Cyber Resilience](https://cyberresilience.io), [Internet Measurement](https://internet-measurement.com), [probe.onyphe.net](https://onyphe.net), [Security Trails](https://securitytrails.com) | ★★★★⚝ | [view](https://blocklist.configserver.dev/privacy_general.ipset)</sup></sub> |
-| `privacy_ahrefs.ipset` | Ahrefs SEO and services | ★★⚝⚝⚝ | [view](https://blocklist.configserver.dev/privacy_ahrefs.ipset) |
-| `privacy_amazon_aws.ipset` | Amazon AWS | ★★⚝⚝⚝ | [view](https://blocklist.configserver.dev/privacy_amazon_aws.ipset) |
-| `privacy_amazon_ec2.ipset` | Amazon EC2 | ★★⚝⚝⚝ | [view](https://blocklist.configserver.dev/privacy_amazon_ec2.ipset) |
-| `privacy_applebot.ipset` | Apple Bots | ★★★⚝⚝ | [view](https://blocklist.configserver.dev/privacy_applebot.ipset) |
-| `privacy_bing.ipset` | Microsoft Bind and Bing Crawlers / Bots | ★★⚝⚝⚝ | [view](https://blocklist.configserver.dev/privacy_bing.ipset) |
-| `privacy_bunnycdn.ipset` | Bunny CDN | ★★⚝⚝⚝ | [view](https://blocklist.configserver.dev/privacy_bunnycdn.ipset) |
-| `privacy_cloudflarecdn.ipset` | Cloudflare CDN | ★★⚝⚝⚝ | [view](https://blocklist.configserver.dev/privacy_cloudflarecdn.ipset) |
-| `privacy_cloudfront.ipset` | Cloudfront DNS | ★⚝⚝⚝⚝ | [view](https://blocklist.configserver.dev/privacy_cloudfront.ipset) |
-| `privacy_duckduckgo.ipset` | DuckDuckGo Web Crawlers / Bots | ★★⚝⚝⚝ | [view](https://blocklist.configserver.dev/privacy_duckduckgo.ipset) |
-| `privacy_facebook.ipset` | Facebook Bots & Trackers | ★★★⚝⚝ | [view](https://blocklist.configserver.dev/privacy_facebook.ipset) |
-| `privacy_fastly.ipset` | Fastly CDN | ★⚝⚝⚝⚝ | [view](https://blocklist.configserver.dev/privacy_fastly.ipset) |
-| `privacy_google.ipset` | Google Crawlers | ★★⚝⚝⚝ | [view](https://blocklist.configserver.dev/privacy_google.ipset) |
-| `privacy_pingdom.ipset` | Pingdom Monitoring Service | ★★⚝⚝⚝ | [view](https://blocklist.configserver.dev/privacy_pingdom.ipset) |
-| `privacy_rssapi.ipset` | RSS API Reader | ★★⚝⚝⚝ | [view](https://blocklist.configserver.dev/privacy_rssapi.ipset) |
-| `privacy_stripe_api.ipset` | Stripe Payment Gateway API | ★★⚝⚝⚝ | [view](https://blocklist.configserver.dev/privacy_stripe_api.ipset) |
-| `privacy_stripe_armada_gator.ipset` | Stripe Armada Gator | ★★⚝⚝⚝ | [view](https://blocklist.configserver.dev/privacy_stripe_armada_gator.ipset) |
-| `privacy_stripe_webhooks.ipset` | Stripe Webhook Service | ★★⚝⚝⚝ | [view](https://blocklist.configserver.dev/privacy_stripe_webhooks.ipset) |
-| `privacy_telegram.ipset` | Telegram Trackers and Crawlers | ★★★⚝⚝ | [view](https://blocklist.configserver.dev/privacy_telegram.ipset) |
-| `privacy_uptimerobot.ipset` | Uptime Robot Monitoring Service | ★⚝⚝⚝⚝ | [view](https://blocklist.configserver.dev/privacy_uptimerobot.ipset) |
-| `privacy_webpagetest.ipset` | Webpage Test Services | ★★⚝⚝⚝ | [view](https://blocklist.configserver.dev/privacy_webpagetest.ipset) |
+| Set                                 | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                   | Severity    | View                                                                         |
+|-------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|------------------------------------------------------------------------------|
+| `privacy_general.ipset`             | Servers which scan ports for data collection and research purposes. <br> <sub><sup>List includes [Censys](https://censys.io), [Shodan](https://shodan.io/), [Project25499](https://blogproject25499.wordpress.com/), [InternetArchive](https://archive.org/), [Cyber Resilience](https://cyberresilience.io), [Internet Measurement](https://internet-measurement.com), [probe.onyphe.net](https://onyphe.net), [Security Trails](https://securitytrails.com) | ★★★★⚝     | [view](https://blocklist.configserver.dev/privacy_general.ipset)</sup></sub> |
+| `privacy_ahrefs.ipset`              | Ahrefs SEO and services                                                                                                                                                                                                                                                                                                                                                                                                                                       | ★★⚝⚝⚝     | [view](https://blocklist.configserver.dev/privacy_ahrefs.ipset)              |
+| `privacy_amazon_aws.ipset`          | Amazon AWS                                                                                                                                                                                                                                                                                                                                                                                                                                                    | ★★⚝⚝⚝     | [view](https://blocklist.configserver.dev/privacy_amazon_aws.ipset)          |
+| `privacy_amazon_ec2.ipset`          | Amazon EC2                                                                                                                                                                                                                                                                                                                                                                                                                                                    | ★★⚝⚝⚝     | [view](https://blocklist.configserver.dev/privacy_amazon_ec2.ipset)          |
+| `privacy_applebot.ipset`            | Apple Bots                                                                                                                                                                                                                                                                                                                                                                                                                                                    | ★★★⚝⚝     | [view](https://blocklist.configserver.dev/privacy_applebot.ipset)            |
+| `privacy_bing.ipset`                | Microsoft Bind and Bing Crawlers / Bots                                                                                                                                                                                                                                                                                                                                                                                                                       | ★★⚝⚝⚝     | [view](https://blocklist.configserver.dev/privacy_bing.ipset)                |
+| `privacy_bunnycdn.ipset`            | Bunny CDN                                                                                                                                                                                                                                                                                                                                                                                                                                                     | ★★⚝⚝⚝     | [view](https://blocklist.configserver.dev/privacy_bunnycdn.ipset)            |
+| `privacy_cloudflarecdn.ipset`       | Cloudflare CDN                                                                                                                                                                                                                                                                                                                                                                                                                                                | ★★⚝⚝⚝     | [view](https://blocklist.configserver.dev/privacy_cloudflarecdn.ipset)       |
+| `privacy_cloudfront.ipset`          | Cloudfront DNS                                                                                                                                                                                                                                                                                                                                                                                                                                                | ★⚝⚝⚝⚝     | [view](https://blocklist.configserver.dev/privacy_cloudfront.ipset)          |
+| `privacy_duckduckgo.ipset`          | DuckDuckGo Web Crawlers / Bots                                                                                                                                                                                                                                                                                                                                                                                                                                | ★★⚝⚝⚝     | [view](https://blocklist.configserver.dev/privacy_duckduckgo.ipset)          |
+| `privacy_facebook.ipset`            | Facebook Bots & Trackers                                                                                                                                                                                                                                                                                                                                                                                                                                      | ★★★⚝⚝     | [view](https://blocklist.configserver.dev/privacy_facebook.ipset)            |
+| `privacy_fastly.ipset`              | Fastly CDN                                                                                                                                                                                                                                                                                                                                                                                                                                                    | ★⚝⚝⚝⚝     | [view](https://blocklist.configserver.dev/privacy_fastly.ipset)              |
+| `privacy_google.ipset`              | Google Crawlers                                                                                                                                                                                                                                                                                                                                                                                                                                               | ★★⚝⚝⚝     | [view](https://blocklist.configserver.dev/privacy_google.ipset)              |
+| `privacy_pingdom.ipset`             | Pingdom Monitoring Service                                                                                                                                                                                                                                                                                                                                                                                                                                    | ★★⚝⚝⚝     | [view](https://blocklist.configserver.dev/privacy_pingdom.ipset)             |
+| `privacy_rssapi.ipset`              | RSS API Reader                                                                                                                                                                                                                                                                                                                                                                                                                                                | ★★⚝⚝⚝     | [view](https://blocklist.configserver.dev/privacy_rssapi.ipset)              |
+| `privacy_stripe_api.ipset`          | Stripe Payment Gateway API                                                                                                                                                                                                                                                                                                                                                                                                                                    | ★★⚝⚝⚝     | [view](https://blocklist.configserver.dev/privacy_stripe_api.ipset)          |
+| `privacy_stripe_armada_gator.ipset` | Stripe Armada Gator                                                                                                                                                                                                                                                                                                                                                                                                                                           | ★★⚝⚝⚝     | [view](https://blocklist.configserver.dev/privacy_stripe_armada_gator.ipset) |
+| `privacy_stripe_webhooks.ipset`     | Stripe Webhook Service                                                                                                                                                                                                                                                                                                                                                                                                                                        | ★★⚝⚝⚝     | [view](https://blocklist.configserver.dev/privacy_stripe_webhooks.ipset)     |
+| `privacy_telegram.ipset`            | Telegram Trackers and Crawlers                                                                                                                                                                                                                                                                                                                                                                                                                                | ★★★⚝⚝     | [view](https://blocklist.configserver.dev/privacy_telegram.ipset)            |
+| `privacy_uptimerobot.ipset`         | Uptime Robot Monitoring Service                                                                                                                                                                                                                                                                                                                                                                                                                               | ★⚝⚝⚝⚝     | [view](https://blocklist.configserver.dev/privacy_uptimerobot.ipset)         |
+| `privacy_webpagetest.ipset`         | Webpage Test Services                                                                                                                                                                                                                                                                                                                                                                                                                                         | ★★⚝⚝⚝     | [view](https://blocklist.configserver.dev/privacy_webpagetest.ipset)         |
 
 <br />
 <br />
@@ -617,10 +617,11 @@ These blocklists help prevent known spam sources from accessing your server. The
 
 <br />
 
-| Set | Description | Severity | View |
-| --- | --- | --- | --- |
-| `spam_forums.ipset` | <sub>List of known forum / blog spammers and bots</sub> | ★★★⚝⚝ | [view](https://blocklist.configserver.dev/spam_forums.ipset) |
-| `spam_spamhaus.ipset` | <sub>Bad actor IP addresses registered with Spamhaus</sub> | ★★★★⚝ | [view](https://blocklist.configserver.dev/spam_spamhaus.ipset) |
+| Set                   | Description                                                | Severity   | View                                                           |
+|-----------------------|------------------------------------------------------------|------------|----------------------------------------------------------------|
+| `spam_forums.ipset`   | <sub>List of known forum / blog spammers and bots</sub>    | ★★★⚝⚝    | [view](https://blocklist.configserver.dev/spam_forums.ipset)   |
+| `spam_spamhaus.ipset` | <sub>Bad actor IP addresses registered with Spamhaus</sub> | ★★★★⚝    | [view](https://blocklist.configserver.dev/spam_spamhaus.ipset) |
+
 
 <br />
 <br />
@@ -629,21 +630,22 @@ These blocklists help prevent known spam sources from accessing your server. The
 
 These blocklists allow you to filter traffic based on Internet Service Providers (ISPs). They can be used to block or restrict access from specific networks or providers.
 
-| Set | Description | Severity | View |
-|----------|------------|------------|------------|
-| `isp_aol.ipset` | AOL Internet Service Provider IPs | ★⚝⚝⚝⚝ | [view](https://blocklist.configserver.dev/isp_aol.ipset) |
-| `isp_att.ipset` | AT&T Internet Service Provider IPs | ★⚝⚝⚝⚝ | [view](https://blocklist.configserver.dev/isp_att.ipset) |
-| `isp_cablevision.ipset` | Cablevision / Optimum ISP IPs | ★⚝⚝⚝⚝ | [view](https://blocklist.configserver.dev/isp_cablevision.ipset) |
-| `isp_charter_spectrum_timewarnercable.ipset` | Charter/Spectrum/TWC ISP IPs | ★⚝⚝⚝⚝ | [view](https://blocklist.configserver.dev/isp_charter_spectrum_timewarnercable.ipset) |
-| `isp_comcast.ipset` | Comcast / Xfinity ISP IPs | ★⚝⚝⚝⚝ | [view](https://blocklist.configserver.dev/isp_comcast.ipset) |
-| `isp_cox_communications.ipset` | Cox Communications ISP IPs | ★⚝⚝⚝⚝ | [view](https://blocklist.configserver.dev/isp_cox_communications.ipset) |
-| `isp_embarq.ipset` | Embarq / CenturyLink ISP IPs | ★⚝⚝⚝⚝ | [view](https://blocklist.configserver.dev/isp_embarq.ipset) |
-| `isp_frontier_communications.ipset` | Frontier Communications ISP IPs | ★⚝⚝⚝⚝ | [view](https://blocklist.configserver.dev/isp_frontier_communications.ipset) |
-| `isp_qwest.ipset` | Qwest / CenturyLink ISP IPs | ★⚝⚝⚝⚝ | [view](https://blocklist.configserver.dev/isp_qwest.ipset) |
-| `isp_spacex_starlink.ipset` | SpaceX Starlink satellite ISP IPs | ★⚝⚝⚝⚝ | [view](https://blocklist.configserver.dev/isp_spacex_starlink.ipset) |
-| `isp_sprint.ipset` | Sprint ISP IPs | ★⚝⚝⚝⚝ | [view](https://blocklist.configserver.dev/isp_sprint.ipset) |
-| `isp_suddenlink_altice_optimum.ipset` | Suddenlink / Altice / Optimum ISP IPs | ★⚝⚝⚝⚝ | [view](https://blocklist.configserver.dev/isp_suddenlink_altice_optimum.ipset) |
-| `isp_verizon.ipset` | Verizon ISP IPs | ★⚝⚝⚝⚝ | [view](https://blocklist.configserver.dev/isp_verizon.ipset) |
+| Set                                          | Description                           | Severity   | View                                                                                  |
+|----------------------------------------------|---------------------------------------|------------|---------------------------------------------------------------------------------------|
+| `isp_aol.ipset`                              | AOL Internet Service Provider IPs     | ★⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/isp_aol.ipset)                              |
+| `isp_att.ipset`                              | AT&T Internet Service Provider IPs    | ★⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/isp_att.ipset)                              |
+| `isp_cablevision.ipset`                      | Cablevision / Optimum ISP IPs         | ★⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/isp_cablevision.ipset)                      |
+| `isp_charter_spectrum_timewarnercable.ipset` | Charter/Spectrum/TWC ISP IPs          | ★⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/isp_charter_spectrum_timewarnercable.ipset) |
+| `isp_comcast.ipset`                          | Comcast / Xfinity ISP IPs             | ★⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/isp_comcast.ipset)                          |
+| `isp_cox_communications.ipset`               | Cox Communications ISP IPs            | ★⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/isp_cox_communications.ipset)               |
+| `isp_embarq.ipset`                           | Embarq / CenturyLink ISP IPs          | ★⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/isp_embarq.ipset)                           |
+| `isp_frontier_communications.ipset`          | Frontier Communications ISP IPs       | ★⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/isp_frontier_communications.ipset)          |
+| `isp_qwest.ipset`                            | Qwest / CenturyLink ISP IPs           | ★⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/isp_qwest.ipset)                            |
+| `isp_spacex_starlink.ipset`                  | SpaceX Starlink satellite ISP IPs     | ★⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/isp_spacex_starlink.ipset)                  |
+| `isp_sprint.ipset`                           | Sprint ISP IPs                        | ★⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/isp_sprint.ipset)                           |
+| `isp_suddenlink_altice_optimum.ipset`        | Suddenlink / Altice / Optimum ISP IPs | ★⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/isp_suddenlink_altice_optimum.ipset)        |
+| `isp_verizon.ipset`                          | Verizon ISP IPs                       | ★⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/isp_verizon.ipset)                          |
+
 
 <br />
 <br />
@@ -671,15 +673,16 @@ These blocklists let you control which geographical locations can access your se
 
 All data is sourced directly from the GeoLite2 Database.
 
-| Set | Description | Risk | View |
-|----------|------------|------------|------------|
-| `continent_africa.ipset` | All IPs located in Africa | ★★★⚝⚝ | [view](https://blocklist.configserver.dev/continent_africa.ipset) |
-| `continent_antartica.ipset` | All IPs located in Antarctica | ⚝⚝⚝⚝⚝ | [view](https://blocklist.configserver.dev/continent_antartica.ipset) |
-| `continent_asia.ipset` | All IPs located in Asia | ★★★★⚝ | [view](https://blocklist.configserver.dev/continent_asia.ipset) |
-| `continent_europe.ipset` | All IPs located in Europe | ★★★⚝⚝ | [view](https://blocklist.configserver.dev/continent_europe.ipset) |
-| `continent_north_america.ipset` | All IPs located in North America | ★★★★⚝ | [view](https://blocklist.configserver.dev/continent_north_america.ipset) |
-| `continent_oceania.ipset` | All IPs located in Oceania | ★⚝⚝⚝⚝ | [view](https://blocklist.configserver.dev/continent_oceania.ipset) |
-| `continent_south_america.ipset` | All IPs located in South America | ★★⚝⚝⚝ | [view](https://blocklist.configserver.dev/continent_south_america.ipset) |
+| Set                             | Description                      | Risk     | View                                                                     |
+|---------------------------------|----------------------------------|----------|--------------------------------------------------------------------------|
+| `continent_africa.ipset`        | All IPs located in Africa        | ★★★⚝⚝  | [view](https://blocklist.configserver.dev/continent_africa.ipset)        |
+| `continent_antartica.ipset`     | All IPs located in Antarctica    | ⚝⚝⚝⚝⚝  | [view](https://blocklist.configserver.dev/continent_antartica.ipset)     |
+| `continent_asia.ipset`          | All IPs located in Asia          | ★★★★⚝  | [view](https://blocklist.configserver.dev/continent_asia.ipset)          |
+| `continent_europe.ipset`        | All IPs located in Europe        | ★★★⚝⚝  | [view](https://blocklist.configserver.dev/continent_europe.ipset)        |
+| `continent_north_america.ipset` | All IPs located in North America | ★★★★⚝  | [view](https://blocklist.configserver.dev/continent_north_america.ipset) |
+| `continent_oceania.ipset`       | All IPs located in Oceania       | ★⚝⚝⚝⚝  | [view](https://blocklist.configserver.dev/continent_oceania.ipset)       |
+| `continent_south_america.ipset` | All IPs located in South America | ★★⚝⚝⚝  | [view](https://blocklist.configserver.dev/continent_south_america.ipset) |
+
 
 <br />
 
@@ -689,8 +692,8 @@ These blocklists let you control which geographical locations can access your se
 
 All data is sourced directly from the GeoLite2 Database.
 
-| Set                                                          | Description                                  | Severity | View                                                                                                  |
-|--------------------------------------------------------------|----------------------------------------------|----------|-------------------------------------------------------------------------------------------------------|
+| Set                                                          | Description                                  | Severity   | View                                                                                                  |
+|--------------------------------------------------------------|----------------------------------------------|------------|-------------------------------------------------------------------------------------------------------|
 | `country_afghanistan.ipset`                                  | Afghanistan                                  | ★★★★⚝    | [view](https://blocklist.configserver.dev/country_afghanistan.ipset)                                  |
 | `country_aland_islands.ipset`                                | Aland Islands                                | ⚝⚝⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_aland_islands.ipset)                                |
 | `country_albania.ipset`                                      | Albania                                      | ★★⚝⚝⚝    | [view](https://blocklist.configserver.dev/country_albania.ipset)                                      |
@@ -959,9 +962,10 @@ This section includes blocklists which you can import into the [bittorrent clien
 
 <br />
 
-| Set | Description | Severity | View | Website |
-| --- | --- | --- | --- | --- |
-| `transmission.ipset` | A large blocklist for the BitTorrent client [Transmission](https://transmissionbt.com/) | ★★★★★ | [view](https://blocklist.configserver.dev/transmission.ipset) | [view](https://transmissionbt.com/) |
+| Set                  | Description                                                                             | Severity   | View                                                          | Website                             |
+|----------------------|-----------------------------------------------------------------------------------------|------------|---------------------------------------------------------------|-------------------------------------|
+| `transmission.ipset` | A large blocklist for the BitTorrent client [Transmission](https://transmissionbt.com/) | ★★★★★    | [view](https://blocklist.configserver.dev/transmission.ipset) | [view](https://transmissionbt.com/) |
+
 
 <br />
 <br />
