@@ -791,59 +791,59 @@ jobs:
             #   Generate › SFTP / SSH › Upload Artifact
             # #
 
-            - name: 'SSH › Zip Artifacts'
-              id: generate_artifact_zip
-              run: |
-                  REPO_NAME="${{ github.event.repository.name }}"                         # csf-firewall
-                  BRANCH_NAME="${{ github.ref_name }}"                                    # main
-                  RUN_ID="${{ github.run_id }}"                                           # 17373119899
+            #- name: 'SSH › Zip Artifacts'
+            #  id: generate_artifact_zip
+            #  run: |
+            #      REPO_NAME="${{ github.event.repository.name }}"                         # csf-firewall
+            #      BRANCH_NAME="${{ github.ref_name }}"                                    # main
+            #      RUN_ID="${{ github.run_id }}"                                           # 17373119899
 
-                  ARTIFACT_NAME="artifact_${BRANCH_NAME}_${RUN_ID}.zip"                   # artifacts_main_xxxxxx.zip
-                  ARTIFACT_PATH="${REPO_NAME}/${ARTIFACT_NAME}"                           # csf-firewall/artifacts_main_xxxxxx.zip
+            #      ARTIFACT_NAME="artifact_${BRANCH_NAME}_${RUN_ID}.zip"                   # artifacts_main_xxxxxx.zip
+            #      ARTIFACT_PATH="${REPO_NAME}/${ARTIFACT_NAME}"                           # csf-firewall/artifacts_main_xxxxxx.zip
 
-                  echo "REPO_NAME=$REPO_NAME" >> $GITHUB_ENV                              # csf-firewall
+            #      echo "REPO_NAME=$REPO_NAME" >> $GITHUB_ENV                              # csf-firewall
 
-                  echo "ARTIFACT_NAME=$ARTIFACT_NAME" >> $GITHUB_ENV                      # artifacts_main_xxxxxx.zip
-                  echo "ARTIFACT_PATH=$ARTIFACT_PATH" >> $GITHUB_ENV                      # csf-firewall/artifacts_main_xxxxxx.zip
+            #      echo "ARTIFACT_NAME=$ARTIFACT_NAME" >> $GITHUB_ENV                      # artifacts_main_xxxxxx.zip
+            #      echo "ARTIFACT_PATH=$ARTIFACT_PATH" >> $GITHUB_ENV                      # csf-firewall/artifacts_main_xxxxxx.zip
 
-                  echo "artifact-name=$ARTIFACT_NAME" >> $GITHUB_OUTPUT                   # artifacts_main_xxxxxx.zip
-                  echo "artifact-path=$ARTIFACT_PATH" >> $GITHUB_OUTPUT                   # csf-firewall/artifacts_main_xxxxxx.zip
+            #      echo "artifact-name=$ARTIFACT_NAME" >> $GITHUB_OUTPUT                   # artifacts_main_xxxxxx.zip
+            #      echo "artifact-path=$ARTIFACT_PATH" >> $GITHUB_OUTPUT                   # csf-firewall/artifacts_main_xxxxxx.zip
 
-                  zip -r "$ARTIFACT_NAME" ./*                                             # delete original zip before push
+            #      zip -r "$ARTIFACT_NAME" ./*                                             # delete original zip before push
 
             # #
             #   Generate › SFTP / SSH › Setup SSH Key
             # #
 
-            - name: 'SSH › Upload Artifacts'
-              run: |
-                  # Make sure the .ssh folder exists
-                  mkdir -p ~/.ssh
-                  echo "${{ secrets.ARTIFACTS_GITHUB_SSH_PRIVATE_KEY }}" > "$HOME/.ssh/github_sftp_key"
-                  chmod 600 "$HOME/.ssh/github_sftp_key"
+            #- name: 'SSH › Upload Artifacts'
+            #  run: |
+            #      # Make sure the .ssh folder exists
+            #      mkdir -p ~/.ssh
+            #      echo "${{ secrets.ARTIFACTS_GITHUB_SSH_PRIVATE_KEY }}" > "$HOME/.ssh/github_sftp_key"
+            #      chmod 600 "$HOME/.ssh/github_sftp_key"
 
-                  # Upload to repo-specific directory
-                  sftp -P ${{ secrets.ARTIFACTS_PORT }} \
-                      -i "$HOME/.ssh/github_sftp_key" \
-                      -o StrictHostKeyChecking=no \
-                  github@${{ secrets.ARTIFACTS_DOMAIN }} <<EOF
-                  mkdir $REPO_NAME
-                  cd $REPO_NAME
-                  put $ARTIFACT_NAME
-                  bye
-                  EOF
+            #      # Upload to repo-specific directory
+            #      sftp -P ${{ secrets.ARTIFACTS_PORT }} \
+            #          -i "$HOME/.ssh/github_sftp_key" \
+            #          -o StrictHostKeyChecking=no \
+            #      github@${{ secrets.ARTIFACTS_DOMAIN }} <<EOF
+            #      mkdir $REPO_NAME
+            #      cd $REPO_NAME
+            #      put $ARTIFACT_NAME
+            #      bye
+            #      EOF
 
             # #
             #   Generate › Artifact › Upload
             # #
 
-          #  - name: "🎁 Generate › Upload Artifact"
-          #    id: task_blocklist_generate_artifact_upload
-          #    uses: actions/upload-artifact@v4
-          #    with:
-          #        name: blocklist-latest
-          #        path: ./
-          #        retention-days: 1
+            - name: "🎁 Generate › Upload Artifact"
+              id: task_blocklist_generate_artifact_upload
+              uses: actions/upload-artifact@v4
+              with:
+                  name: blocklist-latest
+                  path: ./
+                  retention-days: 1
 
     # #
     #   Job › Commit
@@ -871,35 +871,35 @@ jobs:
             #   Commit › Artifact › Setup SSH
             # #
 
-            - name: '🎁 Commit › Setup SSH Artifact'
-              run: |
-                  mkdir -p ~/.ssh
-                  echo "${{ secrets.ARTIFACTS_GITHUB_SSH_PRIVATE_KEY }}" > "$HOME/.ssh/github_sftp_key"
-                  chmod 600 "$HOME/.ssh/github_sftp_key"
+            #- name: '🎁 Commit › Setup SSH Artifact'
+            #  run: |
+            #      mkdir -p ~/.ssh
+            #      echo "${{ secrets.ARTIFACTS_GITHUB_SSH_PRIVATE_KEY }}" > "$HOME/.ssh/github_sftp_key"
+            #      chmod 600 "$HOME/.ssh/github_sftp_key"
 
             # #
             #   Commit › Artifact › Download
             # #
 
-            - name: '🎁 Commit › Download Artifact'
-              run: |
-                  ARTIFACT_PATH="${{ needs.blocklist-generate.outputs.artifact-path }}"     # csf-firewall/artifacts_main_xxxxxx.zip
-                  ARTIFACT_NAME="$(basename "$ARTIFACT_PATH")"                              # artifacts_main_xxxxxx.zip
-                  REPO_NAME="$(dirname "$ARTIFACT_PATH")"                                   # csf-firewall
+            #- name: '🎁 Commit › Download Artifact'
+            #  run: |
+            #      ARTIFACT_PATH="${{ needs.blocklist-generate.outputs.artifact-path }}"     # csf-firewall/artifacts_main_xxxxxx.zip
+            #      ARTIFACT_NAME="$(basename "$ARTIFACT_PATH")"                              # artifacts_main_xxxxxx.zip
+            #      REPO_NAME="$(dirname "$ARTIFACT_PATH")"                                   # csf-firewall
 
-                  echo "Downloading $ARTIFACT_PATH"
+            #      echo "Downloading $ARTIFACT_PATH"
 
-                  sftp -P ${{ secrets.ARTIFACTS_PORT }} \
-                      -i "$HOME/.ssh/github_sftp_key" \
-                      -o StrictHostKeyChecking=no \
-                      github@${{ secrets.ARTIFACTS_DOMAIN }} <<EOF
-                  cd $REPO_NAME
-                  get $ARTIFACT_NAME
-                  bye
-                  EOF
+            #      sftp -P ${{ secrets.ARTIFACTS_PORT }} \
+            #          -i "$HOME/.ssh/github_sftp_key" \
+            #          -o StrictHostKeyChecking=no \
+            #          github@${{ secrets.ARTIFACTS_DOMAIN }} <<EOF
+            #      cd $REPO_NAME
+            #      get $ARTIFACT_NAME
+            #      bye
+            #      EOF
 
-                  unzip -o "$ARTIFACT_NAME"                                                 # unzip -o artifacts_main_xxxxxx.zip
-                  rm -f "$ARTIFACT_NAME"                                                    # rm -f artifacts_main_xxxxxx.zip
+            #      unzip -o "$ARTIFACT_NAME"                                                 # unzip -o artifacts_main_xxxxxx.zip
+            #      rm -f "$ARTIFACT_NAME"                                                    # rm -f artifacts_main_xxxxxx.zip
 
             # #
             #   Commit › GPG › Import Key (No Passphrase)
@@ -939,12 +939,12 @@ jobs:
             #   Commit › Artifact › Download
             # #
 
-            #    - name: "🎁 Commit › Download Artifact"
-            #      id: task_commit_artifact_download
-            #      uses: actions/download-artifact@v4
-            #      with:
-            #          name: blocklist-latest
-            #          path: ./
+            - name: "🎁 Commit › Download Artifact"
+              id: task_commit_artifact_download
+              uses: actions/download-artifact@v4
+              with:
+                  name: blocklist-latest
+                  path: ./
 
             # #
             #   Commit › Precommit
