@@ -1,158 +1,464 @@
 #!/bin/bash
 
 # #
-#   @for                https://github.com/Aetherinox/csf-firewall
+#   @app                https://github.com/Aetherinox/csf-firewall
 #   @workflow           blocklist-generate.yml
 #   @type               bash script
 #   @summary            generate ipset by fetching locally specified file in /blocks/ repo folder
 #                       copies local ipsets from .github/blocks/${ARG_BLOCKS_CAT}/*.ipset
+#   @storage            /.github/scripts/bl-block.sh
+#   @command            .github/scripts/bl-block.sh blocklists/highrisk.ipset highrisk
 # #
 
-
-APP_THIS_FILE=$(basename "$0")
-APP_THIS_DIR="${PWD}"
-APP_GITHUB_DIR="${APP_THIS_DIR}/.github"
-
 # #
-#   Colors
+#   Populate Paths
 # #
-RESET="\e[0m"
-WHITE="\e[97m"
-BOLD="\e[1m"
-DIM="\e[2m"
-UNDERLINE="\e[4m"
-BLINK="\e[5m"
-INVERTED="\e[7m"
-HIDDEN="\e[8m"
-BLACK="\e[38;5;0m"
-FUCHSIA1="\e[38;5;125m"
-FUCHSIA2="\e[38;5;198m"
-RED1="\e[38;5;160m"
-RED2="\e[38;5;196m"
-ORANGE1="\e[38;5;202m"
-ORANGE2="\e[38;5;208m"
-MAGENTA="\e[38;5;5m"
-BLUE1="\e[38;5;033m"
-BLUE2="\e[38;5;39m"
-CYAN="\e[38;5;6m"
-GREEN1="\e[38;5;2m"
-GREEN2="\e[38;5;76m"
-YELLOW1="\e[38;5;184m"
-YELLOW2="\e[38;5;190m"
-YELLOW3="\e[38;5;193m"
-GREY1="\e[38;5;240m"
-GREY2="\e[38;5;244m"
-GREY3="\e[38;5;250m"
+
+OLDPWD=$(pwd)                                                           #  save current working directory
+cd "$(dirname "$0")" || exit 1                                          #  change to the dir where the script resides
+_app_path_bin=$(pwd)                                                    #  get absolute path
+cd "$OLDPWD" || exit 1                                                  #  restore previous working directory
 
 # #
-#   Error Helper
+#   Define › path
 # #
-function error
+
+app_path_runfrom="${PWD}"                                               #  path to where script called from
+app_path_bin="${_app_path_bin}"                                         #  the path where script is called from
+
+# #
+#   Define › file
+# #
+
+app_file_this=$(basename "$0")                                          #  bl-block.sh       (with ext)
+app_file_bin="${app_file_this%.*}"                                      #  bl-block          (without ext)
+
+# #
+#   Define › folders
+# #
+
+app_dir_this="$(cd "$(dirname "$0")" >/dev/null 2>&1 && pwd)"           #  path where script was last found in
+app_dir_github="${app_path_runfrom}/.github"                            #  .github folder
+
+# #
+#   Define › Colors
+#   
+#   Use the color table at:
+#       - https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
+# #
+
+esc=$(printf '\033')
+end="${esc}[0m"
+bold="${esc}[1m"
+dim="${esc}[2m"
+underline="${esc}[4m"
+blink="${esc}[5m"
+white="${esc}[97m"
+black="${esc}[0;30m"
+redl="${esc}[0;91m"
+redd="${esc}[38;5;196m"
+magental="${esc}[0;95m"
+magentad="${esc}[0;35m"
+fuchsial="${esc}[38;5;198m"
+fuchsiad="${esc}[38;5;161m"
+bluel="${esc}[38;5;75m"
+blued="${esc}[38;5;33m"
+greenl="${esc}[38;5;76m"
+greend="${esc}[38;5;2m"
+orangel="${esc}[0;93m"
+oranged="${esc}[38;5;202m"
+yellowl="${esc}[38;5;190m"
+yellowd="${esc}[38;5;184m"
+greyl="${esc}[38;5;250m"
+greym="${esc}[38;5;244m"
+greyd="${esc}[0;90m"
+navy="${esc}[38;5;62m"
+olive="${esc}[38;5;144m"
+peach="${esc}[38;5;210m"
+cyan="${esc}[38;5;6m"
+
+# #
+#   Define › Logging functions
+# #
+
+error( )
 {
-    echo -e "  ⭕ ${GREY2}${APP_THIS_FILE}${RESET}: \n     ${BOLD}${RED1}Error${RESET}: $1"
-    echo -e
-    exit 1
+    printf '%-28s %-65s\n' "   ${redl} ERROR ${end}" "${greym} $1 ${end}"
+}
+
+warn( )
+{
+    printf '%-32s %-65s\n' "   ${yellowl} WARN ${end}" "${greym} $1 ${end}"
+}
+
+info( )
+{
+    printf '%-31s %-65s\n' "   ${bluel} INFO ${end}" "${greym} $1 ${end}"
+}
+
+status( )
+{
+    printf '%-31s %-65s\n' "   ${bluel} STATUS ${end}" "${greym} $1 ${end}"
+}
+
+ok( )
+{
+    printf '%-31s %-65s\n' "   ${greenl} OK ${end}" "${greym} $1 ${end}"
+}
+
+debug( )
+{
+    if [ "$argDevMode" = "true" ]; then
+        printf '%-28s %-65s\n' "   ${greyd} DEBUG ${end}" "${greym} $1 ${end}"
+    fi
+}
+
+verbose( )
+{
+    if [ "$VERBOSE" -eq 1 ]; then
+        printf '%-28s %-65s\n' "   ${greyd} VERBOSE ${end}" "${greym} $1 ${end}"
+    fi
+}
+
+label( )
+{
+    printf '%-31s %-65s\n' "   ${navy}        ${end}" "${navy} $1 ${end}"
+}
+
+labels( )
+{
+    printf '%-31s\n' "   ${greym} $1 ${end}"
+}
+
+print( )
+{
+    echo "${greym}$1${end}"
+}
+
+debug( )
+{
+    if [ "$argDevMode" = "true" ]; then
+        printf '%-28s %-65s\n' "   ${greyd} DEBUG ${end}" "${greym} $1 ${end}"
+    fi
+}
+
+verbose( )
+{
+    if [ "$VERBOSE" -eq 1 ]; then
+        printf '%-28s %-65s\n' "   ${greyd} VERBOSE ${end}" "${greym} $1 ${end}"
+    fi
 }
 
 # #
-#   Sort Results
+#   Print › Line
+#   
+#   Prints single line
+#   
+#   @usage          prins
 # #
-function sort_results
-{
-    declare -a ipv4 ipv6
 
-    while read -r line ; do
-        if [[ ${line} =~ : ]] ; then
-            ipv6+=("${line}")
+prins()
+{
+    local indent="   "
+    local box_width=90
+    local line_width=$(( box_width + 2 ))
+
+    local line
+    line=$(printf '─%.0s' $(seq 1 "$line_width"))
+
+    print
+    printf "%b%s%s%b\n" "${greyd}" "$indent" "$line" "${reset}"
+    print
+}
+
+# #
+#   Print › Box › Single Line Text
+#   
+#   Prints single line of text with a box surrounding it.
+#   
+#   @usage          prinb "${APP_NAME_SHORT:-CSF} › Customize csf.config"
+# #
+
+prinb( )
+{
+    local title="$*"
+    local indent="   "
+    local padding=6
+    
+    local visible_title
+    visible_title=$(echo -e "$title" | sed 's/\x1b\[[0-9;]*m//g')
+    
+    local title_length=${#visible_title}
+    local inner_width=$(( title_length + padding ))
+    local box_width=90
+
+    [ "$inner_width" -lt ${box_width} ] && inner_width=${box_width}
+
+    local line
+    line=$(printf '─%.0s' $(seq 1 "$inner_width"))
+
+    local spaces_req=$(( inner_width - title_length - 3 ))
+    local spaces=$(printf ' %.0s' $(seq 1 "$spaces_req"))
+
+    print
+    print
+    printf "%b%s┌%s┐\n" "${greym}" "$indent" "$line"
+    printf "%b%s│  %s%s │\n" "${greym}" "$indent" "$title" "$spaces"
+    printf "%b%s└%s┘%b\n" "${greym}" "$indent" "$line" "${reset}"
+    print
+}
+
+# #
+#   Print > Box > Paragraph
+#   
+#   Prints multiple lines with a box surrounding it.
+#   
+#   @usage          prinp "CSF › Title" "This is a really long paragraph that will wrap multiple lines and align properly under the title. Second line of text, same alignment, with multiple words."
+# #
+
+prinp()
+{
+    local title="$1"
+    shift
+    local text="$*"
+
+    local indent="   "
+    local box_width=90
+    local pad=2
+
+    local content_width=$(( box_width ))
+    local inner_width=$(( box_width - pad*2 ))
+
+    print
+    print
+    local hline
+    hline=$(printf '─%.0s' $(seq 1 "$content_width"))
+
+    printf "${greyd}%s┌%s┐\n" "$indent" "$hline"
+
+    # #
+    #   title
+    # #
+
+    local title_width=$(( content_width - pad ))
+    printf "${greym}%s│%*s${bluel}%-${title_width}s${greym}│\n" "$indent" "$pad" "" "$title"
+
+    printf "${greyd}%s│%-${content_width}s│\n" "$indent" ""
+
+    local line=""
+    set -- $text
+    for word; do
+        if [ ${#line} -eq 0 ]; then
+            line="$word"
+        elif [ $(( ${#line} + 1 + ${#word} )) -le $inner_width ]; then
+            line="$line $word"
         else
-            ipv4+=("${line}")
+            printf "${greyd}%s│%*s%-*s%*s│\n" "$indent" "$pad" "" "$inner_width" "$line" "$pad" ""
+            line="$word"
         fi
     done
+    [ -n "$line" ] && printf "${greyd}%s│%*s%-*s%*s│\n" "$indent" "$pad" "" "$inner_width" "$line" "$pad" ""
 
-    [[ -v ipv4[@] ]] && printf '%s\n' "${ipv4[@]}" | sort -g -t. -k1,1 -k2,2 -k3,3 -k4,4 | uniq
-    [[ -v ipv6[@] ]] && printf '%s\n' "${ipv6[@]}" | sort -g -t: -k1,1 -k2,2 -k3,3 -k4,4 -k5,5 -k6,6 -k7,7 -k8,8 | uniq
+    printf "${greyd}%s└%s┘${reset}\n" "$indent" "$hline"
+    print
 }
 
 # #
-#   Arguments
+#   Print › Box › Multi-line Text (Left Line)
+#   
+#   Prints single line with a box surrounding it, excluding the right side
+#   
+#   @usage          prinb "Name › Section"
 # #
+
+prinl( )
+{
+    local title="$*"
+    local indent="   "
+    local padding=6
+    
+    local visible_title
+    visible_title=$(echo -e "$title" | sed 's/\x1b\[[0-9;]*m//g')
+    
+    local title_length=${#visible_title}
+    local inner_width=$(( title_length + padding ))
+    local box_width=90
+
+    [ "$inner_width" -lt ${box_width} ] && inner_width=${box_width}
+
+    local line
+    line=$(printf '─%.0s' $(seq 1 "$inner_width"))
+
+    local spaces_req=$(( inner_width - title_length - 3 ))
+    local spaces=$(printf ' %.0s' $(seq 1 "$spaces_req"))
+
+    print
+    printf "%b%s┌%s┐\n" "${greym}" "$indent" "$line"
+    printf "%b%s│  %s%s \n" "${greym}" "$indent" "$title" "$spaces"
+    printf "%b%s└%s┘%b\n" "${greym}" "$indent" "$line" "${reset}"
+    print
+}
+
+# #
+#   Define › Logging › Verbose
+# #
+
+log()
+{
+    if [ "$VERBOSE" -eq 1 ]; then
+		verbose "    $@ "
+    fi
+}
+
+# #
+#   Define › Args
+# #
+
 ARG_SAVEFILE=$1
 ARG_BLOCKS_CAT=$2
 
 if [[ -z "${ARG_SAVEFILE}" ]]; then
-    echo -e "\n  ⭕ ${YELLOW1}[${APP_THIS_FILE}]${RESET}: No output file specified\n"
-    exit 0
+    echo -e
+    error "    ⭕  No target file specified ${redl}${app_file_this}${greym}; aborting${greym}"
+    echo -e
+    exit 1
 fi
 
 if [[ -z "${ARG_BLOCKS_CAT}" ]]; then
-    echo -e "\n  ⭕ ${YELLOW1}[${APP_THIS_FILE}]${RESET}: Aborting -- no static file category specified. ex: privacy\n"
-    exit 0
+    error "    ⭕  No static category specified ${redl}${app_file_this}${greym}; aborting${greym}"
+    exit 1
 fi
 
 # #
-#   Define General
+#   Define › General
 # #
+
 SECONDS=0                                               # set seconds count for beginning of script
 APP_VER=("1" "0" "0" "0")                               # current script version
 APP_DEBUG=false                                         # debug mode
 APP_REPO="Aetherinox/blocklists"                        # repository
 APP_REPO_BRANCH="main"                                  # repository branch
 APP_FILE_PERM="${ARG_SAVEFILE}"                         # perm file when building ipset list
-COUNT_LINES=0                                           # number of lines in doc
-COUNT_TOTAL_SUBNET=0                                    # number of IPs in all subnets combined
-COUNT_TOTAL_IP=0                                        # number of single IPs (counts each line)
-BLOCKS_COUNT_TOTAL_IP=0                                 # number of ips for one particular file
-BLOCKS_COUNT_TOTAL_SUBNET=0                             # number of subnets for one particular file
 APP_AGENT="Mozilla/5.0 (Windows NT 10.0; WOW64) "\
 "AppleWebKit/537.36 (KHTML, like Gecko) "\
 "Chrome/51.0.2704.103 Safari/537.36"                    # user agent used with curl
-TEMPL_NOW="$(date -u)"
-TEMPL_ID=$(basename -- "${APP_FILE_PERM}")
-TEMPL_ID="${TEMPL_ID//[^[:alnum:]]/_}"
-TEMPL_UUID="$(uuidgen -m -N "${TEMPL_ID}" -n @url)"
-TEMPL_DESC="$(curl -sSL -A "${APP_AGENT}" "https://raw.githubusercontent.com/${APP_REPO}/${APP_REPO_BRANCH}/.github/descriptions/${TEMPL_ID}.txt")"
-TEMPL_CAT="$(curl -sSL -A "${APP_AGENT}" "https://raw.githubusercontent.com/${APP_REPO}/${APP_REPO_BRANCH}/.github/categories/${TEMPL_ID}.txt")"
-TEMPL_EXP="$(curl -sSL -A "${APP_AGENT}" "https://raw.githubusercontent.com/${APP_REPO}/${APP_REPO_BRANCH}/.github/expires/${TEMPL_ID}.txt")"
-TEMP_URL_SRC="$(curl -sSL -A "${APP_AGENT}" "https://raw.githubusercontent.com/${APP_REPO}/${APP_REPO_BRANCH}/.github/url-source/${TEMPL_ID}.txt")"
-REGEX_URL='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]\.[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$'
-REGEX_ISNUM='^[0-9]+$'
 
 # #
-#   Default Values
+#   Define › Count Defaults
 # #
-if [[ "${TEMPL_DESC}" == *"404: Not Found"* ]]; then TEMPL_DESC="#   No description provided"; fi
-if [[ "${TEMPL_CAT}" == *"404: Not Found"* ]]; then TEMPL_CAT="Uncategorized"; fi
-if [[ "${TEMPL_EXP}" == *"404: Not Found"* ]]; then TEMPL_EXP="6 hours"; fi
-if [[ "${TEMP_URL_SRC}" == *"404: Not Found"* ]]; then TEMP_URL_SRC="None"; fi
+
+i_cnt_lines=0                                           # number of lines in doc
+i_cnt_ip_total=0                                        # number of single IPs (counts each line)
+i_cnt_subnet_total=0                                    # number of ips in all subnets combined
+i_cnt_block_ip_total=0                                  # number of ips for one particular file
+i_cnt_block_subnet_total=0                              # number of subnets for one particular file
 
 # #
-#   Header
+#   Define › Template
 # #
-echo -e "\n ──────────────────────────────────────────────────────────────────────────────────────────────"
-echo -e "  ${YELLOW1}${APP_FILE_PERM} (${ARG_BLOCKS_CAT})${RESET}\n"
-echo -e "  ${GREY2}ID:          ${TEMPL_ID}${RESET}"
-echo -e "  ${GREY2}UUID:        ${TEMPL_UUID}${RESET}"
-echo -e "  ${GREY2}CATEGORY:    ${TEMPL_CAT}${RESET}"
-echo -e "  ${GREY2}ACTION:      ${APP_THIS_FILE}${RESET}"
-echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────\n"
-echo -e "  ⭐ Starting script ${GREEN1}${APP_THIS_FILE}${RESET}\n"
+
+templ_now="$(date -u)"
+templ_id=$(basename -- "${APP_FILE_PERM}")
+templ_id="${templ_id//[^[:alnum:]]/_}"
+templ_uuid="$(uuidgen -m -N "${templ_id}" -n @url)"
+templ_curl_opts=(-sSL -A "$APP_AGENT")
+
+# #
+#   Define › Template › External Sources
+# #
+
+curl "${templ_curl_opts[@]}" "https://raw.githubusercontent.com/${APP_REPO}/${APP_REPO_BRANCH}/.github/descriptions/${templ_id}.txt" > desc.txt &
+curl "${templ_curl_opts[@]}" "https://raw.githubusercontent.com/${APP_REPO}/${APP_REPO_BRANCH}/.github/categories/${templ_id}.txt" > cat.txt &
+curl "${templ_curl_opts[@]}" "https://raw.githubusercontent.com/${APP_REPO}/${APP_REPO_BRANCH}/.github/expires/${templ_id}.txt" > exp.txt &
+curl "${templ_curl_opts[@]}" "https://raw.githubusercontent.com/${APP_REPO}/${APP_REPO_BRANCH}/.github/url-source/${templ_id}.txt" > src.txt &
+wait
+templ_desc=$(<desc.txt)
+templ_cat=$(<cat.txt)
+templ_exp=$(<exp.txt)
+templ_url_src=$(<src.txt)
+rm -f desc.txt cat.txt exp.txt src.txt
+
+# #
+#   Define › Template › Default Values
+# #
+
+if [[ "${templ_desc}" == *"404: Not Found"* ]]; then templ_desc="#   No description provided"; fi
+if [[ "${templ_cat}" == *"404: Not Found"* ]]; then templ_cat="Uncategorized"; fi
+if [[ "${templ_exp}" == *"404: Not Found"* ]]; then templ_exp="6 hours"; fi
+if [[ "${templ_url_src}" == *"404: Not Found"* ]]; then templ_url_src="None"; fi
+
+# #
+#   Define › Regex
+# #
+
+regex_url='^(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]\.[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]$'
+regex_isnum='^[0-9]+$'
+
+# #
+#   Output › Header
+# #
+
+echo
+prins
+print "    ${yellowl}${APP_FILE_PERM}${end}"
+print
+print "    ${greym}ID:          ${templ_id}${end}"
+print "    ${greym}UUID:        ${templ_uuid}${end}"
+print "    ${greym}CATEGORY:    ${templ_cat}${end}"
+print "    ${greym}ACTION:      ${app_file_this}${end}"
+prins
+
+# #
+#   Start
+# #
+
+info "    ⭐ Starting script ${bluel}${app_file_this}${greym}"
 
 # #
 #   Create or Clean file
 # #
+
 if [ -f "${APP_FILE_PERM}" ]; then
-    echo -e "  📄 Clean ${BLUE2}${APP_FILE_PERM}${RESET}\n"
-    : > "${APP_FILE_PERM}"
+    info "    🗑️  Wipe existing file ${bluel}${PWD}/${APP_FILE_PERM}${greym}"
+   > "${APP_FILE_PERM}"       # clean file
 else
-    echo -e "  📁 Create ${BLUE2}${APP_FILE_PERM}${RESET}\n"
+    info "    📁 Create ${bluel}${PWD}/${APP_FILE_PERM}${greym}"
     mkdir -p "$(dirname "${APP_FILE_PERM}")"
+
+    if [ -d "$(dirname "${APP_FILE_PERM}")" ]; then
+        ok "    📁 Created ${greenl}$(dirname "${APP_FILE_PERM}")${greym}"
+    else
+        error "    ⭕  Failed to create directory ${redl}$(dirname "${APP_FILE_PERM}")${greym}; aborting${greym}"
+        exit 1
+    fi
+
     touch "${APP_FILE_PERM}"
+    if [ -f "${APP_FILE_PERM}" ]; then
+        ok "    📄 Created perm file ${greenl}${PWD}/${APP_FILE_PERM}${greym}"
+    else
+        error "    ⭕ Failed to create perm file ${bluel}${PWD}/${APP_FILE_PERM}${greym}"
+        exit 1
+    fi
+fi
+
+# #
+#   Pre-clean generated data BEFORE appending static blocks
+#       - remove comment lines starting with # or ;
+#       - remove blank lines
+#       - remove trailing whitespace
+#       - sort and dedupe
+# #
+
+if [ -f "${APP_FILE_PERM}" ]; then
+    info "    📄 Cleaning current list of IPs in file ${bluel}${PWD}/${APP_FILE_PERM}"
+    awk '!/^(#|;|[[:space:]]*$)/ { sub(/[[:space:]]+$/,""); if(!seen[$0]++) print }' "${APP_FILE_PERM}" | sort -V > "${APP_FILE_PERM}.tmp" && mv "${APP_FILE_PERM}.tmp" "${APP_FILE_PERM}"
 fi
 
 # #
 #   Add Static Files
 # #
-if [ -d .github/blocks/ ]; then
+
+if [ -d ".github/blocks/" ]; then
 
     # #
     #   Determines if the category provided is either a folder, or a file ending with `.ipset`.
@@ -173,7 +479,7 @@ if [ -d .github/blocks/ ]; then
     # #
 
     for APP_FILE_TEMP in ${APP_BLOCK_TARGET}; do
-        echo -e "  📒 Reading static block ${ORANGE2}${APP_FILE_TEMP}${RESET}"
+        info "    📒 Reading static block ${bluel}${PWD}/${APP_FILE_TEMP}"
 
         # #
         #   calculate how many IPs are in a subnet
@@ -183,10 +489,10 @@ if [ -d .github/blocks/ ]; then
         #   so we will count every IP in the block.
         # #
 
-        BLOCKS_COUNT_TOTAL_IP=0
-        BLOCKS_COUNT_TOTAL_SUBNET=0
+        i_cnt_block_ip_total=0
+        i_cnt_block_subnet_total=0
 
-        echo -e "  📊 Fetching statistics for ${ORANGE2}${APP_FILE_TEMP}${RESET}"
+        info "    📊 Fetching statistics for ${bluel}${PWD}/${APP_FILE_TEMP}"
 
         # line-by-line read (preserves spaces + full lines)
         while IFS= read -r line; do
@@ -196,25 +502,25 @@ if [ -d .github/blocks/ ]; then
             # is ipv6 (contains a colon)
             if [[ "${line}" == *:* ]]; then
                 if [[ ${line} =~ /[0-9]{1,3}$ ]]; then
-                    COUNT_TOTAL_SUBNET=$((COUNT_TOTAL_SUBNET + 1))
-                    BLOCKS_COUNT_TOTAL_SUBNET=$((BLOCKS_COUNT_TOTAL_SUBNET + 1))
+                    i_cnt_subnet_total=$((i_cnt_subnet_total + 1))
+                    i_cnt_block_subnet_total=$((i_cnt_block_subnet_total + 1))
                 else
-                    COUNT_TOTAL_IP=$((COUNT_TOTAL_IP + 1))
-                    BLOCKS_COUNT_TOTAL_IP=$((BLOCKS_COUNT_TOTAL_IP + 1))
+                    i_cnt_ip_total=$((i_cnt_ip_total + 1))
+                    i_cnt_block_ip_total=$((i_cnt_block_ip_total + 1))
                 fi
             # is subnet (ipv4)
             elif [[ ${line} =~ /[0-9]{1,2}$ ]]; then
                 ips=$((1 << (32 - ${line#*/})))
-                if [[ ${ips} =~ ${REGEX_ISNUM} ]]; then
-                    BLOCKS_COUNT_TOTAL_IP=$((BLOCKS_COUNT_TOTAL_IP + ips))
-                    BLOCKS_COUNT_TOTAL_SUBNET=$((BLOCKS_COUNT_TOTAL_SUBNET + 1))
-                    COUNT_TOTAL_IP=$((COUNT_TOTAL_IP + ips))
-                    COUNT_TOTAL_SUBNET=$((COUNT_TOTAL_SUBNET + 1))
+                if [[ ${ips} =~ ${regex_isnum} ]]; then
+                    i_cnt_block_ip_total=$((i_cnt_block_ip_total + ips))
+                    i_cnt_block_subnet_total=$((i_cnt_block_subnet_total + 1))
+                    i_cnt_ip_total=$((i_cnt_ip_total + ips))
+                    i_cnt_subnet_total=$((i_cnt_subnet_total + 1))
                 fi
             # is normal IP (ipv4)
             elif [[ ${line} =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-                BLOCKS_COUNT_TOTAL_IP=$((BLOCKS_COUNT_TOTAL_IP + 1))
-                COUNT_TOTAL_IP=$((COUNT_TOTAL_IP + 1))
+                i_cnt_block_ip_total=$((i_cnt_block_ip_total + 1))
+                i_cnt_ip_total=$((i_cnt_ip_total + 1))
             fi
         done < "${APP_FILE_TEMP}"
 
@@ -222,40 +528,24 @@ if [ -d .github/blocks/ ]; then
         #   Count lines and subnets
         # #
 
-        COUNT_LINES=$(wc -l < "${APP_FILE_TEMP}")                                       # GLOBAL count ip lines
-        COUNT_LINES=$(printf "%'d" "${COUNT_LINES}")                                    # GLOBAL add commas to thousands
-        COUNT_TOTAL_IP=$(printf "%'d" "${COUNT_TOTAL_IP}")                              # GLOBAL add commas to thousands
-        COUNT_TOTAL_SUBNET=$(printf "%'d" "${COUNT_TOTAL_SUBNET}")                      # GLOBAL add commas to thousands
+        i_cnt_lines=$(wc -l < "${APP_FILE_TEMP}")                                       # GLOBAL count ip lines
+        i_cnt_lines=$(printf "%'d" "${i_cnt_lines}")                                    # GLOBAL add commas to thousands
+        i_cnt_ip_total=$(printf "%'d" "${i_cnt_ip_total}")                              # GLOBAL add commas to thousands
+        i_cnt_subnet_total=$(printf "%'d" "${i_cnt_subnet_total}")                      # GLOBAL add commas to thousands
+        i_cnt_block_ip_total=$(printf "%'d" "${i_cnt_block_ip_total}")                  # LOCAL add commas to thousands
+        i_cnt_block_subnet_total=$(printf "%'d" "${i_cnt_block_subnet_total}")          # LOCAL add commas to thousands
 
-        BLOCKS_COUNT_TOTAL_IP=$(printf "%'d" "${BLOCKS_COUNT_TOTAL_IP}")                # LOCAL add commas to thousands
-        BLOCKS_COUNT_TOTAL_SUBNET=$(printf "%'d" "${BLOCKS_COUNT_TOTAL_SUBNET}")        # LOCAL add commas to thousands
+        info "    🚛 Copy static block rules from ${bluel}${PWD}/${APP_FILE_TEMP}${greym} to ${bluel}${PWD}/${APP_FILE_PERM}${greym}"
 
-        echo -e "  🚛 Copy static block rules from ${ORANGE2}${APP_FILE_TEMP}${RESET} to ${BLUE2}${APP_FILE_PERM}${RESET}"
         cat "${APP_FILE_TEMP}" >> "${APP_FILE_PERM}"
-
-        echo -e "  ➕ Added ${FUCHSIA2}${BLOCKS_COUNT_TOTAL_IP} IPs${RESET} and ${FUCHSIA2}${BLOCKS_COUNT_TOTAL_SUBNET} Subnets${RESET} to ${BLUE2}${APP_FILE_PERM}${RESET}\n"
+        ok "    ➕ Added ${bluel}${i_cnt_block_ip_total} IPs${greym} and ${bluel}${i_cnt_block_subnet_total} subnets${greym} to ${bluel}${PWD}/${APP_FILE_PERM}"
     done
+else
+    warn "    ❌ No static blocklist found at ${orangel}.github/blocks/${greym}"
 fi
 
 # #
-#   Clean lines
-#       - remove trailing whitespace
-#       - keep original order (comments stay in place)
-# #
-
-sed -i 's/[[:blank:]]*$//' "${APP_FILE_PERM}" || true
-
-# #
-#   Remove duplicates
-# #
-
-if [ -s "${APP_FILE_PERM}" ]; then
-    echo -e "  🧹 Cleaning duplicates from ${BLUE2}${APP_FILE_PERM}${RESET}"
-    awk '{gsub(/[[:space:]]+$/, ""); if(!seen[$0]++) print}' "${APP_FILE_PERM}" > "${APP_FILE_PERM}.tmp" && mv "${APP_FILE_PERM}.tmp" "${APP_FILE_PERM}"
-fi
-
-# #
-#   Header insertion
+#   Template › Header
 # #
 
 ed -s "${APP_FILE_PERM}" <<END_ED
@@ -264,17 +554,17 @@ ed -s "${APP_FILE_PERM}" <<END_ED
 #   🧱 Firewall Blocklist - ${APP_FILE_PERM}
 #   
 #   @url            https://raw.githubusercontent.com/${APP_REPO}/${APP_REPO_BRANCH}/${APP_FILE_PERM}
-#   @source         ${TEMP_URL_SRC}
-#   @id             ${TEMPL_ID}
-#   @uuid           ${TEMPL_UUID}
-#   @updated        ${TEMPL_NOW}
-#   @entries        ${COUNT_TOTAL_IP} ips
-#                   ${COUNT_TOTAL_SUBNET} subnets
-#                   ${COUNT_LINES} lines
-#   @expires        ${TEMPL_EXP}
-#   @category       ${TEMPL_CAT}
+#   @source         ${templ_url_src}
+#   @id             ${templ_id}
+#   @uuid           ${templ_uuid}
+#   @updated        ${templ_now}
+#   @entries        ${i_cnt_ip_total} ips
+#                   ${i_cnt_subnet_total} subnets
+#                   ${i_cnt_lines} lines
+#   @expires        ${templ_exp}
+#   @category       ${templ_cat}
 #
-${TEMPL_DESC}
+${templ_desc}
 # #
 
 .
@@ -283,15 +573,16 @@ q
 END_ED
 
 # #
-#   Finished
+#   Output › Stats
 # #
+
 T=$SECONDS
 D=$((T/86400))
 H=$((T/3600%24))
 M=$((T/60%60))
 S=$((T%60))
 
-echo -e "  🎌 ${GREY2}Finished! ${YELLOW2}${D} days ${H} hrs ${M} mins ${S} secs${RESET}\n"
-echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────"
-echo -e "  #️⃣ ${BLUE2}${APP_FILE_PERM}${RESET} | Added ${FUCHSIA2}${COUNT_TOTAL_IP} IPs${RESET} and ${FUCHSIA2}${COUNT_TOTAL_SUBNET} Subnets${RESET}"
-echo -e " ──────────────────────────────────────────────────────────────────────────────────────────────\n"
+print
+labels "🎌 Finished! ${yellowd}${D} days ${H} hrs ${M} mins ${S} secs"
+
+prinl "#️⃣  ${bluel}${APP_FILE_PERM}${end} | Added ${fuchsial}${i_cnt_ip_total} IPs${end} and ${fuchsial}${i_cnt_subnet_total} Subnets"
