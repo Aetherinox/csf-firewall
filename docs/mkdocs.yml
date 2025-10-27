@@ -282,8 +282,8 @@ nav:
           - Getting Started: 'usage/getting-started.md'
           - Configuration: 'usage/configuration.md'
           - Pre & Post Scripts: 'usage/prepost.md'
-          - Ipsets: 'usage/ipset.md'
           - Blocklists: 'usage/blocklists.md'
+          - Ipsets: 'usage/ipset.md'
           - Geographical Blocks: 'usage/geoip.md'
           - Troubleshooting:
                 - usage/troubleshooting/index.md
