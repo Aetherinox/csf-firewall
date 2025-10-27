@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_tunisia_ipset
 #   @uuid           01edfa66-3f18-3c72-8308-135afbe7d2bb
-#   @updated        Sun Oct 26 22:18:04 UTC 2025
+#   @updated        Mon Oct 27 00:21:28 UTC 2025
 #   @entries        7883594 ips
 #                   342 subnets
 #                   342 lines
