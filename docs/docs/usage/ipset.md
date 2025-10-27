@@ -59,7 +59,9 @@ While this method works, it becomes inefficient when the list grows large. Every
 
 This is where IPSETs come in. An ipset is a special data structure in the Linux kernel that allows you to group many IP addresses, networks, or ranges together, and then reference that group with a single firewall rule. Instead of adding thousands of rules into iptables, CSF can load all of those addresses into an ipset and apply them collectively. This approach is dramatically more efficient, reduces CPU usage, and speeds up packet filtering even when working with massive blocklists.
 
-The key difference is in how the firewall stores and processes the data. A traditional blocklist tells the firewall: _“check this IP against every single rule until you find a match.”_ An ipset, on the other hand, works more like a fast lookup table: _“check if this IP is in the set; if so, apply the rule.”_ This makes IPSETs especially useful for country-level bans, abuse IP feeds, or any large-scale list that would otherwise overwhelm a rule-based blocklist.
+The key difference is in how the firewall stores and processes the data. A traditional blocklist tells the firewall: _“check this IP against every single rule until you find a match.”_ 
+
+An ipset, on the other hand, works more like a fast lookup table: _“check if this IP is in the set; if so, apply the rule.”_ This makes IPSETs especially useful for geographical blocks, abusive IP feeds, or any large-scale list that would otherwise overwhelm a rule-based blocklist.
 
 For many users, blocklists are still perfectly fine if you only manage a handful of entries or want to manually add or remove individual IPs. But if you plan to use automated feeds, block entire regions, or maintain thousands of entries, IPSETs are the better option. They give you the same control as blocklists, but with far less overhead and much better scalability.
 
@@ -82,7 +84,7 @@ It is also recommended that you enable IPSET if you plan on using any of the set
 
 Before you can begin using IPSETs with CSF, you’ll need to ensure the ipset package is installed on your server. Many modern Linux distributions already include IPSET support in the kernel by default, and in some cases the user-space tools (ipset command) are installed out of the box. If not, you can easily install them using your system’s package manager. Or you can build the source from http://ipset.netfilter.org/.
 
-On Debian and Ubuntu systems, you can install IPSET with the following commands:
+You can install IPSET with the following commands based on your Linux distro:
 
 === ":aetherx-axb-debian: Debian/Ubuntu (apt-get)"
 
@@ -103,7 +105,7 @@ On Debian and Ubuntu systems, you can install IPSET with the following commands:
 
 <br />
 
-Once installed, you can verify that IPSET is available by running:
+Once installed, verify that IPSET is available by running:
 
 === ":aetherx-axd-command: Command"
 
@@ -131,7 +133,7 @@ If installation was successful, this command will display the current running ve
 
 Once the ipset package is installed, the next step is to enable IPSET support within CSF. By default, CSF ships with IPSETs disabled, so you’ll need to update the configuration file to turn it on.
 
-Open the CSF configuration file in your preferred text editor:
+Open the CSF configuration ++"/etc/csf/csf.conf"++ file in your preferred text editor:
 
 === ":aetherx-axd-command: Command"
 
@@ -141,7 +143,7 @@ Open the CSF configuration file in your preferred text editor:
 
 <br />
 
-Once you get the config file opened, locate `LF_IPSET` and change the value from 0 to `1`:
+Locate ++"LF_IPSET"++ and change the value from 0 to ++1++:
 
 === ":aetherx-axs-file-magnifying-glass: Find"
 
@@ -170,12 +172,146 @@ After saving your changes, give CSF a restart:
 Enabling IPSETs allows CSF to offload large blocklists into efficient kernel-managed sets, significantly improving performance compared to standard iptables rules. This step is essential before you can begin adding and managing IPSET-based blocklists.
 
 <br />
+<br />
+
+## Configuration
+
+If you have decided to use IPSET integration with CSF; there are a few settings you need to make note of. We'll explain those settings in brief detail here.
+
+<br />
+<br />
+
+### LF_IPSET
+
+As explained in the previous section [Enable IPSET](#enable), this setting is what enables IPSET integration within CSF. To use any IPSET feature, you must set this to ++1++.
+
+Open ++"/etc/csf/csf.conf"++ and change the following:
+
+=== ":aetherx-axs-file-magnifying-glass: Find"
+
+    ``` bash title="/etc/csf/csf.conf"
+    LF_IPSET = "0"
+    ```
+
+=== ":aetherx-axs-file-pen: Change To"
+
+    ``` bash title="/etc/csf/csf.conf"
+    LF_IPSET = "1"
+    ```
+
+<br />
+<br />
+
+### LF_IPSET_MAXELEM
+
+The ++"LF_IPSET_MAXELEM"++ setting defines the **maximum number of entries** that can be stored within each IPSET created by CSF.
+
+- Setting this value too **low** may prevent full blocklists from loading, reducing your protection.  
+- Setting it too **high** can increase memory usage and potentially affect system performance.
+
+By default, this value is set to ++"65536"++ (approximately sixty-five thousand entries per IPSET).
+
+To determine the best value for your system, review the blocklists you plan to enable. In this example, we’ll reference our in-house blocklists:
+
+- [master.ipset](https://blocklist.configserver.dev/master.ipset) ++"approximately 350,000 entries"++
+- [highrisk.ipset](https://blocklist.configserver.dev/highrisk.ipset) ++"approximately 10,000 entries"++
+
+<br />
+
+The [master.ipset](https://blocklist.configserver.dev/master.ipset) blocklist contains roughly **350,000** entries, while [highrisk.ipset](https://blocklist.configserver.dev/highrisk.ipset) contains around **10,000**.
+
+Since ++"LF_IPSET_MAXELEM"++ applies to each IPSET individually, you should base your configuration on the **largest blocklist** you intend to use.
+
+For example, because ++"master.ipset"++ has about **350,000** entries, that becomes our minimum requirement. To account for growth as blocklists are updated daily, it’s best to include a buffer.
+
+In this case, we’ll set the value to ++"500,000"++ — allowing room for future expansion.
+
+- **350,000** entries ++equal++ [master.ipset](https://blocklist.configserver.dev/master.ipset) (largest blocklist)  
+- **150,000** entry buffer ++equal++ for list growth and flexibility
+
+<br />
+
+Open ++"/etc/csf/csf.conf"++ and change the following:
+
+=== ":aetherx-axs-file-magnifying-glass: Find"
+
+    ``` bash title="/etc/csf/csf.conf"
+    LF_IPSET_MAXELEM = "65536"
+    ```
+
+=== ":aetherx-axs-file-pen: Change To"
+
+    ``` bash title="/etc/csf/csf.conf"
+    LF_IPSET_MAXELEM = "500000"
+    ```
+
+<br />
+
+This setting is the equivilent to running the following ++"IPSET"++ command manually:
+
+=== ":aetherx-axd-command: Command"
+
+      ```shell
+      ipset create -exist <set_name> hash:net family <inet|inet6> \
+        hashsize <LF_IPSET_HASHSIZE> \
+        maxelem 500000
+      ```
+
+<br />
+<br />
+
+### LF_IPSET_HASHSIZE
+
+This setting defines the **internal hash table size** used by each IPSET that CSF creates. It determines how efficiently IP addresses are stored and looked up within each list.
+
+By default, this value is set to ++"1024"++.
+
+A larger hash table allows the system to find IPs faster and reduces lookup collisions, but it also increases memory usage.
+
+The value must always be a power of 2 (such as: ++"1024"++, ++"2048"++, ++"4096"++, etc.).
+
+Users often get confused by this setting [LF_IPSET_HASHSIZE](#lf_ipset_hashsize) and the previously explained setting [LF_IPSET_MAXELEM](#lf_ipset_maxelem). It can be better explained as:
+
+- ++"LF_IPSET_MAXELEM"++ How many books fit on the shelf (total entries allowed).  
+- ++"LF_IPSET_HASHSIZE"++ How many compartments that shelf is divided into (hash buckets for faster searching).
+
+If your blocklists are small (a few thousand IPs), the default value of ++"1024"++ is usually sufficient.
+
+If you are using very large blocklists (hundreds of thousands of entries), increasing this value to ++"2048"++ or ++"4096"++ can improve lookup performance and stability — at the cost of slightly higher RAM usage.
+
+Open ++"/etc/csf/csf.conf"++ and change the following:
+
+=== ":aetherx-axs-file-magnifying-glass: Find"
+
+    ``` bash title="/etc/csf/csf.conf"
+    LF_IPSET_HASHSIZE = "1024"
+    ```
+
+=== ":aetherx-axs-file-pen: Change To"
+
+    ``` bash title="/etc/csf/csf.conf"
+    LF_IPSET_HASHSIZE = "2048"
+    ```
+
+<br />
+
+This setting is the equivilent to running the following ++"IPSET"++ command manually:
+
+=== ":aetherx-axd-command: Command"
+
+      ```shell
+      ipset create -exist <set_name> hash:net family <inet|inet6> \
+        hashsize 2048 \
+        maxelem 500000
+      ```
+
+<br />
 
 ---
 
 <br />
 
-## Manage Lists
+## Build Lists
 
 Once you have IPSET installed and enabled within CSF, it's time to populate your IPSET lists. These lists determine which connections are allowed to access your server and which ones will be denied. Populating your IPSET lists correctly helps ensure your firewall operates efficiently while providing strong protection.
 
@@ -186,7 +322,7 @@ There are two primary ways to add IPs to your IPSET lists:
        2. See the [Blocklists section](../usage/blocklists.md) for more information about blocklists.
 
 2. [Using Manual Additions](#using-manual-additions)
-       1. Adding specific IPs or subnets you want to allow or deny.
+       1. Adding specific IPs or subnets you want to allow or deny via a command (or shell script for automation).
 
 <br />
 <br />
@@ -195,7 +331,7 @@ There are two primary ways to add IPs to your IPSET lists:
 
 Blocklists are precompiled lists of IP addresses or networks known to be malicious or unwanted. They allow you to automatically deny or restrict traffic from these IPs without having to add each one manually.
 
-For instructions on using official CSF blocklists or custom external blocklists to populate your IPSETs automatically, please refer to the [Blocklists section](../usage/blocklists.md). These lists can contain thousands or even millions of IP addresses and are automatically loaded into your IPSETs to save memory and improve firewall performance.
+For instructions on using official CSF blocklists or custom external blocklists to populate your IPSETs automatically, please refer to the [Blocklists chapter](../usage/blocklists.md). These lists can contain thousands or even millions of IP addresses and are automatically loaded into your IPSETs to save memory and improve firewall performance.
 
 <div class="grid cards" markdown>
 
@@ -316,7 +452,7 @@ These commands let you add **single IP addresses** to your whitelist or blacklis
       If you created your IPSET list with the `comment` parameter, you can also add a comment to your entry.
 
       ```shell
-      sudo ipset add my_whitelist 192.0.2.15 comment "Localhost device"
+      sudo ipset add my_whitelist 192.0.2.15 comment "Local device"
       ```
 
 === ":aetherx-axs-ban:{ .icon-clr-red } Blacklist"
@@ -667,7 +803,12 @@ You can also restore, but ignore any errors that occur and continue importing th
 
 #### Flush List
 
-Flushing an IPSET list differs from [deleting](#delete-list). When you delete a list, you destroy the entire list and all IPs in the list. Flushing a list deletes all IPs in the list, but keeps the list itself intact so that you can add more IPs later. To flush a list:
+Flushing an IPSET list differs from [deleting](#delete-list).
+
+- When you **delete** a list, you destroy the entire list and all IPs in the list.
+- When you **flush** a list, you delete all IPs in the list, but keep the list itself intact so that you can add more IPs later.
+
+To flush a list:
 
 === ":aetherx-axs-check:{ .icon-clr-green } Whitelist"
 
@@ -702,6 +843,37 @@ You can change the name of a list with the following commands:
       ```
 
 <br />
+
+---
+
+<br />
+
+## Apply Lists
+
+By this point in the guide, you should have:
+
+- [x] Installed copy of CSF
+- [x] Installed ++"IPSET"++ package
+- [x] Enable ipset setting within ++"/etc/csf/csf.conf"++
+- [x] Set maximum values in ++"/etc/csf/csf.conf"++ with appropriate values
+- [x] Configured and enabled desired blocklists
+
+<br />
+
+After everything above is done, give CSF a restart:
+
+=== ":aetherx-axd-command: Command"
+
+      ```shell
+      sudo csf -ra
+      ```
+
+<br />
+
+You should now have CSF running, IPSET properly configured, and your blocklists should be loaded and operational.
+
+<br />
+
 
 ---
 
