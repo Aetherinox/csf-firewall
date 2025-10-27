@@ -48,7 +48,7 @@ There are numerous popular choices for maintained blocklists such as:
 
 ## Location
 
-To view or edit your current blocklists, open the file `/etc/csf/csf.blocklists`. An explaination of how the blocklist file works will be given in the sections below.
+To view or edit your current blocklists, open the file ++"/etc/csf/csf.blocklists"++. An explaination of how the blocklist file works will be given in the sections below.
 
 <br />
 
@@ -109,13 +109,13 @@ If you wish to utilize option :aetherx-axd-2: and enable IPSET, please review ou
 
 ## Configure Blocklists
 
-Subscribed blocklists can be managed by opening the file `/etc/csf/csf.blocklists`.
+Subscribed blocklists can be managed by opening the file ++"/etc/csf/csf.blocklists"++.
 
-By default, every list is commented out with a `#` symbol at the beginning of the line. Leave the line commented if you do not wish to use that blocklist. To enable a blocklist, simply remove the `#` and save the file.
+By default, every list is commented out with a ++#++ symbol at the beginning of the line. Leave the line commented if you do not wish to use that blocklist. To enable a blocklist, simply remove the ++#++ and save the file.
 
 ??? note "Uncomment the blocklists you want ..."
 
-    Out of box, all blocklists are commented with the character `#` at the front of every line. To use a blocklist, remove the command character `#` and save the file.
+    Out of box, all blocklists are commented with the character ++#++ at the front of every line. To use a blocklist, remove the command character ++#++ and save the file.
 
 ``` ini title="/etc/csf/csf.blocklists"
 # #
@@ -133,11 +133,11 @@ By default, every list is commented out with a `#` symbol at the beginning of th
 #   We offer many others, but these two are the primary ones.
 #   
 #   Requires you to edit /etc/csf/csf.conf setting:
-#       LF_IPSET_MAXELEM = "4000000"
+#       LF_IPSET_MAXELEM = "500000"
 # #
 
-#   CSF_MASTER|43200|0|http://blocklist.configserver.dev/master.ipset
-#   CSF_HIGHRISK|43200|0|http://blocklist.configserver.dev/highrisk.ipset
+#   CSF_MASTER      | 43200 | 0 | http://blocklist.configserver.dev/master.ipset
+#   CSF_HIGHRISK    | 43200 | 0 | http://blocklist.configserver.dev/highrisk.ipset
 
 # #
 #   @blocklist              Spamhaus Don't Route Or Peer List (DROP)
@@ -269,14 +269,14 @@ We will use the first blocklist in the example above to explain the format.
 ``` ini title="/etc/csf/csf.blocklists"
 # #
 #   Example Blocklists
-#   NAME   | INTERVAL | MAX_IPS | BLOCKLIST_URL
+#   NAME   | INTERVAL | MAX_ENTRIES | BLOCKLIST_URL
 # #
 
-SPAMDROP      |   86400   |    0    |  https://spamhaus.org/drop/drop.txt
-CSF_HIGHRISK  |   43200   |    0    |  https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/blocklists/highrisk.ipset
-DSHIELD       |   86400   |    0    |  https://dshield.org/block.txt
+SPAMDROP      |   86400   |      0      |  https://spamhaus.org/drop/drop.txt
+CSF_HIGHRISK  |   43200   |      0      |  https://blocklist.configserver.dev/highrisk.ipset
+DSHIELD       |   86400   |      0      |  https://dshield.org/block.txt
 ----------------------------------------------------------------------------------------------------------------------------------
-    ^NAME^     ^INTERVAL^  ^MAX_IPS^              ^BLOCKLIST_URL^              
+    ^NAME^     ^INTERVAL^  ^MAX_ENTRIES^              ^BLOCKLIST_URL^              
 ```
 
 <!-- md:option NAME -->
@@ -285,15 +285,15 @@ DSHIELD       |   86400   |    0    |  https://dshield.org/block.txt
 
 <!-- md:option INTERVAL -->
 
-:   Refresh interval to download the list, must be a minimum of 3600 seconds (an hour).
+:   Cache refresh interval (in seconds) to keep the list, must be a minimum of 3600 seconds (an hour). After this time has expired, the blocklist will be refrshed.
 
-      - 43200: 12 hours
-      - 86400: 24 hours
+      - `43200`: 12 hours
+      - `86400`: 24 hours
 
 <!-- md:option MAX_IPS -->
 
-:   This is the maximum number of IP addresses to use from the list, a value of `0` means all IPs (see note below).
-        If you add an ipset with 50,000 IPs, and you set this value to 20,000; then you will only block the first 20,000.
+:   This is the maximum number of entries to load from a list, a value of ++0++ means all entries (see note below).
+        If you add a blocklist with 50,000 entries, and you set this value to 20,000; then you will only load the first 20,000 entries within the blocklist.
 
 <!-- md:option URL -->
 
@@ -311,7 +311,7 @@ While there are many blocklists available on the internet — including reposito
 
 <br />
 
-These lists are refreshed approximately every `6 hours` to ensure up-to-date protection. They include IP addresses flagged for abusive behavior such as:
+These lists are refreshed approximately every `12 hours` to ensure up-to-date protection. They include IP addresses flagged for abusive behavior such as:
 
 - SSH brute-forcing  
 - Port scanning  
@@ -321,13 +321,13 @@ These lists are refreshed approximately every `6 hours` to ensure up-to-date pro
 
 <br />
 
-For most users, the `master.ipset` and `highrisk.ipset` lists are sufficient. They contain large collections of high-confidence IPs (100% confidence level) to reduce the chance of false positives.
+For most users, the [master.ipset](https://blocklist.configserver.dev/master.ipset) and [highrisk.ipset](https://blocklist.configserver.dev/highrisk.ipset) lists are sufficient. They contain large collections of high-confidence IPs (100% confidence level) to reduce the chance of false positives.
 
 In addition to the primary lists, the CSF repository also offers specialized blocklists for categories like privacy, spam, and geographic restrictions. These allow you to further tailor your firewall rules, such as blocking traffic from specific countries.
 
 <br />
 
-The primary blocklists can be added to your `/etc/csf/csf.blocklists` file. Open the blocklist file and add the following:
+The primary blocklists can be added to your ++"/etc/csf/csf.blocklists"++ file. Open the blocklist file and add the following:
 
 ``` ini
 # #
@@ -345,26 +345,26 @@ The primary blocklists can be added to your `/etc/csf/csf.blocklists` file. Open
 #   We offer many others, but these two are the primary ones.
 #   
 #   Requires you to edit /etc/csf/csf.conf setting:
-#       LF_IPSET_MAXELEM = "4000000"
+#       LF_IPSET_MAXELEM = "500000"
 # #
 
-CSF_MASTER   | 43200 | 0      | http://blocklist.configserver.dev/master.ipset
-CSF_HIGHRISK | 43200 | 0      | http://blocklist.configserver.dev/highrisk.ipset
+CSF_MASTER   | 43200 | 0 | https://blocklist.configserver.dev/master.ipset
+CSF_HIGHRISK | 43200 | 0 | https://blocklist.configserver.dev/highrisk.ipset
 ```
 
 <br />
 
-??? danger "Master blocklist without IPSET enabled can cause server instability & increased memory usage"
+??? danger "Using the `master.ipset` blocklist without enabling IPSET can cause server instability & increased memory usage"
 
-    The official `master.ipset` blocklist contains millions of IP addresses. 
+    The official [master.ipset](https://blocklist.configserver.dev/master.ipset) blocklist contains millions of IP addresses. 
 
-    We strongly recommend [enabling IPSET](#enable) before using this list. Without IPSET, CSF will create a separate iptables rule for every IP, which can drastically increase memory usage and slow down firewall operations.
+    We strongly recommend [enabling IPSET](#enable) before using this list. Without IPSET, CSF will create a separate iptables rule for every IP, which will dramatically increase memory usage and slow down firewall operations.
 
-    Using this list without IPSET may lead to performance issues or even system instability on servers with limited resources.
+    Using this list without IPSET may lead to performance issues or even system instability on servers with limited resources (memory).
 
 <br />
 
-The blocklists you added from above should give you the entire collection for each main blocklist. All that is needed is to restart CSF to ensure that the blocklists take affect:
+Adding our [master.ipset](https://blocklist.configserver.dev/master.ipset) and [highrisk.ipset](https://blocklist.configserver.dev/highrisk.ipset) blocklists from above will give you the entire collection for each main blocklist and will offer great protection. All that is needed is to restart CSF to ensure that the blocklists take affect:
 
 === ":aetherx-axd-command: Command"
 
@@ -422,7 +422,7 @@ To view a list of all IP addresses within a specific blocklist, run the command:
       Name: bl_CSF_HIGHRISK
       Type: hash:net
       Revision: 7
-      Header: family inet hashsize 1024 maxelem 4000000 bucketsize 12 initval 0x5f263e28
+      Header: family inet hashsize 1024 maxelem 500000 bucketsize 12 initval 0x5f263e28
       Size in memory: 24024
       References: 1
       Number of entries: 630
@@ -434,13 +434,15 @@ To view a list of all IP addresses within a specific blocklist, run the command:
 
 <br />
 
-Now that you have our official blocklists loaded within your `/etc/csf/csf.blocklists`, we need to ensure that the setting `LF_IPSET_MAXELEM` is set to the proper value, otherwise, not all of the blocked IP addresses we provide will be loaded. That is explained in the section below.
+Now that you have our official blocklists defined in ++"/etc/csf/csf.blocklists"++, we need to ensure that the setting ++"LF_IPSET_MAXELEM"++ is set to the proper value, otherwise, not all of the blocked entries in the lists will be loaded. That is explained in the section below.
 
-??? warning "Official master blocklist requires increased `LF_IPSET_MAXELEM`"
+??? warning "Official master blocklist requires increased ++"LF_IPSET_MAXELEM"++"
 
-    If you decide to use our official blocklist `master.ipset`, you **must** increase the value of the setting `LF_IPSET_MAXELEM` in `/etc/csf/csf.conf` to at least `4000000`.
+    If you plan to use our official blocklist, [master.ipset](https://blocklist.configserver.dev/master.ipset), you **must** increase the ++"LF_IPSET_MAXELEM"++ setting in ++"/etc/csf/csf.conf"++. 
+    
+    The [master.ipset](https://blocklist.configserver.dev/master.ipset) file currently contains approximately 350,000 entries. To allow for future updates and ensure safe operation, set ++"LF_IPSET_MAXELEM"++ to around ++"500000"++.
 
-    Instructions for doing this are available in the next section [Increase Max Limit](#increase-max-limit)
+    Instructions for doing this are available in the next section [Increase Max Limit](#increase-maximum-entry-limit).
 
 <br />
 
@@ -448,13 +450,73 @@ Now that you have our official blocklists loaded within your `/etc/csf/csf.block
 
 <br />
 
-## Increase Max Limit
+## Increase Maximum Entry Limit
 
-By default, CSF places a cap on the number of IP addresses that can be loaded into a single IPSET. This is controlled by the setting `LF_IPSET_MAXELEM` inside your CSF configuration file `/etc/csf/csf.conf`.  
+To control how many entries are loaded from a blocklist into CSF, you need to be aware of **two configuration locations**:
 
-Out of the box, this value is set to **65536** (around sixty-five thousand IPs). That means if a blocklist tries to load more than that, the extra entries will be ignored — even if you set the blocklist `MAX_IPS` value to `0` (unlimited) or a number greater than 65536.
+1. :material-checkbox-blank-circle:{ style="color: var(--md-code-hl-number-color)" } [**Per-Blocklist Limit**](#per-blocklist-limit) (`/etc/csf/csf.blocklists`)
+    - Each blocklist entry has a `Max Entries` value, seperated by the ++pipe++ pipe character.
+    - This controls how many entries are *fetched and imported* from that specific blocklist.
+    - Example:
+      ```
+      # Blocklist Name  | Cache Time    | Max Entries   | Blocklist URL
+      CSF_MASTER        | 43200         | 500000        | https://blocklist.configserver.dev/master.ipset
+      ```
+        - Only 500,000 entries from the `CSF_MASTER` list will be loaded, even if the list contains more.
+        - Set to ++0++ for unlimited.
 
-For servers that rely on multiple large blocklists, this default limit is often too low. To raise the maximum number of IPs that can be stored inside a set, you’ll need to increase the `LF_IPSET_MAXELEM` value.
+2. :material-checkbox-blank-circle:{ style="color: var(--md-code-hl-constant-color) " } [**Per-IPSET Limit**](#per-ipset-limit) (`/etc/csf/csf.conf`)
+    - The ++"LF_IPSET_MAXELEM"++ setting controls how many entries can exist *inside each IPSET* that CSF creates.
+    - It applies to **every IPSET individually**, not to the total across all of them.
+    - Example:
+      ```ini
+      LF_IPSET_MAXELEM = "500000"
+      ```
+        - Each IPSET (such as `csfdeny`, `chain_CSF_MASTER`, or `chain_CSF_HIGHRISK`) can hold up to 500,000 entries.
+
+<br >
+
+### :material-checkbox-blank-circle:{ style="color: var(--md-code-hl-number-color)" } Per-Blocklist Limit
+
+Each blocklist in CSF can define its own maximum number of entries to load via the `Max Entries` field in ++"/etc/csf/csf.blocklists"++.
+
+This setting controls how many entries are fetched and imported from **that specific blocklist only**.
+
+In the example below, the `CSF_MASTER` blocklist is restricted to **20,000 entries**, while the `CSF_HIGHRISK` blocklist is set to ++0++, meaning it will load **all available entries** with no limit:
+
+```
+# Blocklist Name | Cache Time   | Max Entries   | Blocklist URL
+CSF_MASTER       | 43200        | 20000         | https://blocklist.configserver.dev/master.ipset
+CSF_HIGHRISK     | 43200        | 0             | https://blocklist.configserver.dev/highrisk.ipset
+```
+
+<br >
+
+### :material-checkbox-blank-circle:{ style="color: var(--md-code-hl-constant-color) " } Per-IPSET Limit
+
+The second location that affects how many entries are loaded into CSF is the ++"LF_IPSET_MAXELEM"++ setting inside ++"/etc/csf/csf.conf"++.
+
+This option defines the **maximum number of entries allowed per IPSET** that CSF creates.
+
+Each blocklist that CSF loads is stored in its own IPSET (for example, `chain_CSF_MASTER`, `chain_CSF_HIGHRISK`, etc.), and this limit applies individually to each of them; not as a global total across all sets.
+
+By default, ++"LF_IPSET_MAXELEM"++ is set to **65536** (about sixty-five thousand entries per IPSET).  
+
+If a blocklist or IPSET attempts to exceed this number, the remaining entries will be ignored — even if the blocklist’s `Max Entries` value is set to ++0++ (unlimited) or a higher value.
+
+Setting ++"LF_IPSET_MAXELEM"++ in CSF is equivalent to defining the `maxelem` parameter when manually creating an IPSET using the `ipset` command:
+
+```shell
+ipset create hash:net family $family maxelem 65536
+```
+
+<br />
+
+For servers that rely on multiple large blocklists, this default limit is often too low. To raise the maximum number of IPs that can be stored inside a set, you’ll need to increase the ++"LF_IPSET_MAXELEM"++ value.
+
+Our [master.ipset](https://blocklist.configserver.dev/master.ipset) blocklist contains approximately 350,000 entries. While our [highrisk.ipset](https://blocklist.configserver.dev/highrisk.ipset) blocklist contains approximately 10,000 entries.
+
+To give ourselves a good buffer, we will set ++"LF_IPSET_MAXELEM"++ to ++"500000"++.
 
 === ":aetherx-axs-file-magnifying-glass: Find"
 
@@ -465,39 +527,18 @@ For servers that rely on multiple large blocklists, this default limit is often 
 === ":aetherx-axs-file-pen: Change To"
 
     ``` bash title="/etc/csf/csf.conf"
-    LF_IPSET_MAXELEM = "4000000"
+    LF_IPSET_MAXELEM = "500000"
     ```
 
 <br />
 
-Once you have the setting changed in your CSF config, give CSF a restart:
+Once you have the setting changed in ++"/etc/csf/csf.conf"++, give CSF a restart. After the new setting has been applied, you'll now be able to load the entire blocklist.
 
 === ":aetherx-axd-command: Command"
 
       ```shell
       sudo csf -ra
       ```
-
-<br />
-
-After the new setting has been applied, you can go back to your blocklists within the file `/etc/csf/csf.blocklists` and increase the limit as needed:
-
-=== ":aetherx-axs-file-magnifying-glass: Find"
-
-    The blocklist below is has the `MAX_IPS` set to `65536`, which is very low for this blocklist. This one contains about 2 million blocked IP addresses. With the below setting, we will only be able to load 65,536 out of those 2,000,000 IP addresses.
-
-    ``` bash title="/etc/csf/csf.blocklists"
-    CSF_HIGHRISK|43200|65536|https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/blocklists/highrisk.ipset
-    ```
-
-=== ":aetherx-axs-file-pen: Change To"
-
-    We changed the `MAX_IP` value from the default `65536` to `0` for unlimited. Since this particular
-    blocklist only gives us about 2 million blocked IP addresses, and we've set our `LF_IPSET_MAXELEM` to 4 million.
-
-    ``` bash title="/etc/csf/csf.blocklists"
-    CSF_HIGHRISK|43200|0|https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/blocklists/highrisk.ipset
-    ```
 
 <br />
 
@@ -515,7 +556,7 @@ If you are using our [Official Blocklists](#official-blocklists), you can confir
       Name: bl_CSF_HIGHRISK
       Type: hash:net
       Revision: 7
-      Header: family inet hashsize 1024 maxelem 4000000 bucketsize 12 initval 0x5f263e28
+      Header: family inet hashsize 1024 maxelem 500000 bucketsize 12 initval 0x5f263e28
       Size in memory: 24024
       References: 1
       Number of entries: 630
@@ -527,10 +568,10 @@ If you are using our [Official Blocklists](#official-blocklists), you can confir
 
 <br />
 
-You will see the new max limit value listed next `maxelem`.
+You will see the new max limit value listed next ++"maxelem"++.
 
 ```shell
-Header: family inet hashsize 1024 maxelem 4000000 bucketsize 12 initval 0x5f263e28
+Header: family inet hashsize 1024 maxelem 500000 bucketsize 12 initval 0x5f263e28
 ```
 
 <br />
