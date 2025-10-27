@@ -62,7 +62,7 @@ CSF supports **two** different methods for handling blocklists, and the choice d
 
 <br />
 
-### :aetherx-axd-1: <!-- md:option IPSETs Disabled -->
+### :aetherx-axd-1: <!-- md:option IPSET Disabled -->
 
 Blocklists are processed line-by-line, and each entry becomes its own rule in iptables. This option should be selected if you plan to have very small lists that do not contain more than a few thousand entries.
   
@@ -71,7 +71,7 @@ Blocklists are processed line-by-line, and each entry becomes its own rule in ip
 
 <br />
 
-### :aetherx-axd-2: <!-- md:option IPSETs Enabled -->
+### :aetherx-axd-2: <!-- md:option IPSET Enabled -->
 
 Blocklists are imported into kernel-managed sets, allowing CSF to check connections against a single set rather than thousands of rules.  This option is acceptable if your blocklist contains thousands of entries.
 
@@ -111,7 +111,7 @@ If you wish to utilize option :aetherx-axd-2: and enable IPSET, please review th
 
 You can manage and define which blocklists you wish to use in CSF by opening the file ++"/etc/csf/csf.blocklists"++.
 
-By default, every list is commented out with a ++"#"++ symbol at the beginning of the line. Leave the line commented if you do not wish to use that blocklist. To enable a blocklist, simply remove the ++"#"++ and save the file.
+By default, every blocklist is commented out with a ++"#"++ symbol at the beginning of the line. Leave the line commented if you do not wish to use that blocklist. To enable a blocklist, simply remove the ++"#"++ and save the file.
 
 ??? note "All blocklists in CSF are disabled by default"
 
@@ -127,8 +127,8 @@ By default, every list is commented out with a ++"#"++ symbol at the beginning o
 #   different services, including AbuseIPDB (100% confidency).
 #   
 #   You can also use our blocklist service:
-#       http://blocklist.configserver.dev/master.ipset
-#       http://blocklist.configserver.dev/highrisk.ipset
+#       https://blocklist.configserver.dev/master.ipset
+#       https://blocklist.configserver.dev/highrisk.ipset
 #   
 #   We offer many others, but these two are the primary ones.
 #   
@@ -136,8 +136,8 @@ By default, every list is commented out with a ++"#"++ symbol at the beginning o
 #       LF_IPSET_MAXELEM = "500000"
 # #
 
-#   CSF_MASTER      | 43200 | 0 | http://blocklist.configserver.dev/master.ipset
-#   CSF_HIGHRISK    | 43200 | 0 | http://blocklist.configserver.dev/highrisk.ipset
+#   CSF_MASTER      | 43200 | 0 | https://blocklist.configserver.dev/master.ipset
+#   CSF_HIGHRISK    | 43200 | 0 | https://blocklist.configserver.dev/highrisk.ipset
 
 # #
 #   @blocklist              Spamhaus Don't Route Or Peer List (DROP)
@@ -337,8 +337,8 @@ The main blocklists come pre-configured in your `/etc/csf/csf.blocklists` file. 
 #   different services, including AbuseIPDB (100% confidency).
 #   
 #   You can also use our blocklist service:
-#       http://blocklist.configserver.dev/master.ipset
-#       http://blocklist.configserver.dev/highrisk.ipset
+#       https://blocklist.configserver.dev/master.ipset
+#       https://blocklist.configserver.dev/highrisk.ipset
 #   
 #   We offer many others, but these two are the primary ones.
 #   
