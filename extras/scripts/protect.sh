@@ -1,4 +1,5 @@
 #!/bin/sh
+# shellcheck shell=sh
 # #
 #   ConfigServer Firewall - protect.sh
 #
