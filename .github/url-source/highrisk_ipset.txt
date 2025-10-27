@@ -1,1 +1,1 @@
-https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/blocklists/highrisk.ipset
+https://blocklist.configserver.dev/highrisk.ipset
