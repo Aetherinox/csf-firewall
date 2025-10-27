@@ -3276,7 +3276,25 @@
         
       
       
+        <a href="../../about/tags/#tag:blocklists" class="md-tag md-tag-icon">blocklists</a>
+      
+    
+      
+      
+        
+        
+      
+      
         <a href="../../about/tags/#tag:configure" class="md-tag md-tag-icon">configure</a>
+      
+    
+      
+      
+        
+        
+      
+      
+        <a href="../../about/tags/#tag:ipset" class="md-tag md-tag-icon">ipset</a>
       
     
       
@@ -3509,11 +3527,11 @@ they work efficiently no matter the size of the list.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="7:2"><input checked="checked" id="create-list-whitelist_1" name="__tabbed_7" type="radio"><input id="create-list-blacklist_1" name="__tabbed_7" type="radio"><div class="tabbed-labels"><label for="create-list-whitelist_1"><span class="twemoji icon-clr-green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M434.8 70.1c14.3 10.4 17.5 30.4 7.1 44.7l-256 352c-5.5 7.6-14 12.3-23.4 13.1s-18.5-2.7-25.1-9.3l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l101.5 101.5 234-321.7c10.4-14.3 30.4-17.5 44.7-7.1z"></path></svg></span> Whitelist</label><label for="create-list-blacklist_1"><span class="twemoji icon-clr-red"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M367.2 412.5L99.5 144.8c-22.4 31.4-35.5 69.8-35.5 111.2 0 106 86 192 192 192 41.5 0 79.9-13.1 111.2-35.5zm45.3-45.3c22.4-31.4 35.5-69.8 35.5-111.2 0-106-86-192-192-192-41.5 0-79.9 13.1-111.2 35.5L412.5 367.2zM0 256a256 256 0 1 1 512 0 256 256 0 1 1 -512 0z"></path></svg></span> Blacklist</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>sudo<span class="w"> </span>ipset<span class="w"> </span>create<span class="w"> </span>my_whitelist<span class="w"> </span>hash:ip<span class="w"> </span>comment<span class="w"> </span>hashsize<span class="w"> </span><span class="m">6553</span>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>sudo<span class="w"> </span>ipset<span class="w"> </span>create<span class="w"> </span>my_whitelist<span class="w"> </span>hash:ip<span class="w"> </span>comment<span class="w"> </span>hashsize<span class="w"> </span><span class="m">65536</span>
 </span></code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>sudo<span class="w"> </span>ipset<span class="w"> </span>create<span class="w"> </span>my_blacklist<span class="w"> </span>hash:ip<span class="w"> </span>comment<span class="w"> </span>hashsize<span class="w"> </span><span class="m">6553</span>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>sudo<span class="w"> </span>ipset<span class="w"> </span>create<span class="w"> </span>my_blacklist<span class="w"> </span>hash:ip<span class="w"> </span>comment<span class="w"> </span>hashsize<span class="w"> </span><span class="m">65536</span>
 </span></code></pre></div>
 </div>
 </div>
@@ -3542,7 +3560,7 @@ they work efficiently no matter the size of the list.</p>
 <li>Without this option, attempting to add a comment will fail.</li>
 </ul>
 </dd>
-<dt><a 6553="6553" href="#+hashsize 6553" id="+hashsize"><code>hashsize 6553</code></a></dt>
+<dt><a 65536="65536" href="#+hashsize 65536" id="+hashsize"><code>hashsize 65536</code></a></dt>
 <dd>
 <ul>
 <li>Defines the initial size of the hash table.</li>
@@ -3911,7 +3929,7 @@ they work efficiently no matter the size of the list.</p>
 <p><br></p>
 <h3 id="ipset-blocklist-max-ip-count-change-does-not-take-affect-on-next-restart">IPSET blocklist max IP count change does not take affect on next restart<a class="headerlink" href="#ipset-blocklist-max-ip-count-change-does-not-take-affect-on-next-restart" title="Permanent link">¶</a></h3>
 <p>When you enable a blocklist for the first, it must be defined within <code>/etc/csf/csf.blocklists</code> as the following:</p>
-<div class="language-shell highlight"><span class="filename">/etc/csf/csf.blocklists</span><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>CSF_HIGHRISK<span class="p">|</span><span class="m">43200</span><span class="p">|</span><span class="m">200</span><span class="p">|</span>http://blocklist.configserver.dev/highrisk.ipset
+<div class="language-shell highlight"><span class="filename">/etc/csf/csf.blocklists</span><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>CSF_HIGHRISK<span class="p">|</span><span class="m">43200</span><span class="p">|</span><span class="m">0</span><span class="p">|</span>https://blocklist.configserver.dev/highrisk.ipset
 </span></code></pre></div>
 <p><br></p>
 <p>In the example above:</p>
@@ -3932,11 +3950,11 @@ they work efficiently no matter the size of the list.</p>
 <td>Blocklist cache time. List will not be refreshed until this time expires.</td>
 </tr>
 <tr>
-<td><code>200</code></td>
-<td>Max IPs to load in a blocklist</td>
+<td><code>0</code></td>
+<td>Max IPs to load in a blocklist; <span class="keys"><kbd class="key-0">0</kbd></span> is <strong>unlimited</strong></td>
 </tr>
 <tr>
-<td><code>http://blocklist.configserver.dev/highrisk.ipset</code></td>
+<td><code>https://blocklist.configserver.dev/highrisk.ipset</code></td>
 <td>Blocklist to load</td>
 </tr>
 </tbody>
@@ -4028,7 +4046,7 @@ your server secure.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 23, 2025 11:33:35 UTC"><span class="timeago" datetime="2025-10-23T11:33:35+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 23, 2025 11:33:35 UTC">2025-10-23</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 27, 2025 11:50:22 UTC"><span class="timeago" datetime="2025-10-27T11:50:22+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 27, 2025 11:50:22 UTC">2025-10-27</span>
   </span>
 
     
