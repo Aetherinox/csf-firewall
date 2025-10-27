@@ -1471,11 +1471,35 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#increase-max-limit" class="md-nav__link">
+  <a href="#increase-maximum-entry-limit" class="md-nav__link">
     <span class="md-ellipsis">
-      Increase Max Limit
+      Increase Maximum Entry Limit
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Increase Maximum Entry Limit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#per-blocklist-limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Per-Blocklist Limit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#per-ipset-limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Per-IPSET Limit
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2961,11 +2985,35 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#increase-max-limit" class="md-nav__link">
+  <a href="#increase-maximum-entry-limit" class="md-nav__link">
     <span class="md-ellipsis">
-      Increase Max Limit
+      Increase Maximum Entry Limit
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Increase Maximum Entry Limit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#per-blocklist-limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Per-Blocklist Limit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#per-ipset-limit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Per-IPSET Limit
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -3078,7 +3126,7 @@
 <hr>
 <p><br></p>
 <h2 id="location">Location<a class="headerlink" href="#location" title="Permanent link">¶</a></h2>
-<p>To view or edit your current blocklists, open the file <code>/etc/csf/csf.blocklists</code>. An explaination of how the blocklist file works will be given in the sections below.</p>
+<p>To view or edit your current blocklists, open the file <span class="keys"><kbd>/etc/csf/csf.blocklists</kbd></span>. An explaination of how the blocklist file works will be given in the sections below.</p>
 <p><br></p>
 <hr>
 <p><br></p>
@@ -3119,11 +3167,11 @@ of <abbr title="An older Linux firewall tool for packet filtering, now gradually
 <hr>
 <p><br></p>
 <h2 id="configure-blocklists">Configure Blocklists<a class="headerlink" href="#configure-blocklists" title="Permanent link">¶</a></h2>
-<p>Subscribed blocklists can be managed by opening the file <code>/etc/csf/csf.blocklists</code>.</p>
-<p>By default, every list is commented out with a <code>#</code> symbol at the beginning of the line. Leave the line commented if you do not wish to use that blocklist. To enable a blocklist, simply remove the <code>#</code> and save the file.</p>
+<p>Subscribed blocklists can be managed by opening the file <span class="keys"><kbd>/etc/csf/csf.blocklists</kbd></span>.</p>
+<p>By default, every list is commented out with a ++#++ symbol at the beginning of the line. Leave the line commented if you do not wish to use that blocklist. To enable a blocklist, simply remove the ++#++ and save the file.</p>
 <details class="note">
 <summary>Uncomment the blocklists you want ...</summary>
-<p>Out of box, all blocklists are commented with the character <code>#</code> at the front of every line. To use a blocklist, remove the command character <code>#</code> and save the file.</p>
+<p>Out of box, all blocklists are commented with the character ++#++ at the front of every line. To use a blocklist, remove the command character ++#++ and save the file.</p>
 </details>
 <div class="language-ini highlight"><span class="filename">/etc/csf/csf.blocklists</span><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># #</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1">#   @blocklist              Official CSF Blocklists</span>
@@ -3140,11 +3188,11 @@ of <abbr title="An older Linux firewall tool for packet filtering, now gradually
 </span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="c1">#   We offer many others, but these two are the primary ones.</span>
 </span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="c1">#   </span>
 </span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="c1">#   Requires you to edit /etc/csf/csf.conf setting:</span>
-</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="c1">#       LF_IPSET_MAXELEM = "4000000"</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="c1">#       LF_IPSET_MAXELEM = "500000"</span>
 </span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="c1"># #</span>
 </span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
-</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="c1">#   CSF_MASTER|43200|0|http://blocklist.configserver.dev/master.ipset</span>
-</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="c1">#   CSF_HIGHRISK|43200|0|http://blocklist.configserver.dev/highrisk.ipset</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="c1">#   CSF_MASTER      | 43200 | 0 | http://blocklist.configserver.dev/master.ipset</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="c1">#   CSF_HIGHRISK    | 43200 | 0 | http://blocklist.configserver.dev/highrisk.ipset</span>
 </span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>
 </span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="c1"># #</span>
 </span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="c1">#   @blocklist              Spamhaus Don't Route Or Peer List (DROP)</span>
@@ -3272,14 +3320,14 @@ of <abbr title="An older Linux firewall tool for packet filtering, now gradually
 <p>We will use the first blocklist in the example above to explain the format. </p>
 <div class="language-ini highlight"><span class="filename">/etc/csf/csf.blocklists</span><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># #</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1">#   Example Blocklists</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1">#   NAME   | INTERVAL | MAX_IPS | BLOCKLIST_URL</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1">#   NAME   | INTERVAL | MAX_ENTRIES | BLOCKLIST_URL</span>
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># #</span>
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="na">SPAMDROP      |   86400   |    0    |  https</span><span class="o">:</span><span class="s">//spamhaus.org/drop/drop.txt</span>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="na">CSF_HIGHRISK  |   43200   |    0    |  https</span><span class="o">:</span><span class="s">//raw.githubusercontent.com/Aetherinox/csf-firewall/main/blocklists/highrisk.ipset</span>
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="na">DSHIELD       |   86400   |    0    |  https</span><span class="o">:</span><span class="s">//dshield.org/block.txt</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="na">SPAMDROP      |   86400   |      0      |  https</span><span class="o">:</span><span class="s">//spamhaus.org/drop/drop.txt</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="na">CSF_HIGHRISK  |   43200   |      0      |  https</span><span class="o">:</span><span class="s">//blocklist.configserver.dev/highrisk.ipset</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="na">DSHIELD       |   86400   |      0      |  https</span><span class="o">:</span><span class="s">//dshield.org/block.txt</span>
 </span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="na">----------------------------------------------------------------------------------------------------------------------------------</span>
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="na">^NAME^     ^INTERVAL^  ^MAX_IPS^              ^BLOCKLIST_URL^              </span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="na">^NAME^     ^INTERVAL^  ^MAX_ENTRIES^              ^BLOCKLIST_URL^              </span>
 </span></code></pre></div>
 <dl>
 <dt><a href="#+NAME" id="+NAME"><code>NAME</code></a></dt>
@@ -3288,16 +3336,16 @@ of <abbr title="An older Linux firewall tool for packet filtering, now gradually
 </dd>
 <dt><a href="#+INTERVAL" id="+INTERVAL"><code>INTERVAL</code></a></dt>
 <dd>
-<p>Refresh interval to download the list, must be a minimum of 3600 seconds (an hour).</p>
+<p>Cache refresh interval (in seconds) to keep the list, must be a minimum of 3600 seconds (an hour). After this time has expired, the blocklist will be refrshed.</p>
 <ul>
-<li>43200: 12 hours</li>
-<li>86400: 24 hours</li>
+<li><code>43200</code>: 12 hours</li>
+<li><code>86400</code>: 24 hours</li>
 </ul>
 </dd>
 <dt><a href="#+MAX_IPS" id="+MAX_IPS"><code>MAX_IPS</code></a></dt>
 <dd>
-<p>This is the maximum number of IP addresses to use from the list, a value of <code>0</code> means all IPs (see note below).
-    If you add an ipset with 50,000 IPs, and you set this value to 20,000; then you will only block the first 20,000.</p>
+<p>This is the maximum number of entries to load from a list, a value of <span class="keys"><kbd class="key-0">0</kbd></span> means all entries (see note below).
+    If you add a blocklist with 50,000 entries, and you set this value to 20,000; then you will only load the first 20,000 entries within the blocklist.</p>
 </dd>
 <dt><a href="#+URL" id="+URL"><code>URL</code></a></dt>
 <dd>
@@ -3310,7 +3358,7 @@ of <abbr title="An older Linux firewall tool for packet filtering, now gradually
 <h2 id="official-blocklists">Official Blocklists<a class="headerlink" href="#official-blocklists" title="Permanent link">¶</a></h2>
 <p>While there are many blocklists available on the internet — including repositories on GitHub — <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> also provides official blocklists maintained directly in our repository. These lists are curated, updated regularly, and designed to minimize false positives while providing protection against common threats.</p>
 <p><br></p>
-<p>These lists are refreshed approximately every <code>6 hours</code> to ensure up-to-date protection. They include IP addresses flagged for abusive behavior such as:</p>
+<p>These lists are refreshed approximately every <code>12 hours</code> to ensure up-to-date protection. They include IP addresses flagged for abusive behavior such as:</p>
 <ul>
 <li>SSH brute-forcing  </li>
 <li>Port scanning  </li>
@@ -3319,10 +3367,10 @@ of <abbr title="An older Linux firewall tool for packet filtering, now gradually
 <li>Phishing attempts  </li>
 </ul>
 <p><br></p>
-<p>For most users, the <code>master.ipset</code> and <code>highrisk.ipset</code> lists are sufficient. They contain large collections of high-confidence IPs (100% confidence level) to reduce the chance of false positives.</p>
+<p>For most users, the <a href="https://blocklist.configserver.dev/master.ipset">master.ipset</a> and <a href="https://blocklist.configserver.dev/highrisk.ipset">highrisk.ipset</a> lists are sufficient. They contain large collections of high-confidence IPs (100% confidence level) to reduce the chance of false positives.</p>
 <p>In addition to the primary lists, the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> repository also offers specialized blocklists for categories like privacy, spam, and geographic restrictions. These allow you to further tailor your firewall rules, such as blocking traffic from specific countries.</p>
 <p><br></p>
-<p>The primary blocklists can be added to your <code>/etc/csf/csf.blocklists</code> file. Open the blocklist file and add the following:</p>
+<p>The primary blocklists can be added to your <span class="keys"><kbd>/etc/csf/csf.blocklists</kbd></span> file. Open the blocklist file and add the following:</p>
 <div class="language-ini highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># #</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1">#   @blocklist              Official CSF Blocklists</span>
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1">#   @details:               https://aetherinox.github.io/csf-firewall/usage/blocklists/#official-blocklists</span>
@@ -3338,21 +3386,21 @@ of <abbr title="An older Linux firewall tool for packet filtering, now gradually
 </span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="c1">#   We offer many others, but these two are the primary ones.</span>
 </span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="c1">#   </span>
 </span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="c1">#   Requires you to edit /etc/csf/csf.conf setting:</span>
-</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="c1">#       LF_IPSET_MAXELEM = "4000000"</span>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="c1">#       LF_IPSET_MAXELEM = "500000"</span>
 </span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="c1"># #</span>
 </span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>
-</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="na">CSF_MASTER   | 43200 | 0      | http</span><span class="o">:</span><span class="s">//blocklist.configserver.dev/master.ipset</span>
-</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="na">CSF_HIGHRISK | 43200 | 0      | http</span><span class="o">:</span><span class="s">//blocklist.configserver.dev/highrisk.ipset</span>
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="na">CSF_MASTER   | 43200 | 0 | https</span><span class="o">:</span><span class="s">//blocklist.configserver.dev/master.ipset</span>
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="na">CSF_HIGHRISK | 43200 | 0 | https</span><span class="o">:</span><span class="s">//blocklist.configserver.dev/highrisk.ipset</span>
 </span></code></pre></div>
 <p><br></p>
 <details class="danger">
-<summary>Master blocklist without IPSET enabled can cause server instability &amp; increased memory usage</summary>
-<p>The official <code>master.ipset</code> blocklist contains millions of IP addresses. </p>
-<p>We strongly recommend <a href="#enable">enabling IPSET</a> before using this list. Without IPSET, <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> will create a separate <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> rule for every IP, which can drastically increase memory usage and slow down firewall operations.</p>
-<p>Using this list without IPSET may lead to performance issues or even system instability on servers with limited resources.</p>
+<summary>Using the <code>master.ipset</code> blocklist without enabling IPSET can cause server instability &amp; increased memory usage</summary>
+<p>The official <a href="https://blocklist.configserver.dev/master.ipset">master.ipset</a> blocklist contains millions of IP addresses. </p>
+<p>We strongly recommend <a href="#enable">enabling IPSET</a> before using this list. Without IPSET, <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> will create a separate <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> rule for every IP, which will dramatically increase memory usage and slow down firewall operations.</p>
+<p>Using this list without IPSET may lead to performance issues or even system instability on servers with limited resources (memory).</p>
 </details>
 <p><br></p>
-<p>The blocklists you added from above should give you the entire collection for each main blocklist. All that is needed is to restart <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> to ensure that the blocklists take affect:</p>
+<p>Adding our <a href="https://blocklist.configserver.dev/master.ipset">master.ipset</a> and <a href="https://blocklist.configserver.dev/highrisk.ipset">highrisk.ipset</a> blocklists from above will give you the entire collection for each main blocklist and will offer great protection. All that is needed is to restart <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> to ensure that the blocklists take affect:</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="official-blocklists-command" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="official-blocklists-command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> Command</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -3432,7 +3480,7 @@ of <abbr title="An older Linux firewall tool for packet filtering, now gradually
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Name:<span class="w"> </span>bl_CSF_HIGHRISK
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>Type:<span class="w"> </span>hash:net
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>Revision:<span class="w"> </span><span class="m">7</span>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>Header:<span class="w"> </span>family<span class="w"> </span>inet<span class="w"> </span>hashsize<span class="w"> </span><span class="m">1024</span><span class="w"> </span>maxelem<span class="w"> </span><span class="m">4000000</span><span class="w"> </span>bucketsize<span class="w"> </span><span class="m">12</span><span class="w"> </span>initval<span class="w"> </span>0x5f263e28
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>Header:<span class="w"> </span>family<span class="w"> </span>inet<span class="w"> </span>hashsize<span class="w"> </span><span class="m">1024</span><span class="w"> </span>maxelem<span class="w"> </span><span class="m">500000</span><span class="w"> </span>bucketsize<span class="w"> </span><span class="m">12</span><span class="w"> </span>initval<span class="w"> </span>0x5f263e28
 </span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>Size<span class="w"> </span><span class="k">in</span><span class="w"> </span>memory:<span class="w"> </span><span class="m">24024</span>
 </span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>References:<span class="w"> </span><span class="m">1</span>
 </span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>Number<span class="w"> </span>of<span class="w"> </span>entries:<span class="w"> </span><span class="m">630</span>
@@ -3445,85 +3493,120 @@ of <abbr title="An older Linux firewall tool for packet filtering, now gradually
 </div>
 </div>
 <p><br></p>
-<p>Now that you have our official blocklists loaded within your <code>/etc/csf/csf.blocklists</code>, we need to ensure that the setting <code>LF_IPSET_MAXELEM</code> is set to the proper value, otherwise, not all of the blocked IP addresses we provide will be loaded. That is explained in the section below.</p>
+<p>Now that you have our official blocklists defined in <span class="keys"><kbd>/etc/csf/csf.blocklists</kbd></span>, we need to ensure that the setting <span class="keys"><kbd>LF_IPSET_MAXELEM</kbd></span> is set to the proper value, otherwise, not all of the blocked entries in the lists will be loaded. That is explained in the section below.</p>
 <details class="warning">
-<summary>Official master blocklist requires increased <code>LF_IPSET_MAXELEM</code></summary>
-<p>If you decide to use our official blocklist <code>master.ipset</code>, you <strong>must</strong> increase the value of the setting <code>LF_IPSET_MAXELEM</code> in <code>/etc/csf/csf.conf</code> to at least <code>4000000</code>.</p>
-<p>Instructions for doing this are available in the next section <a href="#increase-max-limit">Increase Max Limit</a></p>
+<summary>Official master blocklist requires increased <span class="keys"><kbd>LF_IPSET_MAXELEM</kbd></span></summary>
+<p>If you plan to use our official blocklist, <a href="https://blocklist.configserver.dev/master.ipset">master.ipset</a>, you <strong>must</strong> increase the <span class="keys"><kbd>LF_IPSET_MAXELEM</kbd></span> setting in <span class="keys"><kbd>/etc/csf/csf.conf</kbd></span>. </p>
+<p>The <a href="https://blocklist.configserver.dev/master.ipset">master.ipset</a> file currently contains approximately 350,000 entries. To allow for future updates and ensure safe operation, set <span class="keys"><kbd>LF_IPSET_MAXELEM</kbd></span> to around <span class="keys"><kbd>500000</kbd></span>.</p>
+<p>Instructions for doing this are available in the next section <a href="#increase-maximum-entry-limit">Increase Max Limit</a>.</p>
 </details>
 <p><br></p>
 <hr>
 <p><br></p>
-<h2 id="increase-max-limit">Increase Max Limit<a class="headerlink" href="#increase-max-limit" title="Permanent link">¶</a></h2>
-<p>By default, <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> places a cap on the number of IP addresses that can be loaded into a single IPSET. This is controlled by the setting <code>LF_IPSET_MAXELEM</code> inside your <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> configuration file <code>/etc/csf/csf.conf</code>.  </p>
-<p>Out of the box, this value is set to <strong>65536</strong> (around sixty-five thousand IPs). That means if a blocklist tries to load more than that, the extra entries will be ignored — even if you set the blocklist <code>MAX_IPS</code> value to <code>0</code> (unlimited) or a number greater than 65536.</p>
-<p>For servers that rely on multiple large blocklists, this default limit is often too low. To raise the maximum number of IPs that can be stored inside a set, you’ll need to increase the <code>LF_IPSET_MAXELEM</code> value.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="increase-max-limit-find" name="__tabbed_4" type="radio"><input id="increase-max-limit-change-to" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="increase-max-limit-find"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 64C0 28.7 28.7 0 64 0L213.5 0c17 0 33.3 6.7 45.3 18.7L365.3 125.3c12 12 18.7 28.3 18.7 45.3L384 448c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 64zm208-5.5l0 93.5c0 13.3 10.7 24 24 24L325.5 176 208 58.5zM272 320c0-53-43-96-96-96s-96 43-96 96 43 96 96 96c17.8 0 34.4-4.8 48.7-13.2L263 441.1c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-38.3-38.3c8.5-14.3 13.3-31 13.3-48.9zm-96-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg></span> Find</label><label for="increase-max-limit-change-to"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M128.1 0c-35.3 0-64 28.7-64 64l0 384c0 35.3 28.7 64 64 64l146.2 0 10.9-54.5c4.3-21.7 15-41.6 30.6-57.2l132.2-132.2 0-97.5c0-17-6.7-33.3-18.7-45.3L322.8 18.7C310.8 6.7 294.5 0 277.6 0L128.1 0zM389.6 176l-93.5 0c-13.3 0-24-10.7-24-24l0-93.5 117.5 117.5zM332.3 466.9l-11.9 59.6c-.2 .9-.3 1.9-.3 2.9 0 8 6.5 14.6 14.6 14.6 1 0 1.9-.1 2.9-.3l59.6-11.9c12.4-2.5 23.8-8.6 32.7-17.5l118.9-118.9-80-80-118.9 118.9c-8.9 8.9-15 20.3-17.5 32.7zm267.8-123c22.1-22.1 22.1-57.9 0-80s-57.9-22.1-80 0l-28.8 28.8 80 80 28.8-28.8z"></path></svg></span> Change To</label></div>
+<h2 id="increase-maximum-entry-limit">Increase Maximum Entry Limit<a class="headerlink" href="#increase-maximum-entry-limit" title="Permanent link">¶</a></h2>
+<p>To control how many entries are loaded from a blocklist into <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>, you need to be aware of <strong>two configuration locations</strong>:</p>
+<ol>
+<li>
+<p><span class="twemoji" style="color: var(--md-code-hl-number-color)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z"></path></svg></span> <a href="#per-blocklist-limit"><strong>Per-Blocklist Limit</strong></a> (<code>/etc/csf/csf.blocklists</code>)</p>
+<ul>
+<li>Each blocklist entry has a <code>Max Entries</code> value, seperated by the <span class="keys"><kbd class="key-bar">|</kbd></span> pipe character.</li>
+<li>This controls how many entries are <em>fetched and imported</em> from that specific blocklist.</li>
+<li>Example:
+  <div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a># Blocklist Name  | Cache Time    | Max Entries   | Blocklist URL
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>CSF_MASTER        | 43200         | 500000        | https://blocklist.configserver.dev/master.ipset
+</span></code></pre></div><ul>
+<li>Only 500,000 entries from the <code>CSF_MASTER</code> list will be loaded, even if the list contains more.</li>
+<li>Set to <span class="keys"><kbd class="key-0">0</kbd></span> for unlimited.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><span class="twemoji" style="color: var(--md-code-hl-constant-color) "><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z"></path></svg></span> <a href="#per-ipset-limit"><strong>Per-IPSET Limit</strong></a> (<code>/etc/csf/csf.conf</code>)</p>
+<ul>
+<li>The <span class="keys"><kbd>LF_IPSET_MAXELEM</kbd></span> setting controls how many entries can exist <em>inside each IPSET</em> that <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> creates.</li>
+<li>It applies to <strong>every IPSET individually</strong>, not to the total across all of them.</li>
+<li>Example:
+  <div class="language-ini highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="na">LF_IPSET_MAXELEM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"500000"</span>
+</span></code></pre></div><ul>
+<li>Each IPSET (such as <code>csfdeny</code>, <code>chain_CSF_MASTER</code>, or <code>chain_CSF_HIGHRISK</code>) can hold up to 500,000 entries.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p><br></p>
+<h3 id="per-blocklist-limit"><span class="twemoji" style="color: var(--md-code-hl-number-color)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z"></path></svg></span> Per-Blocklist Limit<a class="headerlink" href="#per-blocklist-limit" title="Permanent link">¶</a></h3>
+<p>Each blocklist in <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> can define its own maximum number of entries to load via the <code>Max Entries</code> field in <span class="keys"><kbd>/etc/csf/csf.blocklists</kbd></span>.</p>
+<p>This setting controls how many entries are fetched and imported from <strong>that specific blocklist only</strong>.</p>
+<p>In the example below, the <code>CSF_MASTER</code> blocklist is restricted to <strong>20,000 entries</strong>, while the <code>CSF_HIGHRISK</code> blocklist is set to <span class="keys"><kbd class="key-0">0</kbd></span>, meaning it will load <strong>all available entries</strong> with no limit:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a># Blocklist Name | Cache Time   | Max Entries   | Blocklist URL
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>CSF_MASTER       | 43200        | 20000         | https://blocklist.configserver.dev/master.ipset
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>CSF_HIGHRISK     | 43200        | 0             | https://blocklist.configserver.dev/highrisk.ipset
+</span></code></pre></div>
+<p><br></p>
+<h3 id="per-ipset-limit"><span class="twemoji" style="color: var(--md-code-hl-constant-color) "><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z"></path></svg></span> Per-IPSET Limit<a class="headerlink" href="#per-ipset-limit" title="Permanent link">¶</a></h3>
+<p>The second location that affects how many entries are loaded into <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> is the <span class="keys"><kbd>LF_IPSET_MAXELEM</kbd></span> setting inside <span class="keys"><kbd>/etc/csf/csf.conf</kbd></span>.</p>
+<p>This option defines the <strong>maximum number of entries allowed per IPSET</strong> that <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> creates.</p>
+<p>Each blocklist that <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> loads is stored in its own IPSET (for example, <code>chain_CSF_MASTER</code>, <code>chain_CSF_HIGHRISK</code>, etc.), and this limit applies individually to each of them; not as a global total across all sets.</p>
+<p>By default, <span class="keys"><kbd>LF_IPSET_MAXELEM</kbd></span> is set to <strong>65536</strong> (about sixty-five thousand entries per IPSET).  </p>
+<p>If a blocklist or IPSET attempts to exceed this number, the remaining entries will be ignored — even if the blocklist’s <code>Max Entries</code> value is set to <span class="keys"><kbd class="key-0">0</kbd></span> (unlimited) or a higher value.</p>
+<p>Setting <span class="keys"><kbd>LF_IPSET_MAXELEM</kbd></span> in <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> is equivalent to defining the <code>maxelem</code> parameter when manually creating an IPSET using the <code>ipset</code> command:</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>ipset<span class="w"> </span>create<span class="w"> </span>hash:net<span class="w"> </span>family<span class="w"> </span><span class="nv">$family</span><span class="w"> </span>maxelem<span class="w"> </span><span class="m">65536</span>
+</span></code></pre></div>
+<p><br></p>
+<p>For servers that rely on multiple large blocklists, this default limit is often too low. To raise the maximum number of IPs that can be stored inside a set, you’ll need to increase the <span class="keys"><kbd>LF_IPSET_MAXELEM</kbd></span> value.</p>
+<p>Our <a href="https://blocklist.configserver.dev/master.ipset">master.ipset</a> blocklist contains approximately 350,000 entries. While our <a href="https://blocklist.configserver.dev/highrisk.ipset">highrisk.ipset</a> blocklist contains approximately 10,000 entries.</p>
+<p>To give ourselves a good buffer, we will set <span class="keys"><kbd>LF_IPSET_MAXELEM</kbd></span> to <span class="keys"><kbd>500000</kbd></span>.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="per-ipset-limit-find" name="__tabbed_4" type="radio"><input id="per-ipset-limit-change-to" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="per-ipset-limit-find"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 64C0 28.7 28.7 0 64 0L213.5 0c17 0 33.3 6.7 45.3 18.7L365.3 125.3c12 12 18.7 28.3 18.7 45.3L384 448c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 64zm208-5.5l0 93.5c0 13.3 10.7 24 24 24L325.5 176 208 58.5zM272 320c0-53-43-96-96-96s-96 43-96 96 43 96 96 96c17.8 0 34.4-4.8 48.7-13.2L263 441.1c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-38.3-38.3c8.5-14.3 13.3-31 13.3-48.9zm-96-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg></span> Find</label><label for="per-ipset-limit-change-to"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M128.1 0c-35.3 0-64 28.7-64 64l0 384c0 35.3 28.7 64 64 64l146.2 0 10.9-54.5c4.3-21.7 15-41.6 30.6-57.2l132.2-132.2 0-97.5c0-17-6.7-33.3-18.7-45.3L322.8 18.7C310.8 6.7 294.5 0 277.6 0L128.1 0zM389.6 176l-93.5 0c-13.3 0-24-10.7-24-24l0-93.5 117.5 117.5zM332.3 466.9l-11.9 59.6c-.2 .9-.3 1.9-.3 2.9 0 8 6.5 14.6 14.6 14.6 1 0 1.9-.1 2.9-.3l59.6-11.9c12.4-2.5 23.8-8.6 32.7-17.5l118.9-118.9-80-80-118.9 118.9c-8.9 8.9-15 20.3-17.5 32.7zm267.8-123c22.1-22.1 22.1-57.9 0-80s-57.9-22.1-80 0l-28.8 28.8 80 80 28.8-28.8z"></path></svg></span> Change To</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-bash highlight"><span class="filename">/etc/csf/csf.conf</span><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nv">LF_IPSET_MAXELEM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"65536"</span>
+<div class="language-bash highlight"><span class="filename">/etc/csf/csf.conf</span><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nv">LF_IPSET_MAXELEM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"65536"</span>
 </span></code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="language-bash highlight"><span class="filename">/etc/csf/csf.conf</span><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nv">LF_IPSET_MAXELEM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"4000000"</span>
+<div class="language-bash highlight"><span class="filename">/etc/csf/csf.conf</span><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nv">LF_IPSET_MAXELEM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"500000"</span>
 </span></code></pre></div>
 </div>
 </div>
 </div>
 <p><br></p>
-<p>Once you have the setting changed in your <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> config, give <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> a restart:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="5:1"><input checked="checked" id="increase-max-limit-command" name="__tabbed_5" type="radio"><div class="tabbed-labels"><label for="increase-max-limit-command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> Command</label></div>
+<p>Once you have the setting changed in <span class="keys"><kbd>/etc/csf/csf.conf</kbd></span>, give <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> a restart. After the new setting has been applied, you'll now be able to load the entire blocklist.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:1"><input checked="checked" id="per-ipset-limit-command" name="__tabbed_5" type="radio"><div class="tabbed-labels"><label for="per-ipset-limit-command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> Command</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-ra
-</span></code></pre></div>
-</div>
-</div>
-</div>
-<p><br></p>
-<p>After the new setting has been applied, you can go back to your blocklists within the file <code>/etc/csf/csf.blocklists</code> and increase the limit as needed:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="6:2"><input checked="checked" id="increase-max-limit-find_1" name="__tabbed_6" type="radio"><input id="increase-max-limit-change-to_1" name="__tabbed_6" type="radio"><div class="tabbed-labels"><label for="increase-max-limit-find_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 64C0 28.7 28.7 0 64 0L213.5 0c17 0 33.3 6.7 45.3 18.7L365.3 125.3c12 12 18.7 28.3 18.7 45.3L384 448c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 64zm208-5.5l0 93.5c0 13.3 10.7 24 24 24L325.5 176 208 58.5zM272 320c0-53-43-96-96-96s-96 43-96 96 43 96 96 96c17.8 0 34.4-4.8 48.7-13.2L263 441.1c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-38.3-38.3c8.5-14.3 13.3-31 13.3-48.9zm-96-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg></span> Find</label><label for="increase-max-limit-change-to_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M128.1 0c-35.3 0-64 28.7-64 64l0 384c0 35.3 28.7 64 64 64l146.2 0 10.9-54.5c4.3-21.7 15-41.6 30.6-57.2l132.2-132.2 0-97.5c0-17-6.7-33.3-18.7-45.3L322.8 18.7C310.8 6.7 294.5 0 277.6 0L128.1 0zM389.6 176l-93.5 0c-13.3 0-24-10.7-24-24l0-93.5 117.5 117.5zM332.3 466.9l-11.9 59.6c-.2 .9-.3 1.9-.3 2.9 0 8 6.5 14.6 14.6 14.6 1 0 1.9-.1 2.9-.3l59.6-11.9c12.4-2.5 23.8-8.6 32.7-17.5l118.9-118.9-80-80-118.9 118.9c-8.9 8.9-15 20.3-17.5 32.7zm267.8-123c22.1-22.1 22.1-57.9 0-80s-57.9-22.1-80 0l-28.8 28.8 80 80 28.8-28.8z"></path></svg></span> Change To</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<p>The blocklist below is has the <code>MAX_IPS</code> set to <code>65536</code>, which is very low for this blocklist. This one contains about 2 million blocked IP addresses. With the below setting, we will only be able to load 65,536 out of those 2,000,000 IP addresses.</p>
-<div class="language-bash highlight"><span class="filename">/etc/csf/csf.blocklists</span><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>CSF_HIGHRISK<span class="p">|</span><span class="m">43200</span><span class="p">|</span><span class="m">65536</span><span class="p">|</span>https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/blocklists/highrisk.ipset
-</span></code></pre></div>
-</div>
-<div class="tabbed-block">
-<p>We changed the <code>MAX_IP</code> value from the default <code>65536</code> to <code>0</code> for unlimited. Since this particular
-blocklist only gives us about 2 million blocked IP addresses, and we've set our <code>LF_IPSET_MAXELEM</code> to 4 million.</p>
-<div class="language-bash highlight"><span class="filename">/etc/csf/csf.blocklists</span><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>CSF_HIGHRISK<span class="p">|</span><span class="m">43200</span><span class="p">|</span><span class="m">0</span><span class="p">|</span>https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/blocklists/highrisk.ipset
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-ra
 </span></code></pre></div>
 </div>
 </div>
 </div>
 <p><br></p>
 <p>If you are using our <a href="#official-blocklists">Official Blocklists</a>, you can confirm the increased limit by running the command:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="7:2"><input checked="checked" id="increase-max-limit-command_1" name="__tabbed_7" type="radio"><input id="increase-max-limit-output" name="__tabbed_7" type="radio"><div class="tabbed-labels"><label for="increase-max-limit-command_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> Command</label><label for="increase-max-limit-output"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Output</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="6:2"><input checked="checked" id="per-ipset-limit-command_1" name="__tabbed_6" type="radio"><input id="per-ipset-limit-output" name="__tabbed_6" type="radio"><div class="tabbed-labels"><label for="per-ipset-limit-command_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> Command</label><label for="per-ipset-limit-output"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Output</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>sudo<span class="w"> </span>ipset<span class="w"> </span>--list<span class="w"> </span>bl_CSF_HIGHRISK
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>sudo<span class="w"> </span>ipset<span class="w"> </span>--list<span class="w"> </span>bl_CSF_HIGHRISK
 </span></code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>Name:<span class="w"> </span>bl_CSF_HIGHRISK
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>Type:<span class="w"> </span>hash:net
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>Revision:<span class="w"> </span><span class="m">7</span>
-</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>Header:<span class="w"> </span>family<span class="w"> </span>inet<span class="w"> </span>hashsize<span class="w"> </span><span class="m">1024</span><span class="w"> </span>maxelem<span class="w"> </span><span class="m">4000000</span><span class="w"> </span>bucketsize<span class="w"> </span><span class="m">12</span><span class="w"> </span>initval<span class="w"> </span>0x5f263e28
-</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>Size<span class="w"> </span><span class="k">in</span><span class="w"> </span>memory:<span class="w"> </span><span class="m">24024</span>
-</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>References:<span class="w"> </span><span class="m">1</span>
-</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>Number<span class="w"> </span>of<span class="w"> </span>entries:<span class="w"> </span><span class="m">630</span>
-</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>Members:
-</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>XX.XX.XX.XXX
-</span><span id="__span-14-10"><a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>XX.XX.XX.XXX
-</span><span id="__span-14-11"><a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="o">[</span><span class="w"> </span>...<span class="w"> </span><span class="o">]</span>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>Name:<span class="w"> </span>bl_CSF_HIGHRISK
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>Type:<span class="w"> </span>hash:net
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>Revision:<span class="w"> </span><span class="m">7</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>Header:<span class="w"> </span>family<span class="w"> </span>inet<span class="w"> </span>hashsize<span class="w"> </span><span class="m">1024</span><span class="w"> </span>maxelem<span class="w"> </span><span class="m">500000</span><span class="w"> </span>bucketsize<span class="w"> </span><span class="m">12</span><span class="w"> </span>initval<span class="w"> </span>0x5f263e28
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>Size<span class="w"> </span><span class="k">in</span><span class="w"> </span>memory:<span class="w"> </span><span class="m">24024</span>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>References:<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>Number<span class="w"> </span>of<span class="w"> </span>entries:<span class="w"> </span><span class="m">630</span>
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>Members:
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>XX.XX.XX.XXX
+</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>XX.XX.XX.XXX
+</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="o">[</span><span class="w"> </span>...<span class="w"> </span><span class="o">]</span>
 </span></code></pre></div>
 </div>
 </div>
 </div>
 <p><br></p>
-<p>You will see the new max limit value listed next <code>maxelem</code>.</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>Header:<span class="w"> </span>family<span class="w"> </span>inet<span class="w"> </span>hashsize<span class="w"> </span><span class="m">1024</span><span class="w"> </span>maxelem<span class="w"> </span><span class="m">4000000</span><span class="w"> </span>bucketsize<span class="w"> </span><span class="m">12</span><span class="w"> </span>initval<span class="w"> </span>0x5f263e28
+<p>You will see the new max limit value listed next <span class="keys"><kbd>maxelem</kbd></span>.</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>Header:<span class="w"> </span>family<span class="w"> </span>inet<span class="w"> </span>hashsize<span class="w"> </span><span class="m">1024</span><span class="w"> </span>maxelem<span class="w"> </span><span class="m">500000</span><span class="w"> </span>bucketsize<span class="w"> </span><span class="m">12</span><span class="w"> </span>initval<span class="w"> </span>0x5f263e28
 </span></code></pre></div>
 <p><br></p>
 <hr>
@@ -3569,7 +3652,7 @@ your server secure.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 23, 2025 11:33:35 UTC"><span class="timeago" datetime="2025-10-23T11:33:35+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 23, 2025 11:33:35 UTC">2025-10-23</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 27, 2025 10:35:02 UTC"><span class="timeago" datetime="2025-10-27T10:35:02+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 27, 2025 10:35:02 UTC">2025-10-27</span>
   </span>
 
     
