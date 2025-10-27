@@ -7,21 +7,24 @@
 #   @file           protect.sh
 #   @type           extras/helper
 #   @license        MIT
-#   @desc           Scan today's SSL access logs for abusive IPs and block them
+#   @desc           Scans today's SSL access logs for abusive IPs and blocks them
 #                   in CSF if they exceed a defined request threshold.
-#                   Intended for cPanel/CSF environments.
+#
+#   @note           Bash version using associative arrays and mapfile.
+#                   Includes --show-config option for viewing script settings.
 # #
 #
 # #
 #   @usage          sudo /usr/local/sbin/protect.sh
 #                   sudo /usr/local/sbin/protect.sh --dry-run
 #                   sudo /usr/local/sbin/protect.sh --threshold 300
+#                   protect.sh --show-config
 #
 #   @notes          - Logs actions to /var/log/protect.log
 #                   - Threshold defaults to 500 hits per IP (per day, per vhost log)
 #                   - Skips private/reserved IPs
 #                   - Checks csf.deny before adding duplicates
-#                   - Compatible with multi-vhost access logs under /home/<user>/access-logs/
+#                   - Supports multi-vhost access logs under /home/<user>/access-logs/
 # #
 
 set -euo pipefail
@@ -45,57 +48,21 @@ SITES=(
 
 # Private/reserved IP prefixes
 PRIVATE_PREFIXES_IPV4=(
-  "10."
-  "192.168."
-  "127."
-  "169.254."
-  "172.16." "172.17." "172.18." "172.19." "172.20." "172.21." "172.22." "172.23."
-  "172.24." "172.25." "172.26." "172.27." "172.28." "172.29." "172.30." "172.31."
+  "10." "192.168." "127." "169.254."
+  "172.16." "172.17." "172.18." "172.19."
+  "172.20." "172.21." "172.22." "172.23."
+  "172.24." "172.25." "172.26." "172.27."
+  "172.28." "172.29." "172.30." "172.31."
 )
-
-PRIVATE_PREFIXES_IPV6=(
-  "::1"
-  "fe80:"
-  "fc00:"
-  "fd"
-)
+PRIVATE_PREFIXES_IPV6=("::1" "fe80:" "fc00:" "fd")
 
 # -----------------------------------------------------------------------------
 # Helper functions
 # -----------------------------------------------------------------------------
 
 log() {
-  # write timestamped message to stdout and ACTION_LOG
   local msg="$1"
   printf '%s %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$msg" | tee -a "$ACTION_LOG"
-}
-
-is_private_ip() {
-  # returns 0 if IP looks private/reserved, 1 otherwise
-  local ip="$1"
-
-  # crude prefix match is enough for this use-case
-  if [[ "$ip" == *:* ]]; then
-    # IPv6
-    for p in "${PRIVATE_PREFIXES_IPV6[@]}"; do
-      [[ "$ip" == "$p"* ]] && return 0
-    done
-  else
-    # IPv4
-    for p in "${PRIVATE_PREFIXES_IPV4[@]}"; do
-      [[ "$ip" == "$p"* ]] && return 0
-    done
-  fi
-
-  return 1
-}
-
-in_csf_deny() {
-  # returns 0 if IP already exists in csf.deny, 1 otherwise
-  local ip="$1"
-
-  [[ -f "$CSF_DENY_FILE" ]] || return 1
-  grep -Fq -- "$ip" "$CSF_DENY_FILE"
 }
 
 usage() {
@@ -105,13 +72,54 @@ protect.sh — scan logs and auto-block heavy IPs via CSF
 Options:
   --threshold N    Hits threshold to block (default ${THRESHOLD_DEFAULT})
   --dry-run        Do not run csf -d / csf -r. Just report actions.
+  --show-config    Print current settings and exit.
   --help, -h       Show this help and exit.
 
 Examples:
   sudo protect.sh
   sudo protect.sh --dry-run
   sudo protect.sh --threshold 300
+  protect.sh --show-config
 EOF
+}
+
+show_config() {
+  echo "protect.sh configuration:"
+  echo "  Threshold:          ${THRESHOLD_DEFAULT}"
+  echo "  Scan date:          ${LOG_DATE}"
+  echo "  Action log:         ${ACTION_LOG}"
+  echo "  CSF deny file:      ${CSF_DENY_FILE}"
+  echo "  Private IPv4 ranges skipped:"
+  for p in "${PRIVATE_PREFIXES_IPV4[@]}"; do
+    echo "    - $p"
+  done
+  echo "  Private IPv6 ranges skipped:"
+  for p in "${PRIVATE_PREFIXES_IPV6[@]}"; do
+    echo "    - $p"
+  done
+  echo "  Sites monitored:"
+  for def in "${SITES[@]}"; do
+    IFS='|' read -r label log_path reason <<< "$def"
+    echo "    - $label ($log_path) reason=\"$reason\""
+  done
+  echo
+  echo "Run with --dry-run to simulate blocking or --threshold N to change the hit limit."
+}
+
+is_private_ip() {
+  local ip="$1"
+  if [[ "$ip" == *:* ]]; then
+    for p in "${PRIVATE_PREFIXES_IPV6[@]}"; do [[ "$ip" == "$p"* ]] && return 0; done
+  else
+    for p in "${PRIVATE_PREFIXES_IPV4[@]}"; do [[ "$ip" == "$p"* ]] && return 0; done
+  fi
+  return 1
+}
+
+in_csf_deny() {
+  local ip="$1"
+  [[ -f "$CSF_DENY_FILE" ]] || return 1
+  grep -Fq -- "$ip" "$CSF_DENY_FILE"
 }
 
 # -----------------------------------------------------------------------------
@@ -120,28 +128,22 @@ EOF
 
 THRESHOLD="$THRESHOLD_DEFAULT"
 DRY_RUN=0
+SHOW_CONFIG=0
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --threshold)
-      THRESHOLD="$2"
-      shift 2
-      ;;
-    --dry-run)
-      DRY_RUN=1
-      shift
-      ;;
-    --help|-h)
-      usage
-      exit 0
-      ;;
-    *)
-      echo "Unknown option: $1" >&2
-      usage
-      exit 1
-      ;;
+    --threshold) THRESHOLD="$2"; shift 2 ;;
+    --dry-run) DRY_RUN=1; shift ;;
+    --show-config) SHOW_CONFIG=1; shift ;;
+    --help|-h) usage; exit 0 ;;
+    *) echo "Unknown option: $1"; usage; exit 1 ;;
   esac
 done
+
+if (( SHOW_CONFIG == 1 )); then
+  show_config
+  exit 0
+fi
 
 if (( DRY_RUN == 1 )); then
   log "Starting protect.sh (DRY RUN) — threshold ${THRESHOLD} for date ${LOG_DATE}"
@@ -153,13 +155,11 @@ fi
 # Preconditions
 # -----------------------------------------------------------------------------
 
-# We only enforce csf calls when not in dry-run mode
 if (( DRY_RUN == 0 )); then
   if [[ $EUID -ne 0 ]]; then
     log "ERROR: script must be run as root to block. Exiting."
     exit 1
   fi
-
   if ! command -v csf >/dev/null 2>&1; then
     log "ERROR: csf binary not found. Install CSF and try again."
     exit 1
@@ -170,26 +170,17 @@ fi
 # Collect offenders
 # -----------------------------------------------------------------------------
 
-# OFFENDERS_COUNT[ip]   = max hit count observed for this IP
-# OFFENDERS_REASON[ip]  = semicolon list of site labels/reasons
 declare -A OFFENDERS_COUNT
 declare -A OFFENDERS_REASON
 
 for def in "${SITES[@]}"; do
-  IFS='|' read -r label log_path reason <<<"$def"
-
+  IFS='|' read -r label log_path reason <<< "$def"
   if [[ ! -f "$log_path" ]]; then
-    log "[$label] log not found: ${log_path} — skipping"
+    log "[$label] log not found: $log_path — skipping"
     continue
   fi
 
-  # For today's traffic, build "<count> <ip>" lines
-  mapfile -t lines < <(
-    awk -v d="$LOG_DATE" '$0 ~ d {print $1}' "$log_path" \
-      | sort \
-      | uniq -c \
-      | awk '{print $1 " " $2}'
-  )
+  mapfile -t lines < <(awk -v d="$LOG_DATE" '$0 ~ d {print $1}' "$log_path" | sort | uniq -c | awk '{print $1 " " $2}')
 
   if [[ ${#lines[@]} -eq 0 ]]; then
     log "[$label] no hits today."
@@ -197,34 +188,21 @@ for def in "${SITES[@]}"; do
   fi
 
   for ln in "${lines[@]}"; do
-    # ln looks like "1234 1.2.3.4"
     cnt="${ln%% *}"
     ip="${ln##* }"
-
-    # skip malformed data
     [[ "$cnt" =~ ^[0-9]+$ ]] || continue
-
-    # Only track if over threshold
     if (( cnt > THRESHOLD )); then
       prev="${OFFENDERS_COUNT[$ip]:-0}"
-
-      # keep highest count
       if (( cnt > prev )); then
         OFFENDERS_COUNT["$ip"]="$cnt"
       fi
-
-      # append site label/reason
       OFFENDERS_REASON["$ip"]="${OFFENDERS_REASON[$ip]:-}${label}:${reason};"
     fi
   done
 done
 
-# -----------------------------------------------------------------------------
-# No offenders case
-# -----------------------------------------------------------------------------
-
 if ((${#OFFENDERS_COUNT[@]} == 0)); then
-  log "No offenders above threshold (${THRESHOLD}). Exiting."
+  log "No offenders above threshold ($THRESHOLD). Exiting."
   exit 0
 fi
 
@@ -236,11 +214,7 @@ log "Found ${#OFFENDERS_COUNT[@]} offender(s) above threshold:"
 printf "%-39s  %8s  %s\n" "IP" "HITS" "SITES/REASONS" | tee -a "$ACTION_LOG"
 
 for ip in "${!OFFENDERS_COUNT[@]}"; do
-  printf "%-39s  %8s  %s\n" \
-    "$ip" \
-    "${OFFENDERS_COUNT[$ip]}" \
-    "${OFFENDERS_REASON[$ip]}" \
-    | tee -a "$ACTION_LOG"
+  printf "%-39s  %8s  %s\n" "$ip" "${OFFENDERS_COUNT[$ip]}" "${OFFENDERS_REASON[$ip]}" | tee -a "$ACTION_LOG"
 done
 
 # -----------------------------------------------------------------------------
@@ -250,13 +224,11 @@ done
 CHANGES=0
 
 for ip in "${!OFFENDERS_COUNT[@]}"; do
-  # 1. never block private/reserved
   if is_private_ip "$ip"; then
     log "SKIP ${ip} — private/reserved"
     continue
   fi
 
-  # 2. skip if already blocked
   if in_csf_deny "$ip"; then
     log "ALREADY DENIED ${ip} — skipping"
     continue
@@ -269,7 +241,6 @@ for ip in "${!OFFENDERS_COUNT[@]}"; do
     CHANGES=$((CHANGES + 1))
   else
     log "Blocking ${ip} — reason: ${block_reason}"
-
     if csf -d "$ip" "$block_reason"; then
       CHANGES=$((CHANGES + 1))
       log "Blocked ${ip} successfully."
@@ -278,10 +249,6 @@ for ip in "${!OFFENDERS_COUNT[@]}"; do
     fi
   fi
 done
-
-# -----------------------------------------------------------------------------
-# Apply changes
-# -----------------------------------------------------------------------------
 
 if (( CHANGES > 0 )); then
   if (( DRY_RUN == 1 )); then
