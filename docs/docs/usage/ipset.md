@@ -3,6 +3,8 @@ title: Usage › IPSETs
 tags:
     - usage
     - configure
+    - blocklists
+    - ipset
 ---
 
 # Introduction to IPSETs
@@ -252,13 +254,13 @@ You can also expand on this command and specify that you want to store comments,
 === ":aetherx-axs-check:{ .icon-clr-green } Whitelist"
 
       ```shell
-      sudo ipset create my_whitelist hash:ip comment hashsize 6553
+      sudo ipset create my_whitelist hash:ip comment hashsize 65536
       ```
 
 === ":aetherx-axs-ban:{ .icon-clr-red } Blacklist"
 
       ```shell
-      sudo ipset create my_blacklist hash:ip comment hashsize 6553
+      sudo ipset create my_blacklist hash:ip comment hashsize 65536
       ```
 
 <br />
@@ -280,7 +282,7 @@ The following are some of the options you can use when creating your list:
 :   - Allows each entry in the set to store a comment.
     - Without this option, attempting to add a comment will fail.
 
-<!-- md:option hashsize 6553 -->
+<!-- md:option hashsize 65536 -->
 
 :   - Defines the initial size of the hash table.
     - Determines how many “buckets” the hash table will initially have for storing IPs.
@@ -716,7 +718,7 @@ The following are a list of common issues or errors, and potential solutions for
 When you enable a blocklist for the first, it must be defined within `/etc/csf/csf.blocklists` as the following:
 
 ```shell title="/etc/csf/csf.blocklists"
-CSF_HIGHRISK|43200|200|http://blocklist.configserver.dev/highrisk.ipset
+CSF_HIGHRISK|43200|0|https://blocklist.configserver.dev/highrisk.ipset
 ```
 
 <br />
@@ -727,8 +729,8 @@ In the example above:
 | --------------------------------------------------------- | --------------------------------------------------------------------------------------- |
 | `CSF_HIGHRISK`                                            | Name of the blocklist                                                                   |
 | `43200`                                                   | Blocklist cache time. List will not be refreshed until this time expires.               |
-| `200`                                                     | Max IPs to load in a blocklist                                                          |
-| `http://blocklist.configserver.dev/highrisk.ipset`        | Blocklist to load                                                                       |
+| `0`                                                       | Max IPs to load in a blocklist; ++0++ is **unlimited**                                  |
+| `https://blocklist.configserver.dev/highrisk.ipset`       | Blocklist to load                                                                       |
 
 <br />
 
