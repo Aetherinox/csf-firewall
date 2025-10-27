@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_seychelles_ipset
 #   @uuid           a4cc52d4-b037-3f0b-8e06-a30ea0c4118c
-#   @updated        Mon Oct 27 00:21:20 UTC 2025
+#   @updated        Mon Oct 27 12:13:57 UTC 2025
 #   @entries        1954624 ips
 #                   4549 subnets
 #                   4549 lines
