@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_western_sahara_ipset
 #   @uuid           981b96b7-bd3c-3343-9e81-f6f4c6481e33
-#   @updated        Tue Oct 28 12:12:03 UTC 2025
+#   @updated        Wed Oct 29 00:20:18 UTC 2025
 #   @entries        78 ips
-#                   78 subnets
-#                   78 lines
+#                   82 subnets
+#                   82 lines
 #   @country        Western Sahara (EH)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -93,8 +93,12 @@
 2a11:a682:d000::/36
 2a13:a5c7:2542::/48
 2a13:a5c7:25ff:4100::/56
+2a14:7581:b10:d400::/56
+2a14:7581:b11:d400::/56
 2a14:7581:b12:d400::/56
 2a14:7581:b13:d400::/56
 2a14:7581:b14:d400::/56
 2a14:7581:b15:d400::/56
+2a14:7581:b16:d400::/56
+2a14:7581:b17:d400::/56
 2a14:7584:eff1::/48

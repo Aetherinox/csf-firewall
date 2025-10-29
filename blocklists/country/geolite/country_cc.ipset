@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_cc_ipset
 #   @uuid           d9106d0a-027b-3fd5-8505-4727d45f293f
-#   @updated        Tue Oct 28 12:11:54 UTC 2025
+#   @updated        Wed Oct 29 00:20:08 UTC 2025
 #   @entries        69 ips
-#                   78 subnets
-#                   78 lines
+#                   82 subnets
+#                   82 lines
 #   @country        CC (CC)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -94,7 +94,11 @@
 2a13:a5c3:d428::/46
 2a13:a5c7:2527::/48
 2a13:a5c7:25ff:2600::/56
+2a14:7581:b10:2f00::/56
+2a14:7581:b11:2f00::/56
 2a14:7581:b12:2f00::/56
 2a14:7581:b13:2f00::/56
 2a14:7581:b14:2f00::/56
 2a14:7581:b15:2f00::/56
+2a14:7581:b16:2f00::/56
+2a14:7581:b17:2f00::/56
