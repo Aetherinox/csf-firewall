@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_sint_maarten_south_ipset
 #   @uuid           abf4b2f6-069f-3f55-a779-85465e9257d9
-#   @updated        Tue Oct 28 12:12:46 UTC 2025
+#   @updated        Wed Oct 29 00:21:05 UTC 2025
 #   @entries        38128 ips
-#                   145 subnets
-#                   145 lines
+#                   152 subnets
+#                   152 lines
 #   @country        Sint Maarten (South) (SX)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -122,7 +122,10 @@
 2a02:26f7:b4c3:4000::/64
 2a02:26f7:b4c4:4000::/64
 2a02:26f7:b4c5:4000::/64
-2a02:26f7:b4c8::/45
+2a02:26f7:b4c8:4000::/64
+2a02:26f7:b4c9:4000::/64
+2a02:26f7:b4cc:4000::/64
+2a02:26f7:b4cd:4000::/64
 2a02:26f7:b4d0:4000::/64
 2a02:26f7:b4d1:4000::/64
 2a04:1d41:ec00::/40
@@ -161,7 +164,11 @@
 2a11:3a82:c000::/35
 2a13:a5c7:25d2::/48
 2a13:a5c7:25ff:d200::/56
+2a14:7581:b10:9a00::/56
+2a14:7581:b11:9a00::/56
 2a14:7581:b12:9a00::/56
 2a14:7581:b13:9a00::/56
 2a14:7581:b14:9a00::/56
 2a14:7581:b15:9a00::/56
+2a14:7581:b16:9a00::/56
+2a14:7581:b17:9a00::/56
