@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_kuwait_ipset
 #   @uuid           a3149a3b-3211-3a11-81f0-63d5d20882b2
-#   @updated        Tue Oct 28 12:12:22 UTC 2025
-#   @entries        1931053 ips
-#                   1192 subnets
-#                   1192 lines
+#   @updated        Wed Oct 29 00:20:39 UTC 2025
+#   @entries        1931069 ips
+#                   1197 subnets
+#                   1197 lines
 #   @country        Kuwait (KW)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -334,6 +334,7 @@
 172.225.121.224/27
 172.225.158.200/29
 172.225.161.16/28
+172.225.161.208/28
 172.225.180.80/28
 172.225.181.72/29
 172.225.218.96/29
@@ -1208,7 +1209,11 @@
 2a13:a5c3:d45c::/46
 2a13:a5c7:257b::/48
 2a13:a5c7:25ff:7a00::/56
+2a14:7581:b10:7600::/56
+2a14:7581:b11:7600::/56
 2a14:7581:b12:7600::/56
 2a14:7581:b13:7600::/56
 2a14:7581:b14:7600::/56
 2a14:7581:b15:7600::/56
+2a14:7581:b16:7600::/56
+2a14:7581:b17:7600::/56

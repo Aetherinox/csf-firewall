@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_saint_lucia_ipset
 #   @uuid           2a5fae01-bc88-39d7-b89f-a01ed9c491f3
-#   @updated        Tue Oct 28 12:12:23 UTC 2025
+#   @updated        Wed Oct 29 00:20:40 UTC 2025
 #   @entries        39041 ips
-#                   255 subnets
-#                   255 lines
+#                   259 subnets
+#                   259 lines
 #   @country        Saint Lucia (LC)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -270,8 +270,12 @@
 2a11:a685:7000::/36
 2a13:a5c7:2580::/48
 2a13:a5c7:25ff:7f00::/56
+2a14:7581:b10:bf00::/56
+2a14:7581:b11:bf00::/56
 2a14:7581:b12:bf00::/56
 2a14:7581:b13:bf00::/56
 2a14:7581:b14:bf00::/56
 2a14:7581:b15:bf00::/56
+2a14:7581:b16:bf00::/56
+2a14:7581:b17:bf00::/56
 2a14:7584:e013::/48
