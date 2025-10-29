@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_united_arab_emirates_ipset
 #   @uuid           cea0d497-6bbf-3fef-a995-cb9c6499fdeb
-#   @updated        Wed Oct 29 00:19:56 UTC 2025
+#   @updated        Wed Oct 29 12:12:23 UTC 2025
 #   @entries        5578667 ips
 #                   5007 subnets
 #                   5007 lines
