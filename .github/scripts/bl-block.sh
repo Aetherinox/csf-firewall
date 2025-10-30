@@ -545,6 +545,34 @@ else
 fi
 
 # #
+#   Final Cleanup › Remove Duplicate IPs (Preserve Order)
+#       - Keeps file structure intact (comments, blank lines stay in place)
+#       - Remove duplicates for valid IPv4 or IPv6 addresses (mainly from static)
+# #
+
+if [ -f "${APP_FILE_PERM}" ]; then
+    info "    🧹 Removing duplicate IP entries from ${bluel}${PWD}/${APP_FILE_PERM}${greym}"
+
+    awk '
+        # Simple regex patterns (POSIX safe)
+        /^[[:space:]]*[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/ {
+            ip = $1
+            if (!seen[ip]++) print $0
+            next
+        }
+        /^[[:space:]]*[0-9A-Fa-f:]+$/ {
+            ip = $1
+            if (!seen[ip]++) print $0
+            next
+        }
+        # Otherwise (comment, blank, etc.)
+        { print $0 }
+    ' "${APP_FILE_PERM}" > "${APP_FILE_PERM}.tmp" && mv "${APP_FILE_PERM}.tmp" "${APP_FILE_PERM}"
+
+    ok "    ✅ Duplicate IPs removed (order preserved)"
+fi
+
+# #
 #   Template › Header
 # #
 
