@@ -3229,24 +3229,24 @@ figure img
 {
     border-radius: 100%;
     display: block;
-    height: 2.1rem;
+    height: 2.5rem;
     margin: .2rem;
     overflow: hidden;
     transform: scale(1);
     transition: color 125ms,transform 125ms;
-    width: 2.1rem;
+    width: 2.5rem;
 }
 
 .md-typeset .mdx-sponsorship__item
 {
     border-radius: 100%;
     display: block;
-    height: 2.1rem !important;
+    height: 2.5rem !important;
     margin: .2rem;
     overflow: hidden;
     transform: scale(1);
     transition: color 125ms,transform 125ms;
-    width: 2.1rem !important;
+    width: 2.5rem !important;
 }
 
 .md-typeset .mdx-sponsorship__item:focus,
@@ -3452,7 +3452,6 @@ figure img
 {
     display: flex;
     flex-direction: column;
-    align-items: center;
     width: 100%;
     padding: 16px 0;
 }
@@ -3477,7 +3476,7 @@ figure img
     flex-wrap: wrap;
     justify-content: center;
     gap: 6px;
-    padding: 16px 0;
+    padding-top: 2.5em;
 }
 
 /*
@@ -3491,6 +3490,11 @@ figure img
     align-items: center;
     gap: 6px;
     padding: 16px 0;
+}
+
+.sponsor-desc
+{
+    text-align: left;
 }
 
 .sponsor-loader .dot
