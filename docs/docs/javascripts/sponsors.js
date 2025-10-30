@@ -11,6 +11,9 @@ document$.subscribe( async function( )
     sponsorList.innerHTML = `
         <div class="sponsor-container" id="github-container">
             <h2>Insiders Participants</h2>
+
+            <div class='sponsor-desc'> The following users have opted to participate in our <b>Insiders</b> program:</div>
+
             <div class="sponsor-loader" id="github-loader">
                 <div class="dot"></div>
                 <div class="dot"></div>
@@ -21,6 +24,9 @@ document$.subscribe( async function( )
 
         <div class="sponsor-container" id="bmac-container">
             <h2>BuyMeACoffee Sponsors</h2>
+    
+            <div class='sponsor-desc'> The following users have contributed to CSF by becoming a <b>Sponsor</b>:</div>
+
             <div class="sponsor-loader" id="bmac-loader">
                 <div class="dot"></div>
                 <div class="dot"></div>
@@ -41,19 +47,38 @@ document$.subscribe( async function( )
         if ( !response.ok )
             throw new Error( 'Failed to fetch GitHub sponsors: ' + response.status );
 
-        const sponsors          = await response.json( );
+        /*
+            Grab json data
+        */
+
+        const data              = await response.json( );
+
+        /*
+            Handle internal API errors (even if response.ok is true)
+        */
+
+        if ( data.error === true || data.success === false )
+        {
+            const msg = data?.message?.result || 'Unknown API error occurred';
+            throw new Error( `API error: ${ msg }` );
+        }
+
+        /*
+            Fetch Supporters
+        */
+        
         const loader            = document.getElementById('github-loader');
         const avatars           = document.getElementById('github-avatars');
 
         loader.style.display    = 'none'; // hide loader once data loads
 
-        if ( !Array.isArray( sponsors ) || sponsors.length === 0 )
+        if ( !Array.isArray( data ) || data.length === 0 )
         {
             avatars.innerHTML   = '<em>No GitHub sponsors yet</em>';
         }
         else
         {
-            sponsors.forEach( sponsor =>
+            data.forEach( sponsor =>
             {
                 const username          = sponsor.github_id;
                 if ( !username )
@@ -100,8 +125,27 @@ document$.subscribe( async function( )
         if ( !response.ok )
             throw new Error( 'Failed to fetch BuyMeACoffee supporters: ' + response.status );
 
+        /*
+            Grab json data
+        */
+
         const data              = await response.json( );
-        const supporters        = Array.isArray( data.supporters ) ? data.supporters : [];
+
+        /*
+            Handle internal API errors (even if response.ok is true)
+        */
+
+        if ( data.error === true || data.success === false )
+        {
+            const msg = data?.message?.result || 'Unknown API error occurred';
+            throw new Error( `API error: ${ msg }` );
+        }
+
+        /*
+            Fetch Supporters
+        */
+
+        const supporters        = Array.isArray( data.message.supporters ) ? data.message.supporters : [];
         const loader            = document.getElementById( 'bmac-loader' );
         const avatars           = document.getElementById( 'bmac-avatars' );
 
