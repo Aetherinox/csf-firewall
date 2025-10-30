@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_algeria_ipset
 #   @uuid           553a79f5-da17-3585-bcbb-964dba5f726e
-#   @updated        Thu Oct 30 00:18:33 UTC 2025
+#   @updated        Thu Oct 30 12:11:56 UTC 2025
 #   @entries        4779375 ips
 #                   505 subnets
 #                   505 lines
