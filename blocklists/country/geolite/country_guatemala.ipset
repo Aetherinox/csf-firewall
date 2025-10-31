@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_guatemala_ipset
 #   @uuid           bf3a0112-a689-3c9e-8edc-abd284b3121d
-#   @updated        Thu Oct 30 12:12:06 UTC 2025
+#   @updated        Fri Oct 31 00:17:52 UTC 2025
 #   @entries        695348 ips
 #                   787 subnets
 #                   787 lines
