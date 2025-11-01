@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_maldives_ipset
 #   @uuid           ccda0536-ca04-3cac-8990-d43feabfbd13
-#   @updated        Fri Oct 31 12:12:08 UTC 2025
-#   @entries        104674 ips
-#                   878 subnets
-#                   878 lines
+#   @updated        Sat Nov  1 00:20:07 UTC 2025
+#   @entries        104676 ips
+#                   879 subnets
+#                   879 lines
 #   @country        Maldives (MV)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -134,6 +134,7 @@
 157.167.236.27/32
 157.167.236.28/32
 157.167.236.62/32
+162.10.17.76/31
 162.158.143.0/24
 163.116.195.80/32
 163.116.195.89/32
