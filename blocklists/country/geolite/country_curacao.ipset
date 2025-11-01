@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_curacao_ipset
 #   @uuid           9fbaba46-3c5a-34cc-8153-ebeefb61eb48
-#   @updated        Fri Oct 31 12:11:33 UTC 2025
+#   @updated        Sat Nov  1 00:19:36 UTC 2025
 #   @entries        188408 ips
-#                   235 subnets
-#                   235 lines
+#                   236 subnets
+#                   236 lines
 #   @country        Curacao (CW)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -144,11 +144,11 @@
 216.152.160.0/20
 217.78.240.0/20
 2001:470:5:47::/64
+2001:470:5:231::/64
 2001:470:5:267::/64
 2001:470:5:26b::/64
 2001:470:24:20f::/64
 2001:470:24:653::/64
-2001:470:24:a06::/64
 2001:470:28:bab::/64
 2001:470:36:338::/64
 2001:470:36:427::/64
@@ -164,6 +164,7 @@
 2001:470:b84e::/48
 2001:470:b921::/48
 2001:470:d8cb::/48
+2001:470:d98b::/48
 2001:470:ec34::/48
 2001:470:ee9a::/48
 2001:470:fe42::/48
