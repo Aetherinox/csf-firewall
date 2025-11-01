@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_falkland_islands_malvinas_ipset
 #   @uuid           2da2d619-cdc5-3819-b123-fe8f0ea2d37d
-#   @updated        Fri Oct 31 12:11:41 UTC 2025
+#   @updated        Sat Nov  1 00:19:43 UTC 2025
 #   @entries        4483 ips
-#                   113 subnets
-#                   113 lines
+#                   112 subnets
+#                   112 lines
 #   @country        Falkland Islands Malvinas (FK)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -93,7 +93,6 @@
 2a04:1d45:c200::/40
 2a04:1d46:c200::/40
 2a04:1d47:c200::/40
-2a04:4e41:14:3600::/56
 2a04:4e41:21a::/48
 2a04:4e41:1332::/48
 2a04:4e41:1628::/48
