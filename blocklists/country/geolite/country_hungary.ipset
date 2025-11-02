@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_hungary_ipset
 #   @uuid           951217fc-b9dc-3eb3-bb79-77b92b18bf52
-#   @updated        Sat Nov  1 12:12:05 UTC 2025
+#   @updated        Sun Nov  2 00:20:48 UTC 2025
 #   @entries        5970332 ips
 #                   2982 subnets
 #                   2982 lines
