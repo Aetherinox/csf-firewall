@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_kiribati_ipset
 #   @uuid           ca0f8c07-eb02-38c2-963c-4b20c58af62e
-#   @updated        Sun Nov  2 00:20:55 UTC 2025
+#   @updated        Sun Nov  2 12:13:22 UTC 2025
 #   @entries        8162 ips
 #                   233 subnets
 #                   233 lines
