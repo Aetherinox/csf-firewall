@@ -3991,7 +3991,7 @@ sub doupdate
         }
         else
         {
-            print "csf is already at the latest version: v$version\n";
+            if (-t STDOUT) {print "csf is already at the latest version: v$version\n"} ##no critic
         }
     }
     else
