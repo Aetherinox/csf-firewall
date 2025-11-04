@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_greenland_ipset
 #   @uuid           23850ec9-0384-3828-a795-c7d8b5f1c64b
-#   @updated        Tue Nov  4 00:19:56 UTC 2025
+#   @updated        Tue Nov  4 12:12:18 UTC 2025
 #   @entries        35651 ips
 #                   284 subnets
 #                   284 lines
