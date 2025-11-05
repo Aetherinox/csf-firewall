@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_slovenia_ipset
 #   @uuid           849ad83a-3ae5-3537-9f1d-0e94d92529f5
-#   @updated        Wed Nov  5 00:19:36 UTC 2025
+#   @updated        Wed Nov  5 12:12:49 UTC 2025
 #   @entries        2648621 ips
 #                   1573 subnets
 #                   1573 lines
