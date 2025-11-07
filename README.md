@@ -64,7 +64,7 @@
 <br />
 
 - [Summary](#summary)
-- [Beware of Fake Websites \& Scams](#beware-of-fake-websites--scams)
+- [⚠️ Beware of Fake Websites \& Scams ⚠️](#️-beware-of-fake-websites--scams-️)
 - [Features](#features)
   - [Firewall \& Network Security](#firewall--network-security)
   - [Login \& User Monitoring](#login--user-monitoring)
@@ -133,7 +133,7 @@ This provides better security for your server while giving you an advanced, easy
 
 <br />
 
-## Beware of Fake Websites & Scams
+## ⚠️ Beware of Fake Websites & Scams ⚠️
 
 There are a few **fake websites** circulating that claim to sell a *"commercial"* version of **ConfigServer Security and Firewall (CSF)**.
 
