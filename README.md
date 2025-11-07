@@ -64,6 +64,7 @@
 <br />
 
 - [Summary](#summary)
+- [Beware of Fake Websites \& Scams](#beware-of-fake-websites--scams)
 - [Features](#features)
   - [Firewall \& Network Security](#firewall--network-security)
   - [Login \& User Monitoring](#login--user-monitoring)
@@ -125,6 +126,24 @@ This provides better security for your server while giving you an advanced, easy
 
 > [!NOTE] 
 > In August 2025, the original developer, Way to the Web Ltd, unfortunately discontinued development of ConfigServer Firewall. This repository has since became a fork of the original application, continuing its development by adding new features and providing ongoing bug fixes.
+
+<br />
+
+---
+
+<br />
+
+## Beware of Fake Websites & Scams
+
+There are a few **fake websites** circulating that claim to sell a *"commercial"* version of **ConfigServer Security and Firewall (CSF)**.
+
+These are **not legitimate**.
+
+ConfigServer Security and Firewall is completely **open-source and free** — we will **never charge you** for the product.
+
+When visiting our official website, make sure you're using the `.dev` domain (TLD):
+
+- [https://configserver.dev](https://configserver.dev)
 
 <br />
 
