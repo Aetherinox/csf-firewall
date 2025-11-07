@@ -64,7 +64,7 @@
 <br />
 
 - [Summary](#summary)
-- [⚠️ Beware of Fake Websites \& Scams ⚠️](#️-beware-of-fake-websites--scams-️)
+- [⚠️ Beware of Fake Repositories \& Website Scams ⚠️](#️-beware-of-fake-repositories--website-scams-️)
 - [Features](#features)
   - [Firewall \& Network Security](#firewall--network-security)
   - [Login \& User Monitoring](#login--user-monitoring)
@@ -133,17 +133,18 @@ This provides better security for your server while giving you an advanced, easy
 
 <br />
 
-## ⚠️ Beware of Fake Websites & Scams ⚠️
+## ⚠️ Beware of Fake Repositories & Website Scams ⚠️
 
-There are a few **fake websites** circulating that claim to sell a *"commercial"* version of **ConfigServer Security and Firewall (CSF)**.
+There are a few Github users who have been forking our repository and producing **fake websites** which claim to sell a *"commercial"* version of **ConfigServer Security and Firewall (CSF)**.
 
 These are **not legitimate**.
 
 ConfigServer Security and Firewall is completely **open-source and free** — we will **never charge you** for the product.
 
-When visiting our official website, make sure you're using the `.dev` domain (TLD):
+To ensure you have the official repository and domain, you should only use the links below, and ensure you are visiting our `.dev` domain / TLD:
 
-- [https://configserver.dev](https://configserver.dev)
+- [https://configserver.dev](https://docs.configserver.dev)
+- [https://github.com/Aetherinox/csf-firewall](https://github.com/Aetherinox/csf-firewall)
 
 <br />
 
