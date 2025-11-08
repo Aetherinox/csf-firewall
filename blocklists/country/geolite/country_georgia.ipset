@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_georgia_ipset
 #   @uuid           dd1f414b-3a04-3945-8333-54ec8d6c72ff
-#   @updated        Fri Nov  7 12:11:44 UTC 2025
-#   @entries        1290890 ips
-#                   808 subnets
-#                   808 lines
+#   @updated        Sat Nov  8 00:17:41 UTC 2025
+#   @entries        1291402 ips
+#                   809 subnets
+#                   809 lines
 #   @country        Georgia (GE)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -283,6 +283,7 @@
 159.26.125.0/24
 160.25.104.117/32
 160.25.105.117/32
+160.225.0.0/23
 162.120.184.50/32
 162.120.184.114/32
 162.120.184.178/32
@@ -540,7 +541,7 @@
 2001:470:88aa::/48
 2001:470:8985::/48
 2001:470:b5e6::/48
-2001:470:b628::/48
+2001:470:b65e::/48
 2001:470:c8d9::/48
 2001:470:edc5::/48
 2001:470:fe7b::/48
