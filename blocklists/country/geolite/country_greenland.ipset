@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_greenland_ipset
 #   @uuid           23850ec9-0384-3828-a795-c7d8b5f1c64b
-#   @updated        Fri Nov  7 12:11:45 UTC 2025
+#   @updated        Sat Nov  8 00:17:43 UTC 2025
 #   @entries        35651 ips
-#                   291 subnets
-#                   291 lines
+#                   290 subnets
+#                   290 lines
 #   @country        Greenland (GL)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -310,4 +310,3 @@
 2a14:7581:b15:5900::/56
 2a14:7581:b16:5900::/56
 2a14:7581:b17:5900::/56
-2a14:c380:369::/48

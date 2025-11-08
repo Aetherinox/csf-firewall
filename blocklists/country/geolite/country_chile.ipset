@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_chile_ipset
 #   @uuid           d9f6ded5-1dd7-3d44-830a-adb2e08cde4c
-#   @updated        Fri Nov  7 12:11:30 UTC 2025
+#   @updated        Sat Nov  8 00:17:27 UTC 2025
 #   @entries        10813390 ips
-#                   2937 subnets
-#                   2937 lines
+#                   2935 subnets
+#                   2935 lines
 #   @country        Chile (CL)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -219,6 +219,7 @@
 45.68.44.0/22
 45.71.8.0/22
 45.71.44.0/22
+45.74.62.0/24
 45.82.103.0/24
 45.87.10.0/24
 45.133.0.0/24
@@ -928,7 +929,6 @@
 155.190.29.44/32
 155.204.160.0/21
 156.97.0.0/16
-156.235.43.0/24
 156.235.77.0/24
 156.235.78.0/24
 156.246.174.0/23
@@ -2613,14 +2613,12 @@
 2a00:79e0:3600:1800::/55
 2a00:79e0:ffe2:9900::/56
 2a00:79e0:ffe2:b500::/56
-2a00:79e0:ffe3:f100::/56
 2a00:79e0:ffe4:1600::/56
 2a00:79e0:ffe4:a700::/56
 2a00:79e0:ffe4:a900::/56
 2a00:79e0:ffe5:600::/56
 2a00:79e0:ffe5:2e00::/56
 2a00:79e1:abc:3200::/56
-2a00:79e1:abc:6300::/56
 2a00:79e1:abc:af00::/56
 2a00:79e1:abd:6100::/56
 2a00:79e1:2600:800::/55
