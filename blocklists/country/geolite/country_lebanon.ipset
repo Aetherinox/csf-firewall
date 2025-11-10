@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_lebanon_ipset
 #   @uuid           d0a79f55-389a-31c6-ad63-aab24324fef7
-#   @updated        Mon Nov 10 00:19:29 UTC 2025
+#   @updated        Mon Nov 10 12:13:16 UTC 2025
 #   @entries        582334 ips
 #                   622 subnets
 #                   622 lines
