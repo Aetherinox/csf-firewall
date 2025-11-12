@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_senegal_ipset
 #   @uuid           f2695eb3-c9b5-3096-a7ab-515dbc9d85cc
-#   @updated        Tue Nov 11 12:12:31 UTC 2025
+#   @updated        Wed Nov 12 00:19:11 UTC 2025
 #   @entries        414939 ips
-#                   273 subnets
-#                   273 lines
+#                   274 subnets
+#                   274 lines
 #   @country        Senegal (SN)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -156,6 +156,7 @@
 202.181.130.32/29
 212.32.90.0/24
 213.154.64.0/19
+2001:470:8:4f7::/64
 2001:470:d:447::/64
 2001:470:19:3dc::/64
 2001:470:36:198::/64
