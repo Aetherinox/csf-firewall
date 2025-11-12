@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_palau_ipset
 #   @uuid           1599150f-4c34-3b16-86a9-ef52eff39b9c
-#   @updated        Tue Nov 11 12:12:24 UTC 2025
+#   @updated        Wed Nov 12 00:19:05 UTC 2025
 #   @entries        8698 ips
-#                   158 subnets
-#                   158 lines
+#                   160 subnets
+#                   160 lines
 #   @country        Palau (PW)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -91,6 +91,7 @@
 202.124.224.0/20
 2001:470:d:321::/64
 2001:470:d:83d::/64
+2001:470:19:881::/64
 2001:470:36:180::/64
 2001:470:36:1c8::/64
 2001:470:36:7d3::/64
@@ -100,6 +101,7 @@
 2001:470:887f::/48
 2001:470:efca::/48
 2001:470:f2f3::/48
+2001:470:fbe1::/48
 2001:67c:ec8::/48
 2001:4b28:2600::/40
 2401:6e0::/32
