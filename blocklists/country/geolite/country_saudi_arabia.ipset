@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_saudi_arabia_ipset
 #   @uuid           e00c2b4b-7f02-331c-b7b5-4e33b95fd20f
-#   @updated        Wed Nov 12 12:12:24 UTC 2025
+#   @updated        Thu Nov 13 00:20:09 UTC 2025
 #   @entries        11550312 ips
 #                   2147 subnets
 #                   2147 lines
