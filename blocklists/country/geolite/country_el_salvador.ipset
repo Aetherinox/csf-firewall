@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_el_salvador_ipset
 #   @uuid           8dacfc48-0fbb-39b1-b688-8dc4fde049a7
-#   @updated        Fri Nov 14 12:12:33 UTC 2025
-#   @entries        696700 ips
-#                   491 subnets
-#                   491 lines
+#   @updated        Sat Nov 15 00:18:40 UTC 2025
+#   @entries        696732 ips
+#                   492 subnets
+#                   492 lines
 #   @country        El Salvador (SV)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -31,6 +31,7 @@
 45.5.12.0/24
 45.6.248.0/21
 45.81.127.0/24
+45.83.146.0/27
 45.152.216.0/22
 45.161.24.0/22
 45.164.207.0/24
