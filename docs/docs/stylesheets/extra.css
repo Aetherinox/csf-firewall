@@ -1754,9 +1754,10 @@
     padding-top: 15px;
 }
 
-/*
-    Icon color > yellow
-*/
+.icon-clr-white
+{
+    color: #FFFFFF;
+}
 
 .icon-clr-yellow
 {
