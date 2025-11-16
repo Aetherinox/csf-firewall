@@ -1316,10 +1316,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#enable-docker-mode" class="md-nav__link">
+  <a href="#what-is-docker" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Enable Docker Mode
+        What is Docker?
       
     </span>
   </a>
@@ -1327,10 +1327,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-is-docker" class="md-nav__link">
+  <a href="#docker-and-csf" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What is Docker?
+        Docker and CSF
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enable-docker-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enable Docker Mode
       
     </span>
   </a>
@@ -1362,17 +1373,6 @@
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#conclusion" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Conclusion
-      
-    </span>
-  </a>
   
 </li>
       
@@ -3327,10 +3327,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#enable-docker-mode" class="md-nav__link">
+  <a href="#what-is-docker" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Enable Docker Mode
+        What is Docker?
       
     </span>
   </a>
@@ -3338,10 +3338,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-is-docker" class="md-nav__link">
+  <a href="#docker-and-csf" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What is Docker?
+        Docker and CSF
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enable-docker-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enable Docker Mode
       
     </span>
   </a>
@@ -3373,17 +3384,6 @@
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#conclusion" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Conclusion
-      
-    </span>
-  </a>
   
 </li>
       
@@ -3525,7 +3525,37 @@
 
 
 <h1 id="docker-integration"><abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> Integration<a class="headerlink" href="#docker-integration" title="Permanent link">¶</a></h1>
-<p>Running <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> in environments that leverage <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> requires special considerations due to containerized networking and isolated interfaces. This section provides guidance on configuring <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> to recognize <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> networks, manage container IP ranges, and ensure that firewall rules do not interfere with container-to-host or container-to-container communication. Following these steps will help maintain both security and functionality in your <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr>-based infrastructure.</p>
+<p>Running <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> in environments that leverage <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> requires special considerations due to containerized networking and isolated interfaces.</p>
+<p>This section provides guidance on configuring <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> to recognize <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> networks, manage container IP ranges, and ensure that firewall rules do not interfere with container-to-host or container-to-container communication.</p>
+<p>Following these steps will help maintain both security and functionality in your <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr>-based infrastructure.</p>
+<p><br></p>
+<hr>
+<p><br></p>
+<h2 id="what-is-docker">What is <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr>?<a class="headerlink" href="#what-is-docker" title="Permanent link">¶</a></h2>
+<p><abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> is a platform that lets you run applications inside <strong>containers</strong>, which are small, isolated environments that bundle everything your app needs to run.</p>
+<p>A container can be described as a sealed mini virtual machine which includes:</p>
+<ul>
+<li>Distro binaries</li>
+<li>If your image runs on a distro such as Alpine or Ubuntu</li>
+<li>The application’s code </li>
+<li>Any required libraries or <abbr title="A list of packages required for CSF to function properly">dependencies</abbr> </li>
+<li>Configuration files</li>
+</ul>
+<p>Because all of this is packaged together, it ensures that the app runs exactly the same everywhere, such as your laptop, a production server, a homelab machine, or in the cloud. It attempts to solve the problem of <em>"It works on my machine, but not on yours"</em>.</p>
+<p>Unlike full virtual machines, <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> containers don’t include an entire operating system. Instead, they <strong>share the host OS</strong> while keeping their processes isolated. This gives each container the feel of a mini-system, but with:</p>
+<ul>
+<li>Much less overhead</li>
+<li>Faster startup</li>
+<li>Lower resource usage</li>
+</ul>
+<p><br></p>
+<hr>
+<p><br></p>
+<h2 id="docker-and-csf"><abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> and <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr><a class="headerlink" href="#docker-and-csf" title="Permanent link">¶</a></h2>
+<p><abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> containers run isolated from the host system and from each other, using their own virtualized networking interfaces. <abbr title="ConfigServer Security &amp; Firewall Security">ConfigServer Firewall</abbr> (<abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>) needs to understand this containerized network environment in order to properly manage traffic.</p>
+<p>By supporting <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr>, <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> can allow containers to communicate with each other internally, while also controlling and securing access to the public internet.</p>
+<p>Without <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr>-aware firewall rules, containers may be blocked from sending or receiving traffic, breaking applications that rely on network communication.</p>
+<p><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> ensures that container-to-container communication, external access, and port mappings are properly managed, maintaining both security and functionality in environments where <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> is used.</p>
 <p><br></p>
 <hr>
 <p><br></p>
@@ -3563,12 +3593,6 @@
 </div>
 </div>
 </div>
-<p><br></p>
-<hr>
-<p><br></p>
-<h2 id="what-is-docker">What is <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr>?<a class="headerlink" href="#what-is-docker" title="Permanent link">¶</a></h2>
-<p><abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> is a platform that allows developers and system administrators to package applications and their <abbr title="A list of packages required for CSF to function properly">dependencies</abbr> into lightweight, portable containers. These containers run consistently across different environments, ensuring that software behaves the same on a developer’s laptop as it does on production servers. By isolating applications from the underlying operating system, <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> simplifies deployment, scaling, and management, making it an essential tool for modern infrastructure and DevOps practices.</p>
-<p>While <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> containers are not full virtual machines, they function in a similar way by providing isolated environments for applications. Each container has its own filesystem, processes, and network interfaces, allowing multiple containers to run on the same host without interfering with each other. This isolation provides many of the benefits of traditional virtual machines but with far lower overhead and faster startup times.</p>
 <p><br></p>
 <hr>
 <p><br></p>
@@ -3610,11 +3634,6 @@
 </div>
 </div>
 </div>
-<p><br></p>
-<hr>
-<p><br></p>
-<h2 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">¶</a></h2>
-<p>If you do all of the steps above, you should now be able to access the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface through your browser, with the added protection of <abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr>. This will allow you to access the web interface from other locations, implement <abbr title="A component in Traefik that modifies requests or responses before they reach a service or client.">middleware</abbr> such as IP whitelisting, and not expose the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface port to the world. You should <strong>NOT</strong> be allowing any connection to access the web interface, even if they don't have the username and password to sign in.</p>
 <p><br></p>
 <hr>
 <p><br></p>
@@ -3671,7 +3690,7 @@ your server secure.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 2, 2025 22:37:32 UTC"><span class="timeago" datetime="2025-10-02T22:37:32+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 2, 2025 22:37:32 UTC">2025-10-02</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="November 16, 2025 13:35:27 UTC"><span class="timeago" datetime="2025-11-16T13:35:27+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="November 16, 2025 13:35:27 UTC">2025-11-16</span>
   </span>
 
     
