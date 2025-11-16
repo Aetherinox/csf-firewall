@@ -9,7 +9,53 @@ tags:
 
 # Docker Integration
 
-Running CSF in environments that leverage Docker requires special considerations due to containerized networking and isolated interfaces. This section provides guidance on configuring CSF to recognize Docker networks, manage container IP ranges, and ensure that firewall rules do not interfere with container-to-host or container-to-container communication. Following these steps will help maintain both security and functionality in your Docker-based infrastructure.
+Running CSF in environments that leverage Docker requires special considerations due to containerized networking and isolated interfaces.
+
+This section provides guidance on configuring CSF to recognize Docker networks, manage container IP ranges, and ensure that firewall rules do not interfere with container-to-host or container-to-container communication.
+
+Following these steps will help maintain both security and functionality in your Docker-based infrastructure.
+
+<br />
+
+---
+
+<br />
+
+## What is Docker?
+
+Docker is a platform that lets you run applications inside **containers**, which are small, isolated environments that bundle everything your app needs to run.
+
+A container can be described as a sealed mini virtual machine which includes:
+
+- Distro binaries
+  - If your image runs on a distro such as Alpine or Ubuntu
+- The application’s code 
+- Any required libraries or dependencies 
+- Configuration files
+
+Because all of this is packaged together, it ensures that the app runs exactly the same everywhere, such as your laptop, a production server, a homelab machine, or in the cloud. It attempts to solve the problem of _"It works on my machine, but not on yours"_.
+
+Unlike full virtual machines, Docker containers don’t include an entire operating system. Instead, they **share the host OS** while keeping their processes isolated. This gives each container the feel of a mini-system, but with:
+
+- Much less overhead
+- Faster startup
+- Lower resource usage
+
+<br />
+
+---
+
+<br />
+
+## Docker and CSF
+
+Docker containers run isolated from the host system and from each other, using their own virtualized networking interfaces. ConfigServer Firewall (CSF) needs to understand this containerized network environment in order to properly manage traffic.
+
+By supporting Docker, CSF can allow containers to communicate with each other internally, while also controlling and securing access to the public internet.
+
+Without Docker-aware firewall rules, containers may be blocked from sending or receiving traffic, breaking applications that rely on network communication.
+
+CSF ensures that container-to-container communication, external access, and port mappings are properly managed, maintaining both security and functionality in environments where Docker is used.
 
 <br />
 
@@ -52,18 +98,6 @@ Afterward, give your Docker service a restart:
       ```shell
       sudo service docker restart
       ```
-
-<br />
-
----
-
-<br />
-
-## What is Docker?
-
-Docker is a platform that allows developers and system administrators to package applications and their dependencies into lightweight, portable containers. These containers run consistently across different environments, ensuring that software behaves the same on a developer’s laptop as it does on production servers. By isolating applications from the underlying operating system, Docker simplifies deployment, scaling, and management, making it an essential tool for modern infrastructure and DevOps practices.
-
-While Docker containers are not full virtual machines, they function in a similar way by providing isolated environments for applications. Each container has its own filesystem, processes, and network interfaces, allowing multiple containers to run on the same host without interfering with each other. This isolation provides many of the benefits of traditional virtual machines but with far lower overhead and faster startup times.
 
 <br />
 
@@ -119,16 +153,6 @@ You can now restart the Docker container again.
       ``` shell
       docker run --name <container_name_or_id> --restart unless-stopped ...
       ```
-
-<br />
-
----
-
-<br />
-
-## Conclusion
-
-If you do all of the steps above, you should now be able to access the CSF web interface through your browser, with the added protection of Traefik. This will allow you to access the web interface from other locations, implement middleware such as IP whitelisting, and not expose the CSF web interface port to the world. You should **NOT** be allowing any connection to access the web interface, even if they don't have the username and password to sign in.
 
 <br />
 
