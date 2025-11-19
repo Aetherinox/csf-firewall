@@ -274,6 +274,9 @@ nav:
           - Start Services: 'install/services.md'
           - Enable Web Interface: 'install/webui.md'
           - Uninstall: 'install/uninstall.md'
+          - Update:
+                - v14.x to v15.x: 'install/update/v14-to-v15.md'
+                - v15.x to Newer: 'install/update/v15-to-newer.md'
           - Integrations:
                 - Authentik: 'install/integrations/authentik.md'
                 - Docker: 'install/integrations/docker.md'
@@ -301,9 +304,10 @@ nav:
             - download.configserver.dev: 'services/download.configserver.md'
             - get.configserver.dev: 'services/get.configserver.md'
     - Changelog: 'about/changelog.md'
-    - Insiders:
+    - About Insiders:
           - About: insiders/about.md
-          - Payment and Billing: insiders/payments_and_billing.md
+          - Payments and Billing: insiders/payments_and_billing.md
+          - Join Insiders: insiders/join.md
           - Our Sponsors: insiders/sponsors.md
           - Using Insiders:
               - Setup: insiders/setup.md
