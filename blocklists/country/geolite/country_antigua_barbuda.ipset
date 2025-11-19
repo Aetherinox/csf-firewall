@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_antigua_barbuda_ipset
 #   @uuid           a95ca522-2940-3a56-a8d9-60494c51ca1b
-#   @updated        Tue Nov 18 12:11:08 UTC 2025
+#   @updated        Wed Nov 19 00:18:33 UTC 2025
 #   @entries        68950 ips
-#                   311 subnets
-#                   311 lines
+#                   303 subnets
+#                   303 lines
 #   @country        Antigua Barbuda (AG)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -323,11 +323,3 @@
 2a11:a680:1000::/36
 2a13:a5c7:2504::/48
 2a13:a5c7:25ff:300::/56
-2a14:7581:b10:800::/56
-2a14:7581:b11:800::/56
-2a14:7581:b12:800::/56
-2a14:7581:b13:800::/56
-2a14:7581:b14:800::/56
-2a14:7581:b15:800::/56
-2a14:7581:b16:800::/56
-2a14:7581:b17:800::/56
