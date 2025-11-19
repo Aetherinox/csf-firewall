@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_french_southern_territories_ipset
 #   @uuid           e91632fc-680a-3372-9d4b-fa4df3b3b847
-#   @updated        Tue Nov 18 12:12:16 UTC 2025
+#   @updated        Wed Nov 19 00:19:43 UTC 2025
 #   @entries        31 ips
-#                   69 subnets
-#                   69 lines
+#                   61 subnets
+#                   61 lines
 #   @country        French Southern Territories (TF)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -80,12 +80,4 @@
 2a11:3a83:4000::/35
 2a13:a5c7:25d7::/48
 2a13:a5c7:25ff:d700::/56
-2a14:7581:b10:4e00::/56
-2a14:7581:b11:4e00::/56
-2a14:7581:b12:4e00::/56
-2a14:7581:b13:4e00::/56
-2a14:7581:b14:4e00::/56
-2a14:7581:b15:4e00::/56
-2a14:7581:b16:4e00::/56
-2a14:7581:b17:4e00::/56
 2a14:7584:eff2::/48

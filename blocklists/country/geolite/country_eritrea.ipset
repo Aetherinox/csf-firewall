@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_eritrea_ipset
 #   @uuid           02460c55-934a-3b46-bf18-26c0c2aab948
-#   @updated        Tue Nov 18 12:11:29 UTC 2025
+#   @updated        Wed Nov 19 00:18:54 UTC 2025
 #   @entries        7430 ips
-#                   160 subnets
-#                   160 lines
+#                   152 subnets
+#                   152 lines
 #   @country        Eritrea (ER)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -172,11 +172,3 @@
 2a10:9007:2:6::/64
 2a13:a5c7:2543::/48
 2a13:a5c7:25ff:4200::/56
-2a14:7581:b10:4300::/56
-2a14:7581:b11:4300::/56
-2a14:7581:b12:4300::/56
-2a14:7581:b13:4300::/56
-2a14:7581:b14:4300::/56
-2a14:7581:b15:4300::/56
-2a14:7581:b16:4300::/56
-2a14:7581:b17:4300::/56
