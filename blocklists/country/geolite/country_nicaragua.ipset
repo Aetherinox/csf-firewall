@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_nicaragua_ipset
 #   @uuid           780dbe2e-b3e5-3358-aa4b-377ebd887cda
-#   @updated        Wed Nov 19 12:11:57 UTC 2025
+#   @updated        Thu Nov 20 00:19:48 UTC 2025
 #   @entries        441825 ips
 #                   341 subnets
 #                   341 lines
