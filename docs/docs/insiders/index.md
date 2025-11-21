@@ -19,18 +19,13 @@ Learn more about the The ConfigServer Security & Firewall <!-- md:sponsor --> **
 
 The ConfigServer Security & Firewall <!-- md:sponsor --> **Insiders Program** is for users who want to actively support and shape the future of CSF. As an Insider, you’ll gain **early access** to upcoming features and experimental functionality before they are released to the public.
 
-We believe security should never be locked behind a paywall — your safety shouldn’t depend on your wallet. The Insiders Program simply allows you to contribute by testing new versions, supporting the project, and helping identify bugs before public release.  
+We believe security should never be locked behind a paywall — your safety shouldn’t depend on your wallet.
+
+The Insiders Program simply allows you to contribute by testing new versions, supporting the project, and helping identify bugs before public release.  
 
 Even if you’re unable to donate, that's perfectly fine. You’ll still get to enjoy the same features as our Insiders, and the application will remain open-source.
 
 Your feedback matters. If you have ideas for improvements or ways to make CSF easier to use, your input can directly influence the future direction of the project.
-
-By joining our Insiders program as a sponsor, you’ll receive the following perks:
-
-- **Insiders access** to the ConfigServer Security & Firewall release channel  
-- **[Discord](https://discord.configserver.dev)** Sponsor role  
-- Your Github avatar listed on our [Sponsors](../insiders/sponsors.md) page  
-- Opportunity to suggest additional perks you’d like to see as a Sponsor of our Insiders program [^1]
 
 <br />
 
@@ -39,6 +34,15 @@ By joining our Insiders program as a sponsor, you’ll receive the following per
 <br />
 
 ## Joining Insiders
+
+By joining our Insiders program as a sponsor, you’ll receive the following perks:
+
+- **Insiders access** to the ConfigServer Security & Firewall release channel  
+- **[Discord](https://discord.configserver.dev)** Sponsor role  
+- Your Github avatar listed on our [Sponsors](../insiders/sponsors.md) page  
+- Suggest additional perks you’d like to see as a Sponsor of our Insiders program [^1]
+
+<br />
 
 If you would like to join our **Insiders** program and become a sponsor, we have numerous ways that you can contribute:
 
@@ -57,8 +61,6 @@ If you would like to join our **Insiders** program and become a sponsor, we have
 ## Our Sponsors
 
 A huge thank you to the following people who have sponsored ConfigServer Security & Firewall.
-
-<br />
 
 <div class="mdx-sponsorship" data-mdx-component="sponsorship">
     <div class="mdx-sponsorship__list"></div>
