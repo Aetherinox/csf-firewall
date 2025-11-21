@@ -3517,6 +3517,11 @@ figure img
     animation-delay: 0.3s;
 }
 
+.md-code__nav
+{
+    background-color: unset;
+}
+
 @keyframes sponsor-pulse
 {
     0%, 80%, 100%
