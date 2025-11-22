@@ -303,8 +303,7 @@ nav:
             - blocklist.configserver.dev: 'services/blocklist.configserver.md'
             - download.configserver.dev: 'services/download.configserver.md'
             - get.configserver.dev: 'services/get.configserver.md'
-    - Changelog: 'about/changelog.md'
-    - About Insiders:
+    - Insiders:
           - About: insiders/about.md
           - Payments and Billing: insiders/payments_and_billing.md
           - Join Insiders: insiders/join.md
@@ -312,6 +311,7 @@ nav:
           - Using Insiders:
               - Setup: insiders/setup.md
               - Disable: insiders/disable.md
+    - Changelog: 'about/changelog.md'
     - Blog:
         - blog/index.md
     - Discord: 'https://discord.configserver.dev'
