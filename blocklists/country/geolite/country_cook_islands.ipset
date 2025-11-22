@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_cook_islands_ipset
 #   @uuid           a17d0ea9-ead0-31be-afee-c29fc0e72b0d
-#   @updated        Fri Nov 21 12:10:58 UTC 2025
+#   @updated        Sat Nov 22 12:10:43 UTC 2025
 #   @entries        9683 ips
-#                   149 subnets
-#                   149 lines
+#                   140 subnets
+#                   140 lines
 #   @country        Cook Islands (CK)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -103,7 +103,6 @@
 2001:470:b4fe::/48
 2001:470:efc5::/48
 2001:470:f941::/48
-2001:4b28:aa00::/40
 2401:4d20::/32
 2406:2d40:7340::/42
 2407:5800::/32
@@ -116,7 +115,6 @@
 2607:8940:37dc::/46
 2607:8940:41a0:4600::/55
 2607:8940:41e0::/55
-2a01:528:aa00::/40
 2a02:26f7:f640:4000::/64
 2a02:26f7:f640:c160::/64
 2a02:26f7:f641:4000::/64
@@ -129,13 +127,6 @@
 2a02:26f7:f648:4000::/64
 2a02:26f7:f648:c160::/64
 2a02:26f7:f649:4000::/64
-2a04:1d41:aa00::/40
-2a04:1d42:aa00::/40
-2a04:1d43:aa00::/40
-2a04:1d44:aa00::/40
-2a04:1d45:aa00::/40
-2a04:1d46:aa00::/40
-2a04:1d47:aa00::/40
 2a04:4e41:1c02::/48
 2a04:4e41:2809::/48
 2a04:4e41:2c0a::/48
