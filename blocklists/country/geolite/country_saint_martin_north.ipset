@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_saint_martin_north_ipset
 #   @uuid           9b42ad71-b3cb-329d-a5e3-6a061e4d44f1
-#   @updated        Fri Nov 21 12:11:34 UTC 2025
+#   @updated        Sat Nov 22 12:11:12 UTC 2025
 #   @entries        7941 ips
-#                   171 subnets
-#                   171 lines
+#                   162 subnets
+#                   162 lines
 #   @country        Saint Martin (North) (MF)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -117,7 +117,6 @@
 2001:470:1f2b:226::/64
 2001:470:8886::/48
 2001:470:f9af::/48
-2001:4b28:4e00::/40
 2600:70ff:a467::/48
 2600:70ff:b148::/48
 2600:70ff:b1a2::/48
@@ -140,7 +139,6 @@
 2607:8940:40b1:c00::/56
 2607:8940:4143:8d00::/56
 2607:8940:4143:8e00::/56
-2a01:528:4e00::/40
 2a02:26f7:bd80:4000::/64
 2a02:26f7:bd80:c4e0::/64
 2a02:26f7:bd81:4000::/64
@@ -156,13 +154,6 @@
 2a02:26f7:bd90:4000::/64
 2a02:26f7:bd90:c4e0::/64
 2a02:26f7:bd91:4000::/64
-2a04:1d41:4e00::/40
-2a04:1d42:4e00::/40
-2a04:1d43:4e00::/40
-2a04:1d44:4e00::/40
-2a04:1d45:4e00::/40
-2a04:1d46:4e00::/40
-2a04:1d47:4e00::/40
 2a04:4e41:3c:7::/64
 2a04:4e41:3c:1300::/56
 2a04:4e41:184::/48

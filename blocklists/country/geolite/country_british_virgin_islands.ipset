@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_british_virgin_islands_ipset
 #   @uuid           e6b4ef15-e8b2-3829-9e19-6a18222ba30d
-#   @updated        Fri Nov 21 12:12:16 UTC 2025
+#   @updated        Sat Nov 22 12:11:49 UTC 2025
 #   @entries        94893 ips
-#                   388 subnets
-#                   388 lines
+#                   380 subnets
+#                   380 lines
 #   @country        British Virgin Islands (VG)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -277,7 +277,6 @@
 2001:504:93::/48
 2001:67c:2d54::/48
 2001:df1:1f00::/48
-2001:4b28:f000::/40
 2405:6e40::/32
 2602:f55b::/40
 2602:f61e::/40
@@ -312,7 +311,6 @@
 2620:e1:c000::/48
 2620:171:b9::/48
 2a00:6e20::/32
-2a01:528:f000::/40
 2a02:26f7:e6c0:4000::/64
 2a02:26f7:e6c0:4f00::/64
 2a02:26f7:e6c1:4000::/64
@@ -327,12 +325,6 @@
 2a02:26f7:e6d0:4000::/64
 2a02:26f7:e6d0:4f00::/64
 2a02:26f7:e6d1:4000::/64
-2a04:1d41:f000::/40
-2a04:1d42:f000::/40
-2a04:1d43:f000::/40
-2a04:1d44:f000::/40
-2a04:1d45:f000::/40
-2a04:1d46:f000::/40
 2a04:2d00::/29
 2a04:4e41:614::/48
 2a04:4e41:3016::/48
