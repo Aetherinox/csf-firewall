@@ -14,12 +14,12 @@ document$.subscribe( async function( )
 
             <div class='sponsor-desc'> The following users have opted to participate in our <b>Insiders</b> program:</div>
 
-            <div class="sponsor-loader" id="github-loader">
+            <div class="sponsor-loader" id="insiders-loader">
                 <div class="dot"></div>
                 <div class="dot"></div>
                 <div class="dot"></div>
             </div>
-            <div class="sponsor-avatars" id="github-avatars"></div>
+            <div class="sponsor-avatars" id="insiders-avatars"></div>
         </div>
 
         <div class="sponsor-container" id="bmac-container">
@@ -37,7 +37,9 @@ document$.subscribe( async function( )
     `;
 
     /*
-        Service > Insiders Members
+        Service › Insiders Members
+
+        List of Insiders members who have activated a license key for the insider's branch
     */
     
     try
@@ -45,7 +47,7 @@ document$.subscribe( async function( )
         const response = await fetch( 'https://license.configserver.dev/users' );
 
         if ( !response.ok )
-            throw new Error( 'Failed to fetch GitHub sponsors: ' + response.status );
+            throw new Error( 'Failed to fetch Insiders members: ' + response.status );
 
         /*
             Grab json data
@@ -67,15 +69,14 @@ document$.subscribe( async function( )
             Extract sponsors list
         */
 
-        const users = data?.message?.result || [];
+        const users             = data?.message?.result || [];
 
         /*
-            Fetch Supporters
+            Fetch Github Sponsors
         */
         
-        const loader            = document.getElementById('github-loader');
-        const avatars           = document.getElementById('github-avatars');
-
+        const loader            = document.getElementById( 'insiders-loader' ) ;
+        const avatars           = document.getElementById( 'insiders-avatars' );
         loader.style.display    = 'none'; // hide loader once data loads
 
         if ( !Array.isArray( users ) || users.length === 0 )
@@ -93,14 +94,14 @@ document$.subscribe( async function( )
                 const githubUrl             = `https://github.com/${ username }`;
                 const avatarUrl             = `https://github.com/${ username }.png?size=100`;
 
-                const a                     = document.createElement('a');
+                const a                     = document.createElement( 'a' );
                 a.href                      = githubUrl;
                 a.title                     = `@${ username }`;
                 a.className                 = 'mdx-sponsorship__item';
                 a.target                    = '_blank';
                 a.rel                       = 'noopener';
 
-                const img                   = document.createElement('img');
+                const img                   = document.createElement( 'img' );
                 img.src                     = avatarUrl;
                 img.alt                     = `@${ username }`;
                 img.loading                 = 'lazy';
@@ -109,19 +110,22 @@ document$.subscribe( async function( )
                 img.style.borderRadius      = '50%';
                 img.style.boxShadow         = '0 2px 6px rgba(0,0,0,0.1)';
 
-                a.appendChild(img);
-                avatars.appendChild(a);
+                a.appendChild( img );
+                avatars.appendChild( a );
             });
         }
     }
-    catch (err)
+    catch ( err )
     {
-        console.error( 'Error loading GitHub sponsors:', err );
-        document.getElementById( 'github-avatars' ).innerHTML = '<em>Unable to load GitHub sponsors.</em>';
+        console.error( 'Error loading Insiders members with valid license:', err );
+        document.getElementById( 'insiders-avatars' ).innerHTML = '<em>Unable to load GitHub sponsors.</em>';
     }
 
     /*
-        Service > BuyMeACoffee
+        Service › BuyMeACoffee Sponsors
+
+        Returns a list of all BuyMeACoffee sponsors who have contributed to the project. Will display
+        an avatar, and their username on the site.
     */
 
     try
@@ -129,7 +133,7 @@ document$.subscribe( async function( )
         const response = await fetch( 'https://sponsors.configserver.dev/buymeacoffee' );
 
         if ( !response.ok )
-            throw new Error( 'Failed to fetch BuyMeACoffee supporters: ' + response.status );
+            throw new Error( 'Failed to fetch BuyMeACoffee sponsors: ' + response.status );
 
         /*
             Grab json data
@@ -148,25 +152,24 @@ document$.subscribe( async function( )
         }
 
         /*
-            Fetch Supporters
+            BuyMeACoffee > Fetch Sponsors
         */
 
-        const supporters        = Array.isArray( data.message.supporters ) ? data.message.supporters : [];
+        const sponsors          = Array.isArray( data.message.sponsors ) ? data.message.sponsors : [];
         const loader            = document.getElementById( 'bmac-loader' );
         const avatars           = document.getElementById( 'bmac-avatars' );
-
         loader.style.display    = 'none'; // hide loader once data loads
 
-        if ( supporters.length === 0 )
+        if ( sponsors.length === 0 )
         {
-            avatars.innerHTML   = '<em>No BuyMeACoffee supporters yet</em>';
+            avatars.innerHTML   = '<em>No BuyMeACoffee sponsors yet</em>';
         }
         else
         {
-            supporters.forEach( item =>
+            sponsors.forEach( item =>
             {
                 const username              = item.supporter_name || 'Unknown';
-                const avatarUrl             = item.avatar_url || getBmacAvatar( username );
+                const avatarUrl             = item.avatar_url || getMemberAvatar( username );
 
                 const a                     = document.createElement( 'a' );
                 a.href                      = '#';
@@ -191,8 +194,8 @@ document$.subscribe( async function( )
     }
     catch (err)
     {
-        console.error( 'Error loading BuyMeACoffee supporters:', err );
-        document.getElementById( 'bmac-avatars' ).innerHTML = '<em>Unable to load BuyMeACoffee supporters.</em>';
+        console.error( 'Error loading BuyMeACoffee sponsors:', err );
+        document.getElementById( 'bmac-avatars' ).innerHTML = '<em>Unable to load BuyMeACoffee sponsors.</em>';
     }
 });
 
@@ -200,16 +203,16 @@ document$.subscribe( async function( )
     Helper: generate BuyMeACoffee avatar
 */
 
-function getBmacAvatar( name )
+function getMemberAvatar( name )
 {
     if ( !name )
         return `https://api.dicebear.com/9.x/avataaars/svg?seed=Unknown`;
 
-    name = name.trim( ).replace(/^[^a-zA-Z0-9]+/, '');
-    const words = name.split(' ');
-    let initials = words.length >= 2
-        ? words[ 0 ][ 0 ].toUpperCase( ) + words[ 1 ][ 0 ].toUpperCase( )
-        : words[ 0 ].substring(0, 2).toUpperCase( );
+    name                = name.trim( ).replace(/^[^a-zA-Z0-9]+/, '');
+    const words         = name.split(' ');
+    let initials        = words.length >= 2
+                            ? words[ 0 ][ 0 ].toUpperCase( ) + words[ 1 ][ 0 ].toUpperCase( )
+                            : words[ 0 ].substring(0, 2).toUpperCase( );
 
     const colors        = [ 'FAC799', 'FFB3A0', 'EC9689', 'DEBBB9', 'EFC16D', 'FFD8CF' ];
     const colorIndex    = Array.from( name ).reduce( ( sum, c ) => sum + c.charCodeAt( 0 ), 0 ) % colors.length;
