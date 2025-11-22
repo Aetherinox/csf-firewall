@@ -64,6 +64,12 @@ document$.subscribe( async function( )
         }
 
         /*
+            Extract sponsors list
+        */
+
+        const users = data?.message?.result || [];
+
+        /*
             Fetch Supporters
         */
         
@@ -72,39 +78,39 @@ document$.subscribe( async function( )
 
         loader.style.display    = 'none'; // hide loader once data loads
 
-        if ( !Array.isArray( data ) || data.length === 0 )
+        if ( !Array.isArray( users ) || users.length === 0 )
         {
             avatars.innerHTML   = '<em>No GitHub sponsors yet</em>';
         }
         else
         {
-            data.forEach( sponsor =>
+            users.forEach(sponsor =>
             {
-                const username          = sponsor.github_id;
+                const username = sponsor.github_id;
                 if ( !username )
                     return;
 
-                const githubUrl         = `https://github.com/${ username }`;
-                const avatarUrl         = `https://github.com/${ username }.png?size=100`;
+                const githubUrl             = `https://github.com/${ username }`;
+                const avatarUrl             = `https://github.com/${ username }.png?size=100`;
 
-                const a                 = document.createElement('a');
-                a.href                  = githubUrl;
-                a.title                 = `@${ username }`;
-                a.className             = 'mdx-sponsorship__item';
-                a.target                = '_blank';
-                a.rel                   = 'noopener';
+                const a                     = document.createElement('a');
+                a.href                      = githubUrl;
+                a.title                     = `@${ username }`;
+                a.className                 = 'mdx-sponsorship__item';
+                a.target                    = '_blank';
+                a.rel                       = 'noopener';
 
-                const img               = document.createElement('img');
-                img.src                 = avatarUrl;
-                img.alt                 = `@${ username }`;
-                img.loading             = 'lazy';
-                img.width               = 100;
-                img.height              = 100;
-                img.style.borderRadius  = '50%';
-                img.style.boxShadow     = '0 2px 6px rgba(0,0,0,0.1)';
+                const img                   = document.createElement('img');
+                img.src                     = avatarUrl;
+                img.alt                     = `@${ username }`;
+                img.loading                 = 'lazy';
+                img.width                   = 100;
+                img.height                  = 100;
+                img.style.borderRadius      = '50%';
+                img.style.boxShadow         = '0 2px 6px rgba(0,0,0,0.1)';
 
-                a.appendChild( img );
-                avatars.appendChild( a );
+                a.appendChild(img);
+                avatars.appendChild(a);
             });
         }
     }
@@ -159,24 +165,24 @@ document$.subscribe( async function( )
         {
             supporters.forEach( item =>
             {
-                const username          = item.supporter_name || 'Unknown';
-                const avatarUrl         = item.avatar_url || getBmacAvatar( username );
+                const username              = item.supporter_name || 'Unknown';
+                const avatarUrl             = item.avatar_url || getBmacAvatar( username );
 
-                const a                 = document.createElement( 'a' );
-                a.href                  = '#';
-                a.title                 = username;
-                a.className             = 'mdx-sponsorship__item';
-                a.target                = '_blank';
-                a.rel                   = 'noopener';
+                const a                     = document.createElement( 'a' );
+                a.href                      = '#';
+                a.title                     = username;
+                a.className                 = 'mdx-sponsorship__item';
+                a.target                    = '_blank';
+                a.rel                       = 'noopener';
 
-                const img               = document.createElement( 'img' );
-                img.src                 = avatarUrl;
-                img.alt                 = username;
-                img.loading             = 'lazy';
-                img.width               = 100;
-                img.height              = 100;
-                img.style.borderRadius  = '50%';
-                img.style.boxShadow     = '0 2px 6px rgba(0,0,0,0.1)';
+                const img                   = document.createElement( 'img' );
+                img.src                     = avatarUrl;
+                img.alt                     = username;
+                img.loading                 = 'lazy';
+                img.width                   = 100;
+                img.height                  = 100;
+                img.style.borderRadius      = '50%';
+                img.style.boxShadow         = '0 2px 6px rgba(0,0,0,0.1)';
 
                 a.appendChild( img );
                 avatars.appendChild( a );
