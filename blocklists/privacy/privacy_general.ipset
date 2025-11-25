@@ -5,10 +5,10 @@
 #   @source         https://raw.githubusercontent.com/Aetherinox/dev-kw/main/blocklists/02_privacy_general.ipset
 #   @id             privacy_general_ipset
 #   @uuid           6a2bb2a1-edca-33d8-9dd5-75c3ec3c6ef7
-#   @updated        Tue Nov 25 00:13:20 UTC 2025
-#   @entries        125098 ips
-#                   72 subnets
-#                   243 lines
+#   @updated        Tue Nov 25 12:08:08 UTC 2025
+#   @entries        127146 ips
+#                   80 subnets
+#                   256 lines
 #   @expires        6 hours
 #   @category       Privacy
 #
@@ -260,3 +260,16 @@
 209.38.33.0/24
 209.38.46.0/24
 209.38.206.0/24
+
+# #
+#   ShadowServer Foundation
+# #
+
+64.62.156.0/24
+64.62.197.0/24
+65.49.1.0/24
+65.49.20.0/24
+74.82.47.0/24
+184.105.139.0/24
+184.105.247.0/24
+216.218.206.0/24
