@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_benin_ipset
 #   @uuid           1494cf8c-6b18-3735-99b9-543d1df0d77a
-#   @updated        Tue Nov 25 12:11:56 UTC 2025
+#   @updated        Wed Nov 26 00:18:36 UTC 2025
 #   @entries        156824 ips
 #                   227 subnets
 #                   227 lines
@@ -143,7 +143,7 @@
 197.234.216.0/21
 2001:470:d:492::/64
 2001:470:36:a1::/64
-2001:470:36:237::/64
+2001:470:36:1fa::/64
 2001:470:36:419::/64
 2001:470:6d:b28::/64
 2001:470:1f07:b::/64
