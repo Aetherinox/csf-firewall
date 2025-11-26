@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_christmas_island_ipset
 #   @uuid           7c1575b4-a7e4-3e1e-9fec-fc3dad22516c
-#   @updated        Tue Nov 25 12:12:05 UTC 2025
+#   @updated        Wed Nov 26 00:18:45 UTC 2025
 #   @entries        66 ips
-#                   114 subnets
-#                   114 lines
+#                   112 subnets
+#                   112 lines
 #   @country        Christmas Island (CX)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -55,7 +55,6 @@
 2001:470:d:5fd::/64
 2001:470:d:635::/64
 2001:470:d:669::/64
-2001:470:19:4c::/64
 2001:470:19:101::/64
 2001:470:19:63d::/64
 2001:470:19:793::/64
@@ -94,7 +93,6 @@
 2001:470:f2bb::/48
 2001:470:f56c::/48
 2001:470:f5a6::/48
-2001:470:f835::/48
 2001:470:fa3a::/48
 2001:470:fb6a::/48
 2001:470:fcbe::/48

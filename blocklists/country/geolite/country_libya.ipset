@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_libya_ipset
 #   @uuid           8df7412e-87d2-3f4e-9abc-1de6155ed915
-#   @updated        Tue Nov 25 12:12:30 UTC 2025
-#   @entries        474118 ips
-#                   226 subnets
-#                   226 lines
+#   @updated        Wed Nov 26 00:19:12 UTC 2025
+#   @entries        473606 ips
+#                   232 subnets
+#                   232 lines
 #   @country        Libya (LY)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -30,7 +30,13 @@
 37.1.187.128/28
 38.7.144.0/24
 38.50.0.0/19
-38.252.32.0/19
+38.252.32.0/20
+38.252.48.0/22
+38.252.52.0/23
+38.252.55.0/24
+38.252.56.0/22
+38.252.60.0/23
+38.252.63.0/24
 41.74.64.0/20
 41.208.64.0/18
 41.242.16.0/20
