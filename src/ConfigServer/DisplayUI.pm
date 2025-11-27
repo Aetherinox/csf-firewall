@@ -3606,13 +3606,14 @@ print <<END_JS;
 
         const licenseDiv = document.getElementById('license-status');
 	
-        if ( data.valid )
+		if ( data.message && data.message.valid )
 		{
             licenseDiv.innerHTML = "<tr><td colspan='2'>✅ You are a sponsor</td></tr>";
         }
 		else
 		{
-            licenseDiv.innerHTML = "<tr><td colspan='2'>❌ No sponsorship (" + ( data.error || 'unknown') + ")<br><div style='padding-top:10px;'><a href='https://docs.configserver.dev/insiders/sponsors/' target='_blank' class='btn btn-success'>Become a Sponsor</a></div></td></tr>";
+        	const errorMsg = (data.message && data.message.response) || (data.error || 'unknown');
+        	licenseDiv.innerHTML = "<tr><td colspan='2'>❌ No sponsorship (" + errorMsg + ")<br><div style='padding-top:10px;'><a href='https://docs.configserver.dev/insiders/sponsors/' target='_blank' class='btn btn-success'>Become a Sponsor</a></div></td></tr>";
         }
 
 		/*

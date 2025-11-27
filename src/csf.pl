@@ -5814,7 +5814,7 @@ sub doinsiders
             #    Check JSON manually
             # #
 		
-            my $valid = ( $resp =~ /"valid"\s*:\s*true/ ) ? 1 : 0;
+            my $valid = ( $resp =~ /"message"\s*:\s*{.*?"valid"\s*:\s*true/s ) ? 1 : 0;
             $license_status = $valid ? 'Valid' : 'Invalid';
             $insiders_status = ( $valid && ( $config{SPONSOR_RELEASE_INSIDERS} // '' ) eq '1' ) ? 'Enabled' : 'Disabled';
 
@@ -5822,10 +5822,10 @@ sub doinsiders
             #    Extract error message if invalid
             # #
 		
-            if ( !$valid && $resp =~ /"error"\s*:\s*"([^"]+)"/ )
-            {
-                $message = $1;
-            }
+			if ( $resp =~ /"message"\s*:\s*{.*?"response"\s*:\s*"([^"]+)"/s )
+			{
+				$message = $1;
+			}
 	
             $message ||= $valid ? 'Success' : 'License key is empty or invalid';
         }
