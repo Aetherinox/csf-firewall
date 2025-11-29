@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_martinique_ipset
 #   @uuid           251981f4-fd66-3dcf-924d-1b88663f4946
-#   @updated        Fri Nov 28 12:11:50 UTC 2025
+#   @updated        Sat Nov 29 00:19:08 UTC 2025
 #   @entries        243930 ips
-#                   267 subnets
-#                   267 lines
+#                   268 subnets
+#                   268 lines
 #   @country        Martinique (MQ)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -234,6 +234,7 @@
 2607:8940:40b1:e00::/56
 2607:8940:4143:8f00::/56
 2607:8940:4143:9000::/56
+2803:9810:57c0::/42
 2a01:cb20::/34
 2a01:cb20:5000::/36
 2a01:cb20:6000::/35

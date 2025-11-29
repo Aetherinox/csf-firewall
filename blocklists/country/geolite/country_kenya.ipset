@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_kenya_ipset
 #   @uuid           eb893ce5-984d-3451-bb47-ae570c2ee2a9
-#   @updated        Fri Nov 28 12:11:43 UTC 2025
+#   @updated        Sat Nov 29 00:18:57 UTC 2025
 #   @entries        6364011 ips
-#                   1161 subnets
-#                   1161 lines
+#                   1162 subnets
+#                   1162 lines
 #   @country        Kenya (KE)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -910,6 +910,7 @@
 2600:1416:3000::/48
 2600:9000:1144::/64
 2600:9000:122f::/62
+2605:59c1:4400::/38
 2606:54c0:4610::/44
 2606:54c0:4620::/43
 2606:54c3:0:6bc::/64
