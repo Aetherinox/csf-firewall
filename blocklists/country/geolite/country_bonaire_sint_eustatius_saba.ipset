@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_bonaire_sint_eustatius_saba_ipset
 #   @uuid           b14c615b-0708-395c-a7e8-24c3784c1d17
-#   @updated        Mon Dec  1 00:21:55 UTC 2025
+#   @updated        Mon Dec  1 12:11:09 UTC 2025
 #   @entries        28678 ips
 #                   139 subnets
 #                   139 lines
