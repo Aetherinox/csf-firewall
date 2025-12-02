@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_falkland_islands_malvinas_ipset
 #   @uuid           2da2d619-cdc5-3819-b123-fe8f0ea2d37d
-#   @updated        Tue Dec  2 00:18:18 UTC 2025
+#   @updated        Tue Dec  2 12:11:03 UTC 2025
 #   @entries        4483 ips
 #                   95 subnets
 #                   95 lines

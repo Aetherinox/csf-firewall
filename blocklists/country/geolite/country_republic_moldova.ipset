@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_republic_moldova_ipset
 #   @uuid           ceb0444f-9c98-363b-867e-0d4a5e4c35d5
-#   @updated        Tue Dec  2 00:18:40 UTC 2025
+#   @updated        Tue Dec  2 12:11:23 UTC 2025
 #   @entries        1351056 ips
 #                   2123 subnets
 #                   2123 lines
