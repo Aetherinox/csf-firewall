@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_macao_ipset
 #   @uuid           eb52941b-d434-3ee3-b9db-2d56f50be3b5
-#   @updated        Mon Dec  1 12:11:46 UTC 2025
+#   @updated        Tue Dec  2 00:18:42 UTC 2025
 #   @entries        379192 ips
 #                   550 subnets
 #                   550 lines
