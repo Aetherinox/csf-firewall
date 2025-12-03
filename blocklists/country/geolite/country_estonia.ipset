@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_estonia_ipset
 #   @uuid           99b13814-c63a-3a7e-a974-2556381ddecd
-#   @updated        Tue Dec  2 12:10:59 UTC 2025
-#   @entries        1633260 ips
-#                   1613 subnets
-#                   1613 lines
+#   @updated        Wed Dec  3 00:19:04 UTC 2025
+#   @entries        1634028 ips
+#                   1616 subnets
+#                   1616 lines
 #   @country        Estonia (EE)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -365,6 +365,7 @@
 93.123.39.0/24
 93.185.240.0/20
 94.23.190.128/30
+94.126.224.0/24
 94.154.144.0/22
 94.156.236.0/24
 94.177.25.0/24
@@ -378,6 +379,7 @@
 94.246.192.0/18
 95.47.173.0/24
 95.47.236.0/24
+95.85.242.0/23
 95.129.192.0/21
 95.153.0.0/18
 95.156.206.0/24
@@ -1114,6 +1116,7 @@
 2001:470:1f15:a58::/64
 2001:470:1f15:d47::/64
 2001:470:1f1b:122::/64
+2001:470:1f1b:487::/64
 2001:470:1f1d:2eb::/64
 2001:470:1f29:63::/64
 2001:470:1f29:132::/64

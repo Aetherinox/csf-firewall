@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_slovenia_ipset
 #   @uuid           849ad83a-3ae5-3537-9f1d-0e94d92529f5
-#   @updated        Tue Dec  2 12:11:40 UTC 2025
-#   @entries        2641463 ips
-#                   1518 subnets
-#                   1518 lines
+#   @updated        Wed Dec  3 00:20:04 UTC 2025
+#   @entries        2637111 ips
+#                   1517 subnets
+#                   1517 lines
 #   @country        Slovenia (SI)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -661,7 +661,6 @@
 178.79.64.0/18
 178.172.0.0/17
 178.216.56.0/21
-178.219.159.0/24
 185.0.38.0/24
 185.13.52.0/22
 185.24.36.0/22
@@ -1085,7 +1084,7 @@
 213.172.224.0/19
 213.229.192.0/18
 213.250.0.0/18
-213.253.64.0/19
+213.253.80.0/20
 213.253.98.0/24
 213.253.100.0/23
 213.253.125.0/24

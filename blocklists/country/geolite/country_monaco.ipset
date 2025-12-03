@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_monaco_ipset
 #   @uuid           ee98ae04-5b04-38ca-a6c5-f223aa585461
-#   @updated        Tue Dec  2 12:11:22 UTC 2025
-#   @entries        78440 ips
-#                   339 subnets
-#                   339 lines
+#   @updated        Wed Dec  3 00:19:37 UTC 2025
+#   @entries        78696 ips
+#                   340 subnets
+#                   340 lines
 #   @country        Monaco (MC)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -154,6 +154,7 @@
 165.85.28.192/26
 165.85.222.224/27
 165.85.236.192/26
+172.94.95.0/24
 172.225.26.96/27
 172.225.144.224/27
 172.225.161.64/28
