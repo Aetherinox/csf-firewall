@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_mayotte_ipset
 #   @uuid           218e7a1d-4d0b-3b04-87e4-e717d08b5430
-#   @updated        Tue Dec  2 12:12:03 UTC 2025
-#   @entries        57773 ips
-#                   148 subnets
-#                   148 lines
+#   @updated        Wed Dec  3 00:20:33 UTC 2025
+#   @entries        56749 ips
+#                   147 subnets
+#                   147 lines
 #   @country        Mayotte (YT)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -101,7 +101,6 @@
 204.195.243.84/31
 204.195.243.86/32
 212.105.137.0/24
-213.222.100.0/22
 2001:470:d:b7::/64
 2001:470:36:1de::/64
 2001:470:36:3e7::/64
