@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_costa_rica_ipset
 #   @uuid           6fc745f4-0ffe-3c3c-8d43-76e82331df80
-#   @updated        Thu Dec  4 00:18:44 UTC 2025
+#   @updated        Thu Dec  4 12:26:38 UTC 2025
 #   @entries        2334531 ips
 #                   906 subnets
 #                   906 lines
