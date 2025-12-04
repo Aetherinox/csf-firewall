@@ -10,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            10.09.2025
+#   @updated            12.04.2025
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -40,10 +40,57 @@ our ($script, $images, $myv, %FORM, %in);
 my $config = ConfigServer::Config->loadconfig();
 my %config = $config->config;
 
+# #
+#	Get Codename
+#	
+#	returns the codename depending on which control panel a user is running.
+#	
+#	@args			$config
+#	@usage			my $codename = getCodename(\%config);
+# #
+
+sub getCodename
+{
+	my ($config_ref) = @_;
+	my %config = %{$config_ref};
+	my $cname = "cpanel";
+
+	if ($config{GENERIC})      { $cname = "generic" }
+	if ($config{DIRECTADMIN})  { $cname = "directadmin" }
+	if ($config{INTERWORX})    { $cname = "interworx" }
+	if ($config{CYBERPANEL})   { $cname = "cyberpanel" }
+	if ($config{CWP})          { $cname = "cwp" }
+	if ($config{VESTA})        { $cname = "vestacp" }
+
+	if ( -e "/usr/share/webmin/miniserv.pl" || -e "/usr/libexec/webmin/bin/webmin" || -e "/usr/bin/webmin" )
+	{
+		$cname = "webmin";
+	}
+
+	# #
+    #	Optional debug output
+	# #
+
+	#	print "$cname\n";
+
+	# #
+    #	Return the value so it can be used in conditionals
+	# #
+
+	return $cname;
+}
+
+my $codename = getCodename(\%config);
+
+# #
+#	open version.txt
+# #
+
 open (my $IN, "<", "/etc/csf/version.txt") or die $!;
 $myv = <$IN>;
 close ($IN);
 chomp $myv;
+
 
 $script = "loader_ajax.php?ajax=csfframe";
 $images = "design/csf";
