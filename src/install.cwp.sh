@@ -10,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            10.25.2025
+#   @updated            12.04.2025
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -635,19 +635,100 @@ for file in $files; do
     fi
 done
 
-cp -av cwp/csfofficial.php /usr/local/cwpsrv/htdocs/resources/admin/modules/
-cp -av cwp/csf.pl /usr/local/cwpsrv/htdocs/resources/admin/modules/
+# #
+#	@app			CentOS Web Panel (CWP)
+#	@purpose		Copy main CSF CWP integration files
+#	@desc			Copies the main integration files over to CWP
+# #
+
+copi "cwp/csfofficial.php" "/usr/local/cwpsrv/htdocs/resources/admin/modules/"
+copi "cwp/csf.pl" "/usr/local/cwpsrv/htdocs/resources/admin/modules/"
+copi "cwp/ajax_csfframe.php" "/usr/local/cwpsrv/htdocs/resources/admin/addons/ajax/"
+copi "cwp/configserver.php" "/usr/local/cwpsrv/htdocs/resources/admin/include/"
 chmod 700 /usr/local/cwpsrv/htdocs/resources/admin/modules/csf.pl
-cp -av cwp/ajax_csfframe.php /usr/local/cwpsrv/htdocs/resources/admin/addons/ajax/
-cp -av cwp/configserver.php /usr/local/cwpsrv/htdocs/resources/admin/include/
-mkdir -v -m 0600 /usr/local/cwpsrv/htdocs/admin/design/csf/
-cp -avf csf/* /usr/local/cwpsrv/htdocs/admin/design/csf/
 
 # #
-#	Step > Webmin
-#		- create tarball of webmin files
-#		- Detect /usr/share/webmin
-#		- Extract tarball to /usr/share/webmin/csf
+#	@app			CentOS Web Panel (CWP)
+#	@purpose		Storage for Immutable Status
+#	@desc			Stores user's existing immutable status; used to restore later
+#						/usr/local/cwpsrv/htdocs
+# #
+
+cwp_flag_immutable=0
+
+# #
+#	@app			CentOS Web Panel (CWP)
+#	@purpose		Check full cwp design path exists
+#	@desc			Check to see if CWP design folder for CSF web files already exists.
+#						/usr/local/cwpsrv/htdocs/admin/design/csf
+# #
+
+if [ ! -d "$CSF_CWP_PATH_DESIGN" ]; then
+    mkdir -v -m 0600 "$CSF_CWP_PATH_DESIGN"
+	info "    Creating folder ${bluel}${CSF_CWP_PATH_DESIGN}${greym} with chown ${bluel}0600${greym}"
+
+    if [ -d "$CSF_CWP_PATH_DESIGN" ]; then
+		ok "    Created folder ${greenl}${CSF_CWP_PATH_DESIGN}${greym}"
+    else
+		error "    Failed to create folder ${redl}$CSF_CWP_PATH_DESIGN"
+    fi
+else
+	info "    Folder already exists ${bluel}${CSF_CWP_PATH_DESIGN}${greym}; skipping creation${greym}"
+fi
+
+# #
+#	@app			CentOS Web Panel (CWP)
+#	@purpose		Remove -i immutable
+#	@desc			Checks to see if the cwp base design folder has the +i
+#						immutable flag. Removes flag before modifying files.
+# #
+
+if lsattr "$CSF_CWP_PATH_DESIGN" 2>/dev/null | grep -q 'i'; then
+    cwp_flag_immutable=1
+	chattr -R -i "$CSF_CWP_PATH_DESIGN"
+	warn "    Temporarily removing immutable flag ${yellowl}-i${greym} from ${yellowl}${CSF_CWP_PATH_DESIGN}${greym}"
+else
+	info "    Folder ${bluel}${CSF_CWP_PATH_DESIGN}${greym} does not have flag immutable ${bluel}+i${greym}; skipping"
+fi
+
+# #
+#	@app			CentOS Web Panel (CWP)
+#	@purpose		Copy local CSF Source Files to CWP
+#	@desc			Copies local csf folder to cwp installation path.
+#						csf/* › /usr/local/cwpsrv/htdocs/admin/design/csf
+# #
+
+copi "$CSF_CWP_FOLD_SRC" "$CSF_CWP_PATH_DESIGN"
+cwp_copy_status=$?
+
+if [ $cwp_copy_status -eq 0 ]; then
+    count=$(ls -A "$CSF_CWP_PATH_DESIGN" | wc -l)
+    if [ "$count" -gt 0 ]; then
+		ok "    Successfully copied ${greenl}${count}${greym} files to folder ${greenl}${CSF_CWP_PATH_DESIGN}${greym}"
+    else
+		warn "    Copy reported success but no files found in ${yellowl}${CSF_CWP_PATH_DESIGN}${greym}"
+    fi
+else
+	error "    Failed to copy with status ${redl}$cwp_copy_status${greym}"
+fi
+
+# #
+#	@app			CentOS Web Panel (CWP)
+#	@purpose		CWP › Re-Apply +i Immutable Flag
+#	@desc			Re-add immutable flag if it was there before
+# #
+
+if [ "$cwp_flag_immutable" -eq 1 ]; then
+	chattr -R +i "$CSF_CWP_PATH_DESIGN"
+	ok "    Set immutable flag ${greenl}+i${greym} on folders ${greenl}${CSF_CWP_PATH_DESIGN}${greym}"
+fi
+
+# #
+#	@app			Webmin
+#	@purpose		Initial Setup
+#	@desc			› create tarball of webmin files
+#					› Detect /usr/share/webmin
+#					› Extract tarball to /usr/share/webmin/csf
 # #
 
 prinp "${APP_NAME_SHORT:-CSF} > Webmin" \
@@ -677,7 +758,6 @@ if [ -d "${CSF_WEBMIN_HOME}" ]; then
 	cp -a csf/* "$CSF_WEBMIN_DESC"/							# Copy all files from current folder
 	ok "    CSF Webmin module installed to ${greenl}${CSF_WEBMIN_DESC}${greym}"
 else
-    echo "Directory ${CSF_WEBMIN_HOME} does not exist. Skipping copy."
 	error "    Webmin home folder ${redl}${CSF_WEBMIN_HOME}${greym} does not exist; skipping Webmin install"
 fi
 
