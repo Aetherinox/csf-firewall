@@ -10,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            10.11.2025
+#   @updated            12.04.2025
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -71,6 +71,8 @@ CSF_WEBMIN_ETC="/etc/webmin"
 CSF_WEBMIN_FILE_ACL="${CSF_WEBMIN_ETC}/webmin.acl"
 CSF_WEBMIN_ACL_USER="root"
 CSF_WEBMIN_ACL_MODULE="csf"
+CSF_CWP_FOLD_SRC="csf"
+CSF_CWP_PATH_DESIGN="/usr/local/cwpsrv/htdocs/admin/design/csf"
 
 # #
 #   Define › Server
@@ -114,6 +116,8 @@ APP_VERSION=$( [ -f "$VERSION_FILE" ] && grep -v '^[[:space:]]*$' "$VERSION_FILE
 
 esc=$(printf '\033')
 end="${esc}[0m"
+bgEnd="${esc}[49m"
+fgEnd="${esc}[39m"
 bold="${esc}[1m"
 dim="${esc}[2m"
 underline="${esc}[4m"
@@ -122,72 +126,89 @@ white="${esc}[97m"
 black="${esc}[0;30m"
 redl="${esc}[0;91m"
 redd="${esc}[38;5;196m"
-magental="${esc}[0;95m"
-magentad="${esc}[0;35m"
-fuchsial="${esc}[38;5;198m"
-fuchsiad="${esc}[38;5;161m"
-bluel="${esc}[38;5;75m"
-blued="${esc}[38;5;33m"
-greenl="${esc}[38;5;76m"
-greend="${esc}[38;5;2m"
-orangel="${esc}[0;93m"
+magental="${esc}[38;5;197m"
+magentad="${esc}[38;5;161m"
+fuchsial="${esc}[38;5;206m"
+fuchsiad="${esc}[38;5;199m"
+bluel="${esc}[38;5;33m"
+blued="${esc}[38;5;27m"
+greenl="${esc}[38;5;47m"
+greend="${esc}[38;5;35m"
+orangel="${esc}[38;5;208m"
 oranged="${esc}[38;5;202m"
-yellowl="${esc}[38;5;190m"
-yellowd="${esc}[38;5;184m"
+yellowl="${esc}[38;5;226m"
+yellowd="${esc}[38;5;214m"
 greyl="${esc}[38;5;250m"
 greym="${esc}[38;5;244m"
-greyd="${esc}[0;90m"
+greyd="${esc}[38;5;242m"
 navy="${esc}[38;5;62m"
 olive="${esc}[38;5;144m"
-peach="${esc}[38;5;210m"
+peach="${esc}[38;5;204m"
 cyan="${esc}[38;5;6m"
+bgVerbose="${esc}[1;38;5;15;48;5;125m"
+bgDebug="${esc}[1;38;5;15;48;5;237m"
+bgInfo="${esc}[1;38;5;15;48;5;27m"
+bgOk="${esc}[1;38;5;15;48;5;64m"
+bgWarn="${esc}[1;38;5;16;48;5;214m"
+bgDanger="${esc}[1;38;5;15;48;5;202m"
+bgError="${esc}[1;38;5;15;48;5;160m"
 
 # #
 #   Define › Logging functions
+#   
+#   verbose "This is an verbose message"
+#   debug "This is an debug message"
+#   info "This is an info message"
+#   ok "This is an ok message"
+#   warn "This is a warn message"
+#   danger "This is a danger message"
+#   error "This is an error message"
 # #
 
-error( )
+verbose( )
 {
-    printf '%-28s %-65s\n' "   ${redl} ERROR ${end}" "${greym} $1 ${end}"
-}
-
-warn( )
-{
-    printf '%-32s %-65s\n' "   ${yellowl} WARN ${end}" "${greym} $1 ${end}"
-}
-
-info( )
-{
-    printf '%-31s %-65s\n' "   ${bluel} INFO ${end}" "${greym} $1 ${end}"
-}
-
-status( )
-{
-    printf '%-31s %-65s\n' "   ${bluel} STATUS ${end}" "${greym} $1 ${end}"
-}
-
-ok( )
-{
-    printf '%-31s %-65s\n' "   ${greenl} OK ${end}" "${greym} $1 ${end}"
+    case "${argVerbose:-0}" in
+        1|true|TRUE|yes|YES)
+            printf '%-42s %-65s\n' "   ${bgVerbose} VRBO ${end}" "${greym} $1 ${end}"
+            ;;
+    esac
 }
 
 debug( )
 {
-    if [ "$argDevMode" = "true" ]; then
-        printf '%-28s %-65s\n' "   ${greyd} DEBUG ${end}" "${greym} $1 ${end}"
+    if [ "$argDevEnabled" = "true" ]; then
+        printf '%-42s %-65s\n' "   ${bgDebug} DBUG ${end}" "${greym} $1 ${end}"
     fi
 }
 
-verbose( )
+info( )
 {
-    if [ "$VERBOSE" -eq 1 ]; then
-        printf '%-28s %-65s\n' "   ${greyd} VERBOSE ${end}" "${greym} $1 ${end}"
-    fi
+    printf '%-41s %-65s\n' "   ${bgInfo} INFO ${end}" "${greym} $1 ${end}"
+}
+
+ok( )
+{
+    printf '%-41s %-65s\n' "   ${bgOk} PASS ${end}" "${greym} $1 ${end}"
+}
+
+warn( )
+{
+    printf '%-42s %-65s\n' "   ${bgWarn} WARN ${end}" "${greym} $1 ${end}"
+}
+
+danger( )
+{
+    printf '%-42s %-65s\n' "   ${bgDanger} DNGR ${end}" "${greym} $1 ${end}"
+}
+
+error( )
+{
+    printf '%-42s %-65s\n' "   ${bgError} FAIL ${end}" "${greym} $1 ${end}"
 }
 
 label( )
 {
-    printf '%-31s %-65s\n' "   ${navy}        ${end}" "${navy} $1 ${end}"
+    printf '%-31s %-65s\n' "   ${greyd}        ${end}" "${greyd} $1 ${end}"
 }
 
 print( )
@@ -196,17 +217,58 @@ print( )
 }
 
 # #
-#   Print > Line
+#   truncate text; add ...
 #   
-#   Prints single line
-#   
-#   @usage          prinb
+#   @usage
+#       truncate "This is a long string" 10 "..."
 # #
 
-prinl()
+truncate()
+{
+    text=$1
+    maxlen=$2
+    suffix=${3:-}
+
+    len=$(printf %s "$text" | wc -c | tr -d '[:space:]')
+
+    if [ "$len" -gt "$maxlen" ]; then
+        printf '%s%s\n' "$(printf %s "$text" | cut -c1-"$maxlen")" "$suffix"
+    else
+        printf '%s\n' "$text"
+    fi
+}
+
+# #
+#   Print › Demo Notifications
+#   
+#   Outputs a list of example notifications
+#   
+#   @usage          demoNoti
+# #
+
+demoNoti()
+{
+    verbose "This is an verbose message"
+    debug "This is an debug message"
+    info "This is an info message"
+    ok "This is an ok message"
+    warn "This is a warn message"
+    danger "This is a danger message"
+    error "This is an error message"
+}
+
+# #
+#   Print › Line
+#   
+#   Prints single line, no text
+#   
+#   @usage          prin0
+# #
+
+prin0()
 {
     local indent="   "
-    local box_width=90
+    local box_width=110
     local line_width=$(( box_width + 2 ))
 
     local line
@@ -218,7 +280,43 @@ prinl()
 }
 
 # #
-#   Print > Box > Single
+#   Print › Box › Crop
+#   
+#   Prints single line with a box surrounding it, excluding the right side
+#   
+#   @usage          princ "Name › Section"
+# #
+
+princ()
+{
+    local title="$*"
+    local indent="   "
+    local padding=6
+    
+    local visible_title
+    visible_title=$(echo -e "$title" | sed 's/\x1b\[[0-9;]*m//g')
+    
+    local title_length=${#visible_title}
+    local inner_width=$(( title_length + padding ))
+    local box_width=110
+
+    [ "$inner_width" -lt ${box_width} ] && inner_width=${box_width}
+
+    local line
+    line=$(printf '─%.0s' $(seq 1 "$inner_width"))
+
+    local spaces_needed=$(( inner_width - title_length - 3 ))
+    local spaces=$(printf ' %.0s' $(seq 1 "$spaces_needed"))
+
+    print
+    printf "%b%s┌%s┐\n" "${greym}" "$indent" "$line"
+    printf "%b%s│  %s%s \n" "${greym}" "$indent" "$title" "$spaces"
+    printf "%b%s└%s┘%b\n" "${greym}" "$indent" "$line" "${reset}"
+    print
+}
+
+# #
+#   Print › Box › Single
 #   
 #   Prints single line with a box surrounding it.
 #   
@@ -236,7 +334,7 @@ prinb( )
     local padding=6                                 # Extra horizontal space around text
     local title_length=${#title}
     local inner_width=$(( title_length + padding ))
-    local box_width=90
+    local box_width=110
 
     # #
     #   Minimum width for aesthetics
@@ -258,17 +356,28 @@ prinb( )
     print
     print
     printf "%b%s┌%s┐\n" "${greym}" "$indent" "$line"
-    printf "%b%s│  %-${inner_width}s│\n" "${greym}" "$indent" "$title"
+    printf "%b%s│  %-${inner_width}s \n" "${greym}" "$indent" "$title"
     printf "%b%s└%s┘%b\n" "${greym}" "$indent" "$line" "${reset}"
     print
 }
 
 # #
-#   Print > Box > Paragraph
+#   Print › Box › Paragraph
 #   
-#   Prints multiple lines with a box surrounding it.
+#   Places an ASCII box around text. Supports multi-lines with \n.
 #   
-#   @usage          prinp "CSF › Title" "This is a really long paragraph that will wrap multiple lines and align properly under the title. Second line of text, same alignment, with multiple words."
+#   Determines the character count if color codes are used and ensures that the box borders are aligned properly.
+#   
+#   If using emojis; adjust the spacing so that the far-right line will align with the rest. Add the number of spaces
+#   to increase the value, which is represented with a number enclosed in square brackets.
+#     [1]           add 1 space to the right.
+#     [2]           add 2 spaces to the right.
+#     [-1]          remove 1 space to the right (needed for some emojis)
+#   
+#   @usage          prinp "Certificate Generation Successful" "Your new certificate and keys have been generated successfully.\n\nYou can find them in the ${greenl}${app_dir_output}${greyd} folder."
+#                   prinp "🎗️[1]  ${file_domain_base}" "The following description will show on multiple lines with a ASCII box around it."
+#                   prinp "📄[-1] File Overview" "The following list outlines the files that you have generated using this utility, and what certs/keys may be missing."
+#                   prinp "➡️[15]  ${bluel}Paths${end}"
 # #
 
 prinp()
@@ -277,42 +386,152 @@ prinp()
     shift
     local text="$*"
 
-    local indent="   "
-    local box_width=90
-    local pad=2
+    local indent="  "
+    local box_width=110
+    local pad=1
 
     local content_width=$(( box_width ))
     local inner_width=$(( box_width - pad*2 ))
 
     print
     print
+
     local hline
     hline=$(printf '─%.0s' $(seq 1 "$content_width"))
 
     printf "${greyd}%s┌%s┐\n" "$indent" "$hline"
 
     # #
-    #   title
+    #   Title
+    #   
+    #   Extract optional [N] adjustment from title (signed integer), portably
     # #
 
-    local title_width=$(( content_width - pad ))
-    printf "${greym}%s│%*s${bluel}%-${title_width}s${greym}│\n" "$indent" "$pad" "" "$title"
+    local emoji_adjust=0
+    local display_title="$title"
 
-    printf "${greyd}%s│%-${content_width}s│\n" "$indent" ""
+    # #
+    #   Get content inside first [...] (if present)
+    # #
 
-    local line=""
-    set -- $text
-    for word; do
-        if [ ${#line} -eq 0 ]; then
-            line="$word"
-        elif [ $(( ${#line} + 1 + ${#word} )) -le $inner_width ]; then
-            line="$line $word"
+    if printf '%s\n' "$title" | grep -q '\[[[:space:]]*[-0-9][-0-9[:space:]]*\]'; then
+
+        # #
+        #   Extract numeric inside brackets (allow optional leading -)
+        #   - use sed to capture first bracketed token, then strip non-digit except leading -
+        # #
+
+        local bracket
+        bracket=$(printf '%s' "$title" | sed -n 's/.*\[\([-0-9][-0-9]*\)\].*/\1/p')
+
+        # #
+        #   Validate numeric and assign, otherwise fallback to 0
+        # #
+    
+        if printf '%s\n' "$bracket" | grep -qE '^-?[0-9]+$'; then
+            emoji_adjust=$bracket
         else
-            printf "${greyd}%s│%*s%-*s%*s│\n" "$indent" "$pad" "" "$inner_width" "$line" "$pad" ""
-            line="$word"
+            emoji_adjust=0
         fi
-    done
-    [ -n "$line" ] && printf "${greyd}%s│%*s%-*s%*s│\n" "$indent" "$pad" "" "$inner_width" "$line" "$pad" ""
+
+        # #
+        #   Remove the first [...] token from the display_title
+        # #
+    
+        display_title=$(printf '%s' "$title" | sed 's/\[[^]]*\]//')
+    fi
+
+    # #
+    #   Sanity: ensure emoji_adjust is a decimal integer so math works
+    # #
+
+    case "$emoji_adjust" in
+        ''|*[!0-9-]*)
+            emoji_adjust=0
+            ;;
+    esac
+
+    local title_width=$(( content_width - pad ))
+
+    # #
+    #   Account for emoji adjustment in visible length calculation
+    # #
+  
+    local title_vis_len=$(( ${#display_title} - emoji_adjust ))
+    printf "${greyd}%s│%*s${bluel}%s${greyd}%*s│\n" \
+        "$indent" "$pad" "" "$display_title" "$(( title_width - title_vis_len ))" ""
+
+    # #
+    #   Only render body text if provided
+    # #
+
+    if [ -n "$text" ]; then
+        printf "${greyd}%s│%-${content_width}s│\n" "$indent" ""
+
+        # #
+        #   Convert literal \n to real newlines
+        # #
+
+        text=$(printf "%b" "$text")
+
+        # #
+        #   Handle each line with ANSI-aware wrapping and true padding
+        # #
+
+        printf "%s" "$text" | while IFS= read -r line || [ -n "$line" ]; do
+
+        # #
+        #   Blank line
+        # #
+    
+        if [ -z "$line" ]; then
+            printf "${greyd}%s│%-*s│\n" "$indent" "$content_width" ""
+            continue
+        fi
+
+        local out="" word
+        for word in $line; do
+            # #
+            #   Strip ANSI for visible width
+            # #
+        
+            local vis_out vis_len vis_word
+            vis_out=$(printf "%s" "$out" | sed 's/\x1B\[[0-9;]*[A-Za-z]//g')
+            vis_word=$(printf "%s" "$word" | sed 's/\x1B\[[0-9;]*[A-Za-z]//g')
+            vis_len=$(( ${#vis_out} + ( ${#vis_out} > 0 ? 1 : 0 ) + ${#vis_word} ))
+
+            if [ -z "$out" ]; then
+                out="$word"
+            elif [ $vis_len -le $inner_width ]; then
+                out="$out $word"
+            else
+                # #
+                #   Print and pad manually based on visible length
+                # #
+
+                local vis_len_full
+                vis_len_full=$(printf "%s" "$out" | sed 's/\x1B\[[0-9;]*[A-Za-z]//g' | wc -c | tr -d ' ')
+                local pad_spaces=$(( inner_width - vis_len_full ))
+                [ $pad_spaces -lt 0 ] && pad_spaces=0
+                printf "${greyd}%s│%*s%s%*s│\n" "$indent" "$pad" "" "$out" "$(( pad + pad_spaces ))" ""
+                out="$word"
+            fi
+        done
+
+        # #
+        #   Final flush line
+        # #
+    
+        if [ -n "$out" ]; then
+            local vis_len_full pad_spaces
+            vis_len_full=$(printf "%s" "$out" | sed 's/\x1B\[[0-9;]*[A-Za-z]//g' | wc -c | tr -d ' ')
+            pad_spaces=$(( inner_width - vis_len_full ))
+            [ $pad_spaces -lt 0 ] && pad_spaces=0
+            printf "${greyd}%s│%*s%s%*s│\n" "$indent" "$pad" "" "$out" "$(( pad + pad_spaces ))" ""
+        fi
+
+        done
+    fi
 
     printf "${greyd}%s└%s┘${reset}\n" "$indent" "$hline"
     print
@@ -324,9 +543,11 @@ prinp()
 
 log()
 {
-    if [ "$VERBOSE" -eq 1 ]; then
-		verbose "    $@ "
-    fi
+    case "${argVerbose:-0}" in
+        1|true|TRUE|yes|YES)
+            verbose "$@"
+            ;;
+    esac
 }
 
 # #
@@ -392,3 +613,51 @@ copy_or_new( )
         fi
     fi
 }
+
+# #
+#   Copy
+# #
+
+copi()
+{
+    src="$1"
+    dest="$2"
+
+    # Make destination
+    mkdir -p "$dest" || return 1
+
+    # Single file or symlink
+    if [ -f "$src" ] || [ -L "$src" ]; then
+        fname=$(basename "$src")
+        label "     Copying ${navy}${fname}${greym} › ${navy}$dest${greym}"
+        cp -p "$src" "$dest/$fname" || return 2
+        return 0
+    fi
+
+    # Directory case
+    if [ -d "$src" ]; then
+        # Copy recursively
+        (
+            cd "$src" || exit 1
+
+            # create directories first (including empty ones)
+            find . -type d -print | while IFS= read -r d; do
+                mkdir -p "$dest/$d" || { error "    Failed mkdir ${redl}${dest}/${d}"; exit 1; }
+            done
+
+            # copy files, preserve mode/timestamps
+            find . -type f -print | while IFS= read -r f; do
+                label "     Copying ${navy}${f}${greym} › ${navy}$dest${greym}"
+                mkdir -p "$dest/$(dirname "$f")"  # safety
+                cp -p "$f" "$dest/$f" || { error "    Failed copying ${redl}${f}"; exit 1; }
+            done
+        )
+        return $?
+    fi
+
+    # If we get here, src is missing
+    warn "    No such file or directory ${yellowl}${src}${greym}"
+
+    return 3
+}
+
