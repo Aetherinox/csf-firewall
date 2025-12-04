@@ -2,7 +2,7 @@
 	$(document).ready(function() {
 		var newButtons = ''
 		+' <li>'
-		+' <a href="#" class="hasUl"><span aria-hidden="true" class="icon16 icomoon-icon-bug"></span>ConfigServer Scripts<span class="hasDrop icon16 icomoon-icon-arrow-down-2"></span></a>'
+		+' <a href="#" class="hasUl"><span aria-hidden="true" class="icon16 icomoon-icon-bug"></span>ConfigServer Firewall<span class="hasDrop icon16 icomoon-icon-arrow-down-2"></span></a>'
 		+'	<ul class="sub">'
 <?php 
 	
