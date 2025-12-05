@@ -9,7 +9,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            10.20.2025
+#   @updated            12.05.2025
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -29,39 +29,40 @@
 #   This file contains definitions to IP BLOCK lists.
 #   
 #   Uncomment the line starting with the rule name to use it, then restart csf
-#   and then lfd
-#
-#   Each block list must be listed on per line: as NAME|INTERVAL|MAX|URL
-#       NAME      : List name with all uppercase alphabetic characters with no
-#                   spaces and a maximum of 25 characters - this will be used as the
-#                   iptables chain name
-#       INTERVAL  : Refresh interval to download the list, must be a minimum of 3600
-#                   seconds (an hour), but 86400 (a day) should be more than enough
-#       MAX       : This is the maximum number of IP addresses to use from the list,
-#                   a value of 0 means all IPs
-#       URL       : The URL to download the list from
+#   and then lfd using:
+#       sudo csf -ra
 #   
-#   Note: Some of these lists may be very long and could cause serious network
-#   and/or performance issues unless you are using LF_IPSET in csf, so setting a
-#   value for the MAX field should be considered
+#   Each block list must be listed on per line: as NAME|INTERVAL|MAX|URL
+#       NAME        List name with all uppercase alphabetic characters with no
+#                       spaces and a maximum of 25 characters - this will be used as the
+#                       iptables chain name
+#       INTERVAL    Refresh interval to download the list, must be a minimum of 3600
+#                       seconds (an hour), but 86400 (a day) should be more than enough
+#       MAX         This is the maximum number of IP addresses to use from the list,
+#                       a value of 0 means all IPs
+#       URL         The URL to download the list from
+#   
+#   Note:           Some of these lists may be very long and could cause serious network
+#                   and/or performance issues unless you are using LF_IPSET in csf, so
+#                   setting a value for the MAX field should be considered
+#   
+#   Note:           CXS_ is a reserved prefix for the blocklist name and MUST NOT be used
 #   
 #   After making any changes to this file you must restart csf and then lfd
 #   
-#   If you want to redownload a blocklist you must first delete
+#   If you want to re-download a blocklist you must first delete
 #   /var/lib/csf/csf.block.NAME and then restart csf and then lfd
 #   
 #   Each URL is scanned for an IP/CIDR address per line and if found is blocked
 #   
 #   The downloaded list can be a zip file. The zip file MUST only contain a
 #   single text file of a single IP/CIDR per line
-#   
-#   Note: CXS_ is a reserved prefix for the blocklist name and MUST NOT be used
 # #
 
 # #
 #   @blocklist              Official CSF Blocklists
-#   @details:               https://aetherinox.github.io/csf-firewall/usage/blocklists/#official-blocklists
-#                           https://aetherinox.github.io/csf-firewall/advanced/services/blocklist.configserver
+#   @details:               https://docs.configserver.dev/usage/blocklists/#official-blocklists
+#                           https://docs.configserver.dev/services/blocklist.configserver/
 #   
 #   The official CSF blocklists contain a large number of IPs which range from various 
 #   different services, including AbuseIPDB (100% confidency).
@@ -81,17 +82,17 @@
 
 # #
 #   @blocklist              Spamhaus Don't Route Or Peer List (DROP)
-#   @details:               http://spamhaus.org/drop
+#   @details:               https://www.spamhaus.org/blocklists/do-not-route-or-peer/
 # #
 
-#   SPAMDROP|86400|0|http://spamhaus.org/drop/drop.txt
+#   SPAMDROP|86400|0|https://www.spamhaus.org/drop/drop.txt
 
 # #
 #   @blocklist              Spamhaus IPv6 Don't Route Or Peer List (DROPv6)
-#   @details:               http://spamhaus.org/drop
+#   @details:               https://www.spamhaus.org/blocklists/do-not-route-or-peer/
 # #
 
-#   SPAMDROPV6|86400|0|https://spamhaus.org/drop/dropv6.txt
+#   SPAMDROPV6|86400|0|https://www.spamhaus.org/drop/dropv6.txt
 
 # #
 #   @blocklist              DShield.org Recommended Block List
@@ -142,6 +143,8 @@
 #   @details:               https://maxmind.com/en/anonymous_proxies
 #   @notes:                 Set URLGET in csf.conf to use LWP as this list
 #                           uses an SSL connection
+#   
+#                           This is now a paid service.
 # #
 
 #   MAXMIND|86400|0|https://www.maxmind.com/en/anonymous_proxies
@@ -166,14 +169,14 @@
 #   BDEALL|86400|0|http://lists.blocklist.de/lists/all.txt
 
 # #
-#   @blocklist              Stop Forum Spam
+#   @blocklist              Stop Forum Spam IPv4
 #   @details:               http://stopforumspam.com/downloads
 #   @notes:                 Many of the lists available contain a vast number of
 #                           IP addresses so special care needs to be made when
 #                           selecting from their lists
 # #
 
-#   STOPFORUMSPAM|86400|0|http://www.stopforumspam.com/downloads/listed_ip_1.zip
+#   STOPFORUMSPAMV4|86400|0|http://www.stopforumspam.com/downloads/listed_ip_1.zip
 
 # #
 #   @blocklist              Stop Forum Spam IPv6
