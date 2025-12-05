@@ -828,6 +828,7 @@
             background-size: auto, auto;
         background-size: cover;
         background-position: center;
+        box-shadow: 0px 3px 30px #040404;
     }
 
     /*
@@ -911,6 +912,11 @@
     */
 
     :hover > .md-code__nav
+    {
+        background-color: unset !important;
+    }
+
+    .md-code__nav
     {
         background-color: unset !important;
     }
@@ -1693,6 +1699,7 @@
             background-size: auto, auto;
         background-size: cover;
         background-position: center;
+        box-shadow: 0px 3px 30px #040404;
     }
 
     /*
@@ -1784,6 +1791,11 @@
     */
 
     :hover > .md-code__nav
+    {
+        background-color: unset !important;
+    }
+
+    .md-code__nav
     {
         background-color: unset !important;
     }
