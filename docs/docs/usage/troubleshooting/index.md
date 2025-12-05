@@ -4,7 +4,6 @@ tags:
     - usage
     - configure
     - troubleshoot
-status: new
 ---
 
 # Troubleshooting
