@@ -6,6 +6,7 @@ tags:
     - troubleshoot
     - webui
     - interface
+status: new
 ---
 
 # Troubleshooting › WebUI
