@@ -127,35 +127,36 @@ def on_page_markdown(markdown: str, *, page: Page, config: MkDocsConfig, files: 
 
         if type == "version":
             if re.match(r"^(dev(elopment)?-)", args, re.I):
-                return badgeVersionDev(args, page, files )
+                return badgeVersionDev( args, page, files )
             elif re.match(r"^(stable-|public-)", args, re.I):
-                return badgeVersionStable(args, page, files )
+                return badgeVersionStable( args, page, files )
             else:
-                return badgeVersionDefault(args, page, files )
+                return badgeVersionDefault( args, page, files )
 
-        elif type == "control":         return badgeControl(args, page, files )
-        elif type == "flag":            return badgeFlag(args, page, files )
-        elif type == "option":          return badgeOption(args)
-        elif type == "setting":         return badgeSetting(args)
+        elif type == "link":            return newLink( args, page, files )
+        elif type == "control":         return badgeControl( args, page, files )
+        elif type == "flag":            return badgeFlag( args, page, files )
+        elif type == "option":          return badgeOption( args )
+        elif type == "setting":         return badgeSetting( args )
         elif type == "sponsor":         return badgeSponsors( page, files )
-        elif type == "command":         return badgeCommand(args, page, files )
-        elif type == "feature":         return badgeFeature(args, page, files )
-        elif type == "plugin":          return badgePlugin(args, page, files )
-        elif type == "markdown":        return badgeMarkdown(args, page, files )
-        elif type == "3rdparty":        return badge3rdParty(args, page, files )
-        elif type == "docs":            return badgeDocs(args, page, files )
-        elif type == "file":            return badgeFile(args, page, files )
-        elif type == "fileDownload":    return badgeFileSingleDownload(args, page, files )
-        elif type == "fileView":        return badgeFileSingleView(args, page, files )
-        elif type == "fileView":        return badgeFileView(args, page, files )
-        elif type == "source":          return badgeFileSource(args, page, files )
-        elif type == "requires":        return badgeFileRequires(args, page, files )
+        elif type == "command":         return badgeCommand( args, page, files )
+        elif type == "feature":         return badgeFeature( args, page, files )
+        elif type == "plugin":          return badgePlugin( args, page, files )
+        elif type == "markdown":        return badgeMarkdown( args, page, files )
+        elif type == "3rdparty":        return badge3rdParty( args, page, files )
+        elif type == "docs":            return badgeDocs( args, page, files )
+        elif type == "file":            return badgeFile( args, page, files )
+        elif type == "fileDownload":    return badgeFileSingleDownload( args, page, files )
+        elif type == "fileView":        return badgeFileSingleView( args, page, files )
+        elif type == "fileView":        return badgeFileView( args, page, files )
+        elif type == "source":          return badgeFileSource( args, page, files )
+        elif type == "requires":        return badgeFileRequires( args, page, files )
         elif type == "default":
             if   args == "none":        return badgeDefaultNone( page, files )
             elif args == "computed":    return badgeDefaultComputed( page, files )
-            else:                       return badgeDefaultCustom(args, page, files )
+            else:                       return badgeDefaultCustom( args, page, files )
 
-        raise RuntimeError( f"Error in shortcodes.yp - Specified an unknown shortcode: {type}")
+        raise RuntimeError( f"Error in shortcodes.yp - Specified an unknown shortcode: {type}" )
 
     # #
     #   one-pass replacement
@@ -192,6 +193,77 @@ def _resolve_path(path: str, page: Page, files: Files):
     return "#".join([path, anchor]) if anchor else path
 
 # #
+#   Links
+#   
+#   Creates a link to either an external or internal location.
+#   Can specify a new or same target.
+#   
+#   <!-- md:link "Example Text" https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/get.sh -->
+#   <!-- md:link "Local Link" #firefox-this-address-is-restricted same -->
+# #
+
+def newLink(text: str, page: Page, files: Files):
+
+    # #
+    #   Extract: "label with spaces" href target
+    #   
+    #   Regex groups:
+    #     1 › quoted label (optional)
+    #     2 › unquoted label (optional)
+    #     3 › href
+    #     4 › target (optional)
+    # #
+
+    m = re.match(
+        r'^\s*(?:"([^"]+)"|(\S+))\s+(\S+)(?:\s+(\S+))?\s*$',
+        text
+    )
+
+    if not m:
+        return ""
+
+    label       = m.group(1) if m.group(1) else m.group(2)
+    href        = m.group(3)
+    target      = (m.group(4) or "blank").lower()
+
+    # #
+    #   Map target → valid HTML target attribute
+    # #
+
+    target_map = {
+        "blank": "_blank",
+        "new":   "_blank",
+        "b":     "_blank",
+
+        "self":  "_self",
+        "same":  "_self",
+        "s":     "_self",
+
+        "parent": "_parent",
+        "p":      "_parent",
+
+        "top": "_top",
+        "t":   "_top"
+    }
+
+    target_attr = target_map.get(target, "_blank")
+
+    # #
+    #   Build final link
+    # #
+
+    icon = "aetherx-axs-link"
+
+    return (
+        f"<span class=\"aether-doc-link\">"
+        f"<a href=\"{href}\" target=\"{target_attr}\">"
+        f"<span class=\"aether-doc-link-icon\">:{icon}:</span>"
+        f"<span class=\"aether-doc-link-text\">{label}</span>"
+        f"</a>"
+        f"</span>"
+    )
+
+# #
 #   Badge › Flag
 #       
 #   Normal Badges
@@ -217,7 +289,7 @@ def badgeFlag( args: str, page: Page, files: Files ):
     elif type == "setting":         return badgeFlagSetting( page, files )
     else: return badgeFlagDefault( page, files )
 
-    raise RuntimeError( f"Unknown type: {type}")
+    raise RuntimeError( f"Unknown type: {type}" )
 
 # #
 #   Badge › Controls › Default
@@ -271,7 +343,7 @@ def badgeControl( args: str, page: Page, files: Files ):
     elif type == "color":       return newControlColor( args, page, files )
     else: return newControlDefault( page, files )
 
-    raise RuntimeError( f"Unknown type: {type}")
+    raise RuntimeError( f"Unknown type: {type}" )
 
 # #
 #   Badge › Version › Default
@@ -350,7 +422,7 @@ def badgeVersionDev( text: str, page: Page, files: Files ):
 
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
-    # spec not empty
+    # Spec not empty
     if spec:
         output = f"Requires dev version {spec}"
     else:
@@ -479,10 +551,9 @@ def badgeDocs(text: str, page: Page, files: Files):
     #   Parse arguments: "href [target]"
     # #
 
-    parts = text.strip().split()
-
-    href = parts[0] if len(parts) > 0 else ""
-    target_arg = parts[1].lower() if len(parts) > 1 else "blank"
+    parts       = text.strip().split()
+    href        = parts[0] if len(parts) > 0 else ""
+    target_arg  = parts[1].lower() if len(parts) > 1 else "blank"
 
     # #
     #   Normalize target argument
@@ -508,8 +579,9 @@ def badgeDocs(text: str, page: Page, files: Files):
     # #
 
     if not href:
-        icon = "aetherx-axs-book-open"
-        href = _resolve_path(f"{PAGE_CONVENTIONS}#docs", page, files)
+        icon    = "aetherx-axs-book-open"
+        href    = _resolve_path(f"{PAGE_CONVENTIONS}#docs", page, files)
+
         return badgeCreate(
             icon=f"[:{icon}:]({href} 'View Docs')"
         )
@@ -524,7 +596,6 @@ def badgeDocs(text: str, page: Page, files: Files):
         text=f"[View Docs]({href}){{: target=\"{target_attr}\" }}",
         type="docs-view"
     )
-
 
 # #
 #   Badge › Option
@@ -561,10 +632,10 @@ def badgeSetting( type: str ):
 def badgeColorPalette( icon: str, text: str = "", type: str = "" ):
     args = type.split( " " )
 
-    bg1_clr = "#000000"
-    bg2_clr = "#000000"
-    bg1_dis = "none"
-    bg2_dis = "none"
+    bg1_clr     = "#000000"
+    bg2_clr     = "#000000"
+    bg1_dis     = "none"
+    bg2_dis     = "none"
 
     if len( args ) > 1:
         bg1_clr = args[ 1 ]

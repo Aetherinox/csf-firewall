@@ -905,6 +905,15 @@
     {
         color: #FFF;
     }
+
+    /*
+        Codeblock Hover Actions
+    */
+
+    :hover > .md-code__nav
+    {
+        background-color: unset !important;
+    }
 }
 
 /*
@@ -1770,6 +1779,14 @@
         color: white;
     }
 
+    /*
+        Codeblock Hover Actions
+    */
+
+    :hover > .md-code__nav
+    {
+        background-color: unset !important;
+    }
 }
 
 & .md-typeset h4 .mdx-badge__icon
