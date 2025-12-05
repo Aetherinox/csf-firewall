@@ -828,7 +828,6 @@
             background-size: auto, auto;
         background-size: cover;
         background-position: center;
-        box-shadow: 0px 3px 30px #040404;
     }
 
     /*
@@ -918,7 +917,7 @@
 
     .md-code__nav
     {
-        background-color: #17192200 !important;
+        background-color: unset !important;
     }
 }
 
@@ -1699,7 +1698,6 @@
             background-size: auto, auto;
         background-size: cover;
         background-position: center;
-        box-shadow: 0px 3px 30px #FFF;
     }
 
     /*
@@ -1797,7 +1795,7 @@
 
     .md-code__nav
     {
-        background-color: #17192200 !important;
+        background-color: unset !important;
     }
 }
 
@@ -3648,6 +3646,11 @@ figure img
 .sponsor-loader .dot:nth-child(3)
 {
     animation-delay: 0.3s;
+}
+
+.md-code__nav
+{
+    background-color: unset !important;
 }
 
 @keyframes sponsor-pulse
