@@ -918,7 +918,7 @@
 
     .md-code__nav
     {
-        background-color: #FFFFFF !important;
+        background-color: #17192200 !important;
     }
 }
 
@@ -1699,7 +1699,7 @@
             background-size: auto, auto;
         background-size: cover;
         background-position: center;
-        box-shadow: 0px 3px 30px #040404;
+        box-shadow: 0px 3px 30px #FFF;
     }
 
     /*
@@ -1797,7 +1797,7 @@
 
     .md-code__nav
     {
-        background-color: #242735 !important;
+        background-color: #17192200 !important;
     }
 }
 
