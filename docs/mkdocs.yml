@@ -291,6 +291,7 @@ nav:
           - Troubleshooting:
                 - usage/troubleshooting/index.md
                 - Cyberpanel: usage/troubleshooting/cyberpanel.md
+                - Web Interface: usage/troubleshooting/webui.md
           - Cheatsheet:
                 - Home: 'usage/cheatsheet/home.md'
                 - Commands: 'usage/cheatsheet/commands.md'
