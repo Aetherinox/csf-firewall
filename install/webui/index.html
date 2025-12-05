@@ -1,0 +1,4475 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Aetherinox">
+      
+      
+        <link rel="canonical" href="https://aetherinox.github.io/csf-firewall/install/webui/">
+      
+      
+        <link rel="prev" href="../services/">
+      
+      
+        <link rel="next" href="../uninstall/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Install › Enable CSF Web Interface - ConfigServer Security &amp; Firewall</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/timeago.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css?v1.000">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    <link rel="stylesheet" href="../../assets/stylesheets/custom.00c04c01.min.css">
+
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: black; }
+            .glightbox-clean .gslide-media { -webkit-box-shadow: none; box-shadow: none; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#enable-web-interface" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+              <button class="md-banner__button md-icon" aria-label="Don't show this again">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"></path></svg>
+              </button>
+            
+            
+    Documentation is currently being developed
+
+          </div>
+          
+            <script>var el=document.querySelector("[data-md-component=announce]");if(el){var content=el.querySelector(".md-typeset");__md_hash(content.innerHTML)===__md_get("__announce")&&(el.hidden=!0)}</script>
+          
+        </aside>
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+          <aside class="md-banner md-banner--warning">
+            <div class="md-banner__inner md-grid md-typeset">
+              
+    You're not viewing the latest version.
+    <a href="../../.."> 
+      <strong>Click here to go to latest.</strong>
+    </a>
+
+            </div>
+            <script>var el=document.querySelector("[data-md-component=outdated]"),base=new URL("../.."),outdated=__md_get("__outdated",sessionStorage,base);!0===outdated&&el&&(el.hidden=!1)</script>
+          </aside>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ConfigServer Security &amp; Firewall" class="md-header__button md-logo" aria-label="ConfigServer Security &amp; Firewall" data-md-component="logo">
+      
+  
+  <svg viewBox="0 0 512 512" id="svgContainer" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 153.171 309.301 C 148.062 327.815, 138.987 342.266, 119.133 363.500 C 109.551 373.749, 107.194 376.959, 102.985 385.500 C 100.275 391, 97.535 397.965, 96.897 400.979 C 95.424 407.931, 96.292 425.010, 98.416 430.876 C 100.650 437.047, 100.462 439.887, 97.750 440.926 C 95.766 441.686, 96.504 442.273, 104 445.893 C 132.088 459.458, 175.989 459.768, 204.481 446.604 C 210.886 443.645, 212.098 442.722, 211.493 441.263 C 210.463 438.780, 210.501 438.470, 212.999 429.045 C 214.880 421.949, 215.157 418.895, 214.727 410.045 C 213.852 392.089, 209.622 383.465, 192.358 364.444 C 173.286 343.430, 166.546 332.810, 160.138 313.672 C 157.960 307.167, 156.010 301.677, 155.806 301.472 C 155.601 301.268, 154.415 304.791, 153.171 309.301" stroke="none" fill="#ffffff" fill-rule="evenodd"></path>
+      <path d="M 120.443 42.092 C 120.072 42.692, 120.334 48.892, 121.025 55.868 C 122.734 73.123, 121.834 101.029, 119.098 115.650 C 113.658 144.719, 102.901 172.578, 86.723 199.500 C 79.301 211.850, 71.923 222.169, 58.657 238.756 C 46.630 253.794, 40.414 263.476, 35.702 274.509 C 28.692 290.924, 26 305.061, 26 325.455 C 26 359.052, 35.782 385.759, 56.918 409.867 C 67.788 422.265, 88.355 438.659, 95.136 440.331 C 99.522 441.412, 100.624 438.988, 98.594 432.724 C 93.944 418.376, 94.445 403.998, 100.066 390.496 C 104.313 380.295, 107.276 376.029, 119.039 363.175 C 133.842 347.001, 139.451 339.666, 144.411 330 C 148.769 321.509, 153.300 309.246, 154.557 302.548 C 154.923 300.597, 155.510 299.003, 155.861 299.007 C 156.213 299.011, 157.235 302.048, 158.133 305.757 C 163.479 327.837, 171.047 340.053, 198.553 371 C 206.162 379.561, 211.611 389.038, 214.079 398 C 216.152 405.531, 215.660 421.296, 213.056 430.746 C 209.570 443.393, 211.350 444.796, 222.095 437.873 C 244.494 423.441, 262.315 404.262, 272.925 383.171 C 277.465 374.146, 282.641 358.067, 284.570 347 C 286.561 335.581, 286.034 313.718, 283.487 302 C 278.365 278.442, 267.866 256.933, 252.003 237.500 C 225.216 204.685, 206.613 159.041, 204.156 120.105 C 203.619 111.600, 203.171 109.510, 201.691 108.605 C 199.052 106.992, 197.527 109.581, 196.129 118.050 C 195.486 121.940, 191.811 133.439, 187.961 143.602 C 184.112 153.765, 179.940 165.620, 178.691 169.947 L 176.420 177.814 173.725 163.521 C 168.619 136.444, 157.730 102.947, 146.074 78.467 C 140.130 65.984, 128.918 45.801, 126.231 42.750 C 124.499 40.784, 121.465 40.439, 120.443 42.092" stroke="none" fill="#cc1414" fill-rule="evenodd"></path>
+      <path d="M 255.366 195.488 C 254.607 197.466, 258.183 203.384, 267.458 215.500 C 285.451 239.004, 288.248 242.987, 293.242 252.222 L 298.500 261.943 317.782 261.972 C 340.632 262.005, 343.009 261.400, 346.010 254.788 C 347.749 250.956, 347.958 248.130, 347.978 228.218 C 348.002 203.832, 347.410 200.562, 342.199 196.286 C 339.510 194.080, 339.342 194.072, 297.719 194.036 C 261.634 194.005, 255.859 194.203, 255.366 195.488 M 378.164 195.689 C 371.640 198.904, 371.500 199.581, 371.500 228 C 371.500 256.524, 371.638 257.177, 378.326 260.351 C 381.406 261.812, 387.258 262, 429.651 261.996 C 475.880 261.993, 477.612 261.924, 480.810 259.974 C 486.469 256.524, 487 253.781, 487 228 C 487 202.219, 486.469 199.476, 480.810 196.026 C 477.610 194.075, 475.902 194.008, 429.500 194.027 C 387.011 194.043, 381.117 194.234, 378.164 195.689 M 307.499 284.001 C 307.159 284.552, 307.902 289.615, 309.151 295.251 C 311.112 304.102, 311.444 308.638, 311.579 328.500 L 311.735 351.500 394.784 351.756 L 477.833 352.011 481.052 349.302 C 486.590 344.643, 487 342.435, 486.998 317.282 C 486.997 291.276, 486.516 289.226, 479.500 285.282 L 475.500 283.033 391.809 283.016 C 336.993 283.006, 307.904 283.346, 307.499 284.001 M 124.437 357.250 L 121.500 360.500 124.750 357.563 C 126.537 355.948, 128 354.485, 128 354.313 C 128 353.540, 127.175 354.221, 124.437 357.250 M 191 363.313 C 191 363.485, 192.463 364.948, 194.250 366.563 L 197.500 369.500 194.563 366.250 C 191.825 363.221, 191 362.540, 191 363.313 M 306.233 374.250 C 305.676 374.938, 303.326 380, 301.011 385.500 C 293.737 402.778, 283.812 418.621, 270.668 433.940 C 268.101 436.932, 266 440.004, 266 440.767 C 266 441.929, 271.858 442.100, 302.250 441.827 C 334.949 441.532, 338.860 441.321, 342.173 439.673 C 348.608 436.471, 349 434.525, 349 405.802 L 349 380.406 345.208 376.703 L 341.416 373 324.330 373 C 311.868  373, 306.971 373.338, 306.233 374.250 M 376.697 376.798 L 372.905 380.682 373.203 407.262 L 373.500 433.842 376 436.516 C 381.224 442.103, 380.227 442, 429.200 441.994 C 457.195 441.991, 475.917 441.595, 478.209 440.959 C 480.248 440.392, 483.286 438.560, 484.959 436.887 L 488 433.846 488 408.324 C 488 387.712, 487.712 382.194, 486.500 379.642 C 483.497 373.312, 485.379 373.529, 430.495 373.207 L 380.489 372.915 376.697 376.798 M 95.286 412.500 C 95.294 415.250, 95.488 416.256, 95.718 414.736 C  95.947 413.216, 95.941  410.966, 95.704 409.736 C 95.467 408.506, 95.279 409.750, 95.286 412.500 M 215.286 412.500 C 215.294 415.250, 215.488 416.256, 215.718 414.736 C 215.947 413.216, 215.941 410.966, 215.704 409.736 C 215.467 408.506, 215.279 409.750, 215.286 412.500" stroke="none" fill="#b3b3b3" fill-rule="evenodd"></path>
+</svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ConfigServer Security &amp; Firewall
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Install › Enable CSF Web Interface
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="indigo" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="main" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Switch to light mode" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"></path></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/aetherinox/csf-firewall" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Aetherinox/csf-firewall
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../home/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../about/csf/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  About
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../dependencies/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Install
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../usage/getting-started/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Usage
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../services/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Services
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../insiders/about/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Insiders
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../about/changelog/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Changelog
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../blog/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Blog
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://discord.configserver.dev" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Discord
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://tickets.configserver.dev" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Create Ticket
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://buymeacoffee.com/aetherinox" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Sponsor
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ConfigServer Security &amp; Firewall" class="md-nav__button md-logo" aria-label="ConfigServer Security &amp; Firewall" data-md-component="logo">
+      
+  
+  <svg viewBox="0 0 512 512" id="svgContainer" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 153.171 309.301 C 148.062 327.815, 138.987 342.266, 119.133 363.500 C 109.551 373.749, 107.194 376.959, 102.985 385.500 C 100.275 391, 97.535 397.965, 96.897 400.979 C 95.424 407.931, 96.292 425.010, 98.416 430.876 C 100.650 437.047, 100.462 439.887, 97.750 440.926 C 95.766 441.686, 96.504 442.273, 104 445.893 C 132.088 459.458, 175.989 459.768, 204.481 446.604 C 210.886 443.645, 212.098 442.722, 211.493 441.263 C 210.463 438.780, 210.501 438.470, 212.999 429.045 C 214.880 421.949, 215.157 418.895, 214.727 410.045 C 213.852 392.089, 209.622 383.465, 192.358 364.444 C 173.286 343.430, 166.546 332.810, 160.138 313.672 C 157.960 307.167, 156.010 301.677, 155.806 301.472 C 155.601 301.268, 154.415 304.791, 153.171 309.301" stroke="none" fill="#ffffff" fill-rule="evenodd"></path>
+      <path d="M 120.443 42.092 C 120.072 42.692, 120.334 48.892, 121.025 55.868 C 122.734 73.123, 121.834 101.029, 119.098 115.650 C 113.658 144.719, 102.901 172.578, 86.723 199.500 C 79.301 211.850, 71.923 222.169, 58.657 238.756 C 46.630 253.794, 40.414 263.476, 35.702 274.509 C 28.692 290.924, 26 305.061, 26 325.455 C 26 359.052, 35.782 385.759, 56.918 409.867 C 67.788 422.265, 88.355 438.659, 95.136 440.331 C 99.522 441.412, 100.624 438.988, 98.594 432.724 C 93.944 418.376, 94.445 403.998, 100.066 390.496 C 104.313 380.295, 107.276 376.029, 119.039 363.175 C 133.842 347.001, 139.451 339.666, 144.411 330 C 148.769 321.509, 153.300 309.246, 154.557 302.548 C 154.923 300.597, 155.510 299.003, 155.861 299.007 C 156.213 299.011, 157.235 302.048, 158.133 305.757 C 163.479 327.837, 171.047 340.053, 198.553 371 C 206.162 379.561, 211.611 389.038, 214.079 398 C 216.152 405.531, 215.660 421.296, 213.056 430.746 C 209.570 443.393, 211.350 444.796, 222.095 437.873 C 244.494 423.441, 262.315 404.262, 272.925 383.171 C 277.465 374.146, 282.641 358.067, 284.570 347 C 286.561 335.581, 286.034 313.718, 283.487 302 C 278.365 278.442, 267.866 256.933, 252.003 237.500 C 225.216 204.685, 206.613 159.041, 204.156 120.105 C 203.619 111.600, 203.171 109.510, 201.691 108.605 C 199.052 106.992, 197.527 109.581, 196.129 118.050 C 195.486 121.940, 191.811 133.439, 187.961 143.602 C 184.112 153.765, 179.940 165.620, 178.691 169.947 L 176.420 177.814 173.725 163.521 C 168.619 136.444, 157.730 102.947, 146.074 78.467 C 140.130 65.984, 128.918 45.801, 126.231 42.750 C 124.499 40.784, 121.465 40.439, 120.443 42.092" stroke="none" fill="#cc1414" fill-rule="evenodd"></path>
+      <path d="M 255.366 195.488 C 254.607 197.466, 258.183 203.384, 267.458 215.500 C 285.451 239.004, 288.248 242.987, 293.242 252.222 L 298.500 261.943 317.782 261.972 C 340.632 262.005, 343.009 261.400, 346.010 254.788 C 347.749 250.956, 347.958 248.130, 347.978 228.218 C 348.002 203.832, 347.410 200.562, 342.199 196.286 C 339.510 194.080, 339.342 194.072, 297.719 194.036 C 261.634 194.005, 255.859 194.203, 255.366 195.488 M 378.164 195.689 C 371.640 198.904, 371.500 199.581, 371.500 228 C 371.500 256.524, 371.638 257.177, 378.326 260.351 C 381.406 261.812, 387.258 262, 429.651 261.996 C 475.880 261.993, 477.612 261.924, 480.810 259.974 C 486.469 256.524, 487 253.781, 487 228 C 487 202.219, 486.469 199.476, 480.810 196.026 C 477.610 194.075, 475.902 194.008, 429.500 194.027 C 387.011 194.043, 381.117 194.234, 378.164 195.689 M 307.499 284.001 C 307.159 284.552, 307.902 289.615, 309.151 295.251 C 311.112 304.102, 311.444 308.638, 311.579 328.500 L 311.735 351.500 394.784 351.756 L 477.833 352.011 481.052 349.302 C 486.590 344.643, 487 342.435, 486.998 317.282 C 486.997 291.276, 486.516 289.226, 479.500 285.282 L 475.500 283.033 391.809 283.016 C 336.993 283.006, 307.904 283.346, 307.499 284.001 M 124.437 357.250 L 121.500 360.500 124.750 357.563 C 126.537 355.948, 128 354.485, 128 354.313 C 128 353.540, 127.175 354.221, 124.437 357.250 M 191 363.313 C 191 363.485, 192.463 364.948, 194.250 366.563 L 197.500 369.500 194.563 366.250 C 191.825 363.221, 191 362.540, 191 363.313 M 306.233 374.250 C 305.676 374.938, 303.326 380, 301.011 385.500 C 293.737 402.778, 283.812 418.621, 270.668 433.940 C 268.101 436.932, 266 440.004, 266 440.767 C 266 441.929, 271.858 442.100, 302.250 441.827 C 334.949 441.532, 338.860 441.321, 342.173 439.673 C 348.608 436.471, 349 434.525, 349 405.802 L 349 380.406 345.208 376.703 L 341.416 373 324.330 373 C 311.868  373, 306.971 373.338, 306.233 374.250 M 376.697 376.798 L 372.905 380.682 373.203 407.262 L 373.500 433.842 376 436.516 C 381.224 442.103, 380.227 442, 429.200 441.994 C 457.195 441.991, 475.917 441.595, 478.209 440.959 C 480.248 440.392, 483.286 438.560, 484.959 436.887 L 488 433.846 488 408.324 C 488 387.712, 487.712 382.194, 486.500 379.642 C 483.497 373.312, 485.379 373.529, 430.495 373.207 L 380.489 372.915 376.697 376.798 M 95.286 412.500 C 95.294 415.250, 95.488 416.256, 95.718 414.736 C  95.947 413.216, 95.941  410.966, 95.704 409.736 C 95.467 408.506, 95.279 409.750, 95.286 412.500 M 215.286 412.500 C 215.294 415.250, 215.488 416.256, 215.718 414.736 C 215.947 413.216, 215.941 410.966, 215.704 409.736 C 215.467 408.506, 215.279 409.750, 215.286 412.500" stroke="none" fill="#b3b3b3" fill-rule="evenodd"></path>
+</svg>
+
+    </a>
+    ConfigServer Security &amp; Firewall
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/aetherinox/csf-firewall" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Aetherinox/csf-firewall
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../home/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2">
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    About
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/csf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/license/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    License
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/privacy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Privacy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5">
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wiki
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Wiki
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/conventions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conventions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tags
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Install
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dependencies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dependencies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../download/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Download
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diagnostic Tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../services/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Start Services
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Enable Web Interface
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Enable Web Interface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-install-perl-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Install Perl Modules
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 1: Install Perl Modules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installation-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installation Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependency-levels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dependency Levels
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-enable-web-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Enable Web UI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-access-web-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Access Web UI
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next Steps
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../uninstall/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Uninstall
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8">
+        
+          
+          <label class="md-nav__link" for="__nav_3_8" id="__nav_3_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Update
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Update
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../update/v14-to-v15/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    v14.x to v15.x
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../update/v15-to-newer.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    v15.x to Newer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_9">
+        
+          
+          <label class="md-nav__link" for="__nav_3_9" id="__nav_3_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Integrations
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Integrations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../integrations/authentik/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Authentik
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../integrations/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../integrations/traefik/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Traefik
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Usage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/prepost/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pre &amp; Post Scripts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/blocklists/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blocklists
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/ipset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ipsets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/geoip/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Geographical Blocks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_7">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../usage/troubleshooting/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_7" id="__nav_4_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Troubleshooting
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/troubleshooting/cyberpanel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cyberpanel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/troubleshooting/webui/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Interface
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--new" title="New Addition">
+    </span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_8">
+        
+          
+          <label class="md-nav__link" for="__nav_4_8" id="__nav_4_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cheatsheet
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Cheatsheet
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/cheatsheet/home/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/cheatsheet/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/cheatsheet/control_panels.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control Panels
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/cheatsheet/conf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Example Configs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/cheatsheet/ports/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ports
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/cheatsheet/structure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Structure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../services/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Services
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Services
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../services/blocklist.configserver/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    blocklist.configserver.dev
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../services/download.configserver/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    download.configserver.dev
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../services/get.configserver/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    get.configserver.dev
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6">
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Insiders
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Insiders
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../insiders/about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../insiders/payments_and_billing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Payments and Billing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../insiders/join/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Join Insiders
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../insiders/sponsors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Our Sponsors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_5">
+        
+          
+          <label class="md-nav__link" for="__nav_6_5" id="__nav_6_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Using Insiders
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Using Insiders
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../insiders/setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../insiders/disable/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Disable
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../blog/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blog
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_8" id="__nav_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Blog
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2">
+        
+          
+          <label class="md-nav__link" for="__nav_8_2" id="__nav_8_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Archive
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Archive
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    October 2025
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_3">
+        
+          
+          <label class="md-nav__link" for="__nav_8_3" id="__nav_8_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Categories
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Categories
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/csfajaxtail/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    csfajaxtail
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/csp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    csp
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/cyberpanel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    cyberpanel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/downloadconfigserverdev/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    download.configserver.dev
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/initd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    init.d
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/release/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    release
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/release-alpha/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    release-alpha
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/ui/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ui
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/v15x/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    v15.x
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/vestacp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    vestacp
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/web-inteface/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    web-inteface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/web-login/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    web-login
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/web-theme-dark/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    web-theme-dark
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/webmin/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    webmin
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://discord.configserver.dev" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Discord
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://tickets.configserver.dev" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Create Ticket
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://buymeacoffee.com/aetherinox" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sponsor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-install-perl-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1: Install Perl Modules
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Step 1: Install Perl Modules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installation-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installation Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dependency-levels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dependency Levels
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-enable-web-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2: Enable Web UI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-access-web-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3: Access Web UI
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next Steps
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <nav class="md-tags">
+    
+      
+      
+      
+        
+        
+      
+      
+        <a href="../../about/tags/#tag:install" class="md-tag md-tag-icon">install</a>
+      
+    
+      
+      
+      
+        
+        
+      
+      
+        <a href="../../about/tags/#tag:setup" class="md-tag md-tag-icon">setup</a>
+      
+    
+  </nav>
+
+
+  
+    <a href="https://github.com/aetherinox/csf-firewall/edit/main/docs/docs/install/webui.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"></path></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/aetherinox/csf-firewall/raw/main/docs/docs/install/webui.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"></path></svg>
+    </a>
+  
+
+
+<h1 id="enable-web-interface">Enable Web Interface <!-- omit from toc --><a class="headerlink" href="#enable-web-interface" title="Permanent link">¶</a></h1>
+<p><abbr title="ConfigServer Security &amp; Firewall Security">ConfigServer Firewall</abbr> provides an optional web-based interface that lets you manage <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> from your browser. With it, you can configure settings, and blacklist or whitelist IPs without using commands or editing configuration files manually. If you choose not to enable the interface, all management must be done directly through the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> config files, or by running commands through your shell.</p>
+<p><br></p>
+<hr>
+<p><br></p>
+<h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">¶</a></h2>
+<p>This section covers the initial setup of the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface with only the essential requirements. Follow these steps to get the web interface up and running quickly.</p>
+<p><br></p>
+<h3 id="step-1-install-perl-modules">Step 1: Install Perl Modules<a class="headerlink" href="#step-1-install-perl-modules" title="Permanent link">¶</a></h3>
+<p><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>'s web interface requires several Perl modules. If you followed our <a href="../dependencies/"><abbr title="A list of packages required for CSF to function properly">dependencies</abbr></a> guide, these modules may already be installed. If not, run one of the commands below on your server.</p>
+<p><br></p>
+<h4 id="installation-options">Installation Options<a class="headerlink" href="#installation-options" title="Permanent link">¶</a></h4>
+<p>You only need to <strong>choose one</strong> of the methods below. We provide multiple options for your convenience:</p>
+<ul>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M380.4 245.6c3-7.6 5.5-14 5.2-24.4l-4.3 9c4.4-13.2 4-27.1 3.6-40.4-.2-6-.3-11.8 0-17.4l-1.8-.5c-1.5-45.2-40.6-93.1-75.3-109.4-30-13.8-76.1-16.2-97.3-5.8 1.3-1.1 4.2-2 6.8-2.7l.3-.1c3.3-1 6-1.7 4-2.9-19.2 1.9-24.9 5.5-31.1 9.4l-.1 0c-4.6 2.9-9.5 6-20.3 8.7-3.5 3.4 1.7 2 5.8 .9s7.2-1.9-.1 2.4c-3.5 1-6.6 1.3-9.6 1.6l-.1 0c-8.3 .8-15.8 1.6-30.7 17 .8 1.3 3.4-.2 5.3-1.3l.1-.1c2.3-1.4 3.4-2-1.7 4.4-19.1-2.4-60.3 43.7-69.1 59l4.6 .8c-3.2 8-6.8 14.8-10 20.8-4.3 8.1-7.9 14.9-8.7 21.3-.3 5.1-1 11-1.7 17.3-.1 1-.2 2-.3 3l-.1 .6c-3 27.3-6.7 60.8 3.9 73l-1.3 13c.6 1.2 1.1 2.3 1.6 3.5 .2 .4 .4 .8 .5 1.1 1 2.1 2 4.2 3.3 6.2l-3 .2c7 22.1 10.8 22.5 15.1 22.9 4.4 .4 9.3 .9 18.7 24.2-2.7-.9-5.5-1.9-9.4-7.2-.5 4.1 5.8 16.3 13.1 25.8l-3.1 3.6c2.1 3.7 4.8 6.2 7.6 8.8 1 .9 2.1 1.9 3.1 2.9-11.9-6.5 3.2 13.7 11.9 25.2 .8 1.1 1.5 2 2.2 2.9 1.4 1.9 2.5 3.4 2.9 4.1l2.4-4.2c-.3 6.1 4.3 13.9 13.1 24.7l7.3-.3c3 6 14 16.7 20.7 17.2l-4.4 5.8c8.1 2.6 10.3 4.3 12.7 6.2 2.6 2.1 5.4 4.3 16.1 8.1l-4.2-7.4c3.5 3 6.2 5.9 8.8 8.7l.1 .1c5.2 5.6 9.9 10.6 19.7 15.3 10.7 3.7 16.6 4.7 22.7 5.8 .3 0 .6 .1 .9 .1 5.4 .8 11.2 1.8 20.8 4.5-1.1-.1-2.2-.1-3.3-.1-2.3-.1-4.7-.1-7-.1-14.4-.2-29.2-.4-42.7-5.2-96.6-25.7-184.9-139-178.4-255.6-.6-9.9-.3-20.9 0-30.7 .4-13.5 .7-24.8-1.6-28.3l1-3.1c5.3-17.4 11.7-38.2 23.8-62.8l-.1-.2 0-.1c.4 .4 3.4 3.4 8.8-5.8 .8-1.8 1.6-3.7 2.4-5.6 .5-1.1 .9-2.2 1.4-3.2 2.5-6.1 5.1-12.3 8.4-17.9l2.6-.6c1.7-10.1 17-23.8 29.8-35.2l1.1-1c5.7-5.1 10.7-9.7 13.6-13.1l.7 4.4c17-15.9 44.6-27.5 65.6-36.4l.5-.2c4.8-2 9.3-3.9 13.3-5.7-3.4 3.8 2.2 2.7 10 1 4.8-1 10.4-2.1 15.3-2.4l-3.9 2.1c-2.7 1.4-5.4 2.8-8 4.6 8.1-2 11.7-1.4 15.7-.8l.3 0c3.5 .6 7.3 1.2 14.6 .2-5.6 .8-12.3 3-11.2 3.8 7.9 .9 12.8-.1 17.2-1l.2 0c5.5-1.1 10.3-2 19.3 .9l-1-4.8c7.3 2.6 12.7 4.3 17.5 5.8l.5 .1c10 3 17.6 5.3 34.2 14.1 3.2 .2 5.3-.5 7.4-1.2l.1 0c3.6-1.1 7-2.1 15.2 1.2 .3 .5 .5 1 .7 1.4 .1 .2 .2 .5 .3 .7l0 .1c1 2.6 1.8 4.6 14.6 12.1 1.7-.7-2.7-4.7-6.4-8.2l-.1-.1c-.2-.1-.3-.3-.5-.4 32.2 17.3 67.3 54.1 78 93.5-6-11.1-5.2-5.5-4.3 .5 .6 4 1.2 8.1-.2 7.5 4.5 12.1 8.1 24.5 10.4 37.4l-.8-2.9-.1-.3c-3.3-11.9-9.6-34.3-19.9-49.3-.4 4.3-2.8 3.9-5.2 3.5l-.1 0c-3.3-.6-6.2-1.1-1.9 12.6 2.6 3.8 3.1 2.4 3.5 1.1 .5-1.5 .9-2.7 4.7 5.2 .1 4.1 1 8.2 2.1 12.7l.1 .6c.1 .3 .1 .5 .2 .8l.1 .6c.6 2.6 1.3 5.4 1.8 8.4-1.1-.2-2.3-2.2-3.4-4.2-1.4-2.4-2.8-4.7-3.7-3.2 2.4 11.5 6.5 17.4 8 18.3-.3 .6-.6 .7-1.1 .7-.8 0-1.8 .1-1.9 5.3 .7 13.7 3.3 12.5 5.3 11.6 .6-.3 1.2-.6 1.7-.4-.6 2.5-1.6 5.1-2.7 7.9-2.8 7.1-6 15.4-3.4 26.1-.8-3-2-6-3.1-8.9l-.1-.4c-.2-.5-.4-1-.6-1.5-.3-.8-.6-1.6-.9-2.3-.6 4.4-.3 7.7-.1 10.6l0 .7c.4 5.3 .7 10-3 19.9 4.3-14.2 3.8-26.9-.2-20.8 1 10.9-3.7 20.4-8 28.9l-.1 .2c-3.6 7.1-6.8 13.5-5.9 19.3l-5.2-7.1c-7.5 10.9-7 13.3-6.5 15.5l0 .1c.5 1.9 1 3.8-3.4 10.8 1.7-2.9 1.3-3.6 1-4.2-.4-.8-.7-1.5 1.7-5.1-1.6 .1-5.5 3.9-10.1 8.5-3.9 3.9-8.5 8.4-12.8 11.8-37.5 30.1-82.3 34-125.6 17.8 .2-1-.2-2.1-3.1-4.1-36.8-28.2-58.5-52.1-50.9-107.5 2.1-1.6 3.6-5.8 5.3-10.8l.2-.4 .1-.3 0-.1c2.9-8.4 6.5-18.8 14.3-23.8 7.8-17.3 31.3-33.3 56.4-33.7 25.6-1.4 47.2 13.7 58.1 27.9-19.8-18.4-52.1-24-79.7-10.4-28.2 12.7-45 43.8-42.5 74.7 .3-.4 .6-.6 .9-.8l.2-.2c.6-.5 1.1-.9 1.4-3.3-.9 60.2 64.8 104.3 112.1 82l.6 1.3c12.7-3.5 15.9-6.5 20.3-10.7l.1-.1c2.2-2.1 4.7-4.5 8.9-7.3-.3 .7-1.3 1.7-2.4 2.7-2.2 2.1-4.6 4.5-1.6 4.6 5-1.3 18.5-13.4 28.5-22.3 .6-.5 1.2-1 1.7-1.5 1.5-1.3 2.8-2.5 4-3.6l.3-.3c1.9-4.2 1.6-5.6 1.3-7l0-.1c-.4-1.6-.8-3.3 2.4-9.6l7.3-3.7c.8-2.1 1.5-4.1 2.2-6 .2-.6 .5-1.2 .7-1.8l-.4-.2-.1-.1zM248 334.1c-6-3-13.7-8.9-14.8-11.4l-.4 .3c-.3 .6-.5 1.3-.2 2.2-12.2-5.7-23.4-14.3-32.6-24.9 4.9 7.1 10.1 14.1 17 19.5-6.9-2.3-15.1-11.8-21.6-19.3l-.1-.1c-4.3-5-7.9-9.1-9.7-9.5 19.8 35.5 80.5 62.3 112.3 49-14.7 .5-33.4 .3-49.9-5.8zm79.3-119.7l-.1-.2c-.5-1.5-1.1-3.1-1.7-3.4 1.4-5.8 5.4-10.7 4.4 4.6-1 3.8-1.8 1.5-2.6-1zm-4.2 22.2c-1.3 7.9-5 15.5-10.1 22.5 .2-2-1.2-2.4-2.6-2.8-2.9-.8-5.9-1.6 5.6-16.1-.5 1.9-2.1 4.6-3.7 7.3l-.3 .4c-3.6 5.9-6.7 11 4 4.3l1-1.8c2.6-4.5 5-8.8 6-13.8l.1 0zm-55.6 33.9c7.1 .6 14.1 .6 21-1.1-2.5 2.4-5.2 4.8-8.3 7.2-11.1-1.7-21.2-6-12.7-6.1zm-92.6 11.6c3.6 7.1 6.4 11.5 9 15.7l.1 .2c2.3 3.7 4.4 7.1 6.8 11.7-5.1-4.2-8.7-9.5-12.5-15l-.3-.5c-1.4-2.1-2.8-4.2-4.4-6.2l1.2-5.9 .1 0zm7.5-9.6c1.6 3.3 3.2 6.4 5.7 9.1l2.6 7.7-1.3-2.1c-3.2-5.3-6.3-10.6-8-16.7l1 2zm238.9-41.6c-2.3 17.4-7.7 34.6-16 50.3 7.6-14.9 12.5-30.9 14.8-47.2l1.2-3.1zM35.8 110.6c.4 .8 1.4 .5 2.3 .3 1.9-.5 3.6-.9-.1 7.6-.5 .3-1 .7-1.5 1-1.4 .9-2.8 1.9-3.9 3 1.9-3.8 3.5-7.4 3.2-11.9zM25.5 152.3c-.7 3.7-1.5 7.9-3.4 13.9 .2-1.9 0-3.5-.2-4.9l0-.1c-.4-3.4-.7-6.3 4.3-12.8-.3 1.2-.5 2.5-.7 3.8l0 .1z"></path></svg></span> <strong>Debian/Ubuntu</strong> › using <code>apt-get</code></li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M341.5 285.6c33.7 0 82.3-6.9 82.3-47 .2-6.7 .9-1.8-20.9-96.2-4.6-19.1-8.7-27.8-42.3-44.6-26.1-13.3-82.9-35.4-99.7-35.4-15.7 0-20.2 20.2-38.9 20.2-18 0-31.3-15.1-48.1-15.1-16.1 0-26.7 11-34.8 33.6-27.5 77.6-26.3 74.3-26.1 78.3 0 24.8 97.6 106.1 228.5 106.1zM429 254.8c4.7 22 4.7 24.3 4.7 27.2 0 37.7-42.3 58.6-98 58.6-125.7 .1-235.9-73.6-235.9-122.3 0-6.8 1.4-13.5 4.1-19.7-45.2 2.3-103.8 10.3-103.8 62 0 84.7 200.6 189 359.5 189 121.8 0 152.5-55.1 152.5-98.6 0-34.2-29.6-73-82.9-96.2z"></path></svg></span> <strong>CentOS/RHEL</strong> › using <code>yum</code> or <code>dnf</code></li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M274.6 27.5C269 12.2 255.9 0 239.7 0L208.3 0C192.1 0 179 12.2 173.4 27.5L117.7 229.3c-3.8 13.8-5.7 28.1-5.7 42.4 0 33.2 10.4 65.7 29.7 92.7l6.9 9.7 45.9 53.6c3.5 4.1 5.5 9.3 5.5 14.8l0 45.5c0 13.3 10.7 24 24 24s24-10.7 24-24l0-45.5c0-5.4 1.9-10.6 5.5-14.8l45.9-53.6 6.9-9.7c19.3-27 29.7-59.5 29.7-92.7 0-14.3-1.9-28.6-5.7-42.4L274.6 27.5zM280 453.1l0 34.9c0 13.3 10.7 24 24 24s24-10.7 24-24l0-48.2c68.3-25.9 120-79.1 120-159.8 0-64-44-102-88-140-9.5-8.2-19-16.4-28.1-24.9l29.2 105.7c4.6 16.6 6.9 33.7 6.9 50.9 0 39.9-12.5 78.8-35.7 111.3l-7.3 10.2-.4 .6-.5 .5-44.1 51.5 0 7.2zM88 140l0 0C44 178 0 216 0 280 0 360.7 51.7 414 120 439.8l0 48.2c0 13.3 10.7 24 24 24s24-10.7 24-24l0-42.1-44.1-51.5-.5-.5-.4-.6-7.3-10.2c-23.2-32.5-35.7-71.4-35.7-111.3 0-17.2 2.3-34.3 6.9-50.9l29.2-105.7C107 123.6 97.5 131.8 88 140z"></path></svg></span> <strong>Perl CPAN</strong> › using the stock <code>cpan</code> client</li>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M274.6 27.5C269 12.2 255.9 0 239.7 0L208.3 0C192.1 0 179 12.2 173.4 27.5L117.7 229.3c-3.8 13.8-5.7 28.1-5.7 42.4 0 33.2 10.4 65.7 29.7 92.7l6.9 9.7 45.9 53.6c3.5 4.1 5.5 9.3 5.5 14.8l0 45.5c0 13.3 10.7 24 24 24s24-10.7 24-24l0-45.5c0-5.4 1.9-10.6 5.5-14.8l45.9-53.6 6.9-9.7c19.3-27 29.7-59.5 29.7-92.7 0-14.3-1.9-28.6-5.7-42.4L274.6 27.5zM280 453.1l0 34.9c0 13.3 10.7 24 24 24s24-10.7 24-24l0-48.2c68.3-25.9 120-79.1 120-159.8 0-64-44-102-88-140-9.5-8.2-19-16.4-28.1-24.9l29.2 105.7c4.6 16.6 6.9 33.7 6.9 50.9 0 39.9-12.5 78.8-35.7 111.3l-7.3 10.2-.4 .6-.5 .5-44.1 51.5 0 7.2zM88 140l0 0C44 178 0 216 0 280 0 360.7 51.7 414 120 439.8l0 48.2c0 13.3 10.7 24 24 24s24-10.7 24-24l0-42.1-44.1-51.5-.5-.5-.4-.6-7.3-10.2c-23.2-32.5-35.7-71.4-35.7-111.3 0-17.2 2.3-34.3 6.9-50.9l29.2-105.7C107 123.6 97.5 131.8 88 140z"></path></svg></span> <strong>Perl CPANM</strong> › using <code>cpanm</code> (recommended for faster, non-interactive installs)</li>
+</ul>
+<p><br></p>
+<h4 id="dependency-levels">Dependency Levels<a class="headerlink" href="#dependency-levels" title="Permanent link">¶</a></h4>
+<p>Each installation method below provides two options:</p>
+<dl>
+<dt><a dependencies="Dependencies" href="#+Full Dependencies" id="+Full"><code>Full Dependencies</code></a></dt>
+<dd>
+<p>Installs <strong>all modules</strong> required to run every aspect of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>.</p>
+</dd>
+<dt><a dependencies="Dependencies" href="#+Minimum Dependencies" id="+Minimum"><code>Minimum Dependencies</code></a></dt>
+<dd>
+<p>Installs only the <strong>core modules</strong> needed for the web interface to function.</p>
+</dd>
+</dl>
+<p><br></p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:4"><input checked="checked" id="dependency-levels-debianubuntu-apt-get" name="__tabbed_1" type="radio"><input id="dependency-levels-centosrhel-yumdnf" name="__tabbed_1" type="radio"><input id="dependency-levels-perl-cpan" name="__tabbed_1" type="radio"><input id="dependency-levels-perl-cpanminus" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="dependency-levels-debianubuntu-apt-get"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M380.4 245.6c3-7.6 5.5-14 5.2-24.4l-4.3 9c4.4-13.2 4-27.1 3.6-40.4-.2-6-.3-11.8 0-17.4l-1.8-.5c-1.5-45.2-40.6-93.1-75.3-109.4-30-13.8-76.1-16.2-97.3-5.8 1.3-1.1 4.2-2 6.8-2.7l.3-.1c3.3-1 6-1.7 4-2.9-19.2 1.9-24.9 5.5-31.1 9.4l-.1 0c-4.6 2.9-9.5 6-20.3 8.7-3.5 3.4 1.7 2 5.8 .9s7.2-1.9-.1 2.4c-3.5 1-6.6 1.3-9.6 1.6l-.1 0c-8.3 .8-15.8 1.6-30.7 17 .8 1.3 3.4-.2 5.3-1.3l.1-.1c2.3-1.4 3.4-2-1.7 4.4-19.1-2.4-60.3 43.7-69.1 59l4.6 .8c-3.2 8-6.8 14.8-10 20.8-4.3 8.1-7.9 14.9-8.7 21.3-.3 5.1-1 11-1.7 17.3-.1 1-.2 2-.3 3l-.1 .6c-3 27.3-6.7 60.8 3.9 73l-1.3 13c.6 1.2 1.1 2.3 1.6 3.5 .2 .4 .4 .8 .5 1.1 1 2.1 2 4.2 3.3 6.2l-3 .2c7 22.1 10.8 22.5 15.1 22.9 4.4 .4 9.3 .9 18.7 24.2-2.7-.9-5.5-1.9-9.4-7.2-.5 4.1 5.8 16.3 13.1 25.8l-3.1 3.6c2.1 3.7 4.8 6.2 7.6 8.8 1 .9 2.1 1.9 3.1 2.9-11.9-6.5 3.2 13.7 11.9 25.2 .8 1.1 1.5 2 2.2 2.9 1.4 1.9 2.5 3.4 2.9 4.1l2.4-4.2c-.3 6.1 4.3 13.9 13.1 24.7l7.3-.3c3 6 14 16.7 20.7 17.2l-4.4 5.8c8.1 2.6 10.3 4.3 12.7 6.2 2.6 2.1 5.4 4.3 16.1 8.1l-4.2-7.4c3.5 3 6.2 5.9 8.8 8.7l.1 .1c5.2 5.6 9.9 10.6 19.7 15.3 10.7 3.7 16.6 4.7 22.7 5.8 .3 0 .6 .1 .9 .1 5.4 .8 11.2 1.8 20.8 4.5-1.1-.1-2.2-.1-3.3-.1-2.3-.1-4.7-.1-7-.1-14.4-.2-29.2-.4-42.7-5.2-96.6-25.7-184.9-139-178.4-255.6-.6-9.9-.3-20.9 0-30.7 .4-13.5 .7-24.8-1.6-28.3l1-3.1c5.3-17.4 11.7-38.2 23.8-62.8l-.1-.2 0-.1c.4 .4 3.4 3.4 8.8-5.8 .8-1.8 1.6-3.7 2.4-5.6 .5-1.1 .9-2.2 1.4-3.2 2.5-6.1 5.1-12.3 8.4-17.9l2.6-.6c1.7-10.1 17-23.8 29.8-35.2l1.1-1c5.7-5.1 10.7-9.7 13.6-13.1l.7 4.4c17-15.9 44.6-27.5 65.6-36.4l.5-.2c4.8-2 9.3-3.9 13.3-5.7-3.4 3.8 2.2 2.7 10 1 4.8-1 10.4-2.1 15.3-2.4l-3.9 2.1c-2.7 1.4-5.4 2.8-8 4.6 8.1-2 11.7-1.4 15.7-.8l.3 0c3.5 .6 7.3 1.2 14.6 .2-5.6 .8-12.3 3-11.2 3.8 7.9 .9 12.8-.1 17.2-1l.2 0c5.5-1.1 10.3-2 19.3 .9l-1-4.8c7.3 2.6 12.7 4.3 17.5 5.8l.5 .1c10 3 17.6 5.3 34.2 14.1 3.2 .2 5.3-.5 7.4-1.2l.1 0c3.6-1.1 7-2.1 15.2 1.2 .3 .5 .5 1 .7 1.4 .1 .2 .2 .5 .3 .7l0 .1c1 2.6 1.8 4.6 14.6 12.1 1.7-.7-2.7-4.7-6.4-8.2l-.1-.1c-.2-.1-.3-.3-.5-.4 32.2 17.3 67.3 54.1 78 93.5-6-11.1-5.2-5.5-4.3 .5 .6 4 1.2 8.1-.2 7.5 4.5 12.1 8.1 24.5 10.4 37.4l-.8-2.9-.1-.3c-3.3-11.9-9.6-34.3-19.9-49.3-.4 4.3-2.8 3.9-5.2 3.5l-.1 0c-3.3-.6-6.2-1.1-1.9 12.6 2.6 3.8 3.1 2.4 3.5 1.1 .5-1.5 .9-2.7 4.7 5.2 .1 4.1 1 8.2 2.1 12.7l.1 .6c.1 .3 .1 .5 .2 .8l.1 .6c.6 2.6 1.3 5.4 1.8 8.4-1.1-.2-2.3-2.2-3.4-4.2-1.4-2.4-2.8-4.7-3.7-3.2 2.4 11.5 6.5 17.4 8 18.3-.3 .6-.6 .7-1.1 .7-.8 0-1.8 .1-1.9 5.3 .7 13.7 3.3 12.5 5.3 11.6 .6-.3 1.2-.6 1.7-.4-.6 2.5-1.6 5.1-2.7 7.9-2.8 7.1-6 15.4-3.4 26.1-.8-3-2-6-3.1-8.9l-.1-.4c-.2-.5-.4-1-.6-1.5-.3-.8-.6-1.6-.9-2.3-.6 4.4-.3 7.7-.1 10.6l0 .7c.4 5.3 .7 10-3 19.9 4.3-14.2 3.8-26.9-.2-20.8 1 10.9-3.7 20.4-8 28.9l-.1 .2c-3.6 7.1-6.8 13.5-5.9 19.3l-5.2-7.1c-7.5 10.9-7 13.3-6.5 15.5l0 .1c.5 1.9 1 3.8-3.4 10.8 1.7-2.9 1.3-3.6 1-4.2-.4-.8-.7-1.5 1.7-5.1-1.6 .1-5.5 3.9-10.1 8.5-3.9 3.9-8.5 8.4-12.8 11.8-37.5 30.1-82.3 34-125.6 17.8 .2-1-.2-2.1-3.1-4.1-36.8-28.2-58.5-52.1-50.9-107.5 2.1-1.6 3.6-5.8 5.3-10.8l.2-.4 .1-.3 0-.1c2.9-8.4 6.5-18.8 14.3-23.8 7.8-17.3 31.3-33.3 56.4-33.7 25.6-1.4 47.2 13.7 58.1 27.9-19.8-18.4-52.1-24-79.7-10.4-28.2 12.7-45 43.8-42.5 74.7 .3-.4 .6-.6 .9-.8l.2-.2c.6-.5 1.1-.9 1.4-3.3-.9 60.2 64.8 104.3 112.1 82l.6 1.3c12.7-3.5 15.9-6.5 20.3-10.7l.1-.1c2.2-2.1 4.7-4.5 8.9-7.3-.3 .7-1.3 1.7-2.4 2.7-2.2 2.1-4.6 4.5-1.6 4.6 5-1.3 18.5-13.4 28.5-22.3 .6-.5 1.2-1 1.7-1.5 1.5-1.3 2.8-2.5 4-3.6l.3-.3c1.9-4.2 1.6-5.6 1.3-7l0-.1c-.4-1.6-.8-3.3 2.4-9.6l7.3-3.7c.8-2.1 1.5-4.1 2.2-6 .2-.6 .5-1.2 .7-1.8l-.4-.2-.1-.1zM248 334.1c-6-3-13.7-8.9-14.8-11.4l-.4 .3c-.3 .6-.5 1.3-.2 2.2-12.2-5.7-23.4-14.3-32.6-24.9 4.9 7.1 10.1 14.1 17 19.5-6.9-2.3-15.1-11.8-21.6-19.3l-.1-.1c-4.3-5-7.9-9.1-9.7-9.5 19.8 35.5 80.5 62.3 112.3 49-14.7 .5-33.4 .3-49.9-5.8zm79.3-119.7l-.1-.2c-.5-1.5-1.1-3.1-1.7-3.4 1.4-5.8 5.4-10.7 4.4 4.6-1 3.8-1.8 1.5-2.6-1zm-4.2 22.2c-1.3 7.9-5 15.5-10.1 22.5 .2-2-1.2-2.4-2.6-2.8-2.9-.8-5.9-1.6 5.6-16.1-.5 1.9-2.1 4.6-3.7 7.3l-.3 .4c-3.6 5.9-6.7 11 4 4.3l1-1.8c2.6-4.5 5-8.8 6-13.8l.1 0zm-55.6 33.9c7.1 .6 14.1 .6 21-1.1-2.5 2.4-5.2 4.8-8.3 7.2-11.1-1.7-21.2-6-12.7-6.1zm-92.6 11.6c3.6 7.1 6.4 11.5 9 15.7l.1 .2c2.3 3.7 4.4 7.1 6.8 11.7-5.1-4.2-8.7-9.5-12.5-15l-.3-.5c-1.4-2.1-2.8-4.2-4.4-6.2l1.2-5.9 .1 0zm7.5-9.6c1.6 3.3 3.2 6.4 5.7 9.1l2.6 7.7-1.3-2.1c-3.2-5.3-6.3-10.6-8-16.7l1 2zm238.9-41.6c-2.3 17.4-7.7 34.6-16 50.3 7.6-14.9 12.5-30.9 14.8-47.2l1.2-3.1zM35.8 110.6c.4 .8 1.4 .5 2.3 .3 1.9-.5 3.6-.9-.1 7.6-.5 .3-1 .7-1.5 1-1.4 .9-2.8 1.9-3.9 3 1.9-3.8 3.5-7.4 3.2-11.9zM25.5 152.3c-.7 3.7-1.5 7.9-3.4 13.9 .2-1.9 0-3.5-.2-4.9l0-.1c-.4-3.4-.7-6.3 4.3-12.8-.3 1.2-.5 2.5-.7 3.8l0 .1z"></path></svg></span> Debian/Ubuntu (<abbr title="A command-line tool for handling packages on Debian-based systems; part of the APT (Advanced Package Tool) suite.">apt-get</abbr>)</label><label for="dependency-levels-centosrhel-yumdnf"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M341.5 285.6c33.7 0 82.3-6.9 82.3-47 .2-6.7 .9-1.8-20.9-96.2-4.6-19.1-8.7-27.8-42.3-44.6-26.1-13.3-82.9-35.4-99.7-35.4-15.7 0-20.2 20.2-38.9 20.2-18 0-31.3-15.1-48.1-15.1-16.1 0-26.7 11-34.8 33.6-27.5 77.6-26.3 74.3-26.1 78.3 0 24.8 97.6 106.1 228.5 106.1zM429 254.8c4.7 22 4.7 24.3 4.7 27.2 0 37.7-42.3 58.6-98 58.6-125.7 .1-235.9-73.6-235.9-122.3 0-6.8 1.4-13.5 4.1-19.7-45.2 2.3-103.8 10.3-103.8 62 0 84.7 200.6 189 359.5 189 121.8 0 152.5-55.1 152.5-98.6 0-34.2-29.6-73-82.9-96.2z"></path></svg></span> CentOS/RHEL (<abbr title="Yellowdog Updater, Modified; a package manager used on older Red Hat–based systems (e.g., CentOS, RHEL).">yum</abbr>/<abbr title="Dandified Yum; the next-generation version of YUM, used on newer Red Hat–based systems (e.g., Fedora, CentOS 8+, RHEL 8+).">dnf</abbr>)</label><label for="dependency-levels-perl-cpan"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M274.6 27.5C269 12.2 255.9 0 239.7 0L208.3 0C192.1 0 179 12.2 173.4 27.5L117.7 229.3c-3.8 13.8-5.7 28.1-5.7 42.4 0 33.2 10.4 65.7 29.7 92.7l6.9 9.7 45.9 53.6c3.5 4.1 5.5 9.3 5.5 14.8l0 45.5c0 13.3 10.7 24 24 24s24-10.7 24-24l0-45.5c0-5.4 1.9-10.6 5.5-14.8l45.9-53.6 6.9-9.7c19.3-27 29.7-59.5 29.7-92.7 0-14.3-1.9-28.6-5.7-42.4L274.6 27.5zM280 453.1l0 34.9c0 13.3 10.7 24 24 24s24-10.7 24-24l0-48.2c68.3-25.9 120-79.1 120-159.8 0-64-44-102-88-140-9.5-8.2-19-16.4-28.1-24.9l29.2 105.7c4.6 16.6 6.9 33.7 6.9 50.9 0 39.9-12.5 78.8-35.7 111.3l-7.3 10.2-.4 .6-.5 .5-44.1 51.5 0 7.2zM88 140l0 0C44 178 0 216 0 280 0 360.7 51.7 414 120 439.8l0 48.2c0 13.3 10.7 24 24 24s24-10.7 24-24l0-42.1-44.1-51.5-.5-.5-.4-.6-7.3-10.2c-23.2-32.5-35.7-71.4-35.7-111.3 0-17.2 2.3-34.3 6.9-50.9l29.2-105.7C107 123.6 97.5 131.8 88 140z"></path></svg></span> Perl (CPAN)</label><label for="dependency-levels-perl-cpanminus"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M274.6 27.5C269 12.2 255.9 0 239.7 0L208.3 0C192.1 0 179 12.2 173.4 27.5L117.7 229.3c-3.8 13.8-5.7 28.1-5.7 42.4 0 33.2 10.4 65.7 29.7 92.7l6.9 9.7 45.9 53.6c3.5 4.1 5.5 9.3 5.5 14.8l0 45.5c0 13.3 10.7 24 24 24s24-10.7 24-24l0-45.5c0-5.4 1.9-10.6 5.5-14.8l45.9-53.6 6.9-9.7c19.3-27 29.7-59.5 29.7-92.7 0-14.3-1.9-28.6-5.7-42.4L274.6 27.5zM280 453.1l0 34.9c0 13.3 10.7 24 24 24s24-10.7 24-24l0-48.2c68.3-25.9 120-79.1 120-159.8 0-64-44-102-88-140-9.5-8.2-19-16.4-28.1-24.9l29.2 105.7c4.6 16.6 6.9 33.7 6.9 50.9 0 39.9-12.5 78.8-35.7 111.3l-7.3 10.2-.4 .6-.5 .5-44.1 51.5 0 7.2zM88 140l0 0C44 178 0 216 0 280 0 360.7 51.7 414 120 439.8l0 48.2c0 13.3 10.7 24 24 24s24-10.7 24-24l0-42.1-44.1-51.5-.5-.5-.4-.6-7.3-10.2c-23.2-32.5-35.7-71.4-35.7-111.3 0-17.2 2.3-34.3 6.9-50.9l29.2-105.7C107 123.6 97.5 131.8 88 140z"></path></svg></span> Perl (CPANMINUS)</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># #</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1">#   Full Dependencies</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1"># #</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">  </span>dnsutils<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span>ipset<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span>libcrypt-ssleay-perl<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">  </span>libgd-graph-perl<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">  </span>libio-socket-inet6-perl<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">  </span>libio-socket-ssl-perl<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">  </span>libjson-perl<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">  </span>liblwp-protocol-https-perl<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">  </span>libnet-libidn-perl<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">  </span>libnet-ssleay-perl<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">  </span>libsocket6-perl<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">  </span>libtime-hires-perl<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">  </span>libwww-perl<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">  </span>perl<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">  </span>sendmail<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">  </span>wget
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="c1"># #</span>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="c1">#   Minimum Dependencies</span>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="c1"># #</span>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="w">  </span>ipset<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="w">  </span>libcrypt-ssleay-perl<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="w">  </span>libio-socket-inet6-perl<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="w">  </span>libio-socket-ssl-perl<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="w">  </span>libnet-libidn-perl<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a><span class="w">  </span>libsocket6-perl<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a><span class="w">  </span>perl<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a><span class="w">  </span>wget
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># #</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1">#   Full Dependencies</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1"># #</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>sudo<span class="w"> </span>yum<span class="w"> </span>makecache<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span>bind-utils<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span>ipset<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">  </span>net-tools<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">  </span>perl<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">  </span>perl-Crypt-SSLeay<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">  </span>perl-GDGraph<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">  </span>perl-IO-Socket-INET6<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">  </span>perl-IO-Socket-SSL.noarch<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">  </span>perl-JSON<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">  </span>perl-libwww-perl<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">  </span>perl-LWP-Protocol-https.noarch<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">  </span>perl-Math-BigInt<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">  </span>perl-Net-LibIDN2<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w">  </span>perl-Net-SSLeay<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w">  </span>perl-Socket<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w">  </span>perl-Socket6<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="w">  </span>perl-Time-HiRes<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="w">  </span>sendmail<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="w">  </span>wget
+</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>
+</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="c1"># #</span>
+</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="c1">#   Minimum Dependencies</span>
+</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="c1"># #</span>
+</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>
+</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a>sudo<span class="w"> </span>yum<span class="w"> </span>makecache<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="w">  </span>ipset<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-32"><a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="w">  </span>perl<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-33"><a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a><span class="w">  </span>perl-IO-Socket-INET6<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-34"><a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="w">  </span>perl-IO-Socket-SSL.noarch<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-35"><a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a><span class="w">  </span>perl-libwww-perl<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-36"><a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a><span class="w">  </span>perl-Net-LibIDN2<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-37"><a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="w">  </span>perl-Net-SSLeay<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-38"><a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a><span class="w">  </span>perl-Socket6<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-39"><a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a><span class="w">  </span>wget
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># #</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1">#   Debian/Ubuntu</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1"># #</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>perl<span class="w"> </span>build-essential
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1"># #</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="c1">#   CentOS/RHEL</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="c1"># #</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>sudo<span class="w"> </span>yum<span class="w"> </span>makecache<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>yum<span class="w"> </span>groupinstall<span class="w"> </span><span class="s1">'Development Tools'</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>perl<span class="w"> </span>cpan
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="c1"># #</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="c1">#   Full Dependencies</span>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="c1"># #</span>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>sudo<span class="w"> </span>cpan<span class="w"> </span>-i<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="w">  </span>Crypt::SSLeay<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="w">  </span>Digest::MD5<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="w">  </span>Digest::SHA<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="w">  </span>Email::Valid<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="w">  </span>GD::Graph<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="w">  </span>IO::Socket::INET6<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a><span class="w">  </span>IO::Socket::SSL<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-25"><a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="w">  </span>JSON<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-26"><a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a><span class="w">  </span>LWP<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-27"><a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a><span class="w">  </span>LWP::Protocol::https<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-28"><a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a><span class="w">  </span>LWP::UserAgent<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-29"><a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a><span class="w">  </span>Net::LibIDN<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-30"><a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a><span class="w">  </span>Net::SSLeay<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-31"><a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a><span class="w">  </span>Socket<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-32"><a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a><span class="w">  </span>Socket6<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-33"><a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a><span class="w">  </span>Time::HiRes
+</span><span id="__span-2-34"><a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a>
+</span><span id="__span-2-35"><a id="__codelineno-2-35" name="__codelineno-2-35" href="#__codelineno-2-35"></a><span class="c1"># #</span>
+</span><span id="__span-2-36"><a id="__codelineno-2-36" name="__codelineno-2-36" href="#__codelineno-2-36"></a><span class="c1">#   Minimum Dependencies</span>
+</span><span id="__span-2-37"><a id="__codelineno-2-37" name="__codelineno-2-37" href="#__codelineno-2-37"></a><span class="c1"># #</span>
+</span><span id="__span-2-38"><a id="__codelineno-2-38" name="__codelineno-2-38" href="#__codelineno-2-38"></a>
+</span><span id="__span-2-39"><a id="__codelineno-2-39" name="__codelineno-2-39" href="#__codelineno-2-39"></a>sudo<span class="w"> </span>cpan<span class="w"> </span>-i<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-40"><a id="__codelineno-2-40" name="__codelineno-2-40" href="#__codelineno-2-40"></a><span class="w">  </span>IO::Socket::INET6<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-41"><a id="__codelineno-2-41" name="__codelineno-2-41" href="#__codelineno-2-41"></a><span class="w">  </span>IO::Socket::SSL<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-42"><a id="__codelineno-2-42" name="__codelineno-2-42" href="#__codelineno-2-42"></a><span class="w">  </span>Net::LibIDN<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-43"><a id="__codelineno-2-43" name="__codelineno-2-43" href="#__codelineno-2-43"></a><span class="w">  </span>Net::SSLeay<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-44"><a id="__codelineno-2-44" name="__codelineno-2-44" href="#__codelineno-2-44"></a><span class="w">  </span>Socket6
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># #</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="c1">#   Debian/Ubuntu</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1"># #</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>perl<span class="w"> </span>cpanminus
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="c1"># #</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="c1">#   CentOS/RHEL</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="c1"># #</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>sudo<span class="w"> </span>yum<span class="w"> </span>makecache<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>perl<span class="w"> </span>perl-App-cpanminus
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="c1"># #</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="c1">#   Full Dependencies</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="c1"># #</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>sudo<span class="w"> </span>cpanm<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="w">  </span>IO::Socket::SSL<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="w">  </span>IO::Socket::INET6<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="w">  </span>Socket6<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="w">  </span>Net::LibIDN<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="w">  </span>LWP<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="w">  </span>LWP::Protocol::https<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="w">  </span>LWP::UserAgent<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a><span class="w">  </span>JSON<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-26"><a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a><span class="w">  </span>Net::SSLeay<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-27"><a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a><span class="w">  </span>Crypt::SSLeay<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-28"><a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a><span class="w">  </span>Digest::MD5<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-29"><a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a><span class="w">  </span>Digest::SHA<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-30"><a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a><span class="w">  </span>Email::Valid<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-31"><a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a><span class="w">  </span>GD::Graph<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-32"><a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a><span class="w">  </span>Time::HiRes<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-33"><a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a><span class="w">  </span>Socket
+</span><span id="__span-3-34"><a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a>
+</span><span id="__span-3-35"><a id="__codelineno-3-35" name="__codelineno-3-35" href="#__codelineno-3-35"></a><span class="c1"># #</span>
+</span><span id="__span-3-36"><a id="__codelineno-3-36" name="__codelineno-3-36" href="#__codelineno-3-36"></a><span class="c1">#   Minimum Dependencies</span>
+</span><span id="__span-3-37"><a id="__codelineno-3-37" name="__codelineno-3-37" href="#__codelineno-3-37"></a><span class="c1"># #</span>
+</span><span id="__span-3-38"><a id="__codelineno-3-38" name="__codelineno-3-38" href="#__codelineno-3-38"></a>
+</span><span id="__span-3-39"><a id="__codelineno-3-39" name="__codelineno-3-39" href="#__codelineno-3-39"></a>sudo<span class="w"> </span>cpanm<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-40"><a id="__codelineno-3-40" name="__codelineno-3-40" href="#__codelineno-3-40"></a><span class="w">  </span>IO::Socket::SSL<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-41"><a id="__codelineno-3-41" name="__codelineno-3-41" href="#__codelineno-3-41"></a><span class="w">  </span>Net::SSLeay<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-42"><a id="__codelineno-3-42" name="__codelineno-3-42" href="#__codelineno-3-42"></a><span class="w">  </span>Net::LibIDN<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-43"><a id="__codelineno-3-43" name="__codelineno-3-43" href="#__codelineno-3-43"></a><span class="w">  </span>IO::Socket::INET6<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-44"><a id="__codelineno-3-44" name="__codelineno-3-44" href="#__codelineno-3-44"></a><span class="w">  </span>Socket6
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><br>
+<br></p>
+<h3 id="step-2-enable-web-ui">Step 2: Enable Web UI<a class="headerlink" href="#step-2-enable-web-ui" title="Permanent link">¶</a></h3>
+<p>To enable <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface, edit the file <code>/etc/csf/csf.conf</code> in a text editor:</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>nano<span class="w"> </span>/etc/csf/csf.conf
+</span></code></pre></div>
+<p><br></p>
+<p>We need to update the following values. Click <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z"></path></svg></span> to see information about each setting.</p>
+<div class="language-ini highlight"><span class="filename"><span>/etc/csf/csf.conf</span></span><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># #</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="c1">#   1 to enable, 0 to disable web ui </span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="c1"># #</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="na">UI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"1"</span><span class="w"> </span><span class="c1"># (1)!</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c1"># #</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="c1">#   Set port for web UI. The default port is 6666, but</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="c1">#   I change this to 1025 to easy access. Default port create some issue</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="c1">#   with popular chrome and firefox browser (in my case) </span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="c1"># #</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="na">UI_PORT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"1025"</span><span class="w"> </span><span class="c1"># (2)!</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="c1"># #</span>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="c1">#   Leave blank to bind to all IP addresses on the server </span>
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="c1"># #</span>
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>
+</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="na">UI_IP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">""</span><span class="w"> </span><span class="c1"># (3)!</span>
+</span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>
+</span><span id="__span-5-21"><a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="c1"># #</span>
+</span><span id="__span-5-22"><a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="c1">#   Set username for authentication </span>
+</span><span id="__span-5-23"><a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a><span class="c1"># #</span>
+</span><span id="__span-5-24"><a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a>
+</span><span id="__span-5-25"><a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a><span class="na">UI_USER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"admin"</span><span class="w"> </span><span class="c1"># (4)!</span>
+</span><span id="__span-5-26"><a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a>
+</span><span id="__span-5-27"><a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a><span class="c1"># #</span>
+</span><span id="__span-5-28"><a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a><span class="c1">#   Set a strong password for authentication </span>
+</span><span id="__span-5-29"><a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a><span class="c1"># #</span>
+</span><span id="__span-5-30"><a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a>
+</span><span id="__span-5-31"><a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a><span class="na">UI_PASS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"admin"</span><span class="w"> </span><span class="c1"># (5)!</span>
+</span></code></pre></div>
+<ol>
+<li><span class="twemoji pulsate icon-clr-yellow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M48 192c0 38.4 15 73.2 39.5 99.1 21.3 22.4 44.9 54 53.3 92.9l102.4 0c8.4-39 32-70.5 53.3-92.9 24.5-25.9 39.5-60.7 39.5-99.1 0-79.5-64.5-144-144-144S48 112.5 48 192zm48-8c0-48.6 39.4-88 88-88 13.3 0 24 10.7 24 24s-10.7 24-24 24c-22.1 0-40 17.9-40 40 0 13.3-10.7 24-24 24s-24-10.7-24-24z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M296.5 291.1C321 265.2 336 230.4 336 192 336 112.5 271.5 48 192 48S48 112.5 48 192c0 38.4 15 73.2 39.5 99.1 21.3 22.4 44.9 54 53.3 92.9l102.4 0c8.4-39 32-70.5 53.3-92.9zm34.8 33C307.7 349 288 379.4 288 413.7l0 18.3c0 44.2-35.8 80-80 80l-32 0c-44.2 0-80-35.8-80-80l0-18.3C96 379.4 76.3 349 52.7 324.1 20 289.7 0 243.2 0 192 0 86 86 0 192 0S384 86 384 192c0 51.2-20 97.7-52.7 132.1zM144 184c0 13.3-10.7 24-24 24s-24-10.7-24-24c0-48.6 39.4-88 88-88 13.3 0 24 10.7 24 24s-10.7 24-24 24c-22.1 0-40 17.9-40 40z"></path></svg></span> Defines if the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface is enabled or not. Will be
+    accessible via your web browser.
+    <div class="red right"><small>Required</small></div>
+    <div class="yellow right"><small>Values: <code>0</code>, <code>1</code></small></div></li>
+<li><span class="twemoji pulsate icon-clr-yellow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M48 192c0 38.4 15 73.2 39.5 99.1 21.3 22.4 44.9 54 53.3 92.9l102.4 0c8.4-39 32-70.5 53.3-92.9 24.5-25.9 39.5-60.7 39.5-99.1 0-79.5-64.5-144-144-144S48 112.5 48 192zm48-8c0-48.6 39.4-88 88-88 13.3 0 24 10.7 24 24s-10.7 24-24 24c-22.1 0-40 17.9-40 40 0 13.3-10.7 24-24 24s-24-10.7-24-24z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M296.5 291.1C321 265.2 336 230.4 336 192 336 112.5 271.5 48 192 48S48 112.5 48 192c0 38.4 15 73.2 39.5 99.1 21.3 22.4 44.9 54 53.3 92.9l102.4 0c8.4-39 32-70.5 53.3-92.9zm34.8 33C307.7 349 288 379.4 288 413.7l0 18.3c0 44.2-35.8 80-80 80l-32 0c-44.2 0-80-35.8-80-80l0-18.3C96 379.4 76.3 349 52.7 324.1 20 289.7 0 243.2 0 192 0 86 86 0 192 0S384 86 384 192c0 51.2-20 97.7-52.7 132.1zM144 184c0 13.3-10.7 24-24 24s-24-10.7-24-24c0-48.6 39.4-88 88-88 13.3 0 24 10.7 24 24s-10.7 24-24 24c-22.1 0-40 17.9-40 40z"></path></svg></span> Defines the port to assign for the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface.
+    This should be set to a value of <code>1023</code> or higher.
+    <div class="red right"><small>Required</small></div>
+    <div class="yellow right"><small>Values: <code>&gt; 1023</code></small></div></li>
+<li><span class="twemoji pulsate icon-clr-yellow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M48 192c0 38.4 15 73.2 39.5 99.1 21.3 22.4 44.9 54 53.3 92.9l102.4 0c8.4-39 32-70.5 53.3-92.9 24.5-25.9 39.5-60.7 39.5-99.1 0-79.5-64.5-144-144-144S48 112.5 48 192zm48-8c0-48.6 39.4-88 88-88 13.3 0 24 10.7 24 24s-10.7 24-24 24c-22.1 0-40 17.9-40 40 0 13.3-10.7 24-24 24s-24-10.7-24-24z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M296.5 291.1C321 265.2 336 230.4 336 192 336 112.5 271.5 48 192 48S48 112.5 48 192c0 38.4 15 73.2 39.5 99.1 21.3 22.4 44.9 54 53.3 92.9l102.4 0c8.4-39 32-70.5 53.3-92.9zm34.8 33C307.7 349 288 379.4 288 413.7l0 18.3c0 44.2-35.8 80-80 80l-32 0c-44.2 0-80-35.8-80-80l0-18.3C96 379.4 76.3 349 52.7 324.1 20 289.7 0 243.2 0 192 0 86 86 0 192 0S384 86 384 192c0 51.2-20 97.7-52.7 132.1zM144 184c0 13.3-10.7 24-24 24s-24-10.7-24-24c0-48.6 39.4-88 88-88 13.3 0 24 10.7 24 24s-10.7 24-24 24c-22.1 0-40 17.9-40 40z"></path></svg></span> Defines the IP address to bind to the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface.
+    If you plan to route this through <abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr>, you should set this to your <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">docker</abbr> subnet such as <code>::ffff:172.17.0.1</code>.
+    <div style="padding-top:15px">Leave blank if you want to bind to all IP addresses on server.</div>
+    <div class="red right"><small>Required</small></div>
+    <div class="yellow right"><small>Values: <code>blank</code>, <code>::IPv6:IPv4</code></small></div></li>
+<li><span class="twemoji pulsate icon-clr-yellow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M48 192c0 38.4 15 73.2 39.5 99.1 21.3 22.4 44.9 54 53.3 92.9l102.4 0c8.4-39 32-70.5 53.3-92.9 24.5-25.9 39.5-60.7 39.5-99.1 0-79.5-64.5-144-144-144S48 112.5 48 192zm48-8c0-48.6 39.4-88 88-88 13.3 0 24 10.7 24 24s-10.7 24-24 24c-22.1 0-40 17.9-40 40 0 13.3-10.7 24-24 24s-24-10.7-24-24z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M296.5 291.1C321 265.2 336 230.4 336 192 336 112.5 271.5 48 192 48S48 112.5 48 192c0 38.4 15 73.2 39.5 99.1 21.3 22.4 44.9 54 53.3 92.9l102.4 0c8.4-39 32-70.5 53.3-92.9zm34.8 33C307.7 349 288 379.4 288 413.7l0 18.3c0 44.2-35.8 80-80 80l-32 0c-44.2 0-80-35.8-80-80l0-18.3C96 379.4 76.3 349 52.7 324.1 20 289.7 0 243.2 0 192 0 86 86 0 192 0S384 86 384 192c0 51.2-20 97.7-52.7 132.1zM144 184c0 13.3-10.7 24-24 24s-24-10.7-24-24c0-48.6 39.4-88 88-88 13.3 0 24 10.7 24 24s-10.7 24-24 24c-22.1 0-40 17.9-40 40z"></path></svg></span> Defines the username that will be required in order to
+    sign into the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface. This should be alphabetic or numerical characters.
+    <div class="red right"><small>Required</small></div>
+    <div class="yellow right"><small>Values: <code>A-Z,a-z,0-9</code></small></div></li>
+<li><span class="twemoji pulsate icon-clr-yellow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M48 192c0 38.4 15 73.2 39.5 99.1 21.3 22.4 44.9 54 53.3 92.9l102.4 0c8.4-39 32-70.5 53.3-92.9 24.5-25.9 39.5-60.7 39.5-99.1 0-79.5-64.5-144-144-144S48 112.5 48 192zm48-8c0-48.6 39.4-88 88-88 13.3 0 24 10.7 24 24s-10.7 24-24 24c-22.1 0-40 17.9-40 40 0 13.3-10.7 24-24 24s-24-10.7-24-24z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M296.5 291.1C321 265.2 336 230.4 336 192 336 112.5 271.5 48 192 48S48 112.5 48 192c0 38.4 15 73.2 39.5 99.1 21.3 22.4 44.9 54 53.3 92.9l102.4 0c8.4-39 32-70.5 53.3-92.9zm34.8 33C307.7 349 288 379.4 288 413.7l0 18.3c0 44.2-35.8 80-80 80l-32 0c-44.2 0-80-35.8-80-80l0-18.3C96 379.4 76.3 349 52.7 324.1 20 289.7 0 243.2 0 192 0 86 86 0 192 0S384 86 384 192c0 51.2-20 97.7-52.7 132.1zM144 184c0 13.3-10.7 24-24 24s-24-10.7-24-24c0-48.6 39.4-88 88-88 13.3 0 24 10.7 24 24s-10.7 24-24 24c-22.1 0-40 17.9-40 40z"></path></svg></span> Defines the password that will be required in order to
+    sign into the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface. This should alphabetic, numerical, or special characters.
+    <div class="red right"><small>Required</small></div>
+    <div class="yellow right"><small'>Values: <code>A-Z,a-z,0-9,!@#$%^&amp;*()-_=+</code></small'></div></li>
+</ol>
+<p><br></p>
+<p>Save and exit. Then open the file <code>/etc/csf/ui/ui.allow</code> and add your client IP to allow access to the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface. Ensure you only add one IP address per line:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="step-2-enable-web-ui-etccsfuiuiallow" name="__tabbed_2" type="radio"><input id="step-2-enable-web-ui-command" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="step-2-enable-web-ui-etccsfuiuiallow"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 9V3.5L18.5 9M6 2c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6Z"></path></svg></span> /etc/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>/ui/ui.allow</label><label for="step-2-enable-web-ui-command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Command</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>This is an example of how your <code>ui.allow</code> file should look.</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="m">127</span>.0.0.1<span class="w">           </span><span class="c1"># localhost</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="m">10</span>.10.0.6<span class="w">           </span><span class="c1"># example LAN ip</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="m">40</span>.159.100.6<span class="w">        </span><span class="c1"># example WAN ip</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<p>If you want to add a new IP without having to open <code>ui.allow</code>, run the following:</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">"YOUR_PUBLIC_IP_ADDRESS"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>-a<span class="w"> </span>/etc/csf/ui/ui.allow
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>If you opt to define an IP address to <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> by setting <code>UI_IP</code>, you must ensure you whitelist the gateway address in your <code>/etc/csf/ui/ui.allow</code></p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="step-2-enable-web-ui-etccsfcsfconf" name="__tabbed_3" type="radio"><input id="step-2-enable-web-ui-etccsfuiuiallow_1" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="step-2-enable-web-ui-etccsfcsfconf"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 9V3.5L18.5 9M6 2c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6Z"></path></svg></span> /etc/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>/<abbr title="The default csf config file, usually in &lt;pre&gt;/etc/csf/csf.conf&lt;/pre&gt;">csf.conf</abbr></label><label for="step-2-enable-web-ui-etccsfuiuiallow_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 9V3.5L18.5 9M6 2c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6Z"></path></svg></span> /etc/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>/ui/ui.allow</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># #</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="c1">#   Leave blank to bind to all IP addresses on the server </span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="c1"># #</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="nv">UI_IP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"::ffff:172.17.0.1"</span>
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="m">172</span>.17.0.1<span class="w">          </span><span class="c1"># CSF assigned IP</span>
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>The <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface works under the <code>lfd daemon</code> <em><abbr title="Login Failure Daemon">LFD</abbr></em>. We need to restart the <abbr title="Login Failure Daemon">LFD</abbr> on your system using the command:</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>sudo<span class="w"> </span>service<span class="w"> </span>lfd<span class="w"> </span>restart
+</span></code></pre></div>
+<p><br></p>
+<p>In order to gain access to the online admin panel; you must ensure <abbr title="Login Failure Daemon">LFD</abbr> and <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> are running. You can check by running the commands:</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>sudo<span class="w"> </span>service<span class="w"> </span>lfd<span class="w"> </span>status
+</span></code></pre></div>
+<p><br></p>
+<p>You should see the following:</p>
+<div class="language-console highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="go">● lfd.service - ConfigServer Security &amp; Firewall - lfd</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="go">     Loaded: loaded (/lib/systemd/system/lfd.service; enabled; preset: enabled)</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="go">     Active: active (running) since Mon 2025-19-21 11:59:38 UTC; 1s ago</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="go">    Process: 46393 ExecStart=/usr/sbin/lfd (code=exited, status=0/SUCCESS)</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="go">   Main PID: 46407 (lfd - sleeping)</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="go">      Tasks: 8 (limit: 4613)</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="go">     Memory: 121.7M</span>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="go">        CPU: 2.180s</span>
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="go">     CGroup: /system.slice/lfd.service</span>
+</span></code></pre></div>
+<p><br></p>
+<p>Next, confirm <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> service is also running:</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>sudo<span class="w"> </span>service<span class="w"> </span>csf<span class="w"> </span>status
+</span></code></pre></div>
+<p><br></p>
+<p>Check the output for any errors; which there should be none.</p>
+<div class="language-console highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="go">● csf.service - ConfigServer Security &amp; Firewall - csf</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="go">     Loaded: loaded (/lib/systemd/system/csf.service; enabled; preset: enabled)</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="go">     Active: active (exited) since Mon 2024-08-05 12:04:09 UTC; 1s ago</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="go">    Process: 46916 ExecStart=/usr/sbin/csf --initup (code=exited, status=0/SUCCESS)</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="go">   Main PID: 46916 (code=exited, status=0/SUCCESS)</span>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="go">        CPU: 12.692s</span>
+</span></code></pre></div>
+<p><br></p>
+<p>If you see the following error; you must install <code>ipset</code> on your system:</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>csf<span class="o">[</span><span class="m">46313</span><span class="o">]</span>:<span class="w"> </span>open3:<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>of<span class="w"> </span>/sbin/ipset<span class="w"> </span>flush<span class="w"> </span>failed:<span class="w"> </span>No<span class="w"> </span>such<span class="w"> </span>file<span class="w"> </span>or<span class="w"> </span>directory<span class="w"> </span>at<span class="w"> </span>/usr/sbin/csf<span class="w"> </span>line<span class="w"> </span><span class="m">5650</span>.
+</span></code></pre></div>
+<p><br></p>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="step-2-enable-web-ui-debianubuntu-apt-get" name="__tabbed_4" type="radio"><input id="step-2-enable-web-ui-centosrhel-yumdnf" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="step-2-enable-web-ui-debianubuntu-apt-get"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M380.4 245.6c3-7.6 5.5-14 5.2-24.4l-4.3 9c4.4-13.2 4-27.1 3.6-40.4-.2-6-.3-11.8 0-17.4l-1.8-.5c-1.5-45.2-40.6-93.1-75.3-109.4-30-13.8-76.1-16.2-97.3-5.8 1.3-1.1 4.2-2 6.8-2.7l.3-.1c3.3-1 6-1.7 4-2.9-19.2 1.9-24.9 5.5-31.1 9.4l-.1 0c-4.6 2.9-9.5 6-20.3 8.7-3.5 3.4 1.7 2 5.8 .9s7.2-1.9-.1 2.4c-3.5 1-6.6 1.3-9.6 1.6l-.1 0c-8.3 .8-15.8 1.6-30.7 17 .8 1.3 3.4-.2 5.3-1.3l.1-.1c2.3-1.4 3.4-2-1.7 4.4-19.1-2.4-60.3 43.7-69.1 59l4.6 .8c-3.2 8-6.8 14.8-10 20.8-4.3 8.1-7.9 14.9-8.7 21.3-.3 5.1-1 11-1.7 17.3-.1 1-.2 2-.3 3l-.1 .6c-3 27.3-6.7 60.8 3.9 73l-1.3 13c.6 1.2 1.1 2.3 1.6 3.5 .2 .4 .4 .8 .5 1.1 1 2.1 2 4.2 3.3 6.2l-3 .2c7 22.1 10.8 22.5 15.1 22.9 4.4 .4 9.3 .9 18.7 24.2-2.7-.9-5.5-1.9-9.4-7.2-.5 4.1 5.8 16.3 13.1 25.8l-3.1 3.6c2.1 3.7 4.8 6.2 7.6 8.8 1 .9 2.1 1.9 3.1 2.9-11.9-6.5 3.2 13.7 11.9 25.2 .8 1.1 1.5 2 2.2 2.9 1.4 1.9 2.5 3.4 2.9 4.1l2.4-4.2c-.3 6.1 4.3 13.9 13.1 24.7l7.3-.3c3 6 14 16.7 20.7 17.2l-4.4 5.8c8.1 2.6 10.3 4.3 12.7 6.2 2.6 2.1 5.4 4.3 16.1 8.1l-4.2-7.4c3.5 3 6.2 5.9 8.8 8.7l.1 .1c5.2 5.6 9.9 10.6 19.7 15.3 10.7 3.7 16.6 4.7 22.7 5.8 .3 0 .6 .1 .9 .1 5.4 .8 11.2 1.8 20.8 4.5-1.1-.1-2.2-.1-3.3-.1-2.3-.1-4.7-.1-7-.1-14.4-.2-29.2-.4-42.7-5.2-96.6-25.7-184.9-139-178.4-255.6-.6-9.9-.3-20.9 0-30.7 .4-13.5 .7-24.8-1.6-28.3l1-3.1c5.3-17.4 11.7-38.2 23.8-62.8l-.1-.2 0-.1c.4 .4 3.4 3.4 8.8-5.8 .8-1.8 1.6-3.7 2.4-5.6 .5-1.1 .9-2.2 1.4-3.2 2.5-6.1 5.1-12.3 8.4-17.9l2.6-.6c1.7-10.1 17-23.8 29.8-35.2l1.1-1c5.7-5.1 10.7-9.7 13.6-13.1l.7 4.4c17-15.9 44.6-27.5 65.6-36.4l.5-.2c4.8-2 9.3-3.9 13.3-5.7-3.4 3.8 2.2 2.7 10 1 4.8-1 10.4-2.1 15.3-2.4l-3.9 2.1c-2.7 1.4-5.4 2.8-8 4.6 8.1-2 11.7-1.4 15.7-.8l.3 0c3.5 .6 7.3 1.2 14.6 .2-5.6 .8-12.3 3-11.2 3.8 7.9 .9 12.8-.1 17.2-1l.2 0c5.5-1.1 10.3-2 19.3 .9l-1-4.8c7.3 2.6 12.7 4.3 17.5 5.8l.5 .1c10 3 17.6 5.3 34.2 14.1 3.2 .2 5.3-.5 7.4-1.2l.1 0c3.6-1.1 7-2.1 15.2 1.2 .3 .5 .5 1 .7 1.4 .1 .2 .2 .5 .3 .7l0 .1c1 2.6 1.8 4.6 14.6 12.1 1.7-.7-2.7-4.7-6.4-8.2l-.1-.1c-.2-.1-.3-.3-.5-.4 32.2 17.3 67.3 54.1 78 93.5-6-11.1-5.2-5.5-4.3 .5 .6 4 1.2 8.1-.2 7.5 4.5 12.1 8.1 24.5 10.4 37.4l-.8-2.9-.1-.3c-3.3-11.9-9.6-34.3-19.9-49.3-.4 4.3-2.8 3.9-5.2 3.5l-.1 0c-3.3-.6-6.2-1.1-1.9 12.6 2.6 3.8 3.1 2.4 3.5 1.1 .5-1.5 .9-2.7 4.7 5.2 .1 4.1 1 8.2 2.1 12.7l.1 .6c.1 .3 .1 .5 .2 .8l.1 .6c.6 2.6 1.3 5.4 1.8 8.4-1.1-.2-2.3-2.2-3.4-4.2-1.4-2.4-2.8-4.7-3.7-3.2 2.4 11.5 6.5 17.4 8 18.3-.3 .6-.6 .7-1.1 .7-.8 0-1.8 .1-1.9 5.3 .7 13.7 3.3 12.5 5.3 11.6 .6-.3 1.2-.6 1.7-.4-.6 2.5-1.6 5.1-2.7 7.9-2.8 7.1-6 15.4-3.4 26.1-.8-3-2-6-3.1-8.9l-.1-.4c-.2-.5-.4-1-.6-1.5-.3-.8-.6-1.6-.9-2.3-.6 4.4-.3 7.7-.1 10.6l0 .7c.4 5.3 .7 10-3 19.9 4.3-14.2 3.8-26.9-.2-20.8 1 10.9-3.7 20.4-8 28.9l-.1 .2c-3.6 7.1-6.8 13.5-5.9 19.3l-5.2-7.1c-7.5 10.9-7 13.3-6.5 15.5l0 .1c.5 1.9 1 3.8-3.4 10.8 1.7-2.9 1.3-3.6 1-4.2-.4-.8-.7-1.5 1.7-5.1-1.6 .1-5.5 3.9-10.1 8.5-3.9 3.9-8.5 8.4-12.8 11.8-37.5 30.1-82.3 34-125.6 17.8 .2-1-.2-2.1-3.1-4.1-36.8-28.2-58.5-52.1-50.9-107.5 2.1-1.6 3.6-5.8 5.3-10.8l.2-.4 .1-.3 0-.1c2.9-8.4 6.5-18.8 14.3-23.8 7.8-17.3 31.3-33.3 56.4-33.7 25.6-1.4 47.2 13.7 58.1 27.9-19.8-18.4-52.1-24-79.7-10.4-28.2 12.7-45 43.8-42.5 74.7 .3-.4 .6-.6 .9-.8l.2-.2c.6-.5 1.1-.9 1.4-3.3-.9 60.2 64.8 104.3 112.1 82l.6 1.3c12.7-3.5 15.9-6.5 20.3-10.7l.1-.1c2.2-2.1 4.7-4.5 8.9-7.3-.3 .7-1.3 1.7-2.4 2.7-2.2 2.1-4.6 4.5-1.6 4.6 5-1.3 18.5-13.4 28.5-22.3 .6-.5 1.2-1 1.7-1.5 1.5-1.3 2.8-2.5 4-3.6l.3-.3c1.9-4.2 1.6-5.6 1.3-7l0-.1c-.4-1.6-.8-3.3 2.4-9.6l7.3-3.7c.8-2.1 1.5-4.1 2.2-6 .2-.6 .5-1.2 .7-1.8l-.4-.2-.1-.1zM248 334.1c-6-3-13.7-8.9-14.8-11.4l-.4 .3c-.3 .6-.5 1.3-.2 2.2-12.2-5.7-23.4-14.3-32.6-24.9 4.9 7.1 10.1 14.1 17 19.5-6.9-2.3-15.1-11.8-21.6-19.3l-.1-.1c-4.3-5-7.9-9.1-9.7-9.5 19.8 35.5 80.5 62.3 112.3 49-14.7 .5-33.4 .3-49.9-5.8zm79.3-119.7l-.1-.2c-.5-1.5-1.1-3.1-1.7-3.4 1.4-5.8 5.4-10.7 4.4 4.6-1 3.8-1.8 1.5-2.6-1zm-4.2 22.2c-1.3 7.9-5 15.5-10.1 22.5 .2-2-1.2-2.4-2.6-2.8-2.9-.8-5.9-1.6 5.6-16.1-.5 1.9-2.1 4.6-3.7 7.3l-.3 .4c-3.6 5.9-6.7 11 4 4.3l1-1.8c2.6-4.5 5-8.8 6-13.8l.1 0zm-55.6 33.9c7.1 .6 14.1 .6 21-1.1-2.5 2.4-5.2 4.8-8.3 7.2-11.1-1.7-21.2-6-12.7-6.1zm-92.6 11.6c3.6 7.1 6.4 11.5 9 15.7l.1 .2c2.3 3.7 4.4 7.1 6.8 11.7-5.1-4.2-8.7-9.5-12.5-15l-.3-.5c-1.4-2.1-2.8-4.2-4.4-6.2l1.2-5.9 .1 0zm7.5-9.6c1.6 3.3 3.2 6.4 5.7 9.1l2.6 7.7-1.3-2.1c-3.2-5.3-6.3-10.6-8-16.7l1 2zm238.9-41.6c-2.3 17.4-7.7 34.6-16 50.3 7.6-14.9 12.5-30.9 14.8-47.2l1.2-3.1zM35.8 110.6c.4 .8 1.4 .5 2.3 .3 1.9-.5 3.6-.9-.1 7.6-.5 .3-1 .7-1.5 1-1.4 .9-2.8 1.9-3.9 3 1.9-3.8 3.5-7.4 3.2-11.9zM25.5 152.3c-.7 3.7-1.5 7.9-3.4 13.9 .2-1.9 0-3.5-.2-4.9l0-.1c-.4-3.4-.7-6.3 4.3-12.8-.3 1.2-.5 2.5-.7 3.8l0 .1z"></path></svg></span> Debian/Ubuntu (<abbr title="A command-line tool for handling packages on Debian-based systems; part of the APT (Advanced Package Tool) suite.">apt-get</abbr>)</label><label for="step-2-enable-web-ui-centosrhel-yumdnf"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M341.5 285.6c33.7 0 82.3-6.9 82.3-47 .2-6.7 .9-1.8-20.9-96.2-4.6-19.1-8.7-27.8-42.3-44.6-26.1-13.3-82.9-35.4-99.7-35.4-15.7 0-20.2 20.2-38.9 20.2-18 0-31.3-15.1-48.1-15.1-16.1 0-26.7 11-34.8 33.6-27.5 77.6-26.3 74.3-26.1 78.3 0 24.8 97.6 106.1 228.5 106.1zM429 254.8c4.7 22 4.7 24.3 4.7 27.2 0 37.7-42.3 58.6-98 58.6-125.7 .1-235.9-73.6-235.9-122.3 0-6.8 1.4-13.5 4.1-19.7-45.2 2.3-103.8 10.3-103.8 62 0 84.7 200.6 189 359.5 189 121.8 0 152.5-55.1 152.5-98.6 0-34.2-29.6-73-82.9-96.2z"></path></svg></span> CentOS/RHEL (<abbr title="Yellowdog Updater, Modified; a package manager used on older Red Hat–based systems (e.g., CentOS, RHEL).">yum</abbr>/<abbr title="Dandified Yum; the next-generation version of YUM, used on newer Red Hat–based systems (e.g., Fedora, CentOS 8+, RHEL 8+).">dnf</abbr>)</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>update<span class="w"> </span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>ipset
+</span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>sudo<span class="w"> </span>yum<span class="w"> </span>makecache
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>sudo<span class="w"> </span>yum<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>ipset
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>Alternatively, you can restart <code>CSF</code> and <code>LFD</code> at the same time by running:</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-ra
+</span></code></pre></div>
+<p><br>
+<br></p>
+<h3 id="step-3-access-web-ui">Step 3: Access Web UI<a class="headerlink" href="#step-3-access-web-ui" title="Permanent link">¶</a></h3>
+<p>Access the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> interface in your browser with the specified IP and port. For these docs; we used port <code>1025</code>. </p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>https://127.0.0.1:1025
+</span></code></pre></div>
+<p><br></p>
+<details class="danger">
+<summary>Default Web Interface Username &amp; Password</summary>
+<p>You cannot keep the web interface username and password defaulted to <code>admin</code>; you will get an error that the credentials must be changed within <code>/etc/csf/csf.conf</code>.</p>
+<p>Ggo back to the <code>/etc/csf/csf.conf</code> set <code>UI_USER</code> and <code>UI_PASS</code> to something else.</p>
+</details>
+<p><br></p>
+<figure>
+    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../assets/images/install/webui/1.png" data-desc-position="bottom"><img alt="CSF Login Interface" src="../../assets/images/install/webui/1.png" width="700"></a>
+    <figcaption><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> Login Interface</figcaption>
+</figure>
+<p><br></p>
+<p>After successful login, you should see the following:</p>
+<figure>
+    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../assets/images/install/webui/2.png" data-desc-position="bottom"><img alt="CSF Main Dashboard" src="../../assets/images/install/webui/2.png" width="700"></a>
+    <figcaption><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> Main Dashboard</figcaption>
+</figure>
+<p><br></p>
+<p>If you try to access the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface in your browser and you get an error similar to the following:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>Secure Connection Failed
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>An error occurred during a connection to 172.17.0.1:1025. PR_CONNECT_RESET_ERROR
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>Error code: PR_CONNECT_RESET_ERROR
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>    The page you are trying to view cannot be shown because the authenticity of the received data could not be verified.
+</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>    Please contact the website owners to inform them of this problem.
+</span></code></pre></div>
+<p><br></p>
+<p>Open your <abbr title="Login Failure Daemon">lfd</abbr> logs at <code>/var/logs/lfd.log</code> and see if any messages state that you attempted to access the web interface, but were denied access. The message will be similar to the following:</p>
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>Oct<span class="w">  </span><span class="m">2</span><span class="w"> </span><span class="m">02</span>:55:38<span class="w"> </span>configserver<span class="w"> </span>lfd<span class="o">[</span><span class="m">42635</span><span class="o">]</span>:<span class="w"> </span>UI:<span class="w"> </span>Access<span class="w"> </span>attempt<span class="w"> </span>from<span class="w"> </span>an<span class="w"> </span>IP<span class="w"> </span>not<span class="w"> </span><span class="k">in</span><span class="w"> </span>/etc/csf/ui/ui.allow<span class="w"> </span>-<span class="w"> </span>denied<span class="w"> </span><span class="o">[</span><span class="m">127</span>.0.0.1<span class="o">]</span>
+</span></code></pre></div>
+<p><br></p>
+<p>An error like above means that you have not whitelisted the correct IP in your <code>/etc/csf/ui/ui.allow</code> file. You must whitelist the correct IP before you'll be able to access the web interface.</p>
+<p><br></p>
+<p>We will cover how to actually use the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface in another section. As of right now you should at least be able to access the web interface by going to <code>http://127.0.0.1:1025</code> in your browser. Or whatever IP and port you assigned within the <code>/etc/csf/csf.conf</code>.</p>
+<p><br></p>
+<hr>
+<p><br></p>
+<h2 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">¶</a></h2>
+<p>By this point in the guide, you should have:</p>
+<ul>
+<li><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> installed and functioning</li>
+<li>Access to the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface via an IP and port</li>
+</ul>
+<hr>
+<p>The next section will show you how to put the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface behind third-party apps such as <a href="../integrations/traefik/"><abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik Reverse Proxy</abbr></a> and secure it with <a href="../integrations/authentik/"><abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr></a>.  </p>
+<p>These steps are <strong>optional</strong>. They enhance the security of your web interface and help prevent unauthorized access, but you do not need to perform them to continue using <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>.</p>
+<p><br></p>
+<hr>
+<p><br></p>
+<h2 id="next-steps">Next Steps <!-- omit from toc --><a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
+<mark class="critic block">
+<p>Select what documentation you would like to proceed with next ...</p>
+</mark>
+<div class="grid cards">
+<ul>
+<li>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M349.9 236.3l-66.1 0 0-59.4 66.1 0 0 59.4zm0-204.3l-66.1 0 0 60.7 66.1 0 0-60.7zm78.2 144.8l-66.1 0 0 59.4 66.1 0 0-59.4zM271.8 104.7l-66.1 0 0 60.1 66.1 0 0-60.1zm78.1 0l-66.1 0 0 60.1 66.1 0 0-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7l-434.7 0c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4 .4 67.6 .1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zM115.6 176.8l-66 0 0 59.4 66.1 0 0-59.4-.1 0zm78.1 0l-66.1 0 0 59.4 66.1 0 0-59.4zm78.1 0l-66.1 0 0 59.4 66.1 0 0-59.4zm-78.1-72.1l-66.1 0 0 60.1 66.1 0 0-60.1z"></path></svg></span> &nbsp; <strong><a href="../integrations/docker/"><abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> Integration</a></strong></p>
+<hr>
+<p>This section explains how to run <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> and <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> together in the same 
+environment. By using <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>’s integrated <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> mode and the included 
+<abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> scripts, you can strengthen your server’s security while 
+running your containers safely within a controlled setup.</p>
+<p>We’ve provided a detailed set of instructions along with troubleshooting 
+guidance to help you resolve any issues that may arise during setup.</p>
+</li>
+<li>
+<p><span class="twemoji"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Traefik Proxy</title><path d="M12 1.19c1.088 0 2.056.768 2.056 1.714 0 .947-.921 1.715-2.056 1.715-.13 0-.3-.022-.509-.064a.685.685 0 0 0-.475.076l-7.37 4.195a.344.344 0 0 0 .001.597l7.99 4.49c.208.116.461.116.669 0l8.034-4.468a.343.343 0 0 0 .003-.598l-2.507-1.424a.683.683 0 0 0-.67-.003l-2.647 1.468a.234.234 0 0 0-.119.18l-.001.025c0 .946-.921 1.714-2.056 1.714s-2.056-.768-2.056-1.714c0-.947.921-1.715 2.056-1.715.042 0 .09.002.145.007l.087.008.096.013a.685.685 0 0 0 .425-.08l3.913-2.173c.3-.166.662-.171.965-.017l.04.023 5.465 3.104c.686.39.693 1.368.03 1.773l-.037.021-3.656 2.033a.343.343 0 0 0 .007.604l3.62 1.906c.72.378.736 1.402.03 1.804l-10.995 6.272a1.03 1.03 0 0 1-1.019 0L.526 16.43a1.03 1.03 0 0 1 .034-1.806l3.66-1.911a.343.343 0 0 0 .01-.603L.524 10.029a1.03 1.03 0 0 1-.041-1.77l.036-.021L9.618 3.06a.688.688 0 0 0 .308-.369l.011-.036c.32-.952 1.046-1.466 2.063-1.466Zm5.076 12.63-4.492 2.586-.041.022c-.306.158-.671.152-.973-.018l-4.478-2.527a.682.682 0 0 0-.65-.01L3.86 15.224a.343.343 0 0 0-.012.602l7.887 4.515c.21.12.467.121.677 0l7.956-4.547a.343.343 0 0 0-.01-.602l-2.623-1.384a.683.683 0 0 0-.659.012z"></path></svg></span> &nbsp; <strong><a href="../integrations/traefik/"><abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr> Integration</a></strong></p>
+<hr>
+<p>Protect your <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> installation by placing it behind a <strong><abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik Reverse Proxy</abbr></strong>.</p>
+<p>This setup lets you filter and control traffic to the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface using
+<abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr>’s <abbr title="A component in Traefik that modifies requests or responses before they reach a service or client.">middleware</abbr>, all with the added bonus that you do not need to expose
+or open the ports to your server.</p>
+<p>With <abbr title="A component in Traefik that modifies requests or responses before they reach a service or client.">middleware</abbr>, you can whitelist your own IP for secure access and enforce
+geographic restrictions to allow or block traffic from specific countries.</p>
+</li>
+<li>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300">
+  <path fill="currentColor" d="M 110.517 35.585 C 91.004 38.863, 77.219 51.033, 71.612 69.932 C 70.290 74.387, 70 80.632, 70 104.682 C 70 120.807, 69.739 134, 69.420 134 C 69.101 134, 66.236 131.412, 63.053 128.250 C 59.870 125.088, 54.635 120.925, 51.421 119 C 45.877 115.680, 45.136 115.507, 37.038 115.645 C 30.246 115.760, 27.312 116.316, 22.692 118.365 C 15.449 121.577, 7.234 129.787, 3.354 137.689 C 0.764 142.962, 0.500 144.472, 0.505 154 C 0.509 163.142, 0.819 165.082, 2.899 169 C 8.112 178.817, 13.499 184.540, 21.500 188.758 C 25.907 191.081, 27.686 191.400, 36.500 191.447 C 45.771 191.496, 46.865 191.288, 51.500 188.597 C 59.645 183.869, 70.267 172.217, 74.936 162.888 C 77.171 158.422, 79 154.209, 79 153.525 C 79 152.841, 77.656 149.631, 76.013 146.391 C 74.370 143.151, 73.020 140.393, 73.013 140.262 C 73.006 140.131, 89.987 139.906, 110.750 139.762 L 148.500 139.500 148.769 116.750 L 149.038 94 156.519 94 L 164 94 164 103.552 L 164 113.105 169.250 112.802 L 174.500 112.500 174.788 103.250 L 175.075 94 183.038 94 L 191 94 191 99.500 L 191 105 196.481 105 C 201.515 105, 202.014 104.793, 202.599 102.463 C 202.949 101.068, 202.969 98.593, 202.643 96.963 L 202.050 94 211.525 94 L 221 94 221 134.500 L 221 175 145.500 175 L 70 175 70 199.818 C 70 219.729, 70.319 225.711, 71.612 230.068 C 74.239 238.923, 77.914 245.124, 84.155 251.231 C 94.162 261.023, 104.084 264.811, 122.057 265.703 C 139.288 266.558, 138 268.516, 138 241.465 L 138 219 185 219 L 232 219 232 240.929 C 232 260.228, 232.204 263.061, 233.699 264.556 C 235.169 266.026, 237.021 266.189, 247.449 265.765 C 274.087 264.681, 290.217 253.971, 297.914 232.254 C 300.125 226.015, 300.127 225.925, 300.106 150.254 C 300.086 78.629, 299.982 74.189, 298.191 68.794 C 292.029 50.226, 277.958 38.369, 258.582 35.419 C 245.757 33.466, 122.306 33.604, 110.517 35.585 M 30.754 131.599 C 19.002 135.213, 11.993 149.859, 16.156 162.101 C 18.888 170.134, 27.549 177, 34.950 177 C 43.909 177, 53.387 170.391, 59.858 159.630 L 63.217 154.045 60.428 149.273 C 55.937 141.585, 47.474 133.350, 42.229 131.562 C 36.826 129.721, 36.860 129.721, 30.754 131.599 M 0.355 153.500 C 0.352 158.450, 0.521 160.601, 0.731 158.280 C 0.940 155.959, 0.943 151.909, 0.736 149.280 C 0.530 146.651, 0.358 148.550, 0.355 153.500"></path>
+</svg>
+</span> &nbsp; <strong><a href="../integrations/authentik/"><abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> Integration</a></strong></p>
+<hr>
+<p>Enhance the security of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> by placing it behind the <strong><abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr></strong> identity 
+provider using a forward proxy. </p>
+<p>This ensures that all traffic to the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface passes through <abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr>, 
+giving you centralized control over authentication and access.</p>
+<p>With this setup, <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> is protected by modern authentication methods such as
+passwords, two-factor authentication (2FA), or passkeys.</p>
+</li>
+<li>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 9V3.5L18.5 9M6 2c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6Z"></path></svg></span> &nbsp; <strong><a href="../../usage/getting-started/">Usage Introduction</a></strong></p>
+<hr>
+<p>If you don’t plan to set up <abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr> or <abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> with the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface, 
+you can skip ahead to the <a href="../../usage/getting-started/">Usage</a> section. </p>
+<p>The next chapter covers <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>’s core features, basic configuration, available
+commands, folder structure, and everything you need to get started.</p>
+<p>You will be taken on a more detailed dive of how <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> can benefit you and
+what options you have for securing your server.</p>
+</li>
+</ul>
+</div>
+<div style="opacity: 0.5"></div>
+<p><br>
+<br></p>
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 23, 2025 16:07:34 UTC"><span class="timeago" datetime="2025-10-23T16:07:34+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 23, 2025 16:07:34 UTC">2025-10-23</span>
+  </span>
+
+    
+    
+    
+      
+  
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Contributors">
+      
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4Z"></path></svg>
+      
+    </span>
+    <nav>
+      
+        <a href="mailto:aetherinox@proton.me">Aetherinox</a>
+    </nav>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    
+      
+  <span class="md-icon" title="Contributors">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"></path></svg>
+  </span>
+  <span>GitHub</span>
+
+    
+    <nav>
+      
+        <a href="https://github.com/Aetherinox" class="md-author" title="@Aetherinox">
+          
+          <img src="https://avatars.githubusercontent.com/u/118329232?v=4&amp;size=72" alt="Aetherinox">
+        </a>
+      
+      
+      
+    </nav>
+  </span>
+
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"></path></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="../services/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Start Services">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Start Services
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../uninstall/" class="md-footer__link md-footer__link--next" aria-label="Next: Uninstall">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Uninstall
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2025 - Aetherinox
+
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://download.configserver.dev" target="_blank" rel="noopener" title="Download CSF" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M256 32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 210.7-41.4-41.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l96 96c12.5 12.5 32.8 12.5 45.3 0l96-96c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 242.7 256 32zM64 320c-35.3 0-64 28.7-64 64l0 32c0 35.3 28.7 64 64 64l320 0c35.3 0 64-28.7 64-64l0-32c0-35.3-28.7-64-64-64l-46.9 0-56.6 56.6c-31.2 31.2-81.9 31.2-113.1 0L110.9 320 64 320zm304 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"></path></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://blocklist.configserver.dev" target="_blank" rel="noopener" title="Service › Blocklists" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M224 32l192 0 0 80-192 0 0-80zm-32 80l-96 0 0-16c0-35.3 28.7-64 64-64l32 0 0 80zM96 144l208 0 0 96-208 0 0-96zm0 224l0-96 96 0 0 96-96 0zm0 32l176.7 0c-.5 4.7-.7 9.4-.7 14.1 0 22.9 3.7 45.1 10.6 65.9L160 480c-35.3 0-64-28.7-64-64l0-16zM544 144l0 60.2c-12 .3-23.8 3.9-34.1 11-7.9-7.9-15.9-15.6-24.2-23.1-23.8-21.4-60-21.5-83.9-.2-17 15.2-32.9 31.4-47.2 48.1l-18.6 0 0-96 208 0zM224 272l105.2 0c-6.4 8.8-12.3 17.6-17.7 26.3-13.2 21.3-25.1 45.2-32.3 69.7l-55.2 0 0-96zM544 112l-96 0 0-80 32 0c35.3 0 64 28.7 64 64l0 16zM505.7 272.3L518 258.5c5.4-6.1 13.3-8.8 20.9-8.9 7.2 0 14.3 2.6 19.9 7.8 19.7 18.3 39.8 43.2 55 70.6 15.1 27.2 26.2 58.1 26.2 88.1 0 88.7-71.3 159.8-160 159.8-89.6 0-160-71.3-160-159.8 0-37.3 16-73.4 36.8-104.5 20.9-31.3 47.5-59 70.9-80.2 5.7-5.2 13.1-7.7 20.3-7.5s13.4 3.2 18.8 7.5c14.4 11.4 38.9 40.7 38.9 40.7zM544 464.2c0-36.5-37-73-54.8-88.4-5.4-4.7-13.1-4.7-18.5 0-17.7 15.4-54.8 51.9-54.8 88.4 0 35.3 28.7 64 64 64s64-28.7 64-64z"></path></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://tickets.configserver.dev" target="_blank" rel="noopener" title="Submit Issue / Ticket" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M202.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM496 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3l48.2 0c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"></path></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://github.com/Aetherinox/csf-firewall" target="_blank" rel="noopener" title="View Github Repo" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://discord.configserver.dev" target="_blank" rel="noopener" title="Discord" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M492.5 69.8c-.2-.3-.4-.6-.8-.7-38.1-17.5-78.4-30-119.7-37.1-.4-.1-.8 0-1.1 .1s-.6 .4-.8 .8c-5.5 9.9-10.5 20.2-14.9 30.6-44.6-6.8-89.9-6.8-134.4 0-4.5-10.5-9.5-20.7-15.1-30.6-.2-.3-.5-.6-.8-.8s-.7-.2-1.1-.2c-41.3 7.1-81.6 19.6-119.7 37.1-.3 .1-.6 .4-.8 .7-76.2 113.8-97.1 224.9-86.9 334.5 0 .3 .1 .5 .2 .8s.3 .4 .5 .6c44.4 32.9 94 58 146.8 74.2 .4 .1 .8 .1 1.1 0s.7-.4 .9-.7c11.3-15.4 21.4-31.8 30-48.8 .1-.2 .2-.5 .2-.8s0-.5-.1-.8-.2-.5-.4-.6-.4-.3-.7-.4c-15.8-6.1-31.2-13.4-45.9-21.9-.3-.2-.5-.4-.7-.6s-.3-.6-.3-.9 0-.6 .2-.9 .3-.5 .6-.7c3.1-2.3 6.2-4.7 9.1-7.1 .3-.2 .6-.4 .9-.4s.7 0 1 .1c96.2 43.9 200.4 43.9 295.5 0 .3-.1 .7-.2 1-.2s.7 .2 .9 .4c2.9 2.4 6 4.9 9.1 7.2 .2 .2 .4 .4 .6 .7s.2 .6 .2 .9-.1 .6-.3 .9-.4 .5-.6 .6c-14.7 8.6-30 15.9-45.9 21.8-.2 .1-.5 .2-.7 .4s-.3 .4-.4 .7-.1 .5-.1 .8 .1 .5 .2 .8c8.8 17 18.8 33.3 30 48.8 .2 .3 .6 .6 .9 .7s.8 .1 1.1 0c52.9-16.2 102.6-41.3 147.1-74.2 .2-.2 .4-.4 .5-.6s.2-.5 .2-.8c12.3-126.8-20.5-236.9-86.9-334.5zm-302 267.7c-29 0-52.8-26.6-52.8-59.2s23.4-59.2 52.8-59.2c29.7 0 53.3 26.8 52.8 59.2 0 32.7-23.4 59.2-52.8 59.2zm195.4 0c-29 0-52.8-26.6-52.8-59.2s23.4-59.2 52.8-59.2c29.7 0 53.3 26.8 52.8 59.2 0 32.7-23.2 59.2-52.8 59.2z"></path></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://buymeacoffee.com/aetherinox" target="_blank" rel="noopener" title="Sponsor" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M241 87.1l15 20.7 15-20.7C296 52.5 336.2 32 378.9 32 452.4 32 512 91.6 512 165.1l0 2.6c0 112.2-139.9 242.5-212.9 298.2-12.4 9.4-27.6 14.1-43.1 14.1s-30.8-4.6-43.1-14.1C139.9 410.2 0 279.9 0 167.7l0-2.6C0 91.6 59.6 32 133.1 32 175.8 32 216 52.5 241 87.1z"></path></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+  
+
+
+<h4>Cookie Consent</h4>
+<p>We use cookies to recognize your repeated visits and preferences, as well as to measure the effectiveness of our documentation and whether users find what they're searching for. With your consent, you're helping us to make our documentation better.</p>
+<input class="md-toggle" type="checkbox" id="__settings">
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="github" checked>
+      <span class="task-list-indicator"></span>
+      GitHub
+    </label>
+  </li>
+
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["announce.dismiss", "toc.follow", "content.action.edit", "content.action.view", "content.tooltips", "search.highlight", "search.share", "search.suggest", "content.code.annotate", "content.code.select", "content.code.copy", "navigation.tabs", "navigation.sections", "navigation.footer", "navigation.indexes", "navigation.instant", "navigation.instant.progress", "navigation.instant.prefetch", "navigation.instant.preview", "navigation.tracking", "navigation.path", "navigation.top"], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": {"CSS": "css", "HTML5": "html", "JavaScript": "js"}, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"alias": true, "default": "latest", "provider": "mike"}}</script>
+    
+    
+    
+      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="../../js/timeago.min.js"></script>
+      
+        <script src="../../js/timeago_mkdocs_material.js"></script>
+      
+        <script src="https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js"></script>
+      
+        <script src="../../javascripts/tablesort.js"></script>
+      
+        <script src="../../javascripts/all.js?v7.000"></script>
+      
+        <script src="../../javascripts/sponsors.js"></script>
+      
+    
+    <script src="../../assets/javascripts/custom.129bd6ad.min.js"></script>
+
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": false, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

@@ -1,0 +1,6185 @@
+<!DOCTYPE html><html lang="en" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Aetherinox">
+      
+      
+        <link rel="canonical" href="https://aetherinox.github.io/csf-firewall/services/blocklist.configserver/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../download.configserver/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Advanced › Services › blocklist.configserver.dev - ConfigServer Security &amp; Firewall</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/timeago.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css?v1.000">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    <link rel="stylesheet" href="../../assets/stylesheets/custom.00c04c01.min.css">
+
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: black; }
+            .glightbox-clean .gslide-media { -webkit-box-shadow: none; box-shadow: none; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#blocklistconfigserverdev" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+              <button class="md-banner__button md-icon" aria-label="Don't show this again">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"></path></svg>
+              </button>
+            
+            
+    Documentation is currently being developed
+
+          </div>
+          
+            <script>var el=document.querySelector("[data-md-component=announce]");if(el){var content=el.querySelector(".md-typeset");__md_hash(content.innerHTML)===__md_get("__announce")&&(el.hidden=!0)}</script>
+          
+        </aside>
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+          <aside class="md-banner md-banner--warning">
+            <div class="md-banner__inner md-grid md-typeset">
+              
+    You're not viewing the latest version.
+    <a href="../../.."> 
+      <strong>Click here to go to latest.</strong>
+    </a>
+
+            </div>
+            <script>var el=document.querySelector("[data-md-component=outdated]"),base=new URL("../.."),outdated=__md_get("__outdated",sessionStorage,base);!0===outdated&&el&&(el.hidden=!1)</script>
+          </aside>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ConfigServer Security &amp; Firewall" class="md-header__button md-logo" aria-label="ConfigServer Security &amp; Firewall" data-md-component="logo">
+      
+  
+  <svg viewBox="0 0 512 512" id="svgContainer" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 153.171 309.301 C 148.062 327.815, 138.987 342.266, 119.133 363.500 C 109.551 373.749, 107.194 376.959, 102.985 385.500 C 100.275 391, 97.535 397.965, 96.897 400.979 C 95.424 407.931, 96.292 425.010, 98.416 430.876 C 100.650 437.047, 100.462 439.887, 97.750 440.926 C 95.766 441.686, 96.504 442.273, 104 445.893 C 132.088 459.458, 175.989 459.768, 204.481 446.604 C 210.886 443.645, 212.098 442.722, 211.493 441.263 C 210.463 438.780, 210.501 438.470, 212.999 429.045 C 214.880 421.949, 215.157 418.895, 214.727 410.045 C 213.852 392.089, 209.622 383.465, 192.358 364.444 C 173.286 343.430, 166.546 332.810, 160.138 313.672 C 157.960 307.167, 156.010 301.677, 155.806 301.472 C 155.601 301.268, 154.415 304.791, 153.171 309.301" stroke="none" fill="#ffffff" fill-rule="evenodd"></path>
+      <path d="M 120.443 42.092 C 120.072 42.692, 120.334 48.892, 121.025 55.868 C 122.734 73.123, 121.834 101.029, 119.098 115.650 C 113.658 144.719, 102.901 172.578, 86.723 199.500 C 79.301 211.850, 71.923 222.169, 58.657 238.756 C 46.630 253.794, 40.414 263.476, 35.702 274.509 C 28.692 290.924, 26 305.061, 26 325.455 C 26 359.052, 35.782 385.759, 56.918 409.867 C 67.788 422.265, 88.355 438.659, 95.136 440.331 C 99.522 441.412, 100.624 438.988, 98.594 432.724 C 93.944 418.376, 94.445 403.998, 100.066 390.496 C 104.313 380.295, 107.276 376.029, 119.039 363.175 C 133.842 347.001, 139.451 339.666, 144.411 330 C 148.769 321.509, 153.300 309.246, 154.557 302.548 C 154.923 300.597, 155.510 299.003, 155.861 299.007 C 156.213 299.011, 157.235 302.048, 158.133 305.757 C 163.479 327.837, 171.047 340.053, 198.553 371 C 206.162 379.561, 211.611 389.038, 214.079 398 C 216.152 405.531, 215.660 421.296, 213.056 430.746 C 209.570 443.393, 211.350 444.796, 222.095 437.873 C 244.494 423.441, 262.315 404.262, 272.925 383.171 C 277.465 374.146, 282.641 358.067, 284.570 347 C 286.561 335.581, 286.034 313.718, 283.487 302 C 278.365 278.442, 267.866 256.933, 252.003 237.500 C 225.216 204.685, 206.613 159.041, 204.156 120.105 C 203.619 111.600, 203.171 109.510, 201.691 108.605 C 199.052 106.992, 197.527 109.581, 196.129 118.050 C 195.486 121.940, 191.811 133.439, 187.961 143.602 C 184.112 153.765, 179.940 165.620, 178.691 169.947 L 176.420 177.814 173.725 163.521 C 168.619 136.444, 157.730 102.947, 146.074 78.467 C 140.130 65.984, 128.918 45.801, 126.231 42.750 C 124.499 40.784, 121.465 40.439, 120.443 42.092" stroke="none" fill="#cc1414" fill-rule="evenodd"></path>
+      <path d="M 255.366 195.488 C 254.607 197.466, 258.183 203.384, 267.458 215.500 C 285.451 239.004, 288.248 242.987, 293.242 252.222 L 298.500 261.943 317.782 261.972 C 340.632 262.005, 343.009 261.400, 346.010 254.788 C 347.749 250.956, 347.958 248.130, 347.978 228.218 C 348.002 203.832, 347.410 200.562, 342.199 196.286 C 339.510 194.080, 339.342 194.072, 297.719 194.036 C 261.634 194.005, 255.859 194.203, 255.366 195.488 M 378.164 195.689 C 371.640 198.904, 371.500 199.581, 371.500 228 C 371.500 256.524, 371.638 257.177, 378.326 260.351 C 381.406 261.812, 387.258 262, 429.651 261.996 C 475.880 261.993, 477.612 261.924, 480.810 259.974 C 486.469 256.524, 487 253.781, 487 228 C 487 202.219, 486.469 199.476, 480.810 196.026 C 477.610 194.075, 475.902 194.008, 429.500 194.027 C 387.011 194.043, 381.117 194.234, 378.164 195.689 M 307.499 284.001 C 307.159 284.552, 307.902 289.615, 309.151 295.251 C 311.112 304.102, 311.444 308.638, 311.579 328.500 L 311.735 351.500 394.784 351.756 L 477.833 352.011 481.052 349.302 C 486.590 344.643, 487 342.435, 486.998 317.282 C 486.997 291.276, 486.516 289.226, 479.500 285.282 L 475.500 283.033 391.809 283.016 C 336.993 283.006, 307.904 283.346, 307.499 284.001 M 124.437 357.250 L 121.500 360.500 124.750 357.563 C 126.537 355.948, 128 354.485, 128 354.313 C 128 353.540, 127.175 354.221, 124.437 357.250 M 191 363.313 C 191 363.485, 192.463 364.948, 194.250 366.563 L 197.500 369.500 194.563 366.250 C 191.825 363.221, 191 362.540, 191 363.313 M 306.233 374.250 C 305.676 374.938, 303.326 380, 301.011 385.500 C 293.737 402.778, 283.812 418.621, 270.668 433.940 C 268.101 436.932, 266 440.004, 266 440.767 C 266 441.929, 271.858 442.100, 302.250 441.827 C 334.949 441.532, 338.860 441.321, 342.173 439.673 C 348.608 436.471, 349 434.525, 349 405.802 L 349 380.406 345.208 376.703 L 341.416 373 324.330 373 C 311.868  373, 306.971 373.338, 306.233 374.250 M 376.697 376.798 L 372.905 380.682 373.203 407.262 L 373.500 433.842 376 436.516 C 381.224 442.103, 380.227 442, 429.200 441.994 C 457.195 441.991, 475.917 441.595, 478.209 440.959 C 480.248 440.392, 483.286 438.560, 484.959 436.887 L 488 433.846 488 408.324 C 488 387.712, 487.712 382.194, 486.500 379.642 C 483.497 373.312, 485.379 373.529, 430.495 373.207 L 380.489 372.915 376.697 376.798 M 95.286 412.500 C 95.294 415.250, 95.488 416.256, 95.718 414.736 C  95.947 413.216, 95.941  410.966, 95.704 409.736 C 95.467 408.506, 95.279 409.750, 95.286 412.500 M 215.286 412.500 C 215.294 415.250, 215.488 416.256, 215.718 414.736 C 215.947 413.216, 215.941 410.966, 215.704 409.736 C 215.467 408.506, 215.279 409.750, 215.286 412.500" stroke="none" fill="#b3b3b3" fill-rule="evenodd"></path>
+</svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ConfigServer Security &amp; Firewall
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Advanced › Services › blocklist.configserver.dev
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="indigo" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="main" data-md-color-primary="custom" data-md-color-accent="custom" aria-label="Switch to light mode" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"></path></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/aetherinox/csf-firewall" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Aetherinox/csf-firewall
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../home/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../about/csf/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  About
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../install/dependencies/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Install
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../usage/getting-started/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Usage
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Services
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../insiders/about/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Insiders
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../about/changelog/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Changelog
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../blog/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Blog
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://discord.configserver.dev" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Discord
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://tickets.configserver.dev" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Create Ticket
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://buymeacoffee.com/aetherinox" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Sponsor
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ConfigServer Security &amp; Firewall" class="md-nav__button md-logo" aria-label="ConfigServer Security &amp; Firewall" data-md-component="logo">
+      
+  
+  <svg viewBox="0 0 512 512" id="svgContainer" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 153.171 309.301 C 148.062 327.815, 138.987 342.266, 119.133 363.500 C 109.551 373.749, 107.194 376.959, 102.985 385.500 C 100.275 391, 97.535 397.965, 96.897 400.979 C 95.424 407.931, 96.292 425.010, 98.416 430.876 C 100.650 437.047, 100.462 439.887, 97.750 440.926 C 95.766 441.686, 96.504 442.273, 104 445.893 C 132.088 459.458, 175.989 459.768, 204.481 446.604 C 210.886 443.645, 212.098 442.722, 211.493 441.263 C 210.463 438.780, 210.501 438.470, 212.999 429.045 C 214.880 421.949, 215.157 418.895, 214.727 410.045 C 213.852 392.089, 209.622 383.465, 192.358 364.444 C 173.286 343.430, 166.546 332.810, 160.138 313.672 C 157.960 307.167, 156.010 301.677, 155.806 301.472 C 155.601 301.268, 154.415 304.791, 153.171 309.301" stroke="none" fill="#ffffff" fill-rule="evenodd"></path>
+      <path d="M 120.443 42.092 C 120.072 42.692, 120.334 48.892, 121.025 55.868 C 122.734 73.123, 121.834 101.029, 119.098 115.650 C 113.658 144.719, 102.901 172.578, 86.723 199.500 C 79.301 211.850, 71.923 222.169, 58.657 238.756 C 46.630 253.794, 40.414 263.476, 35.702 274.509 C 28.692 290.924, 26 305.061, 26 325.455 C 26 359.052, 35.782 385.759, 56.918 409.867 C 67.788 422.265, 88.355 438.659, 95.136 440.331 C 99.522 441.412, 100.624 438.988, 98.594 432.724 C 93.944 418.376, 94.445 403.998, 100.066 390.496 C 104.313 380.295, 107.276 376.029, 119.039 363.175 C 133.842 347.001, 139.451 339.666, 144.411 330 C 148.769 321.509, 153.300 309.246, 154.557 302.548 C 154.923 300.597, 155.510 299.003, 155.861 299.007 C 156.213 299.011, 157.235 302.048, 158.133 305.757 C 163.479 327.837, 171.047 340.053, 198.553 371 C 206.162 379.561, 211.611 389.038, 214.079 398 C 216.152 405.531, 215.660 421.296, 213.056 430.746 C 209.570 443.393, 211.350 444.796, 222.095 437.873 C 244.494 423.441, 262.315 404.262, 272.925 383.171 C 277.465 374.146, 282.641 358.067, 284.570 347 C 286.561 335.581, 286.034 313.718, 283.487 302 C 278.365 278.442, 267.866 256.933, 252.003 237.500 C 225.216 204.685, 206.613 159.041, 204.156 120.105 C 203.619 111.600, 203.171 109.510, 201.691 108.605 C 199.052 106.992, 197.527 109.581, 196.129 118.050 C 195.486 121.940, 191.811 133.439, 187.961 143.602 C 184.112 153.765, 179.940 165.620, 178.691 169.947 L 176.420 177.814 173.725 163.521 C 168.619 136.444, 157.730 102.947, 146.074 78.467 C 140.130 65.984, 128.918 45.801, 126.231 42.750 C 124.499 40.784, 121.465 40.439, 120.443 42.092" stroke="none" fill="#cc1414" fill-rule="evenodd"></path>
+      <path d="M 255.366 195.488 C 254.607 197.466, 258.183 203.384, 267.458 215.500 C 285.451 239.004, 288.248 242.987, 293.242 252.222 L 298.500 261.943 317.782 261.972 C 340.632 262.005, 343.009 261.400, 346.010 254.788 C 347.749 250.956, 347.958 248.130, 347.978 228.218 C 348.002 203.832, 347.410 200.562, 342.199 196.286 C 339.510 194.080, 339.342 194.072, 297.719 194.036 C 261.634 194.005, 255.859 194.203, 255.366 195.488 M 378.164 195.689 C 371.640 198.904, 371.500 199.581, 371.500 228 C 371.500 256.524, 371.638 257.177, 378.326 260.351 C 381.406 261.812, 387.258 262, 429.651 261.996 C 475.880 261.993, 477.612 261.924, 480.810 259.974 C 486.469 256.524, 487 253.781, 487 228 C 487 202.219, 486.469 199.476, 480.810 196.026 C 477.610 194.075, 475.902 194.008, 429.500 194.027 C 387.011 194.043, 381.117 194.234, 378.164 195.689 M 307.499 284.001 C 307.159 284.552, 307.902 289.615, 309.151 295.251 C 311.112 304.102, 311.444 308.638, 311.579 328.500 L 311.735 351.500 394.784 351.756 L 477.833 352.011 481.052 349.302 C 486.590 344.643, 487 342.435, 486.998 317.282 C 486.997 291.276, 486.516 289.226, 479.500 285.282 L 475.500 283.033 391.809 283.016 C 336.993 283.006, 307.904 283.346, 307.499 284.001 M 124.437 357.250 L 121.500 360.500 124.750 357.563 C 126.537 355.948, 128 354.485, 128 354.313 C 128 353.540, 127.175 354.221, 124.437 357.250 M 191 363.313 C 191 363.485, 192.463 364.948, 194.250 366.563 L 197.500 369.500 194.563 366.250 C 191.825 363.221, 191 362.540, 191 363.313 M 306.233 374.250 C 305.676 374.938, 303.326 380, 301.011 385.500 C 293.737 402.778, 283.812 418.621, 270.668 433.940 C 268.101 436.932, 266 440.004, 266 440.767 C 266 441.929, 271.858 442.100, 302.250 441.827 C 334.949 441.532, 338.860 441.321, 342.173 439.673 C 348.608 436.471, 349 434.525, 349 405.802 L 349 380.406 345.208 376.703 L 341.416 373 324.330 373 C 311.868  373, 306.971 373.338, 306.233 374.250 M 376.697 376.798 L 372.905 380.682 373.203 407.262 L 373.500 433.842 376 436.516 C 381.224 442.103, 380.227 442, 429.200 441.994 C 457.195 441.991, 475.917 441.595, 478.209 440.959 C 480.248 440.392, 483.286 438.560, 484.959 436.887 L 488 433.846 488 408.324 C 488 387.712, 487.712 382.194, 486.500 379.642 C 483.497 373.312, 485.379 373.529, 430.495 373.207 L 380.489 372.915 376.697 376.798 M 95.286 412.500 C 95.294 415.250, 95.488 416.256, 95.718 414.736 C  95.947 413.216, 95.941  410.966, 95.704 409.736 C 95.467 408.506, 95.279 409.750, 95.286 412.500 M 215.286 412.500 C 215.294 415.250, 215.488 416.256, 215.718 414.736 C 215.947 413.216, 215.941 410.966, 215.704 409.736 C 215.467 408.506, 215.279 409.750, 215.286 412.500" stroke="none" fill="#b3b3b3" fill-rule="evenodd"></path>
+</svg>
+
+    </a>
+    ConfigServer Security &amp; Firewall
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/aetherinox/csf-firewall" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Aetherinox/csf-firewall
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../home/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2">
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    About
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/csf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/license/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    License
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/privacy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Privacy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5">
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Wiki
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Wiki
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/conventions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conventions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tags
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Install
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/dependencies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dependencies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/download/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Download
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/tests/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diagnostic Tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/services/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Start Services
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/webui/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Enable Web Interface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/uninstall/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Uninstall
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8">
+        
+          
+          <label class="md-nav__link" for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Update
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Update
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/update/v14-to-v15/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    v14.x to v15.x
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/update/v15-to-newer.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    v15.x to Newer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_9">
+        
+          
+          <label class="md-nav__link" for="__nav_3_9" id="__nav_3_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Integrations
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Integrations
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/integrations/authentik/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Authentik
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/integrations/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../install/integrations/traefik/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Traefik
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Usage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/prepost/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pre &amp; Post Scripts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/blocklists/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blocklists
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/ipset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ipsets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/geoip/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Geographical Blocks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_7">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../usage/troubleshooting/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4_7" id="__nav_4_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Troubleshooting
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/troubleshooting/cyberpanel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cyberpanel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/troubleshooting/webui/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Interface
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--new" title="New Addition">
+    </span>
+  
+
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_8">
+        
+          
+          <label class="md-nav__link" for="__nav_4_8" id="__nav_4_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cheatsheet
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Cheatsheet
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/cheatsheet/home/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/cheatsheet/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/cheatsheet/control_panels.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Control Panels
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/cheatsheet/conf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Example Configs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/cheatsheet/ports/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ports
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/cheatsheet/structure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Structure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Services
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Services
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    blocklist.configserver.dev
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    blocklist.configserver.dev
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#about-blocklists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        About Blocklists
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-ipset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Get IPSET
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-json-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Get JSON API
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#add-blocklists-to-csf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Add Blocklists to CSF
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#blocklists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Blocklists
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Blocklists">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#risk-assessments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Risk Assessments
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#main-lists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Main Lists
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#privacy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Privacy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Spam
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internet-service-providers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Internet Service Providers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transmission-bittorrent-client" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transmission (BitTorrent Client)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#continents-geolite2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Continents (GeoLite2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#countries-geolite2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Countries (GeoLite2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../download.configserver/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    download.configserver.dev
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../get.configserver/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    get.configserver.dev
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6">
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Insiders
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Insiders
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../insiders/about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../insiders/payments_and_billing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Payments and Billing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../insiders/join/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Join Insiders
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../insiders/sponsors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Our Sponsors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_5">
+        
+          
+          <label class="md-nav__link" for="__nav_6_5" id="__nav_6_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Using Insiders
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Using Insiders
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../insiders/setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../insiders/disable/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Disable
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../blog/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blog
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_8" id="__nav_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Blog
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2">
+        
+          
+          <label class="md-nav__link" for="__nav_8_2" id="__nav_8_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Archive
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Archive
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/2025/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    October 2025
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_3">
+        
+          
+          <label class="md-nav__link" for="__nav_8_3" id="__nav_8_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Categories
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Categories
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/csfajaxtail/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    csfajaxtail
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/csp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    csp
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/cyberpanel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    cyberpanel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/downloadconfigserverdev/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    download.configserver.dev
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/initd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    init.d
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/release/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    release
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/release-alpha/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    release-alpha
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/ui/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ui
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/v15x/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    v15.x
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/vestacp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    vestacp
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/web-inteface/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    web-inteface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/web-login/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    web-login
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/web-theme-dark/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    web-theme-dark
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../blog/webmin/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    webmin
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://discord.configserver.dev" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Discord
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://tickets.configserver.dev" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Create Ticket
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://buymeacoffee.com/aetherinox" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sponsor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#about-blocklists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        About Blocklists
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-ipset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Get IPSET
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-json-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Get JSON API
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#add-blocklists-to-csf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Add Blocklists to CSF
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#blocklists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Blocklists
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Blocklists">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#risk-assessments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Risk Assessments
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#main-lists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Main Lists
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#privacy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Privacy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Spam
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internet-service-providers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Internet Service Providers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transmission-bittorrent-client" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transmission (BitTorrent Client)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#continents-geolite2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Continents (GeoLite2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#countries-geolite2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Countries (GeoLite2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <nav class="md-tags">
+    
+      
+      
+      
+        
+        
+      
+      
+        <a href="../../about/tags/#tag:blocklistconfigserverdev" class="md-tag md-tag-icon">blocklist.configserver.dev</a>
+      
+    
+      
+      
+      
+        
+        
+      
+      
+        <a href="../../about/tags/#tag:services" class="md-tag md-tag-icon">services</a>
+      
+    
+  </nav>
+
+
+  
+    <a href="https://github.com/aetherinox/csf-firewall/edit/main/docs/docs/services/blocklist.configserver.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"></path></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/aetherinox/csf-firewall/raw/main/docs/docs/services/blocklist.configserver.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"></path></svg>
+    </a>
+  
+
+
+<h1 id="blocklistconfigserverdev">blocklist.configserver.dev <!-- omit from toc --><a class="headerlink" href="#blocklistconfigserverdev" title="Permanent link">¶</a></h1>
+<p><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>'s <a href="https://blocklist.configserver.dev">blocklist.configserver.dev</a> provides short, stable URLs for <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>’s official blocklists and other repo-hosted IPSETs. Accessing a URL returns the raw ipset file (one IP or CIDR per line), making it easy to consume and implement with <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>'s blocklist feature. A JSON API is also available for statistical data, showing counts and metadata, while by default the plain text lists are served for direct consumption by tools.</p>
+<p>IPSET files are formatted one entry per line (IP or CIDR), fully compatible with <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>. Administrators can add the URLs to <code>/etc/csf/csf.blocklists</code> or <code>/etc/csf/csf.deny</code>, allowing <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> to automatically apply the entries as <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> rules or via IPSET. The raw format is also easy to script against, mirror, or integrate into firewall automation workflows.</p>
+<p>The blocklists aggregate trusted sources, including high-confidence feeds like AbusiveIPDB top offenders, known brute-force ranges, port scanners, and botnets. While built for <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>, the lists can also be used with Fail2Ban, FireHOL, pfSense, Shorewall, and other compatible firewall tools.</p>
+<p>Read the chapter <a href="../../usage/blocklists.md">Blocklists</a> for more information about this feature and service.</p>
+<p><br></p>
+<hr>
+<p><br></p>
+<h2 id="about-blocklists">About Blocklists<a class="headerlink" href="#about-blocklists" title="Permanent link">¶</a></h2>
+<p>A blocklist is a collection of IP addresses or entire networks (CIDRs) that you don’t want accessing your server. When an IP on the blocklist attempts to connect, <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> blocks the request, helping to protect your system from unwanted or malicious traffic.</p>
+<p>Blocklists are powerful because they let you deny connections from known bad actors automatically. This includes IPs flagged for brute-force attacks, spam, port scanning, or other suspicious activity. Instead of manually adding rules for each offender, <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> can apply a list of rules that you maintain or import from external sources.</p>
+<p>Many blocklists are published and maintained by security organizations that track malicious activity worldwide. By subscribing to these maintained blocklists, you can keep your server automatically protected from known threats without the need for constant manual intervention.</p>
+<p><br></p>
+<hr>
+<p><br></p>
+<h2 id="usage">Usage  <!-- omit from toc --><a class="headerlink" href="#usage" title="Permanent link">¶</a></h2>
+<p>This section explains the different ways you can access and work with our blocklist service.  </p>
+<p><br></p>
+<h3 id="get-ipset">Get IPSET<a class="headerlink" href="#get-ipset" title="Permanent link">¶</a></h3>
+<p>By default, each blocklist is served as a plain text file containing IP addresses and CIDR ranges.<br>
+All lists are available as <code>.ipset</code> files and can be retrieved directly over HTTP.  </p>
+<p>For example, you can open the following URL in your browser or use <code>curl</code> to download the master blocklist:</p>
+<div class="grid cards">
+<ul>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M55.7 199.7l30.9 30.9c6 6 14.1 9.4 22.6 9.4l21.5 0c8.5 0 16.6 3.4 22.6 9.4l29.3 29.3c6 6 9.4 14.1 9.4 22.6l0 37.5c0 8.5 3.4 16.6 9.4 22.6l13.3 13.3c6 6 9.4 14.1 9.4 22.6l0 18.7c0 17.7 14.3 32 32 32s32-14.3 32-32l0-2.7c0-8.5 3.4-16.6 9.4-22.6l45.3-45.3c6-6 9.4-14.1 9.4-22.6l0-34.7c0-17.7-14.3-32-32-32l-82.7 0c-8.5 0-16.6-3.4-22.6-9.4l-16-16c-4.2-4.2-6.6-10-6.6-16 0-12.5 10.1-22.6 22.6-22.6l34.7 0c12.5 0 22.6-10.1 22.6-22.6 0-6-2.4-11.8-6.6-16l-19.7-19.7C242 130 240 125.1 240 120s2-10 5.7-13.7l17.3-17.3c5.8-5.8 9.1-13.7 9.1-21.9 0-7.2-2.4-13.7-6.4-18.9-3.2-.1-6.4-.2-9.6-.2-95.4 0-175.7 64.2-200.3 151.7zM464 256c0-34.6-8.4-67.2-23.4-95.8-6.4 .9-12.7 3.9-17.9 9.1l-13.4 13.4c-6 6-9.4 14.1-9.4 22.6l0 34.7c0 17.7 14.3 32 32 32l24.1 0c2.5 0 5-.3 7.3-.8 .4-5 .5-10.1 .5-15.2zM0 256a256 256 0 1 1 512 0 256 256 0 1 1 -512 0z"></path></svg></span> &nbsp; <a href="https://blocklist.configserver.dev/master.ipset"><strong>IPSET</strong> › <abbr title="Hypertext Transfer Protocol Secure, the encrypted version of HTTP.">https</abbr>://blocklist.configserver.dev/master.ipset</a></li>
+</ul>
+</div>
+<p>This file can then be imported into <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>, FireHOL, or any firewall, security tool, or monitoring system that supports ipsets.  </p>
+<p><br></p>
+<h3 id="get-json-api">Get JSON API  <!-- omit from toc --><a class="headerlink" href="#get-json-api" title="Permanent link">¶</a></h3>
+<p>Beyond simple blocklist retrieval, the service also provides an API with a statistics endpoint.<br>
+By appending the query parameter <code>?stats=true</code> to any <code>.ipset</code> file, the server will return metadata instead of the raw list.  </p>
+<div class="grid cards">
+<ul>
+<li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M55.7 199.7l30.9 30.9c6 6 14.1 9.4 22.6 9.4l21.5 0c8.5 0 16.6 3.4 22.6 9.4l29.3 29.3c6 6 9.4 14.1 9.4 22.6l0 37.5c0 8.5 3.4 16.6 9.4 22.6l13.3 13.3c6 6 9.4 14.1 9.4 22.6l0 18.7c0 17.7 14.3 32 32 32s32-14.3 32-32l0-2.7c0-8.5 3.4-16.6 9.4-22.6l45.3-45.3c6-6 9.4-14.1 9.4-22.6l0-34.7c0-17.7-14.3-32-32-32l-82.7 0c-8.5 0-16.6-3.4-22.6-9.4l-16-16c-4.2-4.2-6.6-10-6.6-16 0-12.5 10.1-22.6 22.6-22.6l34.7 0c12.5 0 22.6-10.1 22.6-22.6 0-6-2.4-11.8-6.6-16l-19.7-19.7C242 130 240 125.1 240 120s2-10 5.7-13.7l17.3-17.3c5.8-5.8 9.1-13.7 9.1-21.9 0-7.2-2.4-13.7-6.4-18.9-3.2-.1-6.4-.2-9.6-.2-95.4 0-175.7 64.2-200.3 151.7zM464 256c0-34.6-8.4-67.2-23.4-95.8-6.4 .9-12.7 3.9-17.9 9.1l-13.4 13.4c-6 6-9.4 14.1-9.4 22.6l0 34.7c0 17.7 14.3 32 32 32l24.1 0c2.5 0 5-.3 7.3-.8 .4-5 .5-10.1 .5-15.2zM0 256a256 256 0 1 1 512 0 256 256 0 1 1 -512 0z"></path></svg></span> &nbsp; <a href="https://blocklist.configserver.dev/master.ipset?stats=true"><strong>IPSET</strong> › <abbr title="Hypertext Transfer Protocol Secure, the encrypted version of HTTP.">https</abbr>://blocklist.configserver.dev/master.ipset?stats=true</a></li>
+</ul>
+</div>
+<p>The statistics response is provided in JSON format and includes details such as the list name, source, number of entries, size, and timestamps.  </p>
+<p>Example response:</p>
+<div class="language-json highlight"><span class="filename">https://blocklist.configserver.dev/master.ipset</span><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Master Blocklist"</span><span class="p">,</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"master_ipset"</span><span class="p">,</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="nt">"filename"</span><span class="p">:</span><span class="w"> </span><span class="s2">"master.ipset"</span><span class="p">,</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Master"</span><span class="p">,</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">  </span><span class="nt">"uuid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ae40fa01-270d-3a98-98eb-249207584724"</span><span class="p">,</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span><span class="nt">"source"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/blocklists/master.ipset"</span><span class="p">,</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/blocklists/master.ipset"</span><span class="p">,</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">  </span><span class="nt">"subnets"</span><span class="p">:</span><span class="w"> </span><span class="mi">5387</span><span class="p">,</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">  </span><span class="nt">"ips_single"</span><span class="p">:</span><span class="w"> </span><span class="mi">425310</span><span class="p">,</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">  </span><span class="nt">"ips_total"</span><span class="p">:</span><span class="w"> </span><span class="mi">612962028</span><span class="p">,</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">  </span><span class="nt">"client_ip"</span><span class="p">:</span><span class="w"> </span><span class="s2">"127.0.0.1"</span><span class="p">,</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">  </span><span class="nt">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-09-27T15:36:37.954Z"</span><span class="p">,</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">  </span><span class="nt">"date"</span><span class="p">:</span><span class="w"> </span><span class="s2">"09-27-2025 08:36:38"</span><span class="p">,</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">  </span><span class="nt">"took"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0m 02s"</span><span class="p">,</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">  </span><span class="nt">"took_ms"</span><span class="p">:</span><span class="w"> </span><span class="mi">2001</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><br></p>
+<hr>
+<p><br></p>
+<h2 id="add-blocklists-to-csf">Add Blocklists to <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>  <!-- omit from toc --><a class="headerlink" href="#add-blocklists-to-csf" title="Permanent link">¶</a></h2>
+<p>To use our <a href="https://blocklist.configserver.dev">blocklist.configserver.dev</a> service, select the lists you want to add to <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> from the <a href="#blocklists">blocklists</a> section below.  </p>
+<p>For example, you might add the lists <code>master.ipset</code> and <code>highrisk.ipset</code>.</p>
+<p>Open your <code>/etc/csf/csf.blocklists</code> and add the following:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a># #
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>#   @blocklist              Official CSF Blocklists
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>#   @details:               https://aetherinox.github.io/csf-firewall/usage/blocklists/#official-blocklists
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>#                           https://aetherinox.github.io/csf-firewall/advanced/services/blocklist.configserver
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>#   
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>#   The official CSF blocklists contain a large number of IPs which range from various 
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>#   different services, including AbuseIPDB (100% confidency).
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>#   
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>#   You can also use our blocklist service:
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>#       https://blocklist.configserver.dev/master.ipset
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>#       https://blocklist.configserver.dev/highrisk.ipset
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>#   
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>#   We offer many others, but these two are the primary ones.
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>#   
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>#   Requires you to edit /etc/csf/csf.conf setting:
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>#       LF_IPSET_MAXELEM = "4000000"
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a># #
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>CSF_MASTER   | 43200 | 0      | https://blocklist.configserver.dev/master.ipset
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>CSF_HIGHRISK | 43200 | 0      | https://blocklist.configserver.dev/highrisk.ipset
+</span></code></pre></div>
+<p><br></p>
+<hr>
+<p><br></p>
+<h2 id="blocklists">Blocklists  <!-- omit from toc --><a class="headerlink" href="#blocklists" title="Permanent link">¶</a></h2>
+<p>The following lists outline the blocklists that are available to use with our blocklist service</p>
+<p><br></p>
+<h3 id="risk-assessments">Risk Assessments<a class="headerlink" href="#risk-assessments" title="Permanent link">¶</a></h3>
+<p>The lists in this README use <code>⚝</code> and <code>★</code> icons to indicate risk levels. More stars mean higher risk. Lists marked as <strong>High</strong> or <strong>Critical</strong> should be added to your <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> blocklist to secure your server. Lower-risk lists are optional and can be added at your discretion.</p>
+<p>Our automated CI generates this risk assessment each day.</p>
+<p><br></p>
+<table>
+<thead>
+<tr>
+<th>Rating</th>
+<th>Risk</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>⚝⚝⚝⚝⚝</code></td>
+<td>No Risk</td>
+<td>IPs pose no real threat, but possibly suspected</td>
+</tr>
+<tr>
+<td><code>★⚝⚝⚝⚝</code></td>
+<td>Low Risk</td>
+<td>IPs pose minimal threat</td>
+</tr>
+<tr>
+<td><code>★★⚝⚝⚝</code></td>
+<td>Moderate Risk</td>
+<td>IPs may cause issues; monitor carefully</td>
+</tr>
+<tr>
+<td><code>★★★⚝⚝</code></td>
+<td>Elevated Risk</td>
+<td>IPs are risky; consider blocking</td>
+</tr>
+<tr>
+<td><code>★★★★⚝</code></td>
+<td>High Risk</td>
+<td>IPs are dangerous; likely to cause harm</td>
+</tr>
+<tr>
+<td><code>★★★★★</code></td>
+<td>Critical Risk</td>
+<td>IPs are highly dangerous; block immediately</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<h3 id="main-lists">Main Lists<a class="headerlink" href="#main-lists" title="Permanent link">¶</a></h3>
+<p>These are the primary IPSETs that most people will be interested in. They contain a large number of IP addresses that have been reported recently for abusive behavior. These statistics are gathered from multiple sources, such as <a href="https://abuseipdb.com/">AbuseIPDB</a> and <a href="https://ipthreat.net/">IPThreat</a>. IPs on this list have a 100% confidence level, meaning you should encounter no false positives from any of the IPs included.  </p>
+<p>IP addresses in these lists have been flagged for engaging in activities such as:</p>
+<ul>
+<li>SSH Bruteforcing</li>
+<li>Port Scanning</li>
+<li>DDoS Attacks</li>
+<li>IoT Targeting</li>
+<li>Phishing</li>
+</ul>
+<p><br></p>
+<p>For most users, the blocklists <code>master.ipset</code> and <code>highrisk.ipset</code> are all you need. They contain a massive collection of IP addresses, all with a 100% confidence level, meaning you should encounter none or minimal false positives.</p>
+<table>
+<thead>
+<tr>
+<th>Set Name</th>
+<th>Description</th>
+<th>Risk</th>
+<th>View</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>master.ipset</code></td>
+<td>Abusive IP addresses which have been reported for port scanning and SSH brute-forcing. HIGHLY recommended. <br> <span class="text-sm-9">Includes <a href="https://www.abuseipdb.com/">AbuseIPDB</a>, <a href="https://ipthreat.net/">IPThreat</a>, <a href="https://cinsscore.com">CinsScore</a>, <a href="https://blocklist.greensnow.co/greensnow.txt">GreensNow</a></span></td>
+<td>★★★★★</td>
+<td><a href="https://blocklist.configserver.dev/master.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>highrisk.ipset</code></td>
+<td>IPs with highest risk to your network and have a possibility that the activity which comes from them are going to be fraudulent.</td>
+<td>★★★★★</td>
+<td><a href="https://blocklist.configserver.dev/highrisk.ipset">view</a></td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<h3 id="privacy">Privacy<a class="headerlink" href="#privacy" title="Permanent link">¶</a></h3>
+<p>These blocklists help you control which third-party <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> can access your server, allowing you to block bad actors or unwanted service providers.</p>
+<p><br></p>
+<table>
+<thead>
+<tr>
+<th>Set</th>
+<th>Description</th>
+<th>Risk</th>
+<th>View</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>privacy_general.ipset</code></td>
+<td>Servers which scan ports for data collection and research purposes. <br> <span class="text-sm-9">List includes <a href="https://censys.io">Censys</a>, <a href="https://shodan.io/">Shodan</a>, <a href="https://blogproject25499.wordpress.com/">Project25499</a>, <a href="https://archive.org/">InternetArchive</a>, <a href="https://cyberresilience.io">Cyber Resilience</a>, <a href="https://internet-measurement.com">Internet Measurement</a>, <a href="https://onyphe.net">probe.onyphe.net</a>, <a href="https://securitytrails.com">Security Trails</a></span></td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_general.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>privacy_ahrefs.ipset</code></td>
+<td>Ahrefs SEO and <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr></td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_ahrefs.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>privacy_amazon_aws.ipset</code></td>
+<td>Amazon AWS</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_amazon_aws.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>privacy_amazon_ec2.ipset</code></td>
+<td>Amazon EC2</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_amazon_ec2.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>privacy_applebot.ipset</code></td>
+<td>Apple Bots</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_applebot.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>privacy_bing.ipset</code></td>
+<td>Microsoft Bind and Bing Crawlers / Bots</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_bing.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>privacy_bunnycdn.ipset</code></td>
+<td>Bunny CDN</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_bunnycdn.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>privacy_cloudflarecdn.ipset</code></td>
+<td><abbr title="A web infrastructure and security company providing CDN, DNS, and DDoS protection services.">Cloudflare</abbr> CDN</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_cloudflarecdn.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>privacy_cloudfront.ipset</code></td>
+<td>Cloudfront DNS</td>
+<td>★⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_cloudfront.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>privacy_duckduckgo.ipset</code></td>
+<td>DuckDuckGo Web Crawlers / Bots</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_duckduckgo.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>privacy_facebook.ipset</code></td>
+<td>Facebook Bots &amp; Trackers</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_facebook.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>privacy_fastly.ipset</code></td>
+<td>Fastly CDN</td>
+<td>★⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_fastly.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>privacy_google.ipset</code></td>
+<td>Google Crawlers</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_google.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>privacy_pingdom.ipset</code></td>
+<td>Pingdom Monitoring Service</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_pingdom.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>privacy_rssapi.ipset</code></td>
+<td>RSS API Reader</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_rssapi.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>privacy_stripe_api.ipset</code></td>
+<td>Stripe Payment Gateway API</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_stripe_api.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>privacy_stripe_armada_gator.ipset</code></td>
+<td>Stripe Armada Gator</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_stripe_armada_gator.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>privacy_stripe_webhooks.ipset</code></td>
+<td>Stripe Webhook Service</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_stripe_webhooks.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>privacy_telegram.ipset</code></td>
+<td>Telegram Trackers and Crawlers</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_telegram.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>privacy_uptimerobot.ipset</code></td>
+<td>Uptime Robot Monitoring Service</td>
+<td>★⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_uptimerobot.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>privacy_webpagetest.ipset</code></td>
+<td>Webpage Test <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">Services</abbr></td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/privacy_webpagetest.ipset">view</a></td>
+</tr>
+</tbody>
+</table>
+<p><br>
+<br>
+<br></p>
+<h3 id="spam">Spam<a class="headerlink" href="#spam" title="Permanent link">¶</a></h3>
+<p>These blocklists help prevent known spam sources from accessing your server. They include IPs identified by <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> like Spamhaus as well as spammers targeting forums and other online platforms.</p>
+<p><br></p>
+<table>
+<thead>
+<tr>
+<th>Set</th>
+<th>Description</th>
+<th>Risk</th>
+<th>View</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>spam_forums.ipset</code></td>
+<td>List of known forum / blog spammers and bots</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/spam_forums.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>spam_spamhaus.ipset</code></td>
+<td>Bad actor IP addresses registered with Spamhaus</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/spam_spamhaus.ipset">view</a></td>
+</tr>
+</tbody>
+</table>
+<p><br>
+<br>
+<br></p>
+<h3 id="internet-service-providers">Internet Service Providers<a class="headerlink" href="#internet-service-providers" title="Permanent link">¶</a></h3>
+<p>These blocklists allow you to filter traffic based on Internet Service Providers (ISPs). They can be used to block or restrict access from specific networks or providers.</p>
+<p><br></p>
+<table>
+<thead>
+<tr>
+<th>Set</th>
+<th>Description</th>
+<th>Risk</th>
+<th>View</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>isp_aol.ipset</code></td>
+<td>AOL Internet Service Provider IPs</td>
+<td>★⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/isp_aol.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>isp_att.ipset</code></td>
+<td>AT&amp;T Internet Service Provider IPs</td>
+<td>★⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/isp_att.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>isp_cablevision.ipset</code></td>
+<td>Cablevision / Optimum ISP IPs</td>
+<td>★⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/isp_cablevision.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>isp_charter_spectrum_timewarnercable.ipset</code></td>
+<td>Charter/Spectrum/TWC ISP IPs</td>
+<td>★⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/isp_charter_spectrum_timewarnercable.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>isp_comcast.ipset</code></td>
+<td>Comcast / Xfinity ISP IPs</td>
+<td>★⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/isp_comcast.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>isp_cox_communications.ipset</code></td>
+<td>Cox Communications ISP IPs</td>
+<td>★⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/isp_cox_communications.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>isp_embarq.ipset</code></td>
+<td>Embarq / CenturyLink ISP IPs</td>
+<td>★⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/isp_embarq.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>isp_frontier_communications.ipset</code></td>
+<td>Frontier Communications ISP IPs</td>
+<td>★⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/isp_frontier_communications.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>isp_qwest.ipset</code></td>
+<td>Qwest / CenturyLink ISP IPs</td>
+<td>★⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/isp_qwest.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>isp_spacex_starlink.ipset</code></td>
+<td>SpaceX Starlink satellite ISP IPs</td>
+<td>★⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/isp_spacex_starlink.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>isp_sprint.ipset</code></td>
+<td>Sprint ISP IPs</td>
+<td>★⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/isp_sprint.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>isp_suddenlink_altice_optimum.ipset</code></td>
+<td>Suddenlink / Altice / Optimum ISP IPs</td>
+<td>★⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/isp_suddenlink_altice_optimum.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>isp_verizon.ipset</code></td>
+<td>Verizon ISP IPs</td>
+<td>★⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/isp_verizon.ipset">view</a></td>
+</tr>
+</tbody>
+</table>
+<p><br>
+<br>
+<br></p>
+<h3 id="transmission-bittorrent-client">Transmission (BitTorrent Client)<a class="headerlink" href="#transmission-bittorrent-client" title="Permanent link">¶</a></h3>
+<p>This section includes blocklists which you can import into the <a href="https://transmissionbt.com/">bittorrent client Transmission</a>.</p>
+<p><br></p>
+<ul>
+<li>In this repo, copy the direct URL to the Transmission blocklist, provided below:<ul>
+<li><a href="https://github.com/Aetherinox/csf-firewall/raw/main/blocklists/transmission/blocklist.gz">https://github.com/Aetherinox/csf-firewall/raw/main/blocklists/transmission/blocklist.gz</a></li>
+</ul>
+</li>
+<li>Open your Transmission application; depending on the version you run, do ONE of the follow two choices:<ul>
+<li>Paste the link to <strong>Transmission</strong> › <code>Settings</code> › <code>Peers</code> › <code>Blocklist</code></li>
+<li>Paste the link to <strong>Transmission</strong> › <code>Edit</code> › <code>Preferences</code> › <code>Privacy</code> › <code>Enable Blocklist</code></li>
+</ul>
+</li>
+</ul>
+<p><br></p>
+<table>
+<thead>
+<tr>
+<th>Set</th>
+<th>Description</th>
+<th>Risk</th>
+<th>View</th>
+<th>Website</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>transmission.ipset</code></td>
+<td>A large blocklist for the BitTorrent client <a href="https://transmissionbt.com/">Transmission</a></td>
+<td>★★★★★</td>
+<td><a href="https://blocklist.configserver.dev/transmission.ipset">view</a></td>
+<td><a href="https://transmissionbt.com/">view</a></td>
+</tr>
+</tbody>
+</table>
+<p><br>
+<br>
+<br></p>
+<h3 id="continents-geolite2">Continents (GeoLite2)<a class="headerlink" href="#continents-geolite2" title="Permanent link">¶</a></h3>
+<p>These blocklists let you control which geographical locations can access your server. They can be used as either a whitelist or a blacklist and include both <strong>continents</strong> and <strong>countries</strong>.  </p>
+<p>All data is sourced directly from the GeoLite2 Database.</p>
+<p><br></p>
+<table>
+<thead>
+<tr>
+<th>Set</th>
+<th>Description</th>
+<th>Risk</th>
+<th>View</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>continent_africa.ipset</code></td>
+<td>All IPs located in Africa</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/continent_africa.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>continent_antartica.ipset</code></td>
+<td>All IPs located in Antarctica</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/continent_antartica.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>continent_asia.ipset</code></td>
+<td>All IPs located in Asia</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/continent_asia.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>continent_europe.ipset</code></td>
+<td>All IPs located in Europe</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/continent_europe.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>continent_north_america.ipset</code></td>
+<td>All IPs located in North America</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/continent_north_america.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>continent_oceania.ipset</code></td>
+<td>All IPs located in Oceania</td>
+<td>★⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/continent_oceania.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>continent_south_america.ipset</code></td>
+<td>All IPs located in South America</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/continent_south_america.ipset">view</a></td>
+</tr>
+</tbody>
+</table>
+<p><br>
+<br>
+<br></p>
+<h3 id="countries-geolite2">Countries (GeoLite2)<a class="headerlink" href="#countries-geolite2" title="Permanent link">¶</a></h3>
+<p>These blocklists let you control which geographical locations can access your server. They can be used as either a whitelist or a blacklist and include both <strong>continents</strong> and <strong>countries</strong>.  </p>
+<p>All data is sourced directly from the GeoLite2 Database.</p>
+<p><br></p>
+<table>
+<thead>
+<tr>
+<th>Set</th>
+<th>Description</th>
+<th>Risk</th>
+<th>View</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>country_afghanistan.ipset</code></td>
+<td>Afghanistan</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_afghanistan.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_aland_islands.ipset</code></td>
+<td>Aland Islands</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_aland_islands.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_albania.ipset</code></td>
+<td>Albania</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_albania.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_algeria.ipset</code></td>
+<td>Algeria</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_algeria.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_american_samoa.ipset</code></td>
+<td>American Samoa</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_american_samoa.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_andorra.ipset</code></td>
+<td>Andorra</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_andorra.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_angola.ipset</code></td>
+<td>Angola</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_angola.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_anguilla.ipset</code></td>
+<td>Anguilla</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_anguilla.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_antarctica.ipset</code></td>
+<td>Antarctica</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_antarctica.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_antigua_barbuda.ipset</code></td>
+<td>Antigua and Barbuda</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_antigua_barbuda.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_argentina.ipset</code></td>
+<td>Argentina</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_argentina.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_armenia.ipset</code></td>
+<td>Armenia</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_armenia.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_aruba.ipset</code></td>
+<td>Aruba</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_aruba.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_australia.ipset</code></td>
+<td>Australia</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_australia.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_austria.ipset</code></td>
+<td>Austria</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_austria.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_azerbaijan.ipset</code></td>
+<td>Azerbaijan</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_azerbaijan.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_bahamas.ipset</code></td>
+<td>The Bahamas</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_bahamas.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_bahrain.ipset</code></td>
+<td>Bahrain</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_bahrain.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_bangladesh.ipset</code></td>
+<td>Bangladesh</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_bangladesh.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_barbados.ipset</code></td>
+<td>Barbados</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_barbados.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_belarus.ipset</code></td>
+<td>Belarus</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_belarus.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_belgium.ipset</code></td>
+<td>Belgium</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_belgium.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_belize.ipset</code></td>
+<td>Belize</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_belize.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_benin.ipset</code></td>
+<td>Benin</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_benin.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_bermuda.ipset</code></td>
+<td>Bermuda</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_bermuda.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_bhutan.ipset</code></td>
+<td>Bhutan</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_bhutan.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_bolivia.ipset</code></td>
+<td>Bolivia</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_bolivia.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_bonaire_sint_eustatius_saba.ipset</code></td>
+<td>Bonaire, Sint Eustatius, and Saba</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_bonaire_sint_eustatius_saba.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_bosnia_herzegovina.ipset</code></td>
+<td>Bosnia and Herzegovina</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_bosnia_herzegovina.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_botswana.ipset</code></td>
+<td>Botswana</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_botswana.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_bouvet_island.ipset</code></td>
+<td>Bouvet Island</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_bouvet_island.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_brazil.ipset</code></td>
+<td>Brazil</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_brazil.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_british_indian_ocean_territory.ipset</code></td>
+<td>British Indian Ocean Territory</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_british_indian_ocean_territory.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_british_virgin_islands.ipset</code></td>
+<td>British Virgin Islands</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_british_virgin_islands.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_brunei_darussalam.ipset</code></td>
+<td>Brunei</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_brunei_darussalam.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_bulgaria.ipset</code></td>
+<td>Bulgaria</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_bulgaria.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_burkina_faso.ipset</code></td>
+<td>Burkina Faso</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_burkina_faso.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_burundi.ipset</code></td>
+<td>Burundi</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_burundi.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_cambodia.ipset</code></td>
+<td>Cambodia</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_cambodia.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_cameroon.ipset</code></td>
+<td>Cameroon</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_cameroon.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_canada.ipset</code></td>
+<td>Canada</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_canada.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_cape_verde.ipset</code></td>
+<td>Cape Verde</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_cape_verde.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_cayman_islands.ipset</code></td>
+<td>Cayman Islands</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_cayman_islands.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_cc.ipset</code></td>
+<td>Cocos (Keeling) Islands</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_cc.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_central_african_republic.ipset</code></td>
+<td>Central African Republic</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_central_african_republic.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_chad.ipset</code></td>
+<td>Chad</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_chad.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_chile.ipset</code></td>
+<td>Chile</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_chile.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_china.ipset</code></td>
+<td>China</td>
+<td>★★★★★</td>
+<td><a href="https://blocklist.configserver.dev/country_china.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_christmas_island.ipset</code></td>
+<td>Christmas Island</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_christmas_island.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_colombia.ipset</code></td>
+<td>Colombia</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_colombia.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_comoros.ipset</code></td>
+<td>Comoros</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_comoros.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_congo.ipset</code></td>
+<td>Congo</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_congo.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_cook_islands.ipset</code></td>
+<td>Cook Islands</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_cook_islands.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_costa_rica.ipset</code></td>
+<td>Costa Rica</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_costa_rica.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_cote_divoire.ipset</code></td>
+<td>Côte d'Ivoire</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_cote_divoire.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_croatia.ipset</code></td>
+<td>Croatia</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_croatia.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_cuba.ipset</code></td>
+<td>Cuba</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_cuba.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_curacao.ipset</code></td>
+<td>Curaçao</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_curacao.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_cyprus.ipset</code></td>
+<td>Cyprus</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_cyprus.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_czech_republic.ipset</code></td>
+<td>Czech Republic</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_czech_republic.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_democratic_republic_congo.ipset</code></td>
+<td>Democratic Republic of the Congo</td>
+<td>★★★★★</td>
+<td><a href="https://blocklist.configserver.dev/country_democratic_republic_congo.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_denmark.ipset</code></td>
+<td>Denmark</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_denmark.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_djibouti.ipset</code></td>
+<td>Djibouti</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_djibouti.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_dominica.ipset</code></td>
+<td>Dominica</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_dominica.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_dominican_republic.ipset</code></td>
+<td>Dominican Republic</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_dominican_republic.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_ecuador.ipset</code></td>
+<td>Ecuador</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_ecuador.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_egypt.ipset</code></td>
+<td>Egypt</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_egypt.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_el_salvador.ipset</code></td>
+<td>El Salvador</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_el_salvador.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_equatorial_guinea.ipset</code></td>
+<td>Equatorial Guinea</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_equatorial_guinea.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_eritrea.ipset</code></td>
+<td>Eritrea</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_eritrea.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_estonia.ipset</code></td>
+<td>Estonia</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_estonia.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_eswatini.ipset</code></td>
+<td>Eswatini</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_eswatini.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_ethiopia.ipset</code></td>
+<td>Ethiopia</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_ethiopia.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_europe.ipset</code></td>
+<td>Europe</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_europe.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_falkland_islands_malvinas.ipset</code></td>
+<td>Falkland Islands (Malvinas)</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_falkland_islands_malvinas.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_faroe_islands.ipset</code></td>
+<td>Faroe Islands</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_faroe_islands.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_fiji.ipset</code></td>
+<td>Fiji</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_fiji.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_finland.ipset</code></td>
+<td>Finland</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_finland.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_france.ipset</code></td>
+<td>France</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_france.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_french_guiana.ipset</code></td>
+<td>French Guiana</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_french_guiana.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_french_polynesia.ipset</code></td>
+<td>French Polynesia</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_french_polynesia.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_french_southern_territories.ipset</code></td>
+<td>French Southern Territories</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_french_southern_territories.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_gabon.ipset</code></td>
+<td>Gabon</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_gabon.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_gambia.ipset</code></td>
+<td>Gambia</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_gambia.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_georgia.ipset</code></td>
+<td>Georgia</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_georgia.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_germany.ipset</code></td>
+<td>Germany</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_germany.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_ghana.ipset</code></td>
+<td>Ghana</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_ghana.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_gibraltar.ipset</code></td>
+<td>Gibraltar</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_gibraltar.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_great_britain.ipset</code></td>
+<td>Great Britain</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_great_britain.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_greece.ipset</code></td>
+<td>Greece</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_greece.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_greenland.ipset</code></td>
+<td>Greenland</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_greenland.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_grenada.ipset</code></td>
+<td>Grenada</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_grenada.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_guadeloupe.ipset</code></td>
+<td>Guadeloupe</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_guadeloupe.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_guam.ipset</code></td>
+<td>Guam</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_guam.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_guatemala.ipset</code></td>
+<td>Guatemala</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_guatemala.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_guernsey.ipset</code></td>
+<td>Guernsey</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_guernsey.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_guineabissau.ipset</code></td>
+<td>Guinea-Bissau</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_guineabissau.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_guinea.ipset</code></td>
+<td>Guinea</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_guinea.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_guyana.ipset</code></td>
+<td>Guyana</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_guyana.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_haiti.ipset</code></td>
+<td>Haiti</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_haiti.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_heard_island_and_mcdonald_islands.ipset</code></td>
+<td>Heard Island and McDonald Islands</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_heard_island_and_mcdonald_islands.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_honduras.ipset</code></td>
+<td>Honduras</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_honduras.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_hong_kong.ipset</code></td>
+<td>Hong Kong</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_hong_kong.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_hungary.ipset</code></td>
+<td>Hungary</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_hungary.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_iceland.ipset</code></td>
+<td>Iceland</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_iceland.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_india.ipset</code></td>
+<td>India</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_india.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_indonesia.ipset</code></td>
+<td>Indonesia</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_indonesia.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_iran.ipset</code></td>
+<td>Iran</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_iran.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_iraq.ipset</code></td>
+<td>Iraq</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_iraq.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_ireland.ipset</code></td>
+<td>Ireland</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_ireland.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_isle_of_man.ipset</code></td>
+<td>Isle of Man</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_isle_of_man.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_israel.ipset</code></td>
+<td>Israel</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_israel.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_italy.ipset</code></td>
+<td>Italy</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_italy.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_jamaica.ipset</code></td>
+<td>Jamaica</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_jamaica.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_japan.ipset</code></td>
+<td>Japan</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_japan.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_jersey.ipset</code></td>
+<td>Jersey</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_jersey.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_jordan.ipset</code></td>
+<td>Jordan</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_jordan.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_kazakhstan.ipset</code></td>
+<td>Kazakhstan</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_kazakhstan.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_kenya.ipset</code></td>
+<td>Kenya</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_kenya.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_kiribati.ipset</code></td>
+<td>Kiribati</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_kiribati.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_kosovo.ipset</code></td>
+<td>Kosovo</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_kosovo.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_kuwait.ipset</code></td>
+<td>Kuwait</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_kuwait.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_kyrgyzstan.ipset</code></td>
+<td>Kyrgyzstan</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_kyrgyzstan.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_laos.ipset</code></td>
+<td>Laos</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_laos.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_latvia.ipset</code></td>
+<td>Latvia</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_latvia.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_lebanon.ipset</code></td>
+<td>Lebanon</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_lebanon.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_lesotho.ipset</code></td>
+<td>Lesotho</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_lesotho.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_liberia.ipset</code></td>
+<td>Liberia</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_liberia.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_libya.ipset</code></td>
+<td>Libya</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_libya.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_liechtenstein.ipset</code></td>
+<td>Liechtenstein</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_liechtenstein.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_lithuania.ipset</code></td>
+<td>Lithuania</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_lithuania.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_luxembourg.ipset</code></td>
+<td>Luxembourg</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_luxembourg.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_macedonia_republic.ipset</code></td>
+<td>Macedonia</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_macedonia_republic.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_madagascar.ipset</code></td>
+<td>Madagascar</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_madagascar.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_malawi.ipset</code></td>
+<td>Malawi</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_malawi.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_malaysia.ipset</code></td>
+<td>Malaysia</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_malaysia.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_maldives.ipset</code></td>
+<td>Maldives</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_maldives.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_mali.ipset</code></td>
+<td>Mali</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_mali.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_malta.ipset</code></td>
+<td>Malta</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_malta.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_marshall_islands.ipset</code></td>
+<td>Marshall Islands</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_marshall_islands.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_martinique.ipset</code></td>
+<td>Martinique</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_martinique.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_mauritania.ipset</code></td>
+<td>Mauritania</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_mauritania.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_mauritius.ipset</code></td>
+<td>Mauritius</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_mauritius.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_mayotte.ipset</code></td>
+<td>Mayotte</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_mayotte.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_mexico.ipset</code></td>
+<td>Mexico</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_mexico.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_micronesia.ipset</code></td>
+<td>Micronesia</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_micronesia.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_monaco.ipset</code></td>
+<td>Monaco</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_monaco.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_mongolia.ipset</code></td>
+<td>Mongolia</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_mongolia.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_montenegro.ipset</code></td>
+<td>Montenegro</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_montenegro.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_montserrat.ipset</code></td>
+<td>Montserrat</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_montserrat.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_morocco.ipset</code></td>
+<td>Morocco</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_morocco.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_mozambique.ipset</code></td>
+<td>Mozambique</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_mozambique.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_myanmar.ipset</code></td>
+<td>Myanmar</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_myanmar.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_namibia.ipset</code></td>
+<td>Namibia</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_namibia.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_nauru.ipset</code></td>
+<td>Nauru</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_nauru.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_nepal.ipset</code></td>
+<td>Nepal</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_nepal.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_netherlands.ipset</code></td>
+<td>Netherlands</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_netherlands.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_new_caledonia.ipset</code></td>
+<td>New Caledonia</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_new_caledonia.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_new_zealand.ipset</code></td>
+<td>New Zealand</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_new_zealand.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_nicaragua.ipset</code></td>
+<td>Nicaragua</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_nicaragua.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_nigeria.ipset</code></td>
+<td>Nigeria</td>
+<td>★★★★★</td>
+<td><a href="https://blocklist.configserver.dev/country_nigeria.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_niger.ipset</code></td>
+<td>Niger</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_niger.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_niue.ipset</code></td>
+<td>Niue</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_niue.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_norfolk_island.ipset</code></td>
+<td>Norfolk Island</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_norfolk_island.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_northern_mariana_islands.ipset</code></td>
+<td>Northern Mariana Islands</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_northern_mariana_islands.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_north_korea.ipset</code></td>
+<td>North Korea</td>
+<td>★★★★★</td>
+<td><a href="https://blocklist.configserver.dev/country_north_korea.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_norway.ipset</code></td>
+<td>Norway</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_norway.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_oman.ipset</code></td>
+<td>Oman</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_oman.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_pakistan.ipset</code></td>
+<td>Pakistan</td>
+<td>★★★★★</td>
+<td><a href="https://blocklist.configserver.dev/country_pakistan.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_palau.ipset</code></td>
+<td>Palau</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_palau.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_palestine.ipset</code></td>
+<td>Palestine</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_palestine.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_panama.ipset</code></td>
+<td>Panama</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_panama.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_papua_new_guinea.ipset</code></td>
+<td>Papua New Guinea</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_papua_new_guinea.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_paraguay.ipset</code></td>
+<td>Paraguay</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_paraguay.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_peru.ipset</code></td>
+<td>Peru</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_peru.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_philippines.ipset</code></td>
+<td>Philippines</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_philippines.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_pitcairn.ipset</code></td>
+<td>Pitcairn Islands</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_pitcairn.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_poland.ipset</code></td>
+<td>Poland</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_poland.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_portugal.ipset</code></td>
+<td>Portugal</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_portugal.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_puerto_rico.ipset</code></td>
+<td>Puerto Rico</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_puerto_rico.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_qatar.ipset</code></td>
+<td>Qatar</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_qatar.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_republic_moldova.ipset</code></td>
+<td>Moldova</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_republic_moldova.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_reunion.ipset</code></td>
+<td>Réunion</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_reunion.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_romania.ipset</code></td>
+<td>Romania</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_romania.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_russia.ipset</code></td>
+<td>Russia</td>
+<td>★★★★★</td>
+<td><a href="https://blocklist.configserver.dev/country_russia.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_rwanda.ipset</code></td>
+<td>Rwanda</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_rwanda.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_saint_barthelemy.ipset</code></td>
+<td>Saint Barthélemy</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_saint_barthelemy.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_saint_helena.ipset</code></td>
+<td>Saint Helena</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_saint_helena.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_saint_kitts_nevis.ipset</code></td>
+<td>Saint Kitts and Nevis</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_saint_kitts_nevis.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_saint_lucia.ipset</code></td>
+<td>Saint Lucia</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_saint_lucia.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_saint_martin_north.ipset</code></td>
+<td>Saint Martin (North)</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_saint_martin_north.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_saint_pierre_miquelon.ipset</code></td>
+<td>Saint Pierre and Miquelon</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_saint_pierre_miquelon.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_saint_vincent_grenadines.ipset</code></td>
+<td>Saint Vincent and the Grenadines</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_saint_vincent_grenadines.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_samoa.ipset</code></td>
+<td>Samoa</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_samoa.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_san_marino.ipset</code></td>
+<td>San Marino</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_san_marino.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_sao_tome_principe.ipset</code></td>
+<td>São Tomé and Príncipe</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_sao_tome_principe.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_saudi_arabia.ipset</code></td>
+<td>Saudi Arabia</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_saudi_arabia.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_senegal.ipset</code></td>
+<td>Senegal</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_senegal.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_serbia.ipset</code></td>
+<td>Serbia</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_serbia.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_seychelles.ipset</code></td>
+<td>Seychelles</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_seychelles.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_sierra_leone.ipset</code></td>
+<td>Sierra Leone</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_sierra_leone.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_singapore.ipset</code></td>
+<td>Singapore</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_singapore.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_sint_maarten_south.ipset</code></td>
+<td>Sint Maarten (South)</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_sint_maarten_south.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_slovakia.ipset</code></td>
+<td>Slovakia</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_slovakia.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_slovenia.ipset</code></td>
+<td>Slovenia</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_slovenia.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_solomon_islands.ipset</code></td>
+<td>Solomon Islands</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_solomon_islands.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_somalia.ipset</code></td>
+<td>Somalia</td>
+<td>★★★★★</td>
+<td><a href="https://blocklist.configserver.dev/country_somalia.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_south_africa.ipset</code></td>
+<td>South Africa</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_south_africa.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_south_georgia_and_the_south_sandwich_islands.ipset</code></td>
+<td>South Georgia and the South Sandwich Islands</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_south_georgia_and_the_south_sandwich_islands.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_south_korea.ipset</code></td>
+<td>South Korea</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_south_korea.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_south_sudan.ipset</code></td>
+<td>South Sudan</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_south_sudan.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_spain.ipset</code></td>
+<td>Spain</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_spain.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_sri_lanka.ipset</code></td>
+<td>Sri Lanka</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_sri_lanka.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_sudan.ipset</code></td>
+<td>Sudan</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_sudan.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_suriname.ipset</code></td>
+<td>Suriname</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_suriname.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_svalbard_jan_mayen.ipset</code></td>
+<td>Svalbard and Jan Mayen</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_svalbard_jan_mayen.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_sweden.ipset</code></td>
+<td>Sweden</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_sweden.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_switzerland.ipset</code></td>
+<td>Switzerland</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_switzerland.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_syria.ipset</code></td>
+<td>Syria</td>
+<td>★★★★★</td>
+<td><a href="https://blocklist.configserver.dev/country_syria.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_taiwan.ipset</code></td>
+<td>Taiwan</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_taiwan.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_tajikistan.ipset</code></td>
+<td>Tajikistan</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_tajikistan.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_tanzania.ipset</code></td>
+<td>Tanzania</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_tanzania.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_thailand.ipset</code></td>
+<td>Thailand</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_thailand.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_timorleste.ipset</code></td>
+<td>Timor-Leste</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_timorleste.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_togo.ipset</code></td>
+<td>Togo</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_togo.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_tokelau.ipset</code></td>
+<td>Tokelau</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_tokelau.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_tonga.ipset</code></td>
+<td>Tonga</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_tonga.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_trinidad_tobago.ipset</code></td>
+<td>Trinidad and Tobago</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_trinidad_tobago.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_tunisia.ipset</code></td>
+<td>Tunisia</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_tunisia.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_turkey.ipset</code></td>
+<td>Turkey</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_turkey.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_turkmenistan.ipset</code></td>
+<td>Turkmenistan</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_turkmenistan.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_turks_caicos_islands.ipset</code></td>
+<td>Turks and Caicos Islands</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_turks_caicos_islands.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_tuvalu.ipset</code></td>
+<td>Tuvalu</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_tuvalu.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_uganda.ipset</code></td>
+<td>Uganda</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_uganda.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_ukraine.ipset</code></td>
+<td>Ukraine</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_ukraine.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_united_arab_emirates.ipset</code></td>
+<td>United Arab Emirates</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_united_arab_emirates.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_united_states.ipset</code></td>
+<td>United States</td>
+<td>★★★★⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_united_states.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_united_states_minor_outlying_islands.ipset</code></td>
+<td>US Minor Outlying Islands</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_united_states_minor_outlying_islands.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_united_states_virgin_islands.ipset</code></td>
+<td>US Virgin Islands</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_united_states_virgin_islands.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_uruguay.ipset</code></td>
+<td>Uruguay</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_uruguay.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_uzbekistan.ipset</code></td>
+<td>Uzbekistan</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_uzbekistan.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_vanuatu.ipset</code></td>
+<td>Vanuatu</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_vanuatu.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_vatican_city_holy_see.ipset</code></td>
+<td>Vatican City / Holy See</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_vatican_city_holy_see.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_venezuela.ipset</code></td>
+<td>Venezuela</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_venezuela.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_vietnam.ipset</code></td>
+<td>Vietnam</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_vietnam.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_wallis_futuna.ipset</code></td>
+<td>Wallis and Futuna</td>
+<td>⚝⚝⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_wallis_futuna.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_western_sahara.ipset</code></td>
+<td>Western Sahara</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_western_sahara.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_yemen.ipset</code></td>
+<td>Yemen</td>
+<td>★★★★★</td>
+<td><a href="https://blocklist.configserver.dev/country_yemen.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_zambia.ipset</code></td>
+<td>Zambia</td>
+<td>★★⚝⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_zambia.ipset">view</a></td>
+</tr>
+<tr>
+<td><code>country_zimbabwe.ipset</code></td>
+<td>Zimbabwe</td>
+<td>★★★⚝⚝</td>
+<td><a href="https://blocklist.configserver.dev/country_zimbabwe.ipset">view</a></td>
+</tr>
+</tbody>
+</table>
+<p><br>
+<br></p>
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="September 28, 2025 02:41:11 UTC"><span class="timeago" datetime="2025-09-28T02:41:11+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 28, 2025 02:41:11 UTC">2025-09-28</span>
+  </span>
+
+    
+    
+    
+      
+  
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Contributors">
+      
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4Z"></path></svg>
+      
+    </span>
+    <nav>
+      
+        <a href="mailto:aetherinox@proton.me">Aetherinox</a>
+    </nav>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    
+      
+  <span class="md-icon" title="Contributors">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"></path></svg>
+  </span>
+  <span>GitHub</span>
+
+    
+    <nav>
+      
+        <a href="https://github.com/Aetherinox" class="md-author" title="@Aetherinox">
+          
+          <img src="https://avatars.githubusercontent.com/u/118329232?v=4&amp;size=72" alt="Aetherinox">
+        </a>
+      
+      
+      
+    </nav>
+  </span>
+
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"></path></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Services">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Services
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../download.configserver/" class="md-footer__link md-footer__link--next" aria-label="Next: download.configserver.dev">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                download.configserver.dev
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2025 - Aetherinox
+
+    </div>
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://download.configserver.dev" target="_blank" rel="noopener" title="Download CSF" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M256 32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 210.7-41.4-41.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l96 96c12.5 12.5 32.8 12.5 45.3 0l96-96c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 242.7 256 32zM64 320c-35.3 0-64 28.7-64 64l0 32c0 35.3 28.7 64 64 64l320 0c35.3 0 64-28.7 64-64l0-32c0-35.3-28.7-64-64-64l-46.9 0-56.6 56.6c-31.2 31.2-81.9 31.2-113.1 0L110.9 320 64 320zm304 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"></path></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://blocklist.configserver.dev" target="_blank" rel="noopener" title="Service › Blocklists" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M224 32l192 0 0 80-192 0 0-80zm-32 80l-96 0 0-16c0-35.3 28.7-64 64-64l32 0 0 80zM96 144l208 0 0 96-208 0 0-96zm0 224l0-96 96 0 0 96-96 0zm0 32l176.7 0c-.5 4.7-.7 9.4-.7 14.1 0 22.9 3.7 45.1 10.6 65.9L160 480c-35.3 0-64-28.7-64-64l0-16zM544 144l0 60.2c-12 .3-23.8 3.9-34.1 11-7.9-7.9-15.9-15.6-24.2-23.1-23.8-21.4-60-21.5-83.9-.2-17 15.2-32.9 31.4-47.2 48.1l-18.6 0 0-96 208 0zM224 272l105.2 0c-6.4 8.8-12.3 17.6-17.7 26.3-13.2 21.3-25.1 45.2-32.3 69.7l-55.2 0 0-96zM544 112l-96 0 0-80 32 0c35.3 0 64 28.7 64 64l0 16zM505.7 272.3L518 258.5c5.4-6.1 13.3-8.8 20.9-8.9 7.2 0 14.3 2.6 19.9 7.8 19.7 18.3 39.8 43.2 55 70.6 15.1 27.2 26.2 58.1 26.2 88.1 0 88.7-71.3 159.8-160 159.8-89.6 0-160-71.3-160-159.8 0-37.3 16-73.4 36.8-104.5 20.9-31.3 47.5-59 70.9-80.2 5.7-5.2 13.1-7.7 20.3-7.5s13.4 3.2 18.8 7.5c14.4 11.4 38.9 40.7 38.9 40.7zM544 464.2c0-36.5-37-73-54.8-88.4-5.4-4.7-13.1-4.7-18.5 0-17.7 15.4-54.8 51.9-54.8 88.4 0 35.3 28.7 64 64 64s64-28.7 64-64z"></path></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://tickets.configserver.dev" target="_blank" rel="noopener" title="Submit Issue / Ticket" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M202.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM496 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3l48.2 0c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"></path></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://github.com/Aetherinox/csf-firewall" target="_blank" rel="noopener" title="View Github Repo" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://discord.configserver.dev" target="_blank" rel="noopener" title="Discord" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M492.5 69.8c-.2-.3-.4-.6-.8-.7-38.1-17.5-78.4-30-119.7-37.1-.4-.1-.8 0-1.1 .1s-.6 .4-.8 .8c-5.5 9.9-10.5 20.2-14.9 30.6-44.6-6.8-89.9-6.8-134.4 0-4.5-10.5-9.5-20.7-15.1-30.6-.2-.3-.5-.6-.8-.8s-.7-.2-1.1-.2c-41.3 7.1-81.6 19.6-119.7 37.1-.3 .1-.6 .4-.8 .7-76.2 113.8-97.1 224.9-86.9 334.5 0 .3 .1 .5 .2 .8s.3 .4 .5 .6c44.4 32.9 94 58 146.8 74.2 .4 .1 .8 .1 1.1 0s.7-.4 .9-.7c11.3-15.4 21.4-31.8 30-48.8 .1-.2 .2-.5 .2-.8s0-.5-.1-.8-.2-.5-.4-.6-.4-.3-.7-.4c-15.8-6.1-31.2-13.4-45.9-21.9-.3-.2-.5-.4-.7-.6s-.3-.6-.3-.9 0-.6 .2-.9 .3-.5 .6-.7c3.1-2.3 6.2-4.7 9.1-7.1 .3-.2 .6-.4 .9-.4s.7 0 1 .1c96.2 43.9 200.4 43.9 295.5 0 .3-.1 .7-.2 1-.2s.7 .2 .9 .4c2.9 2.4 6 4.9 9.1 7.2 .2 .2 .4 .4 .6 .7s.2 .6 .2 .9-.1 .6-.3 .9-.4 .5-.6 .6c-14.7 8.6-30 15.9-45.9 21.8-.2 .1-.5 .2-.7 .4s-.3 .4-.4 .7-.1 .5-.1 .8 .1 .5 .2 .8c8.8 17 18.8 33.3 30 48.8 .2 .3 .6 .6 .9 .7s.8 .1 1.1 0c52.9-16.2 102.6-41.3 147.1-74.2 .2-.2 .4-.4 .5-.6s.2-.5 .2-.8c12.3-126.8-20.5-236.9-86.9-334.5zm-302 267.7c-29 0-52.8-26.6-52.8-59.2s23.4-59.2 52.8-59.2c29.7 0 53.3 26.8 52.8 59.2 0 32.7-23.4 59.2-52.8 59.2zm195.4 0c-29 0-52.8-26.6-52.8-59.2s23.4-59.2 52.8-59.2c29.7 0 53.3 26.8 52.8 59.2 0 32.7-23.2 59.2-52.8 59.2z"></path></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://buymeacoffee.com/aetherinox" target="_blank" rel="noopener" title="Sponsor" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M241 87.1l15 20.7 15-20.7C296 52.5 336.2 32 378.9 32 452.4 32 512 91.6 512 165.1l0 2.6c0 112.2-139.9 242.5-212.9 298.2-12.4 9.4-27.6 14.1-43.1 14.1s-30.8-4.6-43.1-14.1C139.9 410.2 0 279.9 0 167.7l0-2.6C0 91.6 59.6 32 133.1 32 175.8 32 216 52.5 241 87.1z"></path></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+      <div class="md-consent" data-md-component="consent" id="__consent" hidden>
+        <div class="md-consent__overlay"></div>
+        <aside class="md-consent__inner">
+          <form class="md-consent__form md-grid md-typeset" name="consent">
+            
+
+
+  
+
+
+<h4>Cookie Consent</h4>
+<p>We use cookies to recognize your repeated visits and preferences, as well as to measure the effectiveness of our documentation and whether users find what they're searching for. With your consent, you're helping us to make our documentation better.</p>
+<input class="md-toggle" type="checkbox" id="__settings">
+<div class="md-consent__settings">
+  <ul class="task-list">
+    
+    
+      
+    
+    
+      
+        
+  
+  
+    
+    
+  
+  <li class="task-list-item">
+    <label class="task-list-control">
+      <input type="checkbox" name="github" checked>
+      <span class="task-list-indicator"></span>
+      GitHub
+    </label>
+  </li>
+
+      
+    
+    
+  </ul>
+</div>
+<div class="md-consent__controls">
+  
+    
+      <button class="md-button md-button--primary">Accept</button>
+    
+    
+    
+  
+    
+    
+    
+      <label class="md-button" for="__settings">Manage settings</label>
+    
+  
+</div>
+          </form>
+        </aside>
+      </div>
+      <script>var consent=__md_get("__consent");if(consent)for(var input of document.forms.consent.elements)input.name&&(input.checked=consent[input.name]||!1);else"file:"!==location.protocol&&setTimeout((function(){document.querySelector("[data-md-component=consent]").hidden=!1}),250);var form=document.forms.consent;for(var action of["submit","reset"])form.addEventListener(action,(function(e){if(e.preventDefault(),"reset"===e.type)for(var n of document.forms.consent.elements)n.name&&(n.checked=!1);__md_set("__consent",Object.fromEntries(Array.from(new FormData(form).keys()).map((function(e){return[e,!0]})))),location.hash="",location.reload()}))</script>
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["announce.dismiss", "toc.follow", "content.action.edit", "content.action.view", "content.tooltips", "search.highlight", "search.share", "search.suggest", "content.code.annotate", "content.code.select", "content.code.copy", "navigation.tabs", "navigation.sections", "navigation.footer", "navigation.indexes", "navigation.instant", "navigation.instant.progress", "navigation.instant.prefetch", "navigation.instant.preview", "navigation.tracking", "navigation.path", "navigation.top"], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": {"CSS": "css", "HTML5": "html", "JavaScript": "js"}, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"alias": true, "default": "latest", "provider": "mike"}}</script>
+    
+    
+    
+      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="../../js/timeago.min.js"></script>
+      
+        <script src="../../js/timeago_mkdocs_material.js"></script>
+      
+        <script src="https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js"></script>
+      
+        <script src="../../javascripts/tablesort.js"></script>
+      
+        <script src="../../javascripts/all.js?v7.000"></script>
+      
+        <script src="../../javascripts/sponsors.js"></script>
+      
+    
+    <script src="../../assets/javascripts/custom.129bd6ad.min.js"></script>
+
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": false, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

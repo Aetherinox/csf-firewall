@@ -860,6 +860,60 @@
         color: #000000;
         opacity: 0.5;
     }
+
+    /*
+        Filename Above Tab
+    */
+
+    .highlight span.filename
+    {
+        background-color: var(--md-code-bg-color);
+        border-bottom: .05rem solid var(--md-default-fg-color--lightest);
+        border-top-left-radius: .1rem;
+        border-top-right-radius: .1rem;
+        display: flow-root;
+        font-size: .85em;
+        font-weight: 700;
+        margin-top: 1em;
+        padding: 5px !important;
+        position: relative;
+        color: #717171;
+    }
+
+    /*
+        Inline Code Block
+    */
+
+    code:not(.md-code__content):not(pre code)
+    {
+        color: #1b6db1 !important;
+    }
+    
+    /*
+        Aetherx Links using Python md:link()
+    */
+
+    .aether-doc-link-icon svg
+    {
+        margin-right: 5px;
+        fill: #FFF !important;
+        color: #595959;
+        padding: 1px;
+    }
+
+    .aether-doc-link-icon svg:hover
+    {
+        color: #FFF;
+    }
+
+    /*
+        Codeblock Hover Actions
+    */
+
+    :hover > .md-code__nav
+    {
+        background-color: unset !important;
+    }
 }
 
 /*
@@ -1665,6 +1719,73 @@
     {
         color: #ffffff;
         opacity: 0.5;
+    }
+
+    /*
+        Filename Above Tab
+    */
+
+    .highlight span.filename
+    {
+        background-color: var(--md-code-bg-color);
+        border-bottom: .05rem solid var(--md-default-fg-color--lightest);
+        border-top-left-radius: .1rem;
+        border-top-right-radius: .1rem;
+        display: flow-root;
+        font-size: .85em;
+        font-weight: 700;
+        margin-top: 1em;
+        padding: 5px !important;
+        position: relative;
+        color: #666;
+    }
+
+    /*
+        Inline Code Block
+    */
+
+    code:not(.md-code__content):not(pre code)
+    {
+        color: #fbaa0f !important
+    }
+    
+    /*
+        Aetherx Links using Python md:link()
+    */
+
+    .aether-doc-link-icon svg
+    {
+        margin-right: 5px;
+        fill: #FFF !important;
+        color: #595959;
+        padding: 1px;
+        transition: color 0.1s ease-in-out;
+    }
+
+    .aether-doc-link-icon svg:hover
+    {
+        color: #FFF;
+        transition: color 0.1s ease-in-out;
+    }
+
+    /* When the whole link is hovered → icon turns white */
+    .aether-doc-link:hover .aether-doc-link-icon svg
+    {
+        color: white;
+    }
+
+    .aether-doc-link:hover .aether-doc-link-text
+    {
+        color: white;
+    }
+
+    /*
+        Codeblock Hover Actions
+    */
+
+    :hover > .md-code__nav
+    {
+        background-color: unset !important;
     }
 }
 
@@ -3515,11 +3636,6 @@ figure img
 .sponsor-loader .dot:nth-child(3)
 {
     animation-delay: 0.3s;
-}
-
-.md-code__nav
-{
-    background-color: unset;
 }
 
 @keyframes sponsor-pulse
