@@ -48,9 +48,9 @@
     --md-code-hl-variable-color:        var(--md-default-fg-color--light);
     --md-typeset-color:                 var(--md-default-fg-color);
     --md-typeset-a-color:               #f91d5b;
-    --md-badge-icon-color:              #d0d0d0;
+    --md-badge-icon-color:              #ff0357;
     --md-badge-icon-hover-color:        #568afa;
-    --md-badge-bg-color--transparent:   #ffffff1c;
+    --md-badge-bg-color--transparent:   #1b1b1b1c;
     --md-badge-bg-hover-color:          #FFFFFF2E;
     --md-typeset-kbd-color:             hsla(var(--md-hue),15%,90%,0.12);
     --md-typeset-kbd-accent-color:      hsla(var(--md-hue),15%,90%,0.2);
@@ -601,6 +601,7 @@
     h3 .mdx-badge svg
     {
         padding-left: 0px;
+        fill: #3471E8;
     }
 
     /*
@@ -651,9 +652,25 @@
         color: #FFF;
     }
 
+    /*
+        Badge > Override Icon Color
+    */
+
+    .mdx-badge a
+    {
+        color: var(--md-badge-icon-color);
+        word-break: break-word;
+    }
+
     .mdx-badge a:hover
     {
-        color: #FFF;
+        color: var(--md-badge-icon-hover-color);
+        word-break: break-word;
+    }
+
+    .mdx-badge .mdx-badge__icon
+    {
+        background-color: var(--md-badge-bg-color--transparent);
     }
 
     .mdx-badge--command .mdx-badge__text
@@ -762,8 +779,9 @@
     .md-typeset .md-code__content
     {
         display: grid;
-        background-color: #E1E1E1;
+        background-color: #E8E8E8;
         border-radius: 6px;
+        border: 1px solid #dfdfdf;
     }
 
     .highlight .hll
@@ -822,10 +840,7 @@
         margin: 0;
         padding: .8rem;
         transition: border .25s,box-shadow .25s;
-        background: linear-gradient(rgba(255, 255, 255, 0.9), rgb(221, 221, 221)), url(https://cdn.wallpapersafari.com/30/90/xsEG9r.jpg);
-            background-position-x: 0%, 0%;
-            background-position-y: 0%, 0%;
-            background-size: auto, auto;
+        background: #e3e3e3;
         background-size: cover;
         background-position: center;
     }
@@ -884,7 +899,7 @@
         Inline Code Block
     */
 
-    code:not(.md-code__content):not(pre code)
+    code:not(.md-code__content):not(pre code) :not(mdx-badge__text)
     {
         color: #1b6db1 !important;
     }
@@ -919,6 +934,20 @@
     {
         background-color: unset !important;
     }
+
+    .md-typeset kbd
+    {
+        background-color: hsl(210, 3%, 87.1%);
+        border-radius: .1rem;
+        box-shadow: 0 .1rem 0 .05rem hsl(0, 0%, 100%),0 .1rem 0 hsl(0, 0%, 100%),0 -.1rem .2rem hsla(0, 0%, 100%, 0.25) inset;
+        color: var(--md-default-fg-color);
+        display: inline-block;
+        font-size: .75em;
+        padding: 0 .6666666667em;
+        vertical-align: text-top;
+        word-break: break-word;
+    }
+
 }
 
 /*
@@ -1472,6 +1501,7 @@
     h3 .mdx-badge svg
     {
         padding-left: 0px;
+        fill: #ffffff;
     }
 
     /*
@@ -1521,9 +1551,25 @@
         color: #FFF;
     }
 
+    /*
+        Badge > Override Icon Color
+    */
+
+    .mdx-badge a
+    {
+        color: var(--md-badge-icon-color);
+        word-break: break-word;
+    }
+
     .mdx-badge a:hover
     {
-        color: #FFF;
+        color: var(--md-badge-icon-hover-color);
+        word-break: break-word;
+    }
+
+    .mdx-badge .mdx-badge__icon
+    {
+        background-color: var(--md-badge-bg-color--transparent);
     }
 
     .mdx-badge--command .mdx-badge__text
@@ -1749,7 +1795,7 @@
         Inline Code Block
     */
 
-    code:not(.md-code__content):not(pre code)
+    code:not(.md-code__content):not(pre code) :not(mdx-badge__text)
     {
         color: #fbaa0f !important
     }
@@ -2503,27 +2549,6 @@ nav.md-nav--secondary li
 }
 
 /*
-    Badge > Override Icon Color
-*/
-
-.mdx-badge a
-{
-    color: var(--md-badge-icon-color);
-    word-break: break-word;
-}
-
-.mdx-badge a:hover
-{
-    color: var(--md-badge-icon-hover-color);
-    word-break: break-word;
-}
-
-.mdx-badge .mdx-badge__icon
-{
-    background-color: var(--md-badge-bg-color--transparent);
-}
-
-/*
     Tag > Background Color
 */
 
@@ -3163,8 +3188,8 @@ figure img
 .color-box
 {
     float: left;
-    height: 25px;
-    width: 25px;
+    height: 22px;
+    width: 22px;
     border: 1px solid rgba( 255, 255, 255, 0.2 );
     clear: both;
 }
