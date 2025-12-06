@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_algeria_ipset
 #   @uuid           553a79f5-da17-3585-bcbb-964dba5f726e
-#   @updated        Fri Dec  5 12:11:44 UTC 2025
+#   @updated        Sat Dec  6 00:18:06 UTC 2025
 #   @entries        4779634 ips
-#                   448 subnets
-#                   448 lines
+#                   449 subnets
+#                   449 lines
 #   @country        Algeria (DZ)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -457,6 +457,7 @@
 2a0e:ec05:9800::/40
 2a0e:ec05:9900::/41
 2a0e:ec05:9980::/42
+2a0f:1cc5:1f6a::/48
 2a0f:85c1:81b:f020::/60
 2a10:9007:2:5::/64
 2a11:a682:a000::/36

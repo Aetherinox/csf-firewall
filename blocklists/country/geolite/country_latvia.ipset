@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_latvia_ipset
 #   @uuid           a3ab1f3e-0098-3e7c-a516-467dd308d0e0
-#   @updated        Fri Dec  5 12:12:05 UTC 2025
-#   @entries        2148723 ips
-#                   1560 subnets
-#                   1560 lines
+#   @updated        Sat Dec  6 00:18:29 UTC 2025
+#   @entries        2148979 ips
+#                   1562 subnets
+#                   1562 lines
 #   @country        Latvia (LV)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -197,6 +197,7 @@
 82.27.220.0/24
 82.29.211.0/24
 82.29.220.0/24
+82.38.13.0/24
 82.193.64.0/19
 83.99.128.0/17
 83.136.136.0/21
@@ -1510,6 +1511,7 @@
 2a0e:ec05:b000::/40
 2a0e:ec05:b100::/42
 2a0f:1586::/32
+2a0f:1cc5:1f21::/48
 2a0f:6287:a000::/36
 2a0f:85c1:81b:f620::/60
 2a0f:cdc0::/30

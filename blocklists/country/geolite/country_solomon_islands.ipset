@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_solomon_islands_ipset
 #   @uuid           7f68bfc0-2bc4-3002-8ca7-1e13bba85f80
-#   @updated        Fri Dec  5 12:12:20 UTC 2025
+#   @updated        Sat Dec  6 00:18:46 UTC 2025
 #   @entries        17822 ips
-#                   153 subnets
-#                   153 lines
+#                   154 subnets
+#                   154 lines
 #   @country        Solomon Islands (SB)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -169,6 +169,7 @@
 2a0a:6044:f258::/46
 2a0a:6044:f25c::/48
 2a0c:9a40:95bc:a000::/52
+2a0f:1cc5:1fed::/48
 2a0f:85c1:81b:fa10::/60
 2a11:3a81:4000::/35
 2a13:a5c7:25c2::/48
