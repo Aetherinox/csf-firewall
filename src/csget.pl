@@ -10,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            10.23.2025
+#   @updated            12.07.2025
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -103,26 +103,50 @@
 
 use strict;
 use warnings;
-use diagnostics;
 
 # #
-#   set debug mode
-#       1 = debug mode		    sets logging, disables daemonization/fork block
-#       0 = normal mode		    no logging, enables daemonization/fork block
+#   Define › Debug
+#   
+#   1 = debug mode		    sets logging, disables daemonization/fork block
+#   0 = normal mode		    no logging, enables daemonization/fork block
 # #
 
-our $DEBUG = 0;
-our $log_dir  = '/var/log/csf';
-our $log_debug = "$log_dir/csget_debug.log";
+our $DEBUG      = 0;
+
+# #
+#   Define › Log Paths
+# #
+
+our $log_dir    = '/var/log/csf';
+our $log_debug  = "$log_dir/csget_debug.log";
 our $log_daemon = "$log_dir/csget_daemon.log";
-our $proc_name = "ConfigServer Version Check";
+our $proc_name  = "ConfigServer Version Check";
 our $dbg;
 my %versions;
 my $cmd;
 my $GET;
 
 # #
-#   download servers / structure
+#   Declare › Diagnostics Module
+#   
+#   On development servers, install module with
+#       sudo dnf install perl-Diagnostics           # RHEL/AlmaLinux
+#           OR
+#       sudo apt install libdiagnostics-perl        # Debian/Ubuntu
+# #
+
+eval
+{
+    require diagnostics;
+    diagnostics->import();
+};
+if ($@)
+{
+    warn "diagnostics module not found; continuing without it\n" if $DEBUG;
+}
+
+# #
+#   Declare › Download Servers & Structure
 #   
 #   https://download.configserver.dev
 #       csf
@@ -144,19 +168,19 @@ my $GET;
 my @downloadservers = (
         "https://download.configserver.dev"
     #   "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/api/templates/versions"
-    # , "https://download.configserver.com"
 );
 
 # #
-#   set process name
-#       ps aux | grep perl
-#       root   120546  0.0  0.1 ... ConfigServer Version Check
+#   Define › Process Name
+#   
+#   ps aux | grep perl
+#   root   120546  0.0  0.1 ... ConfigServer Version Check
 # #
 
 $0 = $proc_name;            # change process name
 
 # #
-#   helper › get csget process pids
+#   Declare › Helper › Get csget process pids
 #   
 #   @usage                  fetch_csget_pids()
 #   @returns                List of PIDs for all csget processes, excluding the current script and parent sudo
@@ -182,7 +206,7 @@ sub fetch_csget_pids
 }
 
 # #
-#   helper › debug
+#   Declare › Helper › Debug
 #   
 #   @usage                  dbg("Some debug message\n");
 #   @returns                null
@@ -198,14 +222,18 @@ sub dbg
 }
 
 # #
-#   Load /etc/csf/csf.conf
-#   
-#   grabs a few csf config settings we'll need in order to confirm the release channel
-#   to use when downloading updates.
+#   Define › etc/csf/csf.conf
 # # 
 
 my %CONFIG;
 my $CONFIG_FILE = "/etc/csf/csf.conf";
+
+# #
+#   Load › Settings
+#   
+#   Grabs a few csf config settings we'll need in order to confirm the release channel
+#   to use when downloading updates.
+# # 
 
 if ( -e $CONFIG_FILE )
 {
@@ -224,16 +252,14 @@ if ( -e $CONFIG_FILE )
 }
 
 # #
-#   arguments
-#       --debug
-#           enables debug logging; disables forked child process daemonization
-#           sudo perl /etc/cron.daily/csget --debug
-#       --kill
-#           kills all processes associated with csget
-#           sudo perl /etc/cron.daily/csget --kill
-#       --list
-#           lists all processes associated with csget
-#           sudo perl /etc/cron.daily/csget --list
+#   Declare › Flags
+#   
+#       --debug                 enables debug logging; disables forked child process daemonization
+#                                   › sudo perl /etc/cron.daily/csget --debug
+#       --kill                  kills all processes associated with csget
+#                                   › sudo perl /etc/cron.daily/csget --kill
+#       --list                  lists all processes associated with csget
+#                                   › sudo perl /etc/cron.daily/csget --list
 # #
 
 foreach my $arg (@ARGV)
@@ -306,7 +332,7 @@ foreach my $arg (@ARGV)
 mkdir $log_dir unless -d $log_dir;
 
 # #
-#   debugging
+#   Define › Debug Mode
 # #
 
 if ( $DEBUG )
@@ -349,7 +375,7 @@ unless ( $DEBUG )
 }
 
 # #
-#   welcome print
+#   Define › Welcome Print
 # #
 
 my $script_path = `readlink -f /etc/cron.daily/csget`;
@@ -357,13 +383,15 @@ chomp( $script_path ); # remove trailing newline
 print "Script absolute path: $script_path\n";
 
 # #
-#   create required folders and files
+#   Action › Create required folders and files
 # #
 
 system( "mkdir -p /var/lib/configserver/" );
 system( "rm -f /var/lib/configserver/*.txt /var/lib/configserver/*error" );
 
 # #
+#   Condition › Update Fetch Command / Binary
+#   
 #   determine which binary to use for fetching server info
 #       /usr/bin/curl
 #       /usr/bin/wget
@@ -386,7 +414,9 @@ else
 }
 
 # #
-#   used as an alternative to curl / wget
+#   Condition › Binary (Backup)
+#   
+#   Used as an alternative to curl / wget
 # #
 
 if ( -e "/usr/bin/GET" )
@@ -395,13 +425,15 @@ if ( -e "/usr/bin/GET" )
 }
 
 # #
+#   Define › Source Version File
+#   
 #   Get Version Info
 #       csf             ConfigServer and Firewall                   Free
-#       cxs             ConfigServer Exploit Scanner                Commercial
 #       cmm             ConfigServer Mail Manage                    Free
 #       cse             ConfigServer Explorer                       Free
 #       cmq             ConfigServer Mail Queues                    Free
 #       cmc             ConfigServer Modsecurity Control            Free
+#       cxs             ConfigServer Exploit Scanner                Commercial
 #       osm             Outgoing Spam Monitor                       Commercial
 #       msfe            MailScanner Front-End                       Commercial
 # #
@@ -452,8 +484,9 @@ if ( -e "/usr/msfe/msfeversion.txt" )
 }
 
 # #
-#   no version files found
-#       originally, this function would unlink the cron
+#   Condition › No Source Version Found
+#   
+#   originally, this function would unlink the cron
 # #
 
 if ( scalar( keys %versions ) == 0 )
@@ -481,7 +514,7 @@ if ( scalar( keys %versions ) == 0 )
 }
 
 # #
-#   process delayed timer
+#   Execute › Process Delayed Timer
 #   
 #   creates a delay for when the cron will actually run. Anywhere between 0 and 6 hours from the 
 #       time of this condition being triggered.
@@ -500,6 +533,8 @@ unless ( defined $ARGV[0] && $ARGV[0] eq '--nosleep' )
 }
 
 # #
+#   Logic › Get Download Server
+#   
 #   loop download server array with Fisher-Yates shuffle
 #       Randomize order of @downloadservers.
 # #
@@ -512,7 +547,7 @@ for ( my $x = @downloadservers; --$x; )
 }
 
 # #
-#   Loop update url
+#   Logic › Loop Update URL
 # #
 
 foreach my $server ( @downloadservers )
