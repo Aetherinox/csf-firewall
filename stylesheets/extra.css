@@ -48,8 +48,8 @@
     --md-code-hl-variable-color:        var(--md-default-fg-color--light);
     --md-typeset-color:                 var(--md-default-fg-color);
     --md-typeset-a-color:               #f91d5b;
-    --md-badge-icon-color:              #ff0357;
-    --md-badge-icon-hover-color:        #568afa;
+    --md-badge-icon-color:              #568afa;
+    --md-badge-icon-hover-color:        #ff0357;
     --md-badge-bg-color--transparent:   #1b1b1b1c;
     --md-badge-bg-hover-color:          #FFFFFF2E;
     --md-typeset-kbd-color:             hsla(var(--md-hue),15%,90%,0.12);
@@ -388,16 +388,6 @@
     }
 
     /*
-        Tabs > Body > Code Blocks
-            only changes the background if the codeblock is within tabs
-    */
-
-    .md-typeset .tabbed-content code
-    {
-        background-color: #FFF;
-    }
-
-    /*
         Should ensure that only inline code blocks don't wrap code on multiple lines.
     */
 
@@ -601,7 +591,6 @@
     h3 .mdx-badge svg
     {
         padding-left: 0px;
-        fill: #3471E8;
     }
 
     /*
@@ -620,6 +609,16 @@
         padding: .2rem .3rem;
     }
 
+    .mdx-badge .mdx-badge__text a
+    {
+        color: #FFF !important;
+    }
+
+    .mdx-badge .mdx-badge__text a:hover
+    {
+        color: #FFF !important;
+    }
+
     /*
         Badge border
     */
@@ -632,7 +631,6 @@
 
     .md-typeset .mdx-badge__icon 
     {
-        background: #d9d9d9;
         padding-left: 6px;
         padding-right: 6px;
     }
@@ -656,15 +654,15 @@
         Badge > Override Icon Color
     */
 
-    .mdx-badge a
+    .mdx-badge a, h3 .mdx-badge svg
     {
-        color: var(--md-badge-icon-color);
+        color: var(--md-badge-icon-color) !important;
         word-break: break-word;
     }
 
-    .mdx-badge a:hover
+    .mdx-badge a:hover, h3 .mdx-badge svg:hover
     {
-        color: var(--md-badge-icon-hover-color);
+        color: var(--md-badge-icon-hover-color) !important;
         word-break: break-word;
     }
 
@@ -675,7 +673,7 @@
 
     .mdx-badge--command .mdx-badge__text
     {
-        background-color: #e3e3e3;
+ 
     }
 
     /*
@@ -684,7 +682,7 @@
 
     .md-typeset code
     {
-        background-color: #dfdfdf;
+        background-color: #ffffff;
         border: none;
     }
 
@@ -769,7 +767,13 @@
 
     .md-typeset .md-tag
     {
-        background-color: #d7d7d7;
+        background-color: #e0e0e0;
+    }
+
+    .md-typeset .md-tag-icon::before
+    {
+        color: #FFF !important;
+        background-color: hsla(0, 0%, 32.5%, 0.76);
     }
 
     /*
@@ -779,7 +783,7 @@
     .md-typeset .md-code__content
     {
         display: grid;
-        background-color: #E8E8E8;
+        background-color: #F4F4F4;
         border-radius: 6px;
         border: 1px solid #dfdfdf;
     }
@@ -899,7 +903,7 @@
         Inline Code Block
     */
 
-    code:not(.md-code__content):not(pre code) :not(mdx-badge__text)
+    code:not(.md-code__content):not(pre code):not(.mdx-badge code)
     {
         color: #1b6db1 !important;
     }
@@ -933,6 +937,15 @@
     .md-code__nav
     {
         background-color: unset !important;
+    }
+
+    .md-typeset .mdx-badge--dangerous
+    {
+        --md-badge-icon-color: #fff;
+        --md-badge-icon-hover-color: #FFF;
+        --md-badge-bg-color--transparent: RGB(246, 41, 98) !important;
+        color: #f9f9f9;
+        --md-typeset-bg-color: #111;
     }
 
     .md-typeset kbd
@@ -1288,16 +1301,6 @@
     }
 
     /*
-        Tabs > Body > Code Blocks
-            only changes the background if the codeblock is within tabs
-    */
-
-    .md-typeset .tabbed-content code
-    {
-        background-color: #171922;
-    }
-
-    /*
         Should ensure that only inline code blocks don't wrap code on multiple lines.
     */
 
@@ -1501,7 +1504,6 @@
     h3 .mdx-badge svg
     {
         padding-left: 0px;
-        fill: #ffffff;
     }
 
     /*
@@ -1511,12 +1513,23 @@
     .mdx-badge__text
     {
         background-color: #3f4faa;
+        color: #FFF;
     }
 
     .md-typeset .mdx-badge__text
     {
         box-shadow: none;;
         padding: .2rem .3rem;
+    }
+
+    .mdx-badge .mdx-badge__text a
+    {
+        color: #FFF !important;
+    }
+
+    .mdx-badge .mdx-badge__text a:hover
+    {
+        color: #FFF !important;
     }
 
     /*
@@ -1531,7 +1544,6 @@
 
     .md-typeset .mdx-badge__icon 
     {
-        background: var(--md-accent-fg-color--transparent);
         padding-left: 6px;
         padding-right: 6px;
     }
@@ -1555,15 +1567,15 @@
         Badge > Override Icon Color
     */
 
-    .mdx-badge a
+    .mdx-badge a, h3 .mdx-badge svg
     {
-        color: var(--md-badge-icon-color);
+        color: var(--md-badge-icon-color) !important;
         word-break: break-word;
     }
 
-    .mdx-badge a:hover
+    .mdx-badge a:hover, h3 .mdx-badge svg:hover
     {
-        color: var(--md-badge-icon-hover-color);
+        color: var(--md-badge-icon-hover-color) !important;
         word-break: break-word;
     }
 
@@ -1574,7 +1586,7 @@
 
     .mdx-badge--command .mdx-badge__text
     {
-        background-color: #464646;
+
     }
 
     /*
@@ -1671,6 +1683,12 @@
         background-color: #7b1234;
     }
 
+    .md-typeset .md-tag-icon::before
+    {
+        color: #FFF !important;
+        background-color: hsla(0, 0%, 100%, 0.76);
+    }
+
     /*
         Codeblock background
     */
@@ -1678,8 +1696,9 @@
     .md-typeset .md-code__content
     {
         display: grid;
-        background-color: var( --md-code-bg-color );
+        background-color: #1a1c26;
         border-radius: 6px;
+        border: 1px solid #dfdfdf21;
     }
 
     .highlight .hll
@@ -1795,7 +1814,7 @@
         Inline Code Block
     */
 
-    code:not(.md-code__content):not(pre code) :not(mdx-badge__text)
+    code:not(.md-code__content):not(pre code):not(.mdx-badge code)
     {
         color: #fbaa0f !important
     }
@@ -1842,6 +1861,15 @@
     .md-code__nav
     {
         background-color: unset !important;
+    }
+
+    .md-typeset .mdx-badge--dangerous
+    {
+        --md-badge-icon-color: #fff;
+        --md-badge-icon-hover-color: #FFF;
+        --md-badge-bg-color--transparent: #7B1532 !important;
+        color: #f9f9f9;
+        --md-typeset-bg-color: #111;
     }
 }
 
@@ -2320,15 +2348,6 @@ p > a.btn-aln-center-inline
     transition: none !important;
 }
 
-.md-typeset .mdx-badge--dangerous
-{
-    --md-badge-icon-color: #fff;
-    --md-badge-icon-hover-color: #ff1058;
-    --md-badge-bg-color--transparent: #7B1532 !important;
-    color: #f9f9f9;
-    --md-typeset-bg-color: #111;
-}
-
 @-webkit-keyframes pulsate
 {
     0% { transform: scale(0.8); opacity: 0.5; }
@@ -2414,11 +2433,8 @@ p > a.btn-aln-center-inline
 
 .md-typeset .mdx-badge
 {
-    font-size: 0.86em !important;
+    font-size: 0.83em !important;
 }
-
-
-
 
 /*
     Badge > Header Positioning
