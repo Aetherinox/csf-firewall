@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_india_ipset
 #   @uuid           3bcf4fe5-7a5c-3190-9c32-6a88562b7651
-#   @updated        Sat Dec  6 12:10:50 UTC 2025
+#   @updated        Sun Dec  7 00:20:07 UTC 2025
 #   @entries        48364172 ips
 #                   19500 subnets
 #                   19500 lines
