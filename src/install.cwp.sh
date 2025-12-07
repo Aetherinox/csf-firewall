@@ -10,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            12.04.2025
+#   @updated            12.07.2025
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -540,24 +540,73 @@ chown "${CSF_CHOWN_GENERAL}" "${CSF_CRON_CSGET_DEST}"
 info "    Starting cron ${bluel}${CSF_CRON_CSGET_DEST}${greym}"
 /etc/cron.daily/csget --nosleep
 
-chmod -v 700 auto.cwp.pl
-./auto.cwp.pl $OLDVERSION
+# #
+#	Step › Auto Migration
+# #
 
-if test `cat /proc/1/comm` = "systemd"
-then
+prinp "${APP_NAME_SHORT:-CSF} > Automatic Settings Migration" \
+       "We will now check your original config file and see if you are missing any settings that may be new and not added yet."
+
+if [ -f "./${CSF_AUTO_CWP}" ]; then
+    info "    Found ${bluel}${CSF_AUTO_CWP}${greym}; applying chmod 0700"
+    chmod -v 700 "./${CSF_AUTO_CWP}"
+
+    if [ -x "./${CSF_AUTO_CWP}" ]; then
+        info "    Running ${bluel}${CSF_AUTO_CWP}${greym} with version ${bluel}${OLDVERSION}${greym}"
+        "./${CSF_AUTO_CWP}" "${OLDVERSION}"
+    else
+        error "    File exists but is not executable: ${redl}${CSF_AUTO_CWP}${greym}"
+    fi
+else
+    error "    File not found: ${redl}${CSF_AUTO_CWP}${greym}"
+fi
+
+# #
+#	Systemd & SysV Init
+# #
+
+prinp "${APP_NAME_SHORT:-CSF} > Systemd & SysV Init Setup" \
+       "Detecting init system (systemd or SysV Init)"
+
+detectSys="Unknown"
+
+# #
+#	Check systemd assigned to PID 1
+# #
+
+if test `cat /proc/1/comm` = "systemd"; then
+	ok "    Found PID 1 assigned to ${greenl}systemd${greym}"
     if [ -e /etc/init.d/lfd ]; then
+		ok "    Found ${greenl}/etc/init.d/lfd${greym}"
+
+		# #
+		#	/etc/redhat-release			RHEL / Alma / Rocky / CentOS
+		#	/etc/debian_version			Debian
+		#	/etc/lsb-release			Ubuntu & derivatives
+		#	/etc/gentoo-release			Gentoo
+		#	/etc/slackware-version		Slackware
+		# #
+
         if [ -f /etc/redhat-release ]; then
+			detectSys="/etc/redhat-release"
             /sbin/chkconfig csf off
             /sbin/chkconfig lfd off
             /sbin/chkconfig csf --del
             /sbin/chkconfig lfd --del
         elif [ -f /etc/debian_version ] || [ -f /etc/lsb-release ]; then
+			if [ -f /etc/debian_version ]; then
+				detectSys="/etc/debian_version"
+			elif [ -f /etc/lsb-release ]; then
+				detectSys="/etc/lsb-release"
+			fi
             update-rc.d -f lfd remove
             update-rc.d -f csf remove
         elif [ -f /etc/gentoo-release ]; then
+			detectSys="/etc/gentoo-release"
             rc-update del lfd default
             rc-update del csf default
         elif [ -f /etc/slackware-version ]; then
+			detectSys="/etc/slackware-version"
             rm -vf /etc/rc.d/rc3.d/S80csf
             rm -vf /etc/rc.d/rc4.d/S80csf
             rm -vf /etc/rc.d/rc5.d/S80csf
@@ -565,49 +614,121 @@ then
             rm -vf /etc/rc.d/rc4.d/S85lfd
             rm -vf /etc/rc.d/rc5.d/S85lfd
         else
+			detectSys="Other"
             /sbin/chkconfig csf off
             /sbin/chkconfig lfd off
             /sbin/chkconfig csf --del
             /sbin/chkconfig lfd --del
         fi
+
+		ok "    Detected ${greenl}${detectSys}${greym}"
+
         rm -fv /etc/init.d/csf
         rm -fv /etc/init.d/lfd
+	else
+		info "    Did not detect ${bluel}/etc/init.d/lfd${greym}; skipping${greym}"
     fi
 
-    mkdir -p /etc/systemd/system/
-    mkdir -p /usr/lib/systemd/system/
-    cp -avf lfd.service /usr/lib/systemd/system/
-    cp -avf csf.service /usr/lib/systemd/system/
+	# #
+	#	/etc/systemd/system/
+	# #
+
+	pathEtcSystemdSystem="/etc/systemd/system/"
+	if [ ! -d "${pathEtcSystemdSystem}" ]; then
+		mkdir -p "${pathEtcSystemdSystem}"
+		info "    Creating folder ${bluel}${pathEtcSystemdSystem}${greym}"
+
+		if [ -d "${pathEtcSystemdSystem}" ]; then
+			ok "    Created folder ${greenl}${pathEtcSystemdSystem}${greym}"
+		else
+			error "    Failed to create folder ${redl}${pathEtcSystemdSystem}"
+		fi
+	else
+		info "    Folder already exists ${bluel}${pathEtcSystemdSystem}${greym}; skipping creation${greym}"
+	fi
+
+	# #
+	#	/usr/lib/systemd/system/
+	# #
+
+	pathUsrLibSystemdSystem="/usr/lib/systemd/system/"
+	if [ ! -d "${pathUsrLibSystemdSystem}" ]; then
+		mkdir -p "${pathUsrLibSystemdSystem}"
+		info "    Creating folder ${bluel}${pathUsrLibSystemdSystem}${greym}"
+
+		if [ -d "${pathUsrLibSystemdSystem}" ]; then
+			ok "    Created folder ${greenl}${pathUsrLibSystemdSystem}${greym}"
+		else
+			error "    Failed to create folder ${redl}${pathUsrLibSystemdSystem}"
+		fi
+	else
+		info "    Folder already exists ${bluel}${pathUsrLibSystemdSystem}${greym}; skipping creation${greym}"
+	fi
+
+	copi "lfd.service" "/usr/lib/systemd/system/"
+	copi "csf.service" "/usr/lib/systemd/system/"
+
+	# #
+	#   Fix SELinux context on systemd unit files
+	#   Required for RHEL-based systems so systemd can load them
+	# #
 
     chcon -h system_u:object_r:systemd_unit_file_t:s0 /usr/lib/systemd/system/lfd.service
     chcon -h system_u:object_r:systemd_unit_file_t:s0 /usr/lib/systemd/system/csf.service
 
+	# #
+	#	Reload daemon
+	# #
+
+	info "    Running systemctl ${bluel}daemon-reload${greym}"
     systemctl daemon-reload
 
+	# #
+	#	Enable csf / lfd services
+	#	Disable firewalld
+	# #
+
+	info "    Enabling systemctl services ${bluel}csf.service${greym} and ${bluel}lfd.service${greym}"
     systemctl enable csf.service
     systemctl enable lfd.service
 
+	info "    Disabling systemctl service ${bluel}firewalld${greym}"
     systemctl disable firewalld
     systemctl stop firewalld
     systemctl mask firewalld
 else
-    cp -avf lfd.sh /etc/init.d/lfd
-    cp -avf csf.sh /etc/init.d/csf
+	ok "    Systemd not found in PID 1; Using ${greenl}SysV Init${greym}"
+
+	info "    Copying system services ${bluel}/etc/init.d/${greym}"
+	copi "lfd.sh" "/etc/init.d/lfd"
+	copi "csf.sh" "/etc/init.d/csf"
+
+	info "    Chmod ${bluel}0755${greym} on file ${bluel}/etc/init.d/lfd${greym}"
     chmod -v 755 /etc/init.d/lfd
+
+	info "    Chmod ${bluel}0755${greym} on file ${bluel}/etc/init.d/csf${greym}"
     chmod -v 755 /etc/init.d/csf
 
     if [ -f /etc/redhat-release ]; then
+		detectSys="/etc/redhat-release"
         /sbin/chkconfig lfd on
         /sbin/chkconfig csf on
     elif [ -f /etc/debian_version ] || [ -f /etc/lsb-release ]; then
+		if [ -f /etc/debian_version ]; then
+			detectSys="/etc/debian_version"
+		elif [ -f /etc/lsb-release ]; then
+			detectSys="/etc/lsb-release"
+		fi
         update-rc.d -f lfd remove
         update-rc.d -f csf remove
         update-rc.d lfd defaults 80 20
         update-rc.d csf defaults 20 80
     elif [ -f /etc/gentoo-release ]; then
+		detectSys="/etc/gentoo-release"
         rc-update add lfd default
         rc-update add csf default
     elif [ -f /etc/slackware-version ]; then
+		detectSys="/etc/slackware-version"
         ln -svf /etc/init.d/csf /etc/rc.d/rc3.d/S80csf
         ln -svf /etc/init.d/csf /etc/rc.d/rc4.d/S80csf
         ln -svf /etc/init.d/csf /etc/rc.d/rc5.d/S80csf
@@ -615,13 +736,16 @@ else
         ln -svf /etc/init.d/lfd /etc/rc.d/rc4.d/S85lfd
         ln -svf /etc/init.d/lfd /etc/rc.d/rc5.d/S85lfd
     else
+		detectSys="Other"
         /sbin/chkconfig lfd on
         /sbin/chkconfig csf on
     fi
+
+	ok "    Detected ${greenl}${detectSys}${greym}"
 fi
 
 # #
-#	Step > Permissions
+#	Step › Permissions
 # #
 
 prinp "${APP_NAME_SHORT:-CSF} > File Permissions" \
@@ -642,8 +766,6 @@ files="/usr/sbin/csf /usr/sbin/lfd /etc/logrotate.d/lfd /etc/cron.d/csf-cron /et
 # #
 #   Set ownership for directories
 # #
-
-CSF_CHOWN_GENERAL="root:root"
 
 for dir in $dirs; do
     if [ -d "$dir" ]; then
@@ -794,7 +916,7 @@ else
 fi
 
 # #
-#	Webmin > Install CSF to webmin.acl
+#	Webmin › Install CSF to webmin.acl
 #	This is what makes CSF appear in Webmin menu
 # #
 
@@ -863,7 +985,7 @@ else
 fi
 
 # #
-#	Step > csf.conf Modified Settings
+#	Step › csf.conf Modified Settings
 #   
 #   SYSLOG_LOG          By default, RHEL systems use /var/log/messages
 #                       Debian systems use /var/log/syslog
@@ -880,7 +1002,6 @@ prinp "${APP_NAME_SHORT:-CSF} > Customize csf.config" \
 # #
 
 SYSLOG_PATH=""
-
 if [ -f /var/log/syslog ]; then
     SYSLOG_PATH="/var/log/syslog"
 elif [ -f /var/log/messages ]; then
@@ -917,35 +1038,57 @@ done
 TESTING_VALUE=$(grep '^[[:space:]]*TESTING[[:space:]]*=' "$CSF_CONF" | awk -F= '{gsub(/ /,"",$2); print $2}' | tr -d '"')
 
 prinp "${APP_NAME_SHORT:-CSF} > Installation Complete" \
-       "Your installation is complete. Read important notes below."
+       "Your installation is now complete. Review the notes below on getting started with the firewall."
 
-print "    For more information on how to use ${APP_NAME_SHORT:-CSF}; visit"
+print "    For complete documentation on ${APP_NAME_SHORT:-CSF}; including setup and troubleshooting; visit"
 print "        ${yellowd}${APP_LINK_DOCS:-https://docs.configserver.dev}"
+print "    "
+print "    All settings associated with ${APP_NAME_SHORT:-CSF} can be found in the file:"
+print "        ${bluel}${CSF_CONF}"
+print "    "
+print "    If you are a Sponsor and wish to apply your license key, open ${bluel}${CSF_CONF}${greym} and"
+print "    add the following line to your config:"
+print "        ${fuchsial}SPONSOR_LICENSE = ${white}\"${bluel}XXXXXX-XXXX-XXXX-XXXXXX${white}\"${greym}"
 if [ -f "$CSF_CONF" ]; then
+	webui_creds=$(get_csf_ui_info)
+
 	print "    "
-	print "    The next step in the process should be to open the config file located at"
-	print "        ${yellowd}${CSF_CONF}"
-	if [ "$TESTING_VALUE" = "1" ]; then
-	print "    "
-	print "    The setting ${yellowd}TESTING${greym} is currently ${greenl}enabled${greym}; you should open your config and"
-	print "    disable this setting before to you begin using your new firewall."
-	print "    To disable this setting, open ${yellowd}${CSF_CONF}${greym} and set the following:"
-	print "        ${fuchsial}TESTING = ${white}\"${bluel}0${white}\"${greym}"
+	print "    Before starting ${APP_NAME_SHORT:-CSF}; the setting ${yellowd}TESTING${greym} must be ${redl}disabled${greym}."
+	if [ "$TESTING_VALUE" = "0" ]; then
+	print "        ${redl}${icoXmark}${greym} ${redl}You currently have this setting ${greenl}enabled${greym}."
+	print "        ${redl}Disable${greym} this in the file ${bluel}${CSF_CONF}${greym}:"
+	print "            ${fuchsial}TESTING = ${white}\"${bluel}0${white}\"${greym}"
 	else
+	print "        ${greenl}${icoSheckmark}${greym} ${greenl}You currently have the setting disabled which is correct.${end}"
+	print "        If you need to test ${APP_NAME_SHORT:-CSF}, edit the file ${bluel}${CSF_CONF}${greym}:"
+	print "            ${fuchsial}TESTING = ${white}\"${bluel}1${white}\"${greym}"
+	fi
 	print "    "
-	print "    The setting ${yellowd}TESTING${greym} is currently ${redl}disabled${greym}; which is the"
-	print "    correct setting if you plan to start using your firewall."
+	print "    After you have configured ${bluel}${CSF_CONF}${greym} with the desired settings, restart all"
+	print "    ${APP_NAME_SHORT:-CSF} services for changes to apply:"
+	print "        ${yellowd}sudo csf -ra"
+	print "    "
+
+	if [ -n "$webui_creds" ]; then
+		UI_ADDR=$(printf '%s' "$webui_creds" | awk '{print $1}')
+		UI_USER=$(printf '%s' "$webui_creds" | awk '{print $2}')
+		UI_PASS=$(printf '%s' "$webui_creds" | awk '{print $3}')
+
+		print "    ${APP_NAME_SHORT:-CSF} Web Interface:"
+		print "        ${greyd}Status .....  ${greenl}${icoSheckmark}${greym} ${greenl}enabled${greym}"
+		print "        ${greyd}Url ........  ${yellowd}http://${UI_ADDR}${greym}"
+		print "        ${greyd}Username .... ${yellowd}${UI_USER}${greym}"
+		print "        ${greyd}Password .... ${yellowd}${UI_PASS}${greym}"
+	else
+		print "    ${APP_NAME_SHORT:-CSF} Web Interface:"
+		print "        ${greyd}${redl}${icoXmark}${greym} ${redl}disabled${greym}"
 	fi
 else
+	print "    ${redl}${icoXmark} An error occured; we cannot locate your ${APP_NAME_SHORT:-CSF} config file."
 	print "    "
-	print "    An error has occured; we cannot locate your ${APP_NAME_SHORT:-CSF} config file:"
-	print "        ${yellowd}${CSF_CONF}"
-	print "    "
-	print "    You must have a valid config in the correct location before ${APP_NAME_SHORT:-CSF} will"
-	print "    function properly."
+	print "    After adding a ${bluel}${CSF_CONF}${greym} config file, restart all ${APP_NAME_SHORT:-CSF}"
+	print "    services for changes to apply"
+	print "        ${yellowd}sudo csf -ra"
 fi
-print
-print "    After editing or adding a new ${yellowd}${CSF_CONF}${greym}, restart ${APP_NAME_SHORT:-CSF} with:"
-print "        ${yellowd}sudo csf -ra"
 print
 print
