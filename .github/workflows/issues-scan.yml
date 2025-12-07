@@ -215,9 +215,8 @@ jobs:
                   ❌ Prerequisites › Abort
               if: steps.pr_scan_prerequisites.outputs.PRECHECK_RESULT == 'abort'
               run: |
-                  echo "Aborting job; prerequisites not met"
-                  gh run cancel ${{ github.run_id }}
-                  gh run watch ${{ github.run_id }}
+                  echo "Aborting gracefully; prerequisites not met."
+                  exit 0
               env:
                   GH_TOKEN: ${{ secrets.SELF_TOKEN_CL }}
 
