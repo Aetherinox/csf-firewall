@@ -10,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            12.04.2025
+#   @updated            12.07.2025
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -62,6 +62,7 @@ CSF_ETC="/etc/csf"
 CSF_BIN="/usr/local/csf/bin"
 CSF_TPL="/usr/local/csf/tpl"
 CSF_CONF="/etc/csf/csf.conf"
+CSF_CHOWN_GENERAL="root:root"
 CSF_WEBMIN_HOME="/usr/share/webmin"
 CSF_WEBMIN_TARBALL="/usr/local/csf/csfwebmin.tgz"
 CSF_WEBMIN_SYMBOLIC="${CSF_ETC}/csfwebmin.tgz"
@@ -73,6 +74,15 @@ CSF_WEBMIN_ACL_USER="root"
 CSF_WEBMIN_ACL_MODULE="csf"
 CSF_CWP_FOLD_SRC="csf"
 CSF_CWP_PATH_DESIGN="/usr/local/cwpsrv/htdocs/admin/design/csf"
+CSF_CRON_CSGET_SRC="csget.pl"
+CSF_CRON_CSGET_DEST="/etc/cron.daily/csget"
+CSF_AUTO_GENERIC="auto.generic.pl"
+CSF_AUTO_CWP="auto.cwp.pl"
+CSF_AUTO_VESTA="auto.vesta.pl"
+CSF_AUTO_CYBERPANEL="auto.cyberpanel.pl"
+CSF_AUTO_DIRECTADMIN="auto.directadmin.pl"
+CSF_AUTO_INTERWORX="auto.interworx.pl"
+CSF_AUTO_CPANEL="auto.pl"
 
 # #
 #   Define › Server
@@ -108,6 +118,13 @@ APP_VERSION=$( [ -f "$VERSION_FILE" ] && grep -v '^[[:space:]]*$' "$VERSION_FILE
 : "${APP_VERSION:=unknown}"
 
 # #
+#   Define › Icons
+# #
+
+icoSheckmark=$'\u2714'   # ✔
+icoXmark=$'\u274C'       # ❌
+
+# #
 #   Define › Colors
 #   
 #   Use the color table at:
@@ -140,7 +157,7 @@ yellowl="${esc}[38;5;226m"
 yellowd="${esc}[38;5;214m"
 greyl="${esc}[38;5;250m"
 greym="${esc}[38;5;244m"
-greyd="${esc}[38;5;242m"
+greyd="${esc}[38;5;240m"
 navy="${esc}[38;5;62m"
 olive="${esc}[38;5;144m"
 peach="${esc}[38;5;204m"
@@ -623,41 +640,116 @@ copi()
     src="$1"
     dest="$2"
 
-    # Make destination
-    mkdir -p "$dest" || return 1
+    # Source must exist
+    if [ ! -e "$src" ]; then
+        warn "    No such file or directory ${yellowl}${src}${greym}"
+        return 3
+    fi
 
-    # Single file or symlink
+    # If src is a regular file or symlink; file copy mode
     if [ -f "$src" ] || [ -L "$src" ]; then
-        fname=$(basename "$src")
-        label "     Copying ${navy}${fname}${greym} › ${navy}$dest${greym}"
-        cp -p "$src" "$dest/$fname" || return 2
+
+        # If dest already exists and is a directory; copy into it
+        if [ -d "$dest" ]; then
+            fname=$(basename "$src")
+            label "     Copying ${navy}${fname}${greym} › ${navy}$dest${greym}"
+            cp -p "$src" "$dest/$fname" || return 2
+            return 0
+        fi
+
+        # If dest string ends with; user intends directory
+        case "$dest" in
+            */)
+                mkdir -p "$dest" || return 1
+                fname=$(basename "$src")
+                label "     Copying ${navy}${fname}${greym} › ${navy}$dest${greym}"
+                cp -p "$src" "$dest/$fname" || return 2
+                return 0
+                ;;
+        esac
+
+        # Otherwise treat dest as a FILE path (overwrite/create)
+        label "     Copying ${navy}${src}${greym} › ${navy}${dest}${greym}"
+        cp -p "$src" "$dest" || return 2
         return 0
     fi
 
-    # Directory case
+    # Dir copy mode
     if [ -d "$src" ]; then
-        # Copy recursively
+        mkdir -p "$dest" || return 1
+
         (
             cd "$src" || exit 1
 
-            # create directories first (including empty ones)
+            # Create dir tree (including empty dirs)
             find . -type d -print | while IFS= read -r d; do
                 mkdir -p "$dest/$d" || { error "    Failed mkdir ${redl}${dest}/${d}"; exit 1; }
             done
 
-            # copy files, preserve mode/timestamps
+            # Copy files; preserve mode/timestamps
             find . -type f -print | while IFS= read -r f; do
                 label "     Copying ${navy}${f}${greym} › ${navy}$dest${greym}"
-                mkdir -p "$dest/$(dirname "$f")"  # safety
+                mkdir -p "$dest/$(dirname "$f")"   # safety
                 cp -p "$f" "$dest/$f" || { error "    Failed copying ${redl}${f}"; exit 1; }
             done
         )
         return $?
     fi
 
-    # If we get here, src is missing
+    # Unknown type; should never really reach this point
     warn "    No such file or directory ${yellowl}${src}${greym}"
-
     return 3
 }
 
+# #
+#   Get UI bind address, and credentials from CSF config
+# #
+
+get_csf_ui_info()
+{
+    if [ ! -f "$CSF_CONF" ]; then
+        return 1
+    fi
+
+    UI=""
+    UI_PORT=""
+    UI_IP=""
+    UI_USER=""
+    UI_PASS=""
+
+    # Extract config data using awk
+    awk '
+        /^[[:space:]]*UI[[:space:]]*=/ { gsub(/"/,"",$3); print "UI="$3 }
+        /^[[:space:]]*UI_PORT[[:space:]]*=/ { gsub(/"/,"",$3); print "PORT="$3 }
+        /^[[:space:]]*UI_IP[[:space:]]*=/ { gsub(/"/,"",$3); print "IP="$3 }
+        /^[[:space:]]*UI_USER[[:space:]]*=/ { gsub(/"/,"",$3); print "USER="$3 }
+        /^[[:space:]]*UI_PASS[[:space:]]*=/ { gsub(/"/,"",$3); print "PASS="$3 }
+    ' "$CSF_CONF" > /tmp/csf_ui_values.$$ 
+
+    # Read values in current shell
+    while IFS='=' read -r key val
+    do
+        case "$key" in
+            UI)   UI="$val" ;;
+            PORT) UI_PORT="$val" ;;
+            IP)   UI_IP="$val" ;;
+            USER) UI_USER="$val" ;;
+            PASS) UI_PASS="$val" ;;
+        esac
+    done < /tmp/csf_ui_values.$$
+
+    rm -f /tmp/csf_ui_values.$$
+
+    # Disabled; return empty
+    if [ "$UI" != "1" ]; then
+        printf '%s\n' ""
+        return 0
+    fi
+
+    # Fallbacks
+    [ -z "$UI_IP" ] && UI_IP="127.0.0.1"
+    [ -z "$UI_PORT" ] && UI_PORT="6666"
+
+    # Output: "IP:PORT USER PASS"
+    printf '%s:%s %s %s\n' "$UI_IP" "$UI_PORT" "$UI_USER" "$UI_PASS"
+}

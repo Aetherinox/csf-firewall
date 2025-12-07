@@ -486,8 +486,40 @@ chmod -v 700 /etc/csf/webmin/csf/index.cgi
 chmod -v 644 /etc/cron.d/lfd-cron
 chmod -v 644 /etc/cron.d/csf-cron
 
-cp -avf csget.pl /etc/cron.daily/csget
-chmod 700 /etc/cron.daily/csget
+# #
+#	Step › Cron › Csget
+#	
+#	Copy local file csget.pl to /etc/cron.daily/csget
+#	Used for periodic automatic update checks
+# #
+
+prinp "${APP_NAME_SHORT:-CSF} > Installing Cron" \
+       "This cron is responsible for periodic update checks between your workstation and the CSF update servers."
+
+if [ -e "${CSF_CRON_CSGET_DEST}" ]; then
+	info "    Skip copy. File ${bluel}${CSF_CRON_CSGET_DEST}${greym} already exists${greym}"
+else
+	info "    Copying ${bluel}csget.pl${greym} to ${bluel}${CSF_CRON_CSGET_DEST}${greym}"
+	copi "${CSF_CRON_CSGET_SRC}" "${CSF_CRON_CSGET_DEST}"
+	cwp_copy_status=$?
+
+	if [ ${cwp_copy_status} -eq 0 ]; then
+		count=$(ls -A "${CSF_CWP_PATH_DESIGN}" | wc -l)
+		if [ "${count}" -gt 0 ]; then
+			ok "    Successfully copied ${greenl}${CSF_CRON_CSGET_SRC}${greym} to folder ${greenl}${CSF_CRON_CSGET_DEST}${greym}"
+		else
+			warn "    Copy reported success but no files found in ${yellowl}${CSF_CRON_CSGET_DEST}${greym}"
+		fi
+	else
+		error "    Failed to copy with status ${redl}${cwp_copy_status}${greym}"
+	fi
+fi
+
+info "    Chmod ${bluel}0700${greym} on folder ${bluel}${CSF_CRON_CSGET_DEST}${greym}"
+chmod 700 "${CSF_CRON_CSGET_DEST}"
+info "    Chown ${bluel}${CSF_CHOWN_GENERAL}${greym} on file ${bluel}${CSF_CRON_CSGET_DEST}${greym}"
+chown "${CSF_CHOWN_GENERAL}" "${CSF_CRON_CSGET_DEST}"
+info "    Starting cron ${bluel}${CSF_CRON_CSGET_DEST}${greym}"
 /etc/cron.daily/csget --nosleep
 
 chmod -v 700 auto.interworx.pl
