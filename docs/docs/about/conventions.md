@@ -52,7 +52,7 @@ The badges in this section are for general use.
     :   <!-- md:control slider --> slider  `<!-- @md:control slider -->`
     :   <!-- md:control volume --> docker volume  `<!-- @md:control volume -->`
     :   <!-- md:control env --> env variable  `<!-- @md:control env -->`
-    :   <!-- md:control color #E5E5E5 #121315 -->  `<!-- @md:control color #E5E5E5 #121315 -->`
+    :   <!-- md:control color #FFFFFF #121315 -->  `<!-- @md:control color #FFFFFF #121315 -->`
 
 <br />
 
@@ -267,26 +267,45 @@ The badges in this section are for general use.
 
 
 
-### <!-- md:file -->  File Preview { #file-preview data-toc-label="File Preview" }
+### <!-- md:fileViewDLExt -->  File Preview { #file-preview data-toc-label="File Preview" }
 
 === "Description"
 
-    Creates a badge which allows a user to download a file. Badges will contain three sections:
+    Multiple badges exist which show buttons so that the user can **View** a file, **Download** a file, and also display an extension box which shows
+    the file extension itself.
 
-    1. View Example
-    2. Download Example
-    3. .ext filename extension
+    <br />
 
-    `Examples`
+    #### fileViewDLExt
 
-    :   <!-- md:file --> Icon Only <!-- @md:file --> 
-    :   <!-- md:file something.rar left --> Left Aligned
-    :   Right Aligned <!-- md:file something.rar right -->
-    :   `<!-- @md:file something.rar -->` Right Aligned
-    :   `<!-- @md:file something.rar left` --> Left Aligned
-    :   `<!-- @md:file something.rar right` --> Right Aligned
+        1. View file button
+        2. Download file button
+        3. Box with extension of file
 
+    :   <!-- md:fileViewDLExt --> Icon Only `<!-- @md:fileViewDLExt -->`
+    :   <!-- md:fileViewDLExt test.zip https://example.com/test.zip left --> Left Aligned `<!-- @md:fileViewDLExt test.zip https://github.com/.com/test.zip left -->`
+    :   <!-- md:fileViewDLExt test.zip https://example.com/test.zip Right --> Right Aligned `<!-- @md:fileViewDLExt test.zip https://example.com/test.zip Right -->`
+    :   <!-- md:fileViewDLExt path/to/view path/to/download left --> View + Download Only (Left) `<!-- @md:fileViewDLExt path/to/view path/to/download -->`
 
+    <br />
+
+    #### fileDLExt
+
+        1. Download file button
+        2. Box with extension of file
+
+    :   <!-- md:fileDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf --> Download + Ext
+    :   <!-- md:fileDLExt https://example.com/files/sample.zip left --> Left Aligned `<!-- @md:fileDLExt https://example.com/files/sample.zip left -->`
+    :   <!-- md:fileDLExt https://example.com/files/sample.zip right --> Right Aligned `<!-- @md:fileDLExt https://example.com/files/sample.zip right -->`
+
+    <br />
+
+    #### fileView
+
+        1. View file button
+
+    :   <!-- md:fileView https://example.com/file.txt left --> Left Aligned `<!-- @md:fileView https://example.com/file.txt left -->`
+    :   <!-- md:fileView https://example.com/file.txt right --> Right Aligned `<!-- @md:fileView https://example.com/file.txt right -->`
 
 <br />
 <br />
@@ -356,7 +375,7 @@ These are just generic examples with no specific purpose. They demonstrate how b
 <br />
 
 #### <!-- md:flag setting --> DEBUG_ENABLED 
-<!-- md:version stable-2.0.0 --> <!-- md:default `false` --> <!-- md:flag required --> <!-- md:file test.zip -->
+<!-- md:version stable-2.0.0 --> <!-- md:default `false` --> <!-- md:flag required --> <!-- md:fileViewDLExt test.zip https://example.com/test.zip -->
 
 This is an example setting.
 
@@ -364,7 +383,7 @@ This is an example setting.
 
     ```markdown
     #### <!-- @md:flag setting --> DEBUG_ENABLED 
-    <!-- @md:version stable-2.0.0 --> <!-- @md:default `false` --> <!-- @md:flag required --> <!-- @md:file test.zip -->
+    <!-- @md:version stable-2.0.0 --> <!-- @md:default `false` --> <!-- @md:flag required --> <!-- @md:fileViewDLExt test.zip -->
 
     This is an example setting.
     ```
@@ -409,11 +428,11 @@ You can display an emoji / icon search bar which can be called from a codeblock 
     click on the shortcode to copy it to your clipboard:
 
     <div class="mdx-iconsearch" data-mdx-component="iconsearch">
-      <input class="md-input md-input--stretch mdx-iconsearch__input" placeholder="Search icon" data-mdx-component="iconsearch-query" value="aetherx csf" />
-      <div class="mdx-iconsearch-result" data-mdx-component="iconsearch-result" data-mdx-mode="file">
-        <div class="mdx-iconsearch-result__meta"></div>
-        <ol class="mdx-iconsearch-result__list"></ol>
-      </div>
+        <input class="md-input md-input--stretch mdx-iconsearch__input" placeholder="Search icon" data-mdx-component="iconsearch-query" value="aetherx csf" />
+        <div class="mdx-iconsearch-result" data-mdx-component="iconsearch-result" data-mdx-mode="file">
+            <div class="mdx-iconsearch-result__meta"></div>
+            <ol class="mdx-iconsearch-result__list"></ol>
+        </div>
     </div>
 
 <br />
@@ -428,28 +447,17 @@ You can display an emoji / icon search bar which can be called from a codeblock 
 Use the following to search our database for a specific icon which is available through our documentation.
 
 <div class="mdx-iconsearch" data-mdx-component="iconsearch">
-  <input
-    class="md-input md-input--stretch mdx-iconsearch__input"
-    placeholder="Search the icon and emoji database"
-    data-mdx-component="iconsearch-query"
-  />
-  <div class="mdx-iconsearch-result" data-mdx-component="iconsearch-result">
-    <select
-      class="mdx-iconsearch-result__select"
-      data-mdx-component="iconsearch-select"
-    >
-      <option value="all" selected>All</option>
-      <option value="icons">Icons</option>
-      <option value="emojis">Emojis</option>
-    </select>
-    <div class="mdx-iconsearch-result__meta"></div>
-    <ol class="mdx-iconsearch-result__list"></ol>
-  </div>
+    <input class="md-input md-input--stretch mdx-iconsearch__input" placeholder="Search the icon and emoji database" data-mdx-component="iconsearch-query"/>
+    <div class="mdx-iconsearch-result" data-mdx-component="iconsearch-result">
+        <div class="mdx-iconsearch-result__meta"></div>
+        <ol class="mdx-iconsearch-result__list"></ol>
+    </div>
 </div>
+
 <small>
-  :octicons-light-bulb-16:
-  **Tip:** Enter some keywords to find icons and emojis and click on the
-  shortcode to copy it to your clipboard.
+    :octicons-light-bulb-16:
+    **Tip:** Enter some keywords to find icons and emojis and click on the
+    shortcode to copy it to your clipboard.
 </small>
 
 
