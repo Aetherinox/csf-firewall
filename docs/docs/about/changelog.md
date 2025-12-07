@@ -17,6 +17,45 @@ tags:
 
 </p>
 
+### <!-- md:version stable- --> 15.08 <small>Dec 08 2025</small> { id="15.08" }
+
+- `feat(install)`: install scripts now give much more detailed output
+- `feat(cwp)`: add logic to handle files within cwp with immutable +i flag
+- `feat(webmin)`: automatically install `webmin` module if webmin control panel detected during installation
+    - No longer requires webmin module to be manually loaded
+- `pref(blocklist)`: optimize generation scripts for blocklist service
+- `refactor(cwp)`: re-name left nav menu link to CSF within CentOS Web Panel
+- `refactor(license)`: update insiders release json response structure
+- `refactor(scripts)`: `protect.sh` for POSIX compliance and logging
+- `refactor(webmin)`: make `webmin` installation functionality in `install.*.sh` files POSIX compliant
+- `feat(core)`: add warning message if `LF_MODSEC_PERM` threshold below 3600 seconds (1 hour)
+- `chore(core)`: add input value type to `LF_MODSEC_PERM` comments
+- `chore(core)`: update config description for `LF_MODSEC`
+- `chore(webmin)`: add property `longdesc` to `module.info` in CSF webmin module
+- `fix(cwp)`: cwp control panel returned blank page when selecting `csfofficial` link
+- `fix(core)`: prevent output if latest version and no terminal present (#no critic)
+- `fix(blocklist)`: remove duplicate entries from static list highrisk in blocklist service
+- `fix(scripts)`: add shellcheck directive to `protect.sh`
+- `fix(cron)`: cron `csget` assigned incorrect user:group; now uses `root:root` in compliance with SELinux
+
+<br />
+
+### <!-- md:version stable- --> 15.07 <small>Oct 24 2025</small> { id="15.07" }
+
+- `feat`: Add new "Resources" tab interface.
+- `feat`: Add "Insiders" releases.
+- `docs`: Add Privacy Policy to CSF.
+- `chore`: Add Discord server
+    - https://discord.configserver.dev
+- `chore`: Remove spamhaus edrop list, merged with drop.
+- `refactor`: Cyberpanel installation script to ensure POSIX compliant.
+- `refactor`: Update functionality to support both numerical and tagged releases.
+- `perf`: optimized logic to make restarts faster when using resource intense pre/post scripts
+- `fix`: Cyberpanel integration error: 
+    - `"address form post error Data supplied is not accepted"`
+- `fix`: Dark-reader causing login page to not render properly.
+- `fix`: Whitespace in ipset blocklist definitions causing entire blocklist to not load.
+
 <br />
 
 ### <!-- md:version stable- --> 15.06 <small>Oct 16 2025</small> { id="15.06" }
