@@ -40,7 +40,7 @@ This section outlines some of the most important settings that you may want to r
 
 ### TESTING
 
-<!-- md:flag required --> <!-- md:file https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf --> <!-- md:source /etc/csf/csf.conf --> <!-- md:default `1` -->
+<!-- md:flag required --> <!-- md:fileViewDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf --> <!-- md:source /etc/csf/csf.conf --> <!-- md:default `1` -->
 
 <br />
 
@@ -72,7 +72,7 @@ TESTING = "0"
 
 ### TCP_IN, TCP_OUT
 
-<!-- md:flag required --> <!-- md:file https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf --> <!-- md:source /etc/csf/csf.conf --> <!-- md:default `22,53,80,110,143,443,465,587,993,995` -->
+<!-- md:flag required --> <!-- md:fileViewDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf --> <!-- md:source /etc/csf/csf.conf --> <!-- md:default `22,53,80,110,143,443,465,587,993,995` -->
 
 <br />
 
@@ -137,7 +137,7 @@ Define the allowed incoming and outgoing TCP ports, respectively. Add or remove 
 
 ### UDP_IN, UDP_OUT
 
-<!-- md:flag required --> <!-- md:fileDownload https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf --> <!-- md:source /etc/csf/csf.conf --> <!-- md:default `20,21,53,853,80,443` -->
+<!-- md:flag required --> <!-- md:fileDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf --> <!-- md:source /etc/csf/csf.conf --> <!-- md:default `20,21,53,853,80,443` -->
 
 <br />
 
@@ -205,7 +205,7 @@ Define the allowed incoming and outgoing UDP ports, respectively. Add or remove 
 
 ### DENY_IP_LIMIT
 
-<!-- md:flag required --> <!-- md:fileDownload https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf --> <!-- md:source /etc/csf/csf.conf --> <!-- md:default `200` -->
+<!-- md:flag required --> <!-- md:fileDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf --> <!-- md:source /etc/csf/csf.conf --> <!-- md:default `200` -->
 
 <br />
 
@@ -243,7 +243,7 @@ DENY_IP_LIMIT = "200"
 
 ### CT_LIMIT
 
-<!-- md:flag required --> <!-- md:fileDownload https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf --> <!-- md:source /etc/csf/csf.conf --> <!-- md:default `0` -->
+<!-- md:flag required --> <!-- md:fileDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf --> <!-- md:source /etc/csf/csf.conf --> <!-- md:default `0` -->
 
 <br />
 
@@ -278,7 +278,7 @@ CT_LIMIT = "0"
 
 ### UI_BLOCK_PRIVATE_NET
 
-<!-- md:flag required --> <!-- md:fileDownload https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf --> <!-- md:source /etc/csf/csf.conf --> <!-- md:default `1` --> <!-- md:version stable-15.01 -->
+<!-- md:flag required --> <!-- md:fileDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf --> <!-- md:source /etc/csf/csf.conf --> <!-- md:default `1` --> <!-- md:version stable-15.01 -->
 
 <br />
 
@@ -320,7 +320,7 @@ CT_LIMIT = "0"
 
 ### UI
 
-<!-- md:flag required --> <!-- md:fileDownload https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf --> <!-- md:source /etc/csf/csf.conf --> <!-- md:default `0` --> <!-- md:version stable-8.00 -->
+<!-- md:flag required --> <!-- md:fileDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf --> <!-- md:source /etc/csf/csf.conf --> <!-- md:default `0` --> <!-- md:version stable-8.00 -->
 
 This setting enables the **CSF Web Interface**, a user-friendly, HTML-based graphical interface for managing **ConfigServer Firewall (CSF)** and **Login Failure Daemon (LFD)**. With the web interface, you can easily configure and monitor your firewall without needing a control panel or separate web server. The interface runs as a subprocess of the LFD daemon, providing direct interaction with CSF.
 

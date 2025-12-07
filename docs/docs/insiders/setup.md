@@ -26,7 +26,7 @@ To activate your Insiders license key, open your `/etc/csf/csf.conf` file and up
 <br />
 
 ### SPONSOR_LICENSE
-<!-- md:flag optional --> <!-- md:file https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf --> <!-- md:source /etc/csf/csf.conf --> <!-- md:default `empty` -->
+<!-- md:flag optional --> <!-- md:fileViewDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf --> <!-- md:source /etc/csf/csf.conf --> <!-- md:default `empty` -->
 
 Enter the **license key** you received when joining the [Insiders](../insiders/sponsors.md) program. This key uniquely identifies your account and enables access to the exclusive Insiders features and release channel.
 
@@ -54,7 +54,7 @@ SPONSOR_LICENSE = "XXXXXX-XXXX-XXXX-XXXXXXXXX"
 <br />
 
 ### SPONSOR_RELEASE_INSIDERS
-<!-- md:flag optional --> <!-- md:file https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf --> <!-- md:source /etc/csf/csf.conf --> <!-- md:default `0` -->
+<!-- md:flag optional --> <!-- md:fileViewDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf --> <!-- md:source /etc/csf/csf.conf --> <!-- md:default `0` -->
 
 Once you’ve entered your Insiders license key in the setting [SPONSOR_LICENSE](#sponsor_license), you can choose whether to enable the **Insiders release channel**.  
 

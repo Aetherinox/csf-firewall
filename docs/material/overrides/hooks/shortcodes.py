@@ -82,7 +82,7 @@ class clr( ):
 #   these must be configured to a valid page path; otherwise the script will error
 # #
 
-PAGE_CHANGELOG ="about/changelog.md"
+PAGE_CHANGELOG = "about/changelog.md"
 PAGE_BACKERS = "insiders/index.md"
 PAGE_CONVENTIONS = "about/conventions.md"
 
@@ -101,7 +101,7 @@ PAGE_CONVENTIONS = "about/conventions.md"
 #               files           file structure                                  <mkdocs.structure.files.Files object at 0x000002296F748C20>
 # #
 
-def on_page_markdown(markdown: str, *, page: Page, config: MkDocsConfig, files: Files):
+def on_page_markdown( markdown: str, *, page: Page, config: MkDocsConfig, files: Files ):
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Loading Page: ' + clr.YELLOW + str(page) + clr.WHITE )
 
     def replace(match: Match):
@@ -145,10 +145,11 @@ def on_page_markdown(markdown: str, *, page: Page, config: MkDocsConfig, files: 
         elif type == "markdown":        return badgeMarkdown( args, page, files )
         elif type == "3rdparty":        return badge3rdParty( args, page, files )
         elif type == "docs":            return badgeDocs( args, page, files )
-        elif type == "file":            return badgeFile( args, page, files )
-        elif type == "fileDownload":    return badgeFileSingleDownload( args, page, files )
-        elif type == "fileView":        return badgeFileSingleView( args, page, files )
+        elif type == "fileViewDLExt":   return badgeFileViewDLExt( args, page, files )
+        elif type == "fileDLExt":       return badgeFileDLExt( args, page, files )
         elif type == "fileView":        return badgeFileView( args, page, files )
+        elif type == "fileBaseView":    return badgeFileBaseView( args, page, files )
+        elif type == "fileBaseDL":      return badgeFileBaseDL( args, page, files )
         elif type == "source":          return badgeFileSource( args, page, files )
         elif type == "requires":        return badgeFileRequires( args, page, files )
         elif type == "default":
@@ -176,7 +177,7 @@ def on_page_markdown(markdown: str, *, page: Page, config: MkDocsConfig, files: 
 #   used by function _resolve_path
 # #
 
-def _resolve(file: File, page: Page):
+def _resolve( file: File, page: Page ):
     path = posixpath.relpath(file.src_uri, page.file.src_uri)
     return posixpath.sep.join(path.split(posixpath.sep)[1:])
 
@@ -187,7 +188,7 @@ def _resolve(file: File, page: Page):
 #   one additional level of `..` which we need to remove
 # #
 
-def _resolve_path(path: str, page: Page, files: Files):
+def _resolve_path( path: str, page: Page, files: Files ):
     path, anchor, *_ = f"{path}#".split("#")
     path = _resolve(files.get_file_from_path(path), page)
     return "#".join([path, anchor]) if anchor else path
@@ -202,7 +203,7 @@ def _resolve_path(path: str, page: Page, files: Files):
 #   <!-- md:link "Local Link" #firefox-this-address-is-restricted same -->
 # #
 
-def newLink(text: str, page: Page, files: Files):
+def newLink( text: str, page: Page, files: Files ):
 
     # #
     #   Extract: "label with spaces" href target
@@ -326,7 +327,7 @@ def newControlDefault( page: Page, files: Files ):
 #       <!-- md:control slider -->                      slider
 #       <!-- md:control env -->                         env variable
 #       <!-- md:control volume -->                      volume
-#       <!-- md:control color #E5E5E5 #121315 -->   color wheel
+#       <!-- md:control color #FFFFFF #121315 -->   color wheel
 # #
 
 def badgeControl( args: str, page: Page, files: Files ):
@@ -357,18 +358,19 @@ def badgeControl( args: str, page: Page, files: Files ):
 # #
 
 def badgeVersionDefault( text: str, page: Page, files: Files ):
-    spec = text
-    path = f"{PAGE_CHANGELOG}#{spec}"
+    spec        = text
+    path        = f"{PAGE_CHANGELOG}#{spec}"
 
     # Return badge
-    icon = "aetherx-axs-box"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#release-types", page, files )
+    icon        = "aetherx-axs-box"
+    href        = _resolve_path( f"{PAGE_CONVENTIONS}#release-types", page, files )
 
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     return badgeCreate(
-        icon = f"[:{icon}:]({href} 'Public Release')",
-        text = f"[{text}]({_resolve_path(path, page, files )})" if spec else ""
+        icon    = f"[:{icon}:]({href} 'Public Release')",
+        text    = f"[{text}]({_resolve_path(path, page, files )})" if spec else "",
+        type    = "version"
     )
 
 # #
@@ -381,8 +383,8 @@ def badgeVersionDefault( text: str, page: Page, files: Files ):
 # #
 
 def badgeVersionStable( text: str, page: Page, files: Files ):
-    spec = re.sub(r"^(stable-|public-)", "", text, flags=re.I)
-    path = f"{PAGE_CHANGELOG}#{spec}"
+    spec    = re.sub(r"^(stable-|public-)", "", text, flags=re.I)
+    path    = f"{PAGE_CHANGELOG}#{spec}"
 
     # Return badge
     icon    = "aetherx-axs-tag"
@@ -399,7 +401,8 @@ def badgeVersionStable( text: str, page: Page, files: Files ):
 
     return badgeCreate(
         icon = f"[:{icon}:]({href} '{output}' )",
-        text = f"[{spec}]({_resolve_path(path, page, files )})" if spec else ""
+        text = f"[{spec}]({_resolve_path(path, page, files )})" if spec else "",
+        type = "version"
     )
 
 # #
@@ -412,8 +415,8 @@ def badgeVersionStable( text: str, page: Page, files: Files ):
 # #
 
 def badgeVersionDev( text: str, page: Page, files: Files ):
-    spec = re.sub(r"^(dev(elopment)?-)", "", text, flags=re.I)
-    path = f"{PAGE_CHANGELOG}#{spec}"
+    spec    = re.sub(r"^(dev(elopment)?-)", "", text, flags=re.I)
+    path    = f"{PAGE_CHANGELOG}#{spec}"
 
     # Return badge
     icon    = "aetherx-axs-code"
@@ -430,7 +433,8 @@ def badgeVersionDev( text: str, page: Page, files: Files ):
 
     return badgeCreate(
         icon = f"[:{icon}:]({href} '{output}' )",
-        text = f"[{spec}]({_resolve_path(path, page, files )})" if spec else ""
+        text = f"[{spec}]({_resolve_path(path, page, files )})" if spec else "",
+        type = "version"
     )
 
 # #
@@ -451,7 +455,8 @@ def badgeDefaultCustom( text: str, page: Page, files: Files ):
 
     return badgeCreate(
         icon = f"[:{icon}:]({href} 'Default value')",
-        text = text
+        text = text,
+        type = "default"
     )
 
 # #
@@ -470,7 +475,8 @@ def badgeDefaultNone( page: Page, files: Files ):
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     return badgeCreate(
-        icon = f"[:{icon}:]({href} 'Default value is empty')"
+        icon = f"[:{icon}:]({href} 'Default value is empty')",
+        type = "default"
     )
 
 # #
@@ -489,7 +495,8 @@ def badgeDefaultComputed( page: Page, files: Files ):
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     return badgeCreate(
-        icon = f"[:{icon}:]({href} 'Default value is computed')"
+        icon = f"[:{icon}:]({href} 'Default value is computed')",
+        type = "default"
     )
 
 # #
@@ -502,6 +509,7 @@ def badgeDefaultComputed( page: Page, files: Files ):
 #       <!-- md:command `-s,  --start` -->      Specified setting has a default value  <!-- @md:command -s, --start -->
 # #
 
+# reeee
 def badgeCommand( text: str, page: Page, files: Files ):
     icon = "material-console-line"
     href = _resolve_path( f"{PAGE_CONVENTIONS}#command", page, files )
@@ -532,7 +540,8 @@ def badge3rdParty( text: str, page: Page, files: Files ):
 
     return badgeCreate(
         icon = f"[:{icon}:]({href} 'Third-party utility')",
-        text = text
+        text = text,
+        type = "3rdparty"
     )
 
 # #
@@ -545,7 +554,7 @@ def badge3rdParty( text: str, page: Page, files: Files ):
 #       <!-- md:docs ../advanced/services/blocklist.configserver/ self -->
 # #
 
-def badgeDocs(text: str, page: Page, files: Files):
+def badgeDocs( text: str, page: Page, files: Files ):
 
     # #
     #   Parse arguments: "href [target]"
@@ -572,7 +581,7 @@ def badgeDocs(text: str, page: Page, files: Files):
         "t": "_top"
     }
 
-    target_attr = target_map.get(target_arg, "_blank")
+    target_attr = target_map.get( target_arg, "_blank" )
 
     # #
     #   If no href -> just show a generic docs icon
@@ -606,8 +615,8 @@ def badgeDocs(text: str, page: Page, files: Files):
 # #
 
 def badgeOption( type: str ):
-    parts = re.split( r"[.:]", type )
-    name = parts[-1]  # last chunk only
+    parts   = re.split( r"[.:]", type )
+    name    = parts[-1]  # last chunk only
     return f"[`{type}`](#+{type}){{ #+{type} }}\n\n"
 
 # #
@@ -626,11 +635,11 @@ def badgeSetting( type: str ):
 #   Badge › Color Palette
 #   
 #   Normal Badges
-#       <!-- md:control color #E5E5E5 #121315 -->
+#       <!-- md:control color #FFFFFF #121315 -->
 # #
 
 def badgeColorPalette( icon: str, text: str = "", type: str = "" ):
-    args = type.split( " " )
+    args        = type.split( " " )
 
     bg1_clr     = "#000000"
     bg2_clr     = "#000000"
@@ -683,14 +692,15 @@ def badgeSponsors( page: Page, files: Files ):
 # #
 
 def badgeFeature( text: str, page: Page, files: Files ):
-    icon = "material-toggle-switch"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#feature", page, files )
+    icon    = "material-toggle-switch"
+    href    = _resolve_path( f"{PAGE_CONVENTIONS}#feature", page, files )
 
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     return badgeCreate(
         icon = f"[:{icon}:]({href} 'Optional feature')",
-        text = text
+        text = text,
+        type = "feature"
     )
 
 # #
@@ -703,14 +713,15 @@ def badgeFeature( text: str, page: Page, files: Files ):
 # #
 
 def badgePlugin( text: str, page: Page, files: Files ):
-    icon = "material-floppy"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#plugin", page, files )
+    icon    = "material-floppy"
+    href    = _resolve_path( f"{PAGE_CONVENTIONS}#plugin", page, files )
 
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     return badgeCreate(
         icon = f"[:{icon}:]({href} 'Plugin')",
-        text = text
+        text = text,
+        type = "plugin"
     )
 
 # #
@@ -721,51 +732,107 @@ def badgePlugin( text: str, page: Page, files: Files ):
 # #
 
 def badgeMarkdown( text: str, page: Page, files: Files ):
-    icon = "material-language-markdown"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#markdown-extension", page, files )
+    icon    = "material-language-markdown"
+    href    = _resolve_path( f"{PAGE_CONVENTIONS}#markdown-extension", page, files )
 
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     return badgeCreate(
         icon = f"[:{icon}:]({href} 'Markdown extension')",
-        text = text
+        text = text,
+        type = "markdown"
+    )
+    
+# #
+#   Badge › Button:(View File)
+#   
+#   Shows a single view file button.
+#   
+#   @arg    href                URL / path for user to view file
+#   
+#   Badges:
+#       <!-- md:fileBaseView https://example.com/file.txt -->
+# #
+
+def badgeFileBaseView( text: str, page: Page, files: Files ):
+    href            = text
+    basename, ext   = os.path.splitext(text)
+    icon            = "material-folder-eye"
+
+    # #
+    #   Prevent empty `` ticks by only showing extension badge when ext is non-empty
+    # #
+
+    ext_badge = ""
+
+    return badgeCreate(
+        icon=f"[:{icon}:]({href} 'View'){{: target=\"_blank\" }}",
+        text=ext_badge,
+        type="files-view"
     )
 
 # #
-#   Badge › File › Preview & Download
+#   Badge › Button:(Download File)
 #   
-#   Creates a badge which allows a user to download or view a file.
+#   Shows a single download file button.
 #   
-#   The badge will have three sections:
-#       - View Example
-#       - Download Example
-#       - .ext text
+#   @arg    href                URL / path for user to view file
 #   
-#   If you supply the code below with a title of `my-example-file`, the links generated will be:
-#       - [View Example]                            https://github.com/Aetherinox/csf-firewall/my-example-file/
-#       - [Download Example]                        https://github.com/Aetherinox/csf-firewall/my-example-file.zip
-#       - [Zip]                                     https://github.com/Aetherinox/csf-firewall/my-example-file.zip
-#   
-#   Normal Badges:
-#       <!-- md:file -->                            Icon Only
-#       <!-- md:file something.rar https://fileDownload -->              Right Aligned
-#       <!-- md:file something.rar https://fileDownload left -->         Left Aligned
-#       <!-- md:file something.rar https://fileDownload right -->        Right Aligned
-#       <!-- md:file something.rar https://fileDownload l -->            Left Aligned
-#       <!-- md:file something.rar https://fileDownload r -->            Right Aligned
+#   Badges:
+#       <!-- md:fileBaseDL https://example.com/file.txt -->
 # #
 
-def badgeFile(text: str, page: Page, files: Files):
+def badgeFileBaseDL( text: str, page: Page, files: Files ):
+    href            = text
+    basename, ext   = os.path.splitext(text)
+    icon            = "material-folder-download"
+
+    # #
+    #   Prevent empty `` ticks by only showing extension badge when ext is non-empty
+    # #
+
+    ext_badge = ""
+    if ext:
+        ext_badge = f"[{ext}]({href}){{: target=\"_blank\" }}"
+
+    return badgeCreate(
+        icon=f"[:{icon}:]({href} 'Download'){{: target=\"_blank\" }}",
+        text=ext_badge,
+        type="files-download"
+    )
+
+# #
+#   Badge › Button:(View File) + Button:(Download File) + Box:(File Extension)
+#   
+#   Accessible via front-end markdown
+#   
+#   Can show 3 buttons
+#       1. View file button
+#       2. Download file button
+#       3. Box with extension of file (.zip)
+#   
+#   Uses functions:
+#       badgeFileBaseView
+#       badgeFileBaseDL
+#   
+#   @arg    filenameView        URL / path for user to view file
+#   @arg    filenameDownload    URL / path for user to download file
+#   @arg    alignment           Which direction to align buttons in (left, right)
+#   
+#   Badges:
+#       <!-- md:fileViewDLExt https://example.com/file.txt https://example.com/fileabc.txt left -->
+# #
+    
+def badgeFileViewDLExt( text: str, page: Page, files: Files ):
 
     # #
     #   Parse arguments: "filenameView filenameDownload [alignment]"
     # #
 
-    parts = text.strip().split()
-
-    filenameView = parts[0] if len(parts) > 0 else ""
-    filenameDownload = parts[1] if len(parts) > 1 else ""
-    align_arg = parts[2].lower() if len(parts) > 2 else "right"
+    parts               = text.strip().split()
+    filenameView        = parts[0] if len(parts) > 0 else ""
+    filenameDownload    = parts[1] if len(parts) > 1 else ""
+    align_arg           = parts[2].lower() if len(parts) > 2 else "right"
 
     # #
     #   Normalize alignment argument
@@ -777,7 +844,7 @@ def badgeFile(text: str, page: Page, files: Files):
         align_class = "mdx-badge--files-group-right"
 
     # #
-    #   If no filenameView -> just show a generic file icon
+    #   No filenameView → show generic file icon badge
     # #
 
     if not filenameView:
@@ -788,63 +855,38 @@ def badgeFile(text: str, page: Page, files: Files):
         )
 
     # #
-    #   Otherwise, return both badges inside chosen-alignment container
+    #   Normal (view + download) badges
     # #
 
     return (
         f'<span class="mdx-badge {align_class}">'
-        f'{badgeFileView(filenameView, page, files)}'
-        f'{badgeFileDownload(filenameDownload, page, files)}'
+        f'{badgeFileBaseView( filenameView, page, files )}'
+        f'{badgeFileBaseDL( filenameDownload, page, files )}'
         f'</span>'
     )
 
-def badgeFileView(text: str, page: Page, files: Files):
-    icon = "material-folder-eye"
-    href = f"{text}"
-
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW +
-          inspect.stack()[0][3] + clr.WHITE + ' for page ' +
-          clr.GREY + str(href) + clr.WHITE)
-
-    return badgeCreate(
-        icon=f"[:{icon}:]({href} 'View'){{: target=\"_blank\" }}",
-        type="files-view"
-    )
-
-
-def badgeFileDownload(text: str, page: Page, files: Files):
-    icon = "material-folder-download"
-
-    basename, ext = os.path.splitext(text)
-    href = f"{text}"
-
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW +
-          inspect.stack()[0][3] + clr.WHITE + ' for page ' +
-          clr.GREY + str(href) + clr.WHITE)
-
-    return badgeCreate(
-        icon=f"[:{icon}:]({href} 'Download'){{: target=\"_blank\" }}",
-        text=f"[`{ext}`]({href}){{: target=\"_blank\" }}",
-        type="files-download"
-    )
-
 # #
-#   Badge › File › Download › Single
+#   Badge › File › Download (Single)
+#   
+#   Can show 2 buttons
+#       1. Download button
+#       2. Box with file extension inside (.zip)
 #   
 #   Normal Badges:
-#       <!-- md:fileDownload https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf -->
+#       <!-- md:fileDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf -->
+#       <!-- md:fileDLExt https://example.com/files/sample.zip left -->
+#       <!-- md:fileDLExt https://example.com/files/sample.zip right -->
 # #
 
-def badgeFileSingleDownload(text: str, page: Page, files: Files):
+def badgeFileDLExt( text: str, page: Page, files: Files ):
 
     # #
     #   Parse arguments: "filenameDownload [alignment]"
     # #
 
-    parts = text.strip().split()
-
-    filenameDownload = parts[0] if len(parts) > 0 else ""
-    align_arg = parts[1].lower() if len(parts) > 1 else "right"
+    parts               = text.strip().split()
+    filenameDownload    = parts[0] if len(parts) > 0 else ""
+    align_arg           = parts[1].lower() if len(parts) > 1 else "right"
 
     # #
     #   Normalize alignment argument
@@ -861,27 +903,29 @@ def badgeFileSingleDownload(text: str, page: Page, files: Files):
 
     return (
         f'<span class="mdx-badge {align_class}">'
-        f'{badgeFileDownload(filenameDownload, page, files)}'
+        f'{badgeFileBaseDL(filenameDownload, page, files)}'
         f'</span>'
     )
 
 # #
 #   Badge › File › View › Single
 #   
-#   Normal Badges:
-#       <!-- md:fileView https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf -->
+#   Shows a single button with folder icon, can click to view file in URL.
+#   Calls badgeFileBaseView
+#   
+#   Badges
+#       <!-- md:fileView https://example.com/file.txt left --> 1
 # #
 
-def badgeFileSingleView(text: str, page: Page, files: Files):
+def badgeFileView( text: str, page: Page, files: Files ):
 
     # #
     #   Parse arguments: "filenameView [alignment]"
     # #
 
-    parts = text.strip().split()
-
-    filenameView = parts[0] if len(parts) > 0 else ""
-    align_arg = parts[1].lower() if len(parts) > 1 else "right"
+    parts           = text.strip().split()
+    filenameView    = parts[0] if len(parts) > 0 else ""
+    align_arg       = parts[1].lower() if len(parts) > 1 else "right"
 
     # #
     #   Normalize alignment argument
@@ -898,7 +942,7 @@ def badgeFileSingleView(text: str, page: Page, files: Files):
 
     return (
         f'<span class="mdx-badge {align_class}">'
-        f'{badgeFileView(filenameView, page, files)}'
+        f'{badgeFileBaseView(filenameView, page, files)}'
         f'</span>'
     )
 
@@ -918,9 +962,9 @@ def badgeFileSingleView(text: str, page: Page, files: Files):
 # #
 
 def badgeFileRequires( text: str, page: Page, files: Files ):
-    icon = "aetherx-axs-file"
-    tooltip = "This feature requires the file <pre>" + text + "</pre>"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#requires", page, files )
+    icon        = "aetherx-axs-file"
+    tooltip     = "This feature requires the file <pre>" + text + "</pre>"
+    href        = _resolve_path( f"{PAGE_CONVENTIONS}#requires", page, files )
 
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW +
           inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' +
@@ -928,7 +972,8 @@ def badgeFileRequires( text: str, page: Page, files: Files ):
 
     return badgeCreate(
         icon = f"[:{icon}:]({href} '{tooltip}')",
-        text=text
+        text=text,
+        type = "file-required"
     )
 
 # #
@@ -947,9 +992,9 @@ def badgeFileRequires( text: str, page: Page, files: Files ):
 # #
 
 def badgeFileSource( text: str, page: Page, files: Files ):
-    icon = "aetherx-axd-file"
-    tooltip = "This setting can be found in the file <pre>" + text + "</pre>"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#source", page, files )
+    icon        = "aetherx-axd-file"
+    tooltip     = "This setting can be found in the file <pre>" + text + "</pre>"
+    href        = _resolve_path( f"{PAGE_CONVENTIONS}#source", page, files )
 
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW +
           inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' +
@@ -957,7 +1002,8 @@ def badgeFileSource( text: str, page: Page, files: Files ):
 
     return badgeCreate(
         icon = f"[:{icon}:]({href} '{tooltip}')",
-        text = text
+        text = text,
+        type = "file-source"
     )
 
 # #
@@ -972,13 +1018,14 @@ def badgeFileSource( text: str, page: Page, files: Files ):
 # #
 
 def badgeFlagDefault( page: Page, files: Files ):
-    icon = "material-flag"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#setting", page, files )
+    icon        = "material-flag"
+    href        = _resolve_path( f"{PAGE_CONVENTIONS}#setting", page, files )
 
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     return badgeCreate(
-        icon = f"[:{icon}:]({href} 'Configurable Setting')"
+        icon = f"[:{icon}:]({href} 'Configurable Setting')",
+        type = "flag-default"
     )
 
 # #
@@ -994,13 +1041,14 @@ def badgeFlagDefault( page: Page, files: Files ):
 # #
 
 def badgeFlagMetadata( page: Page, files: Files ):
-    icon = "material-list-box-outline"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#metadata", page, files )
+    icon        = "material-list-box-outline"
+    href        = _resolve_path( f"{PAGE_CONVENTIONS}#metadata", page, files )
 
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     return badgeCreate(
-        icon = f"[:{icon}:]({href} 'Metadata property')"
+        icon = f"[:{icon}:]({href} 'Metadata property')",
+        type = "flag-metadata"
     )
 
 # #
@@ -1015,8 +1063,8 @@ def badgeFlagMetadata( page: Page, files: Files ):
 # #
 
 def badgeFlagDangerous( page: Page, files: Files ):
-    icon = "aetherx-axd-skull-crossbones"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#dangerous", page, files )
+    icon    = "aetherx-axd-skull-crossbones"
+    href    = _resolve_path( f"{PAGE_CONVENTIONS}#dangerous", page, files )
 
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
@@ -1037,13 +1085,14 @@ def badgeFlagDangerous( page: Page, files: Files ):
 # #
 
 def badgeFlagRequired( page: Page, files: Files ):
-    icon = "material-alert"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#required", page, files )
+    icon    = "material-alert"
+    href    = _resolve_path( f"{PAGE_CONVENTIONS}#required", page, files )
 
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     return badgeCreate(
-        icon = f"[:{icon}:]({href} 'Required value')"
+        icon = f"[:{icon}:]({href} 'Required value')",
+        type = "flag-required"
     )
 
 # #
@@ -1064,7 +1113,8 @@ def badgeFlagCustomization( page: Page, files: Files ):
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     return badgeCreate(
-        icon = f"[:{icon}:]({href} 'Customization')"
+        icon = f"[:{icon}:]({href} 'Customization')",
+        type = "flag-customization"
     )
 
 # #
@@ -1085,7 +1135,8 @@ def badgeFlagExperimental( page: Page, files: Files ):
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     return badgeCreate(
-        icon = f"[:{icon}:]({href} 'Experimental')"
+        icon = f"[:{icon}:]({href} 'Experimental')",
+        type = "flag-experimental"
     )
 
 # #
@@ -1107,7 +1158,8 @@ def badgeFlagMultiInstances( page: Page, files: Files ):
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     return badgeCreate(
-        icon = f"[:{icon}:]({href} 'Multiple instances')"
+        icon = f"[:{icon}:]({href} 'Multiple instances')",
+        type = "flag-instance"
     )
 
 # #
@@ -1128,7 +1180,8 @@ def badgeFlagSetting( page: Page, files: Files ):
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
     return badgeCreate(
-        icon = f"[:{icon}:]({href} 'Configurable Setting')"
+        icon = f"[:{icon}:]({href} 'Configurable Setting')",
+        type = "flag-setting"
     )
 
 # #
@@ -1242,7 +1295,7 @@ def newControlSlider( page: Page, files: Files ):
 #   Icon › New Control › Color
 #   
 #   Normal Badges
-#       <!-- md:control color #E5E5E5 #121315 -->
+#       <!-- md:control color #FFFFFF #121315 -->
 # #
 
 def newControlColor( text: str, page: Page, files: Files ):
