@@ -215,8 +215,7 @@ jobs:
                   ❌ Prerequisites › Abort
               if: steps.pr_scan_prerequisites.outputs.PRECHECK_RESULT == 'abort'
               run: |
-                  echo "Aborting gracefully; prerequisites not met."
-                  exit 0
+                  echo "Stopping job gracefully — prerequisites not met."
               env:
                   GH_TOKEN: ${{ secrets.SELF_TOKEN_CL }}
 
@@ -226,6 +225,7 @@ jobs:
 
             - name: >-
                   ☑️ Checkout
+              if: steps.pr_scan_prerequisites.outputs.PRECHECK_RESULT == 'run'
               uses: actions/checkout@v4
               with:
                   fetch-depth: 0
@@ -236,6 +236,7 @@ jobs:
 
             - name: >-
                   🔄 Load Job
+              if: steps.pr_scan_prerequisites.outputs.PRECHECK_RESULT == 'run'
               uses: qoomon/actions--context@v4
               id: 'context'
 
@@ -245,6 +246,7 @@ jobs:
 
             - name: >-
                   ✅ Start
+              if: steps.pr_scan_prerequisites.outputs.PRECHECK_RESULT == 'run'
               run: |
                   echo "‎"
                   echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
@@ -341,9 +343,9 @@ jobs:
 
             # #
             #   PR Scan › Labels › Verify Existing
-            #
+            #   
             #   check if repo has all of the needed issue / pr labels; create label if not exists
-            #
+            #   
             #   action needed if using 'pull_request' and 'issue_comment'
             #   to get the pull request, you would normally use ${{ github.event.number }}
             #   however this isnt available for 'issue_comment'
@@ -351,6 +353,7 @@ jobs:
 
             - name: >-
                   🎫 Labels › Verify Existing
+              if: steps.pr_scan_prerequisites.outputs.PRECHECK_RESULT == 'run'
               uses: actions/github-script@v7
               with:
                   github-token: ${{ secrets.ADMINSERV_TOKEN_CL || github.token }}
@@ -391,6 +394,7 @@ jobs:
             - name: >-
                   #️⃣ Pull-Request ID › Set
               id: task_prscan_issue_num_set
+              if: steps.pr_scan_prerequisites.outputs.PRECHECK_RESULT == 'run'
               uses: actions/github-script@v7
               with:
                   github-token: ${{ secrets.ADMINSERV_TOKEN_CL || github.token }}
@@ -427,6 +431,7 @@ jobs:
 
             - name: >-
                   #️⃣ Pull-Request ID › Print
+              if: steps.pr_scan_prerequisites.outputs.PRECHECK_RESULT == 'run'
               run: |
                   echo '${{ steps.task_prscan_issue_num_set.outputs.result }}'
 
@@ -438,7 +443,16 @@ jobs:
                   ☑️ Checkout
               uses: actions/checkout@v4
               if: |
-                  ( github.event_name == 'pull_request_target' ) || ( github.event_name == 'pull_request' ) || ( github.event_name == 'issue_comment' && contains( github.event.comment.html_url, '/pull/' ) && contains( github.event.comment.body, '/rescan' ) )
+                  steps.pr_scan_prerequisites.outputs.PRECHECK_RESULT == 'run' &&
+                  (
+                      github.event_name == 'pull_request_target' ||
+                      github.event_name == 'pull_request' ||
+                      (
+                          github.event_name == 'issue_comment' &&
+                          contains(github.event.comment.html_url, '/pull/') &&
+                          contains(github.event.comment.body, '/rescan')
+                      )
+                  )
               with:
                   token: ${{ secrets.ADMINSERV_TOKEN_CL || github.token }}
                   fetch-depth: 0
@@ -450,6 +464,7 @@ jobs:
 
             - name: >-
                   ⚙️ Setup Node
+              if: steps.pr_scan_prerequisites.outputs.PRECHECK_RESULT == 'run'
               uses: actions/setup-node@v4
 
             # #
@@ -464,6 +479,7 @@ jobs:
             - name: >-
                   📄 Get changed files
               id: task_prscan_changed_files_get
+              if: steps.pr_scan_prerequisites.outputs.PRECHECK_RESULT == 'run'
               uses: tj-actions/changed-files@v46
               with:
                   separator: ","
@@ -475,6 +491,7 @@ jobs:
             - name: >-
                   📄 List all added files
               id: task_prscan_added_files_get
+              if: steps.pr_scan_prerequisites.outputs.PRECHECK_RESULT == 'run'
               run: |
                   for file in ${CHANGED_FILES}; do
                       echo "$file was changed"
@@ -495,6 +512,7 @@ jobs:
 
             - name: >-
                   📂 List Directories
+              if: steps.pr_scan_prerequisites.outputs.PRECHECK_RESULT == 'run'
               run: |
                   ls
 
@@ -504,6 +522,7 @@ jobs:
 
             - name: >-
                   ☑️ Run Autocheck
+              if: steps.pr_scan_prerequisites.outputs.PRECHECK_RESULT == 'run'
               uses: actions/github-script@v7
               with:
                   github-token: ${{ secrets.ADMINSERV_TOKEN_CL }}
@@ -900,6 +919,7 @@ jobs:
 
             - name: >-
                 🕛 Get Weekly Commit List
+              if: steps.pr_scan_prerequisites.outputs.PRECHECK_RESULT == 'run'
               run: |
                   echo 'WEEKLY_COMMITS<<EOF' >> $GITHUB_ENV
                   git log --format="[\`%h\`](${{ github.server_url }}/${{ github.repository }}/commit/%H) %s - %an" --since=7.days >> $GITHUB_ENV
