@@ -883,7 +883,14 @@ foreach my $server ( @downloadservers )
 
     foreach my $version ( keys %versions )
     {
-        dbg( "[INFO]: Compare local installable version [ \"$version\" ] to downloaded server [ \"$versions{ $version }\" ]", daemon => 1 );
+        # #
+        #   Download url
+        #       Example: https://download.configserver.dev/csf/version.txt
+        # #
+    
+        my $url = "$server$version";
+
+        dbg( "[INFO]: Found local file [ \"$version\" ]; getting remote latest version number from [ \"$url\" ] and store in local [ \"$versions{ $version }\" ]", daemon => 1 );
     
         # #
         #   Run if local version file does NOT exist
@@ -901,13 +908,6 @@ foreach my $server ( @downloadservers )
                 unlink $versions{ $version }.".error";
                 dbg( "[INFO]: Removed previous error file: $versions{ $version }.error", daemon => 1 );
             }
-
-            # #
-            #   Download url
-            #       Example: https://download.configserver.dev/csf/version.txt
-            # #
-     
-            my $url = "$server$version";
 
             # #
             #   Channel › Insiders
@@ -933,7 +933,7 @@ foreach my $server ( @downloadservers )
             #   Prepare download
             # #
 
-            dbg( "[INFO]: Prepare to download [ \"$versions{ $version }\" ] from server [ \"$url\" ]", daemon => 1 );
+            dbg( "[INFO]: Preparing to download remote [ \"$url\" ] to local [ \"$versions{ $version }\" ]", daemon => 1 );
 
             # #
             #   Method: None
@@ -954,12 +954,12 @@ foreach my $server ( @downloadservers )
                 # #
             
                 my $cmdline = "$cmd $url > $versions{ $version } 2> $versions{ $version }.error";
-                dbg( "[INFO]: Running [ \"$method\" ] command [ \"$cmdline\" ]", daemon => 1 );
+                dbg( "[INFO]: Downloading file using [ \"$method\" ] with command [ \"$cmdline\" ]", daemon => 1 );
 
                 my $raw     = system( $cmdline );           # Raw return from system()
                 my $exit    = $raw >> 8;                    # Real exit code from raw return; shift right 8 bytes
 
-                dbg( "[INFO]: GET [ \"$method\" ] raw return [ \"$raw\" ]; exit = [ \"$exit\" ]", daemon => 1 );
+                dbg( "[INFO]: Method [ \"$method\" ] returned raw response [ \"$raw\" ]; exit = [ \"$exit\" ]", daemon => 1 );
 
                 # #
                 #   Success only if exit == 0 AND file exists and has content
@@ -998,12 +998,12 @@ foreach my $server ( @downloadservers )
             else
             {
                 my $cmdline = "$cmd $versions{ $version } $url";
-                dbg( "[INFO]: Running [ \"$method\" ] command [ \"$cmdline\" ]", daemon => 1 );
+                dbg( "[INFO]: Downloading file using [ \"$method\" ] with command [ \"$cmdline\" ]", daemon => 1 );
 
                 my $raw     = system( $cmdline );
                 my $exit    = $raw >> 8;
 
-                dbg( "[INFO]: GET [ \"$method\" ] raw return [ \"$raw\" ]; exit = [ \"$exit\" ]", daemon => 1 );
+                dbg( "[INFO]: Method [ \"$method\" ] returned raw response [ \"$raw\" ]; exit = [ \"$exit\" ]", daemon => 1 );
 
                 # Normalize to 0 (success) / non-zero (failure)
                 $status = $exit == 0 ? 0 : $exit;
@@ -1020,7 +1020,7 @@ foreach my $server ( @downloadservers )
             #               non-zero    Error
             # #
 
-            dbg( "[INFO]: GET [ \"$method\" ] status: [ \"" . ( $status ) . "\" ]" , daemon => 1 );
+            dbg( "[INFO]: Method [ \"$method\" ] returned status [ \"" . ( $status ) . "\" ]" , daemon => 1 );
 
             if ( $status )
             {
