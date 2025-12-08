@@ -107,90 +107,99 @@ use strict;
 use warnings;
 
 # #
-#   ANSI Colors
+#   Colors
 # #
 
-my $ESC             = "\e";
-my $END             = "${ESC}[0m";
+my $esc                 = "\033";
+my $end                 = "${esc}[0m";
+my $bgEnd               = "${esc}[49m";
+my $fgEnd               = "${esc}[39m";
+my $bold                = "${esc}[1m";
+my $dim                 = "${esc}[2m";
+my $underline           = "${esc}[4m";
+my $blink               = "${esc}[5m";
+
+# Foreground colors
+my $white           = "${esc}[97m";
+my $black           = "${esc}[0;30m";
+my $redl            = "${esc}[0;91m";
+my $redd            = "${esc}[38;5;196m";
+my $magental        = "${esc}[38;5;197m";
+my $magentad        = "${esc}[38;5;161m";
+my $fuchsial        = "${esc}[38;5;206m";
+my $fuchsiad        = "${esc}[38;5;199m";
+my $bluel           = "${esc}[38;5;33m";
+my $blued           = "${esc}[38;5;27m";
+my $greenl          = "${esc}[38;5;47m";
+my $greend          = "${esc}[38;5;35m";
+my $orangel         = "${esc}[38;5;208m";
+my $oranged         = "${esc}[38;5;202m";
+my $yellowl         = "${esc}[38;5;226m";
+my $yellowd         = "${esc}[38;5;214m";
+my $greyl           = "${esc}[38;5;250m";
+my $greym           = "${esc}[38;5;244m";
+my $greyd           = "${esc}[38;5;240m";
+my $navy            = "${esc}[38;5;62m";
+my $olive           = "${esc}[38;5;144m";
+my $peach           = "${esc}[38;5;204m";
+my $cyan            = "${esc}[38;5;6m";
+
+# Background / combined colors
+my $bgVerbose       = "${esc}[1;38;5;15;48;5;125m";     # white on purple
+my $bgDebug         = "${esc}[1;38;5;15;48;5;237m";     # white on dark grey
+my $bgInfo          = "${esc}[1;38;5;15;48;5;27m";      # white on blue
+my $bgOk            = "${esc}[1;38;5;15;48;5;64m";      # white on green
+my $bgWarn          = "${esc}[1;38;5;16;48;5;214m";     # black on orange/yellow
+my $bgDanger        = "${esc}[1;38;5;15;48;5;202m";     # white on orange-red
+my $bgError         = "${esc}[1;38;5;15;48;5;160m";     # white on red
 
 # #
-#   Colors › Standard Foreground
-# #
-
-my $BLACK           = "${ESC}[30m";
-my $RED             = "${ESC}[31m";
-my $GREEN           = "${ESC}[32m";
-my $YELLOW          = "${ESC}[33m";
-my $BLUE            = "${ESC}[34m";
-my $MAGENTA         = "${ESC}[35m";
-my $CYAN            = "${ESC}[36m";
-my $WHITE           = "${ESC}[37m";                     # correct standard white
-my $GREY_DARK       = "${ESC}[90m";                     # bright black (dark gray)
-my $GREY_MEDIUM     = "${ESC}[37m";                     # standard white = medium grey
-my $GREY_LIGHT      = "${ESC}[97m";                     # bright white (light grey)
-
-# #
-#   Colors › Bright Foreground
-# #
-
-my $BRIGHT_BLACK    = "${ESC}[90m";                     # dark gray
-my $BRIGHT_RED      = "${ESC}[91m";
-my $BRIGHT_GREEN    = "${ESC}[92m";
-my $BRIGHT_YELLOW   = "${ESC}[93m";
-my $BRIGHT_BLUE     = "${ESC}[94m";
-my $BRIGHT_MAGENTA  = "${ESC}[95m";
-my $BRIGHT_CYAN     = "${ESC}[96m";
-my $BRIGHT_WHITE    = "${ESC}[97m";                     # light grey / nearly white
-
-# #
-#   Colors › Background Styles (256-color)
-# #
-
-my $bgVerbose       = "${ESC}[1;38;5;15;48;5;125m";     # white on purple
-my $bgDebug         = "${ESC}[1;38;5;15;48;5;237m";     # white on dark grey
-my $bgInfo          = "${ESC}[1;38;5;15;48;5;27m";      # white on blue
-my $bgOk            = "${ESC}[1;38;5;15;48;5;64m";      # white on green
-my $bgWarn          = "${ESC}[1;38;5;16;48;5;214m";     # black on orange/yellow
-my $bgDanger        = "${ESC}[1;38;5;15;48;5;202m";     # white on orange-red
-my $bgError         = "${ESC}[1;38;5;15;48;5;160m";     # white on red
-
-# #
-#   Define › Debug
+#   Define › Flag › Debug
 #   
 #   0 = normal mode		    no logging, enables daemonization/fork block; logs to /var/log/csf/csget_daemon.log
 #   1 = debug mode		    sets logging, disables daemonization/fork block; logs to /var/log/csf/csget_debug.log
 # #
 
-our $DEBUG = 0;
+our $FLG_DEBUG = 0;
 
 # #
-#   Define › Nosleep
+#   Define › Flag › Nosleep
 #   
 #   0 = disable		        condition is true › script sleeps.
 #   1 = enable		        condition is false › script runs immediately.
 # #
 
-my $NOSLEEP = 0;
+my $FLG_NOSLEEP = 0;
+
+# #
+#   Define › Flag › Return Response
+#   
+#   0 = disable		        when complete or failed, return nothing
+#   1 = enable		        when complete or failed, return response
+# #
+
+my $FLG_RETRESPONSE = 0;
 
 # #
 #   Define › Log Paths
 # #
 
-our $log_dir        = '/var/log/csf';
-our $log_debug      = "$log_dir/csget_debug.log";
-our $log_daemon     = "$log_dir/csget_daemon.log";
-our $proc_title     = "CSF CSGET Perl Updater";
-our $proc_desc      = "A perl script which allows for automated update checks for the official CSF servers.";
-our $proc_url       = "https://github.com/Aetherinox/csf-firewall";
-our $proc_name      = "ConfigServer Version Check";
-our $dbg;
+our $log_dir            = '/var/log/csf';
+our $log_file_debug     = "$log_dir/csget_debug.log";
+our $log_file_daemon    = "$log_dir/csget_daemon.log";
+our $app_name           = "CSF CSGET Perl Updater";
+our $app_desc           = "A perl script which allows for automated update checks for the official CSF servers.";
+our $app_repo           = "https://github.com/Aetherinox/csf-firewall";
+our $proc_name          = "ConfigServer Version Check";
+our $log_dbg;
 my %versions;
-my $cmd;
-my $GET;
-my %configValues;
-my $configFile      = "/etc/csf/csf.conf";
-my $method          = "none";
-my $status          = 0;
+my %config_vals;
+my $config_file         = "/etc/csf/csf.conf";
+my $version_file        = "/etc/csf/version.txt";
+my $get_bin;
+my $get_cmd;
+my $get_method          = "none";
+my $get_status          = 0;
 
 # #
 #   Declare › Diagnostics Module
@@ -208,11 +217,11 @@ eval
 };
 if ( $@ )
 {
-    print "\n" if $DEBUG;
-    warn "  ${BRIGHT_YELLOW}Diagnostics${BRIGHT_RED} perl module not found; continuing without it. You can install this perl module using the commands:${END}\n" if $DEBUG;
-    warn "      ${GREY_DARK}sudo dnf install perl-Diagnostics${END}\n" if $DEBUG;
-    warn "      ${GREY_DARK}sudo apt install libdiagnostics-perl${END}\n" if $DEBUG;
-    print "\n" if $DEBUG;
+    print "\n" if $FLG_DEBUG;
+    warn "  ${yellowl}Diagnostics${redl} perl module not found; continuing without it. You can install this perl module using the commands:${end}\n" if $FLG_DEBUG;
+    warn "      ${greyd}sudo dnf install perl-Diagnostics${end}\n" if $FLG_DEBUG;
+    warn "      ${greyd}sudo apt install libdiagnostics-perl${end}\n" if $FLG_DEBUG;
+    print "\n" if $FLG_DEBUG;
 }
 
 # #
@@ -318,7 +327,7 @@ if ( -e "/usr/msfe/msfeversion.txt" )
 #   root   120546  0.0  0.1 ... ConfigServer Version Check
 # #
 
-$0 = $proc_name;            # change process name
+$0 = $proc_name;            # change the process name
 
 # #
 #   Declare › Helper › Get csget process pids
@@ -347,104 +356,132 @@ sub fetch_csget_pids
 }
 
 # #
-#   Declare › Helper › Daemon Log
+#   Logs › Main
 #   
-#   @usage                  daemon_log("Some daemon message\n");
-#   @returns                null
-#                           prints message to daemon_log 
+#   Called by:
+#       log_dbg
+#       log_daemon
 # #
 
-sub daemon_log
+sub log_msg
 {
-    my ($msg, $fh) = @_;
+    my (%opts)          = @_;
+    my $level           = $opts{level}          || 'INFO';      #  INFO, WARN, FAIL, PASS, DBUG
+    my $msg             = $opts{msg}            || '';
+    my $color_prefix    = $opts{color}          || '';
+    my $no_console      = $opts{no_console}     || 0;
+
+    $msg =~ s/\n+$//;       # remove newlines
 
     # #
-    #   Strip any trailing newlines
-    # #
-
-    $msg =~ s/\n+$//;
-
-    # #
-    #   Timestamp
+    #   Build timestamp for FILE logs only
     # #
 
     my ($sec,$min,$hour,$mday,$mon,$year) = localtime();
     $mon  += 1;
     $year += 1900;
     $year %= 100;
+    my $timestamp = sprintf "%02d/%02d/%02d %02d:%02d:%02d",
+        $mon, $mday, $year, $hour, $min, $sec;
 
-    my $timestamp = sprintf( "%02d/%02d/%02d %02d:%02d:%02d",
-        $mon, $mday, $year, $hour, $min, $sec
+    # #
+    #   CONSOLE OUTPUT (only when DEBUG or RETRESPONSE)
+    # # 
+
+    if ( ( $FLG_DEBUG || $FLG_RETRESPONSE ) && !$no_console )
+    {
+        my $tag = sprintf("   %s %-5s%s", $color_prefix, $level, $end);
+        my $txt = sprintf("%s  %s%s", $greym, $msg, $end);
+
+        printf "%-44s %-65s\n", $tag, $txt;
+    }
+
+    # #
+    #   FILE OUTPUT (daemon mode)
+    # #
+
+    if ( !$FLG_DEBUG )
+
+    {   # #
+        #   always log clean text to daemon log
+        # #
+
+        open my $dh, '>>', $log_file_daemon;
+
+        # #
+        #   Strip ANSI color codes for clean file logs
+        # #
+    
+        my $plain_msg = $msg;                       # start with message
+        $plain_msg =~ s/\e\[[\d;]*m//g;             # remove ANSI codes
+        my $clean_color = $color_prefix;           
+        $clean_color =~ s/\e\[[\d;]*m//g;           # remove ANSI codes from color prefix
+        $plain_msg = $clean_color . $plain_msg;     # prepend clean color label
+
+        print $dh "$timestamp | [$level] $plain_msg\n";
+        close $dh;
+    }
+
+    # #
+    #   DEBUG FILE OUTPUT
+    # #
+
+    if ( $FLG_DEBUG )
+    {
+        open my $fh, '>>', $log_file_debug;
+        print $fh "$timestamp | [$level] $msg\n";
+        close $fh;
+    }
+}
+
+# #
+#   Declare › Helper › Daemon Log
+#   
+#   @usage                  log_daemon("Some daemon message\n");
+#   @returns                null
+#                           prints message to log_daemon 
+# #
+
+sub log_daemon
+{
+    my ($msg) = @_;
+    log_msg(
+        msg         => $msg,
+        level       => 'INFO',
+        color       => $bgInfo,
+        no_console  => 1       # never print daemon logs to console
     );
-
-    if ($fh)
-    {
-        print $fh "$timestamp | $msg\n";
-    }
-    else
-    {
-        print "$timestamp | $msg\n";
-    }
 }
 
 # #
 #   Declare › Helper › Debug Logging (w/ optional daemon logging route)
 #   
-#   @usage                  dbg( "This is a debug message", daemon => 1 );
+#   @usage                  log_dbg( "This is a debug message" );
 #   @returns                null
 # #
 
-sub dbg
+sub log_dbg
 {
-    my ($msg, %opts) = @_;
+    my ($msg) = @_;
 
-    # #
-    #   Strip any trailing newlines
-    # #
+    my ($tag, $rest) = $msg =~ /^\[(\w+)\]:\s*(.*)/;
+    $tag ||= 'DBUG';            # fallback
+    $rest ||= $msg;             # if no match, use whole message
 
-    $msg =~ s/\n+$//;
+    my $color = $bgDebug;
+    if    ( $tag eq 'INFO' )    { $color = $bgInfo }
+    elsif ( $tag eq 'PASS' )    { $color = $bgOk }
+    elsif ( $tag eq 'WARN' )    { $color = $bgWarn }
+    elsif ( $tag eq 'DNGR' )    { $color = $bgError }
+    elsif ( $tag eq 'FAIL' )    { $color = $bgDanger }
+    elsif ( $tag eq 'DBUG' )    { $color = $bgVerbose }
+    elsif ( $tag eq 'VRBO' )    { $color = $bgVerbose }
 
-    # #
-    #   Timestamp
-    # #
-
-    my ($sec,$min,$hour,$mday,$mon,$year) = localtime();
-    $mon  += 1;
-    $year += 1900;
-    $year %= 100;
-    my $timestamp = sprintf( "%02d/%02d/%02d %02d:%02d:%02d",
-        $mon, $mday, $year, $hour, $min, $sec
+    log_msg(
+        msg   => $rest,
+        level => $tag,
+        color => $color
     );
-
-    my $log_entry = "$timestamp | $msg\n";
-
-    # #
-    #   Print to debug log if $DEBUG
-    # #
-
-    if ( $DEBUG && defined $dbg )
-    {
-        print $dbg $log_entry;
-    }
-
-    # #
-    #   Print to daemon log if requested, pass fh if provided
-    # #
-
-    if ( $opts{daemon} )
-    {
-        daemon_log( $msg, $opts{fh} );
-    }
-
-    # #
-    #   Only print to custom filehandle if not sent to daemon log
-    # #
-
-    elsif ( $opts{fh} )
-    {
-        my $fh = $opts{fh};
-        print $fh $log_entry;
-    }
 }
 
 # #
@@ -454,9 +491,9 @@ sub dbg
 #   to use when downloading updates.
 # # 
 
-if ( -e $configFile )
+if ( -e $config_file )
 {
-    open my $fh, '<', $configFile or die "Cannot open $configFile: $!";
+    open my $fh, '<', $config_file or die "Cannot open $config_file: $!";
     while (<$fh>)
     {
         chomp;
@@ -464,7 +501,7 @@ if ( -e $configFile )
         next if /^\s*$/;       # skip empty lines
         if (/^\s*(\w+)\s*=\s*["']?([^"']+)["']?/)
         {
-            $configValues{$1} = $2;
+            $config_vals{$1} = $2;
         }
     }
     close $fh;
@@ -501,7 +538,7 @@ foreach my $arg ( @ARGV )
         #                   Enables debug logging; disables forked child processes
         # #
 
-        $DEBUG = 1;
+        $FLG_DEBUG = 1;
         next;
     }
     elsif ( $arg =~ /^--kill$|^-k$/ )
@@ -547,11 +584,11 @@ foreach my $arg ( @ARGV )
 
         if ( @lines )
         {
-            print "  ${BRIGHT_BLUE}csget processes currently running:${END}\n", @lines;
+            print "  ${bluel}csget processes currently running:${end}\n", @lines;
         }
         else
         {
-            print "  ${BRIGHT_GREEN}No csget processes found.${END}\n";
+            print "  ${greenl}No csget processes found.${end}\n";
         }
 
         print "\n";
@@ -565,8 +602,6 @@ foreach my $arg ( @ARGV )
         #                   Prints the CSF version number and exits
         # #
 
-        my $version_file = "/etc/csf/version.txt";
-
         if ( -e $version_file )
         {
             open my $fh, '<', $version_file
@@ -576,18 +611,22 @@ foreach my $arg ( @ARGV )
             close $fh;
 
             print "\n";
-            print "  ${BRIGHT_YELLOW}${proc_title}${END}\n";
-            print "  ${GREY_DARK}ConfigServer Security & Firewall v$version${END}\n";
-            print "  ${GREY_DARK}${proc_desc}${END}\n";
-            print "  ${GREY_DARK}$proc_url${END}\n";
+            print "  ${yellowl}${app_name}${end}\n";
+            print "  ${greyd}ConfigServer Security & Firewall v$version${end}\n";
+            print "  ${greyd}${app_desc}${end}\n";
+            print "  ${greyd}$app_repo${end}\n";
             print "\n";
         }
         else
         {
-            print "  ${BRIGHT_RED}CSF version file not found: $version_file${END}\n";
+            print "  ${redl}CSF version file not found: $version_file${end}\n";
         }
 
         exit 0;
+    }
+    elsif ( $arg =~ /^--response$|^--resp$|^-r$/ )
+    {
+        $FLG_RETRESPONSE = 1;
     }
     elsif ( $arg =~ /^--diag$|^--diagnostic$|^-d$/ )
     {
@@ -640,13 +679,13 @@ foreach my $arg ( @ARGV )
         #   Config Status
         # #
 
-        if ( -e $configFile )
+        if ( -e $config_file )
         {
-            $configStatus = "${BRIGHT_GREEN}(Found)${END}";
+            $configStatus = "${greenl}(Found)${end}";
         }
         else
         {
-            $configStatus = "${BRIGHT_RED}(Not Found)${END}";
+            $configStatus = "${redl}(Not Found)${end}";
         }
 
         # #
@@ -654,17 +693,17 @@ foreach my $arg ( @ARGV )
         # #
 
         print "\n";
-        print "  ${BRIGHT_YELLOW}${proc_title}${END}\n";
-        print "  ${GREY_DARK}${proc_desc}${END}\n";
-        print "  ${GREY_DARK}$proc_url${END}\n\n";
-        print "  ${GREY_DARK}Server URL ....... ${BRIGHT_YELLOW}${diagUrl}${END}\n";
-        print "  ${GREY_DARK}Fetch Package .... ${BRIGHT_YELLOW}${diagMethod}${END}\n";
-        print "  ${GREY_DARK}Command (Base) ... ${BRIGHT_YELLOW}${diagCmd}${END}\n";
-        print "  ${GREY_DARK}Command (Out) .... ${BRIGHT_YELLOW}${diagOut}${END}\n";
-        print "  ${GREY_DARK}Config Path ...... ${BRIGHT_YELLOW}${configFile} ${configStatus}${END}\n";
-        print "  ${GREY_DARK}Log Folder ....... ${BRIGHT_YELLOW}${log_dir}${END}\n";
-        print "  ${GREY_DARK}Log Daemon ....... ${BRIGHT_YELLOW}${log_daemon}${END}\n";
-        print "  ${GREY_DARK}Log Debug ........ ${BRIGHT_YELLOW}${log_debug}${END}\n";
+        print "  ${yellowl}${app_name}${end}\n";
+        print "  ${greyd}${app_desc}${end}\n";
+        print "  ${greyd}$app_repo${end}\n\n";
+        print "  ${greyd}Server URL ....... ${yellowl}${diagUrl}${end}\n";
+        print "  ${greyd}Fetch Package .... ${yellowl}${diagMethod}${end}\n";
+        print "  ${greyd}Command (Base) ... ${yellowl}${diagCmd}${end}\n";
+        print "  ${greyd}Command (Out) .... ${yellowl}${diagOut}${end}\n";
+        print "  ${greyd}Config Path ...... ${yellowl}${config_file} ${configStatus}${end}\n";
+        print "  ${greyd}Log Folder ....... ${yellowl}${log_dir}${end}\n";
+        print "  ${greyd}Log Daemon ....... ${yellowl}${log_file_daemon}${end}\n";
+        print "  ${greyd}Log Debug ........ ${yellowl}${log_file_debug}${end}\n";
         print "\n";
 
         exit 0;
@@ -676,7 +715,7 @@ foreach my $arg ( @ARGV )
         #                   If specified, csget runs instantly, not on a random timer.
         # #
 
-        $NOSLEEP = 1;
+        $FLG_NOSLEEP = 1;
     }
     elsif ( $arg =~ /^--help$|^-h$/ )
     {
@@ -690,16 +729,17 @@ foreach my $arg ( @ARGV )
         # #
 
         print "\n";
-        print "  ${BRIGHT_YELLOW}${proc_title}${END}\n";
-        print "  ${GREY_DARK}${proc_desc}${END}\n";
-        print "  ${GREY_DARK}$proc_url${END}\n\n";
-        printf "  %-28s %s%s\n", "${BRIGHT_BLUE}-k, --kill ", "${GREY_MEDIUM}Kills all processes associated with csget.", $END;
-        printf "  %-28s %s%s\n", "${BRIGHT_BLUE}-n, --nosleep ", "${GREY_MEDIUM}Run task immediately, do not start on timed delay.", $END;
-        printf "  %-28s %s%s\n", "${BRIGHT_BLUE}-l, --list ", "${GREY_MEDIUM}Lists all csget processes except this command.", $END;
-        printf "  %-28s %s%s\n", "${BRIGHT_BLUE}-d, --diag ", "${GREY_MEDIUM}Show diagnostic information.", $END;
-        printf "  %-28s %s%s\n", "${BRIGHT_BLUE}-D, --debug ", "${GREY_MEDIUM}Show verbose logs and additional details.", $END;
-        printf "  %-28s %s%s\n", "${BRIGHT_BLUE}-v, --version ", "${GREY_MEDIUM}Show version information.", $END;
-        printf "  %-28s %s%s\n", "${BRIGHT_BLUE}-h, --help ", "${GREY_MEDIUM}Show this help menu.", $END;
+        print "  ${yellowl}${app_name}${end}\n";
+        print "  ${greyd}${app_desc}${end}\n";
+        print "  ${greyd}$app_repo${end}\n\n";
+        printf "  %-28s %s%s\n", "${bluel}-r, --response ", "${greym}Run in foreground and show logs. Useful with bash scripts.", $end;
+        printf "  %-28s %s%s\n", "${bluel}-n, --nosleep ", "${greym}Run task immediately, do not start on timed delay.", $end;
+        printf "  %-28s %s%s\n", "${bluel}-k, --kill ", "${greym}Kills all processes associated with csget.", $end;
+        printf "  %-28s %s%s\n", "${bluel}-l, --list ", "${greym}Lists all csget processes except this command.", $end;
+        printf "  %-28s %s%s\n", "${bluel}-d, --diag ", "${greym}Show diagnostic information.", $end;
+        printf "  %-28s %s%s\n", "${bluel}-D, --debug ", "${greym}Show verbose logs and additional details.", $end;
+        printf "  %-28s %s%s\n", "${bluel}-v, --version ", "${greym}Show version information.", $end;
+        printf "  %-28s %s%s\n", "${bluel}-h, --help ", "${greym}Show this help menu.", $end;
         print "\n";
 
         exit 0;
@@ -712,8 +752,8 @@ foreach my $arg ( @ARGV )
         # #
 
         print "\n";
-        print "  ${BRIGHT_RED}Invalid argument: ${BRIGHT_YELLOW}$arg${END}\n";
-        print "  ${GREY_DARK}Usage: ${BRIGHT_BLUE}sudo perl /etc/cron.daily/csget ${GREY_DARK}[${BRIGHT_YELLOW} --debug ${GREY_DARK}|${BRIGHT_YELLOW} --kill ${GREY_DARK}|${BRIGHT_YELLOW} --list ${GREY_DARK}|${BRIGHT_YELLOW} --version ${GREY_DARK}|${BRIGHT_YELLOW} --nosleep ${GREY_DARK}]${BRIGHT_BLUE}${END}\n";
+        print "  ${redl}Invalid argument: ${yellowl}$arg${end}\n";
+        print "  ${greyd}Usage: ${bluel}sudo perl /etc/cron.daily/csget ${greyd}[${yellowl} --debug ${greyd}|${yellowl} --kill ${greyd}|${yellowl} --list ${greyd}|${yellowl} --version ${greyd}|${yellowl} --nosleep ${greyd}]${bluel}${end}\n";
         print "\n";
         exit 1;
     }
@@ -723,17 +763,17 @@ foreach my $arg ( @ARGV )
 #   Define › Debug Mode
 # #
 
-if ( $DEBUG )
+if ( $FLG_DEBUG )
 {
     mkdir $log_dir unless -d $log_dir;
 
-    open $dbg, '>>', $log_debug or die "Cannot open debug log: $!";
-    select((select($dbg), $|=1)[0]);        # auto-flush
+    open $log_dbg, '>>', $log_file_debug or die "Cannot open debug log: $!";
+    select((select($log_dbg), $|=1)[0]);        # auto-flush
 
     my $script_path = `readlink -f $0`;
     chomp $script_path;
 
-    dbg( "[DBUG]: csget debug enabled; logging to [ \"$log_dir\" ]" );
+    log_dbg( "[DBUG]: csget debug enabled; logging to [ \"$log_dir\" ]" );
 }
 
 # #
@@ -745,7 +785,7 @@ if ( $DEBUG )
 #   Child continues 			runs in background
 # #
 
-unless ( $DEBUG )
+unless ( $FLG_DEBUG || $FLG_RETRESPONSE )
 {
     if ( my $pid = fork ) { exit 0; }               # parent
     elsif ( defined( $pid ) ) { $pid = $$; }        # child
@@ -756,9 +796,9 @@ unless ( $DEBUG )
     close( STDOUT );
     close( STDERR );
     open( STDIN,  "<", "/dev/null" );
-    open( STDOUT, ">>", "$log_daemon" )
+    open( STDOUT, ">>", "$log_file_daemon" )
         or die "Cannot open STDOUT log: $!";
-    open( STDERR, ">>", "$log_daemon" )
+    open( STDERR, ">>", "$log_file_daemon" )
         or die "Cannot open STDERR log: $!";
 }
 
@@ -774,8 +814,8 @@ mkdir $log_dir unless -d $log_dir;
 
 my $script_path = `readlink -f /etc/cron.daily/csget`;
 chomp( $script_path ); # remove trailing newline
-daemon_log( "[INFO]: Found csget path: [$script_path]" );
-daemon_log( "[INFO]: Daemon started with PID [ \"$$\" ]" );
+log_daemon( "[INFO]: Found csget path: [$script_path]" );
+log_daemon( "[INFO]: Daemon started with PID [ \"$$\" ]" );
 
 # #
 #   Action › Create required folders and files
@@ -795,28 +835,28 @@ system( "rm -f /var/lib/configserver/*.txt /var/lib/configserver/*error" );
 
 if ( -e "/usr/bin/curl" )
 {
-    $cmd        = $fetch{ 'curl' };
-    $method     = "curl";
+    $get_cmd        = $fetch{ 'curl' };
+    $get_method     = "curl";
 }
 elsif ( -e "/usr/bin/wget" )
 {
-    $cmd        = $fetch{ 'wget' };
-    $method     = "wget";
+    $get_cmd        = $fetch{ 'wget' };
+    $get_method     = "wget";
 }
 elsif ( -e "/usr/bin/GET" )
 {
-    $cmd        = $fetch{ 'get' };
-    $method     = "get";
+    $get_cmd        = $fetch{ 'get' };
+    $get_method     = "get";
 }
 else
 {
     open( my $ERROR, ">", "/var/lib/configserver/error" );
-    daemon_log( "[FAIL]: No download tool found: curl, wget, or get", $ERROR );
+    log_daemon( "[FAIL]: No download tool found: curl, wget, or get", $ERROR );
     close( $ERROR );
     exit 1;
 }
 
-daemon_log( "[PASS]: Found package [ \"$method\" ] using cmd [ \"$cmd\" ]" );
+log_dbg( "[PASS]: Found package [ \"$get_method\" ] using cmd [ \"$get_cmd\" ]" );
 
 # #
 #   Secondary fallback
@@ -829,7 +869,7 @@ daemon_log( "[PASS]: Found package [ \"$method\" ] using cmd [ \"$cmd\" ]" );
 
 if ( -e "/usr/bin/GET" )
 {
-	$GET = "/usr/bin/GET -sd -t 120"
+	$get_bin = "/usr/bin/GET -sd -t 120"
 }
 
 # #
@@ -843,7 +883,7 @@ if ( scalar( keys %versions ) == 0 )
 
     # unlink $0;
 
-    dbg( "ERROR: No version files to fetch — aborting cron run", daemon => 1 );
+    log_dbg( "ERROR: No version files to fetch — aborting cron run" );
 
     # #
     #   mark last run with no versions
@@ -876,9 +916,9 @@ if ( scalar( keys %versions ) == 0 )
 #   arg `something else`	› sleep
 # #
 
-unless ( $NOSLEEP )
+unless ( $FLG_NOSLEEP )
 {
-    daemon_log( "[INFO]: Activating sleep mode" );
+    log_daemon( "[INFO]: Activating sleep mode" );
     system( 'sleep', int( rand( 60 * 60 * 6 ) ) );
 }
 
@@ -902,7 +942,8 @@ for ( my $x = @downloadservers; --$x; )
 
 foreach my $server ( @downloadservers )
 {
-    dbg( "[INFO]: Check server: [ \"$server\" ]", daemon => 1 );
+
+    log_dbg( "[INFO]: Connect to server [ ${bluel}\"$server\"${greym} ]" );
 
     # #
     #   Loop $versions
@@ -923,7 +964,7 @@ foreach my $server ( @downloadservers )
     
         my $url = "$server$version";
 
-        dbg( "[INFO]: Found local file [ \"$version\" ]; getting remote latest version number from [ \"$url\" ] and store in local [ \"$versions{ $version }\" ]", daemon => 1 );
+        log_dbg( "[INFO]: Found local file [ ${bluel}\"$version\"${greym} ]; fetch remote version number [ ${bluel}\"$url\"${greym} ] and store in local [ ${bluel}\"$versions{ $version }\"${greym} ]" );
     
         # #
         #   Run if local version file does NOT exist
@@ -939,7 +980,7 @@ foreach my $server ( @downloadservers )
             if ( -e $versions{ $version }.".error" )
             {
                 unlink $versions{ $version }.".error";
-                dbg( "[INFO]: Removed previous error file: $versions{ $version }.error", daemon => 1 );
+                log_dbg( "[INFO]: Removed previous error file: ${bluel}$versions{ $version }.error${greym}" );
             }
 
             # #
@@ -947,10 +988,10 @@ foreach my $server ( @downloadservers )
             #   Get sponsor license key from CSF config /etc/csf/csf.conf
             # #
 
-            if ( ( $configValues{SPONSOR_RELEASE_INSIDERS} // 0 ) == 1 && ( $configValues{SPONSOR_LICENSE} // '' ) ne '' && $version eq "/csf/version.txt" )
+            if ( ( $config_vals{SPONSOR_RELEASE_INSIDERS} // 0 ) == 1 && ( $config_vals{SPONSOR_LICENSE} // '' ) ne '' && $version eq "/csf/version.txt" )
             {
-                $url .= "?channel=insiders&license=$configValues{ SPONSOR_LICENSE }";
-                dbg( "[PASS]: Using release channel [ \"insiders\" ] from server [ \"$url\" ]", daemon => 1 );
+                $url .= "?channel=insiders&license=$config_vals{ SPONSOR_LICENSE }";
+                log_dbg( "[PASS]: Using release channel [ ${bluel}\"insiders\"${greym} ] from server [ ${bluel}\"$url\"${greym} ]" );
             }
 
             # #
@@ -959,14 +1000,14 @@ foreach my $server ( @downloadservers )
 
             else
             {
-                dbg( "[PASS]: Using release channel [ \"stable\" ] from server [ \"$url\" ]", daemon => 1 );
+                log_dbg( "[PASS]: Using release channel [ ${bluel}\"stable\"${greym} ] from server [ ${bluel}\"$url\"${greym} ]" );
             }
 
             # #
             #   Prepare download
             # #
 
-            dbg( "[INFO]: Preparing to download remote [ \"$url\" ] to local [ \"$versions{ $version }\" ]", daemon => 1 );
+            log_dbg( "[INFO]: Preparing to download remote [ ${bluel}\"$url\"${greym} ] to local [ ${bluel}\"$versions{ $version }\"${greym} ]" );
 
             # #
             #   Method: None
@@ -974,25 +1015,25 @@ foreach my $server ( @downloadservers )
             #   Backup check to ensure we get the proper method.
             # #
 
-            if ( $method eq "none" )
+            if ( $get_method eq "none" )
             {
-                dbg( "[FAIL]: GET [ \"$method\" ] bad method; aborting process", daemon => 1 );
+                log_dbg( "[FAIL]: GET [ ${bluel}\"$get_method\"${greym} ] bad method; aborting process" );
                 exit 0;
 
             }
-            elsif ( $method eq "get" )
+            elsif ( $get_method eq "get" )
             {
                 # #
                 #   GET prints to stdout; redirect stdout -> file, stderr -> .error
                 # #
             
-                my $cmdline = "$cmd $url > $versions{ $version } 2> $versions{ $version }.error";
-                dbg( "[INFO]: Downloading file using [ \"$method\" ] with command [ \"$cmdline\" ]", daemon => 1 );
+                my $cmdline = "$get_cmd $url > $versions{ $version } 2> $versions{ $version }.error";
+                log_dbg( "[INFO]: Downloading file using [ ${bluel}\"$get_method\"${greym} ] with command [ ${bluel}\"$cmdline\"${greym} ]" );
 
                 my $raw     = system( $cmdline );           # Raw return from system()
                 my $exit    = $raw >> 8;                    # Real exit code from raw return; shift right 8 bytes
 
-                dbg( "[INFO]: Method [ \"$method\" ] returned raw response [ \"$raw\" ]; exit = [ \"$exit\" ]", daemon => 1 );
+                log_dbg( "[INFO]: Method [ ${bluel}\"$get_method\"${greym} ] returned raw response [ ${bluel}\"$raw\"${greym} ]; exit = [ ${bluel}\"$exit\"${greym} ]" );
 
                 # #
                 #   Success only if exit == 0 AND file exists and has content
@@ -1000,7 +1041,7 @@ foreach my $server ( @downloadservers )
             
                 if ( $exit == 0 && -s $versions{ $version } )
                 {
-                    $status = 0;                            # success
+                    $get_status = 0;                            # success
 
                     # remove stale .error if present and empty
                     if ( -e "$versions{ $version }.error" && -z "$versions{ $version }.error" )
@@ -1016,9 +1057,9 @@ foreach my $server ( @downloadservers )
                     #   GET returns non-zero            Keep exit code (non-zero indicates failure)
                     # #
         
-                    $status = ( $exit != 0 ) ? $exit : 1;
+                    $get_status = ( $exit != 0 ) ? $exit : 1;
 
-                    dbg( "[WARN]: GET [ \"$method\" ] failed or produced empty file; status set to [ \"$status\" ]", daemon => 1 );
+                    log_dbg( "[WARN]: GET [ \"$get_method\" ] failed or produced empty file; status set to [ \"$get_status\" ]" );
                 }
             }
 
@@ -1030,16 +1071,16 @@ foreach my $server ( @downloadservers )
 
             else
             {
-                my $cmdline = "$cmd $versions{ $version } $url";
-                dbg( "[INFO]: Downloading file using [ \"$method\" ] with command [ \"$cmdline\" ]", daemon => 1 );
+                my $cmdline = "$get_cmd $versions{ $version } $url";
+                log_dbg( "[INFO]: Downloading file using [ ${bluel}\"$get_method\"${greym} ] with command [ ${bluel}\"$cmdline\"${greym} ]" );
 
                 my $raw     = system( $cmdline );
                 my $exit    = $raw >> 8;
 
-                dbg( "[INFO]: Method [ \"$method\" ] returned raw response [ \"$raw\" ]; exit = [ \"$exit\" ]", daemon => 1 );
+                log_dbg( "[INFO]: Method [ ${bluel}\"$get_method\"${greym} ] returned raw response [ ${bluel}\"$raw\"${greym} ]; exit = [ ${bluel}\"$exit\"${greym} ]" );
 
                 # Normalize to 0 (success) / non-zero (failure)
-                $status = $exit == 0 ? 0 : $exit;
+                $get_status = $exit == 0 ? 0 : $exit;
             }
 
             # #
@@ -1053,30 +1094,61 @@ foreach my $server ( @downloadservers )
             #               non-zero    Error
             # #
 
-            dbg( "[INFO]: Method [ \"$method\" ] returned status [ \"" . ( $status ) . "\" ]" , daemon => 1 );
+            log_dbg( "[INFO]: Method [ ${bluel}\"$get_method\"${greym} ] returned status [ ${bluel}\"" . ( $get_status ) . "\"${greym} ]"  );
 
-            if ( $status )
+            if ( $get_status )
             {
-				if ($GET ne "")
+				if ( $get_bin ne "" )
                 {
 					open ( my $ERROR, ">", $versions{ $version }.".error" );
-                    daemon_log( "[FAIL]: [ \"$method\" ]: $server$version -", $ERROR );
+                    log_daemon( "[FAIL]: [ \"$get_method\" ]: $server$version -", $ERROR );
 					close ( $ERROR );
-					my $GETstatus = system( "$GET $server$version >> $versions{ $version }".".error" );
+					my $GETstatus = system( "$get_bin $server$version >> $versions{ $version }".".error" );
 				}
                 else
                 {
 					open ( my $ERROR, ">", $versions{ $version }.".error" );
-                    daemon_log( "[FAIL]: [ \"$method\" ]: Failed to retrieve latest version from ConfigServer", $ERROR );
+                    log_daemon( "[FAIL]: [ \"$get_method\" ]: Failed to retrieve latest version from ConfigServer", $ERROR );
 					close ( $ERROR );
 				}
             }
             else
             {
-                dbg( "[INFO]: Successfully downloaded csf version from [ \"$url\" ] to file [ \"$versions{ $version }\" ]", daemon => 1 );
+                log_dbg( "[INFO]: Successfully downloaded csf version from [ ${bluel}\"$url\"${greym} ] to file [ ${bluel}\"$versions{ $version }\"${greym} ]" );
             }
 
+            # #
+            #   Response
+            #   
+            #   If running from external script such as bash; status will return if job
+            #   was successful or not.
+            #   
+            #   @return         0   success
+            #                   1   failure
+            #   
+            #   @example        "$CSF_CRON_CSGET_DEST" --nosleep --response
+            #                   CSF_CRON_CSGET_STATUS=$?
+            #   
+            #                   if [ "$CSF_CRON_CSGET_STATUS" -eq 0 ]; then
+            #                       ok "    CSGET daemon ${greenl}${CSF_CRON_CSGET_DEST}${greym} successfully ran"
+            #                   else
+            #                       warn "    CSGET daemon ${yellowl}${CSF_CRON_CSGET_DEST}${greym} failed to run"
+            #                   fi
+            # #
 
+            if ( $FLG_RETRESPONSE )
+            {
+                if ( $get_status == 0 )
+                {
+                    log_dbg( "[INFO]: Job successful" );
+                    exit 0;     # success
+                }
+                else
+                {
+                    log_dbg( "[INFO]: Job failed" );
+                    exit 1;     # failure
+                }
+            }
         }
     }
 }
