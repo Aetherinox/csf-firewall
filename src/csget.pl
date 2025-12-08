@@ -179,8 +179,10 @@ my $NOSLEEP = 0;
 our $log_dir        = '/var/log/csf';
 our $log_debug      = "$log_dir/csget_debug.log";
 our $log_daemon     = "$log_dir/csget_daemon.log";
-our $proc_name      = "ConfigServer Version Check";
+our $proc_title     = "CSF CSGET Perl Updater";
+our $proc_desc      = "A perl script which allows for automated update checks for the official CSF servers.";
 our $proc_url       = "https://github.com/Aetherinox/csf-firewall";
+our $proc_name      = "ConfigServer Version Check";
 our $dbg;
 my %versions;
 my $cmd;
@@ -492,7 +494,7 @@ if ( -e $configFile )
 
 foreach my $arg ( @ARGV )
 {
-    if ( $arg eq '--debug' )
+    if ( $arg =~ /^--debug$|^-D$/ )
     {
         # #
         #   @usage          sudo perl /etc/cron.daily/csget --debug
@@ -502,7 +504,7 @@ foreach my $arg ( @ARGV )
         $DEBUG = 1;
         next;
     }
-    elsif ( $arg eq '--kill' )
+    elsif ( $arg =~ /^--kill$|^-k$/ )
     {
         # #
         #   @usage          sudo perl /etc/cron.daily/csget --kill
@@ -523,12 +525,14 @@ foreach my $arg ( @ARGV )
     
         exit 0;
     }
-    elsif ( $arg eq '--list' )
+    elsif ( $arg =~ /^--list$|^-l$/ )
     {
         # #
         #   @usage          sudo perl /etc/cron.daily/csget --list
         #                   Lists all csget processes except this command
         # #
+
+        print "\n";
 
         my $self_pid   = $$;                # current Perl PID
         my $parent_pid = getppid;           # parent PID (sudo)
@@ -543,16 +547,18 @@ foreach my $arg ( @ARGV )
 
         if ( @lines )
         {
-            print "csget processes currently running:\n", @lines;
+            print "  ${BRIGHT_BLUE}csget processes currently running:${END}\n", @lines;
         }
         else
         {
-            print "No csget processes found.\n";
+            print "  ${BRIGHT_GREEN}No csget processes found.${END}\n";
         }
+
+        print "\n";
 
         exit 0;
     }
-    elsif ( $arg eq '--version' )
+    elsif ( $arg =~ /^--version$|^-v$/ )
     {
         # #
         #   @usage          sudo perl /etc/cron.daily/csget --version
@@ -570,9 +576,10 @@ foreach my $arg ( @ARGV )
             close $fh;
 
             print "\n";
-            print "  ${BRIGHT_BLUE}CSGET Perl Process${END}\n";
-            print "  ${MAGENTA}ConfigServer Security & Firewall v$version${END}\n";
-            print "  ${MAGENTA}$proc_url${END}\n";
+            print "  ${BRIGHT_YELLOW}${proc_title}${END}\n";
+            print "  ${GREY_DARK}ConfigServer Security & Firewall v$version${END}\n";
+            print "  ${GREY_DARK}${proc_desc}${END}\n";
+            print "  ${GREY_DARK}$proc_url${END}\n";
             print "\n";
         }
         else
@@ -582,7 +589,7 @@ foreach my $arg ( @ARGV )
 
         exit 0;
     }
-    elsif ( $arg eq '--diag' )
+    elsif ( $arg =~ /^--diag$|^--diagnostic$|^-d$/ )
     {
         # #
         #   @usage          sudo perl /etc/cron.daily/csget --diag
@@ -647,9 +654,9 @@ foreach my $arg ( @ARGV )
         # #
 
         print "\n";
-        print "  ${BRIGHT_BLUE}CSGET Perl Process${END}\n";
-        print "  ${MAGENTA}Diagnostics${END}\n";
-        print "  ${MAGENTA}$proc_url${END}\n\n";
+        print "  ${BRIGHT_YELLOW}${proc_title}${END}\n";
+        print "  ${GREY_DARK}${proc_desc}${END}\n";
+        print "  ${GREY_DARK}$proc_url${END}\n\n";
         print "  ${GREY_DARK}Server URL ....... ${BRIGHT_YELLOW}${diagUrl}${END}\n";
         print "  ${GREY_DARK}Fetch Package .... ${BRIGHT_YELLOW}${diagMethod}${END}\n";
         print "  ${GREY_DARK}Command (Base) ... ${BRIGHT_YELLOW}${diagCmd}${END}\n";
@@ -662,7 +669,7 @@ foreach my $arg ( @ARGV )
 
         exit 0;
     }
-    elsif ( $arg eq '--nosleep' )
+    elsif ( $arg =~ /^--nosleep$|^-n$/ )
     {
         # #
         #   @usage          sudo perl /etc/cron.daily/csget --nosleep
@@ -670,6 +677,32 @@ foreach my $arg ( @ARGV )
         # #
 
         $NOSLEEP = 1;
+    }
+    elsif ( $arg =~ /^--help$|^-h$/ )
+    {
+        # #
+        #   @usage          sudo perl /etc/cron.daily/csget --help
+        #                   Returns help information
+        # #
+
+        # #
+        #   Output
+        # #
+
+        print "\n";
+        print "  ${BRIGHT_YELLOW}${proc_title}${END}\n";
+        print "  ${GREY_DARK}${proc_desc}${END}\n";
+        print "  ${GREY_DARK}$proc_url${END}\n\n";
+        printf "  %-28s %s%s\n", "${BRIGHT_BLUE}-k, --kill ", "${GREY_MEDIUM}Kills all processes associated with csget.", $END;
+        printf "  %-28s %s%s\n", "${BRIGHT_BLUE}-n, --nosleep ", "${GREY_MEDIUM}Run task immediately, do not start on timed delay.", $END;
+        printf "  %-28s %s%s\n", "${BRIGHT_BLUE}-l, --list ", "${GREY_MEDIUM}Lists all csget processes except this command.", $END;
+        printf "  %-28s %s%s\n", "${BRIGHT_BLUE}-d, --diag ", "${GREY_MEDIUM}Show diagnostic information.", $END;
+        printf "  %-28s %s%s\n", "${BRIGHT_BLUE}-D, --debug ", "${GREY_MEDIUM}Show verbose logs and additional details.", $END;
+        printf "  %-28s %s%s\n", "${BRIGHT_BLUE}-v, --version ", "${GREY_MEDIUM}Show version information.", $END;
+        printf "  %-28s %s%s\n", "${BRIGHT_BLUE}-h, --help ", "${GREY_MEDIUM}Show this help menu.", $END;
+        print "\n";
+
+        exit 0;
     }
     else
     {
