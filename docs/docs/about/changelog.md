@@ -17,18 +17,34 @@ tags:
 
 </p>
 
-### <!-- md:version stable- --> 15.08 <small>Dec 08 2025</small> { id="15.08" }
+### <!-- md:version stable- --> 15.08 <small>Dec 10 2025</small> { id="15.08" }
 
+- `feat(cron)`: Cron `csget` re-written
+  - Now compatible with all distros
+  - Utilizes tertiary redundancy system for fetching updates:
+    - `/usr/bin/wget`
+    - `/usr/bin/curl`
+    - `/usr/bin/GET`
+  - New flags added:
+    - `-r, --response `
+    - `-n, --nosleep`
+    - `-k, --kill`
+    - `-l, --list`
+    - `-d, --diag`
+    - `-D, --debug`
+    - `-v, --version`
+    - `-h, --help`
 - `feat(install)`: install scripts now give much more detailed output
 - `feat(cwp)`: add logic to handle files within cwp with immutable +i flag
 - `feat(webmin)`: automatically install `webmin` module if webmin control panel detected during installation
     - No longer requires webmin module to be manually loaded
 - `pref(blocklist)`: optimize generation scripts for blocklist service
 - `refactor(cwp)`: re-name left nav menu link to CSF within CentOS Web Panel
+    - Renamed from `ConfigServer Scripts` to `ConfigServer Firewall`
 - `refactor(license)`: update insiders release json response structure
 - `refactor(scripts)`: `protect.sh` for POSIX compliance and logging
 - `refactor(webmin)`: make `webmin` installation functionality in `install.*.sh` files POSIX compliant
-- `feat(core)`: add warning message if `LF_MODSEC_PERM` threshold below 3600 seconds (1 hour)
+- `feat(core)`: add warning message if `LF_MODSEC_PERM` threshold below `3600` seconds (1 hour)
 - `chore(core)`: add input value type to `LF_MODSEC_PERM` comments
 - `chore(core)`: update config description for `LF_MODSEC`
 - `chore(webmin)`: add property `longdesc` to `module.info` in CSF webmin module
@@ -37,6 +53,7 @@ tags:
 - `fix(blocklist)`: remove duplicate entries from static list highrisk in blocklist service
 - `fix(scripts)`: add shellcheck directive to `protect.sh`
 - `fix(cron)`: cron `csget` assigned incorrect user:group; now uses `root:root` in compliance with SELinux
+- `docs(mkdocs)`: add new chapter [Advanced](https://docs.configserver.dev/advanced/)
 
 <br />
 
