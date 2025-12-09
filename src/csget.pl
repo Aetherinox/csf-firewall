@@ -105,6 +105,7 @@
 
 use strict;
 use warnings;
+use File::Basename;
 
 # #
 #   Colors
@@ -124,7 +125,7 @@ my $white           = "${esc}[97m";
 my $black           = "${esc}[0;30m";
 my $redl            = "${esc}[0;91m";
 my $redd            = "${esc}[38;5;196m";
-my $magental        = "${esc}[38;5;197m";
+my $magental        = "${esc}[38;5;198m";
 my $magentad        = "${esc}[38;5;161m";
 my $fuchsial        = "${esc}[38;5;206m";
 my $fuchsiad        = "${esc}[38;5;199m";
@@ -191,6 +192,7 @@ our $app_name           = "CSF CSGET Perl Updater";
 our $app_desc           = "A perl script which allows for automated update checks for the official CSF servers.";
 our $app_repo           = "https://github.com/Aetherinox/csf-firewall";
 our $proc_name          = "ConfigServer Version Check";
+our $proc_path          = "/etc/cron.daily/" . basename($0) ."";
 our $log_dbg;
 my %versions;
 my %config_vals;
@@ -200,6 +202,7 @@ my $get_bin;
 my $get_cmd;
 my $get_method          = "none";
 my $get_status          = 0;
+my $col_width_left      = 32;
 
 # #
 #   Declare › Diagnostics Module
@@ -330,6 +333,59 @@ if ( -e "/usr/msfe/msfeversion.txt" )
 $0 = $proc_name;            # change the process name
 
 # #
+#   Define › Version › Compare
+#   
+#   Compare two version numbers
+# #
+
+sub version_is_newer
+{
+    my ($new, $old) = @_;
+
+    my @new_parts   = split /\./, $new;
+    my @old_parts   = split /\./, $old;
+
+    # Pad shorter array with zeros
+    my $len         = @new_parts > @old_parts ? @new_parts : @old_parts;
+    $#new_parts     = $len - 1;
+    $#old_parts     = $len - 1;
+
+    $_ ||= 0 for @new_parts, @old_parts;
+
+    for my $i ( 0..$len - 1 )
+    {
+        return 1 if $new_parts[$i] > $old_parts[$i];
+        return 0 if $new_parts[$i] < $old_parts[$i];
+    }
+
+    return 0; # same version
+}
+
+# #
+#   Define › Version › Read File
+#   
+#   Read version from a file
+# #
+
+sub version_read
+{
+    my ($file) = @_;
+    open my $fh, '<', $file or die "Cannot open $file: $!";
+    my $line = <$fh>;
+    close $fh;
+    chomp $line;
+    $line =~ s/^\s+|\s+$//g;   # trim whitespace
+
+    # Validate version format
+    unless ( $line =~ /^\d+(\.\d+){0,3}$/ )
+    {
+        die "Invalid version format in $file: '$line'\n";
+    }
+
+    return $line;
+}
+
+# #
 #   Declare › Helper › Get csget process pids
 #   
 #   @usage                  fetch_csget_pids()
@@ -342,7 +398,7 @@ sub fetch_csget_pids
     my $parent_pid  = getppid();
 
     # Get PIDs by script path and by $0 name
-    my @pids_path   = map { chomp; $_ } `pgrep -f '/etc/cron.daily/csget' 2>/dev/null`;
+    my @pids_path   = map { chomp; $_ } `pgrep -f "$proc_path" 2>/dev/null`;
     my @pids_name   = map { chomp; $_ } `pgrep -f '\Q$proc_name\E' 2>/dev/null`;
 
     # Merge unique PIDs
@@ -371,7 +427,7 @@ sub log_msg
     my $color_prefix    = $opts{color}          || '';
     my $no_console      = $opts{no_console}     || 0;
 
-    $msg =~ s/\n+$//;       # remove newlines
+    $msg =~ s/\n+$//;   # remove newlines
 
     # #
     #   Build timestamp for FILE logs only
@@ -385,8 +441,8 @@ sub log_msg
         $mon, $mday, $year, $hour, $min, $sec;
 
     # #
-    #   CONSOLE OUTPUT (only when DEBUG or RETRESPONSE)
-    # # 
+    #   Log › Debug & RETRESPONSE › Console Output
+    # #
 
     if ( ( $FLG_DEBUG || $FLG_RETRESPONSE ) && !$no_console )
     {
@@ -397,13 +453,13 @@ sub log_msg
     }
 
     # #
-    #   FILE OUTPUT (daemon mode)
+    #   Log › Daemon › File Output
     # #
 
     if ( !$FLG_DEBUG )
-
-    {   # #
-        #   always log clean text to daemon log
+    {
+        # #
+        #   Always log clean text to daemon log
         # #
 
         open my $dh, '>>', $log_file_daemon;
@@ -423,7 +479,7 @@ sub log_msg
     }
 
     # #
-    #   DEBUG FILE OUTPUT
+    #   Log › Debug › File Output
     # #
 
     if ( $FLG_DEBUG )
@@ -474,7 +530,7 @@ sub log_dbg
     elsif ( $tag eq 'WARN' )    { $color = $bgWarn }
     elsif ( $tag eq 'DNGR' )    { $color = $bgError }
     elsif ( $tag eq 'FAIL' )    { $color = $bgDanger }
-    elsif ( $tag eq 'DBUG' )    { $color = $bgVerbose }
+    elsif ( $tag eq 'DBUG' )    { $color = $bgDebug }
     elsif ( $tag eq 'VRBO' )    { $color = $bgVerbose }
 
     log_msg(
@@ -510,43 +566,65 @@ if ( -e $config_file )
 # #
 #   Declare › Flags
 #   
-#       --debug                 enables debug logging; disables forked child process daemonization
-#                                   › sudo perl /etc/cron.daily/csget --debug
+#       -r, --response          Run in foreground and show logs. Useful with bash scripts.
+#                                   › sudo perl /etc/cron.daily/csget --response
 #   
-#       --kill                  kills all processes associated with csget
+#       -n, --nosleep           Skips random sleep interval; processes immediately
+#                                   › sudo perl /etc/cron.daily/csget --nosleep
+#   
+#       -k, --kill              Kills all processes associated with csget.
 #                                   › sudo perl /etc/cron.daily/csget --kill
 #   
-#       --list                  lists all processes associated with csget
+#       -l, --list              Lists all csget processes except this command.
 #                                   › sudo perl /etc/cron.daily/csget --list
+#       
+#       -d, --diag              Show diagnostic information.
+#                                   › sudo perl /etc/cron.daily/csget --diag
 #   
-#       --version               Prints version information about csget and csf
+#       -D, --debug             Show verbose logs and additional details; disables forked child process daemonization.
+#                                   › sudo perl /etc/cron.daily/csget --debug
+#   
+#       -v, --version           Show version information about csget and csf.
 #                                   › sudo perl /etc/cron.daily/csget --version
 #   
-#       --nosleep               Skips random sleep interval; processes immediately
-#                                   › sudo perl /etc/cron.daily/csget --nosleep
-#       
-#       --diag                  Prints diagnostic info
-#                                   › sudo perl /etc/cron.daily/csget --diag
+#       -h, --help              Returns help information.
+#                                   › sudo perl /etc/cron.daily/csget --help
 # #
 
 foreach my $arg ( @ARGV )
 {
-    if ( $arg =~ /^--debug$|^-D$/ )
+    if ( $FLG_DEBUG )
     {
-        # #
-        #   @usage          sudo perl /etc/cron.daily/csget --debug
-        #                   Enables debug logging; disables forked child processes
-        # #
-
-        $FLG_DEBUG = 1;
-        next;
+        log_dbg( "[DBUG]: Passing arg [ ${peach}\"$arg\"${greym} ]" );
     }
+
+    # #
+    #   @usage          sudo perl /etc/cron.daily/csget --response
+    #                   Run in foreground and show logs. Useful with bash scripts.
+    # #
+
+    if ( $arg =~ /^--response$|^--resp$|^-r$/ )
+    {
+        $FLG_RETRESPONSE = 1;
+    }
+
+    # #
+    #   @usage          sudo perl /etc/cron.daily/csget --nosleep
+    #                   If specified, csget runs instantly, not on a random timer.
+    # #
+
+    elsif ( $arg =~ /^--nosleep$|^-n$/ )
+    {
+        $FLG_NOSLEEP = 1;
+    }
+
+    # #
+    #   @usage          sudo perl /etc/cron.daily/csget --kill
+    #                   Kills all processes associated with csget.
+    # #
+
     elsif ( $arg =~ /^--kill$|^-k$/ )
     {
-        # #
-        #   @usage          sudo perl /etc/cron.daily/csget --kill
-        #                   Kills all processes associated with csget
-        # #
 
         my @pids = fetch_csget_pids();
 
@@ -562,13 +640,14 @@ foreach my $arg ( @ARGV )
     
         exit 0;
     }
+
+    # #
+    #   @usage          sudo perl /etc/cron.daily/csget --list
+    #                   Lists all csget processes except this command.
+    # #
+
     elsif ( $arg =~ /^--list$|^-l$/ )
     {
-        # #
-        #   @usage          sudo perl /etc/cron.daily/csget --list
-        #                   Lists all csget processes except this command
-        # #
-
         print "\n";
 
         my $self_pid   = $$;                # current Perl PID
@@ -584,56 +663,38 @@ foreach my $arg ( @ARGV )
 
         if ( @lines )
         {
-            print "  ${bluel}csget processes currently running:${end}\n", @lines;
+            print "   ${bluel}CSGet processes currently running:${end}\n";
+            print "   ${greyd}The following is a list of processes attached to CSGet${end}\n\n";
+            print "   @lines";
         }
         else
         {
-            print "  ${greenl}No csget processes found.${end}\n";
+            print "   ${greenl}No CSGet processes found.${end}\n";
+            print "   ${greyd}No CSGet process are currently running. To start CSGet, ensure the file is in:${end}\n";
+            print "   ${magental}    $proc_path${end}\n\n";
+
+            print "   ${greyd}To run CSGet once, execute the command${end}\n";
+            print "   ${bluel}    \$ ${greend} sudo ${magental}$proc_path ${yellowl}--nosleep${end}\n\n";
+
+            print "   ${greyd}To start CSGet cron, execute the command${end}\n";
+            print "   ${bluel}    \$ ${greend} sudo ${magental}$proc_path${end}\n\n";
+
+            print "   ${greyd}For a list of command flags and descriptions, execute:${end}\n";
+            print "   ${bluel}    \$ ${greend} sudo ${magental}$proc_path ${yellowl}--help${end}\n\n";
         }
 
         print "\n";
 
         exit 0;
     }
-    elsif ( $arg =~ /^--version$|^-v$/ )
-    {
-        # #
-        #   @usage          sudo perl /etc/cron.daily/csget --version
-        #                   Prints the CSF version number and exits
-        # #
 
-        if ( -e $version_file )
-        {
-            open my $fh, '<', $version_file
-                or die "Cannot open $version_file: $!";
-            my $version = <$fh>;       # read first line
-            chomp $version;            # remove newline
-            close $fh;
+    # #
+    #   @usage          sudo perl /etc/cron.daily/csget --diag
+    #                   Show diagnostic information.
+    # #
 
-            print "\n";
-            print "  ${yellowl}${app_name}${end}\n";
-            print "  ${greyd}ConfigServer Security & Firewall v$version${end}\n";
-            print "  ${greyd}${app_desc}${end}\n";
-            print "  ${greyd}$app_repo${end}\n";
-            print "\n";
-        }
-        else
-        {
-            print "  ${redl}CSF version file not found: $version_file${end}\n";
-        }
-
-        exit 0;
-    }
-    elsif ( $arg =~ /^--response$|^--resp$|^-r$/ )
-    {
-        $FLG_RETRESPONSE = 1;
-    }
     elsif ( $arg =~ /^--diag$|^--diagnostic$|^-d$/ )
     {
-        # #
-        #   @usage          sudo perl /etc/cron.daily/csget --diag
-        #                   Prints diagnostic info about csget
-        # #
 
         # #
         #   Determine which fetch tool exists
@@ -693,67 +754,133 @@ foreach my $arg ( @ARGV )
         # #
 
         print "\n";
-        print "  ${yellowl}${app_name}${end}\n";
-        print "  ${greyd}${app_desc}${end}\n";
-        print "  ${greyd}$app_repo${end}\n\n";
-        print "  ${greyd}Server URL ....... ${yellowl}${diagUrl}${end}\n";
-        print "  ${greyd}Fetch Package .... ${yellowl}${diagMethod}${end}\n";
-        print "  ${greyd}Command (Base) ... ${yellowl}${diagCmd}${end}\n";
-        print "  ${greyd}Command (Out) .... ${yellowl}${diagOut}${end}\n";
-        print "  ${greyd}Config Path ...... ${yellowl}${config_file} ${configStatus}${end}\n";
-        print "  ${greyd}Log Folder ....... ${yellowl}${log_dir}${end}\n";
-        print "  ${greyd}Log Daemon ....... ${yellowl}${log_file_daemon}${end}\n";
-        print "  ${greyd}Log Debug ........ ${yellowl}${log_file_debug}${end}\n";
+        print "   ${yellowl}${app_name}${end}\n";
+        print "   ${greyd}${app_desc}${end}\n";
+        print "   ${greyd}$app_repo${end}\n\n";
+        printf "   %-*s %s\n", $col_width_left, "${greyd}Process Name", "${magental}${proc_name}${end}";
+        printf "   %-*s %s\n", $col_width_left, "${greyd}Process Path", "${magental}${proc_path}${end}";
+        printf "   %-*s %s\n", $col_width_left, "${greyd}Server URL", "${magental}${diagUrl}${end}";
+        printf "   %-*s %s\n", $col_width_left, "${greyd}Fetch Package", "${magental}${diagMethod}${end}";
+        printf "   %-*s %s\n", $col_width_left, "${greyd}Command (Base)", "${magental}${diagCmd}${end}";
+        printf "   %-*s %s\n", $col_width_left, "${greyd}Command (Out)", "${magental}${diagOut}${end}";
+        printf "   %-*s %s\n", $col_width_left, "${greyd}Config Path", "${magental}${config_file} ${configStatus}${end}";
+        printf "   %-*s %s\n", $col_width_left, "${greyd}Log Folder", "${magental}${log_dir}${end}";
+        printf "   %-*s %s\n", $col_width_left, "${greyd}Log Daemon", "${magental}${log_file_daemon}${end}";
+        printf "   %-*s %s\n", $col_width_left, "${greyd}Log Debug", "${magental}${log_file_debug}${end}";
         print "\n";
 
         exit 0;
     }
-    elsif ( $arg =~ /^--nosleep$|^-n$/ )
-    {
-        # #
-        #   @usage          sudo perl /etc/cron.daily/csget --nosleep
-        #                   If specified, csget runs instantly, not on a random timer.
-        # #
 
-        $FLG_NOSLEEP = 1;
+    # #
+    #   @usage          sudo perl /etc/cron.daily/csget --debug
+    #                   Show verbose logs and additional details; disables forked child process daemonization.
+    # #
+
+    elsif ( $arg =~ /^--debug$|^-D$/ )
+    {
+        $FLG_DEBUG = 1;
+        next;
     }
+
+    # #
+    #   @usage          sudo perl /etc/cron.daily/csget --version
+    #                   Show version information about csget and csf.
+    # #
+
+    elsif ( $arg =~ /^--version$|^-v$/ )
+    {
+
+        if ( -e $version_file )
+        {
+            open my $fh, '<', $version_file
+                or die "Cannot open $version_file: $!";
+            my $version = <$fh>;       # read first line
+            chomp $version;            # remove newline
+            close $fh;
+
+            print "\n";
+            print "   ${yellowl}${app_name}${end}\n";
+            print "   ${greyd}ConfigServer Security & Firewall v$version${end}\n";
+            print "   ${greyd}${app_desc}${end}\n";
+            print "   ${greyd}$app_repo${end}\n";
+            print "\n";
+        }
+        else
+        {
+            print "   ${redl}CSF version file not found: $version_file${end}\n";
+        }
+
+        exit 0;
+    }
+
+    # #
+    #   @usage          sudo perl /etc/cron.daily/csget --help
+    #                   Returns help information
+    # #
+
     elsif ( $arg =~ /^--help$|^-h$/ )
     {
-        # #
-        #   @usage          sudo perl /etc/cron.daily/csget --help
-        #                   Returns help information
-        # #
 
         # #
         #   Output
         # #
 
         print "\n";
-        print "  ${yellowl}${app_name}${end}\n";
-        print "  ${greyd}${app_desc}${end}\n";
-        print "  ${greyd}$app_repo${end}\n\n";
-        printf "  %-28s %s%s\n", "${bluel}-r, --response ", "${greym}Run in foreground and show logs. Useful with bash scripts.", $end;
-        printf "  %-28s %s%s\n", "${bluel}-n, --nosleep ", "${greym}Run task immediately, do not start on timed delay.", $end;
-        printf "  %-28s %s%s\n", "${bluel}-k, --kill ", "${greym}Kills all processes associated with csget.", $end;
-        printf "  %-28s %s%s\n", "${bluel}-l, --list ", "${greym}Lists all csget processes except this command.", $end;
-        printf "  %-28s %s%s\n", "${bluel}-d, --diag ", "${greym}Show diagnostic information.", $end;
-        printf "  %-28s %s%s\n", "${bluel}-D, --debug ", "${greym}Show verbose logs and additional details.", $end;
-        printf "  %-28s %s%s\n", "${bluel}-v, --version ", "${greym}Show version information.", $end;
-        printf "  %-28s %s%s\n", "${bluel}-h, --help ", "${greym}Show this help menu.", $end;
-        print "\n";
+        print "   ${yellowl}${app_name}${end}\n";
+        print "   ${greyd}${app_desc}${end}\n";
+        print "   ${greyd}$app_repo${end}\n\n";
+
+        printf STDERR "   %-5s %-40s\n", "${greyd}Syntax:${end}", "";
+        printf STDERR "   %-5s %-30s %-40s\n", "    ", "${greyd}Command${end}                           ", "  ${magental}$proc_path${greyd} [ ${greym}--option ${greyd}[ ${yellowd}arg${greyd} ]${greyd} ]${end}";
+        printf STDERR "   %-5s %-30s %-40s\n", "    ", "${greyd}Options${end}                           ", "  ${magental}$proc_path${greyd} [ ${greym}-h${greyd} | ${greym}--help${greyd} ]${end}";
+        printf STDERR "   %-5s %-30s %-40s\n", "    ", "    ${greym}-A${end}                            ", "     ${white}required";
+        printf STDERR "   %-5s %-30s %-40s\n", "    ", "    ${greym}-A...${end}                         ", "     ${white}required; multiple can be specified";
+        printf STDERR "   %-5s %-30s %-40s\n", "    ", "    ${greym}[ -A ]${end}                        ", "     ${white}optional";
+        printf STDERR "   %-5s %-30s %-40s\n", "    ", "    ${greym}[ -A... ]${end}                     ", "     ${white}optional; multiple can be specified";
+        printf STDERR "   %-5s %-30s %-40s\n", "    ", "    ${greym}{ -A | -B }${end}                   ", "     ${white}one or the other; do not use both";
+        printf STDERR "   %-5s %-30s %-40s\n", "    ", "${greyd}Examples${end}                          ", "  ${magental}$proc_path${end}";
+        printf STDERR "   %-5s %-30s %-40s\n", "    ", "${greyd}${end}                                  ", "  ${magental}$proc_path${end} ${yellowl}--nosleep${end}";
+        printf STDERR "   %-5s %-30s %-40s\n", "    ", "${greyd}${end}                                  ", "  ${magental}$proc_path${end} ${yellowl}--debug${end}";
+        printf STDERR "   %-5s %-30s %-40s\n", "    ", "${greyd}${end}                                  ", "  ${magental}$proc_path${end} ${yellowl}--nosleep ${yellowl}--response${end}";
+        printf STDERR "   %-5s %-30s %-40s\n", "    ", "${greyd}${end}                                  ", "  ${magental}$proc_path${end} ${yellowl}--diag${end}";
+        printf STDERR "   %-5s %-30s %-40s\n", "    ", "${greyd}${end}                                  ", "  ${magental}$proc_path${end} ${yellowl}--list${end}";
+        print STDERR "\n";
+        printf STDERR "   %-5s %-40s\n", "${greyd}Options:${end}", "";
+        printf STDERR "   %-5s %-81s %-40s\n", "    ", "${bluel}-r${greyd},${bluel}  --response ${yellowd}${end}                    ", "Run in foreground and show logs. Useful with bash scripts.${end}";
+        printf STDERR "   %-5s %-81s %-40s\n", "    ", "${blued}  ${greyd} ${blued}           ${yellowd}${end}                      ", "    ${greyd}disables forked daemonization${end}";
+        printf STDERR "   %-5s %-81s %-40s\n", "    ", "${bluel}-n${greyd},${bluel}  --nosleep ${yellowd}${end}                     ", "Run task immediately, do not start on timed delay.${end}";
+        printf STDERR "   %-5s %-81s %-40s\n", "    ", "${blued}  ${greyd} ${blued}           ${yellowd}${end}                      ", "    ${greyd}no forked daemonization${end}";
+        printf STDERR "   %-5s %-81s %-40s\n", "    ", "${bluel}-k${greyd},${bluel}  --kill ${yellowd}${end}                        ", "Kills all processes associated with csget.${end}";
+        printf STDERR "   %-5s %-81s %-40s\n", "    ", "${bluel}-l${greyd},${bluel}  --list ${yellowd}${end}                        ", "Lists all csget processes except this command.${end}";
+        printf STDERR "   %-5s %-81s %-40s\n", "    ", "${bluel}-d${greyd},${bluel}  --diag ${yellowd}${end}                        ", "Show diagnostic information.${end}";
+        printf STDERR "   %-5s %-81s %-40s\n", "    ", "${bluel}-D${greyd},${bluel}  --debug ${yellowd}${end}                       ", "Show verbose logs and additional details; disables forked child process daemonization.${end}";
+        printf STDERR "   %-5s %-81s %-40s\n", "    ", "${blued}  ${greyd} ${blued}           ${yellowd}${end}                      ", "    ${greyd}disables forked daemonization${end}";
+        printf STDERR "   %-5s %-81s %-40s\n", "    ", "${bluel}-v${greyd},${bluel}  --version ${yellowd}${end}                     ", "Show version information about csget and csf.${end}";
+        printf STDERR "   %-5s %-81s %-40s\n", "    ", "${bluel}-h${greyd},${bluel}  --help ${yellowd}${end}                        ", "Show this help menu.${end}";
+        print STDERR "\n";
+        printf STDERR "   %-5s %-40s\n", "${greyd}Tips:${end}", "";
+        printf STDERR "   %-5s %-10s %-40s\n", "    ", "${bluel}Run CSGet once${end}                    ", "${bluel}  \$ ${greend}sudo ${magental}$proc_path ${yellowl}--nosleep${end}";
+        printf STDERR "   %-5s %-10s %-40s\n", "    ", "${bluel}Start CSGet cron${end}                  ", "${bluel}  \$ ${greend}sudo ${magental}$proc_path${end}";
+        printf STDERR "   %-5s %-10s %-40s\n", "    ", "${bluel}Run using perl (normal)${end}           ", "${bluel}  \$ ${greend}sudo perl ${magental}$proc_path${end}";
+        printf STDERR "   %-5s %-10s %-40s\n", "    ", "${bluel}Run using perl (+w warnings)${end}      ", "${bluel}  \$ ${greend}sudo perl ${yellowl}-w ${magental}$proc_path${end}";
+        printf STDERR "   %-5s %-10s %-40s\n", "    ", "${bluel}Run using perl (+d debugger)${end}      ", "${bluel}  \$ ${greend}sudo perl ${yellowl}-d ${magental}$proc_path${end}";
+        printf STDERR "   %-5s %-10s %-40s\n", "    ", "${bluel}Run using perl (+d:Trace)${end}         ", "${bluel}  \$ ${greend}sudo perl ${yellowl}-d:Trace ${magental}$proc_path${end}";
+        print "\n\n";
 
         exit 0;
     }
+
+    # #
+    #   @usage          sudo perl /etc/cron.daily/csget --randomBadFlag
+    #                   Specified bad flag doesn't exist
+    # #
+
     else
     {
-        # #
-        #   @usage          sudo perl /etc/cron.daily/csget --randomBadFlag
-        #                   Specified bad flag doesn't exist
-        # #
-
         print "\n";
-        print "  ${redl}Invalid argument: ${yellowl}$arg${end}\n";
-        print "  ${greyd}Usage: ${bluel}sudo perl /etc/cron.daily/csget ${greyd}[${yellowl} --debug ${greyd}|${yellowl} --kill ${greyd}|${yellowl} --list ${greyd}|${yellowl} --version ${greyd}|${yellowl} --nosleep ${greyd}]${bluel}${end}\n";
+        print "   ${redl}Invalid argument: ${yellowl}$arg${end}\n";
+        print "   ${greyd}Usage: ${bluel}sudo perl $proc_path ${greyd}[${yellowl} --debug ${greyd}|${yellowl} --kill ${greyd}|${yellowl} --list ${greyd}|${yellowl} --version ${greyd}|${yellowl} --nosleep ${greyd}]${bluel}${end}\n";
         print "\n";
         exit 1;
     }
@@ -812,7 +939,7 @@ mkdir $log_dir unless -d $log_dir;
 #   Define › Welcome Print
 # #
 
-my $script_path = `readlink -f /etc/cron.daily/csget`;
+my $script_path = `readlink -f "$proc_path"`;
 chomp( $script_path ); # remove trailing newline
 log_daemon( "[INFO]: Found csget path: [$script_path]" );
 log_daemon( "[INFO]: Daemon started with PID [ \"$$\" ]" );
@@ -856,7 +983,7 @@ else
     exit 1;
 }
 
-log_dbg( "[PASS]: Found package [ \"$get_method\" ] using cmd [ \"$get_cmd\" ]" );
+log_dbg( "[PASS]: Found package [ ${greenl}\"$get_method\"${greym} ] using cmd [ ${greenl}\"$get_cmd\"${greym} ]" );
 
 # #
 #   Secondary fallback
@@ -943,7 +1070,7 @@ for ( my $x = @downloadservers; --$x; )
 foreach my $server ( @downloadservers )
 {
 
-    log_dbg( "[INFO]: Connect to server [ ${bluel}\"$server\"${greym} ]" );
+    log_dbg( "[INFO]: Connecting to server [ ${bluel}\"$server\"${greym} ]" );
 
     # #
     #   Loop $versions
@@ -964,7 +1091,7 @@ foreach my $server ( @downloadservers )
     
         my $url = "$server$version";
 
-        log_dbg( "[INFO]: Found local file [ ${bluel}\"$version\"${greym} ]; fetch remote version number [ ${bluel}\"$url\"${greym} ] and store in local [ ${bluel}\"$versions{ $version }\"${greym} ]" );
+        log_dbg( "[INFO]: Detected correct remote url as [ ${bluel}\"$url\"${greym} ]" );
     
         # #
         #   Run if local version file does NOT exist
@@ -991,7 +1118,7 @@ foreach my $server ( @downloadservers )
             if ( ( $config_vals{SPONSOR_RELEASE_INSIDERS} // 0 ) == 1 && ( $config_vals{SPONSOR_LICENSE} // '' ) ne '' && $version eq "/csf/version.txt" )
             {
                 $url .= "?channel=insiders&license=$config_vals{ SPONSOR_LICENSE }";
-                log_dbg( "[PASS]: Using release channel [ ${bluel}\"insiders\"${greym} ] from server [ ${bluel}\"$url\"${greym} ]" );
+                log_dbg( "[PASS]: Using release channel [ ${greenl}\"insiders\"${greym} ] from server [ ${greenl}\"$url\"${greym} ]" );
             }
 
             # #
@@ -1000,7 +1127,7 @@ foreach my $server ( @downloadservers )
 
             else
             {
-                log_dbg( "[PASS]: Using release channel [ ${bluel}\"stable\"${greym} ] from server [ ${bluel}\"$url\"${greym} ]" );
+                log_dbg( "[PASS]: Using release channel [ ${greenl}\"stable\"${greym} ] from server [ ${greenl}\"$url\"${greym} ]" );
             }
 
             # #
@@ -1017,7 +1144,7 @@ foreach my $server ( @downloadservers )
 
             if ( $get_method eq "none" )
             {
-                log_dbg( "[FAIL]: GET [ ${bluel}\"$get_method\"${greym} ] bad method; aborting process" );
+                log_dbg( "[FAIL]: GET [ ${redl}\"$get_method\"${greym} ] bad method; aborting process" );
                 exit 0;
 
             }
@@ -1028,12 +1155,12 @@ foreach my $server ( @downloadservers )
                 # #
             
                 my $cmdline = "$get_cmd $url > $versions{ $version } 2> $versions{ $version }.error";
-                log_dbg( "[INFO]: Downloading file using [ ${bluel}\"$get_method\"${greym} ] with command [ ${bluel}\"$cmdline\"${greym} ]" );
+                log_dbg( "[INFO]: Download file using [ ${bluel}\"$get_method\"${greym} ] with cmd [ ${bluel}\"$cmdline\"${greym} ]" );
 
                 my $raw     = system( $cmdline );           # Raw return from system()
                 my $exit    = $raw >> 8;                    # Real exit code from raw return; shift right 8 bytes
 
-                log_dbg( "[INFO]: Method [ ${bluel}\"$get_method\"${greym} ] returned raw response [ ${bluel}\"$raw\"${greym} ]; exit = [ ${bluel}\"$exit\"${greym} ]" );
+                log_dbg( "[INFO]: Download with [ ${bluel}\"$get_method\"${greym} ] returned raw response [ ${bluel}\"$raw\"${greym} ]; exit = [ ${bluel}\"$exit\"${greym} ]" );
 
                 # #
                 #   Success only if exit == 0 AND file exists and has content
@@ -1059,7 +1186,7 @@ foreach my $server ( @downloadservers )
         
                     $get_status = ( $exit != 0 ) ? $exit : 1;
 
-                    log_dbg( "[WARN]: GET [ \"$get_method\" ] failed or produced empty file; status set to [ \"$get_status\" ]" );
+                    log_dbg( "[WARN]: GET [ ${yellowl}\"$get_method\"${greym} ] failed or produced empty file; status set to [ ${yellowl}\"$get_status\"${greym} ]" );
                 }
             }
 
@@ -1072,12 +1199,12 @@ foreach my $server ( @downloadservers )
             else
             {
                 my $cmdline = "$get_cmd $versions{ $version } $url";
-                log_dbg( "[INFO]: Downloading file using [ ${bluel}\"$get_method\"${greym} ] with command [ ${bluel}\"$cmdline\"${greym} ]" );
+                log_dbg( "[INFO]: Download file using [ ${bluel}\"$get_method\"${greym} ] with cmd [ ${bluel}\"$cmdline\"${greym} ]" );
 
                 my $raw     = system( $cmdline );
                 my $exit    = $raw >> 8;
 
-                log_dbg( "[INFO]: Method [ ${bluel}\"$get_method\"${greym} ] returned raw response [ ${bluel}\"$raw\"${greym} ]; exit = [ ${bluel}\"$exit\"${greym} ]" );
+                log_dbg( "[INFO]: Download with [ ${bluel}\"$get_method\"${greym} ] returned raw response [ ${bluel}\"$raw\"${greym} ]; exit = [ ${bluel}\"$exit\"${greym} ]" );
 
                 # Normalize to 0 (success) / non-zero (failure)
                 $get_status = $exit == 0 ? 0 : $exit;
@@ -1094,7 +1221,19 @@ foreach my $server ( @downloadservers )
             #               non-zero    Error
             # #
 
-            log_dbg( "[INFO]: Method [ ${bluel}\"$get_method\"${greym} ] returned status [ ${bluel}\"" . ( $get_status ) . "\"${greym} ]"  );
+            my %STATUS_TEXT = (
+                0 => 'Success',
+                1 => 'Connection Error',
+                2 => 'Timeout',
+                3 => 'Invalid Response',
+                4 => 'Permission Denied',
+                5 => 'Unknown Error',
+            );
+
+            my $status_code = $get_status;
+            my $status_text = $STATUS_TEXT{$status_code} // 'Undefined Status';
+
+            log_dbg( "[INFO]: Download with [ ${bluel}\"$get_method\"${greym} ] returned status [ ${bluel}\"$status_text ($get_status)\"${greym} ]"  );
 
             if ( $get_status )
             {
@@ -1108,13 +1247,79 @@ foreach my $server ( @downloadservers )
                 else
                 {
 					open ( my $ERROR, ">", $versions{ $version }.".error" );
-                    log_daemon( "[FAIL]: [ \"$get_method\" ]: Failed to retrieve latest version from ConfigServer", $ERROR );
+                    log_daemon( "[FAIL]: [ ${redl}\"$get_method\"${greym} ]: Failed to retrieve latest version from ConfigServer", $ERROR );
 					close ( $ERROR );
 				}
             }
             else
             {
-                log_dbg( "[INFO]: Successfully downloaded csf version from [ ${bluel}\"$url\"${greym} ] to file [ ${bluel}\"$versions{ $version }\"${greym} ]" );
+                log_dbg( "[PASS]: Successfully downloaded csf version from [ ${greenl}\"$url\"${greym} ] to file [ ${greenl}\"$versions{ $version }\"${greym} ]" );
+            }
+
+            # #
+            #   Verify the downloaded file contains a valid version
+            # #
+
+            if ( -s $versions{ $version } )        # file exists and has content
+            {
+                open my $fh, '<', $versions{ $version } or do
+                {
+                    log_dbg( "[FAIL]: Cannot open [ ${redl}\"$versions{ $version }\" ${greym} ] for reading: [ ${redl}\"$!\" ${greym} ]" );
+                    next;
+                };
+
+                my $line = <$fh>;                  # read first line
+                chomp $line;
+                close $fh;
+
+                # regex: one or more digits, followed by 1-3 groups of .digits
+                if ( $line =~ /^\d+(\.\d+){0,3}$/ )
+                {
+                    log_dbg( "[PASS]: File [ ${greenl}\"$versions{ $version }\" ${greym} ] contains valid version: [ ${greenl}\"$line\" ${greym} ]" );
+                    $get_status = 0;                # mark as passed
+                }
+                else
+                {
+                    log_dbg( "[WARN]: File [ ${yellowl}\"$versions{ $version }\" ${greym} ] does NOT contain a valid version: [ ${yellowl}\"$line\" ${greym} ]" );
+                    $get_status = 1;                # mark as failed
+                }
+            }
+            else
+            {
+                log_dbg( "[FAIL]: File [ ${redl}\"$versions{ $version }\" ${greym} ] is empty or missing" );
+                $get_status = 1;
+            }
+
+            # #
+            #   Version Check (Optional)
+            #   
+            #   After the newest remote CSF version is downloaded and placed in /var/lib/configserver/csf.txt;
+            #   compare the remote version of CSF available (/var/lib/configserver/csf.txt) with the current local version (/etc/csf/version.txt).
+            #   Return if an update is available.
+            # #
+
+            my $file_ver_current    = "${version_file}";            # /etc/csf/version.txt
+            my $file_ver_remote     = $versions{ $version };        # /var/lib/configserver/csf.txt
+
+            if ( -r $file_ver_current )
+            {
+                log_dbg( "[INFO]: File [ ${bluel}\"$file_ver_current\"${greym} ] is readable" );
+
+                my $ver_current     = version_read( $file_ver_current );
+                my $ver_remote      = version_read( $file_ver_remote );
+
+                if ( version_is_newer( $ver_remote, $ver_current ) )
+                {
+                    log_dbg( "[PASS]: Update available! Current Version [ ${greenl}\"$ver_current\"${greym} ] | Newest Version [ ${greenl}\"$ver_remote\"${greym} ]" );
+                }
+                else
+                {
+                    log_dbg( "[INFO]: No update available. Current Version [ ${bluel}\"$ver_current\"${greym} ] | Newest Version [ ${bluel}\"$ver_remote\"${greym} ]" );
+                }
+            }
+            else
+            {
+                log_dbg( "[FAIL]: Version file ${redl}${file_ver_current}${greym} not readable. Skipping initial version check." );
             }
 
             # #
@@ -1140,12 +1345,12 @@ foreach my $server ( @downloadservers )
             {
                 if ( $get_status == 0 )
                 {
-                    log_dbg( "[INFO]: Job successful" );
+                    log_dbg( "[PASS]: Job has completed ${greenl}successfully${greym}. File [ ${greenl}\"$versions{ $version }\" ${greym} ] contains good data." );
                     exit 0;     # success
                 }
                 else
                 {
-                    log_dbg( "[INFO]: Job failed" );
+                    log_dbg( "[FAIL]: Job has ${redl}failed${greym} to fetch version from CSF network. Try running script again." );
                     exit 1;     # failure
                 }
             }
