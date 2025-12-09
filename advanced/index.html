@@ -7,31 +7,31 @@
         <meta name="author" content="Aetherinox">
       
       
-        <link rel="canonical" href="https://aetherinox.github.io/csf-firewall/blog/changelog/">
+        <link rel="canonical" href="https://aetherinox.github.io/csf-firewall/advanced/">
       
       
-        <link rel="prev" href="../">
+        <link rel="prev" href="../usage/cheatsheet/structure/">
       
       
-        <link rel="next" href="../csfajaxtail/">
+        <link rel="next" href="csget/">
       
       
         
       
       
-      <link rel="icon" href="../../assets/favicon.png">
+      <link rel="icon" href="../assets/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
     
     
       
-        <title>changelog - ConfigServer Security &amp; Firewall</title>
+        <title>Advanced › Introduction - ConfigServer Security &amp; Firewall</title>
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.618322db.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -50,19 +50,19 @@
       
     
     
-      <link rel="stylesheet" href="../../css/timeago.css">
+      <link rel="stylesheet" href="../css/timeago.css">
     
-      <link rel="stylesheet" href="../../stylesheets/extra.css?v1.000">
+      <link rel="stylesheet" href="../stylesheets/extra.css?v1.000">
     
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
     
     
-    <link rel="stylesheet" href="../../assets/stylesheets/custom.00c04c01.min.css">
+    <link rel="stylesheet" href="../assets/stylesheets/custom.00c04c01.min.css">
 
-  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+  <link href="../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
             html.glightbox-open { overflow: initial; height: 100%; }
             .gslide-title { margin-top: 0px; user-select: text; }
             .gslide-desc { color: #666; user-select: text; }
@@ -92,7 +92,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#changelog" class="md-skip">
+        <a href="#advanced-introduction" class="md-skip">
           Skip to content
         </a>
       
@@ -124,12 +124,12 @@
             <div class="md-banner__inner md-grid md-typeset">
               
     You're not viewing the latest version.
-    <a href="../../.."> 
+    <a href="../.."> 
       <strong>Click here to go to latest.</strong>
     </a>
 
             </div>
-            <script>var el=document.querySelector("[data-md-component=outdated]"),base=new URL("../.."),outdated=__md_get("__outdated",sessionStorage,base);!0===outdated&&el&&(el.hidden=!1)</script>
+            <script>var el=document.querySelector("[data-md-component=outdated]"),base=new URL(".."),outdated=__md_get("__outdated",sessionStorage,base);!0===outdated&&el&&(el.hidden=!1)</script>
           </aside>
         
       </div>
@@ -139,7 +139,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="ConfigServer Security &amp; Firewall" class="md-header__button md-logo" aria-label="ConfigServer Security &amp; Firewall" data-md-component="logo">
+    <a href=".." title="ConfigServer Security &amp; Firewall" class="md-header__button md-logo" aria-label="ConfigServer Security &amp; Firewall" data-md-component="logo">
       
   
   <svg viewBox="0 0 512 512" id="svgContainer" xmlns="http://www.w3.org/2000/svg">
@@ -163,7 +163,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              changelog
+              Advanced › Introduction
             
           </span>
         </div>
@@ -281,7 +281,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../home/" class="md-tabs__link">
+      <a href="../home/" class="md-tabs__link">
         
   
   
@@ -302,7 +302,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../about/csf/" class="md-tabs__link">
+        <a href="../about/csf/" class="md-tabs__link">
           
   
   
@@ -324,7 +324,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../install/dependencies/" class="md-tabs__link">
+        <a href="../install/dependencies/" class="md-tabs__link">
           
   
   
@@ -346,7 +346,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../usage/getting-started/" class="md-tabs__link">
+        <a href="../usage/getting-started/" class="md-tabs__link">
           
   
   
@@ -364,11 +364,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../advanced/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
           
   
   
@@ -390,7 +392,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../services/" class="md-tabs__link">
+        <a href="../services/" class="md-tabs__link">
           
   
   
@@ -412,7 +414,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../insiders/about/" class="md-tabs__link">
+        <a href="../insiders/about/" class="md-tabs__link">
           
   
   
@@ -432,7 +434,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../about/changelog/" class="md-tabs__link">
+      <a href="../about/changelog/" class="md-tabs__link">
         
   
   
@@ -449,13 +451,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../blog/" class="md-tabs__link">
           
   
   
@@ -548,7 +548,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="ConfigServer Security &amp; Firewall" class="md-nav__button md-logo" aria-label="ConfigServer Security &amp; Firewall" data-md-component="logo">
+    <a href=".." title="ConfigServer Security &amp; Firewall" class="md-nav__button md-logo" aria-label="ConfigServer Security &amp; Firewall" data-md-component="logo">
       
   
   <svg viewBox="0 0 512 512" id="svgContainer" xmlns="http://www.w3.org/2000/svg">
@@ -582,7 +582,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../home/" class="md-nav__link">
+      <a href="../home/" class="md-nav__link">
         
   
   
@@ -673,7 +673,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../about/csf/" class="md-nav__link">
+      <a href="../about/csf/" class="md-nav__link">
         
   
   
@@ -701,7 +701,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../about/contributing/" class="md-nav__link">
+      <a href="../about/contributing/" class="md-nav__link">
         
   
   
@@ -729,7 +729,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../about/license/" class="md-nav__link">
+      <a href="../about/license/" class="md-nav__link">
         
   
   
@@ -757,7 +757,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../about/privacy/" class="md-nav__link">
+      <a href="../about/privacy/" class="md-nav__link">
         
   
   
@@ -843,7 +843,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../about/conventions/" class="md-nav__link">
+      <a href="../about/conventions/" class="md-nav__link">
         
   
   
@@ -871,7 +871,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../about/tags/" class="md-nav__link">
+      <a href="../about/tags/" class="md-nav__link">
         
   
   
@@ -986,7 +986,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../install/dependencies/" class="md-nav__link">
+      <a href="../install/dependencies/" class="md-nav__link">
         
   
   
@@ -1014,7 +1014,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../install/download/" class="md-nav__link">
+      <a href="../install/download/" class="md-nav__link">
         
   
   
@@ -1042,7 +1042,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../install/tests/" class="md-nav__link">
+      <a href="../install/tests/" class="md-nav__link">
         
   
   
@@ -1070,7 +1070,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../install/install/" class="md-nav__link">
+      <a href="../install/install/" class="md-nav__link">
         
   
   
@@ -1098,7 +1098,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../install/services/" class="md-nav__link">
+      <a href="../install/services/" class="md-nav__link">
         
   
   
@@ -1126,7 +1126,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../install/webui/" class="md-nav__link">
+      <a href="../install/webui/" class="md-nav__link">
         
   
   
@@ -1154,7 +1154,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../install/uninstall/" class="md-nav__link">
+      <a href="../install/uninstall/" class="md-nav__link">
         
   
   
@@ -1240,7 +1240,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../install/update/v14-to-v15/" class="md-nav__link">
+      <a href="../install/update/v14-to-v15/" class="md-nav__link">
         
   
   
@@ -1268,7 +1268,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../install/update/v15-to-newer.md" class="md-nav__link">
+      <a href="../install/update/v15-to-newer.md" class="md-nav__link">
         
   
   
@@ -1364,7 +1364,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../install/integrations/authentik/" class="md-nav__link">
+      <a href="../install/integrations/authentik/" class="md-nav__link">
         
   
   
@@ -1392,7 +1392,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../install/integrations/docker/" class="md-nav__link">
+      <a href="../install/integrations/docker/" class="md-nav__link">
         
   
   
@@ -1420,7 +1420,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../install/integrations/traefik/" class="md-nav__link">
+      <a href="../install/integrations/traefik/" class="md-nav__link">
         
   
   
@@ -1533,7 +1533,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/getting-started/" class="md-nav__link">
+      <a href="../usage/getting-started/" class="md-nav__link">
         
   
   
@@ -1561,7 +1561,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/configuration/" class="md-nav__link">
+      <a href="../usage/configuration/" class="md-nav__link">
         
   
   
@@ -1589,7 +1589,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/prepost/" class="md-nav__link">
+      <a href="../usage/prepost/" class="md-nav__link">
         
   
   
@@ -1617,7 +1617,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/blocklists/" class="md-nav__link">
+      <a href="../usage/blocklists/" class="md-nav__link">
         
   
   
@@ -1645,7 +1645,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/ipset/" class="md-nav__link">
+      <a href="../usage/ipset/" class="md-nav__link">
         
   
   
@@ -1673,7 +1673,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/geoip/" class="md-nav__link">
+      <a href="../usage/geoip/" class="md-nav__link">
         
   
   
@@ -1728,7 +1728,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../usage/troubleshooting/" class="md-nav__link ">
+            <a href="../usage/troubleshooting/" class="md-nav__link ">
               
   
   
@@ -1772,7 +1772,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/troubleshooting/cyberpanel/" class="md-nav__link">
+      <a href="../usage/troubleshooting/cyberpanel/" class="md-nav__link">
         
   
   
@@ -1800,7 +1800,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/troubleshooting/webui/" class="md-nav__link">
+      <a href="../usage/troubleshooting/webui/" class="md-nav__link">
         
   
   
@@ -1910,7 +1910,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/cheatsheet/home/" class="md-nav__link">
+      <a href="../usage/cheatsheet/home/" class="md-nav__link">
         
   
   
@@ -1938,7 +1938,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/cheatsheet/commands/" class="md-nav__link">
+      <a href="../usage/cheatsheet/commands/" class="md-nav__link">
         
   
   
@@ -1966,7 +1966,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/cheatsheet/control_panels.md" class="md-nav__link">
+      <a href="../usage/cheatsheet/control_panels.md" class="md-nav__link">
         
   
   
@@ -1994,7 +1994,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/cheatsheet/conf/" class="md-nav__link">
+      <a href="../usage/cheatsheet/conf/" class="md-nav__link">
         
   
   
@@ -2022,7 +2022,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/cheatsheet/ports/" class="md-nav__link">
+      <a href="../usage/cheatsheet/ports/" class="md-nav__link">
         
   
   
@@ -2050,7 +2050,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/cheatsheet/structure/" class="md-nav__link">
+      <a href="../usage/cheatsheet/structure/" class="md-nav__link">
         
   
   
@@ -2090,6 +2090,8 @@
       
   
   
+    
+  
   
   
     
@@ -2105,20 +2107,23 @@
     
     
       
+        
+        
+      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../advanced/" class="md-nav__link ">
+            <a href="./" class="md-nav__link md-nav__link--active">
               
   
   
@@ -2136,13 +2141,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+              <label class="md-nav__link md-nav__link--active" for="__nav_5" id="__nav_5_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2162,7 +2167,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../advanced/csget/" class="md-nav__link">
+      <a href="csget/" class="md-nav__link">
         
   
   
@@ -2226,7 +2231,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../services/" class="md-nav__link ">
+            <a href="../services/" class="md-nav__link ">
               
   
   
@@ -2270,7 +2275,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../services/blocklist.configserver/" class="md-nav__link">
+      <a href="../services/blocklist.configserver/" class="md-nav__link">
         
   
   
@@ -2298,7 +2303,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../services/download.configserver/" class="md-nav__link">
+      <a href="../services/download.configserver/" class="md-nav__link">
         
   
   
@@ -2326,7 +2331,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../services/get.configserver/" class="md-nav__link">
+      <a href="../services/get.configserver/" class="md-nav__link">
         
   
   
@@ -2425,7 +2430,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../insiders/about/" class="md-nav__link">
+      <a href="../insiders/about/" class="md-nav__link">
         
   
   
@@ -2453,7 +2458,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../insiders/payments_and_billing/" class="md-nav__link">
+      <a href="../insiders/payments_and_billing/" class="md-nav__link">
         
   
   
@@ -2481,7 +2486,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../insiders/join/" class="md-nav__link">
+      <a href="../insiders/join/" class="md-nav__link">
         
   
   
@@ -2509,7 +2514,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../insiders/sponsors/" class="md-nav__link">
+      <a href="../insiders/sponsors/" class="md-nav__link">
         
   
   
@@ -2595,7 +2600,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../insiders/setup/" class="md-nav__link">
+      <a href="../insiders/setup/" class="md-nav__link">
         
   
   
@@ -2623,7 +2628,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../insiders/disable/" class="md-nav__link">
+      <a href="../insiders/disable/" class="md-nav__link">
         
   
   
@@ -2666,7 +2671,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../about/changelog/" class="md-nav__link">
+      <a href="../about/changelog/" class="md-nav__link">
         
   
   
@@ -2690,8 +2695,6 @@
       
   
   
-    
-  
   
   
     
@@ -2709,23 +2712,20 @@
     
     
       
-        
-        
-      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9">
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../" class="md-nav__link ">
+            <a href="../blog/" class="md-nav__link ">
               
   
   
@@ -2743,13 +2743,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_9" id="__nav_9_label" tabindex="">
+              <label class="md-nav__link " for="__nav_9" id="__nav_9_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_9">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2779,20 +2779,17 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9_2">
         
           
-          <label class="md-nav__link" for="__nav_9_2" id="__nav_9_2_label" tabindex="">
+          <label class="md-nav__link" for="__nav_9_2" id="__nav_9_2_label" tabindex="0">
             
   
   
@@ -2830,7 +2827,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../2025/" class="md-nav__link">
+      <a href="../blog/2025/" class="md-nav__link">
         
   
   
@@ -2863,10 +2860,8 @@
                 
   
   
-    
   
   
-  
     
     
       
@@ -2905,21 +2900,18 @@
     
       
       
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9_3">
         
           
-          
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9_3" checked>
-        
-          
-          <label class="md-nav__link" for="__nav_9_3" id="__nav_9_3_label" tabindex="">
+          <label class="md-nav__link" for="__nav_9_3" id="__nav_9_3_label" tabindex="0">
             
   
   
@@ -2937,7 +2929,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_9_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_9_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_9_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2952,41 +2944,12 @@
                 
   
   
-    
-  
   
     
-      
-    
   
   
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    changelog
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../blog/changelog/" class="md-nav__link">
         
   
   
@@ -3002,92 +2965,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#release-v1507" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Release: v15.07
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#release-v1506" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Release: v15.06
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#release-v1505" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Release: v15.05
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#release-v1504" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Release: v15.04
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#release-v1503" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Release: v15.03
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#release-v1502" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Release: v15.02
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -3102,7 +2979,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../csfajaxtail/" class="md-nav__link">
+      <a href="../blog/csfajaxtail/" class="md-nav__link">
         
   
   
@@ -3132,7 +3009,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../csp/" class="md-nav__link">
+      <a href="../blog/csp/" class="md-nav__link">
         
   
   
@@ -3162,7 +3039,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cyberpanel/" class="md-nav__link">
+      <a href="../blog/cyberpanel/" class="md-nav__link">
         
   
   
@@ -3192,7 +3069,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../downloadconfigserverdev/" class="md-nav__link">
+      <a href="../blog/downloadconfigserverdev/" class="md-nav__link">
         
   
   
@@ -3222,7 +3099,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../initd/" class="md-nav__link">
+      <a href="../blog/initd/" class="md-nav__link">
         
   
   
@@ -3252,7 +3129,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../release/" class="md-nav__link">
+      <a href="../blog/release/" class="md-nav__link">
         
   
   
@@ -3282,7 +3159,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../release-alpha/" class="md-nav__link">
+      <a href="../blog/release-alpha/" class="md-nav__link">
         
   
   
@@ -3312,7 +3189,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ui/" class="md-nav__link">
+      <a href="../blog/ui/" class="md-nav__link">
         
   
   
@@ -3342,7 +3219,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../v15x/" class="md-nav__link">
+      <a href="../blog/v15x/" class="md-nav__link">
         
   
   
@@ -3372,7 +3249,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../vestacp/" class="md-nav__link">
+      <a href="../blog/vestacp/" class="md-nav__link">
         
   
   
@@ -3402,7 +3279,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../web-inteface/" class="md-nav__link">
+      <a href="../blog/web-inteface/" class="md-nav__link">
         
   
   
@@ -3432,7 +3309,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../web-login/" class="md-nav__link">
+      <a href="../blog/web-login/" class="md-nav__link">
         
   
   
@@ -3462,7 +3339,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../web-theme-dark/" class="md-nav__link">
+      <a href="../blog/web-theme-dark/" class="md-nav__link">
         
   
   
@@ -3492,7 +3369,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../webmin/" class="md-nav__link">
+      <a href="../blog/webmin/" class="md-nav__link">
         
   
   
@@ -3636,68 +3513,30 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#release-v1507" class="md-nav__link">
+  <a href="#components" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Release: v15.07
+        Components
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#csget-cron" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CSGET Cron
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#release-v1506" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Release: v15.06
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#release-v1505" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Release: v15.05
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#release-v1504" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Release: v15.04
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#release-v1503" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Release: v15.03
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#release-v1502" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Release: v15.02
-      
-    </span>
-  </a>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -3710,345 +3549,150 @@
             
           
           
-  <div class="md-content" data-md-component="content">
-    <div class="md-content__inner">
-      <header class="md-typeset">
-        <h1 id="changelog">changelog<a class="headerlink" href="#changelog" title="Permanent link">¶</a></h1>
-      </header>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/118329232" alt="Aetherinox">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2025-10-23 00:00:00+00:00">Thursday, October 23, 2025</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../release/" class="md-meta__link">release</a>, 
-              <a href="./" class="md-meta__link">changelog</a>, 
-              <a href="../v15x/" class="md-meta__link">v15.x</a>, 
-              <a href="../cyberpanel/" class="md-meta__link">cyberpanel</a></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              4 min read
-            
-          </li>
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="release-v1507"><a class="toclink" href="../2025/release-v1507/">Release: v15.07</a></h2>
-<p>This update publicly launches our <a href="../../insiders/">Insiders Program</a>, offering early access to upcoming features and exclusive benefits.  </p>
-<p>It also resolves a CyberPanel integration issue that caused errors when saving your <strong>Firewall Configuration</strong>, alongside several minor bug fixes, maintenance improvements, and code refactoring.</p>
-
-    
-      <nav class="md-post__action">
-        <a href="../2025/release-v1507/">
-          Continue reading
-        </a>
-      </nav>
-    
-    
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/118329232" alt="Aetherinox">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2025-10-17 00:00:00+00:00">Friday, October 17, 2025</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../release/" class="md-meta__link">release</a>, 
-              <a href="./" class="md-meta__link">changelog</a>, 
-              <a href="../v15x/" class="md-meta__link">v15.x</a>, 
-              <a href="../webmin/" class="md-meta__link">webmin</a>, 
-              <a href="../ui/" class="md-meta__link">ui</a></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              2 min read
-            
-          </li>
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="release-v1506"><a class="toclink" href="../2025/release-v1506/">Release: v15.06</a></h2>
-<p>This update fixes a backwards compatibility bug between <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> and older versions of Webmin such as v2.111.</p>
-
-    
-      <nav class="md-post__action">
-        <a href="../2025/release-v1506/">
-          Continue reading
-        </a>
-      </nav>
-    
-    
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/118329232" alt="Aetherinox">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2025-10-16 00:00:00+00:00">Thursday, October 16, 2025</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../release/" class="md-meta__link">release</a>, 
-              <a href="./" class="md-meta__link">changelog</a>, 
-              <a href="../v15x/" class="md-meta__link">v15.x</a>, 
-              <a href="../csp/" class="md-meta__link">csp</a>, 
-              <a href="../initd/" class="md-meta__link">init.d</a></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              1 min read
-            
-          </li>
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="release-v1505"><a class="toclink" href="../2025/release-v1505/">Release: v15.05</a></h2>
-<p>This update fixes an issue where <abbr title="Hyper Text Markup Language">HTML</abbr> in the <strong>Firewall Configuration</strong> page was not properly escaped, and rewrites the <code>init.d</code> script for POSIX compatibility with added functionality.</p>
-
-    
-      <nav class="md-post__action">
-        <a href="../2025/release-v1505/">
-          Continue reading
-        </a>
-      </nav>
-    
-    
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/118329232" alt="Aetherinox">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2025-10-15 00:00:00+00:00">Wednesday, October 15, 2025</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../release/" class="md-meta__link">release</a>, 
-              <a href="./" class="md-meta__link">changelog</a>, 
-              <a href="../v15x/" class="md-meta__link">v15.x</a>, 
-              <a href="../webmin/" class="md-meta__link">webmin</a>, 
-              <a href="../csfajaxtail/" class="md-meta__link">csfajaxtail</a></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              2 min read
-            
-          </li>
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="release-v1504"><a class="toclink" href="../2025/release-v1504/">Release: v15.04</a></h2>
-<p>This update addresses a textbox height bug for the Webmin control panel which affects the <strong>log</strong> viewing pages. Two new settings have also been added to the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> config file <code>/etc/csf/csf.conf</code> which affects logging.</p>
-
-    
-      <nav class="md-post__action">
-        <a href="../2025/release-v1504/">
-          Continue reading
-        </a>
-      </nav>
-    
-    
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/118329232" alt="Aetherinox">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2025-10-14 00:00:00+00:00">Tuesday, October 14, 2025</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../release/" class="md-meta__link">release</a>, 
-              <a href="./" class="md-meta__link">changelog</a>, 
-              <a href="../v15x/" class="md-meta__link">v15.x</a>, 
-              <a href="../webmin/" class="md-meta__link">webmin</a>, 
-              <a href="../csfajaxtail/" class="md-meta__link">csfajaxtail</a></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              2 min read
-            
-          </li>
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="release-v1503"><a class="toclink" href="../2025/release-v1503/">Release: v15.03</a></h2>
-<p>This update includes several minor improvements without adding major new features. It also fixes an issue in the Webmin control panel, restoring the <strong>Configuration</strong> and <strong>Help</strong> menus that were missing from the header in <a href="../2025/release-v1502/">v15.02</a>.</p>
-
-    
-      <nav class="md-post__action">
-        <a href="../2025/release-v1503/">
-          Continue reading
-        </a>
-      </nav>
-    
-    
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/118329232" alt="Aetherinox">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2025-10-13 00:00:00+00:00">Monday, October 13, 2025</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../release/" class="md-meta__link">release</a>, 
-              <a href="./" class="md-meta__link">changelog</a>, 
-              <a href="../v15x/" class="md-meta__link">v15.x</a>, 
-              <a href="../web-inteface/" class="md-meta__link">web-inteface</a>, 
-              <a href="../web-login/" class="md-meta__link">web-login</a></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              11 min read
-            
-          </li>
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="release-v1502"><a class="toclink" href="../2025/release-v1502/">Release: v15.02</a></h2>
-<p>The next release of <abbr title="A security suite for Linux servers that provides firewall management, intrusion detection, and login failure monitoring.">ConfigServer Security &amp; Firewall</abbr> (<abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>) is here, and I wanted to take a moment to share an update on what’s coming next — including fixes, plans, and our broader direction moving forward. This post will cover integration improvements for both <strong>VestaCP</strong> and <strong>CyberPanel</strong>, as well as a look into the ongoing goals behind <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>’s continued progression.</p>
-<p>Our focus remains on transparency, stability, and community involvement. Users deserve to know not only what’s changing, but why. By keeping everyone informed and maintaining compatibility across control panels, we aim to ensure that <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> continues to be the trusted, secure, and reliable firewall solution it has always been.</p>
-
-    
-      <nav class="md-post__action">
-        <a href="../2025/release-v1502/">
-          Continue reading
-        </a>
-      </nav>
-    
-    
-  </div>
-</article>
-      
-      
-        
-          
+            <div class="md-content" data-md-component="content">
+              
+                
 
 
 
-<nav class="md-pagination">
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <nav class="md-tags">
+    
+      
+      
+      
+        
+        
+      
+      
+        <a href="../about/tags/#tag:advanced" class="md-tag md-tag-icon">advanced</a>
+      
+    
+      
+      
+      
+        
+        
+      
+      
+        <a href="../about/tags/#tag:csget" class="md-tag md-tag-icon">csget</a>
+      
+    
+  </nav>
+
+
   
-</nav>
-        
+    <a href="https://github.com/aetherinox/csf-firewall/edit/main/docs/docs/advanced/index.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
-    </div>
-  </div>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"></path></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/aetherinox/csf-firewall/raw/main/docs/docs/advanced/index.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"></path></svg>
+    </a>
+  
 
+
+<h1 id="advanced-introduction">Advanced › Introduction<a class="headerlink" href="#advanced-introduction" title="Permanent link">¶</a></h1>
+<p>This chapter provides an overview of the advanced features included in <abbr title="ConfigServer Security &amp; Firewall Security">ConfigServer Security</abbr> and Firewall. </p>
+<p>These components generally do not require adjustment for normal operation. However, their documentation is provided to help experienced users explore deeper functionality, understand system behavior, and make informed decisions when customizing or extending the software.</p>
+<p><br></p>
+<hr>
+<p><br></p>
+<h2 id="components">Components<a class="headerlink" href="#components" title="Permanent link">¶</a></h2>
+<p>Below is a list of components covered in this chapter. Choose any component to explore its purpose, functionality, and the features it provides.</p>
+<p><br></p>
+<h3 id="csget-cron"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M224 32l192 0 0 80-192 0 0-80zm-32 80l-96 0 0-16c0-35.3 28.7-64 64-64l32 0 0 80zM96 144l208 0 0 96-208 0 0-96zm0 224l0-96 96 0 0 96-96 0zm0 32l176.7 0c-.5 4.7-.7 9.4-.7 14.1 0 22.9 3.7 45.1 10.6 65.9L160 480c-35.3 0-64-28.7-64-64l0-16zM544 144l0 60.2c-12 .3-23.8 3.9-34.1 11-7.9-7.9-15.9-15.6-24.2-23.1-23.8-21.4-60-21.5-83.9-.2-17 15.2-32.9 31.4-47.2 48.1l-18.6 0 0-96 208 0zM224 272l105.2 0c-6.4 8.8-12.3 17.6-17.7 26.3-13.2 21.3-25.1 45.2-32.3 69.7l-55.2 0 0-96zM544 112l-96 0 0-80 32 0c35.3 0 64 28.7 64 64l0 16zM505.7 272.3L518 258.5c5.4-6.1 13.3-8.8 20.9-8.9 7.2 0 14.3 2.6 19.9 7.8 19.7 18.3 39.8 43.2 55 70.6 15.1 27.2 26.2 58.1 26.2 88.1 0 88.7-71.3 159.8-160 159.8-89.6 0-160-71.3-160-159.8 0-37.3 16-73.4 36.8-104.5 20.9-31.3 47.5-59 70.9-80.2 5.7-5.2 13.1-7.7 20.3-7.5s13.4 3.2 18.8 7.5c14.4 11.4 38.9 40.7 38.9 40.7zM544 464.2c0-36.5-37-73-54.8-88.4-5.4-4.7-13.1-4.7-18.5 0-17.7 15.4-54.8 51.9-54.8 88.4 0 35.3 28.7 64 64 64s64-28.7 64-64z"></path></svg></span> <a href="csget/"><strong>CSGET Cron</strong></a><a class="headerlink" href="#csget-cron" title="Permanent link">¶</a></h3>
+<dl>
+<dd>Responible for continuous update checks throughout the life of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>. This perl module periodically checks the official <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> update servers, fetches the latest version available, and compares it to your version to determine if an update is available.</dd>
+</dl>
+<p><br>
+<br></p>
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="December 9, 2025 17:11:05 UTC"><span class="timeago" datetime="2025-12-09T17:11:05+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="December 9, 2025 17:11:05 UTC">2025-12-09</span>
+  </span>
+
+    
+    
+    
+      
+  
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Contributors">
+      
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4Z"></path></svg>
+      
+    </span>
+    <nav>
+      
+        <a href="mailto:aetherinox@proton.me">Aetherinox</a>
+    </nav>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    
+      
+  <span class="md-icon" title="Contributors">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2Z"></path></svg>
+  </span>
+  <span>GitHub</span>
+
+    
+    <nav>
+      
+        <a href="https://github.com/Aetherinox" class="md-author" title="@Aetherinox">
+          
+          <img src="https://avatars.githubusercontent.com/u/118329232?v=4&amp;size=72" alt="Aetherinox">
+        </a>
+      
+      
+      
+    </nav>
+  </span>
+
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
           
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
@@ -4068,7 +3712,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer">
         
           
-          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Previous: Blog">
+          <a href="../usage/cheatsheet/structure/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Structure">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
@@ -4078,20 +3722,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Blog
+                Structure
               </div>
             </div>
           </a>
         
         
           
-          <a href="../csfajaxtail/" class="md-footer__link md-footer__link--next" aria-label="Next: csfajaxtail">
+          <a href="csget/" class="md-footer__link md-footer__link--next" aria-label="Next: CSGet">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                csfajaxtail
+                CSGet
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -4243,26 +3887,26 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["announce.dismiss", "toc.follow", "content.action.edit", "content.action.view", "content.tooltips", "search.highlight", "search.share", "search.suggest", "content.code.annotate", "content.code.select", "content.code.copy", "navigation.tabs", "navigation.sections", "navigation.footer", "navigation.indexes", "navigation.instant", "navigation.instant.progress", "navigation.instant.prefetch", "navigation.instant.preview", "navigation.tracking", "navigation.path", "navigation.top"], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": {"CSS": "css", "HTML5": "html", "JavaScript": "js"}, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"alias": true, "default": "latest", "provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["announce.dismiss", "toc.follow", "content.action.edit", "content.action.view", "content.tooltips", "search.highlight", "search.share", "search.suggest", "content.code.annotate", "content.code.select", "content.code.copy", "navigation.tabs", "navigation.sections", "navigation.footer", "navigation.indexes", "navigation.instant", "navigation.instant.progress", "navigation.instant.prefetch", "navigation.instant.preview", "navigation.tracking", "navigation.path", "navigation.top"], "search": "../assets/javascripts/workers/search.7a47a382.min.js", "tags": {"CSS": "css", "HTML5": "html", "JavaScript": "js"}, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"alias": true, "default": "latest", "provider": "mike"}}</script>
     
     
     
-      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../assets/javascripts/bundle.e71a0d61.min.js"></script>
       
-        <script src="../../js/timeago.min.js"></script>
+        <script src="../js/timeago.min.js"></script>
       
-        <script src="../../js/timeago_mkdocs_material.js"></script>
+        <script src="../js/timeago_mkdocs_material.js"></script>
       
         <script src="https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js"></script>
       
-        <script src="../../javascripts/tablesort.js"></script>
+        <script src="../javascripts/tablesort.js"></script>
       
-        <script src="../../javascripts/all.js?v7.000"></script>
+        <script src="../javascripts/all.js?v7.000"></script>
       
-        <script src="../../javascripts/sponsors.js"></script>
+        <script src="../javascripts/sponsors.js"></script>
       
     
-    <script src="../../assets/javascripts/custom.129bd6ad.min.js"></script>
+    <script src="../assets/javascripts/custom.129bd6ad.min.js"></script>
 
   
 <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": false, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
