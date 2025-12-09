@@ -55,7 +55,7 @@
 #       sudo kill -9 3830870
 #       
 #   If you run the command below; action will immediately start with no lingering process:
-#       sudo perl -d:Trace /etc/cron.daily/csget --nosleep
+#       sudo perl -d:Trace /etc/cron.daily/csget --nodaemon
 #   All output will be logged to:
 #       /var/log/csf/csget_daemon.log
 #   
@@ -569,8 +569,8 @@ if ( -e $config_file )
 #       -r, --response          Run in foreground and show logs. Useful with bash scripts.
 #                                   › sudo perl /etc/cron.daily/csget --response
 #   
-#       -n, --nosleep           Skips random sleep interval; processes immediately
-#                                   › sudo perl /etc/cron.daily/csget --nosleep
+#       -n, --nodaemon          Skips random sleep interval; processes immediately
+#                                   › sudo perl /etc/cron.daily/csget --nodaemon
 #   
 #       -k, --kill              Kills all processes associated with csget.
 #                                   › sudo perl /etc/cron.daily/csget --kill
@@ -609,11 +609,11 @@ foreach my $arg ( @ARGV )
     }
 
     # #
-    #   @usage          sudo perl /etc/cron.daily/csget --nosleep
+    #   @usage          sudo perl /etc/cron.daily/csget --nodaemon
     #                   If specified, csget runs instantly, not on a random timer.
     # #
 
-    elsif ( $arg =~ /^--nosleep$|^-n$/ )
+    elsif ( $arg =~ /^--nosleep$|^-n$|^--nodaemon$|^-N$/ )
     {
         $FLG_NOSLEEP = 1;
     }
@@ -674,7 +674,7 @@ foreach my $arg ( @ARGV )
             print "   ${magental}    $proc_path${end}\n\n";
 
             print "   ${greyd}To run CSGet once, execute the command${end}\n";
-            print "   ${bluel}    \$ ${greend} sudo ${magental}$proc_path ${yellowl}--nosleep${end}\n\n";
+            print "   ${bluel}    \$ ${greend} sudo ${magental}$proc_path ${yellowl}--nodaemon${end}\n\n";
 
             print "   ${greyd}To start CSGet cron, execute the command${end}\n";
             print "   ${bluel}    \$ ${greend} sudo ${magental}$proc_path${end}\n\n";
@@ -840,16 +840,16 @@ foreach my $arg ( @ARGV )
         printf STDERR "   %-5s %-30s %-40s\n", "    ", "    ${greym}[ -A... ]${end}                     ", "     ${white}optional; multiple can be specified";
         printf STDERR "   %-5s %-30s %-40s\n", "    ", "    ${greym}{ -A | -B }${end}                   ", "     ${white}one or the other; do not use both";
         printf STDERR "   %-5s %-30s %-40s\n", "    ", "${greyd}Examples${end}                          ", "  ${magental}$proc_path${end}";
-        printf STDERR "   %-5s %-30s %-40s\n", "    ", "${greyd}${end}                                  ", "  ${magental}$proc_path${end} ${yellowl}--nosleep${end}";
+        printf STDERR "   %-5s %-30s %-40s\n", "    ", "${greyd}${end}                                  ", "  ${magental}$proc_path${end} ${yellowl}--nodaemon${end}";
         printf STDERR "   %-5s %-30s %-40s\n", "    ", "${greyd}${end}                                  ", "  ${magental}$proc_path${end} ${yellowl}--debug${end}";
-        printf STDERR "   %-5s %-30s %-40s\n", "    ", "${greyd}${end}                                  ", "  ${magental}$proc_path${end} ${yellowl}--nosleep ${yellowl}--response${end}";
+        printf STDERR "   %-5s %-30s %-40s\n", "    ", "${greyd}${end}                                  ", "  ${magental}$proc_path${end} ${yellowl}--nodaemon ${yellowl}--response${end}";
         printf STDERR "   %-5s %-30s %-40s\n", "    ", "${greyd}${end}                                  ", "  ${magental}$proc_path${end} ${yellowl}--diag${end}";
         printf STDERR "   %-5s %-30s %-40s\n", "    ", "${greyd}${end}                                  ", "  ${magental}$proc_path${end} ${yellowl}--list${end}";
         print STDERR "\n";
         printf STDERR "   %-5s %-40s\n", "${greyd}Options:${end}", "";
         printf STDERR "   %-5s %-81s %-40s\n", "    ", "${bluel}-r${greyd},${bluel}  --response ${yellowd}${end}                    ", "Run in foreground and show logs. Useful with bash scripts.${end}";
         printf STDERR "   %-5s %-81s %-40s\n", "    ", "${blued}  ${greyd} ${blued}           ${yellowd}${end}                      ", "    ${greyd}disables forked daemonization${end}";
-        printf STDERR "   %-5s %-81s %-40s\n", "    ", "${bluel}-n${greyd},${bluel}  --nosleep ${yellowd}${end}                     ", "Run task immediately, do not start on timed delay.${end}";
+        printf STDERR "   %-5s %-81s %-40s\n", "    ", "${bluel}-n${greyd},${bluel}  --nodaemon ${yellowd}${end}                    ", "Run task immediately, do not start on timed delay.${end}";
         printf STDERR "   %-5s %-81s %-40s\n", "    ", "${blued}  ${greyd} ${blued}           ${yellowd}${end}                      ", "    ${greyd}no forked daemonization${end}";
         printf STDERR "   %-5s %-81s %-40s\n", "    ", "${bluel}-k${greyd},${bluel}  --kill ${yellowd}${end}                        ", "Kills all processes associated with csget.${end}";
         printf STDERR "   %-5s %-81s %-40s\n", "    ", "${bluel}-l${greyd},${bluel}  --list ${yellowd}${end}                        ", "Lists all csget processes except this command.${end}";
@@ -860,7 +860,7 @@ foreach my $arg ( @ARGV )
         printf STDERR "   %-5s %-81s %-40s\n", "    ", "${bluel}-h${greyd},${bluel}  --help ${yellowd}${end}                        ", "Show this help menu.${end}";
         print STDERR "\n";
         printf STDERR "   %-5s %-40s\n", "${greyd}Tips:${end}", "";
-        printf STDERR "   %-5s %-10s %-40s\n", "    ", "${bluel}Run CSGet once${end}                    ", "${bluel}  \$ ${greend}sudo ${magental}$proc_path ${yellowl}--nosleep${end}";
+        printf STDERR "   %-5s %-10s %-40s\n", "    ", "${bluel}Run CSGet once${end}                    ", "${bluel}  \$ ${greend}sudo ${magental}$proc_path ${yellowl}--nodaemon${end}";
         printf STDERR "   %-5s %-10s %-40s\n", "    ", "${bluel}Start CSGet cron${end}                  ", "${bluel}  \$ ${greend}sudo ${magental}$proc_path${end}";
         printf STDERR "   %-5s %-10s %-40s\n", "    ", "${bluel}Run using perl (normal)${end}           ", "${bluel}  \$ ${greend}sudo perl ${magental}$proc_path${end}";
         printf STDERR "   %-5s %-10s %-40s\n", "    ", "${bluel}Run using perl (+w warnings)${end}      ", "${bluel}  \$ ${greend}sudo perl ${yellowl}-w ${magental}$proc_path${end}";
@@ -880,7 +880,7 @@ foreach my $arg ( @ARGV )
     {
         print "\n";
         print "   ${redl}Invalid argument: ${yellowl}$arg${end}\n";
-        print "   ${greyd}Usage: ${bluel}sudo perl $proc_path ${greyd}[${yellowl} --debug ${greyd}|${yellowl} --kill ${greyd}|${yellowl} --list ${greyd}|${yellowl} --version ${greyd}|${yellowl} --nosleep ${greyd}]${bluel}${end}\n";
+        print "   ${greyd}Usage: ${bluel}sudo perl $proc_path ${greyd}[${yellowl} --debug ${greyd}|${yellowl} --kill ${greyd}|${yellowl} --list ${greyd}|${yellowl} --version ${greyd}|${yellowl} --nodaemon ${greyd}]${bluel}${end}\n";
         print "\n";
         exit 1;
     }
@@ -905,7 +905,7 @@ if ( $FLG_DEBUG )
 
 # #
 #   Perl daemonization/fork block
-#       sudo perl -w /etc/cron.daily/csget --nosleep
+#       sudo perl -w /etc/cron.daily/csget --nodaemon
 #       sudo perl -d /etc/cron.daily/csget
 #   
 #   Parent exits				terminal / cron is free
@@ -1039,8 +1039,8 @@ if ( scalar( keys %versions ) == 0 )
 #       traffic from hitting the server all at once.
 #   
 #   no arg					› $ARGV[0] undefined › condition is true › sleep
-#   arg `--nosleep`			› skip sleep
-#   arg `something else`	› sleep
+#   arg `--nodaemon`        › skip sleep (no background daemon)
+#   arg `something else`	› sleep (create forked daemon process)
 # #
 
 unless ( $FLG_NOSLEEP )
@@ -1331,7 +1331,7 @@ foreach my $server ( @downloadservers )
             #   @return         0   success
             #                   1   failure
             #   
-            #   @example        "$CSF_CRON_CSGET_DEST" --nosleep --response
+            #   @example        "$CSF_CRON_CSGET_DEST" --nodaemon --response
             #                   CSF_CRON_CSGET_STATUS=$?
             #   
             #                   if [ "$CSF_CRON_CSGET_STATUS" -eq 0 ]; then
