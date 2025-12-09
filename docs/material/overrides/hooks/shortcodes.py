@@ -147,6 +147,7 @@ def on_page_markdown( markdown: str, *, page: Page, config: MkDocsConfig, files:
         elif type == "docs":            return badgeDocs( args, page, files )
         elif type == "fileViewDLExt":   return badgeFileViewDLExt( args, page, files )
         elif type == "fileDLExt":       return badgeFileDLExt( args, page, files )
+        elif type == "fileSourceCode":  return badgeFileSourceCode( args, page, files )
         elif type == "fileView":        return badgeFileView( args, page, files )
         elif type == "fileBaseView":    return badgeFileBaseView( args, page, files )
         elif type == "fileBaseDL":      return badgeFileBaseDL( args, page, files )
@@ -509,17 +510,39 @@ def badgeDefaultComputed( page: Page, files: Files ):
 #       <!-- md:command `-s,  --start` -->      Specified setting has a default value  <!-- @md:command -s, --start -->
 # #
 
-# reeee
-def badgeCommand( text: str, page: Page, files: Files ):
-    icon = "material-console-line"
-    href = _resolve_path( f"{PAGE_CONVENTIONS}#command", page, files )
+# #
+#   Badge › Command
+# #
+def badgeCommand(md_line: str, page: Page, files: Files):
+    """
+    Creates a command badge from a markdown line. Supports optional width
+    if a number is provided outside of the backticks.
 
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+    Example markdown:
+        <!-- md:command 80 `-d, --debug` -->
+        <!-- md:command `-d, --debug` 80 -->
+    """
 
-    return badgeCreate(
-        icon = f"[:{icon}:]({href} 'Terminal / Console Command')",
-        text = text,
-        type = "command"
+    code_match  = re.search(r"`([^`]*)`", md_line)
+    text        = code_match.group(1) if code_match else ""
+    code_span   = code_match.span() if code_match else (0, 0)
+    numbers = [
+        int(n.group())
+        for n in re.finditer(r"\b\d+\b", md_line)
+        if not (code_span[0] <= n.start() < code_span[1])
+    ]
+
+    width   = numbers[0] if numbers else None
+    icon    = "material-console-line"
+    href    = _resolve_path(f"{PAGE_CONVENTIONS}#command", page, files)
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack()[0][3] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE)
+
+    return badgeCreateWidth(
+        icon=f"[:{icon}:]({href} 'Terminal / Console Command')",
+        text=text,
+        type="command",
+        width=width
     )
 
 # #
@@ -802,6 +825,36 @@ def badgeFileBaseDL( text: str, page: Page, files: Files ):
     )
 
 # #
+#   Badge › Button:Source Code
+#   
+#   Shows a single link to a github repo file
+#   
+#   @arg    href                URL / path for user to view file
+# #
+
+def badgeFileBaseSource(text: str, page: Page, files: Files):
+    """
+    Shows a badge linking to a GitHub repo file,
+    displaying the full filename instead of just the extension.
+    """
+    href = text
+    filename = os.path.basename(text)   # <-- gets 'csget.pl' from full URL/path
+    icon = "aetherx-axb-github-alt"
+
+    # #
+    #   Only show a badge if filename exists
+    # #
+    file_badge = ""
+    if filename:
+        file_badge = f"[{filename}]({href}){{: target=\"_blank\" }}"
+
+    return badgeCreate(
+        icon=f"[:{icon}:]({href} 'View Source Code'){{: target=\"_blank\" }}",
+        text=file_badge,
+        type="files-sourcecode"
+    )
+
+# #
 #   Badge › Button:(View File) + Button:(Download File) + Box:(File Extension)
 #   
 #   Accessible via front-end markdown
@@ -908,6 +961,48 @@ def badgeFileDLExt( text: str, page: Page, files: Files ):
     )
 
 # #
+#   Badge › File › Download (Single)
+#   
+#   Can show 2 buttons
+#       1. Download button
+#       2. Box with file extension inside (.zip)
+#   
+#   Normal Badges:
+#       <!-- md:fileSourceCode https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf -->
+#       <!-- md:fileSourceCode https://example.com/files/sample.zip left -->
+#       <!-- md:fileSourceCode https://example.com/files/sample.zip right -->
+# #
+
+def badgeFileSourceCode( text: str, page: Page, files: Files ):
+
+    # #
+    #   Parse arguments: "filenameDownload [alignment]"
+    # #
+
+    parts               = text.strip().split()
+    filenameDownload    = parts[0] if len(parts) > 0 else ""
+    align_arg           = parts[1].lower() if len(parts) > 1 else "left"
+
+    # #
+    #   Normalize alignment argument
+    # #
+
+    if align_arg in ("l", "left"):
+        align_class = "mdx-badge--files-group-left"
+    else:
+        align_class = "mdx-badge--files-group-right"
+
+    # #
+    #   Otherwise, return both badges inside chosen-alignment container
+    # #
+
+    return (
+        f'<span class="mdx-badge {align_class}">'
+        f'{badgeFileBaseSource(filenameDownload, page, files)}'
+        f'</span>'
+    )
+
+# #
 #   Badge › File › View › Single
 #   
 #   Shows a single button with folder icon, can click to view file in URL.
@@ -993,7 +1088,7 @@ def badgeFileRequires( text: str, page: Page, files: Files ):
 
 def badgeFileSource( text: str, page: Page, files: Files ):
     icon        = "aetherx-axd-file"
-    tooltip     = "This setting can be found in the file <pre>" + text + "</pre>"
+    tooltip     = "This file or feature can be found at: <pre>" + text + "</pre>"
     href        = _resolve_path( f"{PAGE_CONVENTIONS}#source", page, files )
 
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW +
@@ -1355,5 +1450,32 @@ def badgeCreate( icon: str, text: str = "", type: str = "" ):
         f"<span class=\"{classes}\">",
         *([f"<span class=\"mdx-badge__icon\">{icon}</span>"] if icon else []),
         *([f"<span class=\"mdx-badge__text\">{text}</span>"] if text else []),
+        f"</span>",
+    ])
+
+# #
+#   Badge › Create With Width
+# #
+
+def badgeCreateWidth(icon: str, text: str = "", type: str = "", width: int | None = None):
+    """
+    Create an HTML badge with custom width. Used for console commands that can go in markdown
+    tables and look bad at different widths.
+
+    <!-- md:command 100 `-d,  --debug` -->
+
+    @param icon  str       Icon HTML/text
+    @param text  str       Badge text
+    @param type  str       Badge type (adds mdx-badge--type class)
+    @param width int|None  Optional fixed width for badge (inline CSS)
+    @return      str       HTML badge
+    """
+    classes         = f"mdx-badge mdx-badge--{type}" if type else "mdx-badge"
+    text_style      = f' style="width:{width}px !important; display:inline-block; text-align:center; padding-top:2px; padding-bottom:2px;"' if width else ""
+
+    return "".join([
+        f"<span class=\"{classes}\">",
+        *([f"<span class=\"mdx-badge__icon\">{icon}</span>"] if icon else []),
+        *([f"<span class=\"mdx-badge__text\"{text_style}><code>{text}</code></span>"] if text else []),
         f"</span>",
     ])

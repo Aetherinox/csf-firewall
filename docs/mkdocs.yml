@@ -107,6 +107,8 @@ theme:
         - bash
         - shell
     icon:
+        admonition:
+            csf1: aetherx/axs/csf-logo-1
         note: fontawesome/solid/note-sticky
         abstract: fontawesome/solid/book
         info: fontawesome/solid/circle-info
@@ -299,6 +301,9 @@ nav:
                 - Example Configs: 'usage/cheatsheet/conf.md'
                 - Ports: 'usage/cheatsheet/ports.md'
                 - Structure: 'usage/cheatsheet/structure.md'
+    - Advanced:
+            - advanced/index.md
+            - CSGet: advanced/csget/index.md
     - Services:
             - services/index.md
             - blocklist.configserver.dev: 'services/blocklist.configserver.md'
