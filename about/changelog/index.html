@@ -2729,7 +2729,7 @@
   <a href="#15.08" class="md-nav__link">
     <span class="md-ellipsis">
       
-        15.08 Dec 08 2025
+        15.08 Dec 10 2025
       
     </span>
   </a>
@@ -3723,7 +3723,7 @@
   <a href="#15.08" class="md-nav__link">
     <span class="md-ellipsis">
       
-        15.08 Dec 08 2025
+        15.08 Dec 10 2025
       
     </span>
   </a>
@@ -3966,8 +3966,27 @@
 <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="https://img.shields.io/github/last-commit/Aetherinox/csf-firewall?color=b43bcc" data-desc-position="bottom"><img alt="Last Commit)" src="https://img.shields.io/github/last-commit/Aetherinox/csf-firewall?color=b43bcc"></a>
 
 </p>
-<h3 id="15.08"><span class="mdx-badge mdx-badge--version"><span class="mdx-badge__icon"><a href="../conventions/#release-types" title="Stable Release"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M0 80V229.5c0 17 6.7 33.3 18.7 45.3l176 176c25 25 65.5 25 90.5 0L418.7 317.3c25-25 25-65.5 0-90.5l-176-176c-12-12-28.3-18.7-45.3-18.7H48C21.5 32 0 53.5 0 80zm112 32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"></path></svg></span></a></span></span> 15.08 <small>Dec 08 2025</small><a class="headerlink" href="#15.08" title="Permanent link">¶</a></h3>
+<h3 id="15.08"><span class="mdx-badge mdx-badge--version"><span class="mdx-badge__icon"><a href="../conventions/#release-types" title="Stable Release"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M0 80V229.5c0 17 6.7 33.3 18.7 45.3l176 176c25 25 65.5 25 90.5 0L418.7 317.3c25-25 25-65.5 0-90.5l-176-176c-12-12-28.3-18.7-45.3-18.7H48C21.5 32 0 53.5 0 80zm112 32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"></path></svg></span></a></span></span> 15.08 <small>Dec 10 2025</small><a class="headerlink" href="#15.08" title="Permanent link">¶</a></h3>
 <ul>
+<li><code>feat(cron)</code>: Cron <code>csget</code> re-written</li>
+<li>Now compatible with all distros</li>
+<li>Utilizes tertiary redundancy system for fetching updates:<ul>
+<li><code>/usr/bin/wget</code></li>
+<li><code>/usr/bin/curl</code></li>
+<li><code>/usr/bin/GET</code></li>
+</ul>
+</li>
+<li>New flags added:<ul>
+<li><code>-r, --response</code></li>
+<li><code>-n, --nosleep</code></li>
+<li><code>-k, --kill</code></li>
+<li><code>-l, --list</code></li>
+<li><code>-d, --diag</code></li>
+<li><code>-D, --debug</code></li>
+<li><code>-v, --version</code></li>
+<li><code>-h, --help</code></li>
+</ul>
+</li>
 <li><code>feat(install)</code>: install scripts now give much more detailed output</li>
 <li><code>feat(cwp)</code>: add logic to handle files within cwp with immutable +i flag</li>
 <li><code>feat(webmin)</code>: automatically install <code>webmin</code> module if webmin control panel detected during installation<ul>
@@ -3975,11 +3994,14 @@
 </ul>
 </li>
 <li><code>pref(blocklist)</code>: optimize generation scripts for blocklist service</li>
-<li><code>refactor(cwp)</code>: re-name left nav menu link to <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> within CentOS Web Panel</li>
+<li><code>refactor(cwp)</code>: re-name left nav menu link to <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> within CentOS Web Panel<ul>
+<li>Renamed from <code>ConfigServer Scripts</code> to <code>ConfigServer Firewall</code></li>
+</ul>
+</li>
 <li><code>refactor(license)</code>: update insiders release json response structure</li>
 <li><code>refactor(scripts)</code>: <code>protect.sh</code> for POSIX compliance and logging</li>
 <li><code>refactor(webmin)</code>: make <code>webmin</code> installation functionality in <code>install.*.sh</code> files POSIX compliant</li>
-<li><code>feat(core)</code>: add warning message if <code>LF_MODSEC_PERM</code> threshold below 3600 seconds (1 hour)</li>
+<li><code>feat(core)</code>: add warning message if <code>LF_MODSEC_PERM</code> threshold below <code>3600</code> seconds (1 hour)</li>
 <li><code>chore(core)</code>: add input value type to <code>LF_MODSEC_PERM</code> comments</li>
 <li><code>chore(core)</code>: update config description for <code>LF_MODSEC</code></li>
 <li><code>chore(webmin)</code>: add property <code>longdesc</code> to <code>module.info</code> in <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> webmin module</li>
@@ -3988,6 +4010,7 @@
 <li><code>fix(blocklist)</code>: remove duplicate entries from static list highrisk in blocklist service</li>
 <li><code>fix(scripts)</code>: add shellcheck directive to <code>protect.sh</code></li>
 <li><code>fix(cron)</code>: cron <code>csget</code> assigned incorrect user:group; now uses <code>root:root</code> in compliance with SELinux</li>
+<li><code>docs(mkdocs)</code>: add new chapter <a href="https://docs.configserver.dev/advanced/">Advanced</a></li>
 </ul>
 <p><br></p>
 <h3 id="15.07"><span class="mdx-badge mdx-badge--version"><span class="mdx-badge__icon"><a href="../conventions/#release-types" title="Stable Release"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M0 80V229.5c0 17 6.7 33.3 18.7 45.3l176 176c25 25 65.5 25 90.5 0L418.7 317.3c25-25 25-65.5 0-90.5l-176-176c-12-12-28.3-18.7-45.3-18.7H48C21.5 32 0 53.5 0 80zm112 32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"></path></svg></span></a></span></span> 15.07 <small>Oct 24 2025</small><a class="headerlink" href="#15.07" title="Permanent link">¶</a></h3>
@@ -4240,7 +4263,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="December 7, 2025 10:47:05 UTC"><span class="timeago" datetime="2025-12-07T10:47:05+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="December 7, 2025 10:47:05 UTC">2025-12-07</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="December 9, 2025 17:24:40 UTC"><span class="timeago" datetime="2025-12-09T17:24:40+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="December 9, 2025 17:24:40 UTC">2025-12-09</span>
   </span>
 
     
