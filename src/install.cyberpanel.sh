@@ -71,7 +71,8 @@ ARG_PANEL="${2:-CyberPanel}"
 #	Global Variables
 # #
 
-dr="${argDryrun}"
+argDryrun="${argDryrun:-false}"
+dr="$argDryrun"
 
 # #
 #	Start Install
@@ -969,6 +970,13 @@ for file in $files; do
 done
 
 # #
+#	Step › Cyberpanel Integration
+# #
+
+prinp "${APP_NAME_SHORT:-CSF} > Cyberpanel Integration" \
+       "This step will set up integration between ${APP_NAME_SHORT:-CSF} and Cyberpanel."
+
+# #
 #	@app			CyberPanel
 #	@desc			Set specific VestaCP integration
 #   
@@ -1010,6 +1018,11 @@ run touch /home/cyberpanel/plugins/configservercsf
 
 SETTINGSPY_FILE="/usr/local/CyberCP/CyberCP/settings.py"
 if [ -f "$SETTINGSPY_FILE" ] && [ "$dr" = "false" ]; then
+    info "    Scan Cyberpanel modification ${bluel}settings.py${greym}"
+    label "         find ${oranged}'pluginHolder',${greyd}"
+    label "         add above ${oranged}'configservercsf',${greyd}"
+    label "         in ${oranged}${SETTINGSPY_FILE}${greyd}"
+
     if ! grep "configservercsf" "$SETTINGSPY_FILE" >/dev/null 2>&1; then
         SETTINGSPY_TEMP="/tmp/settings.py.$$"
         i=1
@@ -1052,10 +1065,12 @@ if [ -f "$SETTINGSPY_FILE" ] && [ "$dr" = "false" ]; then
             && chown "$FILE_OWNER:$FILE_GROUP" "$SETTINGSPY_FILE" \
             && chmod "$FILE_MODE" "$SETTINGSPY_FILE"
 
-        echo "  CSF [CyberPanel]: Add configservercsf above pluginHolder in $SETTINGSPY_FILE"
+        ok "    Apply Cyberpanel modification ${greenl}settings.py${greym} (add ${greend}configservercsf${greym})"
+        label "     ${SETTINGSPY_FILE}"
+
         trap - EXIT INT TERM
     else
-        echo "  CSF [CyberPanel]: Skip configservercsf above pluginHolder in $SETTINGSPY_FILE"
+        ok "    Skip Cyberpanel modification ${greenl}settings.py${greym} (already applied)"
     fi
 fi
 
@@ -1074,6 +1089,11 @@ fi
 
 URLSPY_FILE="/usr/local/CyberCP/CyberCP/urls.py"
 if [ -f "$URLSPY_FILE" ] && [ "$dr" = "false" ]; then
+	info "    Scan Cyberpanel modification ${bluel}register menu${greym}"
+    label "         find ${oranged}path('plugins/', include('pluginHolder.urls')),${greyd}"
+    label "         add ${oranged}path('configservercsf/',include('configservercsf.urls')),${greyd}"
+    label "         in ${oranged}${URLSPY_FILE}${greyd}"
+
     if ! grep "configservercsf" "$URLSPY_FILE" >/dev/null 2>&1; then
         URLSPY_TEMP="/tmp/urls.py.$$"
         i=1
@@ -1109,11 +1129,16 @@ if [ -f "$URLSPY_FILE" ] && [ "$dr" = "false" ]; then
             && mv "$URLSPY_TEMP" "$URLSPY_FILE" \
             && chmod "$FILE_MODE" "$URLSPY_FILE"
 
-        echo "  CSF [CyberPanel]: Add configservercsf.urls above pluginHolder.urls in $URLSPY_FILE"
+        ok "    Apply Cyberpanel modification ${greenl}register menu${greym}"
+        label "     ${URLSPY_FILE}"
+
         trap - EXIT INT TERM
     else
-        echo "  CSF [CyberPanel]: Skip configservercsf.urls above pluginHolder.urls in $URLSPY_FILE"
+        ok "    Skip Cyberpanel modification ${greenl}register menu${greym} (already applied)"
     fi
+else
+    warn "    Abort Cyberpanel modification ${yellowl}register menu${greym} (target file not found)"
+    label "     ${URLSPY_FILE}"
 fi
 
 # #
@@ -1139,6 +1164,11 @@ fi
 
 BASEINDEX_FILE="/usr/local/CyberCP/baseTemplate/templates/baseTemplate/index.html"
 if [ -f "$BASEINDEX_FILE" ] && [ "$dr" = "false" ]; then
+	info "    Scan Cyberpanel modification ${bluel}legacy menu support${greym}"
+    label "         find ${oranged}<a href=\"#\" title=\"{% trans 'Plugins' %}\">${greyd}"
+    label "         insert ${oranged}{% include \"/usr/local/CyberCP/configservercsf/templates/configservercsf/menu.html\" %}${greyd}"
+    label "         in ${oranged}${BASEINDEX_FILE}${greyd}"
+
     if ! grep "configserver" "$BASEINDEX_FILE" >/dev/null 2>&1; then
         BASEINDEX_TEMP="/tmp/index.html.$$"
         i=1
@@ -1174,13 +1204,16 @@ if [ -f "$BASEINDEX_FILE" ] && [ "$dr" = "false" ]; then
             && mv "$BASEINDEX_TEMP" "$BASEINDEX_FILE" \
             && chmod "$FILE_MODE" "$BASEINDEX_FILE"
 
-        echo "  CSF [CyberPanel]: Add legacy csf menu include in $BASEINDEX_FILE"
+        ok "    Apply Cyberpanel modification ${greenl}legacy menu support${greym}"
+        label "     ${BASEINDEX_FILE}"
+
         trap - EXIT INT TERM
     else
-        echo "  CSF [CyberPanel]: Skip legacy csf menu include - already present in ($BASEINDEX_FILE)"
+        ok "    Skip Cyberpanel modification ${greenl}legacy menu support${greym} (already applied)"
     fi
 else
-    echo "  CSF [CyberPanel]: Skip legacy csf menu include - file not found ($BASEINDEX_FILE)"
+    warn "    Abort Cyberpanel modification ${yellowl}legacy menu support${greym} (target file not found)"
+    label "     ${BASEINDEX_FILE}"
 fi
 
 # #
@@ -1203,11 +1236,27 @@ fi
 #	@todo			Make POSIX compliant
 # #
 
-if ! grep -q "configservercsf" /usr/local/CyberCP/baseTemplate/templates/baseTemplate/index.html; then
-	run sed -i '/url '\''imunify'\''/ i \
-				<a href="{% url '\''configservercsf'\'' %}" class="menu-item">\
-					<span>CSF</span>\
-				</a>' /usr/local/CyberCP/baseTemplate/templates/baseTemplate/index.html
+BASEINDEX_MENU_MODERN_FILE="/usr/local/CyberCP/baseTemplate/templates/baseTemplate/index.html"
+if [ -f "$BASEINDEX_MENU_MODERN_FILE" ] && [ "$dr" = "false" ]; then
+    info "    Scan Cyberpanel modification ${bluel}modern menu support${greym}"
+    label "         find ${oranged}<span>Imunify 360</span>${greyd}"
+    label "         add ${oranged}<span>CSF</span>${greyd}"
+    label "         in ${oranged}${BASEINDEX_MENU_MODERN_FILE}${greyd}"
+
+    if ! grep -q "configservercsf" "$BASEINDEX_MENU_MODERN_FILE"; then
+        run sed -i '/url '\''imunify'\''/ i \
+                    <a href="{% url '\''configservercsf'\'' %}" class="menu-item">\
+                        <span>CSF</span>\
+                    </a>' "$BASEINDEX_MENU_MODERN_FILE"
+
+        ok "    Apply Cyberpanel modification ${greenl}modern menu support${greym}"
+        label "     ${BASEINDEX_MENU_MODERN_FILE}"
+    else
+        ok "    Skip Cyberpanel modification ${greenl}modern menu support${greym} (already applied)"
+    fi
+else
+    warn "    Abort Cyberpanel modification ${yellowl}modern menu support${greym} (target file not found)"
+    label "     ${BASEINDEX_MENU_MODERN_FILE}"
 fi
 
 # #
@@ -1226,17 +1275,29 @@ fi
 #	@todo			Make POSIX compliant
 # #
 
-if grep -q "import url" /usr/local/CyberCP/CyberCP/urls.py; then
-    run sed -i \
-        -e "s/from django\.urls import path/from django.conf.urls import url/g" \
-        -e "s|path('', views.configservercsf, name='configservercsf')|url(r'^$', views.configservercsf, name='configservercsf')|g" \
-        -e "s|path('iframe', views.configservercsfiframe, name='configservercsfiframe')|url(r'^iframe/$', views.configservercsfiframe, name='configservercsfiframe')|g" \
-        -e "s/path(/url(/g" \
-        /usr/local/CyberCP/CyberCP/urls.py
+DJANGOLEGACY_FILE="/usr/local/CyberCP/CyberCP/urls.py"
+if [ -f "$DJANGOLEGACY_FILE" ] && [ "$dr" = "false" ]; then
+    info "    Scan Cyberpanel modification ${bluel}Django legacy urls${greym}"
+    label "         change ${oranged}django.urls import path${greyd}"
+    label "         to ${oranged}django.conf.urls import url${greyd}"
+    label "         in ${oranged}${DJANGOLEGACY_FILE}${greyd}"
 
-    echo "  CSF [CyberPanel]: Add Backwards Compaibility - path() => url()"
+    if grep -q "import url" "$DJANGOLEGACY_FILE"; then
+        run sed -i \
+            -e "s/from django\.urls import path/from django.conf.urls import url/g" \
+            -e "s|path('', views.configservercsf, name='configservercsf')|url(r'^$', views.configservercsf, name='configservercsf')|g" \
+            -e "s|path('iframe', views.configservercsfiframe, name='configservercsfiframe')|url(r'^iframe/$', views.configservercsfiframe, name='configservercsfiframe')|g" \
+            -e "s/path(/url(/g" \
+            "$DJANGOLEGACY_FILE"
+
+        ok "    Apply Cyberpanel modification ${greenl}Django legacy urls${greym}"
+        label "     ${DJANGOLEGACY_FILE}"
+    else
+        ok "    Skip Cyberpanel modification ${greenl}Django legacy urls${greym} (already applied)"
+    fi
 else
-    echo "  CSF [CyberPanel]: Skip Backwards Compaibility - using path()"
+    warn "    Abort Cyberpanel modification ${yellowl}Django legacy urls${greym} (target file not found)"
+    label "     ${DJANGOLEGACY_FILE}"
 fi
 
 # #
@@ -1265,15 +1326,17 @@ BYPASS_LINE="                        if 'configservercsf' in pathActual:"
 BYPASS_CONT="                            continue"
 
 if [ -f "$SECMID_FILE" ] && [ "$dr" = "false" ]; then
-    printf '\n'
-    printf '  CSF [CyberPanel]: Start secMiddleware.py - security exception...\n'
+	info "    Scan Cyberpanel modification ${bluel}secMiddleware.py security exception${greym}"
+    label "         add ${oranged}if 'configservercsf' in pathActual:${greyd}"
+    label "              ${oranged}continue${greyd}"
+    label "         in ${oranged}${SECMID_FILE}${greyd}"
 
 	# #
     #	Skip if exception already present
 	# #
 
     if grep "if 'configservercsf' in pathActual" "$SECMID_FILE" >/dev/null 2>&1; then
-        printf '  CSF [CyberPanel]: Skip secMiddleware.py - security exception already present\n'
+		ok "    Skip Cyberpanel modification ${greenl}secMiddleware.py security exception${greym} (already applied)"
     else
 		# #
 		#	Backup
@@ -1282,7 +1345,8 @@ if [ -f "$SECMID_FILE" ] && [ "$dr" = "false" ]; then
 		SECMID_BACKUP="${SECMID_FILE}.bak.$$"
 		run cp -p "$SECMID_FILE" "$SECMID_BACKUP" ||
 		{
-			printf '  CSF [CyberPanel]: Fail secMiddleware.py - cannot create backup %s\n' "$SECMID_BACKUP"
+			error "    Fail Cyberpanel modification ${redl}secMiddleware.py security exception${greym} (cannot create backup)${greym}"
+            label "     ${SECMID_BACKUP}"
 			exit 1
 		}
 
@@ -1330,9 +1394,12 @@ if [ -f "$SECMID_FILE" ] && [ "$dr" = "false" ]; then
 			# #
 
             run chmod "$FILE_MODE" "$SECMID_FILE"
-            printf '  CSF [CyberPanel]: Add secMiddleware.py - exception after every occurrence of %s.\n' "'$SECMID_TARGET_IF'"
+			ok "    Apply Cyberpanel modification ${greenl}secMiddleware.py security exception${greym} (look for every occurrence of:${greym})"
+			label "     ${SECMID_TARGET_IF}"
         else
-            printf '  CSF [CyberPanel]: Fail secMiddleware.py - cannot write patched file — restoring backup.\n'
+			error "    Fail Cyberpanel modification ${redl}secMiddleware.py security exception${greym} (cannot write patched file - restoring backup)"
+			label "     ${SECMID_BACKUP} => ${SECMID_FILE}"
+		
             run cp -p "$SECMID_BACKUP" "$SECMID_FILE" >/dev/null 2>&1 || true
             exit 1
         fi
@@ -1341,7 +1408,28 @@ if [ -f "$SECMID_FILE" ] && [ "$dr" = "false" ]; then
         run rm -f "$SECMID_TEMP"
     fi
 else
-    printf '  CSF [CyberPanel]: Skip secMiddleware.py  -- target file not found (%s)\n' "$SECMID_FILE"
+    warn "    Abort Cyberpanel modification ${yellowl}secMiddleware.py security exception${greym} (target file not found)"
+    label "     ${SECMID_FILE}"
+fi
+
+# #
+#	restart services
+# #
+
+info "    Restarting Cyberpanel service ${bluel}lscpd${greym}${greym}"
+run service lscpd restart >/dev/null 2>&1
+if [ $? -eq 0 ]; then
+    ok "    Successfully restarted service ${greenl}lscpd${greym}"
+else
+	error "    Failed to restart service ${redl}lscpd"
+fi
+
+info "    Restarting Cyberpanel service ${bluel}lsws${greym}${greym}"
+run service lsws restart >/dev/null 2>&1
+if [ $? -eq 0 ]; then
+    ok "    Successfully restarted service ${greenl}lsws${greym}"
+else
+	error "    Failed to restart service ${redl}lsws"
 fi
 
 # #
