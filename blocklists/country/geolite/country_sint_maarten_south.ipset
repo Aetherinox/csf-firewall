@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_sint_maarten_south_ipset
 #   @uuid           abf4b2f6-069f-3f55-a779-85465e9257d9
-#   @updated        Tue Dec  9 12:12:17 UTC 2025
-#   @entries        37617 ips
-#                   140 subnets
-#                   140 lines
+#   @updated        Wed Dec 10 00:19:55 UTC 2025
+#   @entries        33009 ips
+#                   139 subnets
+#                   139 lines
 #   @country        Sint Maarten (South) (SX)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -69,14 +69,13 @@
 164.137.52.0/24
 168.0.84.0/22
 168.197.108.0/22
-170.0.16.0/23
 172.224.236.64/27
 172.225.22.0/28
 172.225.167.128/27
 172.226.13.128/28
 172.226.86.32/28
 172.226.143.160/27
-190.102.0.0/19
+190.102.0.0/20
 190.124.216.0/22
 190.185.64.0/19
 194.50.99.212/32

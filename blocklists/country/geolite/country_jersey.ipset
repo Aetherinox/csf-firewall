@@ -5,8 +5,8 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_jersey_ipset
 #   @uuid           4cb7e795-c4a9-305c-9fd1-1911e163ce8f
-#   @updated        Tue Dec  9 12:11:51 UTC 2025
-#   @entries        157304 ips
+#   @updated        Wed Dec 10 00:19:28 UTC 2025
+#   @entries        155513 ips
 #                   221 subnets
 #                   221 lines
 #   @country        Jersey (JE)
@@ -141,7 +141,8 @@
 193.201.42.0/24
 194.34.106.0/23
 194.50.99.112/32
-195.226.128.0/21
+195.226.131.25/32
+195.226.150.0/24
 195.226.152.0/21
 199.34.116.0/22
 199.66.128.0/22
@@ -195,8 +196,7 @@
 2a02:26f7:e2c0:4000::/64
 2a02:26f7:e2c0:c3c0::/64
 2a02:26f7:e2c1:4000::/64
-2a02:26f7:e2c2:4000::/64
-2a02:26f7:e2c2:c3c0::/64
+2a02:26f7:e2c2::/48
 2a02:26f7:e2c3:4000::/64
 2a02:26f7:e2c4::/48
 2a02:26f7:e2c5:4000::/64
