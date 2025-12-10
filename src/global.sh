@@ -125,8 +125,8 @@ APP_VERSION=$( [ -f "$VERSION_FILE" ] && grep -v '^[[:space:]]*$' "$VERSION_FILE
 #   Define › Icons
 # #
 
-icoSheckmark=$'\u2714'   # ✔
-icoXmark=$'\u274C'       # ❌
+icoSheckmark='✔'   # ✔ $'\u2714'
+icoXmark='✗'       # ❌ $'\u274C'
 
 # #
 #   Define › Colors
