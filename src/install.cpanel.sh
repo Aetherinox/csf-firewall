@@ -64,7 +64,8 @@ ARG_PANEL="${2:-cPanel}"
 #	Global Variables
 # #
 
-dr="${argDryrun}"
+argDryrun="${argDryrun:-false}"
+dr="$argDryrun"
 
 # #
 #	Start Install
