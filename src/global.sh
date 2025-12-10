@@ -10,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            12.07.2025
+#   @updated            12.10.2025
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -52,6 +52,7 @@ APP_DESC="Robust linux iptables/nftables firewall"
 APP_REPO="https://github.com/aetherinox/csf-firewall"
 APP_LINK_DOCS="https://docs.configserver.dev"
 APP_LINK_DOWNLOAD="https://download.configserver.dev"
+APP_LINK_DISCORD="https://discord.configserver.dev"
 FILE_INSTALL_TXT="install.txt"
 
 # #
@@ -59,6 +60,8 @@ FILE_INSTALL_TXT="install.txt"
 # #
 
 CSF_ETC="/etc/csf"
+CSF_VAR="/var/lib/csf"
+CSF_USR="/usr/local/csf"
 CSF_BIN="/usr/local/csf/bin"
 CSF_TPL="/usr/local/csf/tpl"
 CSF_CONF="/etc/csf/csf.conf"
@@ -76,6 +79,7 @@ CSF_CWP_FOLD_SRC="csf"
 CSF_CWP_PATH_DESIGN="/usr/local/cwpsrv/htdocs/admin/design/csf"
 CSF_CRON_CSGET_SRC="csget.pl"
 CSF_CRON_CSGET_DEST="/etc/cron.daily/csget"
+CSF_CRON_CSGET_LOG="/var/log/csf/csget_daemon.log"
 CSF_AUTO_GENERIC="auto.generic.pl"
 CSF_AUTO_CWP="auto.cwp.pl"
 CSF_AUTO_VESTA="auto.vesta.pl"
@@ -193,7 +197,7 @@ verbose( )
 
 debug( )
 {
-    if [ "$argDevEnabled" = "true" ]; then
+    if [ "$argDevEnabled" = "true" ] || [ "$argDryrun" = "true" ]; then
         printf '%-42s %-65s\n' "   ${bgDebug} DBUG ${end}" "${greym} $1 ${end}"
     fi
 }
@@ -246,12 +250,12 @@ truncate()
     maxlen=$2
     suffix=${3:-}
 
-    len=$(printf %s "$text" | wc -c | tr -d '[:space:]')
+    len=$(printf %s "${text}" | wc -c | tr -d '[:space:]')
 
-    if [ "$len" -gt "$maxlen" ]; then
-        printf '%s%s\n' "$(printf %s "$text" | cut -c1-"$maxlen")" "$suffix"
+    if [ "${len}" -gt "${maxlen}" ]; then
+        printf '%s%s\n' "$(printf %s "${text}" | cut -c1-"${maxlen}")" "${suffix}"
     else
-        printf '%s\n' "$text"
+        printf '%s\n' "${text}"
     fi
 }
 
@@ -389,7 +393,7 @@ prinb( )
 #   to increase the value, which is represented with a number enclosed in square brackets.
 #     [1]           add 1 space to the right.
 #     [2]           add 2 spaces to the right.
-#     [-1]          remove 1 space to the right (needed for some emojis)
+#     [-1]          remove 1 space to the right (needed for some emojis depending on if the emoji is 1 or 2 bytes)
 #   
 #   @usage          prinp "Certificate Generation Successful" "Your new certificate and keys have been generated successfully.\n\nYou can find them in the ${greenl}${app_dir_output}${greyd} folder."
 #                   prinp "🎗️[1]  ${file_domain_base}" "The following description will show on multiple lines with a ASCII box around it."
@@ -580,12 +584,37 @@ check_sudo( )
 }
 
 # #
+#   Run Command
+#   
+#   Added when dryrun mode was added to the install.sh.
+#   Allows for a critical command to be skipped if in --dryrun mode.
+#       Throws a debug message instead of executing.
+#   
+#   argDryrun comes from global export in csf/install.sh
+#   
+#   @usage          run /sbin/chkconfig csf off
+#                   run echo "ConfigServer"
+#                   run chmod -v 700 "./${CSF_AUTO_GENERIC}"
+# #
+
+run()
+{
+    if [ "${argDryrun}" = "true" ]; then
+        debug "    Drymode (skip): $*"
+    else
+        debug "    Run: $*"
+        "$@"
+    fi
+}
+
+# #
 #   Copy If Missing
 #   Copies a src file to dest only if missing
 #   
 #   @arg            src                         File to copy
 #   @arg            dest                        Where to copy file
 #   @usage			copy_if_missing "install.cpanel.sh" "csf cPanel installer"
+#   @todo           deprecate in favor of func 'copi'
 # #
 
 copy_if_missing( )
@@ -593,20 +622,22 @@ copy_if_missing( )
     src="$1"
     dest="$2"
 
-    if [ ! -e "$dest" ]; then
-        if cp -avf "$src" "$dest"; then
-            ok "    Copied ${greenl}$src${greym} to ${greenl}$dest${greym} "
+    if [ ! -e "${dest}" ]; then
+        if cp -avf "${src}" "${dest}"; then
+            ok "    Copied ${greenl}${src}${greym} to ${greenl}${dest}${greym} "
         else
-            error "    ❌ Cannot copy ${redl}$src${greym} to ${redl}$dest${greym}"
+            error "    ❌ Cannot copy ${redl}${src}${greym} to ${redl}${dest}${greym}"
             exit 1
         fi
     else
-        status "    Already existing copy ${bluel}${src}${greym} to ${bluel}$dest${greym}"
+        status "    Already existing copy ${bluel}${src}${greym} to ${bluel}${dest}${greym}"
     fi
 }
 
 # #
 #   Special copy: copy to dest or dest.new if dest exists
+#   
+#   @todo           deprecate in favor of func 'copi'
 # #
 
 copy_or_new( )
@@ -614,18 +645,18 @@ copy_or_new( )
     src="$1"
     dest="$2"
 
-    if [ ! -e "$dest" ]; then
-        if cp -avf "$src" "$dest"; then
-            ok "    Copied ${greenl}$src${greym} to ${greenl}$dest${greym} "
+    if [ ! -e "${dest}" ]; then
+        if cp -avf "${src}" "${dest}"; then
+            ok "    Copied ${greenl}${src}${greym} to ${greenl}${dest}${greym} "
         else
-            error "    ❌ Cannot copy ${redl}$src${greym} to ${redl}$dest${greym}"
+            error "    ❌ Cannot copy ${redl}${src}${greym} to ${redl}${dest}${greym}"
             exit 1
         fi
     else
-        if cp -avf "$src" "${dest}.new"; then
-            ok "    Copied ${greenl}$src${greym} to ${greenl}$dest.new${greym} (destination already existed) "
+        if cp -avf "${src}" "${dest}.new"; then
+            ok "    Copied ${greenl}${src}${greym} to ${greenl}${dest}.new${greym} (destination already existed) "
         else
-            error "    ❌ Cannot copy ${redl}$src${greym} to ${redl}$des.newt${greym}"
+            error "    ❌ Cannot copy ${redl}${src}${greym} to ${redl}$des.newt${greym}"
             exit 1
         fi
     fi
@@ -633,6 +664,46 @@ copy_or_new( )
 
 # #
 #   Copy
+#   
+#   Custom copy function to replace 'cp'; handles copy a bit differently but with the
+#   same behavior.
+#   
+#   @desc           › Auto detects file, symlink, or directory copying
+#                   › Preserve permissions & timestamps (uses `cp -p`)
+#                   › Supports copying into directories
+#                   › Supports copying to directory paths ending in '/' or '/.'
+#                   › Supports copying entire directory trees (recursive)
+#                   › Returns non-zero on error (never partially copies silently)
+#   
+#   @usage          › Copy file into existing directory:
+#                       copi 'csfpre.sh' '/usr/local/csf/bin/'
+#   
+#                   › Copy file and force 'directory intent' using trailing slash:
+#                       copi 'csfpre.sh' '/usr/local/csf/bin/'
+#                       copi 'csfpre.sh' '/usr/local/csf/bin/.'
+#   
+#                   › Copy file to specific destination filename:
+#                       copi 'config.txt' '/etc/csf/config.txt'
+#   
+#                   › Copy directory (full tree) to a new location:
+#                       copi './tpl' '/usr/local/csf/tpl'
+#   
+#                   › Copy directory into another directory:
+#                       copi './webmin' '/var/lib/csf/'
+#   
+#                   › Error handling:
+#                       copi '/missing/badfile' '/tmp/'             # returns `3` (source missing)
+#                       copi '/etc/passwd' '/root/badfolder'        # returns `1` or `2` depending on mkdir/cp errors
+#   
+#   @return codes   0   Success
+#                   1   Failed to create destination directories
+#                   2   Failed file copy
+#                   3   Source does not exist / unsupported type
+#   
+#   @motes          - `/path/to/dir/`       treated as directory
+#                   - `/path/to/dir/.`      treated as directory
+#                   - Destination directories auto-created when required
+#                   - Directory copies preserve directory structure and timestamps
 # #
 
 copi()
@@ -640,63 +711,94 @@ copi()
     src="$1"
     dest="$2"
 
-    # Source must exist
-    if [ ! -e "$src" ]; then
+    # #
+    #   Source must exist
+    # #
+
+    if [ ! -e "${src}" ]; then
         warn "    No such file or directory ${yellowl}${src}${greym}"
         return 3
     fi
 
-    # If src is a regular file or symlink; file copy mode
-    if [ -f "$src" ] || [ -L "$src" ]; then
+    # #
+    #   File || symlink copy mode
+    # #
 
-        # If dest already exists and is a directory; copy into it
-        if [ -d "$dest" ]; then
-            fname=$(basename "$src")
-            label "     Copying ${navy}${fname}${greym} › ${navy}$dest${greym}"
-            cp -p "$src" "$dest/$fname" || return 2
+    if [ -f "${src}" ] || [ -L "${src}" ]; then
+
+        # #
+        #   If dest is an existing dir; copy into it
+        # #
+    
+        if [ -d "${dest}" ]; then
+            fname=$(basename "${src}")
+            label "     Copying ${navy}${fname}${greym} › ${navy}${dest}${greym}"
+            cp -p "${src}" "${dest}/$fname" || return 2
             return 0
         fi
 
-        # If dest string ends with; user intends directory
-        case "$dest" in
-            */)
-                mkdir -p "$dest" || return 1
-                fname=$(basename "$src")
-                label "     Copying ${navy}${fname}${greym} › ${navy}$dest${greym}"
-                cp -p "$src" "$dest/$fname" || return 2
+        # #
+        #   Handle directory intent:
+        #       ends in '/' OR ends in '/.'
+        # #
+
+        case "${dest}" in
+            */ | */.)
+                # Normalize "/." → "/"
+                d="${dest%/.}"
+
+                mkdir -p "${d}" || return 1
+                fname=$(basename "${src}")
+                label "     Copying ${navy}${fname}${greym} › ${navy}${d}${greym}"
+                cp -p "${src}" "${d}/${fname}" || return 2
                 return 0
                 ;;
         esac
 
-        # Otherwise treat dest as a FILE path (overwrite/create)
+        # #
+        #   Otherwise treat dest as a file path
+        # #
+    
         label "     Copying ${navy}${src}${greym} › ${navy}${dest}${greym}"
-        cp -p "$src" "$dest" || return 2
+        cp -p "${src}" "${dest}" || return 2
         return 0
     fi
 
-    # Dir copy mode
-    if [ -d "$src" ]; then
-        mkdir -p "$dest" || return 1
+    # #
+    #   Directory copy mode
+    # #
+
+    if [ -d "${src}" ]; then
+        mkdir -p "${dest}" || return 1
 
         (
-            cd "$src" || exit 1
+            cd "${src}" || exit 1
 
-            # Create dir tree (including empty dirs)
+            # #
+            #   Recreate directory tree
+            # #
+
             find . -type d -print | while IFS= read -r d; do
-                mkdir -p "$dest/$d" || { error "    Failed mkdir ${redl}${dest}/${d}"; exit 1; }
+                mkdir -p "${dest}/${d}" || { error "    Failed mkdir ${redl}${dest}/${d}"; exit 1; }
             done
 
-            # Copy files; preserve mode/timestamps
+            # #
+            #   Copy files
+            # #
+
             find . -type f -print | while IFS= read -r f; do
-                label "     Copying ${navy}${f}${greym} › ${navy}$dest${greym}"
-                mkdir -p "$dest/$(dirname "$f")"   # safety
-                cp -p "$f" "$dest/$f" || { error "    Failed copying ${redl}${f}"; exit 1; }
+                label "     Copying ${navy}${f}${greym} › ${navy}${dest}${greym}"
+                mkdir -p "${dest}/$(dirname "${f}")"
+                cp -p "${f}" "${dest}/${f}" || { error "    Failed copying ${redl}${f}"; exit 1; }
             done
         )
         return $?
     fi
 
-    # Unknown type; should never really reach this point
+    # #
+    #   Unknown type
+    # #
+
     warn "    No such file or directory ${yellowl}${src}${greym}"
     return 3
 }
@@ -707,7 +809,7 @@ copi()
 
 get_csf_ui_info()
 {
-    if [ ! -f "$CSF_CONF" ]; then
+    if [ ! -f "${CSF_CONF}" ]; then
         return 1
     fi
 
@@ -724,32 +826,32 @@ get_csf_ui_info()
         /^[[:space:]]*UI_IP[[:space:]]*=/ { gsub(/"/,"",$3); print "IP="$3 }
         /^[[:space:]]*UI_USER[[:space:]]*=/ { gsub(/"/,"",$3); print "USER="$3 }
         /^[[:space:]]*UI_PASS[[:space:]]*=/ { gsub(/"/,"",$3); print "PASS="$3 }
-    ' "$CSF_CONF" > /tmp/csf_ui_values.$$ 
+    ' "${CSF_CONF}" > /tmp/csf_ui_values.$$ 
 
     # Read values in current shell
     while IFS='=' read -r key val
     do
-        case "$key" in
-            UI)   UI="$val" ;;
-            PORT) UI_PORT="$val" ;;
-            IP)   UI_IP="$val" ;;
-            USER) UI_USER="$val" ;;
-            PASS) UI_PASS="$val" ;;
+        case "${key}" in
+            UI)   UI="${val}" ;;
+            PORT) UI_PORT="${val}" ;;
+            IP)   UI_IP="${val}" ;;
+            USER) UI_USER="${val}" ;;
+            PASS) UI_PASS="${val}" ;;
         esac
     done < /tmp/csf_ui_values.$$
 
     rm -f /tmp/csf_ui_values.$$
 
     # Disabled; return empty
-    if [ "$UI" != "1" ]; then
+    if [ "${UI}" != "1" ]; then
         printf '%s\n' ""
         return 0
     fi
 
     # Fallbacks
-    [ -z "$UI_IP" ] && UI_IP="127.0.0.1"
-    [ -z "$UI_PORT" ] && UI_PORT="6666"
+    [ -z "${UI_IP}" ] && UI_IP="127.0.0.1"
+    [ -z "${UI_PORT}" ] && UI_PORT="6666"
 
     # Output: "IP:PORT USER PASS"
-    printf '%s:%s %s %s\n' "$UI_IP" "$UI_PORT" "$UI_USER" "$UI_PASS"
+    printf '%s:%s %s %s\n' "${UI_IP}" "${UI_PORT}" "${UI_USER}" "${UI_PASS}"
 }
