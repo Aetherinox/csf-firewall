@@ -23,7 +23,7 @@ Below is a list of components covered in this chapter. Choose any component to e
 
 <br />
 
-### :aetherx-axs-block-brick-fire: [**CSGET Cron**](../advanced/csget/index.md)
+### :aetherx-axs-block-brick-fire: [**CSGet Cron**](../advanced/csget/index.md)
 :   Responible for continuous update checks throughout the life of CSF. This perl module periodically checks the official CSF update servers, fetches the latest version available, and compares it to your version to determine if an update is available.
 
 <br />

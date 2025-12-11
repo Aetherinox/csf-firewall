@@ -126,9 +126,7 @@ The following are a list of the minimal dependencies required for CSF to functio
 
 ### Full Dependencies
 
-The following commands allow you to install the full list of dependencies for CSF which include packages for every feature shipped with CSF, including the statistics feature which is enabled in the `/etc/csf/csf.conf` with the setting `ST_ENABLE = "1"`.
-
-This set of dependencies also includes `sendmail` to make use of CSF's mailing functionality.
+The following commands allow you to install the full list of dependencies for CSF. This includes all optional features such as the statistics module, and `sendmail`.
 
 <br />
 
@@ -293,8 +291,8 @@ CSF can send email alerts for blocked IPs, login failures, or other events. To e
     The following should be taken into consideration when installing the dependencies for email alerts:
 
     - After installing sendmail, ensure the MTA is enabled and running:
-      - Debian/Ubuntu: `sudo systemctl enable --now sendmail`
-      - RHEL/CentOS: `sudo systemctl enable --now sendmail`
+        - Debian/Ubuntu: `sudo systemctl enable --now sendmail`
+        - RHEL/CentOS: `sudo systemctl enable --now sendmail`
     - You can also use `postfix` or another MTA if preferred — CSF will use whatever MTA is configured on the system.
     - This is optional if you do not need email alerts, but it is **highly recommended** for security monitoring.
 
@@ -318,22 +316,23 @@ CSF can send email alerts for blocked IPs, login failures, or other events. To e
 
 #### <!-- md:feature Statistics / Graphs -->
 
-CSF comes with an optional feature which allows you to generate charts / graphs that can show Statistics for your server. In order to generate these charts, a few packages are required.
+CSF comes with an optional **Statistics** module which allows you to generate charts / graphs for various monitored aspects of CSF. To enable Statistics, you need the following:
 
-- To enable **Statistics** (`ST_ENABLE = "1"`), you need the following:
+  - :aetherx-axd-box-isometric:{ .icon-clr-purple } **CSF Config File**
+      - Must open `/etc/csf/csf.conf` and set `ST_ENABLE = "1"`
 
-    - :aetherx-axd-box-isometric:{ .icon-clr-purple } **GD Graphics Library (libgd)**  
-        - C library for creating and manipulating images (PNG, JPEG, GIF, etc.).  
-        - Provides low-level graphics functions for CSF statistics.
-        - :aetherx-axb-debian: Debian/Ubuntu: installing the Perl module `GD::Graph Perl Module` below will automatically pull in the necessary GD library.
-        - :aetherx-axb-redhat: RHEL/CentOS: you may need `gd-devel`.
+  - :aetherx-axd-box-isometric:{ .icon-clr-purple } **GD Graphics Library (libgd)**
+      - C library for creating and manipulating images (PNG, JPEG, GIF, etc.).  
+      - Provides low-level graphics functions for CSF statistics.
+      - :aetherx-axb-debian: **Debian/Ubuntu**: installing the Perl module `GD::Graph Perl Module` below will automatically pull in the necessary GD library.
+      - :aetherx-axb-redhat: **RHEL/CentOS**: you may need `gd-devel`.
 
-    - :aetherx-axd-box-isometric:{ .icon-clr-purple } **GD::Graph Perl Module**  
-        - Perl module that depends on the GD library.  
-        - Provides an API to draw charts and graphs (line, bar, pie, etc.) in Perl scripts.  
-        - Used by CSF to render statistics graphs in the web interface.  
-        - :aetherx-axb-debian: Debian/Ubuntu: install via (`libgd-graph-perl` or CPAN/CPANM.
-        - :aetherx-axb-redhat: RHEL/CentOS: install via `perl-GDGraph` or CPAN/CPANM.
+  - :aetherx-axd-box-isometric:{ .icon-clr-purple } **GD::Graph Perl Module**  
+      - Perl module that depends on the GD library.  
+      - Provides an API to draw charts and graphs (line, bar, pie, etc.) in Perl scripts.  
+      - Used by CSF to render statistics graphs in the web interface.  
+      - :aetherx-axb-debian: **Debian/Ubuntu**: install via (`libgd-graph-perl` or CPAN/CPANM.
+      - :aetherx-axb-redhat: **RHEL/CentOS**: install via `perl-GDGraph` or CPAN/CPANM.
 
 <br />
 
@@ -377,7 +376,7 @@ CSF comes with an optional feature which allows you to generate charts / graphs 
 
 #### <!-- md:feature Blocklists -->
 
-CSF allows you to manage **blocklists**, which are lists of IP addresses that should be denied access to your server. Blocklists can come from official CSF sources or from third-party vendors, and they help automate the process of blocking potentially harmful traffic.
+[Blocklists](../usage/blocklists.md) in CSF allow you to manage lists of IP addresses that should be denied access to your server. Blocklists can come from official CSF sources, or from third-party vendors. They help automate the process of blocking potentially harmful traffic from gaining access to your server.
 
 Blocklists can be handled in two ways:
 
@@ -386,24 +385,28 @@ Blocklists can be handled in two ways:
 
 <br />
 
-If you would like to utilize CSF's built in IPSET integration, you will need to install the required dependencies:
+If you would like to utilize CSF's built-in IPSET integration, you will need to install the following dependencies:
 
 === ":aetherx-axb-debian: Debian/Ubuntu (apt-get)"
 
     ``` shell
-    sudo apt-get update && sudo apt-get install -y ipset
+    sudo apt-get update
+    sudo apt-get install -y ipset
     ```
 
 === ":aetherx-axb-redhat: CentOS/RHEL (yum/dnf)"
 
     ``` shell
     sudo yum install -y epel-release
-    sudo yum makecache && sudo yum install -y ipset
+    sudo yum makecache
+    sudo yum install -y ipset
     ```
 
 <br />
 
-This section does not go into detailed instructions on how to set up Blocklists or IPSET, however, if you want to read the full instructions for setting this up, review the chapters [Introduction to IPSETs](../usage/ipset.md) and  [Setting Up Blocklists](../usage/blocklists.md).
+This section does not give detailed instructions on how to set up Blocklists or IPSETs, however, if you want to
+read the full chapter on setting this up, see [Introduction to IPSETs](../usage/ipset.md) and 
+[Setting Up Blocklists](../usage/blocklists.md).
 
 <div class="grid" markdown>
 
@@ -430,13 +433,15 @@ To enable DNS lookups, CSF requires the `dnsutils` package (on Debian/Ubuntu) or
 === ":aetherx-axb-debian: Debian/Ubuntu (apt-get)"
 
     ``` shell
-    sudo apt-get update && sudo apt-get install -y dnsutils
+    sudo apt-get update
+    sudo apt-get install -y dnsutils
     ```
 
 === ":aetherx-axb-redhat: CentOS/RHEL (yum/dnf)"
 
     ``` shell
-    sudo yum makecache && sudo yum install -y bind-utils
+    sudo yum makecache
+    sudo yum install -y bind-utils
     ```
 
 <br />
@@ -445,7 +450,7 @@ To enable DNS lookups, CSF requires the `dnsutils` package (on Debian/Ubuntu) or
 
 #### <!-- md:feature GeoIP Blocking -->
 
-GeoIP Blocking in CSF allows you to block or allow traffic based on the country of origin. This is useful for restricting access to your server from certain regions or implementing geo-specific rules.  
+[Geographical IP Blocks](../usage/geoip.md) in CSF allows you to block or allow traffic based on the country of origin. This is useful for restricting access to your server from certain regions or implementing geo-specific rules.  
 
 This feature does **not require a traditional system package** to function. Instead, it relies on external databases that map IP addresses to countries. 
 
@@ -476,7 +481,9 @@ If you opt to use `MaxMind`, you can automate the database updates by installing
 
 <br />
 
-This section does not go into detailed instructions on how to set up GeoIP blocking, however, if you want to read the full instructions for setting this up, review the chapter [Geographical IP Block Integration](../usage/geoip.md).
+This section does not go into detailed instructions on how to set up Geographical IP blocking, 
+however, if you want to read the full instructions for setting this up, review the chapter 
+[Geographical IP Block Integration](../usage/geoip.md).
 
 <div class="grid" markdown>
 
@@ -484,6 +491,141 @@ This section does not go into detailed instructions on how to set up GeoIP block
 { .card }
 
 </div>
+
+<br />
+<br />
+<br />
+
+#### <!-- md:feature CSGet -->
+
+[CSGet](../advanced/csget/index.md) is a Perl-based script which runs as a system cron job. Its primary role is to 
+communicate with the official CSF update servers and determine whether a new CSF version is available.
+
+This component is used as an extension for the [CSF Web Interface](../install/webui.md).
+
+<br />
+
+Under normal operation, no additional Perl modules are required. However, if you choose to run CSGet in debug 
+mode via the `--debug` flag; the perl module `diagnostics` must be installed.
+
+=== ":aetherx-axb-redhat: RHEL/CentOS (yum/dnf)"
+
+    Use the following to install Perl and its main dependencies on:
+    
+    - :aetherx-axb-redhat: RHEL
+    - :aetherx-axb-centos: CentOS
+    - :aetherx-axb-alma-linux: AlmaLinux
+    - :aetherx-axb-rocky-linux: Rocky
+    - :aetherx-axb-fedora: Fedora
+
+    ```bash
+    sudo dnf makecache
+    sudo dnf install perl-Diagnostics
+    ```
+
+=== ":aetherx-axb-debian: Debian/Ubuntu (apt-get)"
+
+    Use the following to install Perl and its main dependencies on:
+
+    - :aetherx-axb-debian: Debian
+    - :aetherx-axb-ubuntu: Ubuntu
+    - :aetherx-axb-mint-linux: Mint
+    - :aetherx-axb-pop-linux: Pop!
+    - :aetherx-axb-elementary-linux: Elementary
+
+    ```bash
+    sudo apt update
+    sudo apt install libdiagnostics-perl
+    ```
+
+<br />
+
+More information about CSGet can be read in the chapter [Advanced › CSGet](../advanced/csget/index.md).
+
+<div class="grid" markdown>
+
+:aetherx-axs-block-brick-fire: &nbsp; __[Advanced › CSGet](../advanced/csget/index.md)__
+{ .card }
+
+</div>
+
+<br />
+
+---
+
+<br />
+
+## FAQ
+
+The following is a list of questions a user may have regarding CSf dependencies, and information about certain issues that may arise:
+
+<br />
+
+??? faq "Perl: Can't locate XXXX/XXXX.pm in @INC"
+
+    By installing all dependencies listed on this page, you should have everything required
+    to run ConfigServer Firewall (CSF) correctly.
+
+    If you attempt to run a CSF command such as `sudo csf -ra` and encounter an error
+    similar to:
+
+    === ":aetherx-axs-square-terminal: Output"
+
+        ```shell
+        Can't locate File/Copy.pm in @INC (you may need to install the File::Copy module) (@INC contains: /usr/local/csf/lib /usr/local/cpanel 
+        /usr/local/lib64/perl5/5.32 /usr/local/share/perl5/5.32  /usr/lib64/perl5/vendor_perl /usr/share/perl5/vendor_perl 
+        /usr/lib64/perl5 /usr/share/perl5) at /usr/local/csf/lib/ConfigServer/Messenger.pm line 34.
+        ```
+
+    This indicates that your system is still missing essential Perl modules required for
+    CSF to operate.
+
+    Make sure you've executed the installation commands provided on this page and that all
+    required dependencies have been installed.
+
+    Be aware that some Linux distributions include a bundled version of Perl which may be
+    outdated or missing important core modules that modern versions provide. Such minimal
+    Perl installations can prevent CSF from functioning until the missing components are
+    manually installed.
+
+??? faq "Perl: Using Minimal Distro Releases"
+
+    If you are running a light-weight distro such as :aetherx-axb-alma-linux: [AlmaLinux (Minimal)](https://almalinux.org/get-almalinux/),
+    your distro may include a copy of Perl, but may not have many of the core modules required
+    for a program written in perl to function.
+
+    You can run the commands listed on this page to install the required dependencies, or you can
+    install `perl-core` with one of the following commands:
+
+    === ":aetherx-axb-redhat: RHEL/CentOS (yum/dnf)"
+
+        Use the following to install Perl and its main dependencies on:
+        
+        - :aetherx-axb-redhat: RHEL
+        - :aetherx-axb-centos: CentOS
+        - :aetherx-axb-alma-linux: AlmaLinux
+        - :aetherx-axb-rocky-linux: Rocky
+        - :aetherx-axb-fedora: Fedora
+
+        ```bash
+        sudo dnf makecache
+        sudo dnf install perl-core
+        ```
+
+    === ":aetherx-axb-debian: Debian/Ubuntu (apt-get)"
+
+        Use the following to install Perl and its main dependencies on:
+
+        - :aetherx-axb-debian: Debian
+        - :aetherx-axb-ubuntu: Ubuntu
+        - :aetherx-axb-mint-linux: Mint
+        - :aetherx-axb-pop-linux: Pop!
+        - :aetherx-axb-elementary-linux: Elementary
+
+        ```bash
+        sudo apt update
+        sudo apt install perl perl-modules perl-base
+        ```
 
 <br />
 

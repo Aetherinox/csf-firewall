@@ -631,11 +631,11 @@ foreach my $arg ( @ARGV )
         if ( @pids )
         {
             kill 9, @pids;
-            print "csget processes terminated: @pids\n";
+            print "CSGet processes terminated: @pids\n";
         }
         else
         {
-            print "No csget processes found to kill.\n";
+            print "No CSGet processes found to kill.\n";
         }
     
         exit 0;

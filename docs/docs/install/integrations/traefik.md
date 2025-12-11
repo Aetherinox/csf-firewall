@@ -1,6 +1,7 @@
 ---
-title: "Usage › Traefik Integration"
+title: "Usage › Integration › Traefik"
 tags:
+    - 3rd-party
     - usage
     - configure
     - integration
