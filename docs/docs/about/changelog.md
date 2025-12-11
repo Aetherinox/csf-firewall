@@ -17,42 +17,44 @@ tags:
 
 </p>
 
-### <!-- md:version stable- --> 15.08 <small>Dec 10 2025</small> { id="15.08" }
+### <!-- md:version stable- --> 15.08 <small>Dec 11 2025</small> { id="15.08" }
 
-- `feat(cron)`: Cron `csget` re-written
-  - Now compatible with all distros
-  - Utilizes tertiary redundancy system for fetching updates:
-    - `/usr/bin/wget`
-    - `/usr/bin/curl`
-    - `/usr/bin/GET`
-  - New flags added:
-    - `-r, --response `
-    - `-n, --nosleep`
-    - `-k, --kill`
-    - `-l, --list`
-    - `-d, --diag`
-    - `-D, --debug`
-    - `-v, --version`
-    - `-h, --help`
-- `feat(install)`: install scripts now give much more detailed output
-- `feat(cwp)`: add logic to handle files within cwp with immutable +i flag
-- `feat(webmin)`: automatically install `webmin` module if webmin control panel detected during installation
-    - No longer requires webmin module to be manually loaded
-- `pref(blocklist)`: optimize generation scripts for blocklist service
-- `refactor(cwp)`: re-name left nav menu link to CSF within CentOS Web Panel
+- `feat(cron)`: Perl cron `csget` re-written
+    - Now compatible with all distros
+    - Utilizes tertiary redundancy system for fetching updates:
+        - `/usr/bin/wget`
+        - `/usr/bin/curl`
+        - `/usr/bin/GET`
+    - New flags added:
+        - `-r, --response `
+        - `-n, --nosleep`
+        - `-k, --kill`
+        - `-l, --list`
+        - `-d, --diag`
+        - `-D, --debug`
+        - `-v, --version`
+        - `-h, --help`
+- `feat(install)`: install scripts `install.*.sh` now detailed and proper output to user
+- `feat(cwp)`: add logic to mitigate immutable flag +i on cwp installs; restore flag after install complete
+- `feat(webmin)`: automatically install `webmin` module `/usr/local/csf/csfwebmin.tgz`
+    - No longer requires webmin module to be manually imported
+- `pref(blocklist)`: optimize blocklist generation [scripts](https://github.com/Aetherinox/csf-firewall/tree/main/.github/scripts)
+- `refactor(cwp)`: centos web panel nav menu label for CSF changed
     - Renamed from `ConfigServer Scripts` to `ConfigServer Firewall`
-- `refactor(license)`: update insiders release json response structure
-- `refactor(scripts)`: `protect.sh` for POSIX compliance and logging
-- `refactor(webmin)`: make `webmin` installation functionality in `install.*.sh` files POSIX compliant
+- `refactor(license)`: update json response structure for license / insiders service
+- `refactor(scripts)`: bash script `protect.sh` now POSIX compliant
+- `refactor(install)`: make all bash `install.*.sh` installation scripts POSIX compliant
 - `feat(core)`: add warning message if `LF_MODSEC_PERM` threshold below `3600` seconds (1 hour)
-- `chore(core)`: add input value type to `LF_MODSEC_PERM` comments
+- `chore(core)`: add comment to `csf.conf` files to specifyinput value type for `LF_MODSEC_PERM`
 - `chore(core)`: update config description for `LF_MODSEC`
 - `chore(webmin)`: add property `longdesc` to `module.info` in CSF webmin module
-- `fix(cwp)`: cwp control panel returned blank page when selecting `csfofficial` link
-- `fix(core)`: prevent output if latest version and no terminal present (#no critic)
-- `fix(blocklist)`: remove duplicate entries from static list highrisk in blocklist service
-- `fix(scripts)`: add shellcheck directive to `protect.sh`
-- `fix(cron)`: cron `csget` assigned incorrect user:group; now uses `root:root` in compliance with SELinux
+- `chore(general)`: clean up files no longer used by application
+- `fix(cwp)`: centos control panel menu link `csfofficial` returned blank page
+- `fix(core)`: prevent output if latest version and no terminal present; add `#no critic`
+- `fix(blocklist)`: remove duplicate entries from [highrisk](https://github.com/Aetherinox/csf-firewall/blob/main/.github/blocks/highrisk/01.ipset)  static blocklist
+- `fix(scripts)`: add shellcheck directive to [extras/scripts/protect.sh](https://github.com/Aetherinox/csf-firewall/blob/main/extras/scripts/protect.sh)
+- `fix(cron)`: cron `csget` incorrectly assigned wrong user:group to file; triggered SELinux security error
+    - update `install.*.sh` scripts to assign `root:root`
 - `docs(mkdocs)`: add new chapter [Advanced](https://docs.configserver.dev/advanced/)
 
 <br />
