@@ -63,12 +63,16 @@ foreach my $alertfile ("sshalert.txt","sualert.txt","sudoalert.txt","webminalert
 	}
 }
 
-if (-e "/proc/vz/veinfo") {
+if (-e "/proc/vz/veinfo")
+{
 	$vps = 1;
-} else {
+}
+else
+{
 	open (IN, "<","/proc/self/status"); 
 	flock (IN, LOCK_SH);
-	while (my $line = <IN>) {
+	while (my $line = <IN>)
+	{
 		chomp $line;
 		if ($line =~ /^envID:\s*(\d+)\s*$/) {
 			if ($1 > 0) {
@@ -79,25 +83,33 @@ if (-e "/proc/vz/veinfo") {
 	}
 	close (IN);
 }
-if (-e "/usr/local/cwpsrv") {
+
+if (-e "/usr/local/cwpsrv")
+{
 	sysopen (my $CWP, "/usr/local/cwpsrv/htdocs/resources/admin/include/3rdparty.php", O_RDWR | O_CREAT);
 	flock ($CWP, LOCK_EX);
 	my @data = <$CWP>;
 	chomp @data;
-	if (!(grep {$_ =~ /configserver/} @data)) {
+
+	if (!(grep {$_ =~ /configserver/} @data))
+	{
 
 		seek ($CWP, 0, 0);
 		truncate ($CWP, 0);
-		foreach my $line (@data) {
+		foreach my $line (@data)
+		{
 			print $CWP $line."\n";
 		}
 		print $CWP "<?php include('/usr/local/cwpsrv/htdocs/resources/admin/include/configserver.php'); ?>\n";
 	}
+
 	close ($CWP);
 }
 
-if (&checkversion("10.11") and !-e "/var/lib/csf/auto1011") {
-	if (-e "/var/lib/csf/stats/lfdstats") {
+if (&checkversion("10.11") and !-e "/var/lib/csf/auto1011")
+{
+	if (-e "/var/lib/csf/stats/lfdstats")
+	{
 		sysopen (STATS,"/var/lib/csf/stats/lfdstats", O_RDWR | O_CREAT);
 		flock (STATS, LOCK_EX);
 		my @stats = <STATS>;
@@ -120,8 +132,11 @@ if (&checkversion("10.11") and !-e "/var/lib/csf/auto1011") {
 	print OUT time;
 	close (OUT);
 }
-if (&checkversion("10.23") and !-e "/var/lib/csf/auto1023") {
-	if (-e "/etc/csf/csf.blocklists") {
+
+if (&checkversion("10.23") and !-e "/var/lib/csf/auto1023")
+{
+	if (-e "/etc/csf/csf.blocklists")
+	{
 		sysopen (IN,"/etc/csf/csf.blocklists", O_RDWR | O_CREAT);
 		flock (IN, LOCK_EX);
 		my @data = <IN>;
@@ -130,22 +145,28 @@ if (&checkversion("10.23") and !-e "/var/lib/csf/auto1023") {
 		truncate (IN, 0);
 		my $SPAMDROPV6 = 0;
 		my $STOPFORUMSPAMV6 = 0;
-		foreach my $line (@data) {
+
+		foreach my $line (@data)
+		{
 			if ($line =~ /^(\#)?SPAMDROPV6/) {$SPAMDROPV6 = 1}
 			if ($line =~ /^(\#)?STOPFORUMSPAMV6/) {$STOPFORUMSPAMV6 = 1}
 			print IN "$line\n";
 		}
-		unless ($SPAMDROPV6) {
+
+		unless ($SPAMDROPV6)
+		{
 			print IN "\n# Spamhaus IPv6 Don't Route Or Peer List (DROPv6)\n";
 			print IN "# Details: http://www.spamhaus.org/drop/\n";
 			print IN "#SPAMDROPV6|86400|0|https://www.spamhaus.org/drop/dropv6.txt\n";
 		}
-		unless ($STOPFORUMSPAMV6) {
-			print IN "\n# Stop Forum Spam IPv6\n";
-			print IN "# Details: http://www.stopforumspam.com/downloads/\n";
-			print IN "# Many of the lists available contain a vast number of IP addresses so special\n";
-			print IN "# care needs to be made when selecting from their lists\n";
-			print IN "#STOPFORUMSPAMV6|86400|0|http://www.stopforumspam.com/downloads/listed_ip_1_ipv6.zip\n";
+
+		unless ($STOPFORUMSPAMV6)
+		{
+			print IN "\n#    Stop Forum Spam IPv6\n";
+			print IN "#    Details: http://www.stopforumspam.com/downloads/\n";
+			print IN "#    Many of the lists available contain a vast number of IP addresses so special\n";
+			print IN "#    care needs to be made when selecting from their lists\n";
+			print IN "# STOPFORUMSPAMV6|86400|0|http://www.stopforumspam.com/downloads/listed_ip_1_ipv6.zip\n";
 		}
 		close (IN);
 	}
@@ -155,15 +176,19 @@ if (&checkversion("10.23") and !-e "/var/lib/csf/auto1023") {
 	print OUT time;
 	close (OUT);
 }
-if (&checkversion("12.02") and !-e "/var/lib/csf/auto1202") {
-	if (-e "/etc/csf/csf.blocklists") {
+
+if (&checkversion("12.02") and !-e "/var/lib/csf/auto1202")
+{
+	if (-e "/etc/csf/csf.blocklists")
+	{
 		sysopen (IN,"/etc/csf/csf.blocklists", O_RDWR | O_CREAT);
 		flock (IN, LOCK_EX);
 		my @data = <IN>;
 		chomp @data;
 		seek (IN, 0, 0);
 		truncate (IN, 0);
-		foreach my $line (@data) {
+		foreach my $line (@data)
+		{
 			if ($line =~ /greensnow/) {$line =~ s/http:/https:/g}
 			print IN "$line\n";
 		}
@@ -175,18 +200,24 @@ if (&checkversion("12.02") and !-e "/var/lib/csf/auto1202") {
 	print OUT time;
 	close (OUT);
 }
-if (&checkversion("14.03") and !-e "/var/lib/csf/auto1403") {
-	if (-e "/etc/csf/csf.blocklists") {
+
+if (&checkversion("14.03") and !-e "/var/lib/csf/auto1403")
+{
+	if (-e "/etc/csf/csf.blocklists")
+	{
 		sysopen (IN,"/etc/csf/csf.blocklists", O_RDWR | O_CREAT);
 		flock (IN, LOCK_EX);
 		my @data = <IN>;
 		chomp @data;
 		seek (IN, 0, 0);
 		truncate (IN, 0);
-		foreach my $line (@data) {
+	
+		foreach my $line (@data)
+		{
 			if ($line =~ /dshield/) {$line =~ s/http:/https:/g}
 			print IN "$line\n";
 		}
+	
 		close (IN);
 	}
 
@@ -196,53 +227,71 @@ if (&checkversion("14.03") and !-e "/var/lib/csf/auto1403") {
 	close (OUT);
 }
 
-if (-e "/etc/csf/csf.allow") {
+if (-e "/etc/csf/csf.allow")
+{
 	sysopen (IN,"/etc/csf/csf.allow", O_RDWR | O_CREAT);
 	flock (IN, LOCK_EX);
 	my @data = <IN>;
 	chomp @data;
 	seek (IN, 0, 0);
 	truncate (IN, 0);
-	foreach my $line (@data) {
+
+	foreach my $line (@data)
+	{
 		if ($line =~ /^Include \/etc\/csf\/cpanel\.comodo\.allow/) {next}
 		print IN "$line\n";
 	}
+
 	close (IN);
 }
-if (-e "/etc/csf/csf.ignore") {
+
+if (-e "/etc/csf/csf.ignore")
+{
 	sysopen (IN,"/etc/csf/csf.ignore", O_RDWR | O_CREAT);
 	flock (IN, LOCK_EX);
 	my @data = <IN>;
 	chomp @data;
 	seek (IN, 0, 0);
 	truncate (IN, 0);
-	foreach my $line (@data) {
+
+	foreach my $line (@data)
+	{
 		if ($line =~ /^Include \/etc\/csf\/cpanel\.comodo\.ignore/) {next}
 		print IN "$line\n";
 	}
+
 	close (IN);
 }
-if (-e "/usr/local/csf/bin/regex.custom.pm") {
+
+if (-e "/usr/local/csf/bin/regex.custom.pm")
+{
 	sysopen (IN,"/usr/local/csf/bin/regex.custom.pm", O_RDWR | O_CREAT);
 	flock (IN, LOCK_EX);
 	my @data = <IN>;
 	chomp @data;
 	seek (IN, 0, 0);
 	truncate (IN, 0);
-	foreach my $line (@data) {
+
+	foreach my $line (@data)
+	{
 		if ($line =~ /^use strict;/) {next}
 		print IN "$line\n";
 	}
+
 	close (IN);
 }
-if (-e "/etc/csf/csf.blocklists") {
+
+if (-e "/etc/csf/csf.blocklists")
+{
 	sysopen (IN,"/etc/csf/csf.blocklists", O_RDWR | O_CREAT);
 	flock (IN, LOCK_EX);
 	my @data = <IN>;
 	chomp @data;
 	seek (IN, 0, 0);
 	truncate (IN, 0);
-	foreach my $line (@data) {
+
+	foreach my $line (@data)
+	{
 		if ($line =~ /feeds\.dshield\.org/) {$line =~ s/feeds\.dshield\.org/www\.dshield\.org/g}
 		if ($line =~ /openbl\.org/i) {next}
 		if ($line =~ /autoshun/i) {next}
@@ -250,7 +299,9 @@ if (-e "/etc/csf/csf.blocklists") {
 	}
 	close (IN);
 }
-if (-e "/var/lib/csf/csf.tempban") {
+
+if (-e "/var/lib/csf/csf.tempban")
+{
 	sysopen (IN,"/var/lib/csf/csf.tempban", O_RDWR | O_CREAT);
 	flock (IN, LOCK_EX);
 	my @data = <IN>;
@@ -263,7 +314,9 @@ if (-e "/var/lib/csf/csf.tempban") {
 	}
 	close (IN);
 }
-if (-e "/var/lib/csf/csf.tempallow") {
+
+if (-e "/var/lib/csf/csf.tempallow")
+{
 	sysopen (IN,"/var/lib/csf/csf.tempallow", O_RDWR | O_CREAT);
 	flock (IN, LOCK_EX);
 	my @data = <IN>;
@@ -277,7 +330,8 @@ if (-e "/var/lib/csf/csf.tempallow") {
 	close (IN);
 }
 
-if ($config{TESTING}) {
+if ($config{TESTING})
+{
 
 	open (IN, "<", "/etc/ssh/sshd_config") or die $!;
 	flock (IN, LOCK_SH) or die $!;
@@ -286,18 +340,22 @@ if ($config{TESTING}) {
 	chomp @sshconfig;
 
 	my $sshport = "22";
-	foreach my $line (@sshconfig) {
+	foreach my $line (@sshconfig)
+	{
 		if ($line =~ /^Port (\d+)/) {$sshport = $1}
 	}
 
 	$config{TCP_IN} =~ s/\s//g;
-	if ($config{TCP_IN} ne "") {
-		foreach my $port (split(/\,/,$config{TCP_IN})) {
+	if ($config{TCP_IN} ne "")
+	{
+		foreach my $port (split(/\,/,$config{TCP_IN}))
+		{
 			if ($port eq $sshport) {$sshport = "22"}
 		}
 	}
 
-	if ($sshport ne "22") {
+	if ($sshport ne "22")
+	{
 		$config{TCP_IN} .= ",$sshport";
 		$config{TCP6_IN} .= ",$sshport";
 		open (IN, "<", "/etc/csf/csf.conf") or die $!;
@@ -307,22 +365,27 @@ if ($config{TESTING}) {
 		chomp @config;
 		open (OUT, ">", "/etc/csf/csf.conf") or die $!;
 		flock (OUT, LOCK_EX) or die $!;
-		foreach my $line (@config) {
-			if ($line =~ /^TCP6_IN/) {
+	
+		foreach my $line (@config)
+		{
+			if ($line =~ /^TCP6_IN/)
+			{
 				print OUT "TCP6_IN = \"$config{TCP6_IN}\"\n";
 				print "\n*** SSH port $sshport added to the TCP6_IN port list\n\n";
 			}
-			elsif ($line =~ /^TCP_IN/) {
+			elsif ($line =~ /^TCP_IN/)
+			{
 				print OUT "TCP_IN = \"$config{TCP_IN}\"\n";
 				print "\n*** SSH port $sshport added to the TCP_IN port list\n\n";
 			}
-			else {
+			else
+			{
 				print OUT $line."\n";
 			}
 		}
+	
 		close OUT;
 		&loadcsfconfig;
-
 	}
 
 	open (FH, "<", "/proc/sys/kernel/osrelease");
@@ -330,11 +393,14 @@ if ($config{TESTING}) {
 	my @data = <FH>;
 	close (FH);
 	chomp @data;
-	if ($data[0] =~ /^(\d+)\.(\d+)\.(\d+)/) {
+
+	if ($data[0] =~ /^(\d+)\.(\d+)\.(\d+)/)
+	{
 		my $maj = $1;
 		my $mid = $2;
 		my $min = $3;
-		if ($maj == 3 and $mid > 6) {
+		if ($maj == 3 and $mid > 6)
+		{
 			open (IN, "<", "/etc/csf/csf.conf") or die $!;
 			flock (IN, LOCK_SH) or die $!;
 			my @config = <IN>;
@@ -342,11 +408,14 @@ if ($config{TESTING}) {
 			chomp @config;
 			open (OUT, ">", "/etc/csf/csf.conf") or die $!;
 			flock (OUT, LOCK_EX) or die $!;
-			foreach my $line (@config) {
+			foreach my $line (@config)
+			{
 				if ($line =~ /^USE_CONNTRACK =/) {
 					print OUT "USE_CONNTRACK = \"1\"\n";
 					print "\n*** USE_CONNTRACK Enabled\n\n";
-				} else {
+				}
+				else
+				{
 					print OUT $line."\n";
 				}
 			}
@@ -356,7 +425,8 @@ if ($config{TESTING}) {
 	}
 
 	my @ipdata;
-	eval {
+	eval
+	{
 		local $SIG{__DIE__} = undef;
 		local $SIG{'ALRM'} = sub {die "alarm\n"};
 		alarm(3);
@@ -365,11 +435,17 @@ if ($config{TESTING}) {
 		@ipdata = <$childout>;
 		waitpid ($cmdpid, 0);
 		chomp @ipdata;
-		if ($ipdata[0] =~ /# Warning: iptables-legacy tables present/) {shift @ipdata}
+		if ($ipdata[0] =~ /# Warning: iptables-legacy tables present/)
+		{
+			shift @ipdata
+		}
 		alarm(0);
 	};
+
 	alarm(0);
-	if ($@ ne "alarm\n" and $ipdata[0] =~ /^Chain OUTPUT/) {
+
+	if ($@ ne "alarm\n" and $ipdata[0] =~ /^Chain OUTPUT/)
+	{
 		$config{IPTABLESWAIT} = "--wait";
 		$config{WAITLOCK} = 1;
 		open (IN, "<", "/etc/csf/csf.conf") or die $!;
@@ -379,18 +455,24 @@ if ($config{TESTING}) {
 		chomp @config;
 		open (OUT, ">", "/etc/csf/csf.conf") or die $!;
 		flock (OUT, LOCK_EX) or die $!;
-		foreach my $line (@config) {
-			if ($line =~ /WAITLOCK =/) {
+		foreach my $line (@config)
+		{
+			if ($line =~ /WAITLOCK =/)
+			{
 				print OUT "WAITLOCK = \"1\"\n";
-			} else {
+			}
+			else
+			{
 				print OUT $line."\n";
 			}
 		}
+
 		close OUT;
 		&loadcsfconfig;
 	}
 
-	if (-e $config{IP6TABLES} and !$vps) {
+	if (-e $config{IP6TABLES} and !$vps)
+	{
 		my ($childin, $childout);
 		my $cmdpid;
 		if (-e $config{IP}) {$cmdpid = open3($childin, $childout, $childout, $config{IP}, "-oneline", "addr")}
@@ -398,23 +480,31 @@ if ($config{TESTING}) {
 		my @ifconfig = <$childout>;
 		waitpid ($cmdpid, 0);
 		chomp @ifconfig;
-		if (grep {$_ =~ /\s*inet6/} @ifconfig) {
+	
+		if (grep {$_ =~ /\s*inet6/} @ifconfig)
+		{
 			$config{IPV6} = 1;
 			open (FH, "<", "/proc/sys/kernel/osrelease");
 			flock (IN, LOCK_SH);
 			my @data = <FH>;
 			close (FH);
 			chomp @data;
-			if ($data[0] =~ /^(\d+)\.(\d+)\.(\d+)/) {
+	
+			if ($data[0] =~ /^(\d+)\.(\d+)\.(\d+)/)
+			{
 				my $maj = $1;
 				my $mid = $2;
 				my $min = $3;
-				if (($maj > 2) or (($maj > 1) and ($mid > 6)) or (($maj > 1) and ($mid > 5) and ($min > 19))) {
+				if (($maj > 2) or (($maj > 1) and ($mid > 6)) or (($maj > 1) and ($mid > 5) and ($min > 19)))
+				{
 					$config{IPV6_SPI} = 1;
-				} else {
+				}
+				else
+				{
 					$config{IPV6_SPI} = 0;
 				}
 			}
+	
 			open (IN, "<", "/etc/csf/csf.conf") or die $!;
 			flock (IN, LOCK_SH) or die $!;
 			my @config = <IN>;
@@ -447,23 +537,35 @@ close (IN);
 chomp @config;
 open (OUT, ">", "/etc/csf/csf.conf") or die $!;
 flock (OUT, LOCK_EX) or die $!;
-foreach my $line (@config) {
-	if ($line =~ /^\#/) {
+
+foreach my $line (@config)
+{
+	if ($line =~ /^\#/)
+	{
 		print OUT $line."\n";
 		next;
 	}
-	if ($line !~ /=/) {
+
+	if ($line !~ /=/)
+	{
 		print OUT $line."\n";
 		next;
 	}
+
 	my ($name,$value) = split (/=/,$line,2);
 	$name =~ s/\s//g;
-	if ($value =~ /\"(.*)\"/) {
+
+	if ($value =~ /\"(.*)\"/)
+	{
 		$value = $1;
-	} else {
+	}
+	else
+	{
 		print "Error: Invalid configuration line [$line]";
 	}
-	if (&checkversion("10.15") and !-e "/var/lib/csf/auto1015") {
+
+	if (&checkversion("10.15") and !-e "/var/lib/csf/auto1015")
+	{
 		if ($name eq "MESSENGER_RATE" and $config{$name} eq "30/m") {$config{$name} = "100/s"}
 		if ($name eq "MESSENGER_BURST" and $config{$name} eq "5") {$config{$name} = "150"}
 		open (my $AUTO, ">", "/var/lib/csf/auto1015");
@@ -471,9 +573,13 @@ foreach my $line (@config) {
 		print $AUTO time;
 		close ($AUTO);
 	}
-	if ($configsetting{$name}) {
+
+	if ($configsetting{$name})
+	{
 		print OUT "$name = \"$config{$name}\"\n";
-	} else {
+	}
+	else
+	{
 		if (&checkversion("9.29") and !-e "/var/lib/csf/auto929" and $name eq "PT_USERRSS") {
 			$line = "PT_USERRSS = \"$config{PT_USERMEM}\"";
 			open (my $AUTO, ">", "/var/lib/csf/auto929");
@@ -481,6 +587,7 @@ foreach my $line (@config) {
 			print $AUTO time;
 			close ($AUTO);
 		}
+
 		if ($name eq "CC_SRC") {$line = "CC_SRC = \"1\""}
 		print OUT $line."\n";
 		print "New setting: $name\n";
@@ -488,28 +595,41 @@ foreach my $line (@config) {
 }
 close OUT;
 
-if ($config{TESTING}) {
+if ($config{TESTING})
+{
 	my @netstat = `netstat -lpn`;
 	chomp @netstat;
 	my @tcpports;
 	my @udpports;
 	my @tcp6ports;
 	my @udp6ports;
-	foreach my $line (@netstat) {
-		if ($line =~ /^(\w+).* (\d+\.\d+\.\d+\.\d+):(\d+)/) {
-			if ($2 eq '127.0.0.1') {next}
-			if ($1 eq "tcp") {
+
+	foreach my $line (@netstat)
+	{
+		if ($line =~ /^(\w+).* (\d+\.\d+\.\d+\.\d+):(\d+)/)
+		{
+			if ($2 eq '127.0.0.1')
+			{
+				next
+			}
+	
+			if ($1 eq "tcp")
+			{
 				push @tcpports, $3;
 			}
-			elsif ($1 eq "udp") {
+			elsif ($1 eq "udp")
+			{
 				push @udpports, $3;
 			}
 		}
-		if ($line =~ /^(\w+).* (::):(\d+) /) {
-			if ($1 eq "tcp") {
+		if ($line =~ /^(\w+).* (::):(\d+) /)
+		{
+			if ($1 eq "tcp")
+			{
 				push @tcp6ports, $3;
 			}
-			elsif ($1 eq "udp") {
+			elsif ($1 eq "udp")
+			{
 				push @udp6ports, $3;
 			}
 		}
@@ -522,28 +642,36 @@ if ($config{TESTING}) {
 
 	print "\nTCP ports currently listening for incoming connections:\n";
 	my $last = "";
-	foreach my $port (@tcpports) {
+
+	foreach my $port (@tcpports)
+	{
 		if ($port ne $last) {
 			if ($port ne $tcpports[0]) {print ","}
 			print $port;
 			$last = $port;
 		}
 	}
+
 	print "\n\nUDP ports currently listening for incoming connections:\n";
 	$last = "";
-	foreach my $port (@udpports) {
+
+	foreach my $port (@udpports)
+	{
 		if ($port ne $last) {
 			if ($port ne $udpports[0]) {print ","}
 			print $port;
 			$last = $port;
 		}
 	}
+
 	my $opts = "TCP_*, UDP_*";
-	if (@tcp6ports or @udp6ports) {
+	if (@tcp6ports or @udp6ports)
+	{
 		$opts .= ", IPV6, TCP6_*, UDP6_*";
 		print "\n\nIPv6 TCP ports currently listening for incoming connections:\n";
 		my $last = "";
-		foreach my $port (@tcp6ports) {
+		foreach my $port (@tcp6ports)
+		{
 			if ($port ne $last) {
 				if ($port ne $tcp6ports[0]) {print ","}
 				print $port;
@@ -553,7 +681,8 @@ if ($config{TESTING}) {
 		print "\n";
 		print "\nIPv6 UDP ports currently listening for incoming connections:\n";
 		$last = "";
-		foreach my $port (@udp6ports) {
+		foreach my $port (@udp6ports)
+		{
 			if ($port ne $last) {
 				if ($port ne $udp6ports[0]) {print ","}
 				print $port;
@@ -561,6 +690,7 @@ if ($config{TESTING}) {
 			}
 		}
 	}
+
 	print "\n\nNote: The port details above are for information only, csf hasn't been auto-configured.\n\n";
 	print "Don't forget to:\n";
 	print "1. Configure the following options in the csf configuration to suite your server: $opts\n";
@@ -568,7 +698,8 @@ if ($config{TESTING}) {
 	print "3. Set TESTING to 0 once you're happy with the firewall, lfd will not run until you do so\n";
 }
 
-if ($ENV{SSH_CLIENT}) {
+if ($ENV{SSH_CLIENT})
+{
 	my $ip = (split(/ /,$ENV{SSH_CLIENT}))[0];
 	if ($ip =~ /(\d+\.\d+\.\d+\.\d+)/) {
 		print "\nAdding current SSH session IP address to the csf whitelist in csf.allow:\n";
@@ -577,8 +708,9 @@ if ($ENV{SSH_CLIENT}) {
 }
 
 exit;
-###############################################################################
-sub loadcsfconfig {
+
+sub loadcsfconfig
+{
 	open (IN, "<", "/etc/csf/csf.conf") or die $!;
 	flock (IN, LOCK_SH) or die $!;
 	my @config = <IN>;
@@ -590,9 +722,12 @@ sub loadcsfconfig {
 		if ($line !~ /=/) {next}
 		my ($name,$value) = split (/=/,$line,2);
 		$name =~ s/\s//g;
-		if ($value =~ /\"(.*)\"/) {
+		if ($value =~ /\"(.*)\"/)
+		{
 			$value = $1;
-		} else {
+		}
+		else
+		{
 			print "Error: Invalid configuration line [$line]";
 		}
 		$config{$name} = $value;
@@ -600,14 +735,26 @@ sub loadcsfconfig {
 	}
 	return;
 }
-###############################################################################
-sub checkversion {
-	my $version = shift;
-	my ($maj, $min) = split(/\./,$version);
-	my ($oldmaj, $oldmin) = split(/\./,$oldversion);
 
-	if ($oldmaj == 0 or $oldmaj eq "") {return 0}
 
-	if (($oldmaj < $maj) or ($oldmaj == $maj and $oldmin < $min)) {return 1} else {return 0}
+sub checkversion
+{
+	my $version 			= shift;
+	my ($maj, $min) 		= split(/\./,$version);
+	my ($oldmaj, $oldmin) 	= split(/\./,$oldversion);
+
+	if ($oldmaj == 0 or $oldmaj eq "")
+	{
+		return 0
+	}
+
+	if (($oldmaj < $maj) or ($oldmaj == $maj and $oldmin < $min))
+	{
+		return 1
+	}
+	else
+	{
+		return 0
+	}
 }
 ###############################################################################
