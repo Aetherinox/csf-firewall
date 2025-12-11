@@ -49,8 +49,9 @@ tags:
 - `chore(core)`: update config description for `LF_MODSEC`
 - `chore(webmin)`: add property `longdesc` to `module.info` in CSF webmin module
 - `chore(general)`: clean up files no longer used by application
+- `chore(general)`: revise `csf.blocklists` with updated urls to the various blocklist services 
 - `fix(cwp)`: centos control panel menu link `csfofficial` returned blank page
-- `fix(core)`: prevent output if latest version and no terminal present; add `#no critic`
+- `fix(core)`: prevent output if latest version and no terminal present, stops unnecessary update notifications; adds `#no critic`
 - `fix(blocklist)`: remove duplicate entries from [highrisk](https://github.com/Aetherinox/csf-firewall/blob/main/.github/blocks/highrisk/01.ipset)  static blocklist
 - `fix(scripts)`: add shellcheck directive to [extras/scripts/protect.sh](https://github.com/Aetherinox/csf-firewall/blob/main/extras/scripts/protect.sh)
 - `fix(cron)`: cron `csget` incorrectly assigned wrong user:group to file; triggered SELinux security error
