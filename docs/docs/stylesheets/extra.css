@@ -626,6 +626,16 @@
         Badges > Right Box
     */
 
+    .md-typeset .mdx-badge__text
+    {
+        font-size: 0.80em !important;
+    }
+    
+    .md-typeset .mdx-badge__icon
+    {
+        font-size: 0.80em !important;
+    }
+
     .mdx-badge__text
     {
         background-color: #4d4d4d;
@@ -761,7 +771,6 @@
         display: inline-flex;
         justify-content: flex-start;
         gap: 0.35em;
-        vertical-align: middle;
     }
 
     /*
@@ -865,6 +874,13 @@
         color: #ff0864;
     }
 
+    .md-typeset h3 svg
+    {
+        color: #ACACAC;
+        font-size: 14pt;
+        padding-bottom: 3px;
+    }
+
     .md-typeset h4
     {
         font-size: 1.15em;
@@ -873,6 +889,12 @@
         line-height: 1.5;
         margin: 1.6em 0 .8em;
         color: #3083EE;
+    }
+
+    .md-typeset h4 svg
+    {
+        color: #ACACAC;
+        font-size: 10pt;
     }
 
     .md-typeset .grid.cards > ol > li, .md-typeset .grid.cards > ul > li, .md-typeset .grid > .card
@@ -1580,6 +1602,16 @@
         Badges > Right Box
     */
 
+    .md-typeset .mdx-badge__text
+    {
+        font-size: 0.80em !important;
+    }
+    
+    .md-typeset .mdx-badge__icon
+    {
+        font-size: 0.80em !important;
+    }
+
     .mdx-badge__text
     {
         background-color: #3f4faa;
@@ -1715,7 +1747,6 @@
         display: inline-flex;
         justify-content: flex-start;
         gap: 0.35em;
-        vertical-align: middle;
     }
 
     /*
@@ -1819,6 +1850,13 @@
         color: #ff0864;
     }
 
+    .md-typeset h3 svg
+    {
+        color: #ACACAC;
+        font-size: 14pt;
+        padding-bottom: 3px;
+    }
+
     .md-typeset h4
     {
         font-size: 1.15em;
@@ -1827,6 +1865,12 @@
         line-height: 1.5;
         margin: 1.6em 0 .8em;
         color: #3083EE;
+    }
+
+    .md-typeset h4 svg
+    {
+        color: #ACACAC;
+        font-size: 10pt;
     }
 
     .md-typeset .grid.cards > ol > li, .md-typeset .grid.cards > ul > li, .md-typeset .grid > .card
@@ -2514,7 +2558,7 @@ p > a.btn-aln-center-inline
 
 .md-typeset .mdx-badge
 {
-    font-size: 0.83em !important;
+    font-size: unset !important;
 }
 
 /*

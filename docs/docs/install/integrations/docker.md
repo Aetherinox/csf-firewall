@@ -1,6 +1,7 @@
 ---
-title: "Usage › Docker Integration"
+title: "Usage › Integration › Docker"
 tags:
+    - 3rd-party
     - usage
     - configure
     - integration

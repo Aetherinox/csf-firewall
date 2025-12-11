@@ -1,6 +1,7 @@
 ---
-title: Usage › Authentik Integration
+title: "Usage › Integration › Authentik"
 tags:
+    - 3rd-party
     - usage
     - configure
     - integration

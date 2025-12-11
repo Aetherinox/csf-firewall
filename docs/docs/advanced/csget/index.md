@@ -234,9 +234,9 @@ If you wish to call the CSGet module from a bash script, you can use an example 
     CSF_CRON_CSGET_STATUS=$?
 
     if [ "$CSF_CRON_CSGET_STATUS" -eq 0 ]; then
-        print "    CSGET successfully ran"
+        print "    CSGet successfully ran"
     else
-        print "    CSGET failed to run"
+        print "    CSGet failed to run"
     fi
     ```
 
@@ -352,7 +352,7 @@ You will see the following output:
 === ":aetherx-axs-square-terminal: Output"
 
       ```shell
-      CSF CSGET Perl Updater
+      CSF CSGet Perl Updater
       A perl script which allows for automated update checks for the official CSF servers.
       https://github.com/Aetherinox/csf-firewall
 
@@ -395,7 +395,7 @@ You will see the following output:
 === ":aetherx-axs-square-terminal: Output"
 
       ```shell
-      CSF CSGET Perl Updater
+      CSF CSGet Perl Updater
       ConfigServer Security & Firewall v15.08
       A perl script which allows for automated update checks for the official CSF servers.
       https://github.com/Aetherinox/csf-firewall
@@ -428,7 +428,7 @@ You will see the following output:
 === ":aetherx-axs-square-terminal: Output"
 
       ```shell
-      CSF CSGET Perl Updater
+      CSF CSGet Perl Updater
       A perl script which allows for automated update checks for the official CSF servers.
       https://github.com/Aetherinox/csf-firewall
 
@@ -468,7 +468,6 @@ You will see the following output:
             Run using perl (+d debugger)         $ sudo perl -d /etc/cron.daily/csget
             Run using perl (+d:Trace)            $ sudo perl -d:Trace /etc/cron.daily/csget
       ```
-
 
 <br />
 
