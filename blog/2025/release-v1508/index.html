@@ -3,20 +3,18 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Details regarding CSF release v15.04
+        <meta name="description" content="Details regarding CSF release v15.08
 ">
       
       
         <meta name="author" content="Aetherinox">
       
       
-        <link rel="canonical" href="https://aetherinox.github.io/csf-firewall/blog/2025/release-v1504/">
+        <link rel="canonical" href="https://aetherinox.github.io/csf-firewall/blog/2025/release-v1508/">
       
       
-        <link rel="prev" href="../release-v1503/">
+        <link rel="prev" href="../release-v1507/">
       
-      
-        <link rel="next" href="../release-v1505/">
       
       
         
@@ -27,7 +25,7 @@
     
     
       
-        <title>Release v15.04
+        <title>Release v15.08
  - ConfigServer Security &amp; Firewall</title>
       
     
@@ -96,7 +94,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#release-v1504" class="md-skip">
+        <a href="#release-v1508" class="md-skip">
           Skip to content
         </a>
       
@@ -167,7 +165,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Release v15.04
+              Release v15.08
 
             
           </span>
@@ -3540,10 +3538,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#fix-webmin-log-textbox-height" class="md-nav__link">
+  <a href="#webmin-automated-installation" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Fix Webmin Log Textbox Height
+        Webmin Automated Installation
       
     </span>
   </a>
@@ -3551,22 +3549,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#new-settings" class="md-nav__link">
+  <a href="#new-csget-module" class="md-nav__link">
     <span class="md-ellipsis">
       
-        New Settings
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="New Settings">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#ui_logs_refresh_time" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        UI_LOGS_REFRESH_TIME
+        New CSGet Module
       
     </span>
   </a>
@@ -3574,18 +3560,57 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#ui_logs_start_paused" class="md-nav__link">
+  <a href="#detailed-installation-wizard" class="md-nav__link">
     <span class="md-ellipsis">
       
-        UI_LOGS_START_PAUSED
+        Detailed Installation Wizard
       
     </span>
   </a>
   
 </li>
         
-      </ul>
-    </nav>
+          <li class="md-nav__item">
+  <a href="#centos-web-panel-links" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CentOS Web Panel Links
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#centos-web-panel-immutable-flags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CentOS Web Panel Immutable Flags
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#selinux-permission-conformity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SELinux Permission Conformity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blocklist-service-enhancements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Blocklist Service Enhancements
+      
+    </span>
+  </a>
   
 </li>
         
@@ -3661,7 +3686,7 @@
                     <li class="md-nav__item">
                       <div class="md-nav__link">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5v-5Z"></path></svg>
-                        <time datetime="2025-10-15 00:00:00+00:00" class="md-ellipsis">Wednesday, October 15, 2025</time>
+                        <time datetime="2025-12-11 00:00:00+00:00" class="md-ellipsis">Thursday, December 11, 2025</time>
                       </div>
                     </li>
                     
@@ -3675,8 +3700,7 @@
                               <a href="../../release/">release</a>, 
                               <a href="../../changelog/">changelog</a>, 
                               <a href="../../v15x/">v15.x</a>, 
-                              <a href="../../webmin/">webmin</a>, 
-                              <a href="../../csfajaxtail/">csfajaxtail</a></span>
+                              <a href="../../cyberpanel/">cyberpanel</a></span>
                         </div>
                       </li>
                     
@@ -3687,7 +3711,7 @@
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7h1.5Z"></path></svg>
                           <span class="md-ellipsis">
                             
-                              2 min read
+                              5 min read
                             
                           </span>
                         </div>
@@ -3711,7 +3735,7 @@
 
 
   
-    <a href="https://github.com/aetherinox/csf-firewall/edit/main/docs/docs/blog/posts/release-15.04.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/aetherinox/csf-firewall/edit/main/docs/docs/blog/posts/release-15.08.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"></path></svg>
     </a>
@@ -3720,15 +3744,16 @@
     
       
     
-    <a href="https://github.com/aetherinox/csf-firewall/raw/main/docs/docs/blog/posts/release-15.04.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/aetherinox/csf-firewall/raw/main/docs/docs/blog/posts/release-15.08.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"></path></svg>
     </a>
   
 
 
-<h1 id="release-v1504">Release: v15.04<a class="headerlink" href="#release-v1504" title="Permanent link">¶</a></h1>
-<p>This update addresses a textbox height bug for the Webmin control panel which affects the <strong>log</strong> viewing pages. Two new settings have also been added to the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> config file <code>/etc/csf/csf.conf</code> which affects logging.</p>
+<h1 id="release-v1508">Release: v15.08<a class="headerlink" href="#release-v1508" title="Permanent link">¶</a></h1>
+<p>Our <strong>v15.08</strong> update delivers a cleaner, more reliable experience with a strong focus on bug fixes, third-party integration improvements, optimizations, and clearer user feedback during both installation and day-to-day operation.</p>
+<p>This release includes significant fixes for <strong>CyberPanel</strong> and <strong>CentOS Web Panel</strong>, along with automatic installation support for Webmin. Webmin users no longer need to manually import the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> module — it is now handled automatically as part of the installation process.</p>
 <!-- more -->
 
 <p><br></p>
@@ -3737,54 +3762,135 @@
 <h2 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">¶</a></h2>
 <p>A list of the most important changes are listed below.</p>
 <p><br></p>
-<h3 id="fix-webmin-log-textbox-height">Fix Webmin Log Textbox Height<a class="headerlink" href="#fix-webmin-log-textbox-height" title="Permanent link">¶</a></h3>
-<p>Release <a href="https://docs.configserver.dev/blog/2025/release-v1503/">v15.03</a> introduced a complete rewrite of the <code>csfajaxtail.js</code> file, which handles log viewing within <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>. However, this update inadvertently caused a display issue where log textboxes were rendered only a few pixels tall.</p>
-<p>Version <code>v15.04</code> resolves this issue and adds support for vertical resizing of log windows.</p>
-<p><br></p>
-<figure>
-    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../assets/images/blog/release-1504/1.png" data-desc-position="bottom"><img alt="Webmin › CSF › Log Height Bug" src="../../../assets/images/blog/release-1504/1.png" width="700"></a>
-    <figcaption>Webmin › <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> › Log Height Bug</figcaption>
-</figure>
-<p><br></p>
-<hr>
-<p><br></p>
-<h3 id="new-settings">New Settings<a class="headerlink" href="#new-settings" title="Permanent link">¶</a></h3>
-<p>We have introduced two new settings that are available within your <code>/etc/csf/csf.conf</code> config file:</p>
-<p><br></p>
-<h4 id="ui_logs_refresh_time">UI_LOGS_REFRESH_TIME<a class="headerlink" href="#ui_logs_refresh_time" title="Permanent link">¶</a></h4>
-<p>This setting controls how frequently <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> automatically refreshes the displayed logs. The value represents the number of seconds between each refresh cycle. Lower values update the logs more often, while higher values reduce update frequency to conserve resources.</p>
-<div class="language-perl highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># #</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1">#   Number of seconds between automatic log refreshes.</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1">#   Controls how frequently the log display updates.</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># #</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">UI_LOGS_REFRESH_TIME</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"6"</span>
-</span></code></pre></div>
+<h3 id="webmin-automated-installation">Webmin Automated Installation<a class="headerlink" href="#webmin-automated-installation" title="Permanent link">¶</a></h3>
+<p>Before <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> <strong>v15.08</strong>, Webmin users were required to manually import the file<br>
+<code>/usr/local/csf/csfwebmin.tgz</code> in order to enable the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> Webmin module. While this was a simple process, it added an extra manual step during installation.</p>
+<p>This process is now fully automated. During <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> installation or anupdate, the Webmin module is automatically imported for you — no additional actions required. Simply run the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> <code>install.sh</code> script, and Webmin integration is handled seamlessly in the background.</p>
 <p><br>
 <br></p>
-<h4 id="ui_logs_start_paused">UI_LOGS_START_PAUSED<a class="headerlink" href="#ui_logs_start_paused" title="Permanent link">¶</a></h4>
-<p>This setting allows you to define if automatic log refreshing on page load starts off running <span class="keys"><kbd class="key-0">0</kbd></span> or paused <span class="keys"><kbd class="key-1">1</kbd></span>.</p>
-<dl>
-<dt><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M384 128c70.7 0 128 57.3 128 128S454.7 384 384 384l-192 0c-70.7 0-128-57.3-128-128s57.3-128 128-128l192 0zM576 256c0-106-86-192-192-192L192 64C86 64 0 150 0 256S86 448 192 448l192 0c106 0 192-86 192-192zM192 336a80 80 0 1 0 0-160 80 80 0 1 0 0 160z"></path></svg></span> <a href="#+UI_LOGS_START_PAUSED =" id="+UI_LOGS_START_PAUSED" title="0"><code>UI_LOGS_START_PAUSED = "0"</code></a></dt>
-<dd>
-<ul>
-<li>A value of <span class="keys"><kbd class="key-0">0</kbd></span> means that as soon as a log page is loaded, it will automatically start counting down from the value defined in <code>UI_LOGS_REFRESH_TIME</code>.</li>
-</ul>
-</dd>
-<dt><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M192 64C86 64 0 150 0 256S86 448 192 448l192 0c106 0 192-86 192-192S490 64 384 64L192 64zm192 96a96 96 0 1 1 0 192 96 96 0 1 1 0-192z"></path></svg></span> <a href="#+UI_LOGS_START_PAUSED =" id="+UI_LOGS_START_PAUSED" title="1"><code>UI_LOGS_START_PAUSED = "1"</code></a></dt>
-<dd>
-<ul>
-<li>A value of <span class="keys"><kbd class="key-1">1</kbd></span> means that as soon as a log page is loaded, it will start in the <strong>paused</strong> state. To start the automatic refresh functionality and timer, you  need to press the <span class="keys"><kbd>Continue</kbd></span> button toward the top of the window.</li>
-</ul>
-</dd>
-</dl>
-<div class="language-perl highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># #</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1">#   Determines whether the log timer starts paused when the page loads.</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1">#   1 = start paused, 0 = start running immediately.</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># #</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="n">UI_LOGS_START_PAUSED</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"0"</span>
+<h3 id="new-csget-module">New CSGet Module<a class="headerlink" href="#new-csget-module" title="Permanent link">¶</a></h3>
+<p>This update includes an entirely re-written CSGet perl module.</p>
+<p>The <a href="../../../advanced/csget/">CSGet</a> module is a core component of the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> update system used by the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface. Its primary role is to keep every installation of <abbr title="ConfigServer Security &amp; Firewall Security">ConfigServer Security</abbr> and Firewall informed of new releases. CSGet runs quietly in the background, requiring no user interaction while monitoring for updates.</p>
+<p>When <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> is installed for the first time, the <code>csget.pl</code> file will automatically be installed to your system. The script will initially be ran once to confirm that you are using the latest version. After that initial run, your system's cron service will take over the task of running CSGet multiple times a day in order to notify you of updates.</p>
+<p>Along with its base functionality, we have now included the ability to trigger the script manually, with optional flags which can be specified from your terminal. For basic use, you can run CSGet as a foreground process which executes once and then exits the process. A manual execution can be accomplished with one of the commands below <em>(both bash and perl command variants available)</em>:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="new-csget-module-bash" name="__tabbed_1" type="radio"><input id="new-csget-module-perl" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="new-csget-module-bash"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <path fill="currentColor" fill-rule="evenodd" d="M21.038,4.9l-7.577-4.498C13.009,0.134,12.505,0,12,0c-0.505,0-1.009,0.134-1.462,0.403L2.961,4.9 C2.057,5.437,1.5,6.429,1.5,7.503v8.995c0,1.073,0.557,2.066,1.462,2.603l7.577,4.497C10.991,23.866,11.495,24,12,24 c0.505,0,1.009-0.134,1.461-0.402l7.577-4.497c0.904-0.537,1.462-1.529,1.462-2.603V7.503C22.5,6.429,21.943,5.437,21.038,4.9z M15.17,18.946l0.013,0.646c0.001,0.078-0.05,0.167-0.111,0.198l-0.383,0.22c-0.061,0.031-0.111-0.007-0.112-0.085L14.57,19.29 c-0.328,0.136-0.66,0.169-0.872,0.084c-0.04-0.016-0.057-0.075-0.041-0.142l0.139-0.584c0.011-0.046,0.036-0.092,0.069-0.121 c0.012-0.011,0.024-0.02,0.036-0.026c0.022-0.011,0.043-0.014,0.062-0.006c0.229,0.077,0.521,0.041,0.802-0.101 c0.357-0.181,0.596-0.545,0.592-0.907c-0.003-0.328-0.181-0.465-0.613-0.468c-0.55,0.001-1.064-0.107-1.072-0.917 c-0.007-0.667,0.34-1.361,0.889-1.8l-0.007-0.652c-0.001-0.08,0.048-0.168,0.111-0.2l0.37-0.236 c0.061-0.031,0.111,0.007,0.112,0.087l0.006,0.653c0.273-0.109,0.511-0.138,0.726-0.088c0.047,0.012,0.067,0.076,0.048,0.151 l-0.144,0.578c-0.011,0.044-0.036,0.088-0.065,0.116c-0.012,0.012-0.025,0.021-0.038,0.028c-0.019,0.01-0.038,0.013-0.057,0.009 c-0.098-0.022-0.332-0.073-0.699,0.113c-0.385,0.195-0.52,0.53-0.517,0.778c0.003,0.297,0.155,0.387,0.681,0.396 c0.7,0.012,1.003,0.318,1.01,1.023C16.105,17.747,15.736,18.491,15.17,18.946z M19.143,17.859c0,0.06-0.008,0.116-0.058,0.145 l-1.916,1.164c-0.05,0.029-0.09,0.004-0.09-0.056v-0.494c0-0.06,0.037-0.093,0.087-0.122l1.887-1.129 c0.05-0.029,0.09-0.004,0.09,0.056V17.859z M20.459,6.797l-7.168,4.427c-0.894,0.523-1.553,1.109-1.553,2.187v8.833 c0,0.645,0.26,1.063,0.66,1.184c-0.131,0.023-0.264,0.039-0.398,0.039c-0.42,0-0.833-0.114-1.197-0.33L3.226,18.64 c-0.741-0.44-1.201-1.261-1.201-2.142V7.503c0-0.881,0.46-1.702,1.201-2.142l7.577-4.498c0.363-0.216,0.777-0.33,1.197-0.33 c0.419,0,0.833,0.114,1.197,0.33l7.577,4.498c0.624,0.371,1.046,1.013,1.164,1.732C21.686,6.557,21.12,6.411,20.459,6.797z"></path>
+</svg>
+</span> Bash</label><label for="new-csget-module-perl"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <path fill="currentColor" fill-rule="evenodd" d="M11.638 0c-.148 0-.207.689-.252 2.925-.058 2.86-.07 2.949-.51 3.914-.36.793-1.623 2.676-2.037 3.04-.373.328-1.183 1.56-1.58 2.401-.71 1.504-.659 3.52-.04 5.047.518 1.194 1.262 2.156 2.46 3.182.94.805 1.23.919 1.375.544.049-.128-.162-.572-.483-1.018-.313-.436-.843-1.362-1.178-2.059-1.382-2.926-.7-5.357.902-8.045.89-1.393 1.403-2.642 1.579-3.852.22-1.515.043-6.079-.236-6.079zm-.757 1.215c-.186 0-.228.26-.228 1.422 0 .782-.08 1.654-.177 1.938-.312.914-1.154 1.737-3.482 3.404-1.684 1.205-3.096 2.652-3.64 3.732-1.666 3.299-.195 7.311 3.42 9.333 1.613.902 2.966 1.253 2.966.768 0-.126-.054-.228-.121-.228s-.632-.332-1.254-.738c-2.69-1.755-3.947-3.927-3.747-6.482.15-1.91.873-3.08 3.796-6.135 2.522-2.636 2.69-2.97 2.693-5.304.001-1.42-.036-1.71-.226-1.71zm1.508.632c-.103.017-.14.905-.142 2.903l-.004 2.926-.744 2.812c-.83 2.54-.954 5.133-.345 7.725.558 2.202.796 2.638 1.567 2.857.343.098.89.355 1.216.572.736.49 1.395.435 2.715-.232 1.92-.97 3.209-2.222 4.067-3.953.745-1.648.856-3.71.068-5.35-.7-1.414-1.882-2.554-4.358-4.197-2.162-1.436-2.617-1.82-3.15-2.652-.322-.503-.369-.724-.308-1.444.04-.468.126-.978.192-1.134.101-.239.069-.268-.202-.182-.26.082-.34.027-.42-.286-.061-.245-.112-.372-.152-.365zm.714 4.586c.034-.007.135.113.252.306.144.237 1.022 1 1.952 1.697 2.888 2.189 5.27 4.378 4.087 8.2-.405 1.146-.99 2.07-1.963 3.098-.544.575-1.266 1.09-1.53 1.09-.047 0 .252-.43.664-.954 1.337-1.7 1.972-3.718 1.79-5.674-.168-1.796-1.557-3.975-3.753-5.89-.912-.796-1.518-1.536-1.512-1.846 0-.016.005-.025.013-.027zm-1.089 15.492c-.208-.006-.297.349-.297 1.121 0 .94.018.988.342.942.302-.042.347-.15.387-.899.032-.613-.019-.902-.183-1.039-.097-.08-.18-.123-.249-.125zm-1.052.28c-.124-.002-.226.14-.327.43-.085.245-.253.481-.373.527-.322.124-.264.55.075.55.162 0 .402-.109.534-.24.441-.442.579-.824.382-1.062-.111-.134-.206-.203-.29-.205zm2.074.063c-.312 0-.28.61.053 1.034.309.392.908.567.908.264 0-.252-.775-1.298-.961-1.298z"></path>
+</svg></span> Perl</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>/etc/cron.daily/csget<span class="w"> </span>--nodaemon
 </span></code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>perl<span class="w"> </span>/etc/cron.daily/csget<span class="w"> </span>--nodaemon
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>CSGet now includes numerous flags which are outlined below:</p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text" style="width:110px !important; display:inline-block; text-align:center; padding-top:2px; padding-bottom:2px;"><code>-d,  --debug</code></span></span></td>
+<td>CSGet script runs immediately once and exits, no forked background process / daemonization.</td>
+</tr>
+<tr>
+<td><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text" style="width:110px !important; display:inline-block; text-align:center; padding-top:2px; padding-bottom:2px;"><code>-r,  --response</code></span></span></td>
+<td>Runs CSGet in the foreground once and then exits with a numerical response.<br>Returns <code>0</code> on Success <br> Returns <code>1</code> on Failures</td>
+</tr>
+<tr>
+<td><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text" style="width:110px !important; display:inline-block; text-align:center; padding-top:2px; padding-bottom:2px;"><code>-k,  --kill</code></span></span></td>
+<td>Kills all running processes of CSGet.</td>
+</tr>
+<tr>
+<td><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text" style="width:110px !important; display:inline-block; text-align:center; padding-top:2px; padding-bottom:2px;"><code>-l,  --list</code></span></span></td>
+<td>Lists all running processes of CSGet.</td>
+</tr>
+<tr>
+<td><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text" style="width:110px !important; display:inline-block; text-align:center; padding-top:2px; padding-bottom:2px;"><code>-d,  --diag</code></span></span></td>
+<td>Show diagnostic information.</td>
+</tr>
+<tr>
+<td><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text" style="width:110px !important; display:inline-block; text-align:center; padding-top:2px; padding-bottom:2px;"><code>-D,  --debug</code></span></span></td>
+<td>Show verbose logs and additional details; disables forked child process daemonization.</td>
+</tr>
+<tr>
+<td><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text" style="width:110px !important; display:inline-block; text-align:center; padding-top:2px; padding-bottom:2px;"><code>-v,  --version</code></span></span></td>
+<td>Show version information about CSGet and <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>.</td>
+</tr>
+<tr>
+<td><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text" style="width:110px !important; display:inline-block; text-align:center; padding-top:2px; padding-bottom:2px;"><code>-h,  --help</code></span></span></td>
+<td>Show help menu, list of commands, and usage examples.</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<mark class="critic block">
+<p>Our documentation has been updated to explain CSGet in detail, as well as provide examples on how to utilize it, and the list of available flags. 
+<a href="../../../advanced/csget/">You can read more about CSGet here</a></p>
+</mark>
+<p><br>
+<br></p>
+<h3 id="detailed-installation-wizard">Detailed Installation Wizard<a class="headerlink" href="#detailed-installation-wizard" title="Permanent link">¶</a></h3>
+<p>Historically, one of the biggest challenges with ConfigServer was the installation process. If an installation failed, many users struggled to identify exactly where things went wrong.</p>
+<p>The installation workflow has been fully segmented, with nearly every major step being monitored. Each stage now provides clear status reporting, indicating whether it <strong>passed</strong> or <strong>failed</strong>.</p>
+<p>This improvement makes it significantly easier to diagnose issues as they occur and provides users with clearer insight into any problems that may arise during installation.</p>
+<p>There are additional changes coming in the future, but this current phase of the revamp will dramatically help with any potential issues.</p>
+<p><br>
+<br></p>
+<h3 id="centos-web-panel-links">CentOS Web Panel Links<a class="headerlink" href="#centos-web-panel-links" title="Permanent link">¶</a></h3>
+<p>This update fixes a bug in CentOS Web Panel where the <abbr title="ConfigServer Security &amp; Firewall Security">ConfigServer Firewall</abbr> navigation menu would display a blank page instead of redirecting users to the appropriate <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> configuration page.</p>
+<p>Previously, the second navigation link <em>(stock <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> interface)</em> would trigger an error. It now correctly redirects users to the URL:</p>
+<ul>
+<li><a href="https://127.0.0.1:2031/admin/index.php?module=csfofficial">https://127.0.0.1:2031/admin/index.php?module=csfofficial</a></li>
+</ul>
+<p><br></p>
+<p>The CentOS Web Panel allows you to access <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> through two different navigation links. The main difference between them is that one uses a custom theme developed by the CentOS Web Panel team <em>(link 1)</em>, while the second link displays the stock <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> theme <em>(link 2)</em>.</p>
+<ol>
+<li><strong>CWP Menu</strong> › <strong>Security</strong> › <strong><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> Firewall</strong><ul>
+<li>Provided by CentOS Web Panel. Custom colors and stylesheet</li>
+<li><a href="https://127.0.0.1:2031/admin/index.php?module=csf">https://127.0.0.1:2031/admin/index.php?module=csf</a></li>
+</ul>
+</li>
+<li><strong>CWP Menu</strong> › <strong><abbr title="ConfigServer Security &amp; Firewall Security">ConfigServer Firewall</abbr></strong><ul>
+<li>Provided by <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>. Original appearance shipped with all downloads.</li>
+<li><a href="https://127.0.0.1:2031/admin/index.php?module=csfofficial">https://127.0.0.1:2031/admin/index.php?module=csfofficial</a></li>
+</ul>
+</li>
+</ol>
+<p><br></p>
+<figure>
+    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../assets/images/blog/release-1508/cwp_01.png" data-desc-position="bottom"><img alt="Webmin › Bug › Footer" src="../../../assets/images/blog/release-1508/cwp_01.png" width="600"></a>
+    <figcaption>CentOS Web Panel › Menu Differences</figcaption>
+</figure>
+<p><br></p>
+<p><br>
+<br></p>
+<h3 id="centos-web-panel-immutable-flags">CentOS Web Panel Immutable Flags<a class="headerlink" href="#centos-web-panel-immutable-flags" title="Permanent link">¶</a></h3>
+<p>Files in CentOS Web Panel are often protected with the immutable flag <code>+i</code>, which prevents any changes to the file's contents or metadata, including permissions, timestamps, ownership, and link count.</p>
+<p>While this flag enhances security, it can make updating <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> slightly more complex. The CentOS Web Panel installation script now includes logic to detect whether your CWP files have the <code>+i</code> flag and ensures that it is preserved after installing or updating <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> to a newer version.</p>
+<p>This change will <strong>not</strong> set the immutable flag on files that did not previously have it; it will only re-apply the flag for users who already had it enabled. We do not want to start enabling flags on a system that they did not have, and potentially cause the end-user unexpected trouble in the future.</p>
+<p><br>
+<br></p>
+<h3 id="selinux-permission-conformity">SELinux Permission Conformity<a class="headerlink" href="#selinux-permission-conformity" title="Permanent link">¶</a></h3>
+<p>To comply with SELinux security requirements, the ownership of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> files is now adjusted during installation or updates. Specifically, the installed <a href="../../../advanced/csget/">CSGet</a> cron job is now set to <code>root:root</code> rather than the user who initiated the installation.</p>
+<p><br>
+<br></p>
+<h3 id="blocklist-service-enhancements">Blocklist Service Enhancements<a class="headerlink" href="#blocklist-service-enhancements" title="Permanent link">¶</a></h3>
+<p>The Blocklist service has been significantly improved for both performance and efficiency.</p>
+<p>The scripts responsible for generating these blocklists have been optimized for speed. While this change is mostly behind the scenes, it ensures that blocklist generation completes on time without unnecessary delays.</p>
+<p>We have also refined the <a href="https://blocklist.configserver.dev/highrisk.ipset">highrisk</a> blocklist. Duplicate entries have been removed, dramatically reducing the total number of entries. This not only improves clarity for end-users but also reduces memory usage on your server.</p>
+<p>We will soon be enhancing the Blocklist service by adding our own ASN IP sets. This feature will allow you to block entire service providers or organizations from accessing your server, giving you greater control and security.</p>
 <p><br></p>
 <hr>
 <p><br></p>
@@ -3812,7 +3918,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 24, 2025 08:54:08 UTC"><span class="timeago" datetime="2025-10-24T08:54:08+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 24, 2025 08:54:08 UTC">2025-10-24</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="December 11, 2025 21:17:33 UTC"><span class="timeago" datetime="2025-12-11T21:17:33+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="December 11, 2025 21:17:33 UTC">2025-12-11</span>
   </span>
 
     
@@ -3930,7 +4036,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer">
         
           
-          <a href="../release-v1503/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Release v15.03
+          <a href="../release-v1507/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Release v15.07
 ">
             <div class="md-footer__button md-icon">
               
@@ -3941,30 +4047,12 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Release v15.03
+                Release v15.07
 
               </div>
             </div>
           </a>
         
-        
-          
-          <a href="../release-v1505/" class="md-footer__link md-footer__link--next" aria-label="Next: Release v15.05
-">
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              <div class="md-ellipsis">
-                Release v15.05
-
-              </div>
-            </div>
-            <div class="md-footer__button md-icon">
-              
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
-            </div>
-          </a>
         
       </nav>
     

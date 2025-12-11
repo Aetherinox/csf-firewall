@@ -745,7 +745,7 @@
 
     .mdx-badge__text > code, .mdx-badge__text > a
     {
-        background-color: inherit;
+        background-color: inherit !important;
         color: #FFF;
     }
 
@@ -842,10 +842,21 @@
 
     .md-typeset mark
     {
-        background-color: #2a59aab5;
-        color: #FFF;
+        background-color: #404040;
+        color: #ccc;
         border-radius: 6px;
-        white-space: nowrap;
+        white-space: wrap;
+    }
+
+    .md-typeset mark a
+    {
+        color: #F91D5B;
+    }
+
+    .md-typeset mark a:hover
+    {
+        transition: 0.5s;
+        color: #FFFFFF;
     }
 
     .md-typeset h2:not([id^="tag"])
@@ -888,7 +899,7 @@
         letter-spacing: -.01em;
         line-height: 1.5;
         margin: 1.6em 0 .8em;
-        color: #3083EE;
+        color: #EA8B11;
     }
 
     .md-typeset h4 svg
@@ -1039,13 +1050,13 @@
 
     --md-primary-fg-color:              #7b1234;
     --md-default-bg-color:              #151515;
-    --md-table-head-bg-color:           #860038;
+    --md-table-head-bg-color:           #99143f;
     --md-table-head-text-color:         #FFF;
     --md-table-body-text-color:         rgb(231, 231, 231);
 
     --md-navigation-header-link:        #ffffff59;
 
-    --md-header-tabs-bg:                #860038;
+    --md-header-tabs-bg:                #99143f;
 
     --md-tooltip-width:                 400px;
     --glow-color:                       hsl(186 100% 69%);
@@ -1305,7 +1316,7 @@
 
     .md-typeset .tabbed-labels
     {
-        background-color: #2f4373;
+        background-color: #3f4faa;
         border-radius: 4px;
     }
     
@@ -1818,10 +1829,21 @@
 
     .md-typeset mark
     {
-        background-color: #2a59aab5;
+        background-color: #212331;
         color: #FFF;
         border-radius: 6px;
-        white-space: nowrap;
+        white-space: wrap;
+    }
+
+    .md-typeset mark a
+    {
+        color: #f0465e;
+    }
+
+    .md-typeset mark a:hover
+    {
+        transition: 0.5s;
+        color: #FFF;
     }
 
     .md-typeset h2:not([id^="tag"])
@@ -1847,7 +1869,7 @@
         letter-spacing: -.01em;
         line-height: 1.5;
         margin: 1.6em 0 .8em;
-        color: #ff0864;
+        color: #ec336f;
     }
 
     .md-typeset h3 svg
