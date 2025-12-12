@@ -10,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            11.16.2025
+#   @updated            12.12.2025
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -110,6 +110,8 @@ my $bgOk            = "${esc}[1;38;5;15;48;5;64m";      # white on green
 my $bgWarn          = "${esc}[1;38;5;16;48;5;214m";     # black on orange/yellow
 my $bgDanger        = "${esc}[1;38;5;15;48;5;202m";     # white on orange-red
 my $bgError         = "${esc}[1;38;5;15;48;5;160m";     # white on red
+my $bgBlueDark 		= "${esc}[1;38;5;15;48;5;25m";   	# white on dark blue
+my $bgYellowDark = "${esc}[1;38;5;15;48;5;172m";    	# white on dark yellow
 
 # #
 #   Logs › Prepare
@@ -250,11 +252,16 @@ unless (defined $urlget)
 	}
 }
 
-if ((-e "/etc/csf/csf.disable") and ($input{command} ne "--enable") and ($input{command} ne "-e")) {
-	print "csf and lfd have been disabled, use 'csf -e' to enable\n";
+if ((-e "/etc/csf/csf.disable") and ($input{command} ne "--enable") and ($input{command} ne "-e"))
+{
+
+	log_pass( "CSF and LFD have been ${redl}disabled${greym}! Use ${greend}'csf -e'${greym} to re-enable" );
+
 	my $ok = 0;
-	foreach my $opt ("--version","-v","--check","-c","--ports","-p","--help","-h","--update","-u","-uf","--flush","-f","--profile","") {
-		if ($input{command} eq $opt) {
+	foreach my $opt ("--version","-v","--check","-c","--ports","-p","--help","-h","--update","-u","-uf","--flush","-f","--profile","")
+	{
+		if ($input{command} eq $opt)
+		{
 			$ok = 1;
 			last;
 		}
@@ -3765,21 +3772,26 @@ sub dodisable {
 	ConfigServer::Service::stoplfd();
 	&dostop(0);
 
-	print "csf and lfd have been disabled\n";
+	log_pass( "CSF and LFD have been ${redl}disabled${greym}! Use ${greend}'csf -e'${greym} to re-enable" );
+
 	return;
 }
 # end dodisable
 ###############################################################################
 # start doenable
-sub doenable {
-	unless (-e "/etc/csf/csf.disable") {
-		print "csf and lfd are not disabled!\n";
+sub doenable
+{
+	unless (-e "/etc/csf/csf.disable")
+	{
+		log_fail( "CSF and LFD are not ${redl}disabled${greym}!" );
 		exit 0;
 	}
+
 	unlink ("/etc/csf/csf.disable");
 	&dostart;
 	ConfigServer::Service::startlfd();
-	unless ($config{GENERIC}) {
+	unless ($config{GENERIC})
+	{
 		sysopen (my $CONF, "/etc/chkserv.d/chkservd.conf", O_RDWR | O_CREAT) or &error(__LINE__,"Could not open /etc/chkserv.d/chkservd.conf: $!");
 		flock ($CONF, LOCK_EX) or &error(__LINE__,"Could not lock /etc/chkserv.d/chkservd.conf: $!");
 		my $text = join("", <$CONF>);
@@ -3812,7 +3824,8 @@ sub doenable {
 		close ($CONF) or &error(__LINE__,"Could not close /usr/local/directadmin/data/admin/services.status: $!");
 	}
 
-	print "csf and lfd have been enabled\n";
+	log_pass( "CSF and LFD have been ${greenl}enabled${greym}! Use ${greenl}'csf -x'${greym} to disable" );
+
 	return;
 }
 # end doenable
@@ -3964,27 +3977,40 @@ sub getethdev {
 # end getethdev
 ###############################################################################
 # start linefilter
-sub linefilter {
-	my $line = shift;
-	my $ad = shift;
-	my $chain = shift;
-	my $delete = shift;
-	my $pktin = "$accept";
-	my $pktout = "$accept";
-	my $localin = "ALLOWIN";
-	my $localout = "ALLOWOUT";
-	my $inadd = "-I";
-	if ($ad eq "deny") {
-		$inadd = "-A";
-		$pktin = $config{DROP};
-		$pktout = $config{DROP_OUT};
-		if ($config{DROP_IP_LOGGING}) {$pktin = "LOGDROPIN"}
-		if ($config{DROP_OUT_LOGGING}) {$pktout = "LOGDROPOUT"}
-		$localin = "DENYIN";
-		$localout = "DENYOUT";
+sub linefilter
+{
+	my $line 		= shift;
+	my $ad 			= shift;
+	my $chain 		= shift;
+	my $delete 		= shift;
+	my $pktin 		= "$accept";
+	my $pktout 		= "$accept";
+	my $localin 	= "ALLOWIN";
+	my $localout 	= "ALLOWOUT";
+	my $inadd 		= "-I";
+
+	if ($ad eq "deny")
+	{
+		$inadd 		= "-A";
+		$pktin 		= $config{DROP};
+		$pktout 	= $config{DROP_OUT};
+
+		if ($config{DROP_IP_LOGGING})
+		{
+			$pktin = "LOGDROPIN"
+		}
+
+		if ($config{DROP_OUT_LOGGING})
+		{
+			$pktout = "LOGDROPOUT"
+		}
+
+		$localin	= "DENYIN";
+		$localout	= "DENYOUT";
 	}
-	my $chainin = $chain."IN";
-	my $chainout = $chain."OUT";
+
+	my $chainin 	= $chain."IN";
+	my $chainout 	= $chain."OUT";
 
 	$line =~ s/\n|\r//g;
 	$line = lc $line;
@@ -3992,20 +4018,27 @@ sub linefilter {
 	if ($line =~ /^Include/) {return}
 	if ($line eq "") {return}
 
-	my $checkip = checkip(\$line);
-	my $iptables = $config{IPTABLES};
-	my $ipv4 = 1;
-	my $ipv6 = 0;
-	my $linein = $ethdevin;
-	my $lineout = $ethdevout;
-	if ($checkip == 6) {
-		if ($config{IPV6}) {
+	my $checkip 	= checkip(\$line);
+	my $iptables 	= $config{IPTABLES};
+	my $ipv4 		= 1;
+	my $ipv6 		= 0;
+	my $linein 		= $ethdevin;
+	my $lineout 	= $ethdevout;
+
+	if ($checkip == 6)
+	{
+		if ($config{IPV6})
+		{
 			$iptables = $config{IP6TABLES};
 			$linein = $eth6devin;
 			$lineout = $eth6devout;
 			$ipv4 = 0;
 			$ipv6 = 1;
-		} else {return}
+		}
+		else
+		{
+			return
+		}
 	}
 
 	if ($checkip) {
@@ -4041,8 +4074,13 @@ sub linefilter {
 			}
 		}
 	}
-	elsif ($line =~ /\:|\|/) {
-		if ($line !~ /\|/) {$line =~ s/\:/\|/g}
+	elsif ($line =~ /\:|\|/)
+	{
+		if ($line !~ /\|/)
+		{
+			$line =~ s/\:/\|/g
+		}
+
 		my $sip;
 		my $dip;
 		my $sport;
@@ -4055,32 +4093,41 @@ sub linefilter {
 		my $iptype;
 
 		my @ll = split(/\|/,$line);
-		if ($ll[0] eq "tcp") {
+		if ($ll[0] eq "tcp")
+		{
 			$protocol = "-p tcp";
 			$from = 1;
 		}
-		elsif ($ll[0] eq "udp") {
+		elsif ($ll[0] eq "udp")
+		{
 			$protocol = "-p udp";
 			$from = 1;
 		}
-		elsif ($ll[0] eq "icmp") {
+		elsif ($ll[0] eq "icmp")
+		{
 			$protocol = "-p icmp";
 			$from = 1;
 		}
-		for (my $x = $from;$x < 2;$x++) {
+
+		for (my $x = $from;$x < 2;$x++)
+		{
 			if (($ll[$x] eq "out")) {
 				$inout = "out";
 				$from = $x + 1;
 				last;
 			}
-			elsif (($ll[$x] eq "in")) {
+			elsif (($ll[$x] eq "in"))
+			{
 				$inout = "in";
 				$from = $x + 1;
 				last;
 			}
 		}
-		for (my $x = $from;$x < 3;$x++) {
-			if (($ll[$x] =~ /d=(.*)/)) {
+
+		for (my $x = $from;$x < 3;$x++)
+		{
+			if (($ll[$x] =~ /d=(.*)/))
+			{
 				$dport = "--dport $1";
 				$dport =~ s/_/:/g;
 				if ($protocol eq "-p icmp") {$dport = "--icmp-type $1"}
@@ -4088,7 +4135,8 @@ sub linefilter {
 				$from = $x + 1;
 				last;
 			}
-			elsif (($ll[$x] =~ /s=(.*)/)) {
+			elsif (($ll[$x] =~ /s=(.*)/))
+			{
 				$sport = "--sport $1";
 				$sport =~ s/_/:/g;
 				if ($protocol eq "-p icmp") {$sport = "--icmp-type $1"}
@@ -4097,53 +4145,72 @@ sub linefilter {
 				last;
 			}
 		}
-		for (my $x = $from;$x < 4;$x++) {
-			if (($ll[$x] =~ /d=(.*)/)) {
+	
+		for (my $x = $from;$x < 4;$x++)
+		{
+			if (($ll[$x] =~ /d=(.*)/))
+			{
 				my $ip = $1;
 				my $status = checkip(\$ip);
-				if ($status) {
+				if ($status)
+				{
 					$iptype = $status;
 					$dip = "-d $1";
 				}
 				last;
 			}
-			elsif (($ll[$x] =~ /s=(.*)/)) {
+			elsif (($ll[$x] =~ /s=(.*)/))
+			{
 				my $ip = $1;
 				my $status = checkip(\$ip);
-				if ($status) {
+				if ($status)
+				{
 					$iptype = $status;
 					$sip = "-s $1";
 				}
 				last;
 			}
 		}
-		for (my $x = $from;$x < 5;$x++) {
-			if (($ll[$x] =~ /u=(.*)/)) {
+
+		for (my $x = $from;$x < 5;$x++)
+		{
+			if (($ll[$x] =~ /u=(.*)/))
+			{
 				$uid = "--uid-owner $1";
 				last;
 			}
-			elsif (($ll[$x] =~ /g=(.*)/)) {
+			elsif (($ll[$x] =~ /g=(.*)/))
+			{
 				$gid = "--gid-owner $1";
 				last;
 			}
 		}
 
-		if ($uid or $gid) {
-			if ($config{VPS} and $noowner) {
+		if ($uid or $gid)
+		{
+			if ($config{VPS} and $noowner)
+			{
 				print "Cannot use UID or GID rules [$ad: $line] on this VPS as the Monolithic kernel does not support the iptables module ipt_owner/xt_owner - rule skipped\n";
-			} else {
-				if ($chain) {
+			} else
+			{
+				if ($chain)
+				{
 					&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -A $chainout $lineout $protocol $dport -m owner $uid $gid -j $pktout");
 					if ($config{IPV6}) {
 						&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} $verbose -A $chainout $lineout $protocol $dport -m owner $uid $gid -j $pktout");
 					}
-				} else {
-					if ($delete) {
+				}
+				else
+				{
+					if ($delete)
+					{
 						&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -D $localout $lineout $protocol $dport -m owner $uid $gid -j $pktout");
 						if ($config{IPV6}) {
 							&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} $verbose -D $localout $lineout $protocol $dport -m owner $uid $gid -j $pktout");
 						}
-					} else {
+					}
+					else
+					{
 						&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose $inadd $localout $lineout $protocol $dport -m owner $uid $gid -j $pktout");
 						if ($config{IPV6}) {
 							&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} $verbose $inadd $localout $lineout $protocol $dport -m owner $uid $gid -j $pktout");
@@ -4152,41 +4219,63 @@ sub linefilter {
 				}
 			}
 		}
-		elsif (($sip or $dip) and ($dport or $sport)) {
+		elsif (($sip or $dip) and ($dport or $sport))
+		{
 			my $iptables = $config{IPTABLES};
-			if ($iptype == 6) {
-				if ($config{IPV6}) {
+			if ($iptype == 6)
+			{
+				if ($config{IPV6})
+				{
 					$iptables = $config{IP6TABLES};
-				} else {
+				}
+				else
+				{
 					return;
 				}
 			}
-			if (($inout eq "") or ($inout eq "in")) {
+
+			if (($inout eq "") or ($inout eq "in"))
+			{
 				my $bport = $dport;
 				$bport =~ s/--dport //o;
 				my $bip = $sip;
 				$bip =~ s/-s //o;
-				if ($chain) {
+
+				if ($chain)
+				{
 					&syscommand(__LINE__,"$iptables $config{IPTABLESWAIT} $verbose -A $chainin $linein $protocol $dip $sip $dport $sport -j $pktin");
-				} else {
-					if ($delete) {
+				}
+				else
+				{
+					if ($delete)
+					{
 						&syscommand(__LINE__,"$iptables $config{IPTABLESWAIT} $verbose -D $localin $linein $protocol $dip $sip $dport $sport -j $pktin");
 						if ($messengerports{$bport} and ($ad eq "deny") and ($ipv4 and $config{MESSENGER} and $config{MESSENGER_PERM})) {&domessenger($bip,"D","$bport")}
 						if ($messengerports{$bport} and ($ad eq "deny") and ($ipv6 and $config{MESSENGER6} and $config{MESSENGER_PERM})) {&domessenger($bip,"D","$bport")}
-					} else {
+					}
+					else
+					{
 						&syscommand(__LINE__,"$iptables $config{IPTABLESWAIT} $verbose $inadd $localin $linein $protocol $dip $sip $dport $sport -j $pktin");
 						if ($messengerports{$bport} and ($ad eq "deny") and ($ipv4 and $config{MESSENGER} and $config{MESSENGER_PERM})) {&domessenger($bip,"A","$bport")}
 						if ($messengerports{$bport} and ($ad eq "deny") and ($ipv6 and $config{MESSENGER6} and $config{MESSENGER_PERM})) {&domessenger($bip,"A","$bport")}
 					}
 				}
 			}
-			if ($inout eq "out") {
-				if ($chain) {
+
+			if ($inout eq "out")
+			{
+				if ($chain)
+				{
 					&syscommand(__LINE__,"$iptables $config{IPTABLESWAIT} $verbose -A $chainout $lineout $protocol $dip $sip $dport $sport -j $pktout");
-				} else {
-					if ($delete) {
+				}
+				else
+				{
+					if ($delete)
+					{
 						&syscommand(__LINE__,"$iptables $config{IPTABLESWAIT} $verbose -D $localout $lineout $protocol $dip $sip $dport $sport -j $pktout");
-					} else {
+					}
+					else
+					{
 						&syscommand(__LINE__,"$iptables $config{IPTABLESWAIT} $verbose $inadd $localout $lineout $protocol $dip $sip $dport $sport -j $pktout");
 					}
 				}
@@ -4198,9 +4287,10 @@ sub linefilter {
 # end linefilter
 ###############################################################################
 # start autoupdates
-sub autoupdates {
-	my $hour = int (rand(24));
-	my $minutes = int (rand(60));
+sub autoupdates
+{
+	my $hour 		= int (rand(24));
+	my $minutes 	= int (rand(60));
 
 	unless (-d "/etc/cron.d") {mkdir "/etc/cron.d"}
 	open (my $OUT,">", "/etc/cron.d/csf_update") or &error(__LINE__,"Could not create /etc/cron.d/csf_update: $!");
@@ -4220,14 +4310,14 @@ sub doupdate
     my $force = 0;
     my $actv  = "";
 
-    if ($input{command} eq "-uf")
+    if ( $input{command} eq "-uf" )
     {
         $force = 1;
     }
     else
     {
         my $url = "https://$config{DOWNLOADSERVER}/csf/version.txt";
-        if ($config{URLGET} == 1)
+        if ( $config{URLGET} == 1 )
         {
             $url = "http://$config{DOWNLOADSERVER}/csf/version.txt";
         }
@@ -4241,15 +4331,15 @@ sub doupdate
         #       SPONSOR_RELEASE_INSIDERS = "1"
         # #
 
-        if ( ($config{SPONSOR_RELEASE_INSIDERS} // 0) == 1 && ($config{SPONSOR_LICENSE} // '') ne '' )
+        if ( ( $config{SPONSOR_RELEASE_INSIDERS} // 0 ) == 1 && ( $config{SPONSOR_LICENSE} // '' ) ne '' )
         {
             $url .= "?channel=insiders&license=$config{SPONSOR_LICENSE}";
         }
 
         my ($status, $text) = $urlget->urlget($url);
-        if ($status)
+        if ( $status )
         {
-            print "Oops: $text\n";
+			log_fail( "An error occurred performing the CSF update: ${redl}${text}${greym}" );
             exit 1;
         }
 
@@ -4264,13 +4354,14 @@ sub doupdate
     my ($actv_num) = $actv =~ /^([\d.]+)/;        # Extract numeric portion (e.g. "15.07" from "15.07-insiders")
     my ($curr_num) = $version =~ /^([\d.]+)/;     # Current version numeric portion
 
-    if ((defined $actv_num && $actv_num ne '') || $force)
+    if ( ( defined $actv_num && $actv_num ne '' ) || $force )
     {
         my $newer = 0;
 
-        #
-        # Compare numeric parts
-        #
+        # #
+        #	Compare numeric parts
+        # #
+
         my @a = split /\./, $curr_num // '0';
         my @b = split /\./, $actv_num  // '0';
 
@@ -4282,57 +4373,69 @@ sub doupdate
             if ($n < $c) { $newer = 0; last; }
         }
 
-        if ($newer or $force)
+        if ( $newer or $force )
         {
             local $| = 1;
 
-            unless ($force)
+            unless ( $force )
             {
-                print "Upgrading csf from v$version to $actv...\n";
+				log_info( "Updating CSF from ${bluel}${version}${greym} to ${bluel}${actv}${greym}" );
             }
 
-            if (-e "/usr/src/csf.tgz")
+            if ( -e "/usr/src/csf.tgz" )
             {
-                unlink("/usr/src/csf.tgz") or die $!;
+                unlink( "/usr/src/csf.tgz" ) or die $!;
             }
 
-            print "Retrieving new csf package...\n";
+			log_info( "Preparing to get newest CSF package${greym}" );
 
             my $url = "https://$config{DOWNLOADSERVER}/csf.tgz";
-            if ($config{URLGET} == 1)
+            if ( $config{URLGET} == 1 )
             {
                 $url = "http://$config{DOWNLOADSERVER}/csf.tgz";
             }
 
-            if ( ($config{SPONSOR_RELEASE_INSIDERS} // 0) == 1 && ($config{SPONSOR_LICENSE} // '') ne '' )
+            if ( ( $config{SPONSOR_RELEASE_INSIDERS} // 0 ) == 1 && ( $config{SPONSOR_LICENSE} // '' ) ne '' )
             {
                 $url .= "?channel=insiders&license=$config{SPONSOR_LICENSE}";
+				log_info( "Using ${bluel}Insiders Channel${greym} to download update" );
+			}
+			else
+			{
+				log_info( "Using ${bluel}Stable Channel${greym} to download update" );
             }
 
-            my ($status, $text) = $urlget->urlget($url, "/usr/src/csf.tgz");
+            my ($status, $text) = $urlget->urlget( $url, "/usr/src/csf.tgz" );
 
-            print "Downloading csf update from server: $url\n";
+			log_info( "Downloading CSF update from ${bluel}${url}${greym}" );
 
             if (! -z "/usr/src/csf/csf.tgz")
             {
-                print "\nUnpacking new csf package...\n";
+				log_info( "Unpacking new CSF package ${bluel}/usr/src/csf/csf.tgz${greym}" );
                 system("cd /usr/src ; tar -xzf csf.tgz ; cd csf ; sh install.sh");
-                print "\nPerforming housekeeping on temp files...\n";
+
+				log_info( "Performing housekeeping on temp files${greym}" );
                 system("rm -Rfv /usr/src/csf*");
-                print "\nRestarting csf and lfd...\n";
+
+				log_info( "Please wait, restarting CSF and LFD services${greym}" );
                 system("/usr/sbin/csf -r");
                 ConfigServer::Service::restartlfd();
-                print "\nUpdate complete.\n\nView Changelog: https://$config{DOWNLOADSERVER}/csf/changelog.txt\n";
+
+				log_pass( "Update complete! View changelog at ${bluel}https://$config{DOWNLOADSERVER}/csf/changelog.txt${greym}" );
             }
         }
         else
         {
-            if (-t STDOUT) {print "csf is already at the latest version: v$version\n"} ##no critic
+            if (-t STDOUT)
+			{
+				log_warn( "You are already running the latest CSF version: ${yellowl}${version}${greym}" );
+			} ##no critic
         }
     }
     else
     {
-        print "Unable to verify the latest version of csf at this time\n";
+		log_fail( "Unable to verify the latest version of CSF at this time.${greym}" );
+		log_label( "Reach out to the development team if this error continues" );
     }
 
     return;
@@ -4395,13 +4498,16 @@ sub docheck
             if ($n < $c) { $newer = 0; last; }
         }
 
-        if ($newer)
+        if ( $newer )
         {
-            print "A newer version of csf is available - Current:v$version New:v$actv\n";
+			log_info( "${bgYellowDark} A newer version of CSF is available! ${end}" );
+			log_label( "Current: ${bluel}v${version}" );
+			log_label( "Available: ${greenl}v${actv}" );
         }
         else
         {
-            print "csf is already at the latest version: v$version\n";
+			log_pass( "${bgBlueDark} You are already running the latest version! ${end}" );
+			log_label( "Current: ${bluel}v${version}" );
         }
     }
     else
@@ -6509,6 +6615,11 @@ sub modprobe {
 sub faststart
 {
 	my $text = shift;
+
+	# #
+	#	Module › IPV4
+	# #
+
 	if ( @faststart4 )
 	{
 		if ( $verbose )
@@ -6536,8 +6647,18 @@ sub faststart
 		}
 		&iptableslock("unlock",1);
 	}
-	if (@faststart4nat) {
-		if ($verbose) {print "csf: FASTSTART loading $text (IPv4 nat)\n"}
+
+	# #
+	#	Module › IPV4 › NAT
+	# #
+
+	if (@faststart4nat)
+	{
+		if ($verbose)
+		{
+			log_info( "FASTSTART loading (IPv4-NAT) ${bluel}${text}${greym}" );
+		}
+
 		my $status;
 		if ($config{VPS}) {$status = &fastvps(scalar @faststart4nat)}
 		if ($status) {&error(__LINE__,$status)}
@@ -6558,8 +6679,18 @@ sub faststart
 		}
 		&iptableslock("unlock",1);
 	}
-	if (@faststart6 and $config{IPV6}) {
-		if ($verbose) {print "csf: FASTSTART loading $text (IPv6)\n"}
+
+	# #
+	#	Module › IPV6
+	# #
+
+	if (@faststart6 and $config{IPV6})
+	{
+		if ($verbose)
+		{
+			log_info( "FASTSTART loading (IPv6) ${bluel}${text}${greym}" );
+		}
+	
 		my $status;
 		if ($config{VPS}) {$status = &fastvps(scalar @faststart6)}
 		if ($status) {&error(__LINE__,$status)}
@@ -6580,8 +6711,18 @@ sub faststart
 		}
 		&iptableslock("unlock",1);
 	}
-	if (@faststart6nat and $config{IPV6}) {
-		if ($verbose) {print "csf: FASTSTART loading $text (IPv6 nat)\n"}
+
+	# #
+	#	Module › IPV6 › NAT
+	# #
+
+	if (@faststart6nat and $config{IPV6})
+	{
+		if ($verbose)
+		{
+			log_info( "FASTSTART loading (IPv6-NAT) ${bluel}${text}${greym}" );
+		}
+	
 		my $status;
 		if ($config{VPS}) {$status = &fastvps(scalar @faststart6nat)}
 		if ($status) {&error(__LINE__,$status)}
@@ -6602,8 +6743,18 @@ sub faststart
 		}
 		&iptableslock("unlock",1);
 	}
-	if (@faststartipset) {
-		if ($verbose) {print "csf: FASTSTART loading $text (IPSET)\n"}
+
+	# #
+	#	Module › IPSET
+	# #
+
+	if (@faststartipset)
+	{
+		if ($verbose)
+		{
+			log_info( "FASTSTART loading (IPSET) ${bluel}${text}${greym}" );
+		}
+	
 		my ($childin, $childout);
 		my $cmdpid = open3($childin, $childout, $childout, $config{IPSET},"restore");
 		print $childin join("\n",@faststartipset)."\n";
