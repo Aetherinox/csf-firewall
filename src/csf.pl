@@ -360,7 +360,7 @@ elsif ($input{command} eq "--lfd") {&dolfd}
 elsif ($input{command} eq "--rbl") {&dorbls}
 elsif ( ( $input{command} eq "--addport" ) 		or ( $input{command} eq "-ap" ) ) 	{ &portAdd }
 elsif ( ( $input{command} eq "--removeport" ) 	or ( $input{command} eq "-rp" ) ) 	{ &portRemove }
-elsif ($input{command} eq "--profile") {&doprofile}
+elsif ( ( $input{command} eq "--listports" ) 	or ( $input{command} eq "-lp" ) ) 	{ &portsList }
 elsif ($input{command} eq "--mregen") {&domessengerv2}
 elsif ($input{command} eq "--trace") {&dotrace}
 elsif (($input{command} eq "--insiders") or ($input{command} eq "-in")) {&doinsiders}
@@ -6316,6 +6316,63 @@ sub portRemove
     close $fh_out;
 }
 
+# #
+#   Ports › List
+#	
+#   Lists all ports assigned to each protocol in csf.conf
+#	
+#   @syntax         --listports
+#   @usage          csf --listports
+# #
+
+sub portsList
+{
+    my $conf_file = '/etc/csf/csf.conf';
+
+	# #
+	#	Read csf.conf
+	# #
+
+	open my $fh, '<', $conf_file or do
+	{
+		log_error( "Cannot open ${redl}$conf_file${greym} - returned error: ${redl}$${greym}!" );
+		return;
+	};
+	my @lines = <$fh>;
+	close $fh;
+
+    log_label( "" );
+    log_info( "Configured CSF Ports:" );
+	log_label( "The following are a list of the whitelisted ports configured in your ${yellowd}${conf_file}${greym}" );
+    log_label( "" );
+
+	# #
+	#	Loop port protocols
+	# #
+
+    for my $protocol (qw(TCP_IN TCP_OUT UDP_IN UDP_OUT)) 
+    {
+        my ($line) = grep { /^$protocol\s*=/ } @lines;
+
+        if ($line) 
+        {
+            # Extract port list
+            my ($ports) = $line =~ /^$protocol\s*=\s*"(.*?)"/;
+            $ports //= "";
+
+            # Clean whitespace and display
+            $ports =~ s/\s+//g;
+
+            log_label( "${bluel}$protocol${greym}: ${yellowl}$ports${greym}" );
+        }
+        else
+        {
+            log_label( "${bluel}$protocol${greym}: ${redl}Not found${greym}" );
+        }
+    }
+
+    log_label( "" );
+}
 
 # end doprofile
 ###############################################################################
