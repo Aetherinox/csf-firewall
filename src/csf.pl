@@ -64,6 +64,159 @@ our (%input, %config, %ips, %ifaces, %messengerports,%sanitydefault,
 our (@ipset, @faststart4, @faststart6, @faststart4nat, @faststartipset,
      @faststart6nat);
 
+# #
+#   Colors
+# #
+
+my $esc                 = "\033";
+my $end                 = "${esc}[0m";
+my $bgEnd               = "${esc}[49m";
+my $fgEnd               = "${esc}[39m";
+my $bold                = "${esc}[1m";
+my $dim                 = "${esc}[2m";
+my $underline           = "${esc}[4m";
+my $blink               = "${esc}[5m";
+
+# Foreground colors
+my $white           = "${esc}[97m";
+my $black           = "${esc}[0;30m";
+my $redl            = "${esc}[0;91m";
+my $redd            = "${esc}[38;5;196m";
+my $magental        = "${esc}[38;5;198m";
+my $magentad        = "${esc}[38;5;161m";
+my $fuchsial        = "${esc}[38;5;206m";
+my $fuchsiad        = "${esc}[38;5;199m";
+my $bluel           = "${esc}[38;5;33m";
+my $blued           = "${esc}[38;5;27m";
+my $greenl          = "${esc}[38;5;47m";
+my $greend          = "${esc}[38;5;35m";
+my $orangel         = "${esc}[38;5;208m";
+my $oranged         = "${esc}[38;5;202m";
+my $yellowl         = "${esc}[38;5;226m";
+my $yellowd         = "${esc}[38;5;214m";
+my $greyl           = "${esc}[38;5;250m";
+my $greym           = "${esc}[38;5;244m";
+my $greyd           = "${esc}[38;5;240m";
+my $navy            = "${esc}[38;5;62m";
+my $olive           = "${esc}[38;5;144m";
+my $peach           = "${esc}[38;5;204m";
+my $cyan            = "${esc}[38;5;6m";
+
+# Background / combined colors
+my $bgVerbose       = "${esc}[1;38;5;15;48;5;125m";     # white on purple
+my $bgDebug         = "${esc}[1;38;5;15;48;5;237m";     # white on dark grey
+my $bgInfo          = "${esc}[1;38;5;15;48;5;27m";      # white on blue
+my $bgOk            = "${esc}[1;38;5;15;48;5;64m";      # white on green
+my $bgWarn          = "${esc}[1;38;5;16;48;5;214m";     # black on orange/yellow
+my $bgDanger        = "${esc}[1;38;5;15;48;5;202m";     # white on orange-red
+my $bgError         = "${esc}[1;38;5;15;48;5;160m";     # white on red
+
+# #
+#   Logs › Prepare
+#   
+#   Called by:
+#       log_csf
+# #
+
+sub log_prepare
+{
+    my (%opts)          = @_;
+    my $level           = $opts{level}          || 'INFO';      #  INFO, WARN, FAIL, PASS, DBUG
+    my $msg             = $opts{msg}            || '';
+    my $color_prefix    = $opts{color}          || '';
+    my $label      		= $opts{label}     || 0;
+
+    $msg =~ s/\n+$//;
+
+    my $tag = sprintf("   %s %-5s%s", $color_prefix, $level, $end);
+    my $txt = sprintf("%s  %s%s", $greym, $msg, $end);
+
+    # #
+	#	label (no tag)
+	# #
+
+    if ($label)
+	{
+        printf "%-20s %-65s\n", "", $txt;
+        return;
+    }
+
+	# #
+	#	Normal Message
+	# #
+
+    printf "%-44s %-65s\n", $tag, $txt;
+}
+
+
+# #
+#   Declare › Helper › Daemon Log
+#   
+#   @usage                  log_csf("Some daemon message\n");
+#   @returns                null
+# #
+
+sub log_label
+{
+    my ($msg) = @_;
+    log_prepare(
+        msg         => $msg,
+        label  		=> 1
+    );
+}
+
+sub log_info
+{
+    my ($msg) = @_;
+    log_prepare(
+        msg         => $msg,
+        level       => 'INFO',
+        color       => $bgInfo,
+        no_console  => 1
+    );
+}
+
+sub log_warn {
+    my ($msg) = @_;
+    log_prepare(
+        msg     => " $msg",
+        level   => 'WARN',
+        color   => $bgWarn,
+        no_console => 1
+    );
+}
+
+sub log_fail {
+    my ($msg) = @_;
+    log_prepare(
+        msg     => $msg,
+        level   => 'FAIL',
+        color   => $bgError,
+        no_console => 1
+    );
+}
+
+sub log_pass {
+    my ($msg) = @_;
+    log_prepare(
+        msg     => $msg,
+        level   => 'PASS',
+        color   => $bgOk,
+        no_console => 1
+    );
+}
+
+sub log_debug {
+    my ($msg) = @_;
+    log_prepare(
+        msg     => $msg,
+        level   => 'DBUG',
+        color   => $bgDebug,
+        no_console => 1
+    );
+}
+
+
 $version = &version;
 
 $ipscidr6 = Net::CIDR::Lite->new;
@@ -228,13 +381,14 @@ if (($input{command} eq "--start") or ($input{command} eq "-s") or ($input{comma
 		my ( $insane,$range,$default ) = sanity( $key,$config{$key} );
 		if ( $insane )
 		{
-			print "*WARNING* $key sanity check. $key = $config{$key}. Recommended range: $range (Default: $default)\n"
+			log_warn( "${yellowl}$key${greym} sanity check. ${yellowl}$key = $config{$key}${greym}" );
+			log_label( "Recommended range: $range (Default: $default)${greym}" )
 		}
 	}
 
 	unless ( $config{RESTRICT_SYSLOG} )
 	{
-		print "\n*WARNING* RESTRICT_SYSLOG is disabled. See SECURITY WARNING in /etc/csf/csf.conf.\n"
+		log_warn( "${yellowl}RESTRICT_SYSLOG${greym} is disabled. See SECURITY WARNING in ${yellowl}/etc/csf/csf.conf${greym}" );
 	}
 
 	# #
@@ -973,7 +1127,8 @@ sub clustersend {
 # end clustersend
 ###############################################################################
 # lfdstart
-sub lfdstart {
+sub lfdstart
+{
 	open (my $FH, ">", "/var/lib/csf/csf.restart") or die "Failed to create csf.restart - $!";
 	flock ($FH, LOCK_EX);
 	close ($FH);
@@ -983,45 +1138,61 @@ sub lfdstart {
 # lfdstart
 ###############################################################################
 # start dostop
-sub dostop {
+sub dostop
+{
+	log_info( "Flushing firewall rules${greym}" );
+
 	my $restart = shift;
+
 	&syscommand(__LINE__,"$config{IPTABLES} $verbose --policy INPUT ACCEPT");
 	&syscommand(__LINE__,"$config{IPTABLES} $verbose --policy OUTPUT ACCEPT");
 	&syscommand(__LINE__,"$config{IPTABLES} $verbose --policy FORWARD ACCEPT");
 	&syscommand(__LINE__,"$config{IPTABLES} $verbose --flush");
 	&syscommand(__LINE__,"$config{IPTABLES} $verbose --delete-chain");
-	if ($config{NAT}) {
+
+	if ($config{NAT})
+	{
 		&syscommand(__LINE__,"$config{IPTABLES} $verbose -t nat --flush");
 		&syscommand(__LINE__,"$config{IPTABLES} $verbose -t nat --delete-chain");
 	}
-	if ($config{RAW}) {
+	if ($config{RAW})
+	{
 		&syscommand(__LINE__,"$config{IPTABLES} $verbose -t raw --flush");
 		&syscommand(__LINE__,"$config{IPTABLES} $verbose -t raw --delete-chain");
 	}
-	if ($config{MANGLE}) {
+	if ($config{MANGLE})
+	{
 		&syscommand(__LINE__,"$config{IPTABLES} $verbose -t mangle --flush");
 		&syscommand(__LINE__,"$config{IPTABLES} $verbose -t mangle --delete-chain");
 	}
 
-	if ($config{IPV6}) {
+	if ($config{IPV6})
+	{
 		&syscommand(__LINE__,"$config{IP6TABLES} $verbose --policy INPUT ACCEPT");
 		&syscommand(__LINE__,"$config{IP6TABLES} $verbose --policy OUTPUT ACCEPT");
 		&syscommand(__LINE__,"$config{IP6TABLES} $verbose --policy FORWARD ACCEPT");
 		&syscommand(__LINE__,"$config{IP6TABLES} $verbose --flush");
 		&syscommand(__LINE__,"$config{IP6TABLES} $verbose --delete-chain");
-		if ($config{NAT6}) {
+
+		if ($config{NAT6})
+		{
 			&syscommand(__LINE__,"$config{IP6TABLES} $verbose -t nat --flush");
 			&syscommand(__LINE__,"$config{IP6TABLES} $verbose -t nat --delete-chain");
 		}
-		if ($config{RAW6}) {
+
+		if ($config{RAW6})
+		{
 			&syscommand(__LINE__,"$config{IP6TABLES} $verbose -t raw --flush");
 			&syscommand(__LINE__,"$config{IP6TABLES} $verbose -t raw --delete-chain");
 		}
-		if ($config{MANGLE6}) {
+
+		if ($config{MANGLE6})
+		{
 			&syscommand(__LINE__,"$config{IP6TABLES} $verbose -t mangle --flush");
 			&syscommand(__LINE__,"$config{IP6TABLES} $verbose -t mangle --delete-chain");
 		}
 	}
+
 	if ($config{LF_IPSET}) {
 		&syscommand(__LINE__,"$config{IPSET} flush");
 		&syscommand(__LINE__,"$config{IPSET} destroy");
@@ -1029,6 +1200,7 @@ sub dostop {
 
 	if ($config{TESTING}) {&crontab("remove")}
 	return;
+
 }
 # end dostop
 ###############################################################################
@@ -1136,7 +1308,7 @@ sub dostart {
 			close( $CONF );
 		}
 
-		print "Initializing csfpre: $pre\n";
+		log_info( "Initializing ${bluel}csfpre${greym} script ${bluel}${pre}${greym}" );
 		&syscommand( __LINE__, "$path ; $pre" );
 	}
 
@@ -1416,7 +1588,8 @@ sub dostart {
 	}
 
 	if ($config{FASTSTART}) {$faststart = 1}
-	unless ($config{DNS_STRICT}) {
+	unless ($config{DNS_STRICT})
+	{
 		&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -I OUTPUT $ethdevout -p udp --sport 53 -j $accept");
 		&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -I OUTPUT $ethdevout -p tcp --sport 53 -j $accept");
 		&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -I OUTPUT $ethdevout -p udp --dport 53 -j $accept");
@@ -1429,8 +1602,10 @@ sub dostart {
 		}
 	}
 
-	unless ($config{DNS_STRICT_NS}) {
-		foreach my $line (slurp("/etc/resolv.conf")) {
+	unless ($config{DNS_STRICT_NS})
+	{
+		foreach my $line (slurp("/etc/resolv.conf"))
+		{
 			$line =~ s/$cleanreg//g;
 			if ($line =~ /^(\s|\#|$)/) {next}
 			if ($line =~ /^nameserver\s+($ipv4reg)/) {
@@ -1504,8 +1679,10 @@ sub dostart {
 		}
 	}
 
-	if ($config{DOCKER})
+	if ( $config{DOCKER} )
 	{
+		log_info( "Docker integration enabled${greym}" );
+
 		&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -N DOCKER");
 		if ($config{NAT})
 		{
@@ -1523,6 +1700,10 @@ sub dostart {
 			&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} $verbose -A FORWARD -i $config{DOCKER_DEVICE} ! -o $config{DOCKER_DEVICE} -j ACCEPT");
 			&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} $verbose -A FORWARD -i $config{DOCKER_DEVICE} -o $config{DOCKER_DEVICE} -j ACCEPT");
 		}
+	}
+	else
+	{
+		log_info( "Docker integration disabled; skipping.${greym}" );
 	}
 
 	&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -I OUTPUT $skipout $ethdevout -j LOCALOUTPUT");
@@ -1607,23 +1788,59 @@ sub dostart {
 			close( $CONF );
 		}
 
-		print "Initializing csfpost: $post\n";
+		log_info( "Initializing ${bluel}csfpost${greym} script ${bluel}${post}${greym}" );
 		&syscommand( __LINE__, "$path ; $post" );
 	}
 
-	if ($config{VPS})
+	# #
+	#	Give user warning at restart about default username and password
+	# #
+
+	if ( $config{UI} )
+	{
+		log_info( "Checking config file for valid username and password${greym}" );
+		
+		if ( $config{UI_USER} eq "" or $config{UI_USER} eq "username" )
+		{
+			log_fail( "Cannot enable CSF web interface. Setting ${redl}UI_USER${greym} has default value ${redl}'username'${greym}" );
+			log_label( "You MUST change the default value." );
+			$config{UI} = 0;
+		}
+		elsif ( $config{UI_PASS} eq "" or $config{UI_PASS} eq "password" )
+		{
+			log_fail( "Cannot enable CSF web interface. Setting ${redl}UI_PASS${greym} has default value ${redl}'password'${greym}" );
+			log_label( "You MUST change the default value." );
+			$config{UI} = 0;
+		}
+		else
+		{
+    		log_pass( "${greend}CSF web interface running on port${greym} ${greenl}$config{UI_PORT}${greym}" );
+		}
+	}
+	else
+	{
+		log_info( "CSF web interface disabled; skipping.${greym}" );
+	}
+
+	if ( $config{VPS} )
 	{
 		open (my $FH, "<", "/proc/sys/kernel/osrelease");
 		flock ($FH, LOCK_SH);
 		my @data = <$FH>;
 		close ($FH);
 		chomp @data;
-		if ($data[0] =~ /^(\d+)\.(\d+)\.(\d+)/) {
+
+		if ($data[0] =~ /^(\d+)\.(\d+)\.(\d+)/)
+		{
 			my $maj = $1;
 			my $mid = $2;
 			my $min = $3;
-			if (($maj > 2) or (($maj > 1) and ($mid > 5) and ($min > 26))) {
-			} else {
+	
+			if (($maj > 2) or (($maj > 1) and ($mid > 5) and ($min > 26)))
+			{
+			}
+			else
+			{
 				my $status = 0;
 				if (-e "/etc/pure-ftpd.conf") {
 					my @conf = slurp("/etc/pure-ftpd.conf");
@@ -1634,14 +1851,25 @@ sub dostart {
 					} else {$status = 1}
 					if ($status) {$warning .= "*WARNING* Since the Virtuozzo VPS iptables ip_conntrack_ftp kernel module is currently broken you have to open a PASV port hole in iptables for incoming FTP connections to work correctly. See the csf readme.txt under 'A note about FTP Connection Issues' on how to do this if you have not already done so.\n"}
 				}
-				elsif (-e "/etc/proftpd.conf") {
+				elsif (-e "/etc/proftpd.conf")
+				{
 					my @conf = slurp("/etc/proftpd.conf");
-					if (my @ls = grep {$_ =~ /^PassivePorts\s+(\d+)\s+(\d+)/} @conf) {
-						if ($ls[0] =~ /^PassivePorts\s+(\d+)\s+(\d+)/) {
+					if (my @ls = grep {$_ =~ /^PassivePorts\s+(\d+)\s+(\d+)/} @conf)
+					{
+						if ($ls[0] =~ /^PassivePorts\s+(\d+)\s+(\d+)/)
+						{
 							if ($config{TCP_IN} !~ /\b$1:$2\b/) {$status = 1}
 						}
-					} else {$status = 1}
-					if ($status) {$warning .= "*WARNING* Since the Virtuozzo VPS iptables ip_conntrack_ftp kernel module is currently broken you have to open a PASV port hole in iptables for incoming FTP connections to work correctly. See the csf readme.txt under 'A note about FTP Connection Issues' on how to do this if you have not already done so.\n"}
+					}
+					else
+					{
+						$status = 1
+					}
+
+					if ($status)
+					{
+						$warning .= "*WARNING* Since the Virtuozzo VPS iptables ip_conntrack_ftp kernel module is currently broken you have to open a PASV port hole in iptables for incoming FTP connections to work correctly. See the csf readme.txt under 'A note about FTP Connection Issues' on how to do this if you have not already done so.\n"
+					}
 				}
 			}
 		}
@@ -6039,50 +6267,79 @@ sub loadmodule {
 # end loadmodule
 ###############################################################################
 # start syscommand
-sub syscommand {
-	my $line = shift;
-	my $command = shift;
-	my $force = shift;
-	my $status = 0;
-	my $iptableslock = 0;
-	if ($command =~ /^($config{IPTABLES}|$config{IP6TABLES})/) {$iptableslock = 1}
-	if ($faststart) {
-		if ($command =~ /^$config{IPTABLES}\s+(.*)$/) {
+sub syscommand
+{
+	my $line 			= shift;
+	my $command 		= shift;
+	my $force 			= shift;
+	my $status 			= 0;
+	my $iptableslock 	= 0;
+
+	if ($command =~ /^($config{IPTABLES}|$config{IP6TABLES})/)
+	{
+		$iptableslock = 1
+	}
+
+	if ($faststart)
+	{
+		if ($command =~ /^$config{IPTABLES}\s+(.*)$/)
+		{
 			my $fastcmd = $1;
 			$fastcmd =~ s/-v//;
 			$fastcmd =~ s/--wait//;
-			if ($fastcmd =~ /-t\s+nat/) {
+			if ($fastcmd =~ /-t\s+nat/)
+			{
 				$fastcmd =~ s/-t\s+nat//;
 				push @faststart4nat,$fastcmd;
-			} else {
+			}
+			else
+			{
 				push @faststart4,$fastcmd;
 			}
 		}
-		if ($command =~ /^$config{IP6TABLES}\s+(.*)$/) {
+
+		if ($command =~ /^$config{IP6TABLES}\s+(.*)$/)
+		{
 			my $fastcmd = $1;
 			$fastcmd =~ s/-v//;
 			$fastcmd =~ s/--wait//;
-			if ($fastcmd =~ /-t\s+nat/) {
+	
+			if ($fastcmd =~ /-t\s+nat/)
+			{
 				$fastcmd =~ s/-t\s+nat//;
 				push @faststart6nat,$fastcmd;
-			} else {
+			}
+			else
+			{
 				push @faststart6,$fastcmd;
 			}
 		}
 		return;
 	}
 
-	if ($config{VPS}) {$status = &checkvps}
+	if ($config{VPS})
+	{
+		$status = &checkvps
+	}
 
-	if ($status) {
+	if ($status)
+	{
 		&error($line,$status);
-	} else {
-		if ($config{DEBUG} >= 1) {print "debug[$line]: Command:$command\n";}
+	}
+	else
+	{
+		if ($config{DEBUG} >= 1)
+		{
+			print "debug[$line]: Command:$command\n";
+		}
 
 		if ($iptableslock) {&iptableslock("lock")}
 		my @output;
-		if ($iptableslock and $config{WAITLOCK}) {
-			eval {
+
+		if ($iptableslock and $config{WAITLOCK})
+		{
+			eval
+			{
 				local $SIG{__DIE__} = undef;
 				local $SIG{'ALRM'} = sub {die "alarm\n"};
 				alarm($config{WAITLOCK_TIMEOUT});
@@ -6092,28 +6349,44 @@ sub syscommand {
 				waitpid ($cmdpid, 0);
 				alarm(0);
 			};
+
 			alarm(0);
-			if ($@ eq "alarm\n") {
+			if ($@ eq "alarm\n")
+			{
 				&error(__LINE__,"*Error* timeout after iptables --wait for $config{WAITLOCK_TIMEOUT} seconds - WAITLOCK");
 			}
-		} else {
+		}
+		else
+		{
 			my ($childin, $childout);
 			my $cmdpid = open3($childin, $childout, $childout, $command);
 			@output = <$childout>;
 			waitpid ($cmdpid, 0);
 		}
-		if ($iptableslock) {&iptableslock("unlock")}
+
+		if ($iptableslock)
+		{
+			&iptableslock("unlock")
+		}
 
 		chomp @output;
-		if ($output[0] =~ /# Warning: iptables-legacy tables present/) {shift @output}
-		foreach my $line (@output) {
-			if ($line =~ /^Using intrapositioned negation/) {next}
-			print $line."\n";;
+		if ($output[0] =~ /# Warning: iptables-legacy tables present/)
+		{
+			shift @output
 		}
-		if ($output[0] =~ /(^iptables: Unknown error 4294967295)|(xtables lock)/ and !$config{WAITLOCK}) {
+	
+		foreach my $line (@output)
+		{
+			if ($line =~ /^Using intrapositioned negation/) {next}
+			log_label( "$line" );
+		}
+
+		if ($output[0] =~ /(^iptables: Unknown error 4294967295)|(xtables lock)/ and !$config{WAITLOCK})
+		{
 			my $cnt = 0;
 			my $repeat = 6;
-			while ($cnt < $repeat) {
+			while ($cnt < $repeat)
+			{
 				sleep 1;
 				if ($config{DEBUG} >= 1) {print "debug[$line]: Retry (".($cnt+1).") [$command] due to [$output[0]]"}
 				if ($iptableslock) {&iptableslock("lock")}
@@ -6129,29 +6402,44 @@ sub syscommand {
 				unless ($output[0] =~ /(^iptables: Unknown error 4294967295)|(xtables lock)/) {$cnt = $repeat}
 			}
 		}
-		if ($output[0] =~ /^(iptables|xtables|Bad|Another)/ and ($config{TESTING} or $force)) {
-			if ($output[0] =~ /iptables: No chain\/target\/match by that name/) {
+
+		if ($output[0] =~ /^(iptables|xtables|Bad|Another)/ and ($config{TESTING} or $force))
+		{
+			if ($output[0] =~ /iptables: No chain\/target\/match by that name/)
+			{
 				&error($line,"iptables command [$command] failed, you appear to be missing a required iptables module")
-			} else {
+			}
+			else
+			{
 				&error($line,"iptables command [$command] failed");
 			}
 		}
-		if ($output[0] =~ /^(ip6tables|Bad|Another)/ and ($config{TESTING} or $force)) {
-			if ($output[0] =~ /ip6tables: No chain\/target\/match by that name/) {
+
+		if ($output[0] =~ /^(ip6tables|Bad|Another)/ and ($config{TESTING} or $force))
+		{
+			if ($output[0] =~ /ip6tables: No chain\/target\/match by that name/)
+			{
 				&error($line,"ip6tables command [$command] failed, you appear to be missing a required ip6tables module")
-			} else {
+			}
+			else
+			{
 				&error($line,"ip6tables command [$command] failed");
 			}
 		}
-		if ($output[0] =~ /xtables lock/) {
+
+		if ($output[0] =~ /xtables lock/)
+		{
 			$warning .= "iptables command [$command] failed due to xtables lock, enable WAITLOCK in csf.conf\n\n";
 		}
-		if ($output[0] =~ /^(iptables|xtables|ip6tables|Bad|Another)/) {
+
+		if ($output[0] =~ /^(iptables|xtables|ip6tables|Bad|Another)/)
+		{
 			$warning .= "*ERROR* line:[$line]\nCommand:[$command]\nError:[$output[0]]\nYou should check through the main output carefully\n\n";
 		}
 	}
 	return;
 }
+
 # end syscommand
 ###############################################################################
 # start iptableslock
@@ -6218,10 +6506,16 @@ sub modprobe {
 # end modprobe
 ###############################################################################
 # start faststart
-sub faststart {
+sub faststart
+{
 	my $text = shift;
-	if (@faststart4) {
-		if ($verbose) {print "csf: FASTSTART loading $text (IPv4)\n"}
+	if ( @faststart4 )
+	{
+		if ( $verbose )
+		{
+			log_info( "FASTSTART loading (IPv4) ${bluel}${text}${greym}" );
+		}
+
 		my $status;
 		if ($config{VPS}) {$status = &fastvps(scalar @faststart4)}
 		if ($status) {&error(__LINE__,$status)}

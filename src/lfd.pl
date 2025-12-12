@@ -977,10 +977,12 @@ if ($config{MESSENGER}) {
 }
 
 if ($config{UI}) {
-	if ($config{UI_CXS}) {
-	use lib '/etc/cxs';
-	require ConfigServer::cxsUI;
+	if ($config{UI_CXS})
+	{
+		use lib '/etc/cxs';
+		require ConfigServer::cxsUI;
 	}
+
 	if ($config{UI_USER} eq "" or $config{UI_USER} eq "username") {
 		logfile("*Error* Cannot run csf Integrated UI - UI_USER must set");
 		$config{UI} = 0;
@@ -989,7 +991,8 @@ if ($config{UI}) {
 		logfile("*Error* Cannot run Integrated csf UI - UI_PASS must set");
 		$config{UI} = 0;
 	}
-	else {
+	else
+	{
 		logfile("csf Integrated UI running up on port $config{UI_PORT}...");
 		&ui;
 	}
