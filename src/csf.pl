@@ -51,7 +51,7 @@ use ConfigServer::LookUpIP qw(iplookup);
 
 umask(0177);
 
-our ($verbose, $version, $logintarget, $noowner, $warning, $accept, $ipscidr,
+our ($debug, $verbose, $version, $logintarget, $noowner, $warning, $accept, $ipscidr,
      $ipv6reg, $ipv4reg,$ethdevin, $ethdevout, $ipscidr6, $eth6devin,
 	 $eth6devout, $statemodule, $logouttarget, $cleanreg, $slurpreg,
 	 $faststart, $urlget, $statemodulenew, $statemodule6new, $cxsreputation);
@@ -80,8 +80,8 @@ my $blink               = "${esc}[5m";
 # Foreground colors
 my $white           = "${esc}[97m";
 my $black           = "${esc}[0;30m";
-my $redl            = "${esc}[0;91m";
-my $redd            = "${esc}[38;5;196m";
+my $redl            = "${esc}[1;91m";
+my $redd            = "${esc}[38;5;196;1m";
 my $magental        = "${esc}[38;5;198m";
 my $magentad        = "${esc}[38;5;161m";
 my $fuchsial        = "${esc}[38;5;206m";
@@ -111,33 +111,33 @@ my $bgWarn          = "${esc}[1;38;5;16;48;5;214m";     # black on orange/yellow
 my $bgDanger        = "${esc}[1;38;5;15;48;5;202m";     # white on orange-red
 my $bgError         = "${esc}[1;38;5;15;48;5;160m";     # white on red
 my $bgBlueDark 		= "${esc}[1;38;5;15;48;5;25m";   	# white on dark blue
-my $bgYellowDark = "${esc}[1;38;5;15;48;5;172m";    	# white on dark yellow
+my $bgYellowDark 	= "${esc}[1;38;5;15;48;5;172m";		# white on dark yellow/orange
 
 # #
 #   Logs › Prepare
 #   
 #   Called by:
-#       log_csf
+#       log_*
 # #
 
 sub log_prepare
 {
     my (%opts)          = @_;
-    my $level           = $opts{level}          || 'INFO';      #  INFO, WARN, FAIL, PASS, DBUG
-    my $msg             = $opts{msg}            || '';
-    my $color_prefix    = $opts{color}          || '';
-    my $label      		= $opts{label}     || 0;
+    my $level           = $opts{level}		|| 'INFO';      #  INFO, WARN, FAIL, PASS, DBUG
+    my $msg             = $opts{msg}		|| '';
+    my $color_prefix    = $opts{color}		|| '';
+    my $label      		= $opts{label}		|| 0;
 
     $msg =~ s/\n+$//;
 
-    my $tag = sprintf("   %s %-5s%s", $color_prefix, $level, $end);
-    my $txt = sprintf("%s  %s%s", $greym, $msg, $end);
+    my $tag 			= sprintf("   %s %-5s%s", $color_prefix, $level, $end);
+    my $txt 			= sprintf("%s  %s%s", $greym, $msg, $end);
 
     # #
 	#	label (no tag)
 	# #
 
-    if ($label)
+    if ( $label )
 	{
         printf "%-20s %-65s\n", "", $txt;
         return;
@@ -150,11 +150,11 @@ sub log_prepare
     printf "%-44s %-65s\n", $tag, $txt;
 }
 
-
 # #
-#   Declare › Helper › Daemon Log
+#   Log › 
 #   
-#   @usage                  log_csf("Some daemon message\n");
+#   @usage                  log_warn( "This is a warning" );
+#							log_warn( "CSF has thrown a ${yellowl}warning${greym}" );
 #   @returns                null
 # #
 
@@ -174,61 +174,60 @@ sub log_info
         msg         => $msg,
         level       => 'INFO',
         color       => $bgInfo,
-        no_console  => 1
     );
 }
 
-sub log_warn {
+sub log_warn
+{
     my ($msg) = @_;
     log_prepare(
-        msg     => " $msg",
-        level   => 'WARN',
-        color   => $bgWarn,
-        no_console => 1
+        msg     	=> " $msg",
+        level   	=> 'WARN',
+        color   	=> $bgWarn
     );
 }
 
-sub log_fail {
+sub log_fail
+{
     my ($msg) = @_;
     log_prepare(
-        msg     => $msg,
-        level   => 'FAIL',
-        color   => $bgError,
-        no_console => 1
+        msg     	=> " $msg",
+        level   	=> 'FAIL',
+        color   	=> $bgError
     );
 }
 
-sub log_pass {
+sub log_pass
+{
     my ($msg) = @_;
     log_prepare(
-        msg     => $msg,
-        level   => 'PASS',
-        color   => $bgOk,
-        no_console => 1
+        msg     	=> "$msg",
+        level   	=> 'PASS',
+        color   	=> $bgOk
     );
 }
 
-sub log_debug {
+sub log_debug
+{
     my ($msg) = @_;
     log_prepare(
-        msg     => $msg,
-        level   => 'DBUG',
-        color   => $bgDebug,
-        no_console => 1
+        msg     	=> " $msg",
+        level   	=> 'DBUG',
+        color   	=> $bgDebug
     );
 }
 
 
-$version = &version;
+$version 	= &version;
+$ipscidr6 	= Net::CIDR::Lite->new;
+$ipscidr 	= Net::CIDR::Lite->new;
 
-$ipscidr6 = Net::CIDR::Lite->new;
-$ipscidr = Net::CIDR::Lite->new;
 eval {local $SIG{__DIE__} = undef; $ipscidr6->add("::1/128")};
 eval {local $SIG{__DIE__} = undef; $ipscidr->add("127.0.0.0/8")};
 
-$slurpreg = ConfigServer::Slurp->slurpreg;
-$cleanreg = ConfigServer::Slurp->cleanreg;
-$faststart = 0;
+$slurpreg 	= ConfigServer::Slurp->slurpreg;
+$cleanreg 	= ConfigServer::Slurp->cleanreg;
+$faststart 	= 0;
 
 &process_input;
 &load_config;
@@ -499,8 +498,21 @@ sub load_config
 		import ConfigServer::CloudFlare;
 	}
 
+	# #
+	#	Mode > Debug
+	# #
+
+	$debug = "";
+	if ( $config{DEBUG} >= 1 )
+	{
+		$debug = "-d"
+	}
+
 	$verbose = "";
-	if ($config{VERBOSE} or $config{DEBUG} >= 1) {$verbose = "-v"}
+	if ( $config{VERBOSE} or $config{DEBUG} >= 1 )
+	{
+		$verbose = "-v"
+	}
 
 	$logintarget = "LOG --log-prefix";
 	$logouttarget = "LOG --log-uid --log-prefix";
@@ -690,36 +702,72 @@ sub dostatus6 {
 	}
 	return;
 }
-# end dostatus
-###############################################################################
-# start doversion
-sub doversion {
-my $generic = " (cPanel)";
-if ($config{GENERIC}) {$generic = " (generic)"}
-if ($config{DIRECTADMIN}) {$generic = " (DirectAdmin)"}
-if ($config{INTERWORX}) {$generic = " (InterWorx)"}
-if ($config{CYBERPANEL}) {$generic = " (CyberPanel)"}
-if ($config{CWP}) {$generic = " (CentOS Web Panel)"}
-if ($config{VESTA}) {$generic = " (VestaCP)"}
-	print "csf: v$version$generic\n";
+
+# #
+#	Version Information
+#	
+#	Triggered by commands such as `sudo csf -v`
+# #
+
+sub doversion
+{
+	my $generic 				= " (cPanel)";
+	if ( $config{GENERIC} )		{ $generic = " (generic)" }
+	if ( $config{DIRECTADMIN} )	{ $generic = " (DirectAdmin)" }
+	if ( $config{INTERWORX} ) 	{ $generic = " (InterWorx)" }
+	if ( $config{CYBERPANEL} ) 	{ $generic = " (CyberPanel)" }
+	if ( $config{CWP} )			{ $generic = " (CentOS Web Panel)" }
+	if ( $config{VESTA} )		{ $generic = " (VestaCP)" }
+
+	my $licenseValid 			= userLicenseStatus();
+	my $licenseStatus 			= $licenseValid ? "${greenl}Valid${greym}" : "${yellowl}Invalid${greym}";
+	my $releaseChannel 			= userIsInsider( $licenseValid )
+									? "${greyd}Stable Channel${greyd} | ${fuchsial}Insiders Channel${greym}"
+									: "${fuchsial}Stable Channel${greyd} | ${greyd}Insiders Channel${greym}";
+
+	# #
+	#	Output
+	# #
+
+	log_label	( "" );
+	log_info	( "${yellowd}ConfigServer Security & Firewall" );
+	log_label	( "${greenl}v${version}${bluel}$generic${greym}" );
+	log_label	( "${greyd}License: ${licenseStatus}" );
+	log_label	( "${releaseChannel}" );
+	log_label	( "" );
+
 	return;
 }
+
 # end doversion
 ###############################################################################
 # start dolfd
-sub dolfd {
-	my $lfd  = $input{argument};
-	if ($lfd eq "start") {ConfigServer::Service::startlfd()}
-	elsif ($lfd eq "stop") {ConfigServer::Service::stoplfd()}
-	elsif ($lfd eq "restart") {ConfigServer::Service::restartlfd()}
-	elsif ($lfd eq "status") {ConfigServer::Service::statuslfd()}
-	else {print "csf: usage: csf --lfd [stop|start|restart|status]\n"}
+
+sub dolfd
+{
+	my $lfd = $input{argument};
+
+	if ( $lfd eq "start" )		{ ConfigServer::Service::startlfd( ) }
+	elsif ( $lfd eq "stop" )	{ ConfigServer::Service::stoplfd( ) }
+	elsif ( $lfd eq "restart" )	{ ConfigServer::Service::restartlfd( ) }
+	elsif ( $lfd eq "status" ) 	{ ConfigServer::Service::statuslfd( ) }
+	else
+	{
+		log_info( "Invalid flag; lfd service includes the following flags" );
+		log_label( "${fuchsial}csf ${bluel}--lfd ${greyd}[ ${yellowl}stop${greyd} | ${yellowl}start${greyd} | ${yellowl}restart${greyd} | ${yellowl}status${greyd} ]" )
+	}
+
 	return;
 }
-# end dolfd
-###############################################################################
-# start dorestartall
-sub dorestartall {
+
+# #
+#	Action › Restart All
+#	
+#	Triggered via command `csf -ra`
+# #
+
+sub dorestartall
+{
 	&csflock("lock");
 	&dostop(1);
 	&dostart;
@@ -727,10 +775,10 @@ sub dorestartall {
 	ConfigServer::Service::restartlfd();
 	return;
 }
-# end dorestartall
-###############################################################################
+
 # start doinitup
-sub doinitup {
+sub doinitup
+{
 	&csflock("lock");
 	if ($config{FASTSTART}) {
 		&modprobe;
@@ -2268,10 +2316,12 @@ sub dokillall {
 # end dokillall
 ###############################################################################
 # start doakill
-sub doakill {
+sub doakill
+{
 	my $ip = $input{argument};
 
-	if (!checkip(\$ip) and !(($ip =~ /:|\|/) and ($ip =~ /=/))) {
+	if (!checkip(\$ip) and !(($ip =~ /:|\|/) and ($ip =~ /=/)))
+	{
 		print "[$ip] is not a valid PUBLIC IP/CIDR\n";
 		return;
 	}
@@ -2286,7 +2336,9 @@ sub doakill {
 	seek ($ALLOW, 0, 0);
 	truncate ($ALLOW, 0);
 	my $hit = 0;
-	foreach my $line (@allow) {
+
+	foreach my $line (@allow)
+	{
         $line =~ s/$cleanreg//g;
 		my ($ipd,$commentd) = split (/\s/,$line,2);
 		checkip(\$ipd);
@@ -2296,26 +2348,39 @@ sub doakill {
 			$hit = 1;
 			next;
 		}
+
 		print $ALLOW $line."\n";
 	}
+
 	close ($ALLOW) or &error(__LINE__,"Could not close /etc/csf/csf.allow: $!");
-	unless ($hit) {
+	unless ($hit)
+	{
 		print "csf: $ip not found in csf.allow\n";
 	}
+
 	return;
 }
-# end doakill
-###############################################################################
-# start help
-sub dohelp {
-	my $generic = " (cPanel)";
-	if ($config{GENERIC}) {$generic = " (generic)"}
-	if ($config{DIRECTADMIN}) {$generic = " (DirectAdmin)"}
-	print "csf: v$version$generic\n";
+
+# #
+#	Help
+# #
+
+sub dohelp
+{
+	my $generic 					= " (cPanel)";
+	if ( $config{GENERIC} ) 		{ $generic = " (generic)" }
+	if ( $config{DIRECTADMIN} )		{ $generic = " (DirectAdmin)" }
+
+	log_label	( "" );
+	log_info	( "${yellowd}ConfigServer Security & Firewall" );
+	log_label	( "${greenl}v${version}${bluel}$generic${greym}" );
+	log_label	( "" );
+
 	open (my $IN, "<", "/usr/local/csf/lib/csf.help");
 	flock ($IN, LOCK_SH);
 	print <$IN>;
 	close ($IN);
+
 	return;
 }
 # end help
