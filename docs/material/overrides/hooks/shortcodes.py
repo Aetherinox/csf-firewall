@@ -49,6 +49,7 @@ import posixpath
 import re
 import inspect
 import os
+import html
 
 # #
 #   From
@@ -143,6 +144,7 @@ def on_page_markdown( markdown: str, *, page: Page, config: MkDocsConfig, files:
         elif type == "feature":         return badgeFeature( args, page, files )
         elif type == "plugin":          return badgePlugin( args, page, files )
         elif type == "markdown":        return badgeMarkdown( args, page, files )
+        elif type == "argument":        return badgeArgument( args, page, files )
         elif type == "3rdparty":        return badge3rdParty( args, page, files )
         elif type == "docs":            return badgeDocs( args, page, files )
         elif type == "fileViewDLExt":   return badgeFileViewDLExt( args, page, files )
@@ -510,9 +512,6 @@ def badgeDefaultComputed( page: Page, files: Files ):
 #       <!-- md:command `-s,  --start` -->      Specified setting has a default value  <!-- @md:command -s, --start -->
 # #
 
-# #
-#   Badge › Command
-# #
 def badgeCommand(md_line: str, page: Page, files: Files):
     """
     Creates a command badge from a markdown line. Supports optional width
@@ -766,6 +765,25 @@ def badgeMarkdown( text: str, page: Page, files: Files ):
         type = "markdown"
     )
     
+# #
+#   Badge › Argument
+#   
+#   Normal Badges:
+#       <!-- md:argument [admonition][Admonition] -->
+# #
+
+def badgeArgument( text: str, page: Page, files: Files ):
+    icon    = "aetherx-axs-head-side-gear"
+    href    = _resolve_path( f"{PAGE_CONVENTIONS}#command-argument", page, files )
+
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
+
+    return badgeCreate(
+        icon = f"[:{icon}:]({href} 'Command argument')",
+        text = text,
+        type = "argument"
+    )
+
 # #
 #   Badge › Button:(View File)
 #   
@@ -1470,12 +1488,16 @@ def badgeCreateWidth(icon: str, text: str = "", type: str = "", width: int | Non
     @param width int|None  Optional fixed width for badge (inline CSS)
     @return      str       HTML badge
     """
+
     classes         = f"mdx-badge mdx-badge--{type}" if type else "mdx-badge"
     text_style      = f' style="width:{width}px !important; display:inline-block; text-align:center; padding-top:2px; padding-bottom:2px;"' if width else ""
+
+    # Escape HTML special characters in text
+    escaped_text = html.escape(text)
 
     return "".join([
         f"<span class=\"{classes}\">",
         *([f"<span class=\"mdx-badge__icon\">{icon}</span>"] if icon else []),
-        *([f"<span class=\"mdx-badge__text\"{text_style}><code>{text}</code></span>"] if text else []),
+        *([f"<span class=\"mdx-badge__text\"{text_style}><code>{escaped_text}</code></span>"] if text else []),
         f"</span>",
     ])

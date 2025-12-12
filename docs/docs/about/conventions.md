@@ -201,6 +201,7 @@ The badges in this section are for general use.
 <br />
 
 
+
 ### <!-- md:source -->  Source File { #source data-toc-label="Source" }
 
 === "Description"
@@ -211,6 +212,7 @@ The badges in this section are for general use.
 
     :   <!-- md:source -->  `<!-- @md:source -->`
     :   <!-- md:source /etc/csf/csf.conf -->  `<!-- @md:source /etc/csf/csf.conf -->`
+
 
 
 <br />
@@ -234,6 +236,33 @@ The badges in this section are for general use.
     #### <!-- @md:setting config.archive -->
     ```
 
+
+
+<br />
+<br />
+
+
+
+### <!-- md:argument -->  Command Argument { #setting data-toc-label="Command Argument" }
+
+=== "Description"
+
+    This symbol denotes that the thing described is a command argument.
+
+    `Examples`
+
+    :   <!-- md:argument -->  `<!-- @md:argument -->`
+    :   <!-- md:argument [admonition][Admonition] -->  `<!-- @md:argument [admonition][Admonition] -->`
+
+    [Admonition]: https://python-markdown.github.io/extensions/admonition/
+
+=== "Usage"
+
+    ```markdown
+    :   <!-- @md:argument [admonition][Admonition] -->
+
+    [Admonition]: https://python-markdown.github.io/extensions/admonition/
+    ```
 
 
 
