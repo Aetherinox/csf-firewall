@@ -149,6 +149,147 @@ This change will **not** set the immutable flag on files that did not previously
 <br />
 <br />
 
+### New Terminal Commands
+
+New terminal commands have been added to CSF regarding **Port Management**. These commands will allow you to add and remove ports from your whitelist, without the need to open and edit your CSF config file `/etc/csf/csf.conf`. 
+
+This release includes the following new commands:
+
+| Command                                           | Description                                                                   |
+| ------------------------------------------------  | ----------------------------------------------------------------------------- |
+| <!-- md:command 110 `-ap,  --addport` -->         | Add a new port to your `/etc/csf/csf.conf` whitelist. <br /> Requires `<protocol>:<port>` |
+| <!-- md:command 110 `-rp,  --removeport` -->      | Remove port from your `/etc/csf/csf.conf` whitelist. <br /> Requires `<protocol>:<port>` |
+| <!-- md:command 110 `-lp,  --listports` -->       | List all ports and their protocols currently whitelisted in `/etc/csf/csf.conf`. |
+
+<br />
+
+#### Arguments
+
+Two of the commands specified above `--addport` and `--removeport` require **two** additional arguments to be passed with each command. These arguments are required in order for these commands to execute successfully.
+
+- `sudo csf --addport <protocol>:<port>`
+- `sudo csf --removeport <protocol>:<port>`
+
+<br />
+
+The third command does not require any additional arguments, and can simply be ran with just the base command:
+
+- `sudo csf --listports`
+
+<br />
+
+A detailed description of each argument is provided below:
+
+<br />
+
+<!-- md:argument `<protocol>` -->
+
+:   A `<protocol>` must be specified when adding or removing ports. Failing to provide the correct protocol will result in an error. The following values are accepted for `<protocol>`:
+
+    :   TCP_IN
+
+        TCP_OUT
+
+        UDP_IN
+
+        UDP_OUT
+
+<br />
+
+<!-- md:argument `<port>` -->
+
+:   The `<port>` parameter represents the port that you wish to 
+    add or remove from your whitelist.
+    
+    Valid port numbers range from `0` to `65535`.
+
+<br />
+
+#### Commands
+
+The following commands have been added in this release:
+
+<br />
+
+##### Add Port
+<!-- md:version stable-15.08 --> <!-- md:command `csf --addport <protocol>:<port>` -->
+
+The following command will allow you to **add** a new port to your whitelist.
+
+<br />
+
+=== ":aetherx-axb-bash: Command"
+
+    ``` shell
+    sudo csf --addport TCP_IN:21140
+    ```
+
+=== ":aetherx-axs-square-terminal: Output"
+
+      ```shell
+      $ sudo csf --addport TCP_IN:21140
+
+      PASS               Successfully added port TCP_IN:21140 in /etc/csf/csf.conf
+      ```
+
+<br />
+<br />
+
+##### Remove Port
+<!-- md:version stable-15.08 --> <!-- md:command `csf --removeport <protocol>:<port>` -->
+
+The following command will allow you to **remove** an existing port from your whitelist.
+
+<br />
+
+=== ":aetherx-axb-bash: Command"
+
+    ``` shell
+    sudo csf --removeport TCP_IN:21140
+    ```
+
+=== ":aetherx-axs-square-terminal: Output"
+
+      ```shell
+      $ sudo csf --removeport TCP_IN:21140
+
+      PASS               Successfully removed port TCP_IN:21140 from /etc/csf/csf.conf
+      ```
+
+<br />
+<br />
+
+##### List Ports
+<!-- md:version stable-15.08 --> <!-- md:command `csf --listports` -->
+
+This command will list all ports that have been whitelisted through CSF and actively
+allow connections to pass through.
+
+<br />
+
+=== ":aetherx-axb-bash: Command"
+
+    ``` shell
+    sudo csf --listports
+    ```
+
+=== ":aetherx-axs-square-terminal: Output"
+
+      ```shell
+      $ sudo csf --listports
+                                                                            
+          INFO              Configured CSF Ports:                           
+                            The following are a list of the whitelisted ports configured in your /etc/csf/csf.conf
+                                                                            
+                            TCP_IN: 22,25,80,143,443
+                            TCP_OUT: 22,25,80,113,443
+                            UDP_IN: 53,80,443,853
+                            UDP_OUT: 53,113,123,853
+      ```
+
+<br />
+<br />
+
 ### SELinux Permission Conformity
 
 To comply with SELinux security requirements, the ownership of CSF files is now adjusted during installation or updates. Specifically, the installed [CSGet](../../advanced/csget/index.md) cron job is now set to `root:root` rather than the user who initiated the installation.
