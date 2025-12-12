@@ -252,21 +252,35 @@ unless (defined $urlget)
 	}
 }
 
-if ((-e "/etc/csf/csf.disable") and ($input{command} ne "--enable") and ($input{command} ne "-e"))
+if ( ( -e "/etc/csf/csf.disable" ) and ( $input{command} ne "--enable" ) and ( $input{command} ne "-e" ) )
 {
 
-	log_pass( "CSF and LFD have been ${redl}disabled${greym}! Use ${greend}'csf -e'${greym} to re-enable" );
+	log_warn( "CSF and LFD have been ${redl}disabled${greym}! Use ${yellowl}'csf -e'${greym} to re-enable" );
 
-	my $ok = 0;
-	foreach my $opt ("--version","-v","--check","-c","--ports","-p","--help","-h","--update","-u","-uf","--flush","-f","--profile","")
+	# #
+	#   Bypass warning for certain commands
+	# #
+
+	my %valid_cmds = map { $_ => 1 } (
+		"-v",      "--version",
+		"-c",      "--check",
+		"-p",      "--ports",
+		"-h",      "--help",
+		"-u",      "--update",
+		"-uf",
+		"-f",      "--flush",
+		"--profile",
+		"-ap",     "--addport",
+		"-rp",     "--removeport",
+		"-lp",     "--listports",
+	);
+
+	my $ok = $valid_cmds{ $input{command} } ? 1 : 0;
+
+	unless ( $ok )
 	{
-		if ($input{command} eq $opt)
-		{
-			$ok = 1;
-			last;
-		}
+		exit 1;
 	}
-	unless ($ok) {exit 1}
 }
 
 unless (-e $config{IPTABLES})
@@ -297,10 +311,10 @@ unless ($input{command} =~ /^--(stop|initdown|initup)$/)
 	if (-e "/var/lib/csf/csf.6.saved") {unlink "/var/lib/csf/csf.6.saved"}
 }
 
-if (($input{command} eq "--status") or ($input{command} eq "-l")) {&dostatus}
-elsif (($input{command} eq "--status6") or ($input{command} eq "-l6")) {&dostatus6}
-elsif (($input{command} eq "--version") or ($input{command} eq "-v")) {&doversion}
-elsif (($input{command} eq "--stop") or ($input{command} eq "-f")) {&csflock("lock");&dostop(0);&csflock("unlock")}
+# #
+#	Command List
+# #
+
 elsif (($input{command} eq "--startf") or ($input{command} eq "-sf")) {&csflock("lock");&dostop(1);&dostart;&csflock("unlock")}
 elsif (($input{command} eq "--start") or ($input{command} eq "-s") or ($input{command} eq "--restart") or ($input{command} eq "-r")) {if ($config{LFDSTART}) {&lfdstart} else {&csflock("lock");&dostop(1);&dostart;&csflock("unlock")}}
 elsif (($input{command} eq "--startq") or ($input{command} eq "-q")) {&lfdstart}
@@ -344,7 +358,7 @@ elsif ($input{command} eq "--cloudflare") {&docloudflare}
 elsif ($input{command} eq "--graphs") {&dographs}
 elsif ($input{command} eq "--lfd") {&dolfd}
 elsif ($input{command} eq "--rbl") {&dorbls}
-elsif ($input{command} eq "--initup") {&doinitup}
+elsif ( ( $input{command} eq "--addport" ) 		or ( $input{command} eq "-ap" ) ) 	{ &portAdd }
 elsif ($input{command} eq "--initdown") {&doinitdown}
 elsif ($input{command} eq "--profile") {&doprofile}
 elsif ($input{command} eq "--mregen") {&domessengerv2}
@@ -6068,6 +6082,124 @@ sub doprofile {
 	}
 	return;
 }
+
+# #
+#	Ports › Add
+#	
+#	Allows a user to add a port using a console command, instead of editing the config.
+#	
+#	@syntax			--addport <protocol>:<port>
+#	@usage			--addport TCP_IN:9985
+# #
+
+sub portAdd
+{
+    # Get args
+    my $arg = $input{argument} // '';
+
+	# #
+	#	Expect format: PROTOCOL:PORT
+	#	
+	#	Accepted Formats:
+	#		<protocol>:<port>
+	#		<protocol>=<port>
+	#	
+	#	Example
+	#		TCP_IN:2525
+	# #
+
+    unless ( $arg =~ /^(\w+)[:=](\d+)$/ )
+    {
+		log_label( "" );
+		log_fail( "Invalid format provided. Command requires format ${yellowl}<protocol>:<port>${greym}" );
+		log_info( "Usage: csf --addport <protocol>:<port>" );
+		log_label( "       ${fuchsial}csf ${bluel}--addport ${navy}[ ${yellowl}TCP_IN ${navy}|${yellowl} TCP_OUT ${navy}|${yellowl} UDP_IN ${navy}|${yellowl} UDP_OUT${navy} ]${greym}:${greenl}PORT" );
+		log_label( "       ${fuchsial}csf ${bluel}--addport ${yellowl}TCP_IN${greym}:${greenl}8080" );
+		log_label( "       ${fuchsial}csf ${bluel}--addport ${yellowl}UDP_IN${greym}:${greenl}5353" );
+		log_label( "" );
+		
+        return;
+    }
+
+    my ($protocol, $port) 	= ($1, $2);
+    my $conf_file 			= '/etc/csf/csf.conf';
+
+	# #
+	#	Read csf.conf
+	# #
+
+	open my $fh, '<', $conf_file or do
+	{
+		log_error( "Cannot open ${redl}$conf_file${greym} - returned error: ${redl}$${greym}!" );
+		return;
+	};
+	my @lines = <$fh>;
+	close $fh;
+
+    my $found = 0;
+    for my $line ( @lines )
+    {
+        if ($line =~ /^$protocol\s*=\s*"(.*?)"/)
+        {
+            my $ports = $1;
+
+            # #
+			#	Add port if not already exists in csf.conf
+			# #
+
+            if ( $ports !~ /\b\Q$port\E\b/ )
+            {
+                $ports .= ",$port";
+                $line = "$protocol = \"$ports\"\n";
+
+				log_label( "" );
+				log_pass( "Successfully added port ${greenl}${protocol}:${port}${greym} in ${greenl}${conf_file}${greym}" );
+				log_label( "" );
+            }
+            else
+            {
+				log_label( "" );
+				log_warn( "Port ${yellowl}${protocol}:${port}${greym} already ${greenl}allowed${greym} in ${yellowl}${conf_file}${greym}" );
+				log_label( "" );
+            }
+
+            $found = 1;
+            last;
+        }
+    }
+
+	# #
+	#	Specified incorrect protocol
+	#		› TCP_IN
+	#		› TCP_OUT
+	#		› UDP_IN
+	#		› UDP_OUT
+	# #
+
+    unless ( $found )
+    {
+		log_label ( "" );
+		log_fail( "Protocol ${redl}${protocol}${greym} not found in ${redl}${conf_file}" );
+		log_label( "       ${bluel}Options: ${yellowl}TCP_IN${navy},${yellowl} TCP_OUT${navy},${yellowl} UDP_IN${navy},${yellowl} UDP_OUT${greym}" );
+		log_label ( "" );
+		log_info( "Usage: csf --addport <protocol>:<port>" );
+		log_label( "       ${fuchsial}csf ${bluel}--addport ${navy}[ ${yellowl}TCP_IN ${navy}|${yellowl} TCP_OUT ${navy}|${yellowl} UDP_IN ${navy}|${yellowl} UDP_OUT${navy} ]${greym}:${greenl}PORT" );
+		log_label( "       ${fuchsial}csf ${bluel}--addport ${yellowl}TCP_IN${greym}:${greenl}8080" );
+		log_label( "       ${fuchsial}csf ${bluel}--addport ${yellowl}UDP_IN${greym}:${greenl}5353" );
+		log_label ( "" );
+
+        return;
+    }
+
+	# #
+	#	Output / write changes
+	# #
+
+    open my $fh_out, '>', $conf_file or die "Cannot write $conf_file: $!";
+    print $fh_out @lines;
+    close $fh_out;
+}
+
 
 # end doprofile
 ###############################################################################
