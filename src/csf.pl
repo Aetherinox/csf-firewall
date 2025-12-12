@@ -359,7 +359,7 @@ elsif ($input{command} eq "--graphs") {&dographs}
 elsif ($input{command} eq "--lfd") {&dolfd}
 elsif ($input{command} eq "--rbl") {&dorbls}
 elsif ( ( $input{command} eq "--addport" ) 		or ( $input{command} eq "-ap" ) ) 	{ &portAdd }
-elsif ($input{command} eq "--initdown") {&doinitdown}
+elsif ( ( $input{command} eq "--removeport" ) 	or ( $input{command} eq "-rp" ) ) 	{ &portRemove }
 elsif ($input{command} eq "--profile") {&doprofile}
 elsif ($input{command} eq "--mregen") {&domessengerv2}
 elsif ($input{command} eq "--trace") {&dotrace}
@@ -6187,6 +6187,122 @@ sub portAdd
 		log_label( "       ${fuchsial}csf ${bluel}--addport ${yellowl}TCP_IN${greym}:${greenl}8080" );
 		log_label( "       ${fuchsial}csf ${bluel}--addport ${yellowl}UDP_IN${greym}:${greenl}5353" );
 		log_label ( "" );
+
+        return;
+    }
+
+	# #
+	#	Output / write changes
+	# #
+
+    open my $fh_out, '>', $conf_file or die "Cannot write $conf_file: $!";
+    print $fh_out @lines;
+    close $fh_out;
+}
+
+# #
+#   Ports › Remove
+#	
+#   Allows a user to remove a port using a console command, 
+#   instead of editing the config.
+#	
+#   @syntax         --removeport <protocol>:<port>
+#   @usage          --removeport TCP_IN:9985
+# #
+
+sub portRemove
+{
+    my $arg = $input{argument} // '';
+
+	# #
+	#	Expect format: PROTOCOL:PORT
+	#	
+	#	Accepted Formats:
+	#		<protocol>:<port>
+	#		<protocol>=<port>
+	#	
+	#	Example
+	#		TCP_IN:2525
+	# #
+
+    unless ( $arg =~ /^(\w+)[:=](\d+)$/ )
+    {
+        log_label( "" );
+		log_fail( "Invalid format provided. Command requires format ${yellowl}<protocol>:<port>${greym}" );
+        log_info( "Usage: csf --removeport <protocol>:<port>" );
+        log_label( "       ${fuchsial}csf ${bluel}--removeport ${navy}[ ${yellowl}TCP_IN ${navy}|${yellowl} TCP_OUT ${navy}|${yellowl} UDP_IN ${navy}|${yellowl} UDP_OUT${navy} ]${greym}:${greenl}PORT" );
+        log_label( "       ${fuchsial}csf ${bluel}--removeport ${yellowl}TCP_IN${greym}:${greenl}8080" );
+        log_label( "       ${fuchsial}csf ${bluel}--removeport ${yellowl}UDP_IN${greym}:${greenl}5353" );
+        log_label( "" );
+
+        return;
+    }
+
+    my ($protocol, $port) 	= ($1, $2);
+    my $conf_file 			= '/etc/csf/csf.conf';
+
+	# #
+	#	Read csf.conf
+	# #
+
+	open my $fh, '<', $conf_file or do
+	{
+		log_error( "Cannot open ${redl}$conf_file${greym} - returned error: ${redl}$${greym}!" );
+		return;
+	};
+	my @lines = <$fh>;
+	close $fh;
+
+    my $found_protocol 		= 0;
+    my $found_port     		= 0;
+
+    for my $line ( @lines )
+    {
+        if ( $line =~ /^$protocol\s*=\s*"(.*?)"/ )
+        {
+            $found_protocol = 1;
+            my $ports 		= $1;
+
+            # Split list into array
+            my @plist = split /\s*,\s*/, $ports;
+
+            # Check if port exists
+            unless ( grep { $_ eq $port } @plist )
+            {
+                log_warn( "Port ${yellowl}${protocol}:${port}${greym} is already ${redl}BLOCKED${greym} and not added in ${yellowl}${conf_file}${greym}" );
+                last;
+            }
+
+            # Remove port
+            @plist = grep { $_ ne $port } @plist;
+
+            # Rebuild port list
+            my $new_ports 	= join(",", @plist);
+            $line 			= "$protocol = \"$new_ports\"\n";
+            $found_port 	= 1;
+
+			log_label( "" );
+            log_pass( "Successfully removed port ${greenl}${protocol}:${port}${greym} from ${greenl}${conf_file}${greym}" );
+			log_label( "" );
+
+            last;
+        }
+    }
+
+	# #
+	#	Specified incorrect protocol
+	#		› TCP_IN
+	#		› TCP_OUT
+	#		› UDP_IN
+	#		› UDP_OUT
+	# #
+
+    unless ( $found_protocol )
+    {
+        log_label( "" );
+        log_fail( "Protocol ${redl}${protocol}${greym} not found in ${redl}${conf_file}" );
+        log_label( "       ${bluel}Options: ${yellowl}TCP_IN${navy},${yellowl} TCP_OUT${navy},${yellowl} UDP_IN${navy},${yellowl} UDP_OUT${greym}" );
+        log_label( "" );
 
         return;
     }
