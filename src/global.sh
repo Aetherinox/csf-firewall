@@ -190,7 +190,7 @@ verbose( )
 {
     case "${argVerbose:-0}" in
         1|true|TRUE|yes|YES)
-            printf '%-42s %-65s\n' "   ${bgVerbose} VRBO ${end}" "${greym} $1 ${end}"
+            printf '\033[0m\r%-42s %-65s\n' "   ${bgVerbose} VRBO ${end}" "${greym} $1 ${end}"
             ;;
     esac
 }
@@ -198,38 +198,38 @@ verbose( )
 debug( )
 {
     if [ "$argDevEnabled" = "true" ] || [ "$argDryrun" = "true" ]; then
-        printf '%-42s %-65s\n' "   ${bgDebug} DBUG ${end}" "${greym} $1 ${end}"
+        printf '\033[0m\r%-42s %-65s\n' "   ${bgDebug} DBUG ${end}" "${greym} $1 ${end}"
     fi
 }
 
 info( )
 {
-    printf '%-41s %-65s\n' "   ${bgInfo} INFO ${end}" "${greym} $1 ${end}"
+    printf '\033[0m\r%-41s %-65s\n' "   ${bgInfo} INFO ${end}" "${greym} $1 ${end}"
 }
 
 ok( )
 {
-    printf '%-41s %-65s\n' "   ${bgOk} PASS ${end}" "${greym} $1 ${end}"
+    printf '\033[0m\r%-41s %-65s\n' "   ${bgOk} PASS ${end}" "${greym} $1 ${end}"
 }
 
 warn( )
 {
-    printf '%-42s %-65s\n' "   ${bgWarn} WARN ${end}" "${greym} $1 ${end}"
+    printf '\033[0m\r%-42s %-65s\n' "   ${bgWarn} WARN ${end}" "${greym} $1 ${end}"
 }
 
 danger( )
 {
-    printf '%-42s %-65s\n' "   ${bgDanger} DNGR ${end}" "${greym} $1 ${end}"
+    printf '\033[0m\r%-42s %-65s\n' "   ${bgDanger} DNGR ${end}" "${greym} $1 ${end}"
 }
 
 error( )
 {
-    printf '%-42s %-65s\n' "   ${bgError} FAIL ${end}" "${greym} $1 ${end}"
+    printf '\033[0m\r%-42s %-65s\n' "   ${bgError} FAIL ${end}" "${greym} $1 ${end}"
 }
 
 label( )
 {
-    printf '%-31s %-65s\n' "   ${greyd}        ${end}" "${greyd} $1 ${end}"
+    printf '\033[0m\r%-31s %-65s\n' "   ${greyd}        ${end}" "${greyd} $1 ${end}"
 }
 
 print( )
