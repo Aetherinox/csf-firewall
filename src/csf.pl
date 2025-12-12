@@ -3783,6 +3783,7 @@ sub dodisable {
 		}
 		close ($CONF) or &error(__LINE__,"Could not close /usr/local/directadmin/data/admin/services.status: $!");
 	}
+
 	ConfigServer::Service::stoplfd();
 	&dostop(0);
 
@@ -4319,6 +4320,84 @@ END
 # end autoupdates
 ###############################################################################
 # start doupdate
+
+# #
+#	License › Status
+#	
+#	Returns a user's license status.
+#	
+#	@return			0 (false)		License invalid
+#					1 (true)		License valid
+# #
+
+sub userLicenseStatus
+{
+    my $license = $config{SPONSOR_LICENSE} // '';
+
+    # Return 0 if license in config missing
+    return 0 unless $license;
+
+    # Check license server
+    my ( $statusCode, $resp ) = $urlget->urlget("https://license.configserver.dev/?license=${license}");
+
+    # Return 0 if error contacting the server
+    return 0 if $statusCode;
+
+    # Determine if the license is valid (checks JSON "valid": true inside "message")
+    my $isValid = ($resp =~ /"message"\s*:\s*{.*?"valid"\s*:\s*true/s) ? 1 : 0;
+
+    return $isValid;
+}
+
+# #
+#	Release Channel › Insiders
+#	
+#	Checks the server to determine if the user is using the `Insiders` or `Stable`.
+#	If insiders server not accessible; default to false for stable channel.
+#	
+#	Requires csf.conf settings
+#		SPONSOR_LICENSE = "XXXX-XXXX-XXXX"
+#		SPONSOR_RELEASE_INSIDERS = "1"
+#	
+#	@param (optional) 	int 			pre-define if license key came back successful
+#										avoids double hits to the server if needing both insiders status and license status.
+#											( See usage examples #2 / #3 )
+#	@return				0 (false)		User on Stable Channel
+#						1 (true)		User on Insiders Channel
+#	
+#	@usage #1			my $releaseChannel 	= userIsInsider() ? "Insiders" : "Stable";					# No license status param specified
+#	@usage #2			my $licenseValid 	= userLicenseStatus();
+#						my $licenseStatus 	= $licenseValid ? "Valid" : "Invalid";
+#						my $releaseChannel 	= userIsInsider($licenseValid) ? "Insiders" : "Stable";
+#	@usage #3			my $releaseChannel 	= userIsInsider(1);											# Pass user has valid license / true
+# #
+
+
+sub userIsInsider
+{
+    my ( $preCheckedLicense ) = @_;   # Optional param: 1 if license valid, 0 if not
+
+    # License key missing OR Insiders release not enabled in config
+    return 0 unless ( ( $config{SPONSOR_RELEASE_INSIDERS} // 0 ) == 1 && ( $config{SPONSOR_LICENSE} // '' ) ne '' );
+
+    # Avoid double hits to server; use pre-checked license status if provided via param, otherwise call userLicenseStatus()
+    my $userLicenseValid = defined $preCheckedLicense ? $preCheckedLicense : userLicenseStatus();
+
+    # Debug output
+    if ( $debug )
+    {
+        my $userInsiderStatus = $userLicenseValid ? 'Enabled' : 'Disabled';
+        log_label( "Insiders Status: ${yellowd}${userInsiderStatus}" );
+    }
+
+    # Return true if license valid + Insiders enabled
+    return $userLicenseValid;
+}
+
+# #
+#	Update
+# #
+
 sub doupdate
 {
     my $force = 0;
