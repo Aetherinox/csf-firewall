@@ -17,7 +17,7 @@ tags:
 
 </p>
 
-### <!-- md:version stable- --> 15.08 <small>Dec 11 2025</small> { id="15.08" }
+### <!-- md:version stable- --> 15.08 <small>Dec 12 2025</small> { id="15.08" }
 
 - `feat(cron)`: Perl cron `csget` re-written
     - Now compatible with all distros
@@ -34,6 +34,10 @@ tags:
         - `-D, --debug`
         - `-v, --version`
         - `-h, --help`
+- `feat(cli)`: new port management console commands via PR https://github.com/Aetherinox/csf-firewall/issues/57
+    - `--addport`, `-ap`: Add a new port to your whitelist
+    - `--removeport`, `-rp`: Remove an existing whitelisted port
+    - `--listports`, `-lp`: List all ports that are whitelisted within your `/etc/csf/csf.conf`
 - `feat(install)`: install scripts `install.*.sh` now detailed and proper output to user
 - `feat(cwp)`: add logic to mitigate immutable flag +i on cwp installs; restore flag after install complete
 - `feat(webmin)`: automatically install `webmin` module `/usr/local/csf/csfwebmin.tgz`
