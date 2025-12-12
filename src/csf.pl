@@ -315,56 +315,63 @@ unless ($input{command} =~ /^--(stop|initdown|initup)$/)
 #	Command List
 # #
 
-elsif (($input{command} eq "--startf") or ($input{command} eq "-sf")) {&csflock("lock");&dostop(1);&dostart;&csflock("unlock")}
-elsif (($input{command} eq "--start") or ($input{command} eq "-s") or ($input{command} eq "--restart") or ($input{command} eq "-r")) {if ($config{LFDSTART}) {&lfdstart} else {&csflock("lock");&dostop(1);&dostart;&csflock("unlock")}}
-elsif (($input{command} eq "--startq") or ($input{command} eq "-q")) {&lfdstart}
-elsif (($input{command} eq "--restartall") or ($input{command} eq "-ra")) {&dorestartall}
-elsif (($input{command} eq "--add") or ($input{command} eq "-a")) {&doadd}
-elsif (($input{command} eq "--deny") or ($input{command} eq "-d")) {&dodeny}
-elsif (($input{command} eq "--denyrm") or ($input{command} eq "-dr")) {&dokill}
-elsif (($input{command} eq "--denyf") or ($input{command} eq "-df")) {&dokillall}
-elsif (($input{command} eq "--addrm") or ($input{command} eq "-ar")) {&doakill}
-elsif (($input{command} eq "--update") or ($input{command} eq "-u") or ($input{command} eq "-uf")) {&doupdate}
-elsif (($input{command} eq "--disable") or ($input{command} eq "-x")) {&csflock("lock");&dodisable;&csflock("unlock")}
-elsif (($input{command} eq "--enable") or ($input{command} eq "-e")) {&csflock("lock");&doenable;&csflock("unlock")}
-elsif (($input{command} eq "--check") or ($input{command} eq "-c")) {&docheck}
-elsif (($input{command} eq "--grep") or ($input{command} eq "-g")) {&dogrep}
-elsif (($input{command} eq "--iplookup") or ($input{command} eq "-i")) {&doiplookup}
-elsif (($input{command} eq "--temp") or ($input{command} eq "-t")) {&dotempban}
-elsif (($input{command} eq "--temprm") or ($input{command} eq "-tr")) {&dotemprm}
-elsif (($input{command} eq "--temprma") or ($input{command} eq "-tra")) {&dotemprma}
-elsif (($input{command} eq "--temprmd") or ($input{command} eq "-trd")) {&dotemprmd}
-elsif (($input{command} eq "--tempdeny") or ($input{command} eq "-td")) {&dotempdeny}
-elsif (($input{command} eq "--tempallow") or ($input{command} eq "-ta")) {&dotempallow}
-elsif (($input{command} eq "--tempf") or ($input{command} eq "-tf")) {&dotempf}
-elsif (($input{command} eq "--mail") or ($input{command} eq "-m")) {&domail}
-elsif (($input{command} eq "--cdeny") or ($input{command} eq "-cd")) {&doclusterdeny}
-elsif (($input{command} eq "--ctempdeny") or ($input{command} eq "-ctd")) {&doclustertempdeny}
-elsif (($input{command} eq "--callow") or ($input{command} eq "-ca")) {&doclusterallow}
-elsif (($input{command} eq "--ctempallow") or ($input{command} eq "-cta")) {&doclustertempallow}
-elsif (($input{command} eq "--crm") or ($input{command} eq "-cr")) {&doclusterrm}
-elsif (($input{command} eq "--carm") or ($input{command} eq "-car")) {&doclusterarm}
-elsif (($input{command} eq "--cignore") or ($input{command} eq "-ci")) {&doclusterignore}
-elsif (($input{command} eq "--cirm") or ($input{command} eq "-cir")) {&doclusterirm}
-elsif (($input{command} eq "--cping") or ($input{command} eq "-cp")) {&clustersend("PING")}
-elsif (($input{command} eq "--cgrep") or ($input{command} eq "-cg")) {&doclustergrep}
-elsif (($input{command} eq "--cconfig") or ($input{command} eq "-cc")) {&docconfig}
-elsif (($input{command} eq "--cfile") or ($input{command} eq "-cf")) {&docfile}
-elsif (($input{command} eq "--crestart") or ($input{command} eq "-crs")) {&docrestart}
-elsif (($input{command} eq "--watch") or ($input{command} eq "-w")) {&dowatch}
-elsif (($input{command} eq "--logrun") or ($input{command} eq "-lr")) {&dologrun}
-elsif (($input{command} eq "--ports") or ($input{command} eq "-p")) {&doports}
-elsif ($input{command} eq "--cloudflare") {&docloudflare}
-elsif ($input{command} eq "--graphs") {&dographs}
-elsif ($input{command} eq "--lfd") {&dolfd}
-elsif ($input{command} eq "--rbl") {&dorbls}
+if ( ( $input{command} eq "--status" ) 			or ( $input{command} eq "-l" ) ) 	{ &dostatus }
+elsif ( ( $input{command} eq "--status6" ) 		or ( $input{command} eq "-l6" ) ) 	{ &dostatus6 }
+elsif ( ( $input{command} eq "--version" ) 		or ( $input{command} eq "-v" ) ) 	{ &doversion }
+elsif ( ( $input{command} eq "--stop" )			or ( $input{command} eq "-f" ) ) 	{ &csflock("lock" );&dostop(0);&csflock("unlock" ) }
+elsif ( ( $input{command} eq "--startf" ) 		or ( $input{command} eq "-sf" ) ) 	{ &csflock("lock" );&dostop(1);&dostart;&csflock("unlock" ) }
+elsif ( ( $input{command} eq "--start" ) 		or ( $input{command} eq "-s" ) or ( $input{command} eq "--restart" ) or ( $input{command} eq "-r" ) ) {if ($config{LFDSTART}) {&lfdstart} else {&csflock("lock" );&dostop(1);&dostart;&csflock("unlock" )}}
+elsif ( ( $input{command} eq "--startq" ) 		or ( $input{command} eq "-q" ) ) 	{ &lfdstart }
+elsif ( ( $input{command} eq "--restartall" ) 	or ( $input{command} eq "-ra" ) ) 	{ &dorestartall }
+elsif ( ( $input{command} eq "--add" ) 			or ( $input{command} eq "-a" ) ) 	{ &doadd }
+elsif ( ( $input{command} eq "--deny" )			or ( $input{command} eq "-d" ) ) 	{ &dodeny }
+elsif ( ( $input{command} eq "--denyrm" ) 		or ( $input{command} eq "-dr" ) ) 	{ &dokill }
+elsif ( ( $input{command} eq "--denyf" ) 		or ( $input{command} eq "-df" ) ) 	{ &dokillall }
+elsif ( ( $input{command} eq "--addrm" ) 		or ( $input{command} eq "-ar" ) ) 	{ &doakill }
+elsif ( ( $input{command} eq "--update" ) 		or ( $input{command} eq "-u" ) or ( $input{command} eq "-uf" ) ) { &doupdate }
+elsif ( ( $input{command} eq "--disable" ) 		or ( $input{command} eq "-x" ) ) 	{ &csflock("lock" );&dodisable;&csflock("unlock" ) }
+elsif ( ( $input{command} eq "--enable" ) 		or ( $input{command} eq "-e" ) ) 	{ &csflock("lock" );&doenable;&csflock("unlock" ) }
+elsif ( ( $input{command} eq "--check" ) 		or ( $input{command} eq "-c" ) ) 	{ &docheck }
+elsif ( ( $input{command} eq "--grep" )			or ( $input{command} eq "-g" ) ) 	{ &dogrep }
+elsif ( ( $input{command} eq "--iplookup" )		or ( $input{command} eq "-i" ) ) 	{ &doiplookup }
+elsif ( ( $input{command} eq "--temp" )			or ( $input{command} eq "-t" ) ) 	{ &dotempban }
+elsif ( ( $input{command} eq "--temprm" ) 		or ( $input{command} eq "-tr" ) ) 	{ &dotemprm }
+elsif ( ( $input{command} eq "--temprma" ) 		or ( $input{command} eq "-tra" ) ) 	{ &dotemprma }
+elsif ( ( $input{command} eq "--temprmd" ) 		or ( $input{command} eq "-trd" ) ) 	{ &dotemprmd }
+elsif ( ( $input{command} eq "--tempdeny" )		or ( $input{command} eq "-td" ) ) 	{ &dotempdeny }
+elsif ( ( $input{command} eq "--tempallow" ) 	or ( $input{command} eq "-ta" ) ) 	{ &dotempallow }
+elsif ( ( $input{command} eq "--tempf" ) 		or ( $input{command} eq "-tf" ) ) 	{ &dotempf }
+elsif ( ( $input{command} eq "--mail" )			or ( $input{command} eq "-m" ) ) 	{ &domail }
+elsif ( ( $input{command} eq "--cdeny" ) 		or ( $input{command} eq "-cd" ) ) 	{ &doclusterdeny }
+elsif ( ( $input{command} eq "--ctempdeny" ) 	or ( $input{command} eq "-ctd" ) ) 	{ &doclustertempdeny }
+elsif ( ( $input{command} eq "--callow" ) 		or ( $input{command} eq "-ca" ) ) 	{ &doclusterallow }
+elsif ( ( $input{command} eq "--ctempallow" ) 	or ( $input{command} eq "-cta" ) ) 	{ &doclustertempallow }
+elsif ( ( $input{command} eq "--crm" ) 			or ( $input{command} eq "-cr" ) ) 	{ &doclusterrm }
+elsif ( ( $input{command} eq "--carm" )			or ( $input{command} eq "-car" ) ) 	{ &doclusterarm }
+elsif ( ( $input{command} eq "--cignore" ) 		or ( $input{command} eq "-ci" ) ) 	{ &doclusterignore }
+elsif ( ( $input{command} eq "--cirm" )			or ( $input{command} eq "-cir" ) ) 	{ &doclusterirm }
+elsif ( ( $input{command} eq "--cping" ) 		or ( $input{command} eq "-cp" ) ) 	{ &clustersend( "PING" ) }
+elsif ( ( $input{command} eq "--cgrep" ) 		or ( $input{command} eq "-cg" ) ) 	{ &doclustergrep }
+elsif ( ( $input{command} eq "--cconfig" ) 		or ( $input{command} eq "-cc" ) ) 	{ &docconfig }
+elsif ( ( $input{command} eq "--cfile" ) 		or ( $input{command} eq "-cf" ) ) 	{ &docfile }
+elsif ( ( $input{command} eq "--crestart" )		or ( $input{command} eq "-crs" ) ) 	{ &docrestart }
+elsif ( ( $input{command} eq "--watch" ) 		or ( $input{command} eq "-w" ) ) 	{ &dowatch }
+elsif ( ( $input{command} eq "--logrun" ) 		or ( $input{command} eq "-lr" ) ) 	{ &dologrun }
+elsif ( ( $input{command} eq "--ports" ) 		or ( $input{command} eq "-p" ) ) 	{ &doports }
 elsif ( ( $input{command} eq "--addport" ) 		or ( $input{command} eq "-ap" ) ) 	{ &portAdd }
 elsif ( ( $input{command} eq "--removeport" ) 	or ( $input{command} eq "-rp" ) ) 	{ &portRemove }
 elsif ( ( $input{command} eq "--listports" ) 	or ( $input{command} eq "-lp" ) ) 	{ &portsList }
-elsif ($input{command} eq "--mregen") {&domessengerv2}
-elsif ($input{command} eq "--trace") {&dotrace}
-elsif (($input{command} eq "--insiders") or ($input{command} eq "-in")) {&doinsiders}
-else {&dohelp}
+elsif ( $input{command} eq "--cloudflare" ) 	{ &docloudflare }
+elsif ( $input{command} eq "--graphs" ) 		{ &dographs }
+elsif ( $input{command} eq "--lfd" ) 			{ &dolfd }
+elsif ( $input{command} eq "--rbl" ) 			{ &dorbls }
+elsif ( $input{command} eq "--initup" ) 		{ &doinitup }
+elsif ( $input{command} eq "--initdown" ) 		{ &doinitdown }
+elsif ( $input{command} eq "--profile" ) 		{ &doprofile }
+elsif ( $input{command} eq "--mregen" ) 		{ &domessengerv2 }
+elsif ( $input{command} eq "--trace" ) 			{ &dotrace }
+elsif ( ( $input{command} eq "--insiders" ) or ( $input{command} eq "-in" ) ) { &doinsiders }
+else { &dohelp }
 
 # #
 #	Warning › TESTING (Enabled)
