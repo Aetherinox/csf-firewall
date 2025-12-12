@@ -668,10 +668,10 @@
         border-right: 1px solid #202020;
     }
 
-    .md-typeset .mdx-badge__icon 
+    h3 .mdx-badge__icon 
     {
-        padding-left: 6px;
-        padding-right: 6px;
+        padding-left: 3px;
+        padding-right: 3px;
     }
 
     /*
@@ -687,6 +687,31 @@
     {
         background-color: inherit;
         color: #FFF;
+    }
+    
+    dl .mdx-badge__icon
+    {
+        vertical-align: middle;
+    }
+    
+    dl .mdx-badge__icon svg
+    {
+        padding-bottom: 0px;
+        font-size: 12px;
+        margin-top: -1px;
+        margin-left: -1px;
+    }
+
+    dl .mdx-badge .mdx-badge__icon
+    {
+        padding-left: 6px;
+        padding-right: 6px;
+    }
+
+    .mdx-badge__icon:not(h3 .mdx-badge__icon)
+    {
+        padding-left: 6px;
+        padding-right: 8px;
     }
 
     /*
@@ -838,6 +863,12 @@
     .highlight .na, .highlight .nv, .highlight .vc, .highlight .vg, .highlight .vi
     {
 
+    }
+
+    .md-typeset dd
+    {
+        margin-bottom: 0.6em;
+        margin-top: 0.6em;
     }
 
     .md-typeset mark
@@ -1655,10 +1686,10 @@
         border-right: 1px solid #202020;
     }
 
-    .md-typeset .mdx-badge__icon 
+    h3 .mdx-badge__icon 
     {
-        padding-left: 6px;
-        padding-right: 6px;
+        padding-left: 3px;
+        padding-right: 3px;
     }
 
     /*
@@ -1674,6 +1705,31 @@
     {
         background-color: inherit;
         color: #FFF;
+    }
+
+    dl .mdx-badge__icon
+    {
+        vertical-align: middle;
+    }
+    
+    dl .mdx-badge__icon svg
+    {
+        padding-bottom: 0px;
+        font-size: 12px;
+        margin-top: -1px;
+        margin-left: -1px;
+    }
+
+    dl .mdx-badge .mdx-badge__icon
+    {
+        padding-left: 6px;
+        padding-right: 6px;
+    }
+
+    .mdx-badge__icon:not(h3 .mdx-badge__icon)
+    {
+        padding-left: 6px;
+        padding-right: 8px;
     }
 
     /*
@@ -1825,6 +1881,12 @@
     .highlight .na, .highlight .nv, .highlight .vc, .highlight .vg, .highlight .vi
     {
 
+    }
+
+    .md-typeset dd
+    {
+        margin-bottom: 0.6em;
+        margin-top: 0.6em;
     }
 
     .md-typeset mark
@@ -2031,7 +2093,7 @@
     --md-icon-size: 1.130em;
     display: inline-flex;
     height: var(--md-icon-size);
-    vertical-align: text-bottom;
+    vertical-align: middle;
 }
 
 /* Reset to default inside tooltips (optional safety) */
@@ -2305,6 +2367,7 @@ p > a.btn-aln-center-inline
 {
     display: block;
     background-color: inherit !important;
+    white-space: nowrap !important;
 }
 
 /*
