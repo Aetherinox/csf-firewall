@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_samoa_ipset
 #   @uuid           a0c3eb98-7d17-398a-bf82-681be1465959
-#   @updated        Fri Dec 12 12:12:27 UTC 2025
-#   @entries        23820 ips
-#                   167 subnets
-#                   167 lines
+#   @updated        Sat Dec 13 12:12:15 UTC 2025
+#   @entries        24076 ips
+#                   163 subnets
+#                   163 lines
 #   @country        Samoa (WS)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -101,11 +101,7 @@
 196.197.168.0/24
 196.198.168.0/24
 196.199.168.0/24
-202.4.32.0/21
-202.4.40.0/22
-202.4.44.0/23
-202.4.46.0/24
-202.4.48.0/20
+202.4.32.0/19
 202.5.116.0/24
 202.87.208.0/22
 203.99.156.0/22
