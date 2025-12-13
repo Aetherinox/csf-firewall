@@ -18,7 +18,7 @@ comments: true
 
 Our **v15.08** update delivers a cleaner, more reliable experience with a strong focus on bug fixes, third-party integration improvements, optimizations, and clearer user feedback during both installation and day-to-day operation.
 
-This release includes significant fixes for **CyberPanel** and **CentOS Web Panel**, along with automatic installation support for Webmin. Webmin users no longer need to manually import the CSF module — it is now handled automatically as part of the installation process.
+This release includes significant fixes for **CyberPanel** and **CentOS Web Panel**, along with automatic Webmin module installation. This means that Webmin users no longer need to manually import the CSF module. It is now handled automatically as part of the installation process.
 
 <!-- more -->
 
@@ -36,10 +36,10 @@ A list of the most important changes are listed below.
 
 ### Webmin Automated Installation
 
-Before CSF **v15.08**, Webmin users were required to manually import the file  
-`/usr/local/csf/csfwebmin.tgz` in order to enable the CSF Webmin module. While this was a simple process, it added an extra manual step during installation.
+Prior to **CSF v15.08**, Webmin users were required to manually import the file  
+`/usr/local/csf/csfwebmin.tgz` to enable the CSF Webmin module. Although the process was rather simple, it introduced an additional manual step during installation.
 
-This process is now fully automated. During CSF installation or anupdate, the Webmin module is automatically imported for you — no additional actions required. Simply run the CSF `install.sh` script, and Webmin integration is handled seamlessly in the background.
+As of **CSF v15.08**, this step has been fully automated for both new installations and version upgrades. The Webmin module is now imported automatically, without the need for manual installation. Simply run the CSF `install.sh` script, and Webmin integration is handled automatically.
 
 <br />
 <br />
