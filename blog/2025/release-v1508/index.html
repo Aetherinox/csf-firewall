@@ -3831,7 +3831,7 @@
 
 <h1 id="release-v1508">Release: v15.08<a class="headerlink" href="#release-v1508" title="Permanent link">¶</a></h1>
 <p>Our <strong>v15.08</strong> update delivers a cleaner, more reliable experience with a strong focus on bug fixes, third-party integration improvements, optimizations, and clearer user feedback during both installation and day-to-day operation.</p>
-<p>This release includes significant fixes for <strong>CyberPanel</strong> and <strong>CentOS Web Panel</strong>, along with automatic installation support for Webmin. Webmin users no longer need to manually import the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> module — it is now handled automatically as part of the installation process.</p>
+<p>This release includes significant fixes for <strong>CyberPanel</strong> and <strong>CentOS Web Panel</strong>, along with automatic Webmin module installation. This means that Webmin users no longer need to manually import the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> module. It is now handled automatically as part of the installation process.</p>
 <!-- more -->
 
 <p><br></p>
@@ -3841,9 +3841,9 @@
 <p>A list of the most important changes are listed below.</p>
 <p><br></p>
 <h3 id="webmin-automated-installation">Webmin Automated Installation<a class="headerlink" href="#webmin-automated-installation" title="Permanent link">¶</a></h3>
-<p>Before <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> <strong>v15.08</strong>, Webmin users were required to manually import the file<br>
-<code>/usr/local/csf/csfwebmin.tgz</code> in order to enable the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> Webmin module. While this was a simple process, it added an extra manual step during installation.</p>
-<p>This process is now fully automated. During <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> installation or anupdate, the Webmin module is automatically imported for you — no additional actions required. Simply run the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> <code>install.sh</code> script, and Webmin integration is handled seamlessly in the background.</p>
+<p>Prior to <strong><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> v15.08</strong>, Webmin users were required to manually import the file<br>
+<code>/usr/local/csf/csfwebmin.tgz</code> to enable the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> Webmin module. Although the process was rather simple, it introduced an additional manual step during installation.</p>
+<p>As of <strong><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> v15.08</strong>, this step has been fully automated for both new installations and version upgrades. The Webmin module is now imported automatically, without the need for manual installation. Simply run the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> <code>install.sh</code> script, and Webmin integration is handled automatically.</p>
 <p><br>
 <br></p>
 <h3 id="new-csget-module">New CSGet Module<a class="headerlink" href="#new-csget-module" title="Permanent link">¶</a></h3>
@@ -4139,7 +4139,7 @@ allow connections to pass through.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="December 12, 2025 23:23:45 UTC"><span class="timeago" datetime="2025-12-12T23:23:45+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="December 12, 2025 23:23:45 UTC">2025-12-12</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="December 13, 2025 00:20:22 UTC"><span class="timeago" datetime="2025-12-13T00:20:22+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="December 13, 2025 00:20:22 UTC">2025-12-13</span>
   </span>
 
     
