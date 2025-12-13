@@ -171,13 +171,14 @@
     }
 
     /*
-        Page Main Background
+        Apply background to every page except home page.
     */
 
-    .md-main
+    .md-container:not(:has(.mdx-container)) .md-main
     {
         background-color: #f1f1f1 !important;
         background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1123 258'><path d='M1124,2c0,0 0,256 0,256l-1125,0l0,-48c0,0 16,5 55,5c116,0 197,-92 325,-92c121,0 114,46 254,46c140,0 214,-167 572,-166Z' style='fill:rgba(17,17,17,1)' /></svg>") no-repeat bottom, linear-gradient(to bottom,#fff,#fff 100%,#fff 100%);
+        background-size: auto, auto;
     }
 
     .md-main__inner
@@ -1332,10 +1333,10 @@
     }
 
     /*
-        Page Main Background
+        Apply background to every page except home page.
     */
 
-    .md-main
+    .md-container:not(:has(.mdx-container)) .md-main
     {
         background-color: #141414 !important;
         background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1123 258'><path d='M1124,2c0,0 0,256 0,256l-1125,0l0,-48c0,0 16,5 55,5c116,0 197,-92 325,-92c121,0 114,46 254,46c140,0 214,-167 572,-166Z' style='fill:rgba(17,17,17,1)' /></svg>") no-repeat bottom, linear-gradient(to bottom,#1a1a1a,#1c1c1c 100%,#390c1b 100%);
