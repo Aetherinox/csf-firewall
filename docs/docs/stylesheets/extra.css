@@ -1150,13 +1150,13 @@
 
     --md-primary-fg-color:              #7b1234;
     --md-default-bg-color:              #151515;
-    --md-table-head-bg-color:           #99143f;
+    --md-table-head-bg-color:           #860038;
     --md-table-head-text-color:         #FFF;
     --md-table-body-text-color:         rgb(231, 231, 231);
 
     --md-navigation-header-link:        #ffffff59;
 
-    --md-header-tabs-bg:                #99143f;
+    --md-header-tabs-bg:                #860038;
 
     --md-tooltip-width:                 400px;
     --glow-color:                       hsl(186 100% 69%);
