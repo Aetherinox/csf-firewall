@@ -177,12 +177,22 @@
     .md-main
     {
         background-color: #f1f1f1 !important;
+        background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1123 258'><path d='M1124,2c0,0 0,256 0,256l-1125,0l0,-48c0,0 16,5 55,5c116,0 197,-92 325,-92c121,0 114,46 254,46c140,0 214,-167 572,-166Z' style='fill:rgba(17,17,17,1)' /></svg>") no-repeat bottom, linear-gradient(to bottom,#fff,#fff 100%,#fff 100%);
     }
 
     .md-main__inner
     {
         display: flex;
         height: 100%;
+    }
+
+    /*
+      Footer Color
+    */
+
+    .md-source-file__fact
+    {
+        color: #FFF !important;
     }
 
     /*
@@ -573,6 +583,11 @@
     .md-typeset details.faq
     {
         border-color: rgb(47, 47, 47);
+    }
+
+    .md-typeset .admonition-title, .md-typeset summary
+    {
+
     }
 
     .md-typeset .faq > .admonition-title,
@@ -1177,7 +1192,7 @@
     --md-default-bg-color--lightest:    hsla(var(--md-hue),15%,14%,0.07);
     --md-code-fg-color:                 hsla(var(--md-hue),18%,86%,0.82);
     --md-code-bg-color:                 hsla(var(--md-hue),15%,18%,1);
-    --md-code-bg-color:                 #242735;
+    --md-code-bg-color:                 #262626;
     --md-code-hl-color:                 #2977ff;
     --md-code-hl-color--light:          #2977ff1a;
     --md-code-hl-number-color:          #e6695b;
@@ -1323,12 +1338,23 @@
     .md-main
     {
         background-color: #141414 !important;
+        background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1123 258'><path d='M1124,2c0,0 0,256 0,256l-1125,0l0,-48c0,0 16,5 55,5c116,0 197,-92 325,-92c121,0 114,46 254,46c140,0 214,-167 572,-166Z' style='fill:rgba(17,17,17,1)' /></svg>") no-repeat bottom, linear-gradient(to bottom,#1a1a1a,#1c1c1c 100%,#390c1b 100%);
+        background-size: auto, auto;
     }
 
     .md-main__inner
     {
         display: flex;
         height: 100%;
+    }
+
+    /*
+      Footer Color
+    */
+
+    .md-source-file__fact
+    {
+        color: var(--md-default-fg-color--light) !important;
     }
 
     /*
@@ -1470,7 +1496,7 @@
     .md-typeset .tabbed-content 
     {
         width: 100%;
-        background-color: var(--md-code-bg-color, #232633);
+        background-color: var(--md-code-bg-color, #262626);
         padding: 15px;
     }
 
@@ -1658,14 +1684,19 @@
     .md-typeset .admonition.faq,
     .md-typeset details.faq
     {
-        border-color: rgb(47, 47, 47);
-        background-color: #0d0d0d63;
+        border: 1px solid rgb(64, 64, 64);
+        background-color: #222;
+    }
+
+    .md-typeset .admonition-title, .md-typeset summary
+    {
+
     }
 
     .md-typeset .faq > .admonition-title,
     .md-typeset .faq > summary
     {
-        background-color: rgba(153, 153, 153, 0.1);
+        background-color: #222;
     }
 
     .md-typeset .faq > .admonition-title::before,
@@ -1933,7 +1964,7 @@
     .md-typeset .md-code__content
     {
         display: grid;
-        background-color: #1a1c26;
+        background-color: #1c1c1c;
         border-radius: 6px;
         border: 1px solid #dfdfdf21;
     }
@@ -1960,10 +1991,11 @@
 
     .md-typeset mark
     {
-        background-color: #212331;
+        background-color: #222 !important;
         color: #FFF;
-        border-radius: 6px;
+        border: 1px solid rgb(64, 64, 64);
         white-space: wrap;
+        border-radius: 4px;
     }
 
     .md-typeset mark a
@@ -2028,18 +2060,14 @@
 
     .md-typeset .grid.cards > ol > li, .md-typeset .grid.cards > ul > li, .md-typeset .grid > .card
     {
-        border: 1px solid #FFFFFF21;
         border-radius: .4rem;
         display: block;
         margin: 0;
         padding: .8rem;
         transition: border .25s,box-shadow .25s;
-        background: linear-gradient(rgba(25, 25, 25, 0.9), rgb(15, 15, 15)), url(https://cdn.wallpapersafari.com/30/90/xsEG9r.jpg);
-            background-position-x: 0%, 0%;
-            background-position-y: 0%, 0%;
-            background-size: auto, auto;
-        background-size: cover;
-        background-position: center;
+        border-color: rgb(64, 64, 64);
+        background-color: #222;
+        box-shadow: var(--md-shadow-z2);
     }
 
     /*
@@ -2924,6 +2952,18 @@ nav.md-nav > ul.md-nav__list > li.md-nav__item > a.md-nav__link > span.md-ellips
 nav.md-nav--secondary li
 {
     font-size: 0.55rem !important;
+}
+
+.md-nav--secondary .md-nav__title
+{
+    background: none;
+    box-shadow: none;
+}
+
+.md-nav--lifted > .md-nav__list > .md-nav__item--active > .md-nav__link
+{
+    background: none;
+    box-shadow: none;
 }
 
 /*
