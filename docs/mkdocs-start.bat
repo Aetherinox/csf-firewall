@@ -1,10 +1,10 @@
 :: # #
 :: #   @app                        ConfigServer Firewall (csf)
-:: #   @author                     Copyright (C) 2025 Aetherinox
+:: #   @author                     Copyright (C) 2026 Aetherinox
 :: #   @license                    GPLv3
 :: #   @repo_primary               https://github.com/Aetherinox/csf-firewall
 :: #   @repo_legacy                https://github.com/waytotheweb/scripts
-:: #   @updates                    09.10.25
+:: #   @updates                    12.14.25
 :: #   
 :: #   This program is free software; you can redistribute it and/or modify it under
 :: #   the terms of the GNU General Public License as published by the Free Software
