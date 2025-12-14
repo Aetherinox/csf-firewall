@@ -3,11 +3,31 @@ title: "Usage › Pre/Post Loader Scripts"
 tags:
   - usage
   - configure
+  - pre-loader
+  - post-loader
+  - scripts
+  - bash
 ---
 
 # Usage › Pre and Post Loader Scripts
 
 CSF includes dedicated directories where you can place custom Bash scripts to run at specific stages of the firewall’s startup process. This allows you to easily maintain persistent, custom firewall rules that are automatically applied each time the CSF service starts or restarts.
+
+<br />
+
+## :aetherx-axj-bell:{ .icon-tldr } Summary
+
+The following is a summary of what this page explains:
+
+- When you install CSF, two files will be placed on your server. These are known as the `pre` and `post` loader scripts:
+    1. **Preloader**: `/usr/local/csf/bin/csfpre.sh`
+    2. **Postloader**: `/usr/local/csf/bin/csfpost.sh`
+- These loader scripts scan two different folders on your server to see if you have added any custom bash scripts you want ran when CSF starts. You can place your custom bash scripts in two different folders:
+    1. `/usr/local/include/csf/pre.d/`
+          - Place your bash scripts in this folder if you want your scripts to run **BEFORE** CSF imports the default rules into your server.
+    2. `/usr/local/include/csf/post.d/`
+          - Place your bash scripts in this folder if you want your scripts to run **AFTER** CSF imports the default rules into your server.
+- Once the scripts are added, restart CSF with `sudo csf -ra`
 
 <br />
 
@@ -23,32 +43,32 @@ This section outlines exactly how the pre and post scripts are initialized and l
 
 ### Loader Scripts
 
-- When CSF is installed for the first time, two starter files :aetherx-axd-file: `/usr/local/csf/bin/csfpre.sh` and :aetherx-axd-file: `/usr/local/csf/bin/csfpost.sh` are automatically created on your system (only if they don’t already exist). These serve as base loader scripts, giving you a foundation to add your own custom logic later on.
-    - You must create your own pre/post loader folders :aetherx-axd-folder: `/usr/local/include/csf/pre.d/` and :aetherx-axd-folder: `/usr/local/include/csf/post.d/`
-- If you already have existing pre/post loader files in place, CSF will respect your current setup and skip creating the starter versions — allowing you to continue using your existing scripts without interruption.
+- When CSF is installed for the first time, two files :aetherx-axd-file: `/usr/local/csf/bin/csfpre.sh` and :aetherx-axd-file: `/usr/local/csf/bin/csfpost.sh` are automatically created on your system _(they will not overwrite existing copies)_. These files are  loader scripts, giving you the ability to add your own custom bash scripts.
+    - You must create the pre-loader folder :aetherx-axd-folder: `/usr/local/include/csf/pre.d/` and post-loader folder :aetherx-axd-folder: `/usr/local/include/csf/post.d/`
+- If you already have existing pre/post loader files in place, CSF will respect this and **NOT** overwrite your existing files. Your existing setup will not be touched.
 
 <br />
 
-:aetherx-axd-file: <!-- md:option csfpre.sh -->
+:aetherx-axd-file: <!-- md:option /usr/local/csf/bin/csfpre.sh -->
 
-:   - The file `csfpre.sh` iterates over the loader folder :aetherx-axd-folder: `pre.d` and runs any scripts found there.
-    - There are **two allowed locations** for this loader script — either one is valid:
+:   - The file `csfpre.sh` installed with CSF loads every custom bash script you drop in the :aetherx-axd-folder: `/usr/local/include/csf/pre.d/` folder.
+    - If making your own `csfpre.sh` loader, there are **two allowed locations** to place this script — either one is valid:
         - [x] `/usr/local/csf/bin/csfpre.sh` <small>:aetherx-axd-note-sticky: _(default)_</small>
         - [x] `/etc/csf/csfpre.sh` <small>:aetherx-axd-note-sticky: _(alternative)_</small>
     - Runs **before** all default iptables rules are applied; allows you to add custom rules which persist alongside CSF's defaults.
 
-:aetherx-axd-file: <!-- md:option csfpost.sh -->
+:aetherx-axd-file: <!-- md:option /usr/local/csf/bin/csfpost.sh -->
 
-:   - The file `post.sh` iterates over the loader folder :aetherx-axd-folder: `post.d` and runs any scripts found there.
-    - There are **two allowed locations** for this loader script — either one is valid:
+:   - The file `csfpost.sh` installed with CSF loads every custom bash script you drop in the :aetherx-axd-folder: `/usr/local/include/csf/post.d/` folder.
+    - If making your own `csfpost.sh` loader, there are **two allowed locations** to place this script — either one is valid:
         - [x] `/usr/local/csf/bin/csfpost.sh` <small>:aetherx-axd-note-sticky: _(default)_</small>
         - [x] `/etc/csf/csfpost.sh` <small>:aetherx-axd-note-sticky: _(alternative)_</small>
     - Runs **after** all default iptables rules are applied, allowing you to add custom rules which persist alongside CSF's defaults.
 
-??? note "**pre/post.sh:** Multiple Allowed Locations"
+??? note "**pre.sh & post.sh:** Multiple Locations Allowed"
 
-    By default, installing CSF will create your loader files `pre.d` and `post.d` in the folder `/usr/local/csf/bin/`.  
-    However, this location is **not required**—you can place these loader files in any of the following acceptable paths:
+    By default, installing CSF will create the loader files `csfpre.sh` and `csfpost.sh`, and place them in the folder `/usr/local/csf/bin/`.  
+    However, this location is **not strict**; you can place these loader files in one of two allowed locations:
 
       - :aetherx-axd-file: **csfpre.sh**
         - `/usr/local/csf/bin/csfpre.sh`
@@ -57,39 +77,37 @@ This section outlines exactly how the pre and post scripts are initialized and l
         - `/usr/local/csf/bin/csfpost.sh`
         - `/etc/csf/csfpost.sh`
 
-    All folders above are automatically scanned when you start or restart CSF. You can add scripts to both locations if you choose.
-
-    You can also add your bash commands directly into the files `csfpre.sh` and `csfpost.sh` themselves.
-
 <br />
 
 ### Loader Folders
 
-When the [loader scripts](#loader-scripts) run, they check their designated folders for any custom scripts you’ve added. By placing your scripts in these folders, you can create firewall rules that are automatically applied every time CSF starts or restarts, ensuring your custom rules persist.
+When the [loader scripts](#loader-scripts) `/usr/local/csf/bin/csfpre.sh` and `/usr/local/csf/bin/csfpost.sh` run, they check specific folders to see if you have placed any custom bash scripts inside. By placing custom bash scripts in these folders, you can write bash scripts which assist with setting up custom firewall rules which are automatically applied every time CSF starts or restarts, ensuring your custom rules persist.
 
 <br />
 
 :aetherx-axd-folder: <!-- md:option /usr/local/include/csf/pre.d/ -->
 
-:   - Stores bash scripts that run **before** CSF applies its default iptables rules.  
+:   - Your custom bash scripts will run **before** CSF applies any default iptables rules.
     - Scripts placed here run automatically every time CSF starts or restarts.
 
 :aetherx-axd-folder: <!-- md:option /usr/local/include/csf/post.d/ -->
 
-:   - Stores bash scripts that run **after** CSF applies its default iptables rules.  
+:   - Your custom bash scripts will run **after** CSF applies any default iptables rules.
     - Scripts placed here run automatically every time CSF starts or restarts.
 
 ??? note "Defining A New Loader Folder"
 
-    The CSF loader folder which is scanned is defined within the loader files themselves. To change the folder that the loader uses, open `csfpre.sh` and `csfpost.sh` and change the following lines:
+    The CSF loader files `/usr/local/csf/bin/csfpre.sh` and `/usr/local/csf/bin/csfpost.sh` will look inside a specific folder for any custom bash scripts you have added.
 
-    === ":aetherx-axd-command: csfpre.sh"
+    If you wish to change the folder name / path used for storing your custom bash scripts, open these loader files and change the assigned variable toward the top of each file:
+
+    === ":aetherx-axd-command: /usr/local/csf/bin/csfpre.sh"
 
           ```shell
           path_csfpred="/usr/local/include/csf/pre.d"
           ```
 
-    === ":aetherx-axd-command: csfpost.sh"
+    === ":aetherx-axd-command: /usr/local/csf/bin/csfpost.sh"
 
           ```shell
           path_csfpostd="/usr/local/include/csf/post.d"
@@ -124,7 +142,7 @@ We have provided both example structures of how your scripts can be set up. Scri
                     📄 openvpn_rules.sh
       ```
 
-=== ":aetherx-axd-2: Option 2"
+=== ":aetherx-axd-2: Option 2 (Alternative)"
 
       This example stores your loader files in:
 
@@ -155,19 +173,19 @@ We have provided both example structures of how your scripts can be set up. Scri
 
 ## Writing Custom Rules
 
-As outlined earlier, the `pre.d` and `post.d` folders allow you to drop your own custom bash scripts inside the folders which will be responsible for any iptable rules you need to add to CSF every time the service is started or restarted. 
+As outlined earlier, the `pre.d` and `post.d` folders allow you to drop your own custom bash scripts inside the folders which will be responsible for any iptable rules you need to add to CSF every time CSF is started or restarted. 
 
 We will provide an example script below just to outline what can be done. In our example, we will create `/usr/local/include/csf/post.d/ports-blacklist.sh`. The script will do the following:
 
-- Defines a list of blacklisted ports using a JSON array in `BLACKLIST_PORTS`. Each entry includes a port number and a comment describing it.
+- Defines a list of blacklisted ports using a JSON array in `BLACKLIST_PORTS`. Each port we want to block will include the port number and a comment describing what that port is used for.
 - Iterates over each port in the blacklist using `jq` to parse the JSON.
 - For each port:
-    - Extracts the port number `ENTRY_PORT` and its description/comment `ENTRY_COMMENT`.
-    - Checks if a **UDP** rule already exists in iptables for that port:
+    - Extract the port number `ENTRY_PORT` and its description/comment `ENTRY_COMMENT`.
+    - Check if a **UDP** rule already exists in iptables for that port:
         - Sets `DELETE_INPUT_UDP=1` if the rule does not exist.
-    - Checks if a **TCP** rule already exists in iptables for that port:
+    - Check if a **TCP** rule already exists in iptables for that port:
         - Sets `DELETE_INPUT_TCP=1` if the rule does not exist.
-    - Adds the firewall rules if they are not already present:
+    - Add a firewall rule if it isn't already present:
         - Inserts a rule to drop **UDP** traffic to the port.
         - Inserts a rule to drop **TCP** traffic to the port.
 
@@ -245,7 +263,7 @@ done
 
 <br />
 
-The script itself is very easy to use. We make sure to edit the list `BLACKLIST_PORTS` and populate it with ports we absolutely do not want giving access to:
+The script itself is very easy to use. We make sure to edit the list `BLACKLIST_PORTS` and populate it with ports we do not want the outside world being able to access.
 
 ``` bash
 BLACKLIST_PORTS=$(cat <<EOF
@@ -259,7 +277,7 @@ EOF
 
 <br />
 
-After you edit the list of ports, simply restart CSF's services and the script will be automatically re-loaded:
+After you edit the list of ports above, restart CSF and the script will be automatically re-loaded:
 
 === ":aetherx-axd-command: Command"
 
@@ -287,7 +305,7 @@ After you edit the list of ports, simply restart CSF's services and the script w
 
 <br />
 
-We can now view iptables to confirm our rules were added. Iptables will resolve whatever service is associated with a port, which means port `111` will show as `sunrpc`. If you wish to show just the port number, append `-n` to your iptables command:
+We can now use the `iptables` command to confirm our rules were added. Iptables will resolve whatever service is associated with a port, which means port `111` will show as `sunrpc`. If you wish to show just the port number, append `-n` to your iptables command:
 
 === ":aetherx-axd-command: Command"
 
@@ -335,7 +353,9 @@ We can now view iptables to confirm our rules were added. Iptables will resolve 
 
 ## Conclusion
 
-From this point forward, you can create any number of pre and post scripts for your own firewall setup. Simply drop the scripts in the folders specified in the section [Location and Structure](#location-and-structure).
+From this point forward, you can create any number of pre and post bash scripts for your firewall. Simply drop any bash scripts you wish to load with CSF inside the folders `/usr/local/include/csf/pre.d/` and `/usr/local/include/csf/post.d/`. 
+
+For a quick reference to the file and folder names, you can view the section [Location and Structure](#location-and-structure).
 
 <br />
 
