@@ -16,6 +16,12 @@ This section outlines all of the commands that can be run in your server’s ter
 
 <br />
 
+## Manage Service
+
+The following commands allow you to manage CSF and change its state:
+
+<br />
+
 ### Enable
 <!-- md:command `-e,  --enable` -->
 
@@ -238,8 +244,13 @@ sudo csf --lfd status
 
 <br />
 
-### Check for Updates
+## Updates
 
+The following commands allow you to check for updates, as well as update CSF to the latest version.
+
+<br />
+
+### Check for Updates
 <!-- md:command `-c,  --check` -->
 
 Check for updates to csf but do not upgrade
@@ -278,20 +289,53 @@ sudo csf -uf
 
 <br />
 
+## Informational
+
+The following commands display information regarding CSF.
+
+<br />
+
 ### Version
 <!-- md:command `-v,  --version` -->
 
 Show csf version
 
-```shell
-sudo csf -v
-```
+=== ":aetherx-axu-rectangle-code: Syntax"
+
+    ```shell
+    sudo csf -v
+    ```
 
 === ":aetherx-axs-square-terminal: Terminal"
 
-    ```
+    ```shell
     csf: v15.10 (generic)
     ```
+
+<br />
+
+### Insiders
+<!-- md:command `-in,  --insiders` -->
+
+Displays if your installation of CSF uses the Insiders release channel, or the Stable release channel.
+
+=== ":aetherx-axu-rectangle-code: Syntax"
+
+    ```shell
+    sudo csf -in
+    ```
+
+=== ":aetherx-axs-square-terminal: Terminal"
+
+    ```shell
+    csf: v15.10 (generic)
+    ```
+
+<br />
+
+## Rules
+
+The following commands allow you to manage the IP addresses allowed and blocked within your firewall.
 
 <br />
 
@@ -300,13 +344,15 @@ sudo csf -v
 
 List/Show the IPv4 iptables configuration
 
-```shell
-sudo csf -l
-```
+=== ":aetherx-axu-rectangle-code: Syntax"
+
+    ```shell
+    sudo csf -l
+    ```
 
 === ":aetherx-axs-square-terminal: Terminal"
 
-    ```
+    ```shell
     iptables filter table
     =====================
     Chain INPUT (policy DROP 0 packets, 0 bytes)
@@ -326,20 +372,20 @@ sudo csf -l
 
 <br />
 
-<br />
-
 ### List Firewall Rules (IPv6)
 <!-- md:command `-l6, --status6` -->
 
 List/Show the IPv6 ip6tables configuration
 
-```shell
-sudo csf -l6
-```
+=== ":aetherx-axu-rectangle-code: Syntax"
+
+    ```shell
+    sudo csf -l6
+    ```
 
 === ":aetherx-axs-square-terminal: Terminal"
 
-    ```
+    ```shell
     ip6tables filter table
     ======================
     Chain INPUT (policy DROP 0 packets, 0 bytes)
@@ -363,14 +409,16 @@ sudo csf -l6
 
 Allow an IP and add to `/etc/csf/csf.allow`
 
-```shell
-sudo csf -a <IP_ADDRESS>
-sudo csf -a 142.250.189.142
-```
+=== ":aetherx-axu-rectangle-code: Syntax"
+
+    ```shell
+    sudo csf -a <IP_ADDRESS>
+    sudo csf -a 142.250.189.142
+    ```
 
 === ":aetherx-axs-square-terminal: Terminal"
 
-    ```
+    ```shell
     Adding 142.250.189.142 to csf.allow and iptables ACCEPT...
     csf: IPSET adding [142.250.189.142] to set [chain_ALLOW]
     ```
@@ -415,13 +463,15 @@ sudo csf -dr <IP_ADDRESS>
 
 Remove and unblock all entries in `/etc/csf/csf.deny`
 
-```shell
-sudo csf -df
-```
+=== ":aetherx-axu-rectangle-code: Syntax"
+
+    ```shell
+    sudo csf -df
+    ```
 
 === ":aetherx-axs-square-terminal: Terminal"
 
-    ```
+    ```shell
     csf: all entries removed from csf.deny
     ```
 
@@ -445,14 +495,16 @@ sudo csf -g ACCEPT
 
 Lookup IP address geographical information using `CC_LOOKUPS` setting in `/etc/csf/csf.conf`
 
-```shell
-sudo csf -i <IP_ADDRESS>
-sudo csf -i 142.250.189.142
-```
+=== ":aetherx-axu-rectangle-code: Syntax"
+
+    ```shell
+    sudo csf -i <IP_ADDRESS>
+    sudo csf -i 142.250.189.142
+    ```
 
 === ":aetherx-axs-square-terminal: Terminal"
 
-    ```
+    ```shell
     142.250.189.142 (US/United States/mia09s26-in-f14.1e100.net)
     ```
 
@@ -463,13 +515,15 @@ sudo csf -i 142.250.189.142
 
 Displays the current list of temporary allow and deny IP entries with their TTL and comment
 
-```shell
-sudo csf -t
-```
+=== ":aetherx-axu-rectangle-code: Syntax"
+
+    ```shell
+    sudo csf -t
+    ```
 
 === ":aetherx-axs-square-terminal: Terminal"
 
-    ```
+    ```shell
     A/D   IP address          Port    Dir     Time To Live     Comment
     ALLOW 142.250.189.142     *       inout   58m 56s          Manually added: 142.250.189.142 (US/United States/mia09s26-in-f14.1e100.net)
     ```
@@ -481,14 +535,16 @@ sudo csf -t
 
 Remove an IP from the temporary IP ban or allow list
 
-```shell
-sudo csf -tr <IP_ADDRESS>
-sudo csf -tr 142.250.189.142
-```
+=== ":aetherx-axu-rectangle-code: Syntax"
+
+    ```shell
+    sudo csf -tr <IP_ADDRESS>
+    sudo csf -tr 142.250.189.142
+    ```
 
 === ":aetherx-axs-square-terminal: Terminal"
 
-    ```
+    ```shell
     ACCEPT  all opt -- in !lo out *  142.250.189.142  -> 0.0.0.0/0  
     ACCEPT  all opt -- in * out !lo  0.0.0.0/0  -> 142.250.189.142  
     csf: 142.250.189.142 temporary allow removed
@@ -535,10 +591,12 @@ sudo csf -td <IP_ADDRESS>
 
 Add an IP to the temp IP allow list (default:inout)
 
-```shell
-sudo csf -ta <IP_ADDRESS>
-sudo csf -ta 142.250.189.142
-```
+=== ":aetherx-axu-rectangle-code: Syntax"
+
+    ```shell
+    sudo csf -ta <IP_ADDRESS>
+    sudo csf -ta 142.250.189.142
+    ```
 
 === ":aetherx-axs-square-terminal: Terminal"
 
@@ -554,13 +612,15 @@ sudo csf -ta 142.250.189.142
 
 Flush all IPs from the temporary IP entries
 
-```shell
-sudo csf -tf
-```
+=== ":aetherx-axu-rectangle-code: Syntax"
+
+    ```shell
+    sudo csf -tf
+    ```
 
 === ":aetherx-axs-square-terminal: Terminal"
 
-    ```
+    ```shell
     csf: There are no temporary IP bans
     ACCEPT  all opt -- in !lo out *  142.250.189.142  -> 0.0.0.0/0  
     ACCEPT  all opt -- in * out !lo  0.0.0.0/0  -> 142.250.189.142  
@@ -584,7 +644,7 @@ If you receive the following error in console:
 
 === ":aetherx-axs-square-terminal: Terminal"
 
-    ```
+    ```shell
     Option LOGSCANNER needs to be enabled in csf.conf for this feature
     ```
 
@@ -619,14 +679,102 @@ Then go back to console and re-run the command.
 
 <br />
 
+## Port Management
+
+These commands allow you to manage what ports are whitelisted in your firewall, and view information regarding the ports.
+
+Certain commands require specific arguments to be provided. These arguments are described below:
+
+`<protocol>`
+:   Specifies the **protocol** when adding or removing ports. Omitting or providing an incorrect protocol will trigger an error. Accepted values include:
+
+:   - TCP_IN
+    - TCP_OUT
+    - UDP_IN
+    - UDP_OUT
+
+`<port>`
+:   Represents the **port** you want to add or remove from your whitelist. Valid port numbers range from `0` to `65535`.
+
+<br />
+
+### Add Port (Allow)
+<!-- md:command `-ap, --addport <protocol>:<port>` -->
+
+This command allows you to whitelist a port within CSF, allowing access to or from it.
+
+=== ":aetherx-axu-rectangle-code: Syntax"
+
+    ```shell
+    sudo csf --addport <protocol>:<port>
+    ```
+
+=== ":aetherx-axu-magnifying-glass: Examples"
+
+    ```shell
+    sudo csf --addport TCP_IN:2215
+    sudo csf --addport UDP_OUT:985
+    ```
+
+<br />
+
+### Remove Port (Deny)
+<!-- md:command `-rp, --removeport <protocol>:<port>` -->
+
+This command allows you to remove a specified port from your existing CSF whitelist.
+
+=== ":aetherx-axu-rectangle-code: Syntax"
+
+    ```shell
+    sudo csf --removeport <protocol>:<port>
+    ```
+
+=== ":aetherx-axu-magnifying-glass: Examples"
+
+    ```shell
+    sudo csf --removeport TCP_IN:2215
+    sudo csf --removeport UDP_OUT:985
+    ```
+
+<br />
+
+### List Ports
+<!-- md:command `-lp, --listports` -->
+
+This command lets you view both protocols, all chains, and which ports are currently whitelisted for each protocol.
+
+=== ":aetherx-axu-rectangle-code: Syntax"
+
+    ```shell
+    sudo csf --listports
+    ```
+
+=== ":aetherx-axs-square-terminal: Terminal"
+
+    ```shell
+    $ sudo csf --listports
+
+    INFO              Configured CSF Ports:                           
+                      The following are a list of the whitelisted ports configured in your /etc/csf/csf.conf
+
+                      TCP_IN: 22,25,80,143,443
+                      TCP_OUT: 22,25,80,113,443
+                      UDP_IN: 53,80,443,853
+                      UDP_OUT: 53,113,123,853
+    ```
+
+<br />
+
 ### View Ports
 <!-- md:command `-p, --ports` -->
 
 View ports on the server that have a running process behind them listening for external connections
 
-```shell
-sudo csf -p
-```
+=== ":aetherx-axu-rectangle-code: Syntax"
+
+    ```shell
+    sudo csf -p
+    ```
 
 === ":aetherx-axs-square-terminal: Terminal"
 
@@ -640,6 +788,12 @@ sudo csf -p
     40857/udp  -/-  -     (702/avahi)          avahi-daemon: running [local]        /usr/sbin/avahi-daemon
     49833/udp  -/-  -     (702/avahi)          avahi-daemon: running [local]        /usr/sbin/avahi-daemon
     ```
+
+<br />
+
+## Graphs and Statistics
+
+These commands outline how to utilize the built-in CSF graphics & statistics functionality.
 
 <br />
 
@@ -718,7 +872,7 @@ Install the package `libgd-graph-perl`:
 
 === ":aetherx-axb-debian: Debian/Ubuntu (apt-get)"
 
-    ```bash
+    ```shell
     apt-get update
     apt-get install -y perl \
       libgd-graph-perl
@@ -726,14 +880,14 @@ Install the package `libgd-graph-perl`:
 
 === ":aetherx-axb-redhat: CentOS/RHEL (yum/dnf)"
 
-    ```bash
+    ```shell
     yum install -y perl \
       perl-GDGraph
     ```
 
 === ":aetherx-axs-onion: Perl (CPAN)"
 
-    ```bash
+    ```shell
     perl -MCPAN -eshell
     cpan> install GD::Graph
     ```
