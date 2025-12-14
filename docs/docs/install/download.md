@@ -10,7 +10,15 @@ tags:
 
 In the previous section, we explained how to install all the required dependencies for CSF. Now, we’ll guide you through downloading the latest version of ConfigServer Security & Firewall.
 
-Instructions on this page cover both the `tgz` and `zip archive, see the note below:
+<br />
+
+## :aetherx-axj-bell:{ .icon-tldr } Summary
+
+This page covers the following:
+
+- Step-by-step instructions for installing CSF on a bare-metal or generic server without a control panel.
+- Guidance for downloading and extracting CSF for cPanel & WHM environments.
+- Instructions on this page cover both the `tgz` and `zip` archive, see the note below:
 
 ??? note "`.zip` vs `.tgz` format"
 

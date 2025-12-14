@@ -17,6 +17,16 @@ To ensure ConfigServer Security & Firewall (CSF) functions correctly, all requir
 
 <br />
 
+## :aetherx-axj-bell:{ .icon-tldr } Summary
+
+This page provides an overview of the following topics:
+
+- The minimum system requirements needed to install and run CSF successfully.
+- A breakdown of optional CSF features, along with the dependencies required to enable them.
+- Common issues you may encounter, with [troubleshooting](#troubleshooting) guidance provided at the end of the page to help resolve them.
+
+<br />
+
 ## Install
 
 For our documentation, we are going to include all packages you will need in order to run all functionality within CSF. A lot of the packages listed below will be installed along with the base `perl` package; however, we've included them to ensure nothing gets left behind.
@@ -529,7 +539,7 @@ mode via the `--debug` flag; the perl module `diagnostics` must be installed.
 
     - :aetherx-axb-debian: Debian
     - :aetherx-axb-ubuntu: Ubuntu
-    - :aetherx-axb-mint-linux: Mint
+    - :aetherx-axb-linux-mint: Mint
     - :aetherx-axb-pop-linux: Pop!
     - :aetherx-axb-elementary-linux: Elementary
 
@@ -555,7 +565,7 @@ More information about CSGet can be read in the chapter [Advanced › CSGet](../
 
 <br />
 
-## FAQ
+## Troubleshooting
 
 The following is a list of questions a user may have regarding CSf dependencies, and information about certain issues that may arise:
 
@@ -590,7 +600,7 @@ The following is a list of questions a user may have regarding CSf dependencies,
 
 ??? faq "Perl: Using Minimal Distro Releases"
 
-    If you are running a light-weight distro such as :aetherx-axb-alma-linux: [AlmaLinux (Minimal)](https://almalinux.org/get-almalinux/),
+    If you are running a light-weight distro such as :aetherx-axb-alma-linux-2: [AlmaLinux (Minimal)](https://almalinux.org/get-almalinux/),
     your distro may include a copy of Perl, but may not have many of the core modules required
     for a program written in perl to function.
 
@@ -609,7 +619,7 @@ The following is a list of questions a user may have regarding CSf dependencies,
 
         ```bash
         sudo dnf makecache
-        sudo dnf install perl-core
+        sudo dnf install perl perl-core perl-libwww-perl perl-LWP-Protocol-https perl-URI
         ```
 
     === ":aetherx-axb-debian: Debian/Ubuntu (apt-get)"
@@ -618,13 +628,13 @@ The following is a list of questions a user may have regarding CSf dependencies,
 
         - :aetherx-axb-debian: Debian
         - :aetherx-axb-ubuntu: Ubuntu
-        - :aetherx-axb-mint-linux: Mint
+        - :aetherx-axb-linux-mint: Mint
         - :aetherx-axb-pop-linux: Pop!
         - :aetherx-axb-elementary-linux: Elementary
 
         ```bash
         sudo apt update
-        sudo apt install perl perl-modules perl-base
+        sudo apt install perl perl-modules perl-base libwww-perl liblwp-protocol-https
         ```
 
 <br />

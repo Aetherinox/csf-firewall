@@ -343,6 +343,7 @@ plugins:
           separator: '[\s\u200b\-_,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
     - tags:
           tags_file: about/tags.md
+          shadow: false
     - group:
           plugins:
               - optimize

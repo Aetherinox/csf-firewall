@@ -13,6 +13,24 @@ This section outlines the purpose of CSF’s blocklist and how it helps server a
 
 <br />
 
+## :aetherx-axj-bell:{ .icon-tldr } Summary
+
+The following is a summary of what this page explains:
+
+- CSF includes support for a feature known as **Blocklists**.
+- A blocklist is a file that contains thousands (or even millions) of IP addresses that CSF can import to automatically deny access to your server.
+- These IP addresses are gathered and maintained by third-party services that monitor IP reputation, tracking malicious behavior such as port scans, brute-force login attempts, and other abusive activity.
+- When an IP is repeatedly reported for malicious actions, it is added to a blocklist. You can then find these generated blocklists online, and import the IPs from those lists into your firewall.
+- Taffic from the IPs within these blocklists are blocked from accessing your server if they ever attempt to target you.
+- While blocklists are effective, very large blocklists come with a drawback: each IP address must be added as its own firewall rule.
+- Creating thousands of individual firewall rules can significantly impact server performance and increase memory usage.
+- To solve this problem, CSF also supports **IPSETs**.
+- IPSETs serve the same purpose as blocklists, but are handled much more efficiently by the firewall. Instead of creating one rule per IP address, IPSETs store large collections of IPs in optimized sets that the firewall can check instantly.
+- This allows you to block vastly larger numbers of IP addresses without degrading performance or exhausting system memory.
+- This page covers blocklists, but only covers IPSETs very briefly. For a complete guide on how to set up IPSETs, [read the IPSET guide here](../usage/ipset.md).
+
+<br />
+
 ---
 
 <br />
@@ -86,18 +104,20 @@ If you wish to utilize option :aetherx-axd-2: and enable IPSET, please review th
 
 <div class="grid cards" markdown>
 
--   :aetherx-axs-network-wired: &nbsp; __[Introduction to IPSETs](../usage/ipset.md)__
+-   :aetherx-axd-block-brick-fire: &nbsp; __[Introduction to IPSETs](../usage/ipset.md)__
 
     ---
 
-    Enabling **IPSETs** on large blocklists will improve efficiency in CSF. IPSET 
-    integration will take over management of loading large blocklists.  
+    Blocklists and IPSETs are designed to work together. Blocklists provide a simple
+    way to block unwanted traffic from reaching your server, but large blocklists
+    can be inefficient and memory-intensive.
 
-    This chapter covers installing the IPSET package and configuring CSF to use
-    it for handling blocklists.  
+    If you plan to import blocklists containing more than a few thousand IP addresses,
+    it is strongly recommended to enable CSF’s IPSET integration.
 
-    Using IPSET allows CSF to group IP addresses into sets, reducing the number
-    of iptables rules and improving overall performance.
+    IPSETs allow you to block significantly larger numbers of IP addresses in a far
+    more efficient way, without the risk of excessive memory usage or performance
+    degradation.
 
 </div>
 
@@ -577,20 +597,37 @@ Select what documentation you would like to proceed with next ...
 
 <div class="grid cards" markdown>
 
+-   :aetherx-axd-block-brick-fire: &nbsp; __[Introduction to IPSETs](../usage/ipset.md)__
+
+    ---
+
+    Blocklists and IPSETs are designed to work together. Blocklists provide a simple
+    way to block unwanted traffic from reaching your server, but large blocklists
+    can be inefficient and memory-intensive.
+
+    If you plan to import blocklists containing more than a few thousand IP addresses,
+    it is strongly recommended to enable CSF’s IPSET integration.
+
+    IPSETs allow you to block significantly larger numbers of IP addresses in a far
+    more efficient way, without the risk of excessive memory usage or performance
+    degradation.
+
 -   :aetherx-axd-earth-europe: &nbsp; __[Geographical IP Block Integration](../usage/geoip.md)__
 
     ---
 
-    Configure geographical restrictions in CSF to whitelist or blacklist specific
-    regions from accessing your server.
-    
-    This chapter covers enabling the GeoIP blocklist feature using third-party
-    services such as MaxMind (requires an API key), db-ip, ipdeny, or iptoasn.
-    
-    These services allow you to control access based on location while keeping
-    your server secure.
+    Geographical IP blocking allows you to control access to your server based on
+    the country or region an IP address originates from, rather than individual
+    IP reputation or blocklist entries.
+
+    This section explains what geographical IP blocks are, how they differ from
+    blocklists and IPSETs, and when it makes sense to use country-based filtering.
+
+    You’ll also learn how to integrate CSF with GeoIP data providers to apply
+    regional access rules safely and efficiently.
 
 </div>
+
 
 <br />
 
