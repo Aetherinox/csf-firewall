@@ -1654,6 +1654,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#aetherx-axj-bell-icon-tldr-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :aetherx-axj-bell:{ .icon-tldr } Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#location-and-structure" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3687,6 +3698,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#aetherx-axj-bell-icon-tldr-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        :aetherx-axj-bell:{ .icon-tldr } Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#location-and-structure" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3799,7 +3821,47 @@
         
       
       
+        <a href="../../about/tags/#tag:bash" class="md-tag md-tag-icon">bash</a>
+      
+    
+      
+      
+      
+        
+        
+      
+      
         <a href="../../about/tags/#tag:configure" class="md-tag md-tag-icon">configure</a>
+      
+    
+      
+      
+      
+        
+        
+      
+      
+        <a href="../../about/tags/#tag:post-loader" class="md-tag md-tag-icon">post-loader</a>
+      
+    
+      
+      
+      
+        
+        
+      
+      
+        <a href="../../about/tags/#tag:pre-loader" class="md-tag md-tag-icon">pre-loader</a>
+      
+    
+      
+      
+      
+        
+        
+      
+      
+        <a href="../../about/tags/#tag:scripts" class="md-tag md-tag-icon">scripts</a>
       
     
       
@@ -3835,6 +3897,28 @@
 <h1 id="usage-pre-and-post-loader-scripts">Usage › Pre and Post Loader Scripts<a class="headerlink" data-preview="" href="#usage-pre-and-post-loader-scripts" title="Permanent link">¶</a></h1>
 <p><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> includes dedicated directories where you can place custom Bash scripts to run at specific stages of the firewall’s startup process. This allows you to easily maintain persistent, custom firewall rules that are automatically applied each time the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> service starts or restarts.</p>
 <p><br></p>
+<h2 id="aetherx-axj-bell-icon-tldr-summary">:aetherx-axj-bell:{ .icon-tldr } Summary<a class="headerlink" data-preview="" href="#aetherx-axj-bell-icon-tldr-summary" title="Permanent link">¶</a></h2>
+<p>The following is a summary of what this page explains:</p>
+<ul>
+<li>When you install <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>, two files will be placed on your server. These are known as the <code>pre</code> and <code>post</code> loader scripts:<ol>
+<li><strong>Preloader</strong>: <code>/usr/local/csf/bin/csfpre.sh</code></li>
+<li><strong>Postloader</strong>: <code>/usr/local/csf/bin/csfpost.sh</code></li>
+</ol>
+</li>
+<li>These loader scripts scan two different folders on your server to see if you have added any custom bash scripts you want ran when <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> starts. You can place your custom bash scripts in two different folders:<ol>
+<li><code>/usr/local/include/csf/pre.d/</code><ul>
+<li>Place your bash scripts in this folder if you want your scripts to run <strong>BEFORE</strong> <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> imports the default rules into your server.</li>
+</ul>
+</li>
+<li><code>/usr/local/include/csf/post.d/</code><ul>
+<li>Place your bash scripts in this folder if you want your scripts to run <strong>AFTER</strong> <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> imports the default rules into your server.</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>Once the scripts are added, restart <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> with <code>sudo csf -ra</code></li>
+</ul>
+<p><br></p>
 <hr>
 <p><br></p>
 <h2 id="location-and-structure">Location and Structure<a class="headerlink" data-preview="" href="#location-and-structure" title="Permanent link">¶</a></h2>
@@ -3842,19 +3926,19 @@
 <p><br></p>
 <h3 id="loader-scripts">Loader Scripts<a class="headerlink" data-preview="" href="#loader-scripts" title="Permanent link">¶</a></h3>
 <ul>
-<li>When <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> is installed for the first time, two starter files <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0C28.7 0 0 28.7 0 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M224 0c15.4 0 30.1 6.1 41 17L367 119c10.9 10.9 17 25.6 17 41l-128 0c-17.7 0-32-14.3-32-32L224 0z"></path></svg></span> <code>/usr/local/csf/bin/csfpre.sh</code> and <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0C28.7 0 0 28.7 0 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M224 0c15.4 0 30.1 6.1 41 17L367 119c10.9 10.9 17 25.6 17 41l-128 0c-17.7 0-32-14.3-32-32L224 0z"></path></svg></span> <code>/usr/local/csf/bin/csfpost.sh</code> are automatically created on your system (only if they don’t already exist). These serve as base loader scripts, giving you a foundation to add your own custom logic later on.<ul>
-<li>You must create your own pre/post loader folders <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M64 448l384 0c35.3 0 64-28.7 64-64l0-240c0-35.3-28.7-64-64-64L298.7 80c-6.9 0-13.7-2.2-19.2-6.4L241.1 44.8C230 36.5 216.5 32 202.7 32L64 32C28.7 32 0 60.7 0 96L0 384c0 35.3 28.7 64 64 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d=""></path></svg></span> <code>/usr/local/include/csf/pre.d/</code> and <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M64 448l384 0c35.3 0 64-28.7 64-64l0-240c0-35.3-28.7-64-64-64L298.7 80c-6.9 0-13.7-2.2-19.2-6.4L241.1 44.8C230 36.5 216.5 32 202.7 32L64 32C28.7 32 0 60.7 0 96L0 384c0 35.3 28.7 64 64 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d=""></path></svg></span> <code>/usr/local/include/csf/post.d/</code></li>
+<li>When <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> is installed for the first time, two files <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0C28.7 0 0 28.7 0 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M224 0c15.4 0 30.1 6.1 41 17L367 119c10.9 10.9 17 25.6 17 41l-128 0c-17.7 0-32-14.3-32-32L224 0z"></path></svg></span> <code>/usr/local/csf/bin/csfpre.sh</code> and <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0C28.7 0 0 28.7 0 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M224 0c15.4 0 30.1 6.1 41 17L367 119c10.9 10.9 17 25.6 17 41l-128 0c-17.7 0-32-14.3-32-32L224 0z"></path></svg></span> <code>/usr/local/csf/bin/csfpost.sh</code> are automatically created on your system <em>(they will not overwrite existing copies)</em>. These files are  loader scripts, giving you the ability to add your own custom bash scripts.<ul>
+<li>You must create the pre-loader folder <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M64 448l384 0c35.3 0 64-28.7 64-64l0-240c0-35.3-28.7-64-64-64L298.7 80c-6.9 0-13.7-2.2-19.2-6.4L241.1 44.8C230 36.5 216.5 32 202.7 32L64 32C28.7 32 0 60.7 0 96L0 384c0 35.3 28.7 64 64 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d=""></path></svg></span> <code>/usr/local/include/csf/pre.d/</code> and post-loader folder <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M64 448l384 0c35.3 0 64-28.7 64-64l0-240c0-35.3-28.7-64-64-64L298.7 80c-6.9 0-13.7-2.2-19.2-6.4L241.1 44.8C230 36.5 216.5 32 202.7 32L64 32C28.7 32 0 60.7 0 96L0 384c0 35.3 28.7 64 64 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d=""></path></svg></span> <code>/usr/local/include/csf/post.d/</code></li>
 </ul>
 </li>
-<li>If you already have existing pre/post loader files in place, <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> will respect your current setup and skip creating the starter versions — allowing you to continue using your existing scripts without interruption.</li>
+<li>If you already have existing pre/post loader files in place, <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> will respect this and <strong>NOT</strong> overwrite your existing files. Your existing setup will not be touched.</li>
 </ul>
 <p><br></p>
 <dl>
-<dt><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0C28.7 0 0 28.7 0 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M224 0c15.4 0 30.1 6.1 41 17L367 119c10.9 10.9 17 25.6 17 41l-128 0c-17.7 0-32-14.3-32-32L224 0z"></path></svg></span> <a data-preview="" href="#+csfpre.sh" id="+csfpre.sh"><code>csfpre.sh</code></a></dt>
+<dt><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0C28.7 0 0 28.7 0 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M224 0c15.4 0 30.1 6.1 41 17L367 119c10.9 10.9 17 25.6 17 41l-128 0c-17.7 0-32-14.3-32-32L224 0z"></path></svg></span> <a data-preview="" href="#+/usr/local/csf/bin/csfpre.sh" id="+/usr/local/csf/bin/csfpre.sh"><code>/usr/local/csf/bin/csfpre.sh</code></a></dt>
 <dd>
 <ul>
-<li>The file <code>csfpre.sh</code> iterates over the loader folder <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M64 448l384 0c35.3 0 64-28.7 64-64l0-240c0-35.3-28.7-64-64-64L298.7 80c-6.9 0-13.7-2.2-19.2-6.4L241.1 44.8C230 36.5 216.5 32 202.7 32L64 32C28.7 32 0 60.7 0 96L0 384c0 35.3 28.7 64 64 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d=""></path></svg></span> <code>pre.d</code> and runs any scripts found there.</li>
-<li>There are <strong>two allowed locations</strong> for this loader script — either one is valid:<ul class="task-list">
+<li>The file <code>csfpre.sh</code> installed with <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> loads every custom bash script you drop in the <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M64 448l384 0c35.3 0 64-28.7 64-64l0-240c0-35.3-28.7-64-64-64L298.7 80c-6.9 0-13.7-2.2-19.2-6.4L241.1 44.8C230 36.5 216.5 32 202.7 32L64 32C28.7 32 0 60.7 0 96L0 384c0 35.3 28.7 64 64 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d=""></path></svg></span> <code>/usr/local/include/csf/pre.d/</code> folder.</li>
+<li>If making your own <code>csfpre.sh</code> loader, there are <strong>two allowed locations</strong> to place this script — either one is valid:<ul class="task-list">
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked><span class="task-list-indicator"></span></label> <code>/usr/local/csf/bin/csfpre.sh</code> <small><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 96L0 416c0 35.3 28.7 64 64 64l224 0 0-128c0-17.7 14.3-32 32-32l128 0 0-224c0-35.3-28.7-64-64-64L64 32C28.7 32 0 60.7 0 96z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M448 320c0 15.4-6.1 30.1-17 41L329 463c-10.9 10.9-25.6 17-41 17l0-128c0-17.7 14.3-32 32-32l128 0z"></path></svg></span> <em>(default)</em></small></li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked><span class="task-list-indicator"></span></label> <code>/etc/csf/csfpre.sh</code> <small><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 96L0 416c0 35.3 28.7 64 64 64l224 0 0-128c0-17.7 14.3-32 32-32l128 0 0-224c0-35.3-28.7-64-64-64L64 32C28.7 32 0 60.7 0 96z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M448 320c0 15.4-6.1 30.1-17 41L329 463c-10.9 10.9-25.6 17-41 17l0-128c0-17.7 14.3-32 32-32l128 0z"></path></svg></span> <em>(alternative)</em></small></li>
 </ul>
@@ -3862,11 +3946,11 @@
 <li>Runs <strong>before</strong> all default <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> rules are applied; allows you to add custom rules which persist alongside <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>'s defaults.</li>
 </ul>
 </dd>
-<dt><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0C28.7 0 0 28.7 0 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M224 0c15.4 0 30.1 6.1 41 17L367 119c10.9 10.9 17 25.6 17 41l-128 0c-17.7 0-32-14.3-32-32L224 0z"></path></svg></span> <a data-preview="" href="#+csfpost.sh" id="+csfpost.sh"><code>csfpost.sh</code></a></dt>
+<dt><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0C28.7 0 0 28.7 0 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M224 0c15.4 0 30.1 6.1 41 17L367 119c10.9 10.9 17 25.6 17 41l-128 0c-17.7 0-32-14.3-32-32L224 0z"></path></svg></span> <a data-preview="" href="#+/usr/local/csf/bin/csfpost.sh" id="+/usr/local/csf/bin/csfpost.sh"><code>/usr/local/csf/bin/csfpost.sh</code></a></dt>
 <dd>
 <ul>
-<li>The file <code>post.sh</code> iterates over the loader folder <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M64 448l384 0c35.3 0 64-28.7 64-64l0-240c0-35.3-28.7-64-64-64L298.7 80c-6.9 0-13.7-2.2-19.2-6.4L241.1 44.8C230 36.5 216.5 32 202.7 32L64 32C28.7 32 0 60.7 0 96L0 384c0 35.3 28.7 64 64 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d=""></path></svg></span> <code>post.d</code> and runs any scripts found there.</li>
-<li>There are <strong>two allowed locations</strong> for this loader script — either one is valid:<ul class="task-list">
+<li>The file <code>csfpost.sh</code> installed with <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> loads every custom bash script you drop in the <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M64 448l384 0c35.3 0 64-28.7 64-64l0-240c0-35.3-28.7-64-64-64L298.7 80c-6.9 0-13.7-2.2-19.2-6.4L241.1 44.8C230 36.5 216.5 32 202.7 32L64 32C28.7 32 0 60.7 0 96L0 384c0 35.3 28.7 64 64 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d=""></path></svg></span> <code>/usr/local/include/csf/post.d/</code> folder.</li>
+<li>If making your own <code>csfpost.sh</code> loader, there are <strong>two allowed locations</strong> to place this script — either one is valid:<ul class="task-list">
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked><span class="task-list-indicator"></span></label> <code>/usr/local/csf/bin/csfpost.sh</code> <small><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 96L0 416c0 35.3 28.7 64 64 64l224 0 0-128c0-17.7 14.3-32 32-32l128 0 0-224c0-35.3-28.7-64-64-64L64 32C28.7 32 0 60.7 0 96z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M448 320c0 15.4-6.1 30.1-17 41L329 463c-10.9 10.9-25.6 17-41 17l0-128c0-17.7 14.3-32 32-32l128 0z"></path></svg></span> <em>(default)</em></small></li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked><span class="task-list-indicator"></span></label> <code>/etc/csf/csfpost.sh</code> <small><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 96L0 416c0 35.3 28.7 64 64 64l224 0 0-128c0-17.7 14.3-32 32-32l128 0 0-224c0-35.3-28.7-64-64-64L64 32C28.7 32 0 60.7 0 96z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M448 320c0 15.4-6.1 30.1-17 41L329 463c-10.9 10.9-25.6 17-41 17l0-128c0-17.7 14.3-32 32-32l128 0z"></path></svg></span> <em>(alternative)</em></small></li>
 </ul>
@@ -3876,9 +3960,9 @@
 </dd>
 </dl>
 <details class="note">
-<summary><strong>pre/post.sh:</strong> Multiple Allowed Locations</summary>
-<p>By default, installing <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> will create your loader files <code>pre.d</code> and <code>post.d</code> in the folder <code>/usr/local/csf/bin/</code>.<br>
-However, this location is <strong>not required</strong>—you can place these loader files in any of the following acceptable paths:</p>
+<summary><strong>pre.sh &amp; post.sh:</strong> Multiple Locations Allowed</summary>
+<p>By default, installing <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> will create the loader files <code>csfpre.sh</code> and <code>csfpost.sh</code>, and place them in the folder <code>/usr/local/csf/bin/</code>.<br>
+However, this location is <strong>not strict</strong>; you can place these loader files in one of two allowed locations:</p>
 <ul>
 <li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0C28.7 0 0 28.7 0 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M224 0c15.4 0 30.1 6.1 41 17L367 119c10.9 10.9 17 25.6 17 41l-128 0c-17.7 0-32-14.3-32-32L224 0z"></path></svg></span> <strong>csfpre.sh</strong><ul>
 <li><code>/usr/local/csf/bin/csfpre.sh</code></li>
@@ -3891,33 +3975,32 @@ However, this location is <strong>not required</strong>—you can place these lo
 </ul>
 </li>
 </ul>
-<p>All folders above are automatically scanned when you start or restart <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>. You can add scripts to both locations if you choose.</p>
-<p>You can also add your bash commands directly into the files <code>csfpre.sh</code> and <code>csfpost.sh</code> themselves.</p>
 </details>
 <p><br></p>
 <h3 id="loader-folders">Loader Folders<a class="headerlink" data-preview="" href="#loader-folders" title="Permanent link">¶</a></h3>
-<p>When the <a data-preview="" href="#loader-scripts">loader scripts</a> run, they check their designated folders for any custom scripts you’ve added. By placing your scripts in these folders, you can create firewall rules that are automatically applied every time <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> starts or restarts, ensuring your custom rules persist.</p>
+<p>When the <a data-preview="" href="#loader-scripts">loader scripts</a> <code>/usr/local/csf/bin/csfpre.sh</code> and <code>/usr/local/csf/bin/csfpost.sh</code> run, they check specific folders to see if you have placed any custom bash scripts inside. By placing custom bash scripts in these folders, you can write bash scripts which assist with setting up custom firewall rules which are automatically applied every time <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> starts or restarts, ensuring your custom rules persist.</p>
 <p><br></p>
 <dl>
 <dt><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M64 448l384 0c35.3 0 64-28.7 64-64l0-240c0-35.3-28.7-64-64-64L298.7 80c-6.9 0-13.7-2.2-19.2-6.4L241.1 44.8C230 36.5 216.5 32 202.7 32L64 32C28.7 32 0 60.7 0 96L0 384c0 35.3 28.7 64 64 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d=""></path></svg></span> <a data-preview="" href="#+/usr/local/include/csf/pre.d/" id="+/usr/local/include/csf/pre.d/"><code>/usr/local/include/csf/pre.d/</code></a></dt>
 <dd>
 <ul>
-<li>Stores bash scripts that run <strong>before</strong> <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> applies its default <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> rules.  </li>
+<li>Your custom bash scripts will run <strong>before</strong> <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> applies any default <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> rules.</li>
 <li>Scripts placed here run automatically every time <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> starts or restarts.</li>
 </ul>
 </dd>
 <dt><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M64 448l384 0c35.3 0 64-28.7 64-64l0-240c0-35.3-28.7-64-64-64L298.7 80c-6.9 0-13.7-2.2-19.2-6.4L241.1 44.8C230 36.5 216.5 32 202.7 32L64 32C28.7 32 0 60.7 0 96L0 384c0 35.3 28.7 64 64 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d=""></path></svg></span> <a data-preview="" href="#+/usr/local/include/csf/post.d/" id="+/usr/local/include/csf/post.d/"><code>/usr/local/include/csf/post.d/</code></a></dt>
 <dd>
 <ul>
-<li>Stores bash scripts that run <strong>after</strong> <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> applies its default <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> rules.  </li>
+<li>Your custom bash scripts will run <strong>after</strong> <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> applies any default <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> rules.</li>
 <li>Scripts placed here run automatically every time <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> starts or restarts.</li>
 </ul>
 </dd>
 </dl>
 <details class="note">
 <summary>Defining A New Loader Folder</summary>
-<p>The <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> loader folder which is scanned is defined within the loader files themselves. To change the folder that the loader uses, open <code>csfpre.sh</code> and <code>csfpost.sh</code> and change the following lines:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="loader-folders-csfpresh" name="__tabbed_1" type="radio"><input id="loader-folders-csfpostsh" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="loader-folders-csfpresh"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> csfpre.sh</label><label for="loader-folders-csfpostsh"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> csfpost.sh</label></div>
+<p>The <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> loader files <code>/usr/local/csf/bin/csfpre.sh</code> and <code>/usr/local/csf/bin/csfpost.sh</code> will look inside a specific folder for any custom bash scripts you have added.</p>
+<p>If you wish to change the folder name / path used for storing your custom bash scripts, open these loader files and change the assigned variable toward the top of each file:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="loader-folders-usrlocalcsfbincsfpresh" name="__tabbed_1" type="radio"><input id="loader-folders-usrlocalcsfbincsfpostsh" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="loader-folders-usrlocalcsfbincsfpresh"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> /usr/local/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>/bin/csfpre.sh</label><label for="loader-folders-usrlocalcsfbincsfpostsh"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> /usr/local/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>/bin/csfpost.sh</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nv">path_csfpred</span><span class="o">=</span><span class="s2">"/usr/local/include/csf/pre.d"</span>
@@ -3933,7 +4016,7 @@ However, this location is <strong>not required</strong>—you can place these lo
 <p><br></p>
 <h3 id="loader-example">Loader Example<a class="headerlink" data-preview="" href="#loader-example" title="Permanent link">¶</a></h3>
 <p>We have provided both example structures of how your scripts can be set up. Script names can be any name you want, no restrictions.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="loader-example-option-1-default" name="__tabbed_2" type="radio"><input id="loader-example-option-2" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="loader-example-option-1-default"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l64 0 0 320-64 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l192 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0 0-352c0-17.7-14.3-32-32-32L32 32z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d=""></path></svg></span> Option 1 (default)</label><label for="loader-example-option-2"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M48 64c0-17.7 14.3-32 32-32l171 0c60.2 0 109 48.8 109 109 0 43.8-26.2 83.3-66.4 100.4l-139.1 59C119 315.4 96 350.2 96 388.7l0 27.3 224 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L64 480c-17.7 0-32-14.3-32-32l0-59.3c0-64.2 38.4-122.2 97.5-147.3l139.1-59c16.6-7.1 27.4-23.4 27.4-41.4 0-24.9-20.2-45-45-45L80 96C62.3 96 48 81.7 48 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d=""></path></svg></span> Option 2</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="loader-example-option-1-default" name="__tabbed_2" type="radio"><input id="loader-example-option-2-alternative" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="loader-example-option-1-default"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l64 0 0 320-64 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l192 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0 0-352c0-17.7-14.3-32-32-32L32 32z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d=""></path></svg></span> Option 1 (default)</label><label for="loader-example-option-2-alternative"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M48 64c0-17.7 14.3-32 32-32l171 0c60.2 0 109 48.8 109 109 0 43.8-26.2 83.3-66.4 100.4l-139.1 59C119 315.4 96 350.2 96 388.7l0 27.3 224 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L64 480c-17.7 0-32-14.3-32-32l0-59.3c0-64.2 38.4-122.2 97.5-147.3l139.1-59c16.6-7.1 27.4-23.4 27.4-41.4 0-24.9-20.2-45-45-45L80 96C62.3 96 48 81.7 48 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d=""></path></svg></span> Option 2 (Alternative)</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>This example stores your loader files in:</p>
@@ -3983,22 +4066,22 @@ However, this location is <strong>not required</strong>—you can place these lo
 <hr>
 <p><br></p>
 <h2 id="writing-custom-rules">Writing Custom Rules<a class="headerlink" data-preview="" href="#writing-custom-rules" title="Permanent link">¶</a></h2>
-<p>As outlined earlier, the <code>pre.d</code> and <code>post.d</code> folders allow you to drop your own custom bash scripts inside the folders which will be responsible for any iptable rules you need to add to <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> every time the service is started or restarted. </p>
+<p>As outlined earlier, the <code>pre.d</code> and <code>post.d</code> folders allow you to drop your own custom bash scripts inside the folders which will be responsible for any iptable rules you need to add to <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> every time <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> is started or restarted. </p>
 <p>We will provide an example script below just to outline what can be done. In our example, we will create <code>/usr/local/include/csf/post.d/ports-blacklist.sh</code>. The script will do the following:</p>
 <ul>
-<li>Defines a list of blacklisted ports using a JSON array in <code>BLACKLIST_PORTS</code>. Each entry includes a port number and a comment describing it.</li>
+<li>Defines a list of blacklisted ports using a JSON array in <code>BLACKLIST_PORTS</code>. Each port we want to block will include the port number and a comment describing what that port is used for.</li>
 <li>Iterates over each port in the blacklist using <code>jq</code> to parse the JSON.</li>
 <li>For each port:<ul>
-<li>Extracts the port number <code>ENTRY_PORT</code> and its description/comment <code>ENTRY_COMMENT</code>.</li>
-<li>Checks if a <strong>UDP</strong> rule already exists in <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> for that port:<ul>
+<li>Extract the port number <code>ENTRY_PORT</code> and its description/comment <code>ENTRY_COMMENT</code>.</li>
+<li>Check if a <strong>UDP</strong> rule already exists in <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> for that port:<ul>
 <li>Sets <code>DELETE_INPUT_UDP=1</code> if the rule does not exist.</li>
 </ul>
 </li>
-<li>Checks if a <strong>TCP</strong> rule already exists in <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> for that port:<ul>
+<li>Check if a <strong>TCP</strong> rule already exists in <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> for that port:<ul>
 <li>Sets <code>DELETE_INPUT_TCP=1</code> if the rule does not exist.</li>
 </ul>
 </li>
-<li>Adds the firewall rules if they are not already present:<ul>
+<li>Add a firewall rule if it isn't already present:<ul>
 <li>Inserts a rule to drop <strong>UDP</strong> traffic to the port.</li>
 <li>Inserts a rule to drop <strong>TCP</strong> traffic to the port.</li>
 </ul>
@@ -4075,7 +4158,7 @@ However, this location is <strong>not required</strong>—you can place these lo
 </span><span id="__span-4-65"><a id="__codelineno-4-65" name="__codelineno-4-65" href="#__codelineno-4-65"></a><span class="k">done</span>
 </span></code></pre></div>
 <p><br></p>
-<p>The script itself is very easy to use. We make sure to edit the list <code>BLACKLIST_PORTS</code> and populate it with ports we absolutely do not want giving access to:</p>
+<p>The script itself is very easy to use. We make sure to edit the list <code>BLACKLIST_PORTS</code> and populate it with ports we do not want the outside world being able to access.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nv">BLACKLIST_PORTS</span><span class="o">=</span><span class="k">$(</span>cat<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="s">[</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="s">    {"port":"111", "comment":"used by sunrpc/rpcbind, has vulnerabilities"}</span>
@@ -4085,7 +4168,7 @@ However, this location is <strong>not required</strong>—you can place these lo
 </span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="k">)</span>
 </span></code></pre></div>
 <p><br></p>
-<p>After you edit the list of ports, simply restart <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>'s <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> and the script will be automatically re-loaded:</p>
+<p>After you edit the list of ports above, restart <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> and the script will be automatically re-loaded:</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="writing-custom-rules-command" name="__tabbed_3" type="radio"><input id="writing-custom-rules-output" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="writing-custom-rules-command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> Command</label><label for="writing-custom-rules-output"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Output</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -4111,7 +4194,7 @@ However, this location is <strong>not required</strong>—you can place these lo
 </div>
 </div>
 <p><br></p>
-<p>We can now view <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> to confirm our rules were added. Iptables will resolve whatever service is associated with a port, which means port <code>111</code> will show as <code>sunrpc</code>. If you wish to show just the port number, append <code>-n</code> to your <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> command:</p>
+<p>We can now use the <code>iptables</code> command to confirm our rules were added. Iptables will resolve whatever service is associated with a port, which means port <code>111</code> will show as <code>sunrpc</code>. If you wish to show just the port number, append <code>-n</code> to your <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> command:</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="writing-custom-rules-command_1" name="__tabbed_4" type="radio"><input id="writing-custom-rules-output_1" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="writing-custom-rules-command_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> Command</label><label for="writing-custom-rules-output_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Output</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -4149,7 +4232,8 @@ However, this location is <strong>not required</strong>—you can place these lo
 <hr>
 <p><br></p>
 <h2 id="conclusion">Conclusion<a class="headerlink" data-preview="" href="#conclusion" title="Permanent link">¶</a></h2>
-<p>From this point forward, you can create any number of pre and post scripts for your own firewall setup. Simply drop the scripts in the folders specified in the section <a data-preview="" href="#location-and-structure">Location and Structure</a>.</p>
+<p>From this point forward, you can create any number of pre and post bash scripts for your firewall. Simply drop any bash scripts you wish to load with <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> inside the folders <code>/usr/local/include/csf/pre.d/</code> and <code>/usr/local/include/csf/post.d/</code>. </p>
+<p>For a quick reference to the file and folder names, you can view the section <a data-preview="" href="#location-and-structure">Location and Structure</a>.</p>
 <p><br></p>
 <hr>
 <p><br></p>
@@ -4203,7 +4287,7 @@ they work efficiently no matter the size of the list.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 12, 2025 10:50:13 UTC"><span class="timeago" datetime="2025-10-12T10:50:13+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 12, 2025 10:50:13 UTC">2025-10-12</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="December 14, 2025 13:50:08 UTC"><span class="timeago" datetime="2025-12-14T13:50:08+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="December 14, 2025 13:50:08 UTC">2025-12-14</span>
   </span>
 
     
