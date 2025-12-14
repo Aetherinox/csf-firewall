@@ -1716,6 +1716,8 @@
       
         
       
+        
+      
     
     
     
@@ -1793,6 +1795,42 @@
     
   </span>
   
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../troubleshooting/dependencies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dependencies
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--new" title="New Addition">
+    </span>
+  
+
   
 
       </a>
@@ -4399,7 +4437,7 @@
   
 
 
-<h1 id="cheatsheet-commands">Cheatsheet › Commands <!-- omit from toc --><a class="headerlink" href="#cheatsheet-commands" title="Permanent link">¶</a></h1>
+<h1 id="cheatsheet-commands">Cheatsheet › Commands <!-- omit from toc --><a class="headerlink" data-preview="" href="#cheatsheet-commands" title="Permanent link">¶</a></h1>
 <p>This section outlines all of the commands that can be run in your server’s terminal for <strong><abbr title="A security suite for Linux servers that provides firewall management, intrusion detection, and login failure monitoring.">ConfigServer Security &amp; Firewall</abbr> (<abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>)</strong> which will allow you to:</p>
 <ul>
 <li>Manage your firewall  </li>
@@ -4408,30 +4446,30 @@
 <li>List your current rules  </li>
 </ul>
 <p><br></p>
-<h3 id="enable">Enable<a class="headerlink" href="#enable" title="Permanent link">¶</a></h3>
+<h3 id="enable">Enable<a class="headerlink" data-preview="" href="#enable" title="Permanent link">¶</a></h3>
 <p><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>-e,  --enable</code></span></span></p>
 <p>Enable <abbr title="ConfigServer Security &amp; Firewall">csf</abbr> and <abbr title="Login Failure Daemon">lfd</abbr> if previously disabled</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-e
 </span></code></pre></div>
 <p><br></p>
-<h3 id="disable">Disable<a class="headerlink" href="#disable" title="Permanent link">¶</a></h3>
+<h3 id="disable">Disable<a class="headerlink" data-preview="" href="#disable" title="Permanent link">¶</a></h3>
 <p><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>-x,  --disable</code></span></span></p>
 <p>Disable <abbr title="ConfigServer Security &amp; Firewall">csf</abbr> and <abbr title="Login Failure Daemon">lfd</abbr> completely</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-x
 </span></code></pre></div>
 <p><br></p>
-<h3 id="start">Start<a class="headerlink" href="#start" title="Permanent link">¶</a></h3>
+<h3 id="start">Start<a class="headerlink" data-preview="" href="#start" title="Permanent link">¶</a></h3>
 <p><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>-s,  --start</code></span></span></p>
 <p>Starts the firewall and applies any rules that have been configured at startup.</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-s
 </span></code></pre></div>
 <p><br></p>
-<h3 id="stop">Stop<a class="headerlink" href="#stop" title="Permanent link">¶</a></h3>
+<h3 id="stop">Stop<a class="headerlink" data-preview="" href="#stop" title="Permanent link">¶</a></h3>
 <p><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>-f,  --stop</code></span></span></p>
 <p>Flush/Stop firewall rules (Note: <abbr title="Login Failure Daemon">lfd</abbr> may restart <abbr title="ConfigServer Security &amp; Firewall">csf</abbr>)</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-f
 </span></code></pre></div>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="stop-terminal" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="stop-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="stop-terminal" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="stop-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="language-console highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="go">Flushing chain `INPUT'</span>
@@ -4448,12 +4486,12 @@
 </div>
 </div>
 <p><br></p>
-<h3 id="restart">Restart<a class="headerlink" href="#restart" title="Permanent link">¶</a></h3>
+<h3 id="restart">Restart<a class="headerlink" data-preview="" href="#restart" title="Permanent link">¶</a></h3>
 <p><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>-r,  --restart</code></span></span></p>
 <p>Restart firewall rules (<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>)</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-r
 </span></code></pre></div>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="restart-terminal" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="restart-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="restart-terminal" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="restart-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="language-console highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="go">Flushing chain `INPUT'</span>
@@ -4469,12 +4507,12 @@
 </div>
 </div>
 <p><br></p>
-<h3 id="quick-restart">Quick Restart<a class="headerlink" href="#quick-restart" title="Permanent link">¶</a></h3>
+<h3 id="quick-restart">Quick Restart<a class="headerlink" data-preview="" href="#quick-restart" title="Permanent link">¶</a></h3>
 <p><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>-q,  --startq</code></span></span></p>
 <p>Quick restart (<abbr title="ConfigServer Security &amp; Firewall">csf</abbr> restarted by <abbr title="Login Failure Daemon">lfd</abbr>)</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-q
 </span></code></pre></div>
-<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="quick-restart-terminal" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="quick-restart-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="quick-restart-terminal" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="quick-restart-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="language-console highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="go">lfd will restart csf within the next 5 seconds</span>
@@ -4483,12 +4521,12 @@
 </div>
 </div>
 <p><br></p>
-<h3 id="force-restart">Force Restart<a class="headerlink" href="#force-restart" title="Permanent link">¶</a></h3>
+<h3 id="force-restart">Force Restart<a class="headerlink" data-preview="" href="#force-restart" title="Permanent link">¶</a></h3>
 <p><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>-sf, --startf</code></span></span></p>
 <p>Force CLI restart regardless of LFDSTART setting</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-sf
 </span></code></pre></div>
-<div class="tabbed-set tabbed-alternate" data-tabs="4:1"><input checked="checked" id="force-restart-terminal" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="force-restart-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:1"><input checked="checked" id="force-restart-terminal" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="force-restart-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="language-console highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="go">Flushing chain `INPUT'</span>
@@ -4504,12 +4542,12 @@
 </div>
 </div>
 <p><br></p>
-<h3 id="restart-all">Restart All<a class="headerlink" href="#restart-all" title="Permanent link">¶</a></h3>
+<h3 id="restart-all">Restart All<a class="headerlink" data-preview="" href="#restart-all" title="Permanent link">¶</a></h3>
 <p><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>-ra, --restartall</code></span></span></p>
 <p>Restart firewall rules (<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>) and then restart <abbr title="Login Failure Daemon">lfd daemon</abbr>. Both <abbr title="ConfigServer Security &amp; Firewall">csf</abbr> and then <abbr title="Login Failure Daemon">lfd</abbr> should be restarted after making    any  changes  to the configuration files</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-ra
 </span></code></pre></div>
-<div class="tabbed-set tabbed-alternate" data-tabs="5:1"><input checked="checked" id="restart-all-terminal" name="__tabbed_5" type="radio"><div class="tabbed-labels"><label for="restart-all-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:1"><input checked="checked" id="restart-all-terminal" name="__tabbed_5" type="radio"><div class="tabbed-labels"><label for="restart-all-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="language-console highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="go">Flushing chain `INPUT'</span>
@@ -4525,13 +4563,13 @@
 </div>
 </div>
 <p><br></p>
-<h3 id="cluster-restart">Cluster Restart<a class="headerlink" href="#cluster-restart" title="Permanent link">¶</a></h3>
+<h3 id="cluster-restart">Cluster Restart<a class="headerlink" data-preview="" href="#cluster-restart" title="Permanent link">¶</a></h3>
 <p><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>-crs, --crestart</code></span></span></p>
 <p>Cluster restart <abbr title="ConfigServer Security &amp; Firewall">csf</abbr> and <abbr title="Login Failure Daemon">lfd</abbr></p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-crs
 </span></code></pre></div>
 <p><br></p>
-<h3 id="manage-lfd-daemon">Manage Lfd Daemon<a class="headerlink" href="#manage-lfd-daemon" title="Permanent link">¶</a></h3>
+<h3 id="manage-lfd-daemon">Manage Lfd Daemon<a class="headerlink" data-preview="" href="#manage-lfd-daemon" title="Permanent link">¶</a></h3>
 <p><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>--<abbr title="Login Failure Daemon">lfd</abbr> [stop|start|restart|status]</code></span></span></p>
 <p>Actions to take with the <abbr title="Login Failure Daemon">lfd daemon</abbr></p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>--lfd<span class="w"> </span>stop
@@ -4586,12 +4624,12 @@
 </div>
 </div>
 <p><br></p>
-<h3 id="check-for-updates">Check for Updates<a class="headerlink" href="#check-for-updates" title="Permanent link">¶</a></h3>
+<h3 id="check-for-updates">Check for Updates<a class="headerlink" data-preview="" href="#check-for-updates" title="Permanent link">¶</a></h3>
 <p><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>-c,  --check</code></span></span></p>
 <p>Check for updates to <abbr title="ConfigServer Security &amp; Firewall">csf</abbr> but do not upgrade</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-c
 </span></code></pre></div>
-<div class="tabbed-set tabbed-alternate" data-tabs="7:1"><input checked="checked" id="check-for-updates-terminal" name="__tabbed_7" type="radio"><div class="tabbed-labels"><label for="check-for-updates-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="7:1"><input checked="checked" id="check-for-updates-terminal" name="__tabbed_7" type="radio"><div class="tabbed-labels"><label for="check-for-updates-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="language-console highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="go">csf is already at the latest version: v14.20</span>
@@ -4600,24 +4638,24 @@
 </div>
 </div>
 <p><br></p>
-<h3 id="update">Update<a class="headerlink" href="#update" title="Permanent link">¶</a></h3>
+<h3 id="update">Update<a class="headerlink" data-preview="" href="#update" title="Permanent link">¶</a></h3>
 <p><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>-u,  --update</code></span></span></p>
 <p>Check for updates to <abbr title="ConfigServer Security &amp; Firewall">csf</abbr> and upgrade if available</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-u
 </span></code></pre></div>
 <p><br></p>
-<h3 id="update-force">Update (Force)<a class="headerlink" href="#update-force" title="Permanent link">¶</a></h3>
+<h3 id="update-force">Update (Force)<a class="headerlink" data-preview="" href="#update-force" title="Permanent link">¶</a></h3>
 <p><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>-uf</code></span></span></p>
 <p>Force an update of <abbr title="ConfigServer Security &amp; Firewall">csf</abbr> whether and upgrade is required or not</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-uf
 </span></code></pre></div>
 <p><br></p>
-<h3 id="version">Version<a class="headerlink" href="#version" title="Permanent link">¶</a></h3>
+<h3 id="version">Version<a class="headerlink" data-preview="" href="#version" title="Permanent link">¶</a></h3>
 <p><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>-v,  --version</code></span></span></p>
 <p>Show <abbr title="ConfigServer Security &amp; Firewall">csf</abbr> version</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-v
 </span></code></pre></div>
-<div class="tabbed-set tabbed-alternate" data-tabs="8:1"><input checked="checked" id="version-terminal" name="__tabbed_8" type="radio"><div class="tabbed-labels"><label for="version-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="8:1"><input checked="checked" id="version-terminal" name="__tabbed_8" type="radio"><div class="tabbed-labels"><label for="version-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>csf: v15.10 (generic)
@@ -4626,12 +4664,12 @@
 </div>
 </div>
 <p><br></p>
-<h3 id="list-firewall-rules-ipv4">List Firewall Rules (IPv4)<a class="headerlink" href="#list-firewall-rules-ipv4" title="Permanent link">¶</a></h3>
+<h3 id="list-firewall-rules-ipv4">List Firewall Rules (IPv4)<a class="headerlink" data-preview="" href="#list-firewall-rules-ipv4" title="Permanent link">¶</a></h3>
 <p><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>-l,  --status</code></span></span></p>
 <p>List/Show the IPv4 <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> configuration</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-l
 </span></code></pre></div>
-<div class="tabbed-set tabbed-alternate" data-tabs="9:1"><input checked="checked" id="list-firewall-rules-ipv4-terminal" name="__tabbed_9" type="radio"><div class="tabbed-labels"><label for="list-firewall-rules-ipv4-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="9:1"><input checked="checked" id="list-firewall-rules-ipv4-terminal" name="__tabbed_9" type="radio"><div class="tabbed-labels"><label for="list-firewall-rules-ipv4-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>iptables filter table
@@ -4655,12 +4693,12 @@
 </div>
 <p><br></p>
 <p><br></p>
-<h3 id="list-firewall-rules-ipv6">List Firewall Rules (IPv6)<a class="headerlink" href="#list-firewall-rules-ipv6" title="Permanent link">¶</a></h3>
+<h3 id="list-firewall-rules-ipv6">List Firewall Rules (IPv6)<a class="headerlink" data-preview="" href="#list-firewall-rules-ipv6" title="Permanent link">¶</a></h3>
 <p><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>-l6, --status6</code></span></span></p>
 <p>List/Show the IPv6 ip6tables configuration</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-l6
 </span></code></pre></div>
-<div class="tabbed-set tabbed-alternate" data-tabs="10:1"><input checked="checked" id="list-firewall-rules-ipv6-terminal" name="__tabbed_10" type="radio"><div class="tabbed-labels"><label for="list-firewall-rules-ipv6-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="10:1"><input checked="checked" id="list-firewall-rules-ipv6-terminal" name="__tabbed_10" type="radio"><div class="tabbed-labels"><label for="list-firewall-rules-ipv6-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>ip6tables filter table
@@ -4682,13 +4720,13 @@
 </div>
 </div>
 <p><br></p>
-<h3 id="add-ip-to-allow-list">Add IP to Allow List<a class="headerlink" href="#add-ip-to-allow-list" title="Permanent link">¶</a></h3>
+<h3 id="add-ip-to-allow-list">Add IP to Allow List<a class="headerlink" data-preview="" href="#add-ip-to-allow-list" title="Permanent link">¶</a></h3>
 <p><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>-a,  --add ip [comment]</code></span></span></p>
 <p>Allow an IP and add to <code>/etc/csf/csf.allow</code></p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-a<span class="w"> </span>&lt;IP_ADDRESS&gt;
 </span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-a<span class="w"> </span><span class="m">142</span>.250.189.142
 </span></code></pre></div>
-<div class="tabbed-set tabbed-alternate" data-tabs="11:1"><input checked="checked" id="add-ip-to-allow-list-terminal" name="__tabbed_11" type="radio"><div class="tabbed-labels"><label for="add-ip-to-allow-list-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="11:1"><input checked="checked" id="add-ip-to-allow-list-terminal" name="__tabbed_11" type="radio"><div class="tabbed-labels"><label for="add-ip-to-allow-list-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>Adding 142.250.189.142 to csf.allow and iptables ACCEPT...
@@ -4698,30 +4736,30 @@
 </div>
 </div>
 <p><br></p>
-<h3 id="remove-ip-to-allow-list">Remove IP to Allow List<a class="headerlink" href="#remove-ip-to-allow-list" title="Permanent link">¶</a></h3>
+<h3 id="remove-ip-to-allow-list">Remove IP to Allow List<a class="headerlink" data-preview="" href="#remove-ip-to-allow-list" title="Permanent link">¶</a></h3>
 <p><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>-ar, --addrm ip</code></span></span></p>
 <p>Remove an IP from <code>/etc/csf/csf.allow</code> and delete rule</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-ar<span class="w"> </span>&lt;IP_ADDRESS&gt;
 </span></code></pre></div>
 <p><br></p>
-<h3 id="add-ip-to-deny-list">Add IP to Deny List<a class="headerlink" href="#add-ip-to-deny-list" title="Permanent link">¶</a></h3>
+<h3 id="add-ip-to-deny-list">Add IP to Deny List<a class="headerlink" data-preview="" href="#add-ip-to-deny-list" title="Permanent link">¶</a></h3>
 <p><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>-d,  --deny ip [comment]</code></span></span></p>
 <p>Deny an IP and add to <code>/etc/csf/csf.deny</code></p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-d<span class="w"> </span>&lt;IP_ADDRESS&gt;
 </span></code></pre></div>
 <p><br></p>
-<h3 id="remove-ip-from-deny-list">Remove IP from Deny List<a class="headerlink" href="#remove-ip-from-deny-list" title="Permanent link">¶</a></h3>
+<h3 id="remove-ip-from-deny-list">Remove IP from Deny List<a class="headerlink" data-preview="" href="#remove-ip-from-deny-list" title="Permanent link">¶</a></h3>
 <p><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>-dr, --denyrm ip</code></span></span></p>
 <p>Unblock an IP and remove from <code>/etc/csf/csf.deny</code></p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-dr<span class="w"> </span>&lt;IP_ADDRESS&gt;
 </span></code></pre></div>
 <p><br></p>
-<h3 id="remove-all-ips-from-deny-list">Remove All IPs from Deny List<a class="headerlink" href="#remove-all-ips-from-deny-list" title="Permanent link">¶</a></h3>
+<h3 id="remove-all-ips-from-deny-list">Remove All IPs from Deny List<a class="headerlink" data-preview="" href="#remove-all-ips-from-deny-list" title="Permanent link">¶</a></h3>
 <p><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>-df, --denyf</code></span></span></p>
 <p>Remove and unblock all entries in <code>/etc/csf/csf.deny</code></p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-df
 </span></code></pre></div>
-<div class="tabbed-set tabbed-alternate" data-tabs="12:1"><input checked="checked" id="remove-all-ips-from-deny-list-terminal" name="__tabbed_12" type="radio"><div class="tabbed-labels"><label for="remove-all-ips-from-deny-list-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="12:1"><input checked="checked" id="remove-all-ips-from-deny-list-terminal" name="__tabbed_12" type="radio"><div class="tabbed-labels"><label for="remove-all-ips-from-deny-list-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>csf: all entries removed from csf.deny
@@ -4730,7 +4768,7 @@
 </div>
 </div>
 <p><br></p>
-<h3 id="grep-search-for-ip">Grep Search for IP<a class="headerlink" href="#grep-search-for-ip" title="Permanent link">¶</a></h3>
+<h3 id="grep-search-for-ip">Grep Search for IP<a class="headerlink" data-preview="" href="#grep-search-for-ip" title="Permanent link">¶</a></h3>
 <p><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>-g,  --grep ip</code></span></span></p>
 <p>Search the <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> and ip6tables rules for a match (e.g. IP, CIDR, Port Number)</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-g<span class="w"> </span>&lt;STRING&gt;
@@ -4738,13 +4776,13 @@
 </span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-g<span class="w"> </span>ACCEPT
 </span></code></pre></div>
 <p><br></p>
-<h3 id="lookup-ip">Lookup IP<a class="headerlink" href="#lookup-ip" title="Permanent link">¶</a></h3>
+<h3 id="lookup-ip">Lookup IP<a class="headerlink" data-preview="" href="#lookup-ip" title="Permanent link">¶</a></h3>
 <p><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>-i,  --iplookup ip</code></span></span></p>
 <p>Lookup IP address geographical information using <code>CC_LOOKUPS</code> setting in <code>/etc/csf/csf.conf</code></p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-i<span class="w"> </span>&lt;IP_ADDRESS&gt;
 </span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-i<span class="w"> </span><span class="m">142</span>.250.189.142
 </span></code></pre></div>
-<div class="tabbed-set tabbed-alternate" data-tabs="13:1"><input checked="checked" id="lookup-ip-terminal" name="__tabbed_13" type="radio"><div class="tabbed-labels"><label for="lookup-ip-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="13:1"><input checked="checked" id="lookup-ip-terminal" name="__tabbed_13" type="radio"><div class="tabbed-labels"><label for="lookup-ip-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="language-text highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>142.250.189.142 (US/United States/mia09s26-in-f14.1e100.net)
@@ -4753,12 +4791,12 @@
 </div>
 </div>
 <p><br></p>
-<h3 id="view-temp-allowban-list">View Temp Allow/Ban List<a class="headerlink" href="#view-temp-allowban-list" title="Permanent link">¶</a></h3>
+<h3 id="view-temp-allowban-list">View Temp Allow/Ban List<a class="headerlink" data-preview="" href="#view-temp-allowban-list" title="Permanent link">¶</a></h3>
 <p><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>-t,  --temp</code></span></span></p>
 <p>Displays the current list of temporary allow and deny IP entries with their TTL and comment</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-t
 </span></code></pre></div>
-<div class="tabbed-set tabbed-alternate" data-tabs="14:1"><input checked="checked" id="view-temp-allowban-list-terminal" name="__tabbed_14" type="radio"><div class="tabbed-labels"><label for="view-temp-allowban-list-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="14:1"><input checked="checked" id="view-temp-allowban-list-terminal" name="__tabbed_14" type="radio"><div class="tabbed-labels"><label for="view-temp-allowban-list-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="language-text highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>A/D   IP address          Port    Dir     Time To Live     Comment
@@ -4768,13 +4806,13 @@
 </div>
 </div>
 <p><br></p>
-<h3 id="remove-temp-allowban-ip">Remove Temp Allow/Ban IP<a class="headerlink" href="#remove-temp-allowban-ip" title="Permanent link">¶</a></h3>
+<h3 id="remove-temp-allowban-ip">Remove Temp Allow/Ban IP<a class="headerlink" data-preview="" href="#remove-temp-allowban-ip" title="Permanent link">¶</a></h3>
 <p><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>-tr, --temprm ip</code></span></span></p>
 <p>Remove an IP from the temporary IP ban or allow list</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-tr<span class="w"> </span>&lt;IP_ADDRESS&gt;
 </span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-tr<span class="w"> </span><span class="m">142</span>.250.189.142
 </span></code></pre></div>
-<div class="tabbed-set tabbed-alternate" data-tabs="15:1"><input checked="checked" id="remove-temp-allowban-ip-terminal" name="__tabbed_15" type="radio"><div class="tabbed-labels"><label for="remove-temp-allowban-ip-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="15:1"><input checked="checked" id="remove-temp-allowban-ip-terminal" name="__tabbed_15" type="radio"><div class="tabbed-labels"><label for="remove-temp-allowban-ip-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="language-text highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>ACCEPT  all opt -- in !lo out *  142.250.189.142  -&gt; 0.0.0.0/0  
@@ -4785,32 +4823,32 @@
 </div>
 </div>
 <p><br></p>
-<h3 id="remove-temp-ban-ip">Remove Temp Ban IP<a class="headerlink" href="#remove-temp-ban-ip" title="Permanent link">¶</a></h3>
+<h3 id="remove-temp-ban-ip">Remove Temp Ban IP<a class="headerlink" data-preview="" href="#remove-temp-ban-ip" title="Permanent link">¶</a></h3>
 <p><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>-trd, --temprmd ip</code></span></span></p>
 <p>Remove an IP from the temporary IP ban list only</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-trd<span class="w"> </span>&lt;IP_ADDRESS&gt;
 </span></code></pre></div>
 <p><br></p>
-<h3 id="remove-temp-allow-ip">Remove Temp Allow IP<a class="headerlink" href="#remove-temp-allow-ip" title="Permanent link">¶</a></h3>
+<h3 id="remove-temp-allow-ip">Remove Temp Allow IP<a class="headerlink" data-preview="" href="#remove-temp-allow-ip" title="Permanent link">¶</a></h3>
 <p><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>-tra, --temprma ip</code></span></span></p>
 <p>Remove an IP from the temporary IP allow list only</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-tra<span class="w"> </span>&lt;IP_ADDRESS&gt;
 </span></code></pre></div>
 <p><br></p>
-<h3 id="add-temp-block-ip">Add Temp Block IP<a class="headerlink" href="#add-temp-block-ip" title="Permanent link">¶</a></h3>
+<h3 id="add-temp-block-ip">Add Temp Block IP<a class="headerlink" data-preview="" href="#add-temp-block-ip" title="Permanent link">¶</a></h3>
 <p><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>-td, --tempdeny ip ttl [-p port] [-d direction] [comment]</code></span></span></p>
 <p>Add an IP to the temp IP ban list. ttl is how long to blocks for (default:seconds, can use one suffix of h/m/d). Optional port.
 Optional direction of block can be one of: in, out or inout (default:in)</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-td<span class="w"> </span>&lt;IP_ADDRESS&gt;
 </span></code></pre></div>
 <p><br></p>
-<h3 id="add-temp-allow-ip">Add Temp Allow IP<a class="headerlink" href="#add-temp-allow-ip" title="Permanent link">¶</a></h3>
+<h3 id="add-temp-allow-ip">Add Temp Allow IP<a class="headerlink" data-preview="" href="#add-temp-allow-ip" title="Permanent link">¶</a></h3>
 <p><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>-ta, --tempallow ip ttl [-p port] [-d direction] [comment]</code></span></span></p>
 <p>Add an IP to the temp IP allow list (default:inout)</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-ta<span class="w"> </span>&lt;IP_ADDRESS&gt;
 </span><span id="__span-46-2"><a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-ta<span class="w"> </span><span class="m">142</span>.250.189.142
 </span></code></pre></div>
-<div class="tabbed-set tabbed-alternate" data-tabs="16:1"><input checked="checked" id="add-temp-allow-ip-terminal" name="__tabbed_16" type="radio"><div class="tabbed-labels"><label for="add-temp-allow-ip-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="16:1"><input checked="checked" id="add-temp-allow-ip-terminal" name="__tabbed_16" type="radio"><div class="tabbed-labels"><label for="add-temp-allow-ip-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="language-text highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>ACCEPT  all opt -- in !lo out *  142.250.189.142  -&gt; 0.0.0.0/0  
@@ -4820,12 +4858,12 @@ Optional direction of block can be one of: in, out or inout (default:in)</p>
 </div>
 </div>
 <p><br></p>
-<h3 id="flush-all-temp-ip-entries">Flush All Temp IP Entries<a class="headerlink" href="#flush-all-temp-ip-entries" title="Permanent link">¶</a></h3>
+<h3 id="flush-all-temp-ip-entries">Flush All Temp IP Entries<a class="headerlink" data-preview="" href="#flush-all-temp-ip-entries" title="Permanent link">¶</a></h3>
 <p><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>-tf, --tempf</code></span></span></p>
 <p>Flush all IPs from the temporary IP entries</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-tf
 </span></code></pre></div>
-<div class="tabbed-set tabbed-alternate" data-tabs="17:1"><input checked="checked" id="flush-all-temp-ip-entries-terminal" name="__tabbed_17" type="radio"><div class="tabbed-labels"><label for="flush-all-temp-ip-entries-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="17:1"><input checked="checked" id="flush-all-temp-ip-entries-terminal" name="__tabbed_17" type="radio"><div class="tabbed-labels"><label for="flush-all-temp-ip-entries-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="language-text highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>csf: There are no temporary IP bans
@@ -4837,14 +4875,14 @@ Optional direction of block can be one of: in, out or inout (default:in)</p>
 </div>
 </div>
 <p><br></p>
-<h3 id="initiate-lfd-log-scanner">Initiate Lfd Log Scanner<a class="headerlink" href="#initiate-lfd-log-scanner" title="Permanent link">¶</a></h3>
+<h3 id="initiate-lfd-log-scanner">Initiate Lfd Log Scanner<a class="headerlink" data-preview="" href="#initiate-lfd-log-scanner" title="Permanent link">¶</a></h3>
 <p><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>-lr, --logrun</code></span></span></p>
 <p>Initiate Log Scanner report via <abbr title="Login Failure Daemon">lfd</abbr></p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-lr
 </span></code></pre></div>
 <p><br></p>
 <p>If you receive the following error in console:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="18:1"><input checked="checked" id="initiate-lfd-log-scanner-terminal" name="__tabbed_18" type="radio"><div class="tabbed-labels"><label for="initiate-lfd-log-scanner-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="18:1"><input checked="checked" id="initiate-lfd-log-scanner-terminal" name="__tabbed_18" type="radio"><div class="tabbed-labels"><label for="initiate-lfd-log-scanner-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="language-text highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>Option LOGSCANNER needs to be enabled in csf.conf for this feature
@@ -4876,12 +4914,12 @@ Optional direction of block can be one of: in, out or inout (default:in)</p>
 <p><br></p>
 <p>Then go back to console and re-run the command.</p>
 <p><br></p>
-<h3 id="view-ports">View Ports<a class="headerlink" href="#view-ports" title="Permanent link">¶</a></h3>
+<h3 id="view-ports">View Ports<a class="headerlink" data-preview="" href="#view-ports" title="Permanent link">¶</a></h3>
 <p><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>-p, --ports</code></span></span></p>
 <p>View ports on the server that have a running process behind them listening for external connections</p>
 <div class="language-shell highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-p
 </span></code></pre></div>
-<div class="tabbed-set tabbed-alternate" data-tabs="19:1"><input checked="checked" id="view-ports-terminal" name="__tabbed_19" type="radio"><div class="tabbed-labels"><label for="view-ports-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="19:1"><input checked="checked" id="view-ports-terminal" name="__tabbed_19" type="radio"><div class="tabbed-labels"><label for="view-ports-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="language-text highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>Ports listening for external connections and the executables running behind them:
@@ -4897,7 +4935,7 @@ Optional direction of block can be one of: in, out or inout (default:in)</p>
 </div>
 </div>
 <p><br></p>
-<h3 id="view-graphs">View Graphs<a class="headerlink" href="#view-graphs" title="Permanent link">¶</a></h3>
+<h3 id="view-graphs">View Graphs<a class="headerlink" data-preview="" href="#view-graphs" title="Permanent link">¶</a></h3>
 <p><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>--graphs [graph type] [directory]</code></span></span></p>
 <p>Generate System Statistics html pages and images for a given graph type into a given directory. See <code>ST_SYSTEM</code> for requirements</p>
 <dl>
@@ -4927,7 +4965,7 @@ Optional direction of block can be one of: in, out or inout (default:in)</p>
 </span></code></pre></div>
 <p><br></p>
 <p>If you run the above command and see the error:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="20:1"><input checked="checked" id="view-graphs-terminal" name="__tabbed_20" type="radio"><div class="tabbed-labels"><label for="view-graphs-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="20:1"><input checked="checked" id="view-graphs-terminal" name="__tabbed_20" type="radio"><div class="tabbed-labels"><label for="view-graphs-terminal"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="language-text highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>ST_SYSTEM is disabled
@@ -4954,7 +4992,7 @@ Optional direction of block can be one of: in, out or inout (default:in)</p>
 </span></span></code></pre></div>
 <p><br></p>
 <p>If you receive the error:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="21:1"><input checked="checked" id="view-graphs-terminal_1" name="__tabbed_21" type="radio"><div class="tabbed-labels"><label for="view-graphs-terminal_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="21:1"><input checked="checked" id="view-graphs-terminal_1" name="__tabbed_21" type="radio"><div class="tabbed-labels"><label for="view-graphs-terminal_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Terminal</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="language-text highlight"><pre><span></span><code><span id="__span-58-1"><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>Perl module GD::Graph is not installed/working
@@ -4964,7 +5002,7 @@ Optional direction of block can be one of: in, out or inout (default:in)</p>
 </div>
 <p><br></p>
 <p>Install the package <code>libgd-graph-perl</code>:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="22:3"><input checked="checked" id="view-graphs-debianubuntu-apt-get" name="__tabbed_22" type="radio"><input id="view-graphs-centosrhel-yumdnf" name="__tabbed_22" type="radio"><input id="view-graphs-perl-cpan" name="__tabbed_22" type="radio"><div class="tabbed-labels"><label for="view-graphs-debianubuntu-apt-get"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M380.4 245.6c3-7.6 5.5-14 5.2-24.4l-4.3 9c4.4-13.2 4-27.1 3.6-40.4-.2-6-.3-11.8 0-17.4l-1.8-.5c-1.5-45.2-40.6-93.1-75.3-109.4-30-13.8-76.1-16.2-97.3-5.8 1.3-1.1 4.2-2 6.8-2.7l.3-.1c3.3-1 6-1.7 4-2.9-19.2 1.9-24.9 5.5-31.1 9.4l-.1 0c-4.6 2.9-9.5 6-20.3 8.7-3.5 3.4 1.7 2 5.8 .9s7.2-1.9-.1 2.4c-3.5 1-6.6 1.3-9.6 1.6l-.1 0c-8.3 .8-15.8 1.6-30.7 17 .8 1.3 3.4-.2 5.3-1.3l.1-.1c2.3-1.4 3.4-2-1.7 4.4-19.1-2.4-60.3 43.7-69.1 59l4.6 .8c-3.2 8-6.8 14.8-10 20.8-4.3 8.1-7.9 14.9-8.7 21.3-.3 5.1-1 11-1.7 17.3-.1 1-.2 2-.3 3l-.1 .6c-3 27.3-6.7 60.8 3.9 73l-1.3 13c.6 1.2 1.1 2.3 1.6 3.5 .2 .4 .4 .8 .5 1.1 1 2.1 2 4.2 3.3 6.2l-3 .2c7 22.1 10.8 22.5 15.1 22.9 4.4 .4 9.3 .9 18.7 24.2-2.7-.9-5.5-1.9-9.4-7.2-.5 4.1 5.8 16.3 13.1 25.8l-3.1 3.6c2.1 3.7 4.8 6.2 7.6 8.8 1 .9 2.1 1.9 3.1 2.9-11.9-6.5 3.2 13.7 11.9 25.2 .8 1.1 1.5 2 2.2 2.9 1.4 1.9 2.5 3.4 2.9 4.1l2.4-4.2c-.3 6.1 4.3 13.9 13.1 24.7l7.3-.3c3 6 14 16.7 20.7 17.2l-4.4 5.8c8.1 2.6 10.3 4.3 12.7 6.2 2.6 2.1 5.4 4.3 16.1 8.1l-4.2-7.4c3.5 3 6.2 5.9 8.8 8.7l.1 .1c5.2 5.6 9.9 10.6 19.7 15.3 10.7 3.7 16.6 4.7 22.7 5.8 .3 0 .6 .1 .9 .1 5.4 .8 11.2 1.8 20.8 4.5-1.1-.1-2.2-.1-3.3-.1-2.3-.1-4.7-.1-7-.1-14.4-.2-29.2-.4-42.7-5.2-96.6-25.7-184.9-139-178.4-255.6-.6-9.9-.3-20.9 0-30.7 .4-13.5 .7-24.8-1.6-28.3l1-3.1c5.3-17.4 11.7-38.2 23.8-62.8l-.1-.2 0-.1c.4 .4 3.4 3.4 8.8-5.8 .8-1.8 1.6-3.7 2.4-5.6 .5-1.1 .9-2.2 1.4-3.2 2.5-6.1 5.1-12.3 8.4-17.9l2.6-.6c1.7-10.1 17-23.8 29.8-35.2l1.1-1c5.7-5.1 10.7-9.7 13.6-13.1l.7 4.4c17-15.9 44.6-27.5 65.6-36.4l.5-.2c4.8-2 9.3-3.9 13.3-5.7-3.4 3.8 2.2 2.7 10 1 4.8-1 10.4-2.1 15.3-2.4l-3.9 2.1c-2.7 1.4-5.4 2.8-8 4.6 8.1-2 11.7-1.4 15.7-.8l.3 0c3.5 .6 7.3 1.2 14.6 .2-5.6 .8-12.3 3-11.2 3.8 7.9 .9 12.8-.1 17.2-1l.2 0c5.5-1.1 10.3-2 19.3 .9l-1-4.8c7.3 2.6 12.7 4.3 17.5 5.8l.5 .1c10 3 17.6 5.3 34.2 14.1 3.2 .2 5.3-.5 7.4-1.2l.1 0c3.6-1.1 7-2.1 15.2 1.2 .3 .5 .5 1 .7 1.4 .1 .2 .2 .5 .3 .7l0 .1c1 2.6 1.8 4.6 14.6 12.1 1.7-.7-2.7-4.7-6.4-8.2l-.1-.1c-.2-.1-.3-.3-.5-.4 32.2 17.3 67.3 54.1 78 93.5-6-11.1-5.2-5.5-4.3 .5 .6 4 1.2 8.1-.2 7.5 4.5 12.1 8.1 24.5 10.4 37.4l-.8-2.9-.1-.3c-3.3-11.9-9.6-34.3-19.9-49.3-.4 4.3-2.8 3.9-5.2 3.5l-.1 0c-3.3-.6-6.2-1.1-1.9 12.6 2.6 3.8 3.1 2.4 3.5 1.1 .5-1.5 .9-2.7 4.7 5.2 .1 4.1 1 8.2 2.1 12.7l.1 .6c.1 .3 .1 .5 .2 .8l.1 .6c.6 2.6 1.3 5.4 1.8 8.4-1.1-.2-2.3-2.2-3.4-4.2-1.4-2.4-2.8-4.7-3.7-3.2 2.4 11.5 6.5 17.4 8 18.3-.3 .6-.6 .7-1.1 .7-.8 0-1.8 .1-1.9 5.3 .7 13.7 3.3 12.5 5.3 11.6 .6-.3 1.2-.6 1.7-.4-.6 2.5-1.6 5.1-2.7 7.9-2.8 7.1-6 15.4-3.4 26.1-.8-3-2-6-3.1-8.9l-.1-.4c-.2-.5-.4-1-.6-1.5-.3-.8-.6-1.6-.9-2.3-.6 4.4-.3 7.7-.1 10.6l0 .7c.4 5.3 .7 10-3 19.9 4.3-14.2 3.8-26.9-.2-20.8 1 10.9-3.7 20.4-8 28.9l-.1 .2c-3.6 7.1-6.8 13.5-5.9 19.3l-5.2-7.1c-7.5 10.9-7 13.3-6.5 15.5l0 .1c.5 1.9 1 3.8-3.4 10.8 1.7-2.9 1.3-3.6 1-4.2-.4-.8-.7-1.5 1.7-5.1-1.6 .1-5.5 3.9-10.1 8.5-3.9 3.9-8.5 8.4-12.8 11.8-37.5 30.1-82.3 34-125.6 17.8 .2-1-.2-2.1-3.1-4.1-36.8-28.2-58.5-52.1-50.9-107.5 2.1-1.6 3.6-5.8 5.3-10.8l.2-.4 .1-.3 0-.1c2.9-8.4 6.5-18.8 14.3-23.8 7.8-17.3 31.3-33.3 56.4-33.7 25.6-1.4 47.2 13.7 58.1 27.9-19.8-18.4-52.1-24-79.7-10.4-28.2 12.7-45 43.8-42.5 74.7 .3-.4 .6-.6 .9-.8l.2-.2c.6-.5 1.1-.9 1.4-3.3-.9 60.2 64.8 104.3 112.1 82l.6 1.3c12.7-3.5 15.9-6.5 20.3-10.7l.1-.1c2.2-2.1 4.7-4.5 8.9-7.3-.3 .7-1.3 1.7-2.4 2.7-2.2 2.1-4.6 4.5-1.6 4.6 5-1.3 18.5-13.4 28.5-22.3 .6-.5 1.2-1 1.7-1.5 1.5-1.3 2.8-2.5 4-3.6l.3-.3c1.9-4.2 1.6-5.6 1.3-7l0-.1c-.4-1.6-.8-3.3 2.4-9.6l7.3-3.7c.8-2.1 1.5-4.1 2.2-6 .2-.6 .5-1.2 .7-1.8l-.4-.2-.1-.1zM248 334.1c-6-3-13.7-8.9-14.8-11.4l-.4 .3c-.3 .6-.5 1.3-.2 2.2-12.2-5.7-23.4-14.3-32.6-24.9 4.9 7.1 10.1 14.1 17 19.5-6.9-2.3-15.1-11.8-21.6-19.3l-.1-.1c-4.3-5-7.9-9.1-9.7-9.5 19.8 35.5 80.5 62.3 112.3 49-14.7 .5-33.4 .3-49.9-5.8zm79.3-119.7l-.1-.2c-.5-1.5-1.1-3.1-1.7-3.4 1.4-5.8 5.4-10.7 4.4 4.6-1 3.8-1.8 1.5-2.6-1zm-4.2 22.2c-1.3 7.9-5 15.5-10.1 22.5 .2-2-1.2-2.4-2.6-2.8-2.9-.8-5.9-1.6 5.6-16.1-.5 1.9-2.1 4.6-3.7 7.3l-.3 .4c-3.6 5.9-6.7 11 4 4.3l1-1.8c2.6-4.5 5-8.8 6-13.8l.1 0zm-55.6 33.9c7.1 .6 14.1 .6 21-1.1-2.5 2.4-5.2 4.8-8.3 7.2-11.1-1.7-21.2-6-12.7-6.1zm-92.6 11.6c3.6 7.1 6.4 11.5 9 15.7l.1 .2c2.3 3.7 4.4 7.1 6.8 11.7-5.1-4.2-8.7-9.5-12.5-15l-.3-.5c-1.4-2.1-2.8-4.2-4.4-6.2l1.2-5.9 .1 0zm7.5-9.6c1.6 3.3 3.2 6.4 5.7 9.1l2.6 7.7-1.3-2.1c-3.2-5.3-6.3-10.6-8-16.7l1 2zm238.9-41.6c-2.3 17.4-7.7 34.6-16 50.3 7.6-14.9 12.5-30.9 14.8-47.2l1.2-3.1zM35.8 110.6c.4 .8 1.4 .5 2.3 .3 1.9-.5 3.6-.9-.1 7.6-.5 .3-1 .7-1.5 1-1.4 .9-2.8 1.9-3.9 3 1.9-3.8 3.5-7.4 3.2-11.9zM25.5 152.3c-.7 3.7-1.5 7.9-3.4 13.9 .2-1.9 0-3.5-.2-4.9l0-.1c-.4-3.4-.7-6.3 4.3-12.8-.3 1.2-.5 2.5-.7 3.8l0 .1z"></path></svg></span> Debian/Ubuntu (<abbr title="A command-line tool for handling packages on Debian-based systems; part of the APT (Advanced Package Tool) suite.">apt-get</abbr>)</label><label for="view-graphs-centosrhel-yumdnf"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M341.5 285.6c33.7 0 82.3-6.9 82.3-47 .2-6.7 .9-1.8-20.9-96.2-4.6-19.1-8.7-27.8-42.3-44.6-26.1-13.3-82.9-35.4-99.7-35.4-15.7 0-20.2 20.2-38.9 20.2-18 0-31.3-15.1-48.1-15.1-16.1 0-26.7 11-34.8 33.6-27.5 77.6-26.3 74.3-26.1 78.3 0 24.8 97.6 106.1 228.5 106.1zM429 254.8c4.7 22 4.7 24.3 4.7 27.2 0 37.7-42.3 58.6-98 58.6-125.7 .1-235.9-73.6-235.9-122.3 0-6.8 1.4-13.5 4.1-19.7-45.2 2.3-103.8 10.3-103.8 62 0 84.7 200.6 189 359.5 189 121.8 0 152.5-55.1 152.5-98.6 0-34.2-29.6-73-82.9-96.2z"></path></svg></span> CentOS/RHEL (<abbr title="Yellowdog Updater, Modified; a package manager used on older Red Hat–based systems (e.g., CentOS, RHEL).">yum</abbr>/<abbr title="Dandified Yum; the next-generation version of YUM, used on newer Red Hat–based systems (e.g., Fedora, CentOS 8+, RHEL 8+).">dnf</abbr>)</label><label for="view-graphs-perl-cpan"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M274.6 27.5C269 12.2 255.9 0 239.7 0L208.3 0C192.1 0 179 12.2 173.4 27.5L117.7 229.3c-3.8 13.8-5.7 28.1-5.7 42.4 0 33.2 10.4 65.7 29.7 92.7l6.9 9.7 45.9 53.6c3.5 4.1 5.5 9.3 5.5 14.8l0 45.5c0 13.3 10.7 24 24 24s24-10.7 24-24l0-45.5c0-5.4 1.9-10.6 5.5-14.8l45.9-53.6 6.9-9.7c19.3-27 29.7-59.5 29.7-92.7 0-14.3-1.9-28.6-5.7-42.4L274.6 27.5zM280 453.1l0 34.9c0 13.3 10.7 24 24 24s24-10.7 24-24l0-48.2c68.3-25.9 120-79.1 120-159.8 0-64-44-102-88-140-9.5-8.2-19-16.4-28.1-24.9l29.2 105.7c4.6 16.6 6.9 33.7 6.9 50.9 0 39.9-12.5 78.8-35.7 111.3l-7.3 10.2-.4 .6-.5 .5-44.1 51.5 0 7.2zM88 140l0 0C44 178 0 216 0 280 0 360.7 51.7 414 120 439.8l0 48.2c0 13.3 10.7 24 24 24s24-10.7 24-24l0-42.1-44.1-51.5-.5-.5-.4-.6-7.3-10.2c-23.2-32.5-35.7-71.4-35.7-111.3 0-17.2 2.3-34.3 6.9-50.9l29.2-105.7C107 123.6 97.5 131.8 88 140z"></path></svg></span> Perl (CPAN)</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="22:3"><input checked="checked" id="view-graphs-debianubuntu-apt-get" name="__tabbed_22" type="radio"><input id="view-graphs-centosrhel-yumdnf" name="__tabbed_22" type="radio"><input id="view-graphs-perl-cpan" name="__tabbed_22" type="radio"><div class="tabbed-labels"><label for="view-graphs-debianubuntu-apt-get"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M380.4 245.6c3-7.6 5.5-14 5.2-24.4l-4.3 9c4.4-13.2 4-27.1 3.6-40.4-.2-6-.3-11.8 0-17.4l-1.8-.5c-1.5-45.2-40.6-93.1-75.3-109.4-30-13.8-76.1-16.2-97.3-5.8 1.3-1.1 4.2-2 6.8-2.7l.3-.1c3.3-1 6-1.7 4-2.9-19.2 1.9-24.9 5.5-31.1 9.4l-.1 0c-4.6 2.9-9.5 6-20.3 8.7-3.5 3.4 1.7 2 5.8 .9s7.2-1.9-.1 2.4c-3.5 1-6.6 1.3-9.6 1.6l-.1 0c-8.3 .8-15.8 1.6-30.7 17 .8 1.3 3.4-.2 5.3-1.3l.1-.1c2.3-1.4 3.4-2-1.7 4.4-19.1-2.4-60.3 43.7-69.1 59l4.6 .8c-3.2 8-6.8 14.8-10 20.8-4.3 8.1-7.9 14.9-8.7 21.3-.3 5.1-1 11-1.7 17.3-.1 1-.2 2-.3 3l-.1 .6c-3 27.3-6.7 60.8 3.9 73l-1.3 13c.6 1.2 1.1 2.3 1.6 3.5 .2 .4 .4 .8 .5 1.1 1 2.1 2 4.2 3.3 6.2l-3 .2c7 22.1 10.8 22.5 15.1 22.9 4.4 .4 9.3 .9 18.7 24.2-2.7-.9-5.5-1.9-9.4-7.2-.5 4.1 5.8 16.3 13.1 25.8l-3.1 3.6c2.1 3.7 4.8 6.2 7.6 8.8 1 .9 2.1 1.9 3.1 2.9-11.9-6.5 3.2 13.7 11.9 25.2 .8 1.1 1.5 2 2.2 2.9 1.4 1.9 2.5 3.4 2.9 4.1l2.4-4.2c-.3 6.1 4.3 13.9 13.1 24.7l7.3-.3c3 6 14 16.7 20.7 17.2l-4.4 5.8c8.1 2.6 10.3 4.3 12.7 6.2 2.6 2.1 5.4 4.3 16.1 8.1l-4.2-7.4c3.5 3 6.2 5.9 8.8 8.7l.1 .1c5.2 5.6 9.9 10.6 19.7 15.3 10.7 3.7 16.6 4.7 22.7 5.8 .3 0 .6 .1 .9 .1 5.4 .8 11.2 1.8 20.8 4.5-1.1-.1-2.2-.1-3.3-.1-2.3-.1-4.7-.1-7-.1-14.4-.2-29.2-.4-42.7-5.2-96.6-25.7-184.9-139-178.4-255.6-.6-9.9-.3-20.9 0-30.7 .4-13.5 .7-24.8-1.6-28.3l1-3.1c5.3-17.4 11.7-38.2 23.8-62.8l-.1-.2 0-.1c.4 .4 3.4 3.4 8.8-5.8 .8-1.8 1.6-3.7 2.4-5.6 .5-1.1 .9-2.2 1.4-3.2 2.5-6.1 5.1-12.3 8.4-17.9l2.6-.6c1.7-10.1 17-23.8 29.8-35.2l1.1-1c5.7-5.1 10.7-9.7 13.6-13.1l.7 4.4c17-15.9 44.6-27.5 65.6-36.4l.5-.2c4.8-2 9.3-3.9 13.3-5.7-3.4 3.8 2.2 2.7 10 1 4.8-1 10.4-2.1 15.3-2.4l-3.9 2.1c-2.7 1.4-5.4 2.8-8 4.6 8.1-2 11.7-1.4 15.7-.8l.3 0c3.5 .6 7.3 1.2 14.6 .2-5.6 .8-12.3 3-11.2 3.8 7.9 .9 12.8-.1 17.2-1l.2 0c5.5-1.1 10.3-2 19.3 .9l-1-4.8c7.3 2.6 12.7 4.3 17.5 5.8l.5 .1c10 3 17.6 5.3 34.2 14.1 3.2 .2 5.3-.5 7.4-1.2l.1 0c3.6-1.1 7-2.1 15.2 1.2 .3 .5 .5 1 .7 1.4 .1 .2 .2 .5 .3 .7l0 .1c1 2.6 1.8 4.6 14.6 12.1 1.7-.7-2.7-4.7-6.4-8.2l-.1-.1c-.2-.1-.3-.3-.5-.4 32.2 17.3 67.3 54.1 78 93.5-6-11.1-5.2-5.5-4.3 .5 .6 4 1.2 8.1-.2 7.5 4.5 12.1 8.1 24.5 10.4 37.4l-.8-2.9-.1-.3c-3.3-11.9-9.6-34.3-19.9-49.3-.4 4.3-2.8 3.9-5.2 3.5l-.1 0c-3.3-.6-6.2-1.1-1.9 12.6 2.6 3.8 3.1 2.4 3.5 1.1 .5-1.5 .9-2.7 4.7 5.2 .1 4.1 1 8.2 2.1 12.7l.1 .6c.1 .3 .1 .5 .2 .8l.1 .6c.6 2.6 1.3 5.4 1.8 8.4-1.1-.2-2.3-2.2-3.4-4.2-1.4-2.4-2.8-4.7-3.7-3.2 2.4 11.5 6.5 17.4 8 18.3-.3 .6-.6 .7-1.1 .7-.8 0-1.8 .1-1.9 5.3 .7 13.7 3.3 12.5 5.3 11.6 .6-.3 1.2-.6 1.7-.4-.6 2.5-1.6 5.1-2.7 7.9-2.8 7.1-6 15.4-3.4 26.1-.8-3-2-6-3.1-8.9l-.1-.4c-.2-.5-.4-1-.6-1.5-.3-.8-.6-1.6-.9-2.3-.6 4.4-.3 7.7-.1 10.6l0 .7c.4 5.3 .7 10-3 19.9 4.3-14.2 3.8-26.9-.2-20.8 1 10.9-3.7 20.4-8 28.9l-.1 .2c-3.6 7.1-6.8 13.5-5.9 19.3l-5.2-7.1c-7.5 10.9-7 13.3-6.5 15.5l0 .1c.5 1.9 1 3.8-3.4 10.8 1.7-2.9 1.3-3.6 1-4.2-.4-.8-.7-1.5 1.7-5.1-1.6 .1-5.5 3.9-10.1 8.5-3.9 3.9-8.5 8.4-12.8 11.8-37.5 30.1-82.3 34-125.6 17.8 .2-1-.2-2.1-3.1-4.1-36.8-28.2-58.5-52.1-50.9-107.5 2.1-1.6 3.6-5.8 5.3-10.8l.2-.4 .1-.3 0-.1c2.9-8.4 6.5-18.8 14.3-23.8 7.8-17.3 31.3-33.3 56.4-33.7 25.6-1.4 47.2 13.7 58.1 27.9-19.8-18.4-52.1-24-79.7-10.4-28.2 12.7-45 43.8-42.5 74.7 .3-.4 .6-.6 .9-.8l.2-.2c.6-.5 1.1-.9 1.4-3.3-.9 60.2 64.8 104.3 112.1 82l.6 1.3c12.7-3.5 15.9-6.5 20.3-10.7l.1-.1c2.2-2.1 4.7-4.5 8.9-7.3-.3 .7-1.3 1.7-2.4 2.7-2.2 2.1-4.6 4.5-1.6 4.6 5-1.3 18.5-13.4 28.5-22.3 .6-.5 1.2-1 1.7-1.5 1.5-1.3 2.8-2.5 4-3.6l.3-.3c1.9-4.2 1.6-5.6 1.3-7l0-.1c-.4-1.6-.8-3.3 2.4-9.6l7.3-3.7c.8-2.1 1.5-4.1 2.2-6 .2-.6 .5-1.2 .7-1.8l-.4-.2-.1-.1zM248 334.1c-6-3-13.7-8.9-14.8-11.4l-.4 .3c-.3 .6-.5 1.3-.2 2.2-12.2-5.7-23.4-14.3-32.6-24.9 4.9 7.1 10.1 14.1 17 19.5-6.9-2.3-15.1-11.8-21.6-19.3l-.1-.1c-4.3-5-7.9-9.1-9.7-9.5 19.8 35.5 80.5 62.3 112.3 49-14.7 .5-33.4 .3-49.9-5.8zm79.3-119.7l-.1-.2c-.5-1.5-1.1-3.1-1.7-3.4 1.4-5.8 5.4-10.7 4.4 4.6-1 3.8-1.8 1.5-2.6-1zm-4.2 22.2c-1.3 7.9-5 15.5-10.1 22.5 .2-2-1.2-2.4-2.6-2.8-2.9-.8-5.9-1.6 5.6-16.1-.5 1.9-2.1 4.6-3.7 7.3l-.3 .4c-3.6 5.9-6.7 11 4 4.3l1-1.8c2.6-4.5 5-8.8 6-13.8l.1 0zm-55.6 33.9c7.1 .6 14.1 .6 21-1.1-2.5 2.4-5.2 4.8-8.3 7.2-11.1-1.7-21.2-6-12.7-6.1zm-92.6 11.6c3.6 7.1 6.4 11.5 9 15.7l.1 .2c2.3 3.7 4.4 7.1 6.8 11.7-5.1-4.2-8.7-9.5-12.5-15l-.3-.5c-1.4-2.1-2.8-4.2-4.4-6.2l1.2-5.9 .1 0zm7.5-9.6c1.6 3.3 3.2 6.4 5.7 9.1l2.6 7.7-1.3-2.1c-3.2-5.3-6.3-10.6-8-16.7l1 2zm238.9-41.6c-2.3 17.4-7.7 34.6-16 50.3 7.6-14.9 12.5-30.9 14.8-47.2l1.2-3.1zM35.8 110.6c.4 .8 1.4 .5 2.3 .3 1.9-.5 3.6-.9-.1 7.6-.5 .3-1 .7-1.5 1-1.4 .9-2.8 1.9-3.9 3 1.9-3.8 3.5-7.4 3.2-11.9zM25.5 152.3c-.7 3.7-1.5 7.9-3.4 13.9 .2-1.9 0-3.5-.2-4.9l0-.1c-.4-3.4-.7-6.3 4.3-12.8-.3 1.2-.5 2.5-.7 3.8l0 .1z"></path></svg></span> Debian/Ubuntu (<abbr title="A command-line tool for handling packages on Debian-based systems; part of the APT (Advanced Package Tool) suite.">apt-get</abbr>)</label><label for="view-graphs-centosrhel-yumdnf"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M341.5 285.6c33.7 0 82.3-6.9 82.3-47 .2-6.7 .9-1.8-20.9-96.2-4.6-19.1-8.7-27.8-42.3-44.6-26.1-13.3-82.9-35.4-99.7-35.4-15.7 0-20.2 20.2-38.9 20.2-18 0-31.3-15.1-48.1-15.1-16.1 0-26.7 11-34.8 33.6-27.5 77.6-26.3 74.3-26.1 78.3 0 24.8 97.6 106.1 228.5 106.1zM429 254.8c4.7 22 4.7 24.3 4.7 27.2 0 37.7-42.3 58.6-98 58.6-125.7 .1-235.9-73.6-235.9-122.3 0-6.8 1.4-13.5 4.1-19.7-45.2 2.3-103.8 10.3-103.8 62 0 84.7 200.6 189 359.5 189 121.8 0 152.5-55.1 152.5-98.6 0-34.2-29.6-73-82.9-96.2z"></path></svg></span> CentOS/RHEL (<abbr title="Yellowdog Updater, Modified; a package manager used on older Red Hat–based systems (e.g., CentOS, RHEL).">yum</abbr>/<abbr title="Dandified Yum; the next-generation version of YUM, used on newer Red Hat–based systems (e.g., Fedora, CentOS 8+, RHEL 8+).">dnf</abbr>)</label><label for="view-graphs-perl-cpan"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M274.6 27.5C269 12.2 255.9 0 239.7 0L208.3 0C192.1 0 179 12.2 173.4 27.5L117.7 229.3c-3.8 13.8-5.7 28.1-5.7 42.4 0 33.2 10.4 65.7 29.7 92.7l6.9 9.7 45.9 53.6c3.5 4.1 5.5 9.3 5.5 14.8l0 45.5c0 13.3 10.7 24 24 24s24-10.7 24-24l0-45.5c0-5.4 1.9-10.6 5.5-14.8l45.9-53.6 6.9-9.7c19.3-27 29.7-59.5 29.7-92.7 0-14.3-1.9-28.6-5.7-42.4L274.6 27.5zM280 453.1l0 34.9c0 13.3 10.7 24 24 24s24-10.7 24-24l0-48.2c68.3-25.9 120-79.1 120-159.8 0-64-44-102-88-140-9.5-8.2-19-16.4-28.1-24.9l29.2 105.7c4.6 16.6 6.9 33.7 6.9 50.9 0 39.9-12.5 78.8-35.7 111.3l-7.3 10.2-.4 .6-.5 .5-44.1 51.5 0 7.2zM88 140l0 0C44 178 0 216 0 280 0 360.7 51.7 414 120 439.8l0 48.2c0 13.3 10.7 24 24 24s24-10.7 24-24l0-42.1-44.1-51.5-.5-.5-.4-.6-7.3-10.2c-23.2-32.5-35.7-71.4-35.7-111.3 0-17.2 2.3-34.3 6.9-50.9l29.2-105.7C107 123.6 97.5 131.8 88 140z"></path></svg></span> Perl (CPAN)</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>apt-get<span class="w"> </span>update
@@ -5137,7 +5175,7 @@ Optional direction of block can be one of: in, out or inout (default:in)</p>
     
     
     <a href="https://download.configserver.dev" target="_blank" rel="noopener" title="Download CSF" class="md-social__link">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M256 32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 210.7-41.4-41.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l96 96c12.5 12.5 32.8 12.5 45.3 0l96-96c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 242.7 256 32zM64 320c-35.3 0-64 28.7-64 64l0 32c0 35.3 28.7 64 64 64l320 0c35.3 0 64-28.7 64-64l0-32c0-35.3-28.7-64-64-64l-46.9 0-56.6 56.6c-31.2 31.2-81.9 31.2-113.1 0L110.9 320 64 320zm304 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"></path></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M256 32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 210.7-41.4-41.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l96 96c12.5 12.5 32.8 12.5 45.3 0l96-96c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 242.7 256 32zM64 320c-35.3 0-64 28.7-64 64l0 32c0 35.3 28.7 64 64 64l320 0c35.3 0 64-28.7 64-64l0-32c0-35.3-28.7-64-64-64l-46.9 0-56.6 56.6c-31.2 31.2-81.9 31.2-113.1 0L110.9 320 64 320zm304 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"></path></svg>
     </a>
   
     
@@ -5145,7 +5183,7 @@ Optional direction of block can be one of: in, out or inout (default:in)</p>
     
     
     <a href="https://blocklist.configserver.dev" target="_blank" rel="noopener" title="Service › Blocklists" class="md-social__link">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M224 32l192 0 0 80-192 0 0-80zm-32 80l-96 0 0-16c0-35.3 28.7-64 64-64l32 0 0 80zM96 144l208 0 0 96-208 0 0-96zm0 224l0-96 96 0 0 96-96 0zm0 32l176.7 0c-.5 4.7-.7 9.4-.7 14.1 0 22.9 3.7 45.1 10.6 65.9L160 480c-35.3 0-64-28.7-64-64l0-16zM544 144l0 60.2c-12 .3-23.8 3.9-34.1 11-7.9-7.9-15.9-15.6-24.2-23.1-23.8-21.4-60-21.5-83.9-.2-17 15.2-32.9 31.4-47.2 48.1l-18.6 0 0-96 208 0zM224 272l105.2 0c-6.4 8.8-12.3 17.6-17.7 26.3-13.2 21.3-25.1 45.2-32.3 69.7l-55.2 0 0-96zM544 112l-96 0 0-80 32 0c35.3 0 64 28.7 64 64l0 16zM505.7 272.3L518 258.5c5.4-6.1 13.3-8.8 20.9-8.9 7.2 0 14.3 2.6 19.9 7.8 19.7 18.3 39.8 43.2 55 70.6 15.1 27.2 26.2 58.1 26.2 88.1 0 88.7-71.3 159.8-160 159.8-89.6 0-160-71.3-160-159.8 0-37.3 16-73.4 36.8-104.5 20.9-31.3 47.5-59 70.9-80.2 5.7-5.2 13.1-7.7 20.3-7.5s13.4 3.2 18.8 7.5c14.4 11.4 38.9 40.7 38.9 40.7zM544 464.2c0-36.5-37-73-54.8-88.4-5.4-4.7-13.1-4.7-18.5 0-17.7 15.4-54.8 51.9-54.8 88.4 0 35.3 28.7 64 64 64s64-28.7 64-64z"></path></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M224 32l192 0 0 80-192 0 0-80zm-32 80l-96 0 0-16c0-35.3 28.7-64 64-64l32 0 0 80zM96 144l208 0 0 96-208 0 0-96zm0 224l0-96 96 0 0 96-96 0zm0 32l176.7 0c-.5 4.7-.7 9.4-.7 14.1 0 22.9 3.7 45.1 10.6 65.9L160 480c-35.3 0-64-28.7-64-64l0-16zM544 144l0 60.2c-12 .3-23.8 3.9-34.1 11-7.9-7.9-15.9-15.6-24.2-23.1-23.8-21.4-60-21.5-83.9-.2-17 15.2-32.9 31.4-47.2 48.1l-18.6 0 0-96 208 0zM224 272l105.2 0c-6.4 8.8-12.3 17.6-17.7 26.3-13.2 21.3-25.1 45.2-32.3 69.7l-55.2 0 0-96zM544 112l-96 0 0-80 32 0c35.3 0 64 28.7 64 64l0 16zM505.7 272.3L518 258.5c5.4-6.1 13.3-8.8 20.9-8.9 7.2 0 14.3 2.6 19.9 7.8 19.7 18.3 39.8 43.2 55 70.6 15.1 27.2 26.2 58.1 26.2 88.1 0 88.7-71.3 159.8-160 159.8-89.6 0-160-71.3-160-159.8 0-37.3 16-73.4 36.8-104.5 20.9-31.3 47.5-59 70.9-80.2 5.7-5.2 13.1-7.7 20.3-7.5s13.4 3.2 18.8 7.5c14.4 11.4 38.9 40.7 38.9 40.7zM544 464.2c0-36.5-37-73-54.8-88.4-5.4-4.7-13.1-4.7-18.5 0-17.7 15.4-54.8 51.9-54.8 88.4 0 35.3 28.7 64 64 64s64-28.7 64-64z"></path></svg>
     </a>
   
     
@@ -5153,7 +5191,7 @@ Optional direction of block can be one of: in, out or inout (default:in)</p>
     
     
     <a href="https://tickets.configserver.dev" target="_blank" rel="noopener" title="Submit Issue / Ticket" class="md-social__link">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M202.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM496 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3l48.2 0c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"></path></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M202.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM496 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3l48.2 0c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"></path></svg>
     </a>
   
     
@@ -5169,7 +5207,7 @@ Optional direction of block can be one of: in, out or inout (default:in)</p>
     
     
     <a href="https://discord.configserver.dev" target="_blank" rel="noopener" title="Discord" class="md-social__link">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M492.5 69.8c-.2-.3-.4-.6-.8-.7-38.1-17.5-78.4-30-119.7-37.1-.4-.1-.8 0-1.1 .1s-.6 .4-.8 .8c-5.5 9.9-10.5 20.2-14.9 30.6-44.6-6.8-89.9-6.8-134.4 0-4.5-10.5-9.5-20.7-15.1-30.6-.2-.3-.5-.6-.8-.8s-.7-.2-1.1-.2c-41.3 7.1-81.6 19.6-119.7 37.1-.3 .1-.6 .4-.8 .7-76.2 113.8-97.1 224.9-86.9 334.5 0 .3 .1 .5 .2 .8s.3 .4 .5 .6c44.4 32.9 94 58 146.8 74.2 .4 .1 .8 .1 1.1 0s.7-.4 .9-.7c11.3-15.4 21.4-31.8 30-48.8 .1-.2 .2-.5 .2-.8s0-.5-.1-.8-.2-.5-.4-.6-.4-.3-.7-.4c-15.8-6.1-31.2-13.4-45.9-21.9-.3-.2-.5-.4-.7-.6s-.3-.6-.3-.9 0-.6 .2-.9 .3-.5 .6-.7c3.1-2.3 6.2-4.7 9.1-7.1 .3-.2 .6-.4 .9-.4s.7 0 1 .1c96.2 43.9 200.4 43.9 295.5 0 .3-.1 .7-.2 1-.2s.7 .2 .9 .4c2.9 2.4 6 4.9 9.1 7.2 .2 .2 .4 .4 .6 .7s.2 .6 .2 .9-.1 .6-.3 .9-.4 .5-.6 .6c-14.7 8.6-30 15.9-45.9 21.8-.2 .1-.5 .2-.7 .4s-.3 .4-.4 .7-.1 .5-.1 .8 .1 .5 .2 .8c8.8 17 18.8 33.3 30 48.8 .2 .3 .6 .6 .9 .7s.8 .1 1.1 0c52.9-16.2 102.6-41.3 147.1-74.2 .2-.2 .4-.4 .5-.6s.2-.5 .2-.8c12.3-126.8-20.5-236.9-86.9-334.5zm-302 267.7c-29 0-52.8-26.6-52.8-59.2s23.4-59.2 52.8-59.2c29.7 0 53.3 26.8 52.8 59.2 0 32.7-23.4 59.2-52.8 59.2zm195.4 0c-29 0-52.8-26.6-52.8-59.2s23.4-59.2 52.8-59.2c29.7 0 53.3 26.8 52.8 59.2 0 32.7-23.2 59.2-52.8 59.2z"></path></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M492.5 69.8c-.2-.3-.4-.6-.8-.7-38.1-17.5-78.4-30-119.7-37.1-.4-.1-.8 0-1.1 .1s-.6 .4-.8 .8c-5.5 9.9-10.5 20.2-14.9 30.6-44.6-6.8-89.9-6.8-134.4 0-4.5-10.5-9.5-20.7-15.1-30.6-.2-.3-.5-.6-.8-.8s-.7-.2-1.1-.2c-41.3 7.1-81.6 19.6-119.7 37.1-.3 .1-.6 .4-.8 .7-76.2 113.8-97.1 224.9-86.9 334.5 0 .3 .1 .5 .2 .8s.3 .4 .5 .6c44.4 32.9 94 58 146.8 74.2 .4 .1 .8 .1 1.1 0s.7-.4 .9-.7c11.3-15.4 21.4-31.8 30-48.8 .1-.2 .2-.5 .2-.8s0-.5-.1-.8-.2-.5-.4-.6-.4-.3-.7-.4c-15.8-6.1-31.2-13.4-45.9-21.9-.3-.2-.5-.4-.7-.6s-.3-.6-.3-.9 0-.6 .2-.9 .3-.5 .6-.7c3.1-2.3 6.2-4.7 9.1-7.1 .3-.2 .6-.4 .9-.4s.7 0 1 .1c96.2 43.9 200.4 43.9 295.5 0 .3-.1 .7-.2 1-.2s.7 .2 .9 .4c2.9 2.4 6 4.9 9.1 7.2 .2 .2 .4 .4 .6 .7s.2 .6 .2 .9-.1 .6-.3 .9-.4 .5-.6 .6c-14.7 8.6-30 15.9-45.9 21.8-.2 .1-.5 .2-.7 .4s-.3 .4-.4 .7-.1 .5-.1 .8 .1 .5 .2 .8c8.8 17 18.8 33.3 30 48.8 .2 .3 .6 .6 .9 .7s.8 .1 1.1 0c52.9-16.2 102.6-41.3 147.1-74.2 .2-.2 .4-.4 .5-.6s.2-.5 .2-.8c12.3-126.8-20.5-236.9-86.9-334.5zm-302 267.7c-29 0-52.8-26.6-52.8-59.2s23.4-59.2 52.8-59.2c29.7 0 53.3 26.8 52.8 59.2 0 32.7-23.4 59.2-52.8 59.2zm195.4 0c-29 0-52.8-26.6-52.8-59.2s23.4-59.2 52.8-59.2c29.7 0 53.3 26.8 52.8 59.2 0 32.7-23.2 59.2-52.8 59.2z"></path></svg>
     </a>
   
     
@@ -5177,7 +5215,7 @@ Optional direction of block can be one of: in, out or inout (default:in)</p>
     
     
     <a href="https://buymeacoffee.com/aetherinox" target="_blank" rel="noopener" title="Sponsor" class="md-social__link">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M241 87.1l15 20.7 15-20.7C296 52.5 336.2 32 378.9 32 452.4 32 512 91.6 512 165.1l0 2.6c0 112.2-139.9 242.5-212.9 298.2-12.4 9.4-27.6 14.1-43.1 14.1s-30.8-4.6-43.1-14.1C139.9 410.2 0 279.9 0 167.7l0-2.6C0 91.6 59.6 32 133.1 32 175.8 32 216 52.5 241 87.1z"></path></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M241 87.1l15 20.7 15-20.7C296 52.5 336.2 32 378.9 32 452.4 32 512 91.6 512 165.1l0 2.6c0 112.2-139.9 242.5-212.9 298.2-12.4 9.4-27.6 14.1-43.1 14.1s-30.8-4.6-43.1-14.1C139.9 410.2 0 279.9 0 167.7l0-2.6C0 91.6 59.6 32 133.1 32 175.8 32 216 52.5 241 87.1z"></path></svg>
     </a>
   
 </div>

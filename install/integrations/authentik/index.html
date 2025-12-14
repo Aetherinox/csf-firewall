@@ -1826,6 +1826,8 @@
       
         
       
+        
+      
     
     
     
@@ -1900,6 +1902,42 @@
     
   </span>
   
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../usage/troubleshooting/dependencies/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dependencies
+  
+
+    
+  </span>
+  
+  
+    
+  
+  
+    <span class="md-status md-status--new" title="New Addition">
+    </span>
+  
+
   
 
       </a>
@@ -3843,19 +3881,19 @@
   
 
 
-<h1 id="authentik-integration"><abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> Integration<a class="headerlink" href="#authentik-integration" title="Permanent link">¶</a></h1>
-<p>This section explains how to add <abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> as a <strong><abbr title="A component in Traefik that modifies requests or responses before they reach a service or client.">middleware</abbr></strong> through <a href="../traefik/"><abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr></a> so that you can secure the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface behind an authentication server.</p>
+<h1 id="authentik-integration"><abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> Integration<a class="headerlink" data-preview="" href="#authentik-integration" title="Permanent link">¶</a></h1>
+<p>This section explains how to add <abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> as a <strong><abbr title="A component in Traefik that modifies requests or responses before they reach a service or client.">middleware</abbr></strong> through <a data-preview="" href="../traefik/"><abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr></a> so that you can secure the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface behind an authentication server.</p>
 <p><br></p>
 <hr>
 <p><br></p>
-<h2 id="what-is-authentik">What is <abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr>?<a class="headerlink" href="#what-is-authentik" title="Permanent link">¶</a></h2>
+<h2 id="what-is-authentik">What is <abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr>?<a class="headerlink" data-preview="" href="#what-is-authentik" title="Permanent link">¶</a></h2>
 <p><a href="https://goauthentik.io/"><abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr></a> is an open-source identity provider that helps you manage authentication and access control for your applications. It acts as a centralized system for securely verifying the identity of users before they can access your <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr>. By using <abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr>, you can enforce consistent security policies across all the software you manage, rather than relying on separate logins for each service.</p>
 <p>With <abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr>, you can protect your applications using traditional passwords, implement two-factor authentication (2FA), or even leverage modern passkey solutions. This includes hardware keys such as YubiKey, or software-based passkeys stored in password managers like KeePassXC or Vaultwarden.</p>
 <p>Using <abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> adds an extra layer of security and simplifies access management, ensuring that only authorized users can reach sensitive applications like the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface. It can also integrate with <abbr title="A component in Traefik that modifies requests or responses before they reach a service or client.">middleware</abbr> to enforce access policies without exposing your <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> to the public internet.</p>
 <p><br></p>
 <hr>
 <p><br></p>
-<h2 id="before-you-begin">Before You Begin<a class="headerlink" href="#before-you-begin" title="Permanent link">¶</a></h2>
+<h2 id="before-you-begin">Before You Begin<a class="headerlink" data-preview="" href="#before-you-begin" title="Permanent link">¶</a></h2>
 <p>Currently, <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> does not have built-in functionality to detect if your system is protected by an authentication service such as <a href="https://goauthentik.io/"><abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr></a> or <a href="https://authelia.com/">Authelia</a>.</p>
 <p>If you choose to put <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> behind <abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr>, you will encounter two authentication prompts when accessing the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface:</p>
 <ol>
@@ -3867,7 +3905,7 @@
 <p><br></p>
 <hr>
 <p><br></p>
-<h2 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">¶</a></h2>
+<h2 id="setup">Setup<a class="headerlink" data-preview="" href="#setup" title="Permanent link">¶</a></h2>
 <p>If you are adding <a href="https://goauthentik.io/"><abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr></a> as <abbr title="A component in Traefik that modifies requests or responses before they reach a service or client.">middleware</abbr> in the steps above; the last thing you must do is log in to your <abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> admin panel and add a new <strong>Provider</strong> so that we can access the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface via your domain.</p>
 <p><br></p>
 <p>Once you sign into the <abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> admin panel, go to the left-side navigation, select <strong>Applications</strong> › <strong>Providers</strong>.</p>
@@ -3961,7 +3999,7 @@
 <p><br></p>
 <hr>
 <p><br></p>
-<h2 id="authentication-types">Authentication Types<a class="headerlink" href="#authentication-types" title="Permanent link">¶</a></h2>
+<h2 id="authentication-types">Authentication Types<a class="headerlink" data-preview="" href="#authentication-types" title="Permanent link">¶</a></h2>
 <p>When <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> is placed behind <abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr>, you will be prompted to log in through <abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> to access the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface. The method of login depends on your <abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> configuration. Common authentication types include:</p>
 <ul>
 <li><a href="https://docs.goauthentik.io/users-sources/user/user_basic_operations/">Username + password</a></li>
@@ -3975,14 +4013,14 @@
 <p><br></p>
 <hr>
 <p><br></p>
-<h2 id="next-steps">Next Steps <!-- omit from toc --><a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
+<h2 id="next-steps">Next Steps <!-- omit from toc --><a class="headerlink" data-preview="" href="#next-steps" title="Permanent link">¶</a></h2>
 <mark class="critic block">
 <p>Select what documentation you would like to proceed with next ...</p>
 </mark>
 <div class="grid cards">
 <ul>
 <li>
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 256c0 141.4 114.6 256 256 256 5.4 0 10.7-.2 16-.5l0-34.3c0-25-20.3-45.3-45.3-45.3-12 0-23.5-4.8-32-13.3l-16-16c-12-12-18.7-28.3-18.7-45.3l0-3.2c0-21.4 10.7-41.4 28.5-53.3 9.1-6.1 18.3-12.2 27.4-18.3 10.5-7 22.9-10.7 35.5-10.7l20.9 0c15.3 0 30 5.5 41.6 15.4l26.6 22.8c7.4 6.3 16.8 9.8 26.6 9.8 10.8 0 21.2 4.3 28.9 12l4 4c10.2 10.2 24.1 16 38.6 16l54.8 0c4.2-10.3 7.7-21 10.5-32l-57.3 0c-14.5 0-28.4-5.8-38.6-16l-18.3-18.3C386 282 384 277.1 384 272s2-10 5.7-13.7c2.5-2.5 5-5 7.5-7.5 1.8-1.8 2.8-4.3 2.8-6.8s-1-5-2.8-6.8c-2.2-2.2-4.4-4.4-6.5-6.5-4.2-4.2-10-6.6-16-6.6-3.8 0-7.5 0-11.3 0-6.2 0-11.3-5.1-11.3-11.3 0-3 1.2-5.9 3.3-8 1.6-1.6 3.1-3.1 4.7-4.7 5.1-5.1 12.1-8 19.3-8 6.9 0 13.8 0 20.7 0 8.8 0 16-7.2 16-16s-7.2-16-16-16c-9.8 0-19.6 0-29.4 0-10.3 0-18.6 8.3-18.6 18.6 0 8-5.1 15.1-12.7 17.6-7.1 2.4-14.1 4.7-21.2 7.1-7.5 2.5-11 11-7.5 18 .4 .8 .8 1.5 1.1 2.3 3.8 7.5-1.7 16.4-10.1 16.4-3.6 0-6.9-1.7-9.1-4.5-5.4-7.2-10.9-14.5-16.3-21.7-2.7-3.6-6.9-5.7-11.4-5.7-5.4 0-10.4 3.1-12.8 7.9-1.3 2.7-2.7 5.4-4 8.1-4.9 9.8-15.1 16-26.1 16-16.4 0-29.9-13.3-29.9-29.7l0-4.3c0-9 3.6-17.6 9.9-24 6-6 12-12 17.9-17.9 2.6-2.6 4.1-6.2 4.1-10 0-6.1 3.9-11.5 9.6-13.4 8.8-2.9 17.7-5.9 26.5-8.8 7.8-2.6 14.9-7 20.7-12.8 6.6-6.6 13.2-13.2 19.9-19.9 2.1-2.1 3.3-5 3.3-8 0-6.2-5.1-11.3-11.3-11.3-.2 0-.3 0-.5 0-3 0-5.3 .7-7.3 2.1-13.9 9.3-27.9 18.6-41.8 27.9-2 1.3-4.4 2.1-6.8 2.1-6.8 0-12.3-5.5-12.3-12.3l0-8.6c0-7 3.5-13.5 9.3-17.3 31.7-21.1 63.4-42.3 95.1-63.4-23-6.8-47.3-10.4-72.4-10.4-141.4 0-256 114.6-256 256zM132.7 132.7c10.7-10.7 21.3-21.3 32-32 6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6c-10.7 10.7-21.3 21.3-32 32-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M192 210.3l0-4.3c0-9 3.6-17.6 9.9-24l17.9-17.9c2.6-2.6 4.1-6.2 4.1-10 0-6.1 3.9-11.5 9.6-13.4l26.5-8.8c7.8-2.6 14.9-7 20.7-12.8l19.9-19.9c2.1-2.1 3.3-5 3.3-8 0-6.2-5.1-11.3-11.3-11.3l-1 0c-2.4 0-4.8 .7-6.8 2.1l-41.8 27.9c-2 1.3-4.4 2.1-6.8 2.1-6.8 0-12.3-5.5-12.3-12.3l0-8.6c0-7 3.5-13.5 9.3-17.3l95.1-63.4c106.1 31.2 183.6 129.4 183.6 245.6 0 22.1-2.8 43.5-8.1 64l-57.3 0c-14.5 0-28.4-5.8-38.6-16l-18.3-18.3C386 282 384 277.1 384 272s2-10 5.7-13.7l7.5-7.5c1.8-1.8 2.8-4.3 2.8-6.8s-1-5-2.8-6.8l-6.5-6.5c-4.2-4.2-10-6.6-16-6.6l-11.3 0c-6.2 0-11.3-5.1-11.3-11.3 0-3 1.2-5.9 3.3-8L360 200c5.1-5.1 12.1-8 19.3-8l20.7 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-29.4 0c-10.3 0-18.6 8.3-18.6 18.6 0 8-5.1 15.1-12.7 17.6l-21.2 7.1c-7.5 2.5-11 11-7.5 18l1.1 2.3c3.8 7.5-1.7 16.4-10.1 16.4-3.6 0-6.9-1.7-9.1-4.5l-16.3-21.7c-2.7-3.6-6.9-5.7-11.4-5.7-5.4 0-10.4 3.1-12.8 7.9l-4 8.1c-4.9 9.8-15.1 16-26.1 16-16.4 0-29.9-13.3-29.9-29.7zM493.4 352C457.3 441.1 372.5 505.3 272 511.5l0-34.3c0-25-20.3-45.3-45.3-45.3-12 0-23.5-4.8-32-13.3l-16-16c-12-12-18.7-28.3-18.7-45.3l0-3.2c0-21.4 10.7-41.4 28.5-53.3l27.4-18.2c10.5-7 22.9-10.7 35.5-10.7l20.9 0c15.3 0 30 5.5 41.6 15.4l26.6 22.8c7.4 6.3 16.8 9.8 26.6 9.8 10.8 0 21.2 4.3 28.9 12l4 4c10.2 10.2 24.1 16 38.6 16l54.8 0zM187.3 100.7c6.2 6.2 6.2 16.4 0 22.6l-32 32c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l32-32c6.2-6.2 16.4-6.2 22.6 0z"></path></svg></span> &nbsp; <strong><a href="../usage/geoip.md">Geographical IP Block Integration</a></strong></p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 256c0 141.4 114.6 256 256 256 5.4 0 10.7-.2 16-.5l0-34.3c0-25-20.3-45.3-45.3-45.3-12 0-23.5-4.8-32-13.3l-16-16c-12-12-18.7-28.3-18.7-45.3l0-3.2c0-21.4 10.7-41.4 28.5-53.3 9.1-6.1 18.3-12.2 27.4-18.3 10.5-7 22.9-10.7 35.5-10.7l20.9 0c15.3 0 30 5.5 41.6 15.4l26.6 22.8c7.4 6.3 16.8 9.8 26.6 9.8 10.8 0 21.2 4.3 28.9 12l4 4c10.2 10.2 24.1 16 38.6 16l54.8 0c4.2-10.3 7.7-21 10.5-32l-57.3 0c-14.5 0-28.4-5.8-38.6-16l-18.3-18.3C386 282 384 277.1 384 272s2-10 5.7-13.7c2.5-2.5 5-5 7.5-7.5 1.8-1.8 2.8-4.3 2.8-6.8s-1-5-2.8-6.8c-2.2-2.2-4.4-4.4-6.5-6.5-4.2-4.2-10-6.6-16-6.6-3.8 0-7.5 0-11.3 0-6.2 0-11.3-5.1-11.3-11.3 0-3 1.2-5.9 3.3-8 1.6-1.6 3.1-3.1 4.7-4.7 5.1-5.1 12.1-8 19.3-8 6.9 0 13.8 0 20.7 0 8.8 0 16-7.2 16-16s-7.2-16-16-16c-9.8 0-19.6 0-29.4 0-10.3 0-18.6 8.3-18.6 18.6 0 8-5.1 15.1-12.7 17.6-7.1 2.4-14.1 4.7-21.2 7.1-7.5 2.5-11 11-7.5 18 .4 .8 .8 1.5 1.1 2.3 3.8 7.5-1.7 16.4-10.1 16.4-3.6 0-6.9-1.7-9.1-4.5-5.4-7.2-10.9-14.5-16.3-21.7-2.7-3.6-6.9-5.7-11.4-5.7-5.4 0-10.4 3.1-12.8 7.9-1.3 2.7-2.7 5.4-4 8.1-4.9 9.8-15.1 16-26.1 16-16.4 0-29.9-13.3-29.9-29.7l0-4.3c0-9 3.6-17.6 9.9-24 6-6 12-12 17.9-17.9 2.6-2.6 4.1-6.2 4.1-10 0-6.1 3.9-11.5 9.6-13.4 8.8-2.9 17.7-5.9 26.5-8.8 7.8-2.6 14.9-7 20.7-12.8 6.6-6.6 13.2-13.2 19.9-19.9 2.1-2.1 3.3-5 3.3-8 0-6.2-5.1-11.3-11.3-11.3-.2 0-.3 0-.5 0-3 0-5.3 .7-7.3 2.1-13.9 9.3-27.9 18.6-41.8 27.9-2 1.3-4.4 2.1-6.8 2.1-6.8 0-12.3-5.5-12.3-12.3l0-8.6c0-7 3.5-13.5 9.3-17.3 31.7-21.1 63.4-42.3 95.1-63.4-23-6.8-47.3-10.4-72.4-10.4-141.4 0-256 114.6-256 256zM132.7 132.7c10.7-10.7 21.3-21.3 32-32 6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6c-10.7 10.7-21.3 21.3-32 32-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M192 210.3l0-4.3c0-9 3.6-17.6 9.9-24l17.9-17.9c2.6-2.6 4.1-6.2 4.1-10 0-6.1 3.9-11.5 9.6-13.4l26.5-8.8c7.8-2.6 14.9-7 20.7-12.8l19.9-19.9c2.1-2.1 3.3-5 3.3-8 0-6.2-5.1-11.3-11.3-11.3l-1 0c-2.4 0-4.8 .7-6.8 2.1l-41.8 27.9c-2 1.3-4.4 2.1-6.8 2.1-6.8 0-12.3-5.5-12.3-12.3l0-8.6c0-7 3.5-13.5 9.3-17.3l95.1-63.4c106.1 31.2 183.6 129.4 183.6 245.6 0 22.1-2.8 43.5-8.1 64l-57.3 0c-14.5 0-28.4-5.8-38.6-16l-18.3-18.3C386 282 384 277.1 384 272s2-10 5.7-13.7l7.5-7.5c1.8-1.8 2.8-4.3 2.8-6.8s-1-5-2.8-6.8l-6.5-6.5c-4.2-4.2-10-6.6-16-6.6l-11.3 0c-6.2 0-11.3-5.1-11.3-11.3 0-3 1.2-5.9 3.3-8L360 200c5.1-5.1 12.1-8 19.3-8l20.7 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-29.4 0c-10.3 0-18.6 8.3-18.6 18.6 0 8-5.1 15.1-12.7 17.6l-21.2 7.1c-7.5 2.5-11 11-7.5 18l1.1 2.3c3.8 7.5-1.7 16.4-10.1 16.4-3.6 0-6.9-1.7-9.1-4.5l-16.3-21.7c-2.7-3.6-6.9-5.7-11.4-5.7-5.4 0-10.4 3.1-12.8 7.9l-4 8.1c-4.9 9.8-15.1 16-26.1 16-16.4 0-29.9-13.3-29.9-29.7zM493.4 352C457.3 441.1 372.5 505.3 272 511.5l0-34.3c0-25-20.3-45.3-45.3-45.3-12 0-23.5-4.8-32-13.3l-16-16c-12-12-18.7-28.3-18.7-45.3l0-3.2c0-21.4 10.7-41.4 28.5-53.3l27.4-18.2c10.5-7 22.9-10.7 35.5-10.7l20.9 0c15.3 0 30 5.5 41.6 15.4l26.6 22.8c7.4 6.3 16.8 9.8 26.6 9.8 10.8 0 21.2 4.3 28.9 12l4 4c10.2 10.2 24.1 16 38.6 16l54.8 0zM187.3 100.7c6.2 6.2 6.2 16.4 0 22.6l-32 32c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l32-32c6.2-6.2 16.4-6.2 22.6 0z"></path></svg></span> &nbsp; <strong><a href="../usage/geoip.md">Geographical IP Block Integration</a></strong></p>
 <hr>
 <p>Configure geographical restrictions in <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> to whitelist or blacklist specific
 regions from accessing your server.</p>
@@ -4144,7 +4182,7 @@ your server secure.</p>
     
     
     <a href="https://download.configserver.dev" target="_blank" rel="noopener" title="Download CSF" class="md-social__link">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M256 32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 210.7-41.4-41.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l96 96c12.5 12.5 32.8 12.5 45.3 0l96-96c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 242.7 256 32zM64 320c-35.3 0-64 28.7-64 64l0 32c0 35.3 28.7 64 64 64l320 0c35.3 0 64-28.7 64-64l0-32c0-35.3-28.7-64-64-64l-46.9 0-56.6 56.6c-31.2 31.2-81.9 31.2-113.1 0L110.9 320 64 320zm304 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"></path></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M256 32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 210.7-41.4-41.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l96 96c12.5 12.5 32.8 12.5 45.3 0l96-96c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 242.7 256 32zM64 320c-35.3 0-64 28.7-64 64l0 32c0 35.3 28.7 64 64 64l320 0c35.3 0 64-28.7 64-64l0-32c0-35.3-28.7-64-64-64l-46.9 0-56.6 56.6c-31.2 31.2-81.9 31.2-113.1 0L110.9 320 64 320zm304 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"></path></svg>
     </a>
   
     
@@ -4152,7 +4190,7 @@ your server secure.</p>
     
     
     <a href="https://blocklist.configserver.dev" target="_blank" rel="noopener" title="Service › Blocklists" class="md-social__link">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M224 32l192 0 0 80-192 0 0-80zm-32 80l-96 0 0-16c0-35.3 28.7-64 64-64l32 0 0 80zM96 144l208 0 0 96-208 0 0-96zm0 224l0-96 96 0 0 96-96 0zm0 32l176.7 0c-.5 4.7-.7 9.4-.7 14.1 0 22.9 3.7 45.1 10.6 65.9L160 480c-35.3 0-64-28.7-64-64l0-16zM544 144l0 60.2c-12 .3-23.8 3.9-34.1 11-7.9-7.9-15.9-15.6-24.2-23.1-23.8-21.4-60-21.5-83.9-.2-17 15.2-32.9 31.4-47.2 48.1l-18.6 0 0-96 208 0zM224 272l105.2 0c-6.4 8.8-12.3 17.6-17.7 26.3-13.2 21.3-25.1 45.2-32.3 69.7l-55.2 0 0-96zM544 112l-96 0 0-80 32 0c35.3 0 64 28.7 64 64l0 16zM505.7 272.3L518 258.5c5.4-6.1 13.3-8.8 20.9-8.9 7.2 0 14.3 2.6 19.9 7.8 19.7 18.3 39.8 43.2 55 70.6 15.1 27.2 26.2 58.1 26.2 88.1 0 88.7-71.3 159.8-160 159.8-89.6 0-160-71.3-160-159.8 0-37.3 16-73.4 36.8-104.5 20.9-31.3 47.5-59 70.9-80.2 5.7-5.2 13.1-7.7 20.3-7.5s13.4 3.2 18.8 7.5c14.4 11.4 38.9 40.7 38.9 40.7zM544 464.2c0-36.5-37-73-54.8-88.4-5.4-4.7-13.1-4.7-18.5 0-17.7 15.4-54.8 51.9-54.8 88.4 0 35.3 28.7 64 64 64s64-28.7 64-64z"></path></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M224 32l192 0 0 80-192 0 0-80zm-32 80l-96 0 0-16c0-35.3 28.7-64 64-64l32 0 0 80zM96 144l208 0 0 96-208 0 0-96zm0 224l0-96 96 0 0 96-96 0zm0 32l176.7 0c-.5 4.7-.7 9.4-.7 14.1 0 22.9 3.7 45.1 10.6 65.9L160 480c-35.3 0-64-28.7-64-64l0-16zM544 144l0 60.2c-12 .3-23.8 3.9-34.1 11-7.9-7.9-15.9-15.6-24.2-23.1-23.8-21.4-60-21.5-83.9-.2-17 15.2-32.9 31.4-47.2 48.1l-18.6 0 0-96 208 0zM224 272l105.2 0c-6.4 8.8-12.3 17.6-17.7 26.3-13.2 21.3-25.1 45.2-32.3 69.7l-55.2 0 0-96zM544 112l-96 0 0-80 32 0c35.3 0 64 28.7 64 64l0 16zM505.7 272.3L518 258.5c5.4-6.1 13.3-8.8 20.9-8.9 7.2 0 14.3 2.6 19.9 7.8 19.7 18.3 39.8 43.2 55 70.6 15.1 27.2 26.2 58.1 26.2 88.1 0 88.7-71.3 159.8-160 159.8-89.6 0-160-71.3-160-159.8 0-37.3 16-73.4 36.8-104.5 20.9-31.3 47.5-59 70.9-80.2 5.7-5.2 13.1-7.7 20.3-7.5s13.4 3.2 18.8 7.5c14.4 11.4 38.9 40.7 38.9 40.7zM544 464.2c0-36.5-37-73-54.8-88.4-5.4-4.7-13.1-4.7-18.5 0-17.7 15.4-54.8 51.9-54.8 88.4 0 35.3 28.7 64 64 64s64-28.7 64-64z"></path></svg>
     </a>
   
     
@@ -4160,7 +4198,7 @@ your server secure.</p>
     
     
     <a href="https://tickets.configserver.dev" target="_blank" rel="noopener" title="Submit Issue / Ticket" class="md-social__link">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M202.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM496 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3l48.2 0c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"></path></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M202.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM496 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3l48.2 0c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"></path></svg>
     </a>
   
     
@@ -4176,7 +4214,7 @@ your server secure.</p>
     
     
     <a href="https://discord.configserver.dev" target="_blank" rel="noopener" title="Discord" class="md-social__link">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M492.5 69.8c-.2-.3-.4-.6-.8-.7-38.1-17.5-78.4-30-119.7-37.1-.4-.1-.8 0-1.1 .1s-.6 .4-.8 .8c-5.5 9.9-10.5 20.2-14.9 30.6-44.6-6.8-89.9-6.8-134.4 0-4.5-10.5-9.5-20.7-15.1-30.6-.2-.3-.5-.6-.8-.8s-.7-.2-1.1-.2c-41.3 7.1-81.6 19.6-119.7 37.1-.3 .1-.6 .4-.8 .7-76.2 113.8-97.1 224.9-86.9 334.5 0 .3 .1 .5 .2 .8s.3 .4 .5 .6c44.4 32.9 94 58 146.8 74.2 .4 .1 .8 .1 1.1 0s.7-.4 .9-.7c11.3-15.4 21.4-31.8 30-48.8 .1-.2 .2-.5 .2-.8s0-.5-.1-.8-.2-.5-.4-.6-.4-.3-.7-.4c-15.8-6.1-31.2-13.4-45.9-21.9-.3-.2-.5-.4-.7-.6s-.3-.6-.3-.9 0-.6 .2-.9 .3-.5 .6-.7c3.1-2.3 6.2-4.7 9.1-7.1 .3-.2 .6-.4 .9-.4s.7 0 1 .1c96.2 43.9 200.4 43.9 295.5 0 .3-.1 .7-.2 1-.2s.7 .2 .9 .4c2.9 2.4 6 4.9 9.1 7.2 .2 .2 .4 .4 .6 .7s.2 .6 .2 .9-.1 .6-.3 .9-.4 .5-.6 .6c-14.7 8.6-30 15.9-45.9 21.8-.2 .1-.5 .2-.7 .4s-.3 .4-.4 .7-.1 .5-.1 .8 .1 .5 .2 .8c8.8 17 18.8 33.3 30 48.8 .2 .3 .6 .6 .9 .7s.8 .1 1.1 0c52.9-16.2 102.6-41.3 147.1-74.2 .2-.2 .4-.4 .5-.6s.2-.5 .2-.8c12.3-126.8-20.5-236.9-86.9-334.5zm-302 267.7c-29 0-52.8-26.6-52.8-59.2s23.4-59.2 52.8-59.2c29.7 0 53.3 26.8 52.8 59.2 0 32.7-23.4 59.2-52.8 59.2zm195.4 0c-29 0-52.8-26.6-52.8-59.2s23.4-59.2 52.8-59.2c29.7 0 53.3 26.8 52.8 59.2 0 32.7-23.2 59.2-52.8 59.2z"></path></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M492.5 69.8c-.2-.3-.4-.6-.8-.7-38.1-17.5-78.4-30-119.7-37.1-.4-.1-.8 0-1.1 .1s-.6 .4-.8 .8c-5.5 9.9-10.5 20.2-14.9 30.6-44.6-6.8-89.9-6.8-134.4 0-4.5-10.5-9.5-20.7-15.1-30.6-.2-.3-.5-.6-.8-.8s-.7-.2-1.1-.2c-41.3 7.1-81.6 19.6-119.7 37.1-.3 .1-.6 .4-.8 .7-76.2 113.8-97.1 224.9-86.9 334.5 0 .3 .1 .5 .2 .8s.3 .4 .5 .6c44.4 32.9 94 58 146.8 74.2 .4 .1 .8 .1 1.1 0s.7-.4 .9-.7c11.3-15.4 21.4-31.8 30-48.8 .1-.2 .2-.5 .2-.8s0-.5-.1-.8-.2-.5-.4-.6-.4-.3-.7-.4c-15.8-6.1-31.2-13.4-45.9-21.9-.3-.2-.5-.4-.7-.6s-.3-.6-.3-.9 0-.6 .2-.9 .3-.5 .6-.7c3.1-2.3 6.2-4.7 9.1-7.1 .3-.2 .6-.4 .9-.4s.7 0 1 .1c96.2 43.9 200.4 43.9 295.5 0 .3-.1 .7-.2 1-.2s.7 .2 .9 .4c2.9 2.4 6 4.9 9.1 7.2 .2 .2 .4 .4 .6 .7s.2 .6 .2 .9-.1 .6-.3 .9-.4 .5-.6 .6c-14.7 8.6-30 15.9-45.9 21.8-.2 .1-.5 .2-.7 .4s-.3 .4-.4 .7-.1 .5-.1 .8 .1 .5 .2 .8c8.8 17 18.8 33.3 30 48.8 .2 .3 .6 .6 .9 .7s.8 .1 1.1 0c52.9-16.2 102.6-41.3 147.1-74.2 .2-.2 .4-.4 .5-.6s.2-.5 .2-.8c12.3-126.8-20.5-236.9-86.9-334.5zm-302 267.7c-29 0-52.8-26.6-52.8-59.2s23.4-59.2 52.8-59.2c29.7 0 53.3 26.8 52.8 59.2 0 32.7-23.4 59.2-52.8 59.2zm195.4 0c-29 0-52.8-26.6-52.8-59.2s23.4-59.2 52.8-59.2c29.7 0 53.3 26.8 52.8 59.2 0 32.7-23.2 59.2-52.8 59.2z"></path></svg>
     </a>
   
     
@@ -4184,7 +4222,7 @@ your server secure.</p>
     
     
     <a href="https://buymeacoffee.com/aetherinox" target="_blank" rel="noopener" title="Sponsor" class="md-social__link">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M241 87.1l15 20.7 15-20.7C296 52.5 336.2 32 378.9 32 452.4 32 512 91.6 512 165.1l0 2.6c0 112.2-139.9 242.5-212.9 298.2-12.4 9.4-27.6 14.1-43.1 14.1s-30.8-4.6-43.1-14.1C139.9 410.2 0 279.9 0 167.7l0-2.6C0 91.6 59.6 32 133.1 32 175.8 32 216 52.5 241 87.1z"></path></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M241 87.1l15 20.7 15-20.7C296 52.5 336.2 32 378.9 32 452.4 32 512 91.6 512 165.1l0 2.6c0 112.2-139.9 242.5-212.9 298.2-12.4 9.4-27.6 14.1-43.1 14.1s-30.8-4.6-43.1-14.1C139.9 410.2 0 279.9 0 167.7l0-2.6C0 91.6 59.6 32 133.1 32 175.8 32 216 52.5 241 87.1z"></path></svg>
     </a>
   
 </div>
