@@ -3,5 +3,5 @@
   <name>ConfigServer Security and Firewall</name>
   <type>plugin</type>
   <description>Linux security tool that provides advanced firewall management and intrusion detection.</description>
-  <version>15.02</version>
+  <version>15.09</version>
 </cyberpanelPluginConfig>
