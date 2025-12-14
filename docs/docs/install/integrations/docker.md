@@ -188,14 +188,15 @@ Select what documentation you would like to proceed with next ...
 
     ---
 
-    Configure geographical restrictions in CSF to whitelist or blacklist specific
-    regions from accessing your server.
-    
-    This chapter covers enabling the GeoIP blocklist feature using third-party
-    services such as MaxMind (requires an API key), db-ip, ipdeny, or iptoasn.
-    
-    These services allow you to control access based on location while keeping
-    your server secure.
+    Geographical IP blocking allows you to control access to your server based on
+    the country or region an IP address originates from, rather than individual
+    IP reputation or blocklist entries.
+
+    This section explains what geographical IP blocks are, how they differ from
+    blocklists and IPSETs, and when it makes sense to use country-based filtering.
+
+    You’ll also learn how to integrate CSF with GeoIP data providers to apply
+    regional access rules safely and efficiently.
 
 </div>
 

@@ -375,31 +375,34 @@ Select what documentation you would like to proceed with next ...
 
 <div class="grid cards" markdown>
 
--   :aetherx-axs-network-wired: &nbsp; __[Introduction to IPSETs](../usage/ipset.md)__
+-   :aetherx-axs-file: &nbsp; __[Pre & Post Scripts](../usage/prepost.md)__
 
     ---
 
-    Improve firewall efficiency in CSF by enabling IPSET integration to manage
-    large blocklists.  
+    The pre and post loader system allows you to import your own bash scripts
+    directly into CSF, which in return allows you to run your own custom shell
+    commands during key stages of CSF’s startup and restart process.
 
-    This chapter covers installing the IPSET package and configuring CSF to use
-    it for handling blocklists.  
+    This section introduces what pre and post scripts are, when they are executed,
+    and how they can be used to extend CSF with custom firewall rules or system
+    logic.
 
-    Using IPSET allows CSF to group IP addresses into sets, reducing the number
-    of iptables rules and improving overall performance.
+    You’ll learn how to safely create and manage these scripts so they integrate
+    cleanly with CSF without interfering with the normal functionality of CSF.
 
 -   :aetherx-axs-ban: &nbsp; __[Setting Up Blocklists](../usage/blocklists.md)__
 
     ---
 
-    Blocklists in CSF allow you to automatically block connections from known
-    malicious IP addresses, helping to protect your server from abusive traffic.  
+    Blocklists provide the foundation for blocking unwanted and malicious traffic
+    in CSF. They allow you to automatically deny access from IP addresses that have
+    been identified as abusive or high risk.
 
-    This chapter explains how to configure and use blocklists, including CSF’s
-    official blocklist and third-party sources.  
+    This section introduces what blocklists are, how they work, and how to configure
+    them using CSF’s official blocklist or trusted third-party sources.
 
-    You’ll also learn how to enable blocklists with or without IPSET, ensuring
-    they work efficiently no matter the size of the list.
+    Once you are comfortable using blocklists, you can advance to IPSETs to handle
+    larger lists more efficiently and improve performance as your ruleset grows.
 
 </div>
 

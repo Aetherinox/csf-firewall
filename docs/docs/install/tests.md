@@ -70,31 +70,6 @@ RESULT: csf should function on this server
 
 <br />
 
-{==
-
-Select what documentation you would like to proceed with next ...
-
-==}
-
-<div class="grid cards" markdown>
-
--   :material-file: &nbsp; __[Install (Generic)](./install.md#generic)__
-
-    ---
-
-    Choose this step if you wish to install CSF using the generic installer. This is good for users who are installing CSF on a bare metal machine with no existing control panels such as cPanel, DirectAdmin, etc.
-
--   :material-file: &nbsp; __[Install (cPanel)](./install.md#cpanel-and-whm)__
-
-    ---
-
-    Choose this step if you wish to install CSF on a server which already has cPanel and WHM installed. This will allow CSF to be integrated into WHM and will be listed under WHM's **Plugins** category.
-
-</div>
-
-
-<br />
-
 ---
 
 <br />
@@ -282,13 +257,57 @@ Select what documentation you would like to proceed with next ...
 -   :aetherx-axs-box-isometric: &nbsp; __[Install (Generic)](./install.md#install-generic)__
 
     ---
+    
+    Instructions for installing CSF on a bare-metal machine without a control
+    panel.
 
-    Choose this step if you wish to install CSF using the generic installer. This is good for users who are installing CSF on a bare metal machine with no existing control panels such as cPanel, DirectAdmin, etc.
-
--   :aetherx-axb-cpanel: &nbsp; __[Install (cPanel)](./install.md#install-cpanel-and-whm)__
+-   :aetherx-axb-cpanel: &nbsp; __[Install (cPanel & WHM)](./install.md#install-cpanel-and-whm)__
 
     ---
 
-    Choose this step if you wish to install CSF on a server which already has cPanel and WHM installed. This will allow CSF to be integrated into WHM and will be listed under WHM's **Plugins** category.
+    CSF will integrate directly into WHM and appear under the **Plugins** section
+    for easy firewall management.
+
+-   :aetherx-axb-webmin: &nbsp; __[Install (Webmin)](./install.md#install-webmin)__
+
+    ---
+
+    CSF will integrate with the Webmin interface, and will appear under the Webmin
+    **System** category.
+
+-   :aetherx-axb-vestacp: &nbsp; __[Install (VestaCP)](./install.md#install-vestacp)__
+
+    ---
+
+    CSF will integrate with the Vesta control panel while continuing to operate
+    as a system-level firewall.
+
+-   :aetherx-axb-cwp: &nbsp; __[Install (CentOS Web Panel)](./install.md#install-centos-web-panel)__
+
+    ---
+
+    CSF will be installed with CWP compatibility, and a new navigation option will appear
+    under Security › CSF Firewall.
+
+-   :aetherx-axb-cyberpanel: &nbsp; __[Install (CyberPanel)](./install.md#install-cyberpanel)__
+
+    ---
+
+    CSF will be configured to work alongside CyberPanel, a new navigation option will appear
+    within **Security** › **CSF**.
+
+-   :aetherx-axb-directadmin: &nbsp; __[Install (DirectAdmin)](./install.md#install-directadmin)__
+
+    ---
+
+    CSF will integrate into the DirectAdmin interface, providing firewall controls
+    directly within the panel.
+
+-   :aetherx-axb-interworx: &nbsp; __[Install (Interworx)](./install.md#install-interworx)__
+
+    ---
+
+    CSF will integrate with the InterWorx control panel, creating a new menu category 
+    listed as **ConfigServer Firewall Plugins**.
 
 </div>

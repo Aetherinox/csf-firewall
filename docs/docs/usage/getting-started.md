@@ -19,12 +19,6 @@ In the previous [Installation](../install/dependencies.md) chapter, we covered h
 
 By this point, you should have CSF installed and an operational copy running on your server. This chapter will cover the more advanced settings for CSF and how to fine-tune it to fit your needs.
 
-{==
-
-Continue to the configuration section of this guide
-
-==}
-
 <div class="grid cards" markdown>
 
 -   :aetherx-axd-gear: &nbsp; __[Configuration](../usage/configuration.md)__
@@ -46,12 +40,6 @@ Continue to the configuration section of this guide
 If you are looking for straight-forward information such as commands, folder and file structure, or configuration examples, check out the [Cheatsheet](./cheatsheet/home.md) guides listed below.
 
 <br />
-
-{==
-
-Cheatsheet Guides
-
-==}
 
 <div class="grid cards" markdown>
 

@@ -67,7 +67,8 @@ This section outlines exactly how the pre and post scripts are initialized and l
 
 ??? note "**pre.sh & post.sh:** Multiple Locations Allowed"
 
-    By default, installing CSF will create the loader files `csfpre.sh` and `csfpost.sh`, and place them in the folder `/usr/local/csf/bin/`.  
+    By default, installing CSF will create the loader files `csfpre.sh` and `csfpost.sh`, and place them in the folder `/usr/local/csf/bin/`.
+
     However, this location is **not strict**; you can place these loader files in one of two allowed locations:
 
       - :aetherx-axd-file: **csfpre.sh**
@@ -373,31 +374,34 @@ Select what documentation you would like to proceed with next ...
 
 <div class="grid cards" markdown>
 
--   :aetherx-axs-network-wired: &nbsp; __[Introduction to IPSETs](../usage/ipset.md)__
-
-    ---
-
-    Improve firewall efficiency in CSF by enabling IPSET integration to manage
-    large blocklists.  
-
-    This chapter covers installing the IPSET package and configuring CSF to use
-    it for handling blocklists.  
-
-    Using IPSET allows CSF to group IP addresses into sets, reducing the number
-    of iptables rules and improving overall performance.
-
 -   :aetherx-axs-ban: &nbsp; __[Setting Up Blocklists](../usage/blocklists.md)__
 
     ---
 
-    Blocklists in CSF allow you to automatically block connections from known
-    malicious IP addresses, helping to protect your server from abusive traffic.  
+    Blocklists provide the foundation for blocking unwanted and malicious traffic
+    in CSF. They allow you to automatically deny access from IP addresses that have
+    been identified as abusive or high risk.
 
-    This chapter explains how to configure and use blocklists, including CSF’s
-    official blocklist and third-party sources.  
+    This section introduces what blocklists are, how they work, and how to configure
+    them using CSF’s official blocklist or trusted third-party sources.
 
-    You’ll also learn how to enable blocklists with or without IPSET, ensuring
-    they work efficiently no matter the size of the list.
+    Once you are comfortable using blocklists, you can advance to IPSETs to handle
+    larger lists more efficiently and improve performance as your ruleset grows.
+
+-   :aetherx-axd-block-brick-fire: &nbsp; __[Introduction to IPSETs](../usage/ipset.md)__
+
+    ---
+
+    Blocklists and IPSETs are designed to work together. Blocklists provide a simple
+    way to block unwanted traffic from reaching your server, but large blocklists
+    can be inefficient and memory-intensive.
+
+    If you plan to import blocklists containing more than a few thousand IP addresses,
+    it is strongly recommended to enable CSF’s IPSET integration.
+
+    IPSETs allow you to block significantly larger numbers of IP addresses in a far
+    more efficient way, without the risk of excessive memory usage or performance
+    degradation.
 
 </div>
 
