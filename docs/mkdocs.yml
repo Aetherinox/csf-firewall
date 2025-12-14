@@ -29,6 +29,15 @@ site_url: 'https://aetherinox.github.io/csf-firewall/'
 # #
 
 markdown_extensions:
+    - material.extensions.preview:
+        configurations:
+            - targets:
+                include:
+                - about/changelog.md
+                - install/*
+                - insiders/*
+                - usage/*
+                - advanced/*
     - pymdownx.critic
     - markdown.extensions.extra
     - toc:
@@ -293,6 +302,7 @@ nav:
           - Troubleshooting:
                 - usage/troubleshooting/index.md
                 - Cyberpanel: usage/troubleshooting/cyberpanel.md
+                - Dependencies: usage/troubleshooting/dependencies.md
                 - Web Interface: usage/troubleshooting/webui.md
           - Cheatsheet:
                 - Home: 'usage/cheatsheet/home.md'
