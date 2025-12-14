@@ -49,6 +49,9 @@ GOTO        comment_end
                             pip install --upgrade mkdocs
                             pip install --upgrade --force-reinstall mkdocs-material
 
+    @error              if mkdocs will not re-build, downgrade click
+                            pip install --force-reinstall click==8.2.1
+
 :comment_end
 
 echo.
