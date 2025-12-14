@@ -1,6 +1,6 @@
 # #
 #   Mkdocs Config
-#
+#   
 #   @notes            this documentation requires the following plugins to be installed:
 #                         pip install mkdocs
 #                         pip install mkdocs-material
@@ -11,7 +11,7 @@
 #                         pip install mkdocs-redirects mkdocs-glightbox pymdown-extensions mkdocs-git-revision-date-localized-plugin mkdocs-git-authors-plugin mkdocs-link-embeds-plugin
 #                         cd docs
 #                         mkdocs build
-#
+#   
 #   @update           use the following commands to update mkdocs and the mkdocs-material theme:
 #                         pip install --upgrade mkdocs
 #                         pip install --upgrade --force-reinstall mkdocs-material
@@ -440,4 +440,4 @@ plugins:
     # - macros
 
 copyright: >
-  Copyright &copy; 2025 - Aetherinox
+  Copyright &copy; 2025 - 2026 ConfigServer Security & Firewall
