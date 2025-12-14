@@ -1654,10 +1654,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#aetherx-axj-bell-icon-tldr-summary" class="md-nav__link">
+  <a href="#summary" class="md-nav__link">
     <span class="md-ellipsis">
       
-        :aetherx-axj-bell:{ .icon-tldr } Summary
+        Summary
       
     </span>
   </a>
@@ -3698,10 +3698,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#aetherx-axj-bell-icon-tldr-summary" class="md-nav__link">
+  <a href="#summary" class="md-nav__link">
     <span class="md-ellipsis">
       
-        :aetherx-axj-bell:{ .icon-tldr } Summary
+        Summary
       
     </span>
   </a>
@@ -3897,7 +3897,7 @@
 <h1 id="usage-pre-and-post-loader-scripts">Usage › Pre and Post Loader Scripts<a class="headerlink" data-preview="" href="#usage-pre-and-post-loader-scripts" title="Permanent link">¶</a></h1>
 <p><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> includes dedicated directories where you can place custom Bash scripts to run at specific stages of the firewall’s startup process. This allows you to easily maintain persistent, custom firewall rules that are automatically applied each time the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> service starts or restarts.</p>
 <p><br></p>
-<h2 id="aetherx-axj-bell-icon-tldr-summary">:aetherx-axj-bell:{ .icon-tldr } Summary<a class="headerlink" data-preview="" href="#aetherx-axj-bell-icon-tldr-summary" title="Permanent link">¶</a></h2>
+<h2 id="summary"><span class="twemoji icon-tldr"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 504 560"><!--! Font Awesome Pro 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M109.7 53.7C145 18.4 194.6 0 252 0S359 18.4 394.3 53.7 448 138.6 448 196l0 53c0 5.5 1.6 10.9 4.7 15.5L490 320.5c9.1 13.7 14 29.8 14 46.2 0 35.2-22.7 68.5-60 76.6-38.7 8.4-103.8 18.7-192 18.7S98.7 451.8 60 443.3c-37.3-8.1-60-41.4-60-76.6 0-16.5 4.9-32.5 14-46.2l37.3-55.9c3.1-4.6 4.7-10 4.7-15.5l0-53c0-57.4 18.4-107 53.7-142.3zm95.6 463.4c-12.4-.5-23.7 7.3-27.7 19.1s.3 24.8 10.6 31.9c18.1 12.6 40.2 20 63.8 20s45.7-7.4 63.8-20c10.2-7.1 14.5-20.1 10.6-31.9s-15.2-19.6-27.7-19.1c-14.8 .6-30.4 .9-46.7 .9s-31.9-.3-46.7-.9z"></path></svg></span> Summary<a class="headerlink" data-preview="" href="#summary" title="Permanent link">¶</a></h2>
 <p>The following is a summary of what this page explains:</p>
 <ul>
 <li>When you install <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>, two files will be placed on your server. These are known as the <code>pre</code> and <code>post</code> loader scripts:<ol>
@@ -3961,8 +3961,8 @@
 </dl>
 <details class="note">
 <summary><strong>pre.sh &amp; post.sh:</strong> Multiple Locations Allowed</summary>
-<p>By default, installing <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> will create the loader files <code>csfpre.sh</code> and <code>csfpost.sh</code>, and place them in the folder <code>/usr/local/csf/bin/</code>.<br>
-However, this location is <strong>not strict</strong>; you can place these loader files in one of two allowed locations:</p>
+<p>By default, installing <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> will create the loader files <code>csfpre.sh</code> and <code>csfpost.sh</code>, and place them in the folder <code>/usr/local/csf/bin/</code>.</p>
+<p>However, this location is <strong>not strict</strong>; you can place these loader files in one of two allowed locations:</p>
 <ul>
 <li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0C28.7 0 0 28.7 0 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M224 0c15.4 0 30.1 6.1 41 17L367 119c10.9 10.9 17 25.6 17 41l-128 0c-17.7 0-32-14.3-32-32L224 0z"></path></svg></span> <strong>csfpre.sh</strong><ul>
 <li><code>/usr/local/csf/bin/csfpre.sh</code></li>
@@ -4244,24 +4244,27 @@ However, this location is <strong>not strict</strong>; you can place these loade
 <div class="grid cards">
 <ul>
 <li>
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M248 88l80 0 0 48-80 0 0-48zm-8-56c-26.5 0-48 21.5-48 48l0 64c0 26.5 21.5 48 48 48l16 0 0 32-224 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l96 0 0 32-16 0c-26.5 0-48 21.5-48 48l0 64c0 26.5 21.5 48 48 48l96 0c26.5 0 48-21.5 48-48l0-64c0-26.5-21.5-48-48-48l-16 0 0-32 192 0 0 32-16 0c-26.5 0-48 21.5-48 48l0 64c0 26.5 21.5 48 48 48l96 0c26.5 0 48-21.5 48-48l0-64c0-26.5-21.5-48-48-48l-16 0 0-32 96 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-224 0 0-32 16 0c26.5 0 48-21.5 48-48l0-64c0-26.5-21.5-48-48-48l-96 0zM448 376l8 0 0 48-80 0 0-48 72 0zm-256 0l8 0 0 48-80 0 0-48 72 0z"></path></svg></span> &nbsp; <strong><a data-preview="" href="../ipset/">Introduction to IPSETs</a></strong></p>
-<hr>
-<p>Improve firewall efficiency in <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> by enabling IPSET integration to manage
-large blocklists.  </p>
-<p>This chapter covers installing the IPSET package and configuring <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> to use
-it for handling blocklists.  </p>
-<p>Using IPSET allows <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> to group IP addresses into sets, reducing the number
-of <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> rules and improving overall performance.</p>
-</li>
-<li>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M367.2 412.5L99.5 144.8c-22.4 31.4-35.5 69.8-35.5 111.2 0 106 86 192 192 192 41.5 0 79.9-13.1 111.2-35.5zm45.3-45.3c22.4-31.4 35.5-69.8 35.5-111.2 0-106-86-192-192-192-41.5 0-79.9 13.1-111.2 35.5L412.5 367.2zM0 256a256 256 0 1 1 512 0 256 256 0 1 1 -512 0z"></path></svg></span> &nbsp; <strong><a data-preview="" href="../blocklists/">Setting Up Blocklists</a></strong></p>
 <hr>
-<p>Blocklists in <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> allow you to automatically block connections from known
-malicious IP addresses, helping to protect your server from abusive traffic.  </p>
-<p>This chapter explains how to configure and use blocklists, including <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>’s
-official blocklist and third-party sources.  </p>
-<p>You’ll also learn how to enable blocklists with or without IPSET, ensuring
-they work efficiently no matter the size of the list.</p>
+<p>Blocklists provide the foundation for blocking unwanted and malicious traffic
+in <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>. They allow you to automatically deny access from IP addresses that have
+been identified as abusive or high risk.</p>
+<p>This section introduces what blocklists are, how they work, and how to configure
+them using <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>’s official blocklist or trusted third-party sources.</p>
+<p>Once you are comfortable using blocklists, you can advance to IPSETs to handle
+larger lists more efficiently and improve performance as your ruleset grows.</p>
+</li>
+<li>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M96 96l0 16 96 0 0-80-32 0c-35.3 0-64 28.7-64 64zm0 48l0 96 208 0 0-96-208 0zm0 128l0 96 96 0 0-96-96 0zm0 128l0 16c0 35.3 28.7 64 64 64l122.6 0c-6.9-20.9-10.6-43.1-10.6-65.9 0-4.7 .3-9.4 .7-14.1L96 400zM224 32l0 80 192 0 0-80-192 0zm0 240l0 96 55.2 0c7.2-24.5 19.2-48.3 32.3-69.7 5.4-8.8 11.3-17.6 17.7-26.3L224 272zM336 144l0 96 18.6 0c14.4-16.7 30.2-32.9 47.2-48.1 23.9-21.3 60.1-21.2 83.9 .2 8.3 7.5 16.3 15.1 24.2 23.1 10.3-7.1 22.2-10.7 34.1-11l0-60.2-208 0zM448 32l0 80 96 0 0-16c0-35.3-28.7-64-64-64l-32 0z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M518 258.5l-12.3 13.8s-24.5-29.4-38.9-40.7c-5.4-4.3-11.5-7.3-18.8-7.5s-14.6 2.3-20.3 7.5c-23.4 21.1-50 48.9-70.9 80.2-20.8 31.1-36.8 67.1-36.8 104.5 0 88.6 70.4 159.8 160 159.8 88.7 0 160-71.2 160-159.8 0-30-11-60.9-26.2-88.1-15.2-27.4-35.3-52.3-55-70.6-5.6-5.2-12.8-7.8-19.9-7.8-7.6 0-15.5 2.8-20.9 8.9zM480 528.2c-35.3 0-64-28.7-64-64 0-36.5 37-73 54.8-88.4 5.4-4.7 13.1-4.7 18.5 0 17.7 15.4 54.8 51.9 54.8 88.4 0 35.3-28.7 64-64 64z"></path></svg></span> &nbsp; <strong><a data-preview="" href="../ipset/">Introduction to IPSETs</a></strong></p>
+<hr>
+<p>Blocklists and IPSETs are designed to work together. Blocklists provide a simple
+way to block unwanted traffic from reaching your server, but large blocklists
+can be inefficient and memory-intensive.</p>
+<p>If you plan to import blocklists containing more than a few thousand IP addresses,
+it is strongly recommended to enable <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>’s IPSET integration.</p>
+<p>IPSETs allow you to block significantly larger numbers of IP addresses in a far
+more efficient way, without the risk of excessive memory usage or performance
+degradation.</p>
 </li>
 </ul>
 </div>
@@ -4287,7 +4290,7 @@ they work efficiently no matter the size of the list.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="December 14, 2025 13:50:08 UTC"><span class="timeago" datetime="2025-12-14T13:50:08+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="December 14, 2025 13:50:08 UTC">2025-12-14</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="December 14, 2025 16:42:23 UTC"><span class="timeago" datetime="2025-12-14T16:42:23+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="December 14, 2025 16:42:23 UTC">2025-12-14</span>
   </span>
 
     

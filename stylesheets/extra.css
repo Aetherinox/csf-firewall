@@ -2303,9 +2303,7 @@
 
     .md-typeset kbd
     {
-        background-color: hsl(210, 3%, 87.1%);
         border-radius: .1rem;
-        box-shadow: 0 .1rem 0 .05rem hsl(0, 0%, 100%),0 .1rem 0 hsl(0, 0%, 100%),0 -.1rem .2rem hsla(0, 0%, 100%, 0.25) inset;
         color: var(--md-default-fg-color);
         display: inline-block;
         font-size: .75em;
@@ -2416,6 +2414,20 @@
         color: #c8ff01;
     }
 
+}
+
+/*
+    Lists > Ordered
+*/
+
+.md-typeset ol ol, .md-typeset ul ol
+{
+    list-style-type: decimal;
+}
+
+.md-typeset ul li ol ul li
+{
+    list-style: revert;
 }
 
 & .md-typeset h4 .mdx-badge__icon
@@ -2542,6 +2554,14 @@
 .icon-clr-purple
 {
     color: #9242c0;
+}
+
+.icon-tldr
+{
+  color: #5b5b5b;
+  font-size: 12pt;
+  margin-top: 4px;
+  margin-right: 2px;
 }
 
 /*

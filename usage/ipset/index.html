@@ -1710,6 +1710,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#about-ipsets" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3936,6 +3947,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#about-ipsets" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -4353,6 +4375,25 @@
 <h1 id="introduction-to-ipsets">Introduction to IPSETs<a class="headerlink" data-preview="" href="#introduction-to-ipsets" title="Permanent link">¶</a></h1>
 <p>This section explains the purpose of IPSETs, and how they benefit you as a server administrator compared to using file-based allow, deny, or blocklists.</p>
 <p><br></p>
+<h2 id="summary"><span class="twemoji icon-tldr"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 504 560"><!--! Font Awesome Pro 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2025 Fonticons, Inc. --><path fill="currentColor" d="M109.7 53.7C145 18.4 194.6 0 252 0S359 18.4 394.3 53.7 448 138.6 448 196l0 53c0 5.5 1.6 10.9 4.7 15.5L490 320.5c9.1 13.7 14 29.8 14 46.2 0 35.2-22.7 68.5-60 76.6-38.7 8.4-103.8 18.7-192 18.7S98.7 451.8 60 443.3c-37.3-8.1-60-41.4-60-76.6 0-16.5 4.9-32.5 14-46.2l37.3-55.9c3.1-4.6 4.7-10 4.7-15.5l0-53c0-57.4 18.4-107 53.7-142.3zm95.6 463.4c-12.4-.5-23.7 7.3-27.7 19.1s.3 24.8 10.6 31.9c18.1 12.6 40.2 20 63.8 20s45.7-7.4 63.8-20c10.2-7.1 14.5-20.1 10.6-31.9s-15.2-19.6-27.7-19.1c-14.8 .6-30.4 .9-46.7 .9s-31.9-.3-46.7-.9z"></path></svg></span> Summary<a class="headerlink" data-preview="" href="#summary" title="Permanent link">¶</a></h2>
+<p>The following is a summary of what this page explains:</p>
+<ul>
+<li><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> includes support for a feature known as <strong>Blocklists</strong>.</li>
+<li>A blocklist is a file that contains thousands (or even millions) of IP addresses that <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> can import to automatically deny access to your server.</li>
+<li>These IP addresses are gathered and maintained by third-party <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> that monitor IP reputation, tracking malicious behavior such as port scans, brute-force login attempts, and other abusive activity.</li>
+<li>When an IP is repeatedly reported for malicious actions, it is added to a blocklist. You can then find these generated blocklists online, and import the IPs from those lists into your firewall.</li>
+<li>Taffic from the IPs within these blocklists are blocked from accessing your server if they ever attempt to target you.</li>
+<li>While blocklists are effective, very large blocklists come with a drawback: each IP address must be added as its own firewall rule.</li>
+<li>Creating thousands of individual firewall rules can significantly impact server performance and increase memory usage.</li>
+<li>To solve this problem, <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> also supports <strong>IPSETs</strong>.</li>
+<li>IPSETs serve the same purpose as blocklists, but are handled much more efficiently by the firewall. Instead of creating one rule per IP address, IPSETs store large collections of IPs in optimized sets that the firewall can check instantly.</li>
+<li>This allows you to block vastly larger numbers of IP addresses without degrading performance or exhausting system memory.</li>
+<li>Many GitHub repositories and third-party <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> provide blocklists that can be used with <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>.</li>
+<li><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> also offers its own official blocklist, which is automatically maintained and can be easily imported directly into <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>.</li>
+</ul>
+<p><br></p>
+<hr>
+<p><br></p>
 <h2 id="about-ipsets">About IPSETs<a class="headerlink" data-preview="" href="#about-ipsets" title="Permanent link">¶</a></h2>
 <p>When managing a firewall with <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>, you’ll often need to block or allow large numbers of IP addresses or networks. Traditionally, this has been done through file-based lists. When <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> is started, those lists are read into memory, and each IP or CIDR is added as a separate rule in the <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> firewall. As an example:</p>
 <div class="language-shell highlight"><span class="filename">/etc//csf/csf.deny</span><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># #</span>
@@ -4620,12 +4661,13 @@
 <li>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M367.2 412.5L99.5 144.8c-22.4 31.4-35.5 69.8-35.5 111.2 0 106 86 192 192 192 41.5 0 79.9-13.1 111.2-35.5zm45.3-45.3c22.4-31.4 35.5-69.8 35.5-111.2 0-106-86-192-192-192-41.5 0-79.9 13.1-111.2 35.5L412.5 367.2zM0 256a256 256 0 1 1 512 0 256 256 0 1 1 -512 0z"></path></svg></span> &nbsp; <strong><a data-preview="" href="../blocklists/">Setting Up Blocklists</a></strong></p>
 <hr>
-<p>Blocklists in <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> allow you to automatically block connections from known
-malicious IP addresses, helping to protect your server from abusive traffic.  </p>
-<p>This chapter explains how to configure and use blocklists, including <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>’s
-official blocklist and third-party sources.  </p>
-<p>You’ll also learn how to enable blocklists with or without IPSET, ensuring
-they work efficiently no matter the size of the list.</p>
+<p>Blocklists provide the foundation for blocking unwanted and malicious traffic
+in <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>. They allow you to automatically deny access from IP addresses that have
+been identified as abusive or high risk.</p>
+<p>This section introduces what blocklists are, how they work, and how to configure
+them using <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>’s official blocklist or trusted third-party sources.</p>
+<p>Once you are comfortable using blocklists, you can advance to IPSETs to handle
+larger lists more efficiently and improve performance as your ruleset grows.</p>
 </li>
 </ul>
 </div>
@@ -5168,22 +5210,24 @@ they work efficiently no matter the size of the list.</p>
 <li>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M367.2 412.5L99.5 144.8c-22.4 31.4-35.5 69.8-35.5 111.2 0 106 86 192 192 192 41.5 0 79.9-13.1 111.2-35.5zm45.3-45.3c22.4-31.4 35.5-69.8 35.5-111.2 0-106-86-192-192-192-41.5 0-79.9 13.1-111.2 35.5L412.5 367.2zM0 256a256 256 0 1 1 512 0 256 256 0 1 1 -512 0z"></path></svg></span> &nbsp; <strong><a data-preview="" href="../blocklists/">Setting Up Blocklists</a></strong></p>
 <hr>
-<p>Blocklists in <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> allow you to automatically block connections from known
-malicious IP addresses, helping to protect your server from abusive traffic.  </p>
-<p>This chapter explains how to configure and use blocklists, including <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>’s
-official blocklist and third-party sources.  </p>
-<p>You’ll also learn how to enable blocklists with or without IPSET, ensuring
-they work efficiently no matter the size of the list.</p>
+<p>Blocklists provide the foundation for blocking unwanted and malicious traffic
+in <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>. They allow you to automatically deny access from IP addresses that have
+been identified as abusive or high risk.</p>
+<p>This section introduces what blocklists are, how they work, and how to configure
+them using <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>’s official blocklist or trusted third-party sources.</p>
+<p>Once you are comfortable using blocklists, you can advance to IPSETs to handle
+larger lists more efficiently and improve performance as your ruleset grows.</p>
 </li>
 <li>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 256c0 141.4 114.6 256 256 256 5.4 0 10.7-.2 16-.5l0-34.3c0-25-20.3-45.3-45.3-45.3-12 0-23.5-4.8-32-13.3l-16-16c-12-12-18.7-28.3-18.7-45.3l0-3.2c0-21.4 10.7-41.4 28.5-53.3 9.1-6.1 18.3-12.2 27.4-18.3 10.5-7 22.9-10.7 35.5-10.7l20.9 0c15.3 0 30 5.5 41.6 15.4l26.6 22.8c7.4 6.3 16.8 9.8 26.6 9.8 10.8 0 21.2 4.3 28.9 12l4 4c10.2 10.2 24.1 16 38.6 16l54.8 0c4.2-10.3 7.7-21 10.5-32l-57.3 0c-14.5 0-28.4-5.8-38.6-16l-18.3-18.3C386 282 384 277.1 384 272s2-10 5.7-13.7c2.5-2.5 5-5 7.5-7.5 1.8-1.8 2.8-4.3 2.8-6.8s-1-5-2.8-6.8c-2.2-2.2-4.4-4.4-6.5-6.5-4.2-4.2-10-6.6-16-6.6-3.8 0-7.5 0-11.3 0-6.2 0-11.3-5.1-11.3-11.3 0-3 1.2-5.9 3.3-8 1.6-1.6 3.1-3.1 4.7-4.7 5.1-5.1 12.1-8 19.3-8 6.9 0 13.8 0 20.7 0 8.8 0 16-7.2 16-16s-7.2-16-16-16c-9.8 0-19.6 0-29.4 0-10.3 0-18.6 8.3-18.6 18.6 0 8-5.1 15.1-12.7 17.6-7.1 2.4-14.1 4.7-21.2 7.1-7.5 2.5-11 11-7.5 18 .4 .8 .8 1.5 1.1 2.3 3.8 7.5-1.7 16.4-10.1 16.4-3.6 0-6.9-1.7-9.1-4.5-5.4-7.2-10.9-14.5-16.3-21.7-2.7-3.6-6.9-5.7-11.4-5.7-5.4 0-10.4 3.1-12.8 7.9-1.3 2.7-2.7 5.4-4 8.1-4.9 9.8-15.1 16-26.1 16-16.4 0-29.9-13.3-29.9-29.7l0-4.3c0-9 3.6-17.6 9.9-24 6-6 12-12 17.9-17.9 2.6-2.6 4.1-6.2 4.1-10 0-6.1 3.9-11.5 9.6-13.4 8.8-2.9 17.7-5.9 26.5-8.8 7.8-2.6 14.9-7 20.7-12.8 6.6-6.6 13.2-13.2 19.9-19.9 2.1-2.1 3.3-5 3.3-8 0-6.2-5.1-11.3-11.3-11.3-.2 0-.3 0-.5 0-3 0-5.3 .7-7.3 2.1-13.9 9.3-27.9 18.6-41.8 27.9-2 1.3-4.4 2.1-6.8 2.1-6.8 0-12.3-5.5-12.3-12.3l0-8.6c0-7 3.5-13.5 9.3-17.3 31.7-21.1 63.4-42.3 95.1-63.4-23-6.8-47.3-10.4-72.4-10.4-141.4 0-256 114.6-256 256zM132.7 132.7c10.7-10.7 21.3-21.3 32-32 6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6c-10.7 10.7-21.3 21.3-32 32-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M192 210.3l0-4.3c0-9 3.6-17.6 9.9-24l17.9-17.9c2.6-2.6 4.1-6.2 4.1-10 0-6.1 3.9-11.5 9.6-13.4l26.5-8.8c7.8-2.6 14.9-7 20.7-12.8l19.9-19.9c2.1-2.1 3.3-5 3.3-8 0-6.2-5.1-11.3-11.3-11.3l-1 0c-2.4 0-4.8 .7-6.8 2.1l-41.8 27.9c-2 1.3-4.4 2.1-6.8 2.1-6.8 0-12.3-5.5-12.3-12.3l0-8.6c0-7 3.5-13.5 9.3-17.3l95.1-63.4c106.1 31.2 183.6 129.4 183.6 245.6 0 22.1-2.8 43.5-8.1 64l-57.3 0c-14.5 0-28.4-5.8-38.6-16l-18.3-18.3C386 282 384 277.1 384 272s2-10 5.7-13.7l7.5-7.5c1.8-1.8 2.8-4.3 2.8-6.8s-1-5-2.8-6.8l-6.5-6.5c-4.2-4.2-10-6.6-16-6.6l-11.3 0c-6.2 0-11.3-5.1-11.3-11.3 0-3 1.2-5.9 3.3-8L360 200c5.1-5.1 12.1-8 19.3-8l20.7 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-29.4 0c-10.3 0-18.6 8.3-18.6 18.6 0 8-5.1 15.1-12.7 17.6l-21.2 7.1c-7.5 2.5-11 11-7.5 18l1.1 2.3c3.8 7.5-1.7 16.4-10.1 16.4-3.6 0-6.9-1.7-9.1-4.5l-16.3-21.7c-2.7-3.6-6.9-5.7-11.4-5.7-5.4 0-10.4 3.1-12.8 7.9l-4 8.1c-4.9 9.8-15.1 16-26.1 16-16.4 0-29.9-13.3-29.9-29.7zM493.4 352C457.3 441.1 372.5 505.3 272 511.5l0-34.3c0-25-20.3-45.3-45.3-45.3-12 0-23.5-4.8-32-13.3l-16-16c-12-12-18.7-28.3-18.7-45.3l0-3.2c0-21.4 10.7-41.4 28.5-53.3l27.4-18.2c10.5-7 22.9-10.7 35.5-10.7l20.9 0c15.3 0 30 5.5 41.6 15.4l26.6 22.8c7.4 6.3 16.8 9.8 26.6 9.8 10.8 0 21.2 4.3 28.9 12l4 4c10.2 10.2 24.1 16 38.6 16l54.8 0zM187.3 100.7c6.2 6.2 6.2 16.4 0 22.6l-32 32c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l32-32c6.2-6.2 16.4-6.2 22.6 0z"></path></svg></span> &nbsp; <strong><a data-preview="" href="../geoip/">Geographical IP Block Integration</a></strong></p>
 <hr>
-<p>Configure geographical restrictions in <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> to whitelist or blacklist specific
-regions from accessing your server.</p>
-<p>This chapter covers enabling the GeoIP blocklist feature using third-party
-<abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> such as MaxMind (requires an API key), db-ip, ipdeny, or iptoasn.</p>
-<p>These <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> allow you to control access based on location while keeping
-your server secure.</p>
+<p>Geographical IP blocking allows you to control access to your server based on
+the country or region an IP address originates from, rather than individual
+IP reputation or blocklist entries.</p>
+<p>This section explains what geographical IP blocks are, how they differ from
+blocklists and IPSETs, and when it makes sense to use country-based filtering.</p>
+<p>You’ll also learn how to integrate <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> with GeoIP data providers to apply
+regional access rules safely and efficiently.</p>
 </li>
 </ul>
 </div>
@@ -5209,7 +5253,7 @@ your server secure.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 27, 2025 14:18:00 UTC"><span class="timeago" datetime="2025-10-27T14:18:00+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 27, 2025 14:18:00 UTC">2025-10-27</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="December 14, 2025 16:42:23 UTC"><span class="timeago" datetime="2025-12-14T16:42:23+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="December 14, 2025 16:42:23 UTC">2025-12-14</span>
   </span>
 
     
