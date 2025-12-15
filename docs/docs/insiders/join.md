@@ -39,6 +39,8 @@ If you would like to join our **Insiders** program and become a sponsor, we have
 
 [:aetherx-axd-cup-togo: BuyMeACoffee](https://buymeacoffee.com/aetherinox){ .md-button .btn-aln-center-inline .buttons-fill target="_blank" } [:aetherx-axb-github: Github Sponsor](https://github.com/sponsors/Aetherinox){ .md-button .btn-aln-center-inline .buttons-fill target="_blank" }
 
+</div>
+
 <br />
 <br />
 <br />
