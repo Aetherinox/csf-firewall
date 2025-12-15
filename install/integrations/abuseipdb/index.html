@@ -3,18 +3,17 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Details regarding CSF release v15.02
-">
-      
       
         <meta name="author" content="Aetherinox">
       
       
-        <link rel="canonical" href="https://aetherinox.github.io/csf-firewall/blog/2025/release-v1502/">
+        <link rel="canonical" href="https://aetherinox.github.io/csf-firewall/install/integrations/abuseipdb/">
       
       
+        <link rel="prev" href="../../update/v14-to-v15/">
       
-        <link rel="next" href="../release-v1503/">
+      
+        <link rel="next" href="../authentik/">
       
       
         
@@ -25,8 +24,7 @@
     
     
       
-        <title>Release v15.02
- - ConfigServer Security &amp; Firewall</title>
+        <title>Usage › Integration › AbuseIPDB - ConfigServer Security &amp; Firewall</title>
       
     
     
@@ -94,7 +92,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#release-v1502" class="md-skip">
+        <a href="#abuseipdb" class="md-skip">
           Skip to content
         </a>
       
@@ -165,8 +163,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Release v15.02
-
+              Usage › Integration › AbuseIPDB
             
           </span>
         </div>
@@ -323,11 +320,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../../install/dependencies/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../dependencies/" class="md-tabs__link">
           
   
   
@@ -452,13 +451,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../../" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../../blog/" class="md-tabs__link">
           
   
   
@@ -540,9 +537,7 @@
           
             
               
-                
-              
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -916,8 +911,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -943,19 +940,22 @@
     
     
       
+        
+        
+      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
             
   
   
@@ -973,7 +973,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -991,7 +991,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../install/dependencies/" class="md-nav__link">
+      <a href="../../dependencies/" class="md-nav__link">
         
   
   
@@ -1019,7 +1019,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../install/download/" class="md-nav__link">
+      <a href="../../download/" class="md-nav__link">
         
   
   
@@ -1047,7 +1047,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../install/tests/" class="md-nav__link">
+      <a href="../../tests/" class="md-nav__link">
         
   
   
@@ -1075,7 +1075,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../install/install/" class="md-nav__link">
+      <a href="../../install/" class="md-nav__link">
         
   
   
@@ -1103,7 +1103,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../install/services/" class="md-nav__link">
+      <a href="../../services/" class="md-nav__link">
         
   
   
@@ -1131,7 +1131,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../install/webui/" class="md-nav__link">
+      <a href="../../webui/" class="md-nav__link">
         
   
   
@@ -1159,7 +1159,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../install/uninstall/" class="md-nav__link">
+      <a href="../../uninstall/" class="md-nav__link">
         
   
   
@@ -1199,17 +1199,20 @@
       
       
         
+          
+          
+        
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8">
         
           
-          <label class="md-nav__link" for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3_8" id="__nav_3_8_label" tabindex="">
             
   
   
@@ -1245,7 +1248,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../install/update/v14-to-v15/" class="md-nav__link">
+      <a href="../../update/v14-to-v15/" class="md-nav__link">
         
   
   
@@ -1273,7 +1276,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../install/update/v15-to-newer.md" class="md-nav__link">
+      <a href="../../update/v15-to-newer.md" class="md-nav__link">
         
   
   
@@ -1306,8 +1309,10 @@
                 
   
   
+    
   
   
+  
     
     
       
@@ -1324,18 +1329,21 @@
     
       
       
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_9">
         
           
-          <label class="md-nav__link" for="__nav_3_9" id="__nav_3_9_label" tabindex="0">
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_9" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_9" id="__nav_3_9_label" tabindex="">
             
   
   
@@ -1353,7 +1361,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_9_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_9_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_9">
             <span class="md-nav__icon md-icon"></span>
             
@@ -1368,10 +1376,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../../install/integrations/abuseipdb/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AbuseIPDB
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1387,6 +1422,70 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#useful-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Useful Resources
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-abuseipdb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is AbuseIPDB?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#before-you-begin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Before You Begin
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#next-steps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Next Steps
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1399,7 +1498,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../install/integrations/authentik/" class="md-nav__link">
+      <a href="../authentik/" class="md-nav__link">
         
   
   
@@ -1427,7 +1526,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../install/integrations/docker/" class="md-nav__link">
+      <a href="../docker/" class="md-nav__link">
         
   
   
@@ -1455,7 +1554,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../install/integrations/traefik/" class="md-nav__link">
+      <a href="../traefik/" class="md-nav__link">
         
   
   
@@ -2763,8 +2862,6 @@
       
   
   
-    
-  
   
   
     
@@ -2782,23 +2879,20 @@
     
     
       
-        
-        
-      
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9">
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../../" class="md-nav__link ">
+            <a href="../../../blog/" class="md-nav__link ">
               
   
   
@@ -2816,13 +2910,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_9" id="__nav_9_label" tabindex="">
+              <label class="md-nav__link " for="__nav_9" id="__nav_9_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_9">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2852,20 +2946,17 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9_2">
         
           
-          <label class="md-nav__link" for="__nav_9_2" id="__nav_9_2_label" tabindex="">
+          <label class="md-nav__link" for="__nav_9_2" id="__nav_9_2_label" tabindex="0">
             
   
   
@@ -2903,7 +2994,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../" class="md-nav__link">
+      <a href="../../../blog/2025/" class="md-nav__link">
         
   
   
@@ -2977,20 +3068,17 @@
       
       
         
-          
-          
-        
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9_3">
         
           
-          <label class="md-nav__link" for="__nav_9_3" id="__nav_9_3_label" tabindex="">
+          <label class="md-nav__link" for="__nav_9_3" id="__nav_9_3_label" tabindex="0">
             
   
   
@@ -3028,7 +3116,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../changelog/" class="md-nav__link">
+      <a href="../../../blog/changelog/" class="md-nav__link">
         
   
   
@@ -3058,7 +3146,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../csfajaxtail/" class="md-nav__link">
+      <a href="../../../blog/csfajaxtail/" class="md-nav__link">
         
   
   
@@ -3088,7 +3176,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../csp/" class="md-nav__link">
+      <a href="../../../blog/csp/" class="md-nav__link">
         
   
   
@@ -3118,7 +3206,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../cyberpanel/" class="md-nav__link">
+      <a href="../../../blog/cyberpanel/" class="md-nav__link">
         
   
   
@@ -3148,7 +3236,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../downloadconfigserverdev/" class="md-nav__link">
+      <a href="../../../blog/downloadconfigserverdev/" class="md-nav__link">
         
   
   
@@ -3178,7 +3266,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../initd/" class="md-nav__link">
+      <a href="../../../blog/initd/" class="md-nav__link">
         
   
   
@@ -3208,7 +3296,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../release/" class="md-nav__link">
+      <a href="../../../blog/release/" class="md-nav__link">
         
   
   
@@ -3238,7 +3326,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../release-alpha/" class="md-nav__link">
+      <a href="../../../blog/release-alpha/" class="md-nav__link">
         
   
   
@@ -3268,7 +3356,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../ui/" class="md-nav__link">
+      <a href="../../../blog/ui/" class="md-nav__link">
         
   
   
@@ -3298,7 +3386,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../v15x/" class="md-nav__link">
+      <a href="../../../blog/v15x/" class="md-nav__link">
         
   
   
@@ -3328,7 +3416,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../vestacp/" class="md-nav__link">
+      <a href="../../../blog/vestacp/" class="md-nav__link">
         
   
   
@@ -3358,7 +3446,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../web-inteface/" class="md-nav__link">
+      <a href="../../../blog/web-inteface/" class="md-nav__link">
         
   
   
@@ -3388,7 +3476,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../web-login/" class="md-nav__link">
+      <a href="../../../blog/web-login/" class="md-nav__link">
         
   
   
@@ -3418,7 +3506,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../web-theme-dark/" class="md-nav__link">
+      <a href="../../../blog/web-theme-dark/" class="md-nav__link">
         
   
   
@@ -3448,7 +3536,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../webmin/" class="md-nav__link">
+      <a href="../../../blog/webmin/" class="md-nav__link">
         
   
   
@@ -3573,8 +3661,6 @@
             
             
               
-                
-              
               <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
@@ -3594,10 +3680,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#objectives" class="md-nav__link">
+  <a href="#useful-resources" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Objectives
+        Useful Resources
       
     </span>
   </a>
@@ -3605,10 +3691,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#community-collaboration" class="md-nav__link">
+  <a href="#what-is-abuseipdb" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Community Collaboration
+        What is AbuseIPDB?
       
     </span>
   </a>
@@ -3616,266 +3702,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#changelog" class="md-nav__link">
+  <a href="#before-you-begin" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Changelog
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Changelog">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#new-login-page" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        New Login Page
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#alpha-release-channel" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Alpha Release Channel
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Alpha Release Channel">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#enable-alpha-releases" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Enable Alpha Releases
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#download-service-updates" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Download Service Updates
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#cyberpanel" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Cyberpanel
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#vestacp" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        VestaCP
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="VestaCP">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#csf-submenu-in-header" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        CSF Submenu in Header
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#lack-of-updates" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Lack of Updates
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#header-integration" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Header Integration
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dark-theme-users" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Dark Theme Users
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#automatic-download-server" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Automatic Download Server
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#prepost-script-integration" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Pre/Post Script Integration
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Pre/Post Script Integration">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#csfpresh" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        csfpre.sh
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#csfpostsh" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        csfpost.sh
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#updated-installsh-script" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Updated install.sh Script
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Updated install.sh Script">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#example-output" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Example Output
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#config-file-changes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Config File Changes
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Config File Changes">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#added-headers" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Added Headers
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#enhanced-comments" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Enhanced Comments
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#summary" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Summary
+        Before You Begin
       
     </span>
   </a>
@@ -3883,10 +3713,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#full-changelog" class="md-nav__link">
+  <a href="#next-steps" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Full Changelog
+        Next Steps
       
     </span>
   </a>
@@ -3902,109 +3732,118 @@
             
           
           
-  <div class="md-content md-content--post" data-md-component="content">
-    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
-      <div class="md-sidebar__scrollwrap">
-        <div class="md-sidebar__inner md-post">
-          <nav class="md-nav md-nav--primary">
-            <div class="md-post__back">
-              <div class="md-nav__title md-nav__container">
-                <a href="../../" class="md-nav__link">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
-                  <span class="md-ellipsis">
-                    Back to index
-                  </span>
-                </a>
-              </div>
-            </div>
-            
-              <div class="md-post__authors md-typeset">
+            <div class="md-content" data-md-component="content">
+              
                 
-                  <div class="md-profile md-post__profile">
-                    <span class="md-author md-author--long">
-                      <img src="https://avatars.githubusercontent.com/u/118329232" alt="Aetherinox">
-                    </span>
-                    <span class="md-profile__description">
-                      <strong>
-                        
-                          <a href="https://github.com/squidfunk">Aetherinox</a>
-                        
-                      </strong>
-                      <br>
-                      Developer
-                    </span>
-                  </div>
-                
-              </div>
-            
-            <ul class="md-post__meta md-nav__list">
-              <li class="md-nav__item md-nav__item--section">
-                <div class="md-post__title">
-                  <span class="md-ellipsis">
-                    Metadata
-                  </span>
-                </div>
-                <nav class="md-nav">
-                  <ul class="md-nav__list">
-                    <li class="md-nav__item">
-                      <div class="md-nav__link">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5v-5Z"></path></svg>
-                        <time datetime="2025-10-13 00:00:00+00:00" class="md-ellipsis">Monday, October 13, 2025</time>
-                      </div>
-                    </li>
-                    
-                    
-                      <li class="md-nav__item">
-                        <div class="md-nav__link">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3H9m3 2 4 13 3-1-4-13-3 1M5 5v13h3V5H5M3 19v2h18v-2H3Z"></path></svg>
-                          <span class="md-ellipsis">
-                            in
-                            
-                              <a href="../../release/">release</a>, 
-                              <a href="../../changelog/">changelog</a>, 
-                              <a href="../../v15x/">v15.x</a>, 
-                              <a href="../../web-inteface/">web-inteface</a>, 
-                              <a href="../../web-login/">web-login</a>, 
-                              <a href="../../web-theme-dark/">web-theme-dark</a>, 
-                              <a href="../../release-alpha/">release-alpha</a>, 
-                              <a href="../../vestacp/">vestacp</a>, 
-                              <a href="../../cyberpanel/">cyberpanel</a>, 
-                              <a href="../../downloadconfigserverdev/">download.configserver.dev</a></span>
-                        </div>
-                      </li>
-                    
-                    
-                      
-                      <li class="md-nav__item">
-                        <div class="md-nav__link">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7h1.5Z"></path></svg>
-                          <span class="md-ellipsis">
-                            
-                              11 min read
-                            
-                          </span>
-                        </div>
-                      </li>
-                    
-                  </ul>
-                </nav>
-              </li>
-            </ul>
-            
-          </nav>
-          
-        </div>
-      </div>
-    </div>
-    <article class="md-content__inner md-typeset">
+
+
+
+
+  <nav class="md-path" aria-label="Navigation">
+    <ol class="md-path__list">
+      
       
         
   
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../../dependencies/" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Install
+  </span>
 
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="./" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Integrations
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  <nav class="md-tags">
+    
+      
+      
+      
+        
+        
+      
+      
+        <a href="../../../about/tags/#tag:3rd-party" class="md-tag md-tag-icon">3rd-party</a>
+      
+    
+      
+      
+      
+        
+        
+      
+      
+        <a href="../../../about/tags/#tag:abuseipdb" class="md-tag md-tag-icon">abuseipdb</a>
+      
+    
+      
+      
+      
+        
+        
+      
+      
+        <a href="../../../about/tags/#tag:blocklist" class="md-tag md-tag-icon">blocklist</a>
+      
+    
+      
+      
+      
+        
+        
+      
+      
+        <a href="../../../about/tags/#tag:install" class="md-tag md-tag-icon">install</a>
+      
+    
+      
+      
+      
+        
+        
+      
+      
+        <a href="../../../about/tags/#tag:integration" class="md-tag md-tag-icon">integration</a>
+      
+    
+  </nav>
 
 
   
-    <a href="https://github.com/aetherinox/csf-firewall/edit/main/docs/docs/blog/posts/release-15.02.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/aetherinox/csf-firewall/edit/main/docs/docs/install/integrations/abuseipdb.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"></path></svg>
     </a>
@@ -4013,266 +3852,205 @@
     
       
     
-    <a href="https://github.com/aetherinox/csf-firewall/raw/main/docs/docs/blog/posts/release-15.02.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/aetherinox/csf-firewall/raw/main/docs/docs/install/integrations/abuseipdb.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"></path></svg>
     </a>
   
 
 
-<h1 id="release-v1502">Release: v15.02<a class="headerlink" href="#release-v1502" title="Permanent link">¶</a></h1>
-<p>The next release of <abbr title="A security suite for Linux servers that provides firewall management, intrusion detection, and login failure monitoring.">ConfigServer Security &amp; Firewall</abbr> (<abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>) is here, and I wanted to take a moment to share an update on what’s coming next — including fixes, plans, and our broader direction moving forward. This post will cover integration improvements for both <strong>VestaCP</strong> and <strong>CyberPanel</strong>, as well as a look into the ongoing goals behind <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>’s continued progression.</p>
-<p>Our focus remains on transparency, stability, and community involvement. Users deserve to know not only what’s changing, but why. By keeping everyone informed and maintaining compatibility across control panels, we aim to ensure that <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> continues to be the trusted, secure, and reliable firewall solution it has always been.</p>
-<!-- more -->
-
+<h1 id="abuseipdb">AbuseIPDB<a class="headerlink" data-preview="" href="#abuseipdb" title="Permanent link">¶</a></h1>
+<p>This section explains how to integrate <a href="(https://abuseipdb.com)">AbuseIPDB</a>'s blocklist <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> into your copy of <abbr title="ConfigServer Security &amp; Firewall Security">ConfigServer Security</abbr> and Firewall.</p>
 <p><br></p>
-<hr>
-<p><br></p>
-<h2 id="objectives">Objectives<a class="headerlink" href="#objectives" title="Permanent link">¶</a></h2>
-<p>This repository originally began as the home for a third-party <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> Dark Theme and a collection of helper scripts designed to simplify everyday management tasks. However, following the unfortunate announcement that <strong>Way to the Web</strong> would be closing down, this project evolved into a maintained fork of the <abbr title="A security suite for Linux servers that provides firewall management, intrusion detection, and login failure monitoring.">ConfigServer Security &amp; Firewall</abbr> core application itself.  </p>
-<p><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> has long stood as one of the most stable and loved firewall applications available. It has been known for its consistency, reliability, and not fixing what isn’t broken. That legacy is something I respect and want to maintain.</p>
-<p>As a long-time user myself, I understand what <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> brings to everyday server management. While I’m fully capable of managing <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> or <abbr title="A Linux firewall framework that replaces iptables with a simpler, faster system.">nftables</abbr> directly, the convenience of having a clean, functional interface to manage my firewall saves time and effort, and that’s something worth maintaining. </p>
-<p>The goal moving forward is simple: <em>enhance, not overhaul</em></p>
-<p>I am focused on delivering thoughtful updates, quality improvements, and useful new features that make <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> better, without compromising its identity or stability. I have no intention of tearing down what makes <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> great. I want to strengthen it, preserve its integrity, and ensure it remains the trusted tool you know and rely on.</p>
-<p><br></p>
-<hr>
-<p><br></p>
-<h2 id="community-collaboration">Community Collaboration<a class="headerlink" href="#community-collaboration" title="Permanent link">¶</a></h2>
-<p>GitHub was chosen as <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>’s new home because it provides the transparency and the openness this project deserves. It lets users follow development in real-time, track changes as they happen, and directly participate in discussions or contributions. This approach keeps everyone in the loop and ensures that <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> evolves with community insight and feedback.</p>
-<p>While I’m leading the maintenance and development, <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> isn’t a one-person show. If you see areas for improvement, have ideas for new features, or have experience with Perl and want to contribute; your involvement is always welcome. Collaboration strengthens the project, and community input is what keeps it alive. Coupled with the fact that most of the applications I only use these days are open-source.</p>
-<p>Most importantly, <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> will always remain free and open-source. There will never be a shift toward closed-source development or any corporate acquisition. The goal has always been, and will continue to be, to keep <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> accessible, transparent, and powered by the community that relies on it.</p>
-<p><br></p>
-<hr>
-<p><br></p>
-<h2 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">¶</a></h2>
-<p>With all of that out of the way, this post is about the upcoming <code>v15.02</code> release and what it entails.</p>
-<p><br></p>
-<h3 id="new-login-page">New Login Page<a class="headerlink" href="#new-login-page" title="Permanent link">¶</a></h3>
-<p>This update re-introduces the login page that original users of the repository came to enjoy, with the added bonus that there is now a <strong>Theme Selector</strong> in the top-right.</p>
-<p>The theme selector changes the login page theme for the moment; however, it will tie into the main web interface in an upcoming version when the <strong>Dark Theme</strong> is re-added.</p>
-<p>Only <strong>Generic</strong> installation users will see the login screen, as that has always been the case. Control panels such as <abbr title="A Linux-based control panel used to manage your web hosting.">cPanel</abbr>, VestaCP, Interworx, etc., never show a login page because authentication being tied into the control panel itself.</p>
-<p>I wanted to keep the login page simple, and not turn it into a commercialized stock layout. It's a simple, revised login page that keeps the original white appearance but adds a dark theme and a simple background.</p>
-<p>Users should note that when the dark theme returns to <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>, the white theme will remain. The goal is to preserve the original <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> look and avoid confusing the end-user. We're simply adding a dark theme to the web interface as an alternative option for users who would like it. The white theme will remain untouched aside from some style optimizations.</p>
-<figure>
-    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../assets/images/showcase/1.gif" data-desc-position="bottom"><img alt="CSF › Login" src="../../../assets/images/showcase/1.gif" width="700"></a>
-    <figcaption><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> › Login</figcaption>
-</figure>
-<p><br></p>
-<hr>
-<p><br></p>
-<h3 id="alpha-release-channel">Alpha Release Channel<a class="headerlink" href="#alpha-release-channel" title="Permanent link">¶</a></h3>
-<p>The <strong>Alpha Release Channel</strong> provides access to early builds of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> that include experimental features, performance improvements, or upcoming functionality that has not yet been finalized for stable release.</p>
-<p>Alpha releases are highly experimental and not intended for production servers.
-These builds may contain incomplete features, untested changes, or critical bugs that could lead to system instability or security issues.</p>
-<p>The primary purpose of the alpha channel is to allow users and developers to test new functionality and provide feedback before the features are merged into the stable release channel.</p>
-<p>Only use the alpha channel in a controlled testing or development environment.</p>
-<p>If you wish to test an alpha release, it is strongly recommended that you do so on a virtual machine (such as Hyper-V, VMWare, or VirtualBox) or on a secondary barebones server that has no critical role in your primary infrastructure or homelab. This ensures that any potential bugs or regressions in the alpha build do not disrupt your production environment.</p>
-<p><br></p>
-<h4 id="enable-alpha-releases">Enable Alpha Releases<a class="headerlink" href="#enable-alpha-releases" title="Permanent link">¶</a></h4>
-<p>To enable the Alpha channel, edit your <code>/etc/csf/csf.conf</code> file and add the following line:</p>
-<div class="language-ini highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="na">RELEASE_ALPHA</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"1"</span>
-</span></code></pre></div>
-<details class="danger">
-<summary>⚠️ <strong>DANGER</strong> ⚠️ Alpha Releases</summary>
-<p>This setting is not included by default to prevent accidental use on production systems.</p>
-</details>
-<p><br></p>
-<h4 id="download-service-updates">Download Service Updates<a class="headerlink" href="#download-service-updates" title="Permanent link">¶</a></h4>
-<p>Our <a href="">download.configserver.dev</a> update service has been enhanced to now include alpha releases. You can view the latest version of an alpha release by opening your browser and going to:</p>
+<h2 id="useful-resources">Useful Resources<a class="headerlink" data-preview="" href="#useful-resources" title="Permanent link">¶</a></h2>
+<p>The following are useful resources regarding this page.</p>
+<div class="grid cards">
 <ul>
-<li><a href="https://download.configserver.dev/csf/version.txt?channel=alpha"><abbr title="Hypertext Transfer Protocol Secure, the encrypted version of HTTP.">https</abbr>://download.configserver.dev/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>/version.txt?channel=alpha</a></li>
-</ul>
-<p><br></p>
-<p>When you enable the <code>csf.conf</code> setting <code>RELEASE_ALPHA</code>, <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> will download new alpha releases from the url:</p>
-<ul>
-<li><a href="https://download.configserver.dev/csf.tgz?channel=alpha"><abbr title="Hypertext Transfer Protocol Secure, the encrypted version of HTTP.">https</abbr>://download.configserver.dev/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>.tgz?channel=alpha</a></li>
-</ul>
-<p><br></p>
+<li>
+<p><span class="twemoji"><!--?xml version="1.0" encoding="UTF-8"?-->
+<svg width="162.18" height="162.18" version="1.1" viewBox="0 0 162.18244 162.18244" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
+<metadata>
+<rdf:rdf>
+<cc:work rdf:about="">
+<dc:format>image/svg+xml</dc:format>
+<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"></dc:type>
+<dc:title></dc:title>
+</cc:work>
+</rdf:rdf>
+</metadata>
+<defs>
+<linearGradient id="f" x1="54.759" x2="49.053" y1="600.57" y2="631.41" gradientTransform="scale(1.5608 .64069)" gradientUnits="userSpaceOnUse" xlink:href="#a"></linearGradient>
+<linearGradient id="g" x1="32.103" x2="56.402" y1="808.54" y2="808.54" gradientTransform="scale(2.195 .45558)" gradientUnits="userSpaceOnUse" xlink:href="#a"></linearGradient>
+<linearGradient id="e" x1="48.693" x2="46.452" y1="670.39" y2="673.16" gradientTransform="scale(1.7812 .56142)" gradientUnits="userSpaceOnUse">
+<stop stop-opacity=".408" offset="0"></stop>
+<stop stop-opacity="0" offset="1"></stop>
+</linearGradient>
+<linearGradient id="a">
+<stop stop-color="#fff" stop-opacity=".175" offset="0"></stop>
+<stop stop-color="#fff" stop-opacity=".375" offset="1"></stop>
+</linearGradient>
+</defs>
+<g transform="translate(-16.984 -331)" fill-rule="evenodd">
+<path d="m48.388 396.53c0.9599-4.2739 1.9198-33.716 10.559-33.241 30.717 0.94974 62.394-30.867 85.432 39.89 71.033 33.241 4.9391 59.953-51.295 57.579-55.567-2.3264-103.01-42.383-44.696-64.227z" fill-opacity=".992"></path>
+<path d="m46.948 406.03c35.516 22.319 94.071 8.5478 96.47-2.3744 3.3597 3.799 0 14.246 0 14.246-15.358 19.945-89.751 15.671-97.91 1.4246-0.95991-3.799 0.9599-11.872 1.4399-13.296z" fill="#fff"></path>
+<g stroke-width="1.25">
+<path d="m60.387 370.41c9.1191-8.0729 48.955 3.3241 54.235 9.4975 1.9198 10.447-48.955 2.3744-54.235-9.4975z" fill="url(#e)"></path>
+<path d="m60.387 382.29c4.3196 9.9724 21.118 33.241 49.435 10.922-23.518 0.94977-33.597-1.8995-49.435-10.922z" fill="url(#f)"></path>
+<path d="m70.466 362.82c6.2394 2.8492 45.596 13.771 49.915 10.447 4.7995-1.8995 3.8396-2.8493 1.4399-3.3241-3.8396 2.3744-10.559 3.799-51.355-7.1231z" fill="url(#g)"></path>
+</g>
+<path d="m52.701 411.24c5.762 2.7324 23.528 6.3756 30.251 6.831 4.8017 3.1878 2.4008 8.1972 0.48019 11.84-12.964 0-27.85-3.1878-31.691-7.2864-2.4008-4.0986-1.4405-7.2864 0.96034-11.385z" fill="#4d4d4d" fill-opacity=".317"></path>
+</g>
+<circle cx="81.091" cy="81.091" r="75.091" fill="none" stroke="#f00" stroke-width="12"></circle>
+<path d="m26.794 25.237 105.89 112.79" fill="none" stroke="#f00" stroke-width="12"></path>
+<g transform="translate(-16.984 -331)">
+<g transform="matrix(1.0215 0 0 .99183 -1.0406 3.2411)" fill-rule="evenodd">
+<path d="m48.388 396.53c-30.511 40.982-1.0945 30.276 44.696 64.228-55.567-2.3264-103.01-42.383-44.696-64.227z" fill-opacity=".992"></path>
+</g>
+</g>
+</svg>
+</span> &nbsp; <strong><a href="https://abuseipdb.com/csf">AbuseIPDB: <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> Integration</a></strong></p>
 <hr>
-<p><br></p>
-<h3 id="cyberpanel">Cyberpanel<a class="headerlink" href="#cyberpanel" title="Permanent link">¶</a></h3>
-<p>Recently, it seems that the Cyberpanel team has removed <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> as their default firewall solution. This change is understandable, especially given the transition to new developers and the natural concerns around trust and support.</p>
-<p>I will however, continue to maintain <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> for those who prefer it. If you want to use <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> as your firewall instead of the new default, that option remains fully available.</p>
-<p>With the release of <strong>v15.02</strong>, all issues affecting Cyberpanel integration have been resolved. The integration is now fully operational again.</p>
-<p>Installation and updates work exactly as they did before, and backwards compatibility has been preserved wherever possible to ensure a smooth experience for existing users.</p>
-<figure>
-    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../assets/images/install/cyberpanel/4.png" data-desc-position="bottom"><img alt="Cyberpanel › CSF" src="../../../assets/images/install/cyberpanel/4.png" width="700"></a>
-    <figcaption>Cyberpanel › <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr></figcaption>
-</figure>
-<p><br></p>
-<hr>
-<p><br></p>
-<h3 id="vestacp">VestaCP<a class="headerlink" href="#vestacp" title="Permanent link">¶</a></h3>
-<p>With the release of VestaCP <code>v1.0.x</code>, the platform transitioned to React, which broke <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> integration. While the <code>/list/csf</code> page could still be accessed directly via URL, the VestaCP header would no longer appear.</p>
-<p>This issue has been resolved, but there are some important considerations to note.</p>
-<p><br></p>
-<h4 id="csf-submenu-in-header"><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> Submenu in Header<a class="headerlink" href="#csf-submenu-in-header" title="Permanent link">¶</a></h4>
-<p>React-based VestaCP templates are now minified <code>.js</code> and <code>.css</code> files rather than simple PHP and <abbr title="Hyper Text Markup Language">HTML</abbr>. This change makes it significantly more challenging to modify the header and re-add <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> to the navigation menu, especially given hashed filenames in the build process; which we want to preserve the integrity of.</p>
-<p>Rather than rebuilding the templates ourselves which seems like a drastic approach; I have provided instructions for users to manually integrate <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> into the VestaCP menu: <a href="https://docs.configserver.dev/install/install/#add-csf-to-vestacp-menu">Add <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> to VestaCP Menu</a>.</p>
-<p>Ideally, this would be solved by adding a conditional menu item in the header template, but VestaCP has not seen updates in some time, which brings us to the next point.</p>
-<figure>
-    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../assets/images/install/vestacp/5.png" data-desc-position="bottom"><img alt="VestaCP › CSF › Header Menu" src="../../../assets/images/install/vestacp/5.png" width="700"></a>
-    <figcaption>VestaCP › <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> › Header Menu</figcaption>
-</figure>
-<p><br></p>
-<h4 id="lack-of-updates">Lack of Updates<a class="headerlink" href="#lack-of-updates" title="Permanent link">¶</a></h4>
-<p>Security is the core focus of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>, and using outdated software can increase your attack surface. Currently, VestaCP has over <a href="https://www.cve.org/CVERecord/SearchResults?query=vesta">20 known vulnerabilities</a>. While I maintain <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> support for VestaCP, users should carefully consider the security implications of running an unsupported version.</p>
-<p>Support will continue, but given the lack of active updates from VestaCP, I cannot dedicate excessive resources to maintaining integration with a platform that appears unmaintained right now.</p>
-<p><br></p>
-<h4 id="header-integration">Header Integration<a class="headerlink" href="#header-integration" title="Permanent link">¶</a></h4>
-<p>I have re-integrated the header menu into <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> for VestaCP, so you can now jump to other pages from the <code>/list/csf</code> page.</p>
-<figure>
-    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../assets/images/install/vestacp/4.png" data-desc-position="bottom"><img alt="VestaCP › ConfigServer Security &amp; Firewall" src="../../../assets/images/install/vestacp/4.png" width="700"></a>
-    <figcaption>VestaCP › <abbr title="A security suite for Linux servers that provides firewall management, intrusion detection, and login failure monitoring.">ConfigServer Security &amp; Firewall</abbr></figcaption>
-</figure>
-<p><br></p>
-<hr>
-<p><br></p>
-<h3 id="dark-theme-users">Dark Theme Users<a class="headerlink" href="#dark-theme-users" title="Permanent link">¶</a></h3>
-<p>The dark theme will return, but restoring core functionality has been the primary focus. With several integrations previously not working correctly, I prioritized stability and usability first. The dark theme remains on the roadmap and will be reintroduced carefully.  </p>
-<p>The footer from the original dark theme has been re-implemented, along with the Light/Dark theme switcher. The corresponding CSS classes are not yet fully applied, as meticulous testing is required to avoid breaking the appearance or functionality of other integrations. This ensures a smooth, stable experience rather than rushing cosmetic changes that break <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>.</p>
-<p>The login interface, part of the original dark theme, has been restored.</p>
-<p><br></p>
-<hr>
-<p><br></p>
-<h3 id="automatic-download-server">Automatic Download Server<a class="headerlink" href="#automatic-download-server" title="Permanent link">¶</a></h3>
-<p>The update servers are now fully back online, restoring the same functionality as the original developer's website. A new help page has also been added to the download service for easier guidance:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>url:            https://download.configserver.dev/help
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>name:           Download Service › Help
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>desc:           Shows a list of commands that can be utilized with the CSF download service
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>image:          https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/docs/images/logos/csf.png
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>favicon:        https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/docs/images/logos/csf.png
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>favicon_size:   25
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>target:         new
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>accent:         353535E0
-</span></code></pre></div>
-<p><br></p>
-<p>Additionally, a few companies have reached out to offer <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> like reputation identity, which <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> previously supported. These integrations are being reviewed and implemented carefully, with security and privacy as the top priorities, which means no data collection, no extra open ports, and no compromises on safety.</p>
-<p><br></p>
-<p>We have also added an official <strong>Help</strong> interface which shows examples of how to use the Download Service. You can view more information about it here:</p>
-<ul>
-<li><a href="https://download.configserver.dev/help"><abbr title="Hypertext Transfer Protocol Secure, the encrypted version of HTTP.">https</abbr>://download.configserver.dev/help</a></li>
-</ul>
-<p><br></p>
-<hr>
-<p><br></p>
-<h3 id="prepost-script-integration">Pre/Post Script Integration<a class="headerlink" href="#prepost-script-integration" title="Permanent link">¶</a></h3>
-<p>Pre/post script integration is now fully supported in <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>. Any existing scripts you use with <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> will continue to function without changes, but the decision to use one of the two designated directories is left up to the end-user.</p>
-<p><br></p>
-<ul>
-<li>When <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> is installed for the first time, two starter files <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0C28.7 0 0 28.7 0 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M224 0c15.4 0 30.1 6.1 41 17L367 119c10.9 10.9 17 25.6 17 41l-128 0c-17.7 0-32-14.3-32-32L224 0z"></path></svg></span> <code>/usr/local/csf/bin/csfpre.sh</code> and <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0C28.7 0 0 28.7 0 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M224 0c15.4 0 30.1 6.1 41 17L367 119c10.9 10.9 17 25.6 17 41l-128 0c-17.7 0-32-14.3-32-32L224 0z"></path></svg></span> <code>/usr/local/csf/bin/csfpost.sh</code> are automatically created on your system (only if they don’t already exist). These serve as base loader scripts, giving you a foundation to add your own custom logic later on.<ul>
-<li>You must create your own pre/post loader folders <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M64 448l384 0c35.3 0 64-28.7 64-64l0-240c0-35.3-28.7-64-64-64L298.7 80c-6.9 0-13.7-2.2-19.2-6.4L241.1 44.8C230 36.5 216.5 32 202.7 32L64 32C28.7 32 0 60.7 0 96L0 384c0 35.3 28.7 64 64 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d=""></path></svg></span> <code>/usr/local/include/csf/pre.d/</code> and <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M64 448l384 0c35.3 0 64-28.7 64-64l0-240c0-35.3-28.7-64-64-64L298.7 80c-6.9 0-13.7-2.2-19.2-6.4L241.1 44.8C230 36.5 216.5 32 202.7 32L64 32C28.7 32 0 60.7 0 96L0 384c0 35.3 28.7 64 64 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d=""></path></svg></span> <code>/usr/local/include/csf/post.d/</code></li>
-</ul>
+<p><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> Integration guide provided by AbuseIPDB.</p>
 </li>
-<li>If you already have existing pre/post loader files in place, <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> will respect your current setup and skip creating the starter versions — allowing you to continue using your existing scripts without interruption.</li>
+<li>
+<p><span class="twemoji"><!--?xml version="1.0" encoding="UTF-8"?-->
+<svg width="162.18" height="162.18" version="1.1" viewBox="0 0 162.18244 162.18244" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
+<metadata>
+<rdf:rdf>
+<cc:work rdf:about="">
+<dc:format>image/svg+xml</dc:format>
+<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"></dc:type>
+<dc:title></dc:title>
+</cc:work>
+</rdf:rdf>
+</metadata>
+<defs>
+<linearGradient id="f" x1="54.759" x2="49.053" y1="600.57" y2="631.41" gradientTransform="scale(1.5608 .64069)" gradientUnits="userSpaceOnUse" xlink:href="#a"></linearGradient>
+<linearGradient id="g" x1="32.103" x2="56.402" y1="808.54" y2="808.54" gradientTransform="scale(2.195 .45558)" gradientUnits="userSpaceOnUse" xlink:href="#a"></linearGradient>
+<linearGradient id="e" x1="48.693" x2="46.452" y1="670.39" y2="673.16" gradientTransform="scale(1.7812 .56142)" gradientUnits="userSpaceOnUse">
+<stop stop-opacity=".408" offset="0"></stop>
+<stop stop-opacity="0" offset="1"></stop>
+</linearGradient>
+<linearGradient id="a">
+<stop stop-color="#fff" stop-opacity=".175" offset="0"></stop>
+<stop stop-color="#fff" stop-opacity=".375" offset="1"></stop>
+</linearGradient>
+</defs>
+<g transform="translate(-16.984 -331)" fill-rule="evenodd">
+<path d="m48.388 396.53c0.9599-4.2739 1.9198-33.716 10.559-33.241 30.717 0.94974 62.394-30.867 85.432 39.89 71.033 33.241 4.9391 59.953-51.295 57.579-55.567-2.3264-103.01-42.383-44.696-64.227z" fill-opacity=".992"></path>
+<path d="m46.948 406.03c35.516 22.319 94.071 8.5478 96.47-2.3744 3.3597 3.799 0 14.246 0 14.246-15.358 19.945-89.751 15.671-97.91 1.4246-0.95991-3.799 0.9599-11.872 1.4399-13.296z" fill="#fff"></path>
+<g stroke-width="1.25">
+<path d="m60.387 370.41c9.1191-8.0729 48.955 3.3241 54.235 9.4975 1.9198 10.447-48.955 2.3744-54.235-9.4975z" fill="url(#e)"></path>
+<path d="m60.387 382.29c4.3196 9.9724 21.118 33.241 49.435 10.922-23.518 0.94977-33.597-1.8995-49.435-10.922z" fill="url(#f)"></path>
+<path d="m70.466 362.82c6.2394 2.8492 45.596 13.771 49.915 10.447 4.7995-1.8995 3.8396-2.8493 1.4399-3.3241-3.8396 2.3744-10.559 3.799-51.355-7.1231z" fill="url(#g)"></path>
+</g>
+<path d="m52.701 411.24c5.762 2.7324 23.528 6.3756 30.251 6.831 4.8017 3.1878 2.4008 8.1972 0.48019 11.84-12.964 0-27.85-3.1878-31.691-7.2864-2.4008-4.0986-1.4405-7.2864 0.96034-11.385z" fill="#4d4d4d" fill-opacity=".317"></path>
+</g>
+<circle cx="81.091" cy="81.091" r="75.091" fill="none" stroke="#f00" stroke-width="12"></circle>
+<path d="m26.794 25.237 105.89 112.79" fill="none" stroke="#f00" stroke-width="12"></path>
+<g transform="translate(-16.984 -331)">
+<g transform="matrix(1.0215 0 0 .99183 -1.0406 3.2411)" fill-rule="evenodd">
+<path d="m48.388 396.53c-30.511 40.982-1.0945 30.276 44.696 64.228-55.567-2.3264-103.01-42.383-44.696-64.227z" fill-opacity=".992"></path>
+</g>
+</g>
+</svg>
+</span> &nbsp; <strong><a href="https://docs.abuseipdb.com/#introduction">AbuseIPDB: API Docs</a></strong></p>
+<hr>
+<p>Full API documentation for AbuseIPDB.</p>
+</li>
+<li>
+<p><span class="twemoji"><!--?xml version="1.0" encoding="UTF-8"?-->
+<svg width="162.18" height="162.18" version="1.1" viewBox="0 0 162.18244 162.18244" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
+<metadata>
+<rdf:rdf>
+<cc:work rdf:about="">
+<dc:format>image/svg+xml</dc:format>
+<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"></dc:type>
+<dc:title></dc:title>
+</cc:work>
+</rdf:rdf>
+</metadata>
+<defs>
+<linearGradient id="f" x1="54.759" x2="49.053" y1="600.57" y2="631.41" gradientTransform="scale(1.5608 .64069)" gradientUnits="userSpaceOnUse" xlink:href="#a"></linearGradient>
+<linearGradient id="g" x1="32.103" x2="56.402" y1="808.54" y2="808.54" gradientTransform="scale(2.195 .45558)" gradientUnits="userSpaceOnUse" xlink:href="#a"></linearGradient>
+<linearGradient id="e" x1="48.693" x2="46.452" y1="670.39" y2="673.16" gradientTransform="scale(1.7812 .56142)" gradientUnits="userSpaceOnUse">
+<stop stop-opacity=".408" offset="0"></stop>
+<stop stop-opacity="0" offset="1"></stop>
+</linearGradient>
+<linearGradient id="a">
+<stop stop-color="#fff" stop-opacity=".175" offset="0"></stop>
+<stop stop-color="#fff" stop-opacity=".375" offset="1"></stop>
+</linearGradient>
+</defs>
+<g transform="translate(-16.984 -331)" fill-rule="evenodd">
+<path d="m48.388 396.53c0.9599-4.2739 1.9198-33.716 10.559-33.241 30.717 0.94974 62.394-30.867 85.432 39.89 71.033 33.241 4.9391 59.953-51.295 57.579-55.567-2.3264-103.01-42.383-44.696-64.227z" fill-opacity=".992"></path>
+<path d="m46.948 406.03c35.516 22.319 94.071 8.5478 96.47-2.3744 3.3597 3.799 0 14.246 0 14.246-15.358 19.945-89.751 15.671-97.91 1.4246-0.95991-3.799 0.9599-11.872 1.4399-13.296z" fill="#fff"></path>
+<g stroke-width="1.25">
+<path d="m60.387 370.41c9.1191-8.0729 48.955 3.3241 54.235 9.4975 1.9198 10.447-48.955 2.3744-54.235-9.4975z" fill="url(#e)"></path>
+<path d="m60.387 382.29c4.3196 9.9724 21.118 33.241 49.435 10.922-23.518 0.94977-33.597-1.8995-49.435-10.922z" fill="url(#f)"></path>
+<path d="m70.466 362.82c6.2394 2.8492 45.596 13.771 49.915 10.447 4.7995-1.8995 3.8396-2.8493 1.4399-3.3241-3.8396 2.3744-10.559 3.799-51.355-7.1231z" fill="url(#g)"></path>
+</g>
+<path d="m52.701 411.24c5.762 2.7324 23.528 6.3756 30.251 6.831 4.8017 3.1878 2.4008 8.1972 0.48019 11.84-12.964 0-27.85-3.1878-31.691-7.2864-2.4008-4.0986-1.4405-7.2864 0.96034-11.385z" fill="#4d4d4d" fill-opacity=".317"></path>
+</g>
+<circle cx="81.091" cy="81.091" r="75.091" fill="none" stroke="#f00" stroke-width="12"></circle>
+<path d="m26.794 25.237 105.89 112.79" fill="none" stroke="#f00" stroke-width="12"></path>
+<g transform="translate(-16.984 -331)">
+<g transform="matrix(1.0215 0 0 .99183 -1.0406 3.2411)" fill-rule="evenodd">
+<path d="m48.388 396.53c-30.511 40.982-1.0945 30.276 44.696 64.228-55.567-2.3264-103.01-42.383-44.696-64.227z" fill-opacity=".992"></path>
+</g>
+</g>
+</svg>
+</span> &nbsp; <strong><a href="https://abuseipdb.com/account/api">AbuseIPDB: Create API Key</a></strong></p>
+<hr>
+<p>Create an AbuseIPDB and generate an API key.</p>
+</li>
+<li>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M224 32l192 0 0 80-192 0 0-80zm-32 80l-96 0 0-16c0-35.3 28.7-64 64-64l32 0 0 80zM96 144l208 0 0 96-208 0 0-96zm0 224l0-96 96 0 0 96-96 0zm0 32l176.7 0c-.5 4.7-.7 9.4-.7 14.1 0 22.9 3.7 45.1 10.6 65.9L160 480c-35.3 0-64-28.7-64-64l0-16zM544 144l0 60.2c-12 .3-23.8 3.9-34.1 11-7.9-7.9-15.9-15.6-24.2-23.1-23.8-21.4-60-21.5-83.9-.2-17 15.2-32.9 31.4-47.2 48.1l-18.6 0 0-96 208 0zM224 272l105.2 0c-6.4 8.8-12.3 17.6-17.7 26.3-13.2 21.3-25.1 45.2-32.3 69.7l-55.2 0 0-96zM544 112l-96 0 0-80 32 0c35.3 0 64 28.7 64 64l0 16zM505.7 272.3L518 258.5c5.4-6.1 13.3-8.8 20.9-8.9 7.2 0 14.3 2.6 19.9 7.8 19.7 18.3 39.8 43.2 55 70.6 15.1 27.2 26.2 58.1 26.2 88.1 0 88.7-71.3 159.8-160 159.8-89.6 0-160-71.3-160-159.8 0-37.3 16-73.4 36.8-104.5 20.9-31.3 47.5-59 70.9-80.2 5.7-5.2 13.1-7.7 20.3-7.5s13.4 3.2 18.8 7.5c14.4 11.4 38.9 40.7 38.9 40.7zM544 464.2c0-36.5-37-73-54.8-88.4-5.4-4.7-13.1-4.7-18.5 0-17.7 15.4-54.8 51.9-54.8 88.4 0 35.3 28.7 64 64 64s64-28.7 64-64z"></path></svg></span> &nbsp; <strong><a data-preview="" href="../../dependencies/"><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>: Download &amp; Install Guide</a></strong></p>
+<hr>
+<p>The starting point for our official installation guide to get <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> installed on
+your server.</p>
+</li>
 </ul>
+</div>
 <p><br></p>
-<p>Full documentation and usage instructions can be found here:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>url:            https://docs.configserver.dev/usage/prepost/
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>name:           Docs › Pre &amp; Post
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>desc:           CSF includes dedicated directories where you can place custom Bash scripts to run at specific stages of the firewall’s startup process. 
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>image:          https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/docs/images/logos/csf.png
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>favicon:        https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/docs/images/logos/csf.png
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>favicon_size:   25
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>target:         new
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>accent:         353535E0
-</span></code></pre></div>
+<hr>
 <p><br></p>
-<p>With the updated logic, you can now place your pre and post shell scripts in multiple locations for greater flexibility:</p>
-<h4 id="csfpresh"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0C28.7 0 0 28.7 0 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M224 0c15.4 0 30.1 6.1 41 17L367 119c10.9 10.9 17 25.6 17 41l-128 0c-17.7 0-32-14.3-32-32L224 0z"></path></svg></span> <a href="#+csfpre.sh" id="+csfpre.sh"><code>csfpre.sh</code></a><a class="headerlink" href="#csfpresh" title="Permanent link">¶</a></h4>
+<h2 id="what-is-abuseipdb">What is AbuseIPDB?<a class="headerlink" data-preview="" href="#what-is-abuseipdb" title="Permanent link">¶</a></h2>
+<p><a href="https://abuseipdb.com/">AbuseIPDB</a> is a community-driven project focused on tracking and sharing information about IP addresses involved in abusive or malicious activity across the internet. The service allows individuals to report IPs associated with behaviors such as brute-force attacks, spam, port scanning, DDoS attempts, and other forms of network abuse. Each report includes contextual details like the abuse category, a brief description explaining the cause for the report, and the time it was observed.</p>
+<p>The platform aggregates reports from thousands of contributors worldwide and analyzes them to generate an <strong>abuse confidence score</strong> for each IP address. This score is calculated based on factors such as how frequently an IP is reported, the severity of the reported activity, and how recent the reports are. AbuseIPDB also maintains historical data, allowing users to see patterns over time and understand what types of abuse an IP has been associated with.</p>
+<p>AbuseIPDB offers both a free tier and several <a href="https://abuseipdb.com/pricing">paid plans</a> with expanded capabilities. The free plan includes:
+- <strong>1,000</strong> IP checks and reports per day
+- <strong>100</strong> bulk blocklist checks per day
+- Access to a basic blacklist of up to <strong>10,000 IPs</strong></p>
+<p>Users can interact with AbuseIPDB through its web interface for manual lookups, or integrate it directly into scripts, firewalls (including <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>), and security tools using the official <a href="https://docs.abuseipdb.com/#introduction">API</a>. This flexibility makes it valuable for individual server operators as well as large-scale infrastructure and security teams.</p>
+<p><br></p>
+<hr>
+<p><br></p>
+<h2 id="before-you-begin">Before You Begin<a class="headerlink" data-preview="" href="#before-you-begin" title="Permanent link">¶</a></h2>
+<p>Before integrating AbuseIPDB with <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>, make sure that <strong><abbr title="A security suite for Linux servers that provides firewall management, intrusion detection, and login failure monitoring.">ConfigServer Security &amp; Firewall</abbr> (<abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>)</strong> is already installed and working correctly on your server.</p>
+<p>If <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> is not yet installed, begin with the <a data-preview="" href="../../dependencies/">Installation</a> guide. That section walks you through installing the required <abbr title="A list of packages required for CSF to function properly">dependencies</abbr>, downloading <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>, and completing the initial setup so your system is ready for AbuseIPDB integration.</p>
+<p><br></p>
+<hr>
+<p><br></p>
+<h2 id="next-steps">Next Steps <!-- omit from toc --><a class="headerlink" data-preview="" href="#next-steps" title="Permanent link">¶</a></h2>
+<mark class="critic block">
+<p>Select what documentation you would like to proceed with next ...</p>
+</mark>
+<div class="grid cards">
 <ul>
-<li><code>/usr/local/csf/bin/csfpre.sh</code></li>
-<li><code>/etc/csf/csfpre.sh</code></li>
+<li>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 256c0 141.4 114.6 256 256 256 5.4 0 10.7-.2 16-.5l0-34.3c0-25-20.3-45.3-45.3-45.3-12 0-23.5-4.8-32-13.3l-16-16c-12-12-18.7-28.3-18.7-45.3l0-3.2c0-21.4 10.7-41.4 28.5-53.3 9.1-6.1 18.3-12.2 27.4-18.3 10.5-7 22.9-10.7 35.5-10.7l20.9 0c15.3 0 30 5.5 41.6 15.4l26.6 22.8c7.4 6.3 16.8 9.8 26.6 9.8 10.8 0 21.2 4.3 28.9 12l4 4c10.2 10.2 24.1 16 38.6 16l54.8 0c4.2-10.3 7.7-21 10.5-32l-57.3 0c-14.5 0-28.4-5.8-38.6-16l-18.3-18.3C386 282 384 277.1 384 272s2-10 5.7-13.7c2.5-2.5 5-5 7.5-7.5 1.8-1.8 2.8-4.3 2.8-6.8s-1-5-2.8-6.8c-2.2-2.2-4.4-4.4-6.5-6.5-4.2-4.2-10-6.6-16-6.6-3.8 0-7.5 0-11.3 0-6.2 0-11.3-5.1-11.3-11.3 0-3 1.2-5.9 3.3-8 1.6-1.6 3.1-3.1 4.7-4.7 5.1-5.1 12.1-8 19.3-8 6.9 0 13.8 0 20.7 0 8.8 0 16-7.2 16-16s-7.2-16-16-16c-9.8 0-19.6 0-29.4 0-10.3 0-18.6 8.3-18.6 18.6 0 8-5.1 15.1-12.7 17.6-7.1 2.4-14.1 4.7-21.2 7.1-7.5 2.5-11 11-7.5 18 .4 .8 .8 1.5 1.1 2.3 3.8 7.5-1.7 16.4-10.1 16.4-3.6 0-6.9-1.7-9.1-4.5-5.4-7.2-10.9-14.5-16.3-21.7-2.7-3.6-6.9-5.7-11.4-5.7-5.4 0-10.4 3.1-12.8 7.9-1.3 2.7-2.7 5.4-4 8.1-4.9 9.8-15.1 16-26.1 16-16.4 0-29.9-13.3-29.9-29.7l0-4.3c0-9 3.6-17.6 9.9-24 6-6 12-12 17.9-17.9 2.6-2.6 4.1-6.2 4.1-10 0-6.1 3.9-11.5 9.6-13.4 8.8-2.9 17.7-5.9 26.5-8.8 7.8-2.6 14.9-7 20.7-12.8 6.6-6.6 13.2-13.2 19.9-19.9 2.1-2.1 3.3-5 3.3-8 0-6.2-5.1-11.3-11.3-11.3-.2 0-.3 0-.5 0-3 0-5.3 .7-7.3 2.1-13.9 9.3-27.9 18.6-41.8 27.9-2 1.3-4.4 2.1-6.8 2.1-6.8 0-12.3-5.5-12.3-12.3l0-8.6c0-7 3.5-13.5 9.3-17.3 31.7-21.1 63.4-42.3 95.1-63.4-23-6.8-47.3-10.4-72.4-10.4-141.4 0-256 114.6-256 256zM132.7 132.7c10.7-10.7 21.3-21.3 32-32 6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6c-10.7 10.7-21.3 21.3-32 32-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M192 210.3l0-4.3c0-9 3.6-17.6 9.9-24l17.9-17.9c2.6-2.6 4.1-6.2 4.1-10 0-6.1 3.9-11.5 9.6-13.4l26.5-8.8c7.8-2.6 14.9-7 20.7-12.8l19.9-19.9c2.1-2.1 3.3-5 3.3-8 0-6.2-5.1-11.3-11.3-11.3l-1 0c-2.4 0-4.8 .7-6.8 2.1l-41.8 27.9c-2 1.3-4.4 2.1-6.8 2.1-6.8 0-12.3-5.5-12.3-12.3l0-8.6c0-7 3.5-13.5 9.3-17.3l95.1-63.4c106.1 31.2 183.6 129.4 183.6 245.6 0 22.1-2.8 43.5-8.1 64l-57.3 0c-14.5 0-28.4-5.8-38.6-16l-18.3-18.3C386 282 384 277.1 384 272s2-10 5.7-13.7l7.5-7.5c1.8-1.8 2.8-4.3 2.8-6.8s-1-5-2.8-6.8l-6.5-6.5c-4.2-4.2-10-6.6-16-6.6l-11.3 0c-6.2 0-11.3-5.1-11.3-11.3 0-3 1.2-5.9 3.3-8L360 200c5.1-5.1 12.1-8 19.3-8l20.7 0c8.8 0 16-7.2 16-16s-7.2-16-16-16l-29.4 0c-10.3 0-18.6 8.3-18.6 18.6 0 8-5.1 15.1-12.7 17.6l-21.2 7.1c-7.5 2.5-11 11-7.5 18l1.1 2.3c3.8 7.5-1.7 16.4-10.1 16.4-3.6 0-6.9-1.7-9.1-4.5l-16.3-21.7c-2.7-3.6-6.9-5.7-11.4-5.7-5.4 0-10.4 3.1-12.8 7.9l-4 8.1c-4.9 9.8-15.1 16-26.1 16-16.4 0-29.9-13.3-29.9-29.7zM493.4 352C457.3 441.1 372.5 505.3 272 511.5l0-34.3c0-25-20.3-45.3-45.3-45.3-12 0-23.5-4.8-32-13.3l-16-16c-12-12-18.7-28.3-18.7-45.3l0-3.2c0-21.4 10.7-41.4 28.5-53.3l27.4-18.2c10.5-7 22.9-10.7 35.5-10.7l20.9 0c15.3 0 30 5.5 41.6 15.4l26.6 22.8c7.4 6.3 16.8 9.8 26.6 9.8 10.8 0 21.2 4.3 28.9 12l4 4c10.2 10.2 24.1 16 38.6 16l54.8 0zM187.3 100.7c6.2 6.2 6.2 16.4 0 22.6l-32 32c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l32-32c6.2-6.2 16.4-6.2 22.6 0z"></path></svg></span> &nbsp; <strong><a href="../usage/geoip.md">Geographical IP Block Integration</a></strong></p>
+<hr>
+<p>Geographical IP blocking allows you to control access to your server based on
+the country or region an IP address originates from, rather than individual
+IP reputation or blocklist entries.</p>
+<p>This section explains what geographical IP blocks are, how they differ from
+blocklists and IPSETs, and when it makes sense to use country-based filtering.</p>
+<p>You’ll also learn how to integrate <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> with GeoIP data providers to apply
+regional access rules safely and efficiently.</p>
+</li>
 </ul>
-<h4 id="csfpostsh"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0C28.7 0 0 28.7 0 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M224 0c15.4 0 30.1 6.1 41 17L367 119c10.9 10.9 17 25.6 17 41l-128 0c-17.7 0-32-14.3-32-32L224 0z"></path></svg></span> <a href="#+csfpost.sh" id="+csfpost.sh"><code>csfpost.sh</code></a><a class="headerlink" href="#csfpostsh" title="Permanent link">¶</a></h4>
-<ul>
-<li><code>/usr/local/csf/bin/csfpost.sh</code></li>
-<li><code>/etc/csf/csfpost.sh</code></li>
-</ul>
-<p><br></p>
-<p>Previously, <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> would only check one location for each script. With this improvement, you can use both locations simultaneously, allowing you to separate scripts as needed for organizational or operational purposes.</p>
-<p>The original behavior for loading your custom shell scripts has been fully preserved. This means you don’t need to make any changes after upgrading to v15.01. Any existing scripts will continue to work exactly as they did before.</p>
-<p><br></p>
-<hr>
-<p><br></p>
-<h3 id="updated-installsh-script">Updated install.sh Script<a class="headerlink" href="#updated-installsh-script" title="Permanent link">¶</a></h3>
-<p>The <code>install.sh</code> installation script has been updated. The core functionality of the script will remain the same, and any existing automation you may have in place which uses this file will require no changes. These updates just re-write the code, add better output, add support for both relative / absolute calls to the script, and ensure POSIX compliance.</p>
-<ul>
-<li>installer script now gives more detailed information to the user.</li>
-<li>supports absolute or relative execution / calls from any directory</li>
-<li>add flags <code>--dryrun</code>, <code>--detect</code>, <code>--help</code>, <code>--version</code></li>
-<li>POSIX compliant</li>
-<li>No base functionality changes, requires no changes by users with automated scripts; same run command</li>
-</ul>
-<p><br></p>
-<h4 id="example-output">Example Output<a class="headerlink" href="#example-output" title="Permanent link">¶</a></h4>
-<p>The following shows the output provided by the <code>install.sh</code> script:</p>
-<p><br></p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="example-output-output-example-1" name="__tabbed_1" type="radio"><input id="example-output-output-example-2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="example-output-output-example-1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l64 0 0 320-64 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l192 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0 0-352c0-17.7-14.3-32-32-32L32 32z"></path></svg></span> Output Example 1</label><label for="example-output-output-example-2"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M48 64c0-17.7 14.3-32 32-32l171 0c60.2 0 109 48.8 109 109 0 43.8-26.2 83.3-66.4 100.4l-139.1 59C119 315.4 96 350.2 96 388.7l0 27.3 224 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L64 480c-17.7 0-32-14.3-32-32l0-59.3c0-64.2 38.4-122.2 97.5-147.3l139.1-59c16.6-7.1 27.4-23.4 27.4-41.4 0-24.9-20.2-45-45-45L80 96C62.3 96 48 81.7 48 64z"></path></svg></span> Output Example 2</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<div class="language-console highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="gp">$ </span>sudo<span class="w"> </span>sh<span class="w"> </span>src/install.sh<span class="w"> </span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="gp"># </span><span class="c1">#</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="gp">#  </span>ConfigServer<span class="w"> </span>Security<span class="w"> </span><span class="p">&amp;</span><span class="w"> </span>Firewall<span class="w"> </span>›<span class="w"> </span>Installer
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="gp">#  </span>version:<span class="w"> </span><span class="m">15</span>.02
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="gp"># </span><span class="c1">#</span>
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="go">OK                  Starting installer CyberPanel › install.cyberpanel.sh </span>
-</span></code></pre></div>
 </div>
-<div class="tabbed-block">
-<div class="language-console highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="gp">$ </span>sudo<span class="w"> </span>sh<span class="w"> </span>src/install.sh<span class="w"> </span>--help
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="go">ConfigServer Security &amp; Firewall</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="go">Robust linux iptables/nftables firewall</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="go">version: 15.02</span>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="go">install.sh [ --detect | --dryrun |  --version | --help ]</span>
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="go">Flags:                                         </span>
-</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="go">      -D,  --detect             returns installer script that will run; does not install csf &lt;default&gt; false</span>
-</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="go">      -d,  --dryrun             simulates installation, does not install csf &lt;default&gt; false</span>
-</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="go">      -v,  --version            current version of this utilty &lt;current&gt; 15.02</span>
-</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="go">      -h,  --help               show this help menu</span>
-</span></code></pre></div>
-</div>
-</div>
-</div>
-<p><br></p>
-<hr>
-<p><br></p>
-<h3 id="config-file-changes">Config File Changes<a class="headerlink" href="#config-file-changes" title="Permanent link">¶</a></h3>
-<p><code>v15.02</code> introduces newly re-written configuration files. It does not change the way a user's existing configuration file loads, and a user is not required to use the newly revised configs. Most of the changes are simply cosmetic. If you want to keep your existing configuration file, you may do so without any negative results. You can simply use the newer config as an example.</p>
-<p><br></p>
-<h4 id="added-headers">Added Headers<a class="headerlink" href="#added-headers" title="Permanent link">¶</a></h4>
-<p>Every configuration file now features a header displayed at the top of the <strong>Firewall Configuration</strong> page. This header shows which configuration file was generated during the initial <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> installation. It addresses user confusion reported on various forums regarding how config files are processed and helps users quickly identify the active config file within the file system.</p>
-<figure>
-    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../assets/images/blog/release-1502/1.png" data-desc-position="bottom"><img alt="CSF › Configuration File" src="../../../assets/images/blog/release-1502/1.png" width="700"></a>
-    <figcaption><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> › Configuration File</figcaption>
-</figure>
-<p><br></p>
-<h4 id="enhanced-comments">Enhanced Comments<a class="headerlink" href="#enhanced-comments" title="Permanent link">¶</a></h4>
-<p>The comments within each configuration file have been thoroughly revised. Descriptions above each setting are now more informative, providing explanations, common port examples, and additional context for specific features, without becoming overly verbose. This makes it easier for users to understand each setting and how it affects their firewall.</p>
-<p><br></p>
-<hr>
-<p><br></p>
-<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">¶</a></h2>
-<p>This update builds upon existing functionality while preserving the stability and behavior users rely on. The goal is to deliver a seamless transition; keeping automation and workflows intact, while improving integration support and resolving previously broken functionality.</p>
-<p>As always, community feedback is encouraged. If you have feature suggestions or ideas that could enhance the user experience, feel free to open a ticket on the official GitHub repository:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>url:            https://github.com/Aetherinox/csf-firewall/issues/new
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>name:           Github › Submit Issue
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>desc:           Submit a bug or new feature request.
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>image:          https://i.pinimg.com/564x/5c/2b/c5/5c2bc53db08acad9c2c1162e5cfd87ba.jpg
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>favicon:        https://i.pinimg.com/564x/5c/2b/c5/5c2bc53db08acad9c2c1162e5cfd87ba.jpg
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>favicon_size:   25
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>target:         new
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>accent:         353535E0
-</span></code></pre></div>
-<p><br></p>
-<hr>
-<p><br></p>
-<h2 id="full-changelog">Full Changelog<a class="headerlink" href="#full-changelog" title="Permanent link">¶</a></h2>
-<p>The full changelog is available <a data-preview="" href="../../../about/changelog/">here</a>.</p>
 <p><br>
 <br></p>
 
@@ -4295,7 +4073,7 @@ These builds may contain incomplete features, untested changes, or critical bugs
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 24, 2025 08:54:08 UTC"><span class="timeago" datetime="2025-10-24T08:54:08+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 24, 2025 08:54:08 UTC">2025-10-24</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="December 15, 2025 17:51:09 UTC"><span class="timeago" datetime="2025-12-15T17:51:09+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="December 15, 2025 17:51:09 UTC">2025-12-15</span>
   </span>
 
     
@@ -4344,54 +4122,12 @@ These builds may contain incomplete features, untested changes, or critical bugs
 
 
 
-  
 
 
-
-  <h2 id="__comments">Comments</h2>
-  <script src="https://giscus.app/client.js" data-repo="aetherinox/csf-firewall" data-repo-id="R_kgDOMFyd8g" data-category="Blogs" data-category-id="DIC_kwDOMFyd8s4CwoZv" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="1" data-input-position="bottom" data-theme="preferred_color_scheme" data-lang="en" crossorigin="anonymous" async>
-  </script>
-
-  <!-- Synchronize Giscus theme with palette -->
-  <script>
-    var giscus = document.querySelector("script[src*=giscus]")
-
-    // Set palette on initial load
-    var palette = __md_get("__palette")
-    if (palette && typeof palette.color === "object") {
-      var theme = palette.color.scheme === "slate" || palette.color.scheme === "main"
-        ? "transparent_dark"
-        : "light"
-
-      // Instruct Giscus to set theme
-      giscus.setAttribute("data-theme", theme) 
-    }
-
-    // Register event handlers after documented loaded
-    document.addEventListener("DOMContentLoaded", function() {
-      var ref = document.querySelector("[data-md-component=palette]")
-      ref.addEventListener("change", function() {
-        var palette = __md_get("__palette")
-        if (palette && typeof palette.color === "object") {
-          var theme = palette.color.scheme === "slate" || palette.color.scheme === "main"
-            ? "transparent_dark"
-            : "light"
-
-          // Instruct Giscus to change theme
-          var frame = document.querySelector(".giscus-frame")
-          frame.contentWindow.postMessage(
-            { giscus: { setConfig: { theme } } },
-            "https://giscus.app"
-          )
-        }
-      })
-    })
-  </script>
-
-      
-    </article>
-  </div>
-
+                
+              </article>
+            </div>
+          
           
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
@@ -4408,21 +4144,33 @@ These builds may contain incomplete features, untested changes, or critical bugs
   
     
       
-        
-      
       <nav class="md-footer__inner md-grid" aria-label="Footer">
+        
+          
+          <a href="../../update/v14-to-v15/" class="md-footer__link md-footer__link--prev" aria-label="Previous: v14.x to v15.x">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                v14.x to v15.x
+              </div>
+            </div>
+          </a>
         
         
           
-          <a href="../release-v1503/" class="md-footer__link md-footer__link--next" aria-label="Next: Release v15.03
-">
+          <a href="../authentik/" class="md-footer__link md-footer__link--next" aria-label="Next: Authentik">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Release v15.03
-
+                Authentik
               </div>
             </div>
             <div class="md-footer__button md-icon">
