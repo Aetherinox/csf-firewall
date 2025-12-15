@@ -1472,6 +1472,56 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#setup-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup Integration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#paid-tiers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paid Tiers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Paid Tiers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#confidence-levels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Confidence Levels
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#next-steps" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3713,6 +3763,56 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#setup-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup Integration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#paid-tiers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paid Tiers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Paid Tiers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#confidence-levels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Confidence Levels
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#next-steps" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -3860,7 +3960,8 @@
 
 
 <h1 id="abuseipdb">AbuseIPDB<a class="headerlink" data-preview="" href="#abuseipdb" title="Permanent link">¶</a></h1>
-<p>This section explains how to integrate <a href="(https://abuseipdb.com)">AbuseIPDB</a>'s blocklist <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> into your copy of <abbr title="ConfigServer Security &amp; Firewall Security">ConfigServer Security</abbr> and Firewall.</p>
+<p>This section walks you through integrating <a href="https://abuseipdb.com">AbuseIPDB</a> with your <abbr title="ConfigServer Security &amp; Firewall Security">ConfigServer Security</abbr> and Firewall setup. Think of AbuseIPDB as the arcade game Asteroids; harmful attackers and malicious IPs are like asteroids hurtling toward your server. As soon as they get too close, you blast them away for a satisfying <strong>100 points</strong> per hit. </p>
+<p>With this integration, you get real-time intelligence on abusive IPs, giving you the upper hand in the never-ending game of protecting your server from the digital cosmos.</p>
 <p><br></p>
 <h2 id="useful-resources">Useful Resources<a class="headerlink" data-preview="" href="#useful-resources" title="Permanent link">¶</a></h2>
 <p>The following are useful resources regarding this page.</p>
@@ -4032,6 +4133,344 @@ your server.</p>
 <p><br></p>
 <hr>
 <p><br></p>
+<h2 id="setup-integration">Setup Integration<a class="headerlink" data-preview="" href="#setup-integration" title="Permanent link">¶</a></h2>
+<p>Before continuing with the AbuseIPDB integration, make sure you have already completed the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> installation by following our <a data-preview="" href="../../dependencies/">Installation Guide</a>. This ensures that all required <abbr title="A list of packages required for CSF to function properly">dependencies</abbr> are in place and that <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> is properly installed on your system.</p>
+<p>Once <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> is installed, visit the <a href="https://abuseipdb.com/pricing">AbuseIPDB website</a> and <strong>create an account</strong>. Click the <strong>Sign Up</strong> button at the top of the page, which will take you to the tier selection screen where you can choose the plan that best fits your needs.</p>
+<p><br></p>
+<figure>
+    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../assets/images/install/integrations/abuseipdb/01_signup.png" data-desc-position="bottom"><img alt="AbuseIPDB › Select a Tier" src="../../../assets/images/install/integrations/abuseipdb/01_signup.png" width="800"></a>
+    <figcaption>AbuseIPDB › Select a Tier</figcaption>
+</figure>
+<p><br></p>
+<p>You may start with the <strong>Free</strong> tier if you simply want to evaluate the service. This plan allows up to <strong>10,000 IP addresses</strong> in your blocklist. If you require higher limits or additional features, paid plans are available, increasing the blocklist capacity to <strong>100,000 IPs</strong> and beyond.</p>
+<p>Once you have selected the desired tier, the next page will ask you for your information.</p>
+<p>Don't forget to confirm you are human at the bottom page the page. <em>(You are human, right?)</em></p>
+<p><br></p>
+<figure>
+    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../assets/images/install/integrations/abuseipdb/02_signup.png" data-desc-position="bottom"><img alt="AbuseIPDB › Register" src="../../../assets/images/install/integrations/abuseipdb/02_signup.png" width="800"></a>
+    <figcaption>AbuseIPDB › Register</figcaption>
+</figure>
+<p><br></p>
+<p>After you complete the sign-up process, you should be re-directed to your <a href="https://www.abuseipdb.com/account">Account home page</a>. On the left-side navigation menu, select </p>
+<ul>
+<li><strong><a href="https://www.abuseipdb.com/account">Account</a></strong> &gt; <strong><a href="https://www.abuseipdb.com/account/api">My API</a></strong> </li>
+</ul>
+<p><br></p>
+<p>On the right-side of the <strong><a href="https://www.abuseipdb.com/account/api">My API</a></strong> page, click the button:</p>
+<div class="valign-buttons">
+<p><a class="md-button btn-aln-center-inline buttons-fill" href="https://www.abuseipdb.com/account/api" target="_blank"><span class="twemoji"><!--?xml version="1.0" encoding="UTF-8"?-->
+<svg width="162.18" height="162.18" version="1.1" viewBox="0 0 162.18244 162.18244" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
+<metadata>
+<rdf:rdf>
+<cc:work rdf:about="">
+<dc:format>image/svg+xml</dc:format>
+<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"></dc:type>
+<dc:title></dc:title>
+</cc:work>
+</rdf:rdf>
+</metadata>
+<defs>
+<linearGradient id="f" x1="54.759" x2="49.053" y1="600.57" y2="631.41" gradientTransform="scale(1.5608 .64069)" gradientUnits="userSpaceOnUse" xlink:href="#a"></linearGradient>
+<linearGradient id="g" x1="32.103" x2="56.402" y1="808.54" y2="808.54" gradientTransform="scale(2.195 .45558)" gradientUnits="userSpaceOnUse" xlink:href="#a"></linearGradient>
+<linearGradient id="e" x1="48.693" x2="46.452" y1="670.39" y2="673.16" gradientTransform="scale(1.7812 .56142)" gradientUnits="userSpaceOnUse">
+<stop stop-opacity=".408" offset="0"></stop>
+<stop stop-opacity="0" offset="1"></stop>
+</linearGradient>
+<linearGradient id="a">
+<stop stop-color="#fff" stop-opacity=".175" offset="0"></stop>
+<stop stop-color="#fff" stop-opacity=".375" offset="1"></stop>
+</linearGradient>
+</defs>
+<g transform="translate(-16.984 -331)" fill-rule="evenodd">
+<path d="m48.388 396.53c0.9599-4.2739 1.9198-33.716 10.559-33.241 30.717 0.94974 62.394-30.867 85.432 39.89 71.033 33.241 4.9391 59.953-51.295 57.579-55.567-2.3264-103.01-42.383-44.696-64.227z" fill-opacity=".992"></path>
+<path d="m46.948 406.03c35.516 22.319 94.071 8.5478 96.47-2.3744 3.3597 3.799 0 14.246 0 14.246-15.358 19.945-89.751 15.671-97.91 1.4246-0.95991-3.799 0.9599-11.872 1.4399-13.296z" fill="#fff"></path>
+<g stroke-width="1.25">
+<path d="m60.387 370.41c9.1191-8.0729 48.955 3.3241 54.235 9.4975 1.9198 10.447-48.955 2.3744-54.235-9.4975z" fill="url(#e)"></path>
+<path d="m60.387 382.29c4.3196 9.9724 21.118 33.241 49.435 10.922-23.518 0.94977-33.597-1.8995-49.435-10.922z" fill="url(#f)"></path>
+<path d="m70.466 362.82c6.2394 2.8492 45.596 13.771 49.915 10.447 4.7995-1.8995 3.8396-2.8493 1.4399-3.3241-3.8396 2.3744-10.559 3.799-51.355-7.1231z" fill="url(#g)"></path>
+</g>
+<path d="m52.701 411.24c5.762 2.7324 23.528 6.3756 30.251 6.831 4.8017 3.1878 2.4008 8.1972 0.48019 11.84-12.964 0-27.85-3.1878-31.691-7.2864-2.4008-4.0986-1.4405-7.2864 0.96034-11.385z" fill="#4d4d4d" fill-opacity=".317"></path>
+</g>
+<circle cx="81.091" cy="81.091" r="75.091" fill="none" stroke="#f00" stroke-width="12"></circle>
+<path d="m26.794 25.237 105.89 112.79" fill="none" stroke="#f00" stroke-width="12"></path>
+<g transform="translate(-16.984 -331)">
+<g transform="matrix(1.0215 0 0 .99183 -1.0406 3.2411)" fill-rule="evenodd">
+<path d="m48.388 396.53c-30.511 40.982-1.0945 30.276 44.696 64.228-55.567-2.3264-103.01-42.383-44.696-64.227z" fill-opacity=".992"></path>
+</g>
+</g>
+</svg>
+</span> Create Key</a></p>
+</div>
+<figure>
+    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../assets/images/install/integrations/abuseipdb/01_api.png" data-desc-position="bottom"><img alt="AbuseIPDB › Account › Nav Menu" src="../../../assets/images/install/integrations/abuseipdb/01_api.png" width="800"></a>
+    <figcaption>AbuseIPDB › Account › Nav Menu</figcaption>
+</figure>
+<p><br></p>
+<p>When clicking the <strong>Create Key</strong> button, a dialog box will appear and ask you to specify a <strong>Name</strong>:</p>
+<p><br></p>
+<figure>
+    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../assets/images/install/integrations/abuseipdb/02_api.png" data-desc-position="bottom"><img alt="AbuseIPDB › Account › Nav Menu" src="../../../assets/images/install/integrations/abuseipdb/02_api.png" width="800"></a>
+    <figcaption>AbuseIPDB › Account › Nav Menu</figcaption>
+</figure>
+<p><br></p>
+<p>After saving the new name, the page should refresh and show you the new API key:</p>
+<p><br></p>
+<figure>
+    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../assets/images/install/integrations/abuseipdb/03_api.png" data-desc-position="bottom"><img alt="AbuseIPDB › Account › API Key" src="../../../assets/images/install/integrations/abuseipdb/03_api.png" width="800"></a>
+    <figcaption>AbuseIPDB › Account › API Key</figcaption>
+</figure>
+<p><br></p>
+<p>After getting your AbuseIPDB API key, we now need to integrate it into <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>. Open the file <code>/etc/csf/csf.blocklists</code> on your server with the desired editor:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="setup-integration-command" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="setup-integration-command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Command</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>nano<span class="w"> </span>/etc/csf/csf.blocklists
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>Scroll through its contents until you locate the code shown below. If this section does not already exist in your copy of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>, add the following code:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="setup-integration-etccsfcsfblocklists" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="setup-integration-etccsfcsfblocklists"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 9V3.5L18.5 9M6 2c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6Z"></path></svg></span> /etc/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>.blocklists</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-shell highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span>
+<span class="normal"><a href="#__codelineno-1-13">13</a></span>
+<span class="normal"><a href="#__codelineno-1-14">14</a></span>
+<span class="normal"><a href="#__codelineno-1-15">15</a></span>
+<span class="normal"><a href="#__codelineno-1-16">16</a></span>
+<span class="normal"><a href="#__codelineno-1-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="c1"># #</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="c1">#   @blocklist              AbuseIPDB</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="c1">#   @details:               https://abuseipdb.com/account/api</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="c1">#   @notes:                 Requires you to create an account.</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="c1">#                           Requires you to generate an API key.</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="c1">#                           Add your generated API key in the URL below by </span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="c1">#                               replacing `YOUR_API_KEY`.</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="c1">#                           Change the 3rd field `10000` to a higher number</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="c1">#                               if you are on a paid plan.</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="c1">#                           Replace `&amp;limit=10000` at the end of the URL with</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="c1">#                               the same limit value.</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="c1">#   </span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="c1">#                           Full documentation at:</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="c1">#                               https://docs.configserver.dev/install/integrations/abuseipdb/</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="c1"># #</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16"></a>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17"></a><span class="hll"><span class="c1">#   ABUSEIPDB|86400|10000|https://api.abuseipdb.com/api/v2/blacklist?key=YOUR_API_KEY&amp;plaintext&amp;limit=10000</span>
+</span></span></code></pre></div></td></tr></tbody></table></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>To enable the AbuseIPDB integration, start by removing the <code>#</code> character at the beginning of the line to uncomment it. Next, edit the URL and replace <code>YOUR_API_KEY</code> with the AbuseIPDB API key you generated earlier. </p>
+<p>When finished, the query string should look similar to <code>?key=abcdefghi0123456789</code>, using your actual API key in place of the example.</p>
+<p>If you are subscribed to a <a href="https://abuseipdb.com/pricing">paid plan</a>, you can also increase the value <code>10000</code> to a higher number. This value defines the maximum number of IP addresses <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> is allowed to retrieve from the AbuseIPDB blocklist via the API. Free accounts are limited to <strong>10,000 IPs</strong>, while paid plans allow higher limits depending on your subscription tier.</p>
+<table>
+<thead>
+<tr>
+<th>Plan</th>
+<th>Price</th>
+<th>Maximum Blocklist IPs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Individual</td>
+<td>Free</td>
+<td><code>10,000</code></td>
+</tr>
+<tr>
+<td>Basic</td>
+<td>$25.00/month</td>
+<td><code>100,000</code></td>
+</tr>
+<tr>
+<td>Premium</td>
+<td>$99.00/month</td>
+<td><code>500,000</code></td>
+</tr>
+<tr>
+<td>Enterprise</td>
+<td>-</td>
+<td><a href="https://www.abuseipdb.com/contact/enterprise">Contact AbuseiPDB Sales</a></td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>Once you have enabled and configured AbuseIPDB, save the file and close it.</p>
+<p>The final step is to restart the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> so that the changes take effect and the blocklists can be downloaded.</p>
+<p>Open your <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> terminal and run the following command:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="setup-integration-command_1" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="setup-integration-command_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Command</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>csf<span class="w"> </span>-ra
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>Open your <abbr title="Login Failure Daemon">lfd</abbr> log file at <code>/var/log/lfd.log</code></p>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:1"><input checked="checked" id="setup-integration-command_2" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="setup-integration-command_2"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Command</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>cat<span class="w"> </span>/var/log/lfd.log
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>You should see the following in your log file:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:1"><input checked="checked" id="setup-integration-varloglfdlog" name="__tabbed_5" type="radio"><div class="tabbed-labels"><label for="setup-integration-varloglfdlog"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 9V3.5L18.5 9M6 2c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6Z"></path></svg></span> /var/log/<abbr title="Login Failure Daemon">lfd</abbr>.log</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Dec<span class="w"> </span><span class="m">15</span><span class="w"> </span><span class="m">11</span>:14:24<span class="w"> </span>configserver<span class="w"> </span>lfd:<span class="w"> </span>Retrieved<span class="w"> </span>and<span class="w"> </span>blocking<span class="w"> </span>blocklist<span class="w"> </span>ABUSEIPDB<span class="w"> </span>IP<span class="w"> </span>address<span class="w"> </span>ranges
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>Dec<span class="w"> </span><span class="m">15</span><span class="w"> </span><span class="m">11</span>:14:24<span class="w"> </span>configserver<span class="w"> </span>lfd:<span class="w"> </span>IPSET:<span class="w"> </span>loading<span class="w"> </span><span class="nb">set</span><span class="w"> </span>new_ABUSEIPDB<span class="w"> </span>with<span class="w"> </span><span class="m">10000</span><span class="w"> </span>entries
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>Dec<span class="w"> </span><span class="m">15</span><span class="w"> </span><span class="m">11</span>:14:24<span class="w"> </span>configserver<span class="w"> </span>lfd:<span class="w"> </span>IPSET:<span class="w"> </span>switching<span class="w"> </span><span class="nb">set</span><span class="w"> </span>new_ABUSEIPDB<span class="w"> </span>to<span class="w"> </span>bl_ABUSEIPDB
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>If you see an error in your log file such as the following:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="6:1"><input checked="checked" id="setup-integration-varloglfdlog_1" name="__tabbed_6" type="radio"><div class="tabbed-labels"><label for="setup-integration-varloglfdlog_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 9V3.5L18.5 9M6 2c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6Z"></path></svg></span> /var/log/<abbr title="Login Failure Daemon">lfd</abbr>.log</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Dec<span class="w"> </span><span class="m">15</span><span class="w"> </span><span class="m">11</span>:14:53<span class="w"> </span>configserver<span class="w"> </span>lfd:<span class="w"> </span>Unable<span class="w"> </span>to<span class="w"> </span>retrieve<span class="w"> </span>blocklist<span class="w"> </span>ABUSEIPDB<span class="w"> </span>-<span class="w"> </span>Unable<span class="w"> </span>to<span class="w"> </span>download:<span class="w"> </span>Not<span class="w"> </span>Found
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>The error above means that you have configured something incorrectly. Ensure that the URL does not contain typos, and also make sure you copied your AbuseIPDB API key correctly.</p>
+<p><br></p>
+<hr>
+<p><br></p>
+<h2 id="paid-tiers">Paid Tiers<a class="headerlink" data-preview="" href="#paid-tiers" title="Permanent link">¶</a></h2>
+<p>While the free tier of AbuseIPDB is a great way to get started, one of the most valuable advantages of becoming a paid supporter is access to the <strong><a href="https://www.abuseipdb.com/account/blacklist">Blacklist</a></strong> customization tools.</p>
+<h3 id="confidence-levels">Confidence Levels<a class="headerlink" data-preview="" href="#confidence-levels" title="Permanent link">¶</a></h3>
+<p><br></p>
+<figure>
+    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../assets/images/install/integrations/abuseipdb/01_confidence.gif" data-desc-position="bottom"><img alt="AbuseIPDB › Blacklist › Confidence" src="../../../assets/images/install/integrations/abuseipdb/01_confidence.gif" width="640"></a>
+    <figcaption>AbuseIPDB › Blacklist › Confidence</figcaption>
+</figure>
+<p><br></p>
+<p>The <strong>confidence level</strong> determines how strict AbuseIPDB is when deciding which IP addresses are included in your blocklist:</p>
+<ul>
+<li>
+<p><strong>High Confidence level</strong></p>
+<ul>
+<li>Only IPs with a strong history of abusive behavior are included.</li>
+<li><strong>Pros:</strong>  <ul>
+<li>Significantly reduces the chance of blocking legitimate users.  </li>
+<li>Ideal for production servers where availability and user access are critical.</li>
+</ul>
+</li>
+<li><strong>Cons:</strong>  <ul>
+<li>Some newer or less frequently reported malicious IPs may not be blocked.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Low confidence level</strong></p>
+<ul>
+<li>Includes IPs with fewer or less severe abuse reports.</li>
+<li><strong>Pros:</strong>  <ul>
+<li>More aggressive protection against potential threats.  </li>
+<li>Useful for high-risk environments or servers that are frequent attack targets.</li>
+</ul>
+</li>
+<li><strong>Cons:</strong>  <ul>
+<li>Higher risk of false positives, which may block legitimate traffic.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Choosing the right confidence level depends on your server’s purpose and risk tolerance. Paid tiers give you the flexibility to strike the balance that best fits your environment.</p>
+<p>With a free account, adjusting the confidence slider does not change the results you receive. Paid plans unlock this feature, allowing you to fine-tune the generated blocklist so you can strike a better balance between security and legitimate access to your server.</p>
+<p>Once you have selected your desired confidence level, scroll down to the right-hand side of the page and locate the <strong>API Endpoint</strong> section. Each time you adjust the confidence slider, the API URL will automatically update to reflect your current settings.</p>
+<p><br></p>
+<figure>
+    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../assets/images/install/integrations/abuseipdb/02_confidence.png" data-desc-position="bottom"><img alt="AbuseIPDB › Blacklist › Confidence" src="../../../assets/images/install/integrations/abuseipdb/02_confidence.png" width="800"></a>
+    <figcaption>AbuseIPDB › Blacklist › Confidence</figcaption>
+</figure>
+<p><br></p>
+<p>When you have the desired settings, take note of the values generated within <strong>API Endpoint</strong>:</p>
+<figure>
+    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../assets/images/install/integrations/abuseipdb/03_confidence.png" data-desc-position="bottom"><img alt="AbuseIPDB › Blacklist › Confidence" src="../../../assets/images/install/integrations/abuseipdb/03_confidence.png" width="350"></a>
+    <figcaption>AbuseIPDB › Blacklist › Confidence</figcaption>
+</figure>
+<p><br></p>
+<p>You will need to apply these values to your AbuseIPDB blocklist entry inside of the file <code>/etc/csf/csf.blocklists</code>:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="7:1"><input checked="checked" id="confidence-levels-etccsfcsfblocklists" name="__tabbed_7" type="radio"><div class="tabbed-labels"><label for="confidence-levels-etccsfcsfblocklists"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 9V3.5L18.5 9M6 2c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6Z"></path></svg></span> /etc/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>.blocklists</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-shell highlight"><table class="highlighttable"><tbody><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-6-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-6-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-6-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-6-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-6-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-6-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-6-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-6-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-6-10">10</a></span>
+<span class="normal"><a href="#__codelineno-6-11">11</a></span>
+<span class="normal"><a href="#__codelineno-6-12">12</a></span>
+<span class="normal"><a href="#__codelineno-6-13">13</a></span>
+<span class="normal"><a href="#__codelineno-6-14">14</a></span>
+<span class="normal"><a href="#__codelineno-6-15">15</a></span>
+<span class="normal"><a href="#__codelineno-6-16">16</a></span>
+<span class="normal"><a href="#__codelineno-6-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="c1"># #</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="c1">#   @blocklist              AbuseIPDB</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="c1">#   @details:               https://abuseipdb.com/account/api</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="c1">#   @notes:                 Requires you to create an account.</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="c1">#                           Requires you to generate an API key.</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="c1">#                           Add your generated API key in the URL below by </span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7"></a><span class="c1">#                               replacing `YOUR_API_KEY`.</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="c1">#                           Change the 3rd field `10000` to a higher number</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9"></a><span class="c1">#                               if you are on a paid plan.</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10"></a><span class="c1">#                           Replace `&amp;limit=10000` at the end of the URL with</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11"></a><span class="c1">#                               the same limit value.</span>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12"></a><span class="c1">#   </span>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13"></a><span class="c1">#                           Full documentation at:</span>
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14"></a><span class="c1">#                               https://docs.configserver.dev/install/integrations/abuseipdb/</span>
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15"></a><span class="c1"># #</span>
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16"></a>
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17"></a><span class="hll"><span class="w"> </span>ABUSEIPDB<span class="p">|</span><span class="m">86400</span><span class="p">|</span><span class="m">9999999</span><span class="p">|</span>https://api.abuseipdb.com/api/v2/blacklist?key<span class="o">=</span>YOUR_API_KEY<span class="p">&amp;</span>plaintext<span class="p">&amp;</span><span class="nv">limit</span><span class="o">=</span><span class="m">9999999</span><span class="p">&amp;</span><span class="nv">confidenceMinimum</span><span class="o">=</span><span class="m">25</span>
+</span></span></code></pre></div></td></tr></tbody></table></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>Once you have modified the values; give <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> a restart using the command:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="8:1"><input checked="checked" id="confidence-levels-command" name="__tabbed_8" type="radio"><div class="tabbed-labels"><label for="confidence-levels-command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Command</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>csf<span class="w"> </span>-ra
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<hr>
+<p><br></p>
+<h2 id="conclusion">Conclusion<a class="headerlink" data-preview="" href="#conclusion" title="Permanent link">¶</a></h2>
+<p>At the end of this guide, you should now have AbuseIPDB integrated into <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> as one of your blocklist providers. This should dramatically cut down on the attempts by bots to perform tasks such as port sniffing, or even worse. </p>
+<p><br></p>
+<hr>
+<p><br></p>
 <h2 id="next-steps">Next Steps <!-- omit from toc --><a class="headerlink" data-preview="" href="#next-steps" title="Permanent link">¶</a></h2>
 <mark class="critic block">
 <p>Select what documentation you would like to proceed with next ...</p>
@@ -4073,7 +4512,7 @@ regional access rules safely and efficiently.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="December 15, 2025 17:51:09 UTC"><span class="timeago" datetime="2025-12-15T17:51:09+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="December 15, 2025 17:51:09 UTC">2025-12-15</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="December 15, 2025 23:19:09 UTC"><span class="timeago" datetime="2025-12-15T23:19:09+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="December 15, 2025 23:19:09 UTC">2025-12-15</span>
   </span>
 
     
