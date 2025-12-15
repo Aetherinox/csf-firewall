@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_croatia_ipset
 #   @uuid           bcffea06-de55-3e8b-957e-8abf981f76df
-#   @updated        Sun Dec 14 12:11:11 UTC 2025
+#   @updated        Mon Dec 15 00:20:29 UTC 2025
 #   @entries        2473368 ips
 #                   1140 subnets
 #                   1140 lines
