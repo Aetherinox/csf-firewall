@@ -44,8 +44,7 @@ The following are useful resources regarding this page.
 
     ---
 
-    The starting point for our official installation guide to get CSF installed on
-    your server.
+    The starting point for our installation guide to get CSF installed on your server.
 
 </div>
 
@@ -62,11 +61,12 @@ The following are useful resources regarding this page.
 The platform aggregates reports from thousands of contributors worldwide and analyzes them to generate an **abuse confidence score** for each IP address. This score is calculated based on factors such as how frequently an IP is reported, the severity of the reported activity, and how recent the reports are. AbuseIPDB also maintains historical data, allowing users to see patterns over time and understand what types of abuse an IP has been associated with.
 
 AbuseIPDB offers both a free tier and several [paid plans](https://abuseipdb.com/pricing) with expanded capabilities. The free plan includes:
+
 - **1,000** IP checks and reports per day
 - **100** bulk blocklist checks per day
 - Access to a basic blacklist of up to **10,000 IPs**
 
-Users can interact with AbuseIPDB through its web interface for manual lookups, or integrate it directly into scripts, firewalls (including CSF), and security tools using the official [API](https://docs.abuseipdb.com/#introduction). This flexibility makes it valuable for individual server operators as well as large-scale infrastructure and security teams.
+Users can interact with AbuseIPDB through its web interface for manual lookups, or integrate it directly into scripts, firewalls (including CSF), and security tools using the official [AbuiseIPDB API](https://docs.abuseipdb.com/#introduction). This flexibility makes it valuable for individual server operators as well as large-scale infrastructure and security teams.
 
 <br />
 
@@ -354,6 +354,10 @@ Once you have modified the values; give CSF a restart using the command:
     ```shell
     csf -ra
     ```
+
+<br />
+
+You should now be using the parameters you picked from the Blacklist page.
 
 <br />
 
