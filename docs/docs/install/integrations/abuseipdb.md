@@ -30,7 +30,7 @@ The following are useful resources associated with this page.
     ---
 
     CSF Integration guide provided by AbuseIPDB.
-    
+
 -   :aetherx-axb-abuseipdb: &nbsp; __[AbuseIPDB: API Docs](https://docs.abuseipdb.com/#introduction)__
 
     ---
@@ -83,7 +83,7 @@ Users can interact with AbuseIPDB through its web interface for manual lookups, 
 
 Before integrating AbuseIPDB with CSF, make sure that **ConfigServer Security & Firewall (CSF)** is already installed and working correctly on your server.
 
-If CSF is not yet installed, begin with the [Installation](../../install/dependencies.md) guide. That section walks you through installing the required dependencies, downloading CSF, and completing the initial setup so your system is ready for AbuseIPDB integration.
+If CSF is not yet installed, begin with the [Installation](../../install/dependencies.md) guide. That section walks you through installing the required [dependencies](../../install/dependencies.md), downloading CSF, and completing the initial setup so your system is ready for AbuseIPDB integration.
 
 <br />
 
@@ -93,7 +93,7 @@ If CSF is not yet installed, begin with the [Installation](../../install/depende
 
 ## Setup Integration
 
-Before continuing with the AbuseIPDB integration, make sure you have already completed the CSF installation by following our [Installation Guide](../../install/dependencies.md). This ensures that all required dependencies are in place and that CSF is properly installed on your system.
+Before continuing with the AbuseIPDB integration, make sure you have already completed the CSF installation by following our [Installation Guide](../../install/dependencies.md). This ensures that all required [dependencies](../../install/dependencies.md) are in place and that CSF is properly installed on your system.
 
 Once CSF is installed, visit the [AbuseIPDB website](https://abuseipdb.com/pricing) and **create an account**. Click the **Sign Up** button at the top of the page, which will take you to the tier selection screen where you can choose the plan that best fits your needs.
 
@@ -377,6 +377,14 @@ You should now be using the parameters you picked from the [Blacklist](https://a
 <br />
 
 ## Contribute to AbuseIPDB
+
+??? note "Optional"
+
+    This step is **optional**.
+
+    Proceed only if you would like to support AbuseIPDB’s mission to maintain a shared database of
+    malicious IP addresses. By contributing, you help protect not only your own server, but also
+    other server owners who rely on AbuseIPDB to detect and block harmful activity.
 
 In addition to using AbuseIPDB to block malicious traffic, you can also help strengthen the platform by reporting abusive activity detected on your own server. By submitting reports for IP addresses that attempt to carry out malicious actions, you contribute to a shared reputation system that benefits the wider security community.
 
