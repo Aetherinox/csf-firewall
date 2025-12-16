@@ -403,6 +403,12 @@
         border-radius: 4px;
     }
 
+    .tabbed-content code
+    {
+        background-color: #e8e8e8 !important;
+        border: 1px solid #E8E8E8;
+    }
+
     /*
         FAQ > Tabbed Content (Inside
         
@@ -724,7 +730,7 @@
     
     dl .mdx-badge__icon
     {
-        vertical-align: middle;
+
     }
     
     dl .mdx-badge__icon svg
@@ -745,6 +751,24 @@
     {
         padding-left: 6px;
         padding-right: 6px;
+    }
+
+    /*
+        Badge > Remove Underline from attr icons
+    */
+
+    .mdx-badge .mdx-badge__icon a
+    {
+        border-bottom: none;
+    }
+
+    /*
+        Badge > Left Padding
+    */
+
+    .mdx-badge .mdx-badge__icon .twemoji
+    {
+        padding-left: 1px;
     }
 
     /*
@@ -1470,7 +1494,7 @@
 
     .md-typeset .admonition, .md-typeset details
     {
-        background-color: var(--md-admonition-bg-color);
+        background-color: inherit !important;
         border-radius: .2rem;
         box-shadow: var(--md-shadow-z1);
         color: var(--md-admonition-fg-color);
@@ -1507,6 +1531,7 @@
     .md-typeset .admonition.note, .md-typeset details.note
     {
         border: .075rem solid #53aaa9;
+        background-color: #0f1a1a;
     }
 
     .md-typeset .note > .admonition-title::after, .md-typeset .note > summary::after
@@ -1588,6 +1613,12 @@
         border-bottom: 1px solid rgb(64, 64, 64);
         border-left: 1px solid rgb(64, 64, 64);
         border-radius: 4px;
+    }
+
+    .tabbed-content code
+    {
+        background-color: #1a1a1a !important;
+        border: 1px solid rgb(64, 64, 64);
     }
 
     /*
@@ -1912,7 +1943,7 @@
 
     dl .mdx-badge__icon
     {
-        vertical-align: middle;
+
     }
     
     dl .mdx-badge__icon svg
@@ -1932,7 +1963,25 @@
     .mdx-badge__icon:not(h3 .mdx-badge__icon)
     {
         padding-left: 6px;
-        padding-right: 8px;
+        padding-right: 6px;
+    }
+
+    /*
+        Badge > Remove Underline from attr icons
+    */
+
+    .mdx-badge .mdx-badge__icon a
+    {
+        border-bottom: none;
+    }
+
+    /*
+        Badge > Left Padding
+    */
+
+    .mdx-badge .mdx-badge__icon .twemoji
+    {
+        padding-left: 1px;
     }
 
     /*

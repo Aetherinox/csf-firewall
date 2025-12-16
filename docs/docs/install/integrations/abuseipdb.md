@@ -9,8 +9,11 @@ tags:
 ---
 
 # AbuseIPDB
+<!-- md:version stable-15.09 -->
 
-This section walks you through integrating [AbuseIPDB](https://abuseipdb.com) with your ConfigServer Security and Firewall setup. Think of AbuseIPDB as the arcade game Asteroids; harmful attackers and malicious IPs are like asteroids hurtling toward your server. As soon as they get too close, you blast them away for a satisfying 100 points per hit. 
+This section walks you through integrating [AbuseIPDB](https://abuseipdb.com) with your ConfigServer Security and Firewall setup.
+
+Think of AbuseIPDB as the arcade game Asteroids; harmful attackers and malicious IPs are like asteroids hurtling toward your server. As soon as they get too close, you blast them away for a satisfying 100 points per hit. 
 
 With this integration, you get real-time intelligence on abusive IPs, giving you the upper hand in the never-ending game of protecting your server from the digital cosmos.
 
@@ -303,7 +306,7 @@ The **confidence level** determines how strict AbuseIPDB is when deciding which 
     - **Cons:**  
         - Higher risk of false positives, which may block legitimate traffic.
 
-Choosing the right confidence level depends on your server’s purpose and risk tolerance. Paid tiers give you the flexibility to strike the balance that best fits your environment.
+Choosing the right confidence level depends on your server’s purpose and risk tolerance. [Paid tiers] give you the flexibility to strike the balance that best fits your environment.
 
 With a free account, adjusting the confidence slider does not change the results you receive.
 
@@ -360,7 +363,7 @@ Once you have modified the values; give CSF a restart using the command:
 === ":aetherx-axs-square-terminal: Command"
 
     ```shell
-    csf -ra
+    sudo csf -ra
     ```
 
 <br />
@@ -381,7 +384,17 @@ When CSF detects and blocks a malicious connection attempt, that event can be re
 
 To make this process easy, AbuseIPDB has provided multiple integration scripts that can be deployed alongside CSF. Since CSF itself is written in **Perl**, a native Perl reporting script is included.
 
-However, they also offer **Bash** and **Python** versions of the integration script, allowing you to choose the language that best fits your environment or workflow. Once configured, these scripts automatically submit reports to AbuseIPDB whenever CSF blocks a malicious IP, turning your firewall into an active contributor to the global abuse reporting network.
+However, they also offer **Bash** and **Python** versions of the integration script, allowing you to choose the language that best fits your environment or workflow.
+
+Once configured, these scripts automatically submit reports to AbuseIPDB whenever CSF blocks a malicious IP, turning your firewall into an active contributor to the global abuse reporting network.
+
+<br />
+
+### Setup
+
+To configure CSF to detect malicious access attempts and report them to **AbuseIPDB**, choose one of the scripts provided below, create a new file with the selected code, and save it to a location on your server. The file may reside anywhere, as you will specify its path in CSF shortly. 
+
+The directory where you place this file determines where the script will be executed whenever CSF starts and identifies a malicious attempt against your server. 
 
 <br />
 
@@ -405,7 +418,7 @@ However, they also offer **Bash** and **Python** versions of the integration scr
 
 <br />
 
-Upload one of the scripts provided above to your server and place it in a location of your choice. The file may reside anywhere, as you will specify its path in CSF shortly. Once in place, ensure the script is executable by applying `+x` execute permissions using one of the commands below:
+Ensure the script is executable by applying `+x` execute permissions using one of the commands below:
 
 === ":aetherx-axd-command: Perl"
 
@@ -445,6 +458,68 @@ Once the permissions have been updated, you can enable reporting for the script.
     ensure the security and integrity of the `BLOCK_REPORT` script.
 
 <br />
+
+After you have configured CSF to utilize the new AbuseIPDB reporting script, give CSF a restart:
+
+=== ":aetherx-axs-square-terminal: Command"
+
+    ```shell
+    sudo csf -ra
+    ```
+
+<br />
+
+### Notes
+
+Take note of the following pieces of information if you have issues with AbuiseIPDB integration and malicious IP reporting:
+
+<br />
+
+#### Testing Mode
+
+If CSF or AbuseIPDB fails to start or does not behave as expected, verify that **Testing Mode** is disabled.  
+To do this, edit the CSF configuration file located at `/etc/csf/csf.conf` and ensure the `TESTING` option is set to `0`.
+
+<br />
+
+<!-- md:option TESTING -->
+<!-- md:flag setting --> <!-- md:flag required --> <!-- md:default `1` --> <!-- md:requires /etc/csf/csf.conf -->
+
+Defines how often the cron job runs, in minutes. This timing is based on the
+system clock, not when you manually start the firewall.
+
+For example, if the interval is set to 5 minutes, the job will trigger at
+regular 5-minute marks past the hour — meaning the firewall could reset
+anywhere between 0 and 5 minutes after startup.
+
+<br />
+
+#### CSF Restarts Slow
+
+If CSF takes too long to restart, modify CSF's `FASTSTART` setting in the file `/etc/csf/csf.conf` and set the value to `0`. 
+
+<br />
+
+<!-- md:option FASTSTART -->
+<!-- md:flag setting --> <!-- md:flag required --> <!-- md:default `1` --> <!-- md:requires /etc/csf/csf.conf -->
+
+This option uses IPTABLES_SAVE, IPTABLES_RESTORE and IP6TABLES_SAVE, IP6TABLES_RESTORE in two ways:
+
+1. On a clean server reboot the entire csf iptables configuration is saved
+and then restored where possible to provide a near instant firewall
+startup
+
+1. On csf restart or lfd reloading tables, CC_* as well as SPAMHAUS, DSHIELD,
+BOGON, TOR are loaded using this method in a fraction of the time than if
+this setting is disabled
+
+Set to `0` to disable this functionality
+
+<br />
+
+#### Logs
+
+All activity performed by **CSF** and **lfd** is recorded in `/var/log/lfd.log`. Review this log to identify blocked or locked access attempts against your server.
 
 <br />
 
@@ -494,3 +569,5 @@ Select what documentation you would like to proceed with next ...
 
 <br />
 <br />
+
+  [Paid tiers]: #paid-tiers
