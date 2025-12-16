@@ -21,7 +21,8 @@ tags:
 
 - `chore(directadmin)`: Update `plugin.conf` for CSF
     - added `update_url` and `version_url` so that DirectAdmin can fetch the latest version
-- `refactor(integration)`: Add AbuseIPDB integration to documentation
+- `docs(install)`: Add DirectAdmin to [Install](https://docs.configserver.dev/install/install/#install-directadmin) chapter in documentation
+- `docs(integration)`: Add AbuseIPDB integration to documentation
 - `refactor(csf)`: add AbuiseIPDB template to `/etc/csf/csf.blocklists` for better integration
 - `fix(directadmin)`: Fix install script error
     - corrected improperly closed `if` condition in `install.directadmin` script
