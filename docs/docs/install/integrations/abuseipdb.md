@@ -398,19 +398,19 @@ The directory where you place this file determines where the script will be exec
 
 <br />
 
-=== ":aetherx-axd-command: Perl"
+=== ":aetherx-axb-perl: Perl"
 
     ``` perl title="abuseipdb_block.pl" linenums="1"
     --8<-- "https://gist.githubusercontent.com/Bsebring/f3dd52a99f8035303e89fdb681961a2d/raw/7575508c92446f1e1784810eee996980b93a0b03/abuseipdb_block.pl"
     ```
 
-=== ":aetherx-axd-command: Bash"
+=== ":aetherx-axb-bash: Bash"
 
     ``` bash title="abuseipdb_block.sh" linenums="1"
     --8<-- "https://gist.githubusercontent.com/hemoglobin/f4d52c1c17aa77f89564ffd8f65f5f37/raw/0289a12b8e4336c1e47ec98cd064b7ad562aa58c/abuseipdb_block.sh"
     ```
 
-=== ":aetherx-axd-command: Python"
+=== ":aetherx-axb-python: Python"
 
     ``` python title="abuseipdb_block.py" linenums="1"
     --8<-- "https://gist.githubusercontent.com/Bsebring/afcd0ab2c42d5fd603582c7ded2e9368/raw/2b415c9d46730d0c35ff78ccf4942c690dc981b7/abuseipdb_block.py"
@@ -420,19 +420,19 @@ The directory where you place this file determines where the script will be exec
 
 Ensure the script is executable by applying `+x` execute permissions using one of the commands below:
 
-=== ":aetherx-axd-command: Perl"
+=== ":aetherx-axb-perl: Perl"
 
     ```shell
     sudo chmod +x abuseipdb_block.pl
     ```
 
-=== ":aetherx-axd-command: Bash"
+=== ":aetherx-axb-bash: Bash"
 
     ```shell
     sudo chmod +x abuseipdb_block.sh
     ```
 
-=== ":aetherx-axd-command: Python"
+=== ":aetherx-axb-python: Python"
 
     ```shell
     sudo chmod +x abuseipdb_block.py
@@ -442,7 +442,7 @@ Ensure the script is executable by applying `+x` execute permissions using one o
 
 Once the permissions have been updated, you can enable reporting for the script. Open the CSF configuration file at `/etc/csf/csf.conf` and modify the following setting. Chnage `/path/to` to the location where you placed one of the scripts provided above:
 
-=== ":material-file: /etc/csf/csf.conf"
+=== ":aetherx-axs-file: /etc/csf/csf.conf"
 
     ```shell
     BLOCK_REPORT = "/path/to/abuseipdb_report.pl"
@@ -509,7 +509,7 @@ This option uses IPTABLES_SAVE, IPTABLES_RESTORE and IP6TABLES_SAVE, IP6TABLES_R
 and then restored where possible to provide a near instant firewall
 startup
 
-1. On csf restart or lfd reloading tables, CC_* as well as SPAMHAUS, DSHIELD,
+2. On csf restart or lfd reloading tables, CC_* as well as SPAMHAUS, DSHIELD,
 BOGON, TOR are loaded using this method in a fraction of the time than if
 this setting is disabled
 
