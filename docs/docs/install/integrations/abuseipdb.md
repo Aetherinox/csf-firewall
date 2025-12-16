@@ -10,7 +10,7 @@ tags:
 
 # AbuseIPDB
 
-This section walks you through integrating [AbuseIPDB](https://abuseipdb.com) with your ConfigServer Security and Firewall setup. Think of AbuseIPDB as the arcade game Asteroids; harmful attackers and malicious IPs are like asteroids hurtling toward your server. As soon as they get too close, you blast them away for a satisfying **100 points** per hit. 
+This section walks you through integrating [AbuseIPDB](https://abuseipdb.com) with your ConfigServer Security and Firewall setup. Think of AbuseIPDB as the arcade game Asteroids; harmful attackers and malicious IPs are like asteroids hurtling toward your server. As soon as they get too close, you blast them away for a satisfying 100 points per hit. 
 
 With this integration, you get real-time intelligence on abusive IPs, giving you the upper hand in the never-ending game of protecting your server from the digital cosmos.
 
@@ -18,7 +18,7 @@ With this integration, you get real-time intelligence on abusive IPs, giving you
 
 ## Useful Resources
 
-The following are useful resources regarding this page.
+The following are useful resources associated with this page.
 
 <div class="grid cards" markdown>
 
@@ -60,7 +60,9 @@ The following are useful resources regarding this page.
 
 The platform aggregates reports from thousands of contributors worldwide and analyzes them to generate an **abuse confidence score** for each IP address. This score is calculated based on factors such as how frequently an IP is reported, the severity of the reported activity, and how recent the reports are. AbuseIPDB also maintains historical data, allowing users to see patterns over time and understand what types of abuse an IP has been associated with.
 
-AbuseIPDB offers both a free tier and several [paid plans](https://abuseipdb.com/pricing) with expanded capabilities. The free plan includes:
+AbuseIPDB offers both a free tier and several [paid plans](https://abuseipdb.com/pricing) with expanded capabilities. 
+
+The free plan includes:
 
 - **1,000** IP checks and reports per day
 - **100** bulk blocklist checks per day
@@ -101,7 +103,9 @@ Once CSF is installed, visit the [AbuseIPDB website](https://abuseipdb.com/prici
 
 <br />
 
-You may start with the **Free** tier if you simply want to evaluate the service. This plan allows up to **10,000 IP addresses** in your blocklist. If you require higher limits or additional features, paid plans are available, increasing the blocklist capacity to **100,000 IPs** and beyond.
+You may start with the **Free** tier if you simply want to evaluate the service. This plan allows up to **10,000 IP addresses** in your blocklist. 
+
+If you require higher limits or additional features, paid plans are available, increasing the blocklist capacity to **100,000 IPs** and beyond.
 
 Once you have selected the desired tier, the next page will ask you for your information.
 
@@ -137,7 +141,7 @@ On the right-side of the **[My API](https://www.abuseipdb.com/account/api)** pag
 
 <br />
 
-When clicking the **Create Key** button, a dialog box will appear and ask you to specify a **Name**:
+When clicking the **Create Key** button, a dialog box will appear and ask you to specify a **Name**. The name serves no purpose other than identifying what this API key is associated with:
 
 <br />
 
@@ -199,7 +203,9 @@ To enable the AbuseIPDB integration, start by removing the `#` character at the 
 
 When finished, the query string should look similar to `?key=abcdefghi0123456789`, using your actual API key in place of the example.
 
-If you are subscribed to a [paid plan](https://abuseipdb.com/pricing), you can also increase the value `10000` to a higher number. This value defines the maximum number of IP addresses CSF is allowed to retrieve from the AbuseIPDB blocklist via the API. Free accounts are limited to **10,000 IPs**, while paid plans allow higher limits depending on your subscription tier.
+If you are subscribed to a [paid plan](https://abuseipdb.com/pricing), you can also increase the value `10000` to a higher number. This value defines the maximum number of IP addresses CSF is allowed to retrieve from the AbuseIPDB blocklist via the API. 
+
+Free accounts are limited to **10,000 IPs**, while paid plans allow higher limits depending on your subscription tier.
 
 | Plan          | Price             | Maximum Blocklist IPs         |
 | ------------- | ----------------- | ----------------------------- |
@@ -212,9 +218,7 @@ If you are subscribed to a [paid plan](https://abuseipdb.com/pricing), you can a
 
 Once you have enabled and configured AbuseIPDB, save the file and close it.
 
-The final step is to restart the CSF services so that the changes take effect and the blocklists can be downloaded.
-
-Open your :aetherx-axs-square-terminal: terminal and run the following command:
+The final step is to restart the CSF services so that the changes take effect and the blocklists can be downloaded. Open your :aetherx-axs-square-terminal: terminal and run the following command:
 
 === ":aetherx-axs-square-terminal: Command"
 
@@ -268,6 +272,8 @@ The error above means that you have configured something incorrectly. Ensure tha
 
 While the free tier of AbuseIPDB is a great way to get started, one of the most valuable advantages of becoming a paid supporter is access to the **[Blacklist](https://www.abuseipdb.com/account/blacklist)** customization tools.
 
+This section outlines some of the best features associated with AbuseIPDB paid plans.
+
 ### Confidence Levels
 
 <br />
@@ -299,7 +305,9 @@ The **confidence level** determines how strict AbuseIPDB is when deciding which 
 
 Choosing the right confidence level depends on your server’s purpose and risk tolerance. Paid tiers give you the flexibility to strike the balance that best fits your environment.
 
-With a free account, adjusting the confidence slider does not change the results you receive. Paid plans unlock this feature, allowing you to fine-tune the generated blocklist so you can strike a better balance between security and legitimate access to your server.
+With a free account, adjusting the confidence slider does not change the results you receive.
+
+Paid plans unlock this feature, allowing you to fine-tune the generated blocklist so you can strike a better balance between security and legitimate access to your server.
 
 Once you have selected your desired confidence level, scroll down to the right-hand side of the page and locate the **API Endpoint** section. Each time you adjust the confidence slider, the API URL will automatically update to reflect your current settings.
 
@@ -312,7 +320,7 @@ Once you have selected your desired confidence level, scroll down to the right-h
 
 <br />
 
-When you have the desired settings, take note of the values generated within **API Endpoint**:
+When you have the desired settings, scroll down the page and locate the right-side box labeled **API Endpoint**, and take note of the values within the generated URL:
 
 <figure markdown="span">
     ![AbuseIPDB › Blacklist › Confidence](../../assets/images/install/integrations/abuseipdb/03_confidence.png){ width="350" }
@@ -367,9 +375,11 @@ You should now be using the parameters you picked from the Blacklist page.
 
 ## Conclusion
 
-At the end of this guide, you should now have AbuseIPDB integrated into CSF as one of your blocklist providers. This should dramatically cut down on the attempts by bots to perform tasks such as port sniffing, or even worse. 
+By completing this guide, you have successfully integrated **AbuseIPDB** into CSF as an active blocklist provider. This integration adds an additional layer of protection by automatically blocking IP addresses with a known history of abusive behavior, significantly reducing unwanted traffic before it ever reaches your services.
 
+The primary advantage of AbuseIPDB is its community-driven intelligence. Reports submitted by thousands of administrators and security professionals worldwide allow CSF to proactively defend against threats such as port scanning, brute-force attacks, spam attempts, and other malicious activity. Rather than reacting after an incident occurs, your server can now deny access to repeat offenders in advance.
 
+Combined with CSF’s existing firewall and security features, AbuseIPDB helps harden your system, lowers log noise, and reduces the load caused by automated bots; allowing you to focus on legitimate traffic and server management with greater confidence.
 
 <br />
 
