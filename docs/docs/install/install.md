@@ -815,7 +815,341 @@ You can now proceed to the [Next Steps](#next-steps) or skip the rest of this se
 
 ## Install: DirectAdmin
 
-This part of the documentation is currently being written.
+Before you begin installing DirectAdmin, you will need a valid license key. You can obtain one by [purchasing a plan](https://directadmin.com/pricing.php).  
+
+DirectAdmin offers competitively priced options, with the **Personal Plus** plan starting at just $5.00 USD per month.
+
+??? note "Free Trial"
+
+    Currently, there is no information available regarding a free trial license for DirectAdmin.  
+    If the DirectAdmin team wishes to clarify this, they can contact us via the [GitHub Repository](https://github.com/Aetherinox/csf-firewall/issues).
+
+<br />
+
+Once you have your license, download the DirectAdmin installation script to your server.  
+The specific command to use depends on your Linux distribution.
+
+=== ":aetherx-axd-circle-1: Option 1"
+
+    ```bash
+    curl -fsSL https://download.directadmin.com/setup.sh | sudo bash
+    ```
+
+=== ":aetherx-axd-circle-2: Option 2"
+
+    ```bash
+    sh <(curl -fsSL https://download.directadmin.com/setup.sh)
+    ```
+
+<br />
+
+After downloading and running the DirectAdmin installation script, the installation screen should appear as shown below:
+
+<figure markdown="span">
+    ![DirectAdmin › Install](../assets/images/install/directadmin/01_install.png){ width="800" }
+    <figcaption>DirectAdmin › Install</figcaption>
+</figure>
+
+<br />
+
+The initial installation process may take **3–5 minutes** to complete.  
+
+Once finished, you should see the following output in your :aetherx-axd-rectangle-terminal:{ .icon-clr-yellow } terminal:
+
+=== ":aetherx-axs-square-terminal: Terminal"
+
+    ```
+    [setup.sh] Preparing system...
+
+    *** You have /var partition.  The databases, emails and logs will use this partition. *MAKE SURE* its adequately large (6 gig or larger)
+    Press ctrl-c in the next 3 seconds if you need to stop
+    Checking quotas...
+    Running quotacheck
+    done
+    Done quotacheck
+
+    [setup.sh] Please open the following URL in your browser to continue the DirectAdmin installation:
+
+    http://127.0.0.1:35222/?key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    http://XX.XX.XX.XX:35222/?key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+    If installation could not be completed using the given URL, installation can be continued using the command line.
+    Would you like to continue in command line mode? [Y/n]:
+    ```
+
+<br />
+
+Once the message appears in your :aetherx-axd-rectangle-terminal:{ .icon-clr-yellow } terminal, open your web browser and visit the provided URLs.  
+
+- http://127.0.0.1:35222/?key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+<br />
+
+The first page you encounter will prompt you to enter the license key you obtained when purchasing DirectAdmin. Click the **Set License Key** button and DirectAdmin will prepare for validation.
+
+<br />
+
+<figure markdown="span">
+    ![Web Browser › DirectAdmin](../assets/images/install/directadmin/02_install.png){ width="800" }
+    <figcaption>Web Browser › DirectAdmin</figcaption>
+</figure>
+
+<br />
+
+On the next page, DirectAdmin will ask you to provide information about your server:
+
+- [x] **Username**  
+    - The username for the primary admin account.
+- [x] **Email Address**  
+    - An email address associated with the primary admin account.
+- [x] **Server Hostname**  
+    - Usually your main top-level domain (e.g., `yourdomain.tld`).
+- [x] **Nameserver #1**  
+    - The DNS address of your first nameserver.
+- [x] **Nameserver #2**  
+    - The DNS address of your second nameserver.
+
+<br />
+
+Click **Create Admin Account** when you complete filling in the information.
+
+<br />
+
+<figure markdown="span">
+    ![Web Browser › DirectAdmin](../assets/images/install/directadmin/03_install.png){ width="800" }
+    <figcaption>Web Browser › DirectAdmin</figcaption>
+</figure>
+
+<br />
+
+Next, you will be prompted to set up a **TLS Certificate** using [Let's Encrypt](https://letsencrypt.org/).  
+
+If you prefer to skip this step for now, you can click **Continue**, though configuring TLS is strongly recommended for security.
+
+<br />
+
+<figure markdown="span">
+    ![Web Browser › DirectAdmin](../assets/images/install/directadmin/04_install.png){ width="800" }
+    <figcaption>Web Browser › DirectAdmin</figcaption>
+</figure>
+
+<br />
+
+The next step will prompt you to select **Additional Software** to install on your server. You will be asked to configure the following options:
+
+- [x] **Webserver**  
+    - Choose the web server package that will host your websites.  
+    - Options:
+        - `apache`
+        - `nginx`
+        - `nginx_apache`
+        - `litespeed`
+        - `openlitespeed`
+- [x] **PHP Mode**  
+    - Select the PHP handler your server will use to process PHP scripts.  
+    - Options:
+        - `php-fpm`
+        - `fastcgi`
+        - `lsphp`
+- [x] **PHP Release**  
+    - Choose the version of PHP to be installed on your server.  
+    - Options:
+        - `8.x`
+        - `7.x`
+        - `5.6`
+- [x] **Database Server**  
+    - Select the database software for hosting your databases.  
+    - Options:
+        - `mysql`
+        - `mariadb`
+        - `no`
+- [x] **FTP Server**  
+    - Choose the FTP server software for file transfers.  
+    - Options:
+        - `proftpd`
+        - `pureftpd`
+        - `no`
+- [x] **Spam Filter**  
+    - Select the spam filtering software for managing email spam.  
+    - Options:
+        - `rspamd`
+        - `spamassassin`
+        - `no`
+
+<br />
+
+If you do not wish to install something, select the dropdown for that item and select `No`. 
+
+After you've selected the desired packages, proceed to the final step.
+
+<br />
+
+<figure markdown="span">
+    ![Web Browser › DirectAdmin](../assets/images/install/directadmin/05_install.png){ width="800" }
+    <figcaption>Web Browser › DirectAdmin</figcaption>
+</figure>
+
+<br />
+
+On the final step of installation, you will be given your **Username** and **Password**. You must write this down somewhere secure so that you can sign in to your DirectAdmin panel later.
+
+<br />
+
+<figure markdown="span">
+    ![Web Browser › DirectAdmin](../assets/images/install/directadmin/06_install.png){ width="800" }
+    <figcaption>Web Browser › DirectAdmin</figcaption>
+</figure>
+
+<br />
+
+After completing the installation process, you will be re-directed to the front page of DirectAdmin:
+
+<figure markdown="span">
+    ![DirectAdmin › Dashboard](../assets/images/install/directadmin/01_usage.png){ width="800" }
+    <figcaption>DirectAdmin › Dashboard</figcaption>
+</figure>
+
+<br />
+
+<br />
+
+Set DirectAdmin aside for a moment; we need to make sure that we don't have any existing firewalls that need disabled. If so, run the commands below:
+
+=== ":aetherx-axs-block-brick-fire: UFW"
+
+    Stop and disable `ufw`
+
+    ```bash
+    sudo systemctl stop ufw
+    sudo systemctl disable ufw
+    ```
+
+    Confirm `ufw` is disabled with:
+
+    ```bash
+    sudo systemctl status ufw
+    ```
+
+=== ":aetherx-axs-block-brick-fire: Firewalld"
+
+    Stop and disable `firewalld`
+
+    ```bash
+    sudo systemctl stop firewalld
+    sudo systemctl disable firewalld
+    ```
+
+    Confirm `firewalld` is disabled with:
+
+    ```bash
+    sudo systemctl status firewalld
+    ```
+
+<br />
+
+We are ready to install CSF, which you should already have downloaded to your system. If not; download the latest version of CSF:
+
+=== ":aetherx-axs-file-zipper: .tgz"
+
+    ```shell
+    # Using wget (tgz)
+    wget https://download.configserver.dev/csf.tgz
+
+    # Using curl (tgz)
+    curl -O https://download.configserver.dev/csf.tgz
+    ```
+
+=== ":aetherx-axs-file-zip: .zip"
+
+    ```shell
+    # Using wget (zip)
+    wget https://download.configserver.dev/csf.zip
+
+    # Using curl (zip)
+    curl -O https://download.configserver.dev/csf.zip
+    ```
+
+<br />
+
+Decompress / unzip the downloaded archive file:
+
+=== ":aetherx-axs-file-zipper: .tgz"
+
+    ```bash
+    tar -xzf csf.tgz -C /tmp
+    ```
+
+=== ":aetherx-axs-file-zip: .zip"
+
+    ```bash
+    unzip csf.zip -d /tmp
+    ```
+
+<br />
+
+Run the CSF installation script:
+
+=== ":aetherx-axd-circle-1: Option 1"
+
+    :aetherx-axd-circle-1: Runs `install.sh` :aetherx-axd-dot: uses `sh` shell :aetherx-axd-dot: executable permission not required
+
+    ```bash
+    sudo sh /tmp/csf/install.sh
+    ```
+
+=== ":aetherx-axd-circle-2: Option 2"
+
+    :aetherx-axd-circle-2: Runs `install.sh` :aetherx-axd-dot: uses shebang interpreter :aetherx-axd-dot: requires executable `+x` permission
+
+    ```bash
+    sudo chmod +x /tmp/csf/install.sh
+    sudo /tmp/csf/install.sh
+    ```
+
+<br />
+
+Follow any instructions on-screen. If prompted for any additional information, enter it.
+
+<br />
+
+Log back into DirectAdmin. Once in, navigate to **Extra Features** › **ConfigServer Security and Firewall** from the left-hand menu.
+
+<figure markdown="span">
+    ![DirectAdmin › Extra Features](../assets/images/install/directadmin/05_usage.png){ width="800" }
+    <figcaption>DirectAdmin › Extra Features</figcaption>
+</figure>
+
+<br />
+
+Clicking the menu item **ConfigServer Security and Firewall** will open the CSF interface:
+
+<figure markdown="span">
+    ![DirectAdmin › Extra Features › CSF Firewall](../assets/images/install/directadmin/03_usage.png){ width="800" }
+    <figcaption>DirectAdmin › Extra Features › CSF Firewall</figcaption>
+</figure>
+
+<br />
+
+The next important page to be aware of is the **Plugins** page:
+
+<figure markdown="span">
+    ![DirectAdmin › Extra Features › Plugins](../assets/images/install/directadmin/06_usage.png){ width="370" }
+    <figcaption>DirectAdmin › Extra Features › Plugins</figcaption>
+</figure>
+
+<br />
+
+On this page, you can see a list of all currently installed DirectAdmin plugins, including the installed version of CSF:
+
+<figure markdown="span">
+    ![DirectAdmin › Extra Features › Plugins](../assets/images/install/directadmin/04_usage.png){ width="800" }
+    <figcaption>DirectAdmin › Extra Features › Plugins</figcaption>
+</figure>
+
+
+<br />
+
+At this point, you should have both DirectAdmin and the CSF plugin installed on your server. You can now proceed to the [Next Steps](#next-steps) or skip the rest of this section and begin our [Configuration](../usage/configuration.md) chapter to get things set up.
 
 <br />
 <br />
