@@ -282,7 +282,7 @@ Select what documentation you would like to proceed with next ...
     CSF will integrate with the Vesta control panel while continuing to operate
     as a system-level firewall.
 
--   :aetherx-axb-cwp: &nbsp; __[Install (CentOS Web Panel)](./install.md#install-centos-web-panel)__
+-   :aetherx-axb-cwp: &nbsp; __[Install (Control Web Panel)](./install.md#install-control-web-panel)__
 
     ---
 

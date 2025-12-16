@@ -15,7 +15,7 @@ It highlights some of the most common issues, questions, and errors users may en
 The control panels covered include:
 
 - cPanel/WHM
-- CWP (CentOS Web Panel)
+- CWP (Control Web Panel)
 - [CyberPanel](cyberpanel.md)
 - DirectAdmin
 - InterWorx
