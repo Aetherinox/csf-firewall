@@ -18,7 +18,7 @@ comments: true
 
 Our **v15.08** update delivers a cleaner, more reliable experience with a strong focus on bug fixes, third-party integration improvements, optimizations, and clearer user feedback during both installation and day-to-day operation.
 
-This release includes significant fixes for **CyberPanel** and **CentOS Web Panel**, along with automatic Webmin module installation. This means that Webmin users no longer need to manually import the CSF module. It is now handled automatically as part of the installation process.
+This release includes significant fixes for **CyberPanel** and **Control Web Panel**, along with automatic Webmin module installation. This means that Webmin users no longer need to manually import the CSF module. It is now handled automatically as part of the installation process.
 
 <!-- more -->
 
@@ -106,9 +106,9 @@ There are additional changes coming in the future, but this current phase of the
 <br />
 <br />
 
-### CentOS Web Panel Links
+### Control Web Panel Links
 
-This update fixes a bug in CentOS Web Panel where the ConfigServer Firewall navigation menu would display a blank page instead of redirecting users to the appropriate CSF configuration page.
+This update fixes a bug in Control Web Panel where the ConfigServer Firewall navigation menu would display a blank page instead of redirecting users to the appropriate CSF configuration page.
 
 Previously, the second navigation link _(stock CSF interface)_ would trigger an error. It now correctly redirects users to the URL:
 
@@ -116,10 +116,10 @@ Previously, the second navigation link _(stock CSF interface)_ would trigger an 
 
 <br />
 
-The CentOS Web Panel allows you to access CSF through two different navigation links. The main difference between them is that one uses a custom theme developed by the CentOS Web Panel team _(link 1)_, while the second link displays the stock CSF theme _(link 2)_.
+The Control Web Panel allows you to access CSF through two different navigation links. The main difference between them is that one uses a custom theme developed by the Control Web Panel team _(link 1)_, while the second link displays the stock CSF theme _(link 2)_.
 
 1. **CWP Menu** › **Security** › **CSF Firewall**
-      - Provided by CentOS Web Panel. Custom colors and stylesheet
+      - Provided by Control Web Panel. Custom colors and stylesheet
       - https://127.0.0.1:2031/admin/index.php?module=csf
 2. **CWP Menu** › **ConfigServer Firewall**
       - Provided by CSF. Original appearance shipped with all downloads.
@@ -129,7 +129,7 @@ The CentOS Web Panel allows you to access CSF through two different navigation l
 
 <figure markdown="span">
     ![Webmin › Bug › Footer](../../assets/images/blog/release-1508/cwp_01.png){ width="600" }
-    <figcaption>CentOS Web Panel › Menu Differences</figcaption>
+    <figcaption>Control Web Panel › Menu Differences</figcaption>
 </figure>
 
 <br />
@@ -138,11 +138,11 @@ The CentOS Web Panel allows you to access CSF through two different navigation l
 <br />
 <br />
 
-### CentOS Web Panel Immutable Flags
+### Control Web Panel Immutable Flags
 
-Files in CentOS Web Panel are often protected with the immutable flag `+i`, which prevents any changes to the file's contents or metadata, including permissions, timestamps, ownership, and link count.
+Files in Control Web Panel are often protected with the immutable flag `+i`, which prevents any changes to the file's contents or metadata, including permissions, timestamps, ownership, and link count.
 
-While this flag enhances security, it can make updating CSF slightly more complex. The CentOS Web Panel installation script now includes logic to detect whether your CWP files have the `+i` flag and ensures that it is preserved after installing or updating CSF to a newer version.
+While this flag enhances security, it can make updating CSF slightly more complex. The Control Web Panel installation script now includes logic to detect whether your CWP files have the `+i` flag and ensures that it is preserved after installing or updating CSF to a newer version.
 
 This change will **not** set the immutable flag on files that did not previously have it; it will only re-apply the flag for users who already had it enabled. We do not want to start enabling flags on a system that they did not have, and potentially cause the end-user unexpected trouble in the future.
 

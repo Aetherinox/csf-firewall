@@ -8,7 +8,7 @@ tags:
   - webmin
   - vestacp
   - cwp
-  - centos-web-panel
+  - control-web-panel
   - directadmin
   - interworx
   - cyberpanel
@@ -30,7 +30,7 @@ If your tests were successful, you are now ready to install CSF on your server a
   <a href="#install-interworx" class="icon-dim"><img class='install-products white png-size-48' title="Install: InterWorx" src="../../assets/images/logos/interworx.png"></a>
   <a href="#install-vestacp" class="icon-dim"><img class='install-products white png-size-48' title="Install: VestaCP" src="../../assets/images/logos/vestacp.png"></a>
   <a href="#install-cyberpanel" class="icon-dim"><img class='install-products white png-size-48' title="Install: Cyberpanel" src="../../assets/images/logos/cyberpanel.png"></a>
-  <a href="#install-centos-web-panel" class="icon-dim"><img class='install-products white png-size-48' title="Install: CentOS Control Web Panel (CWP)" src="../../assets/images/logos/cwp.png"></a>
+  <a href="#install-control-web-panel" class="icon-dim"><img class='install-products white png-size-48' title="Install: CentOS Control Web Panel (CWP)" src="../../assets/images/logos/cwp.png"></a>
 
 </div>
 
@@ -2910,18 +2910,18 @@ You can now proceed to the [Next Steps](#next-steps) or skip the rest of this se
 <br />
 <br />
 
-## Install: CentOS Web Panel
+## Install: Control Web Panel
 
 ??? note "Automatic Legacy Installation"
 
-    CentOS Web Panel (CWP) automatically installs CSF as part of its base installation.
+    Control Web Panel (CWP) automatically installs CSF as part of its base installation.
     However, as of **October 10, 2025**, CWP does **not** pull CSF from our official repository and instead installs the **legacy v15.00** release.
 
     To get the most recent version from our repository, you’ll need to perform a **manual upgrade**.
 
     Instructions for doing so are provided below.
 
-    If you would like to see CSF's latest version supported, [reach out to CentOS Web Panel](https://centos-webpanel.com/contact) and let them know.
+    If you would like to see CSF's latest version supported, [reach out to Control Web Panel](https://centos-webpanel.com/contact) and let them know.
 
 Installing CSF with CWP integration is fairly straight-forward, with a few things to note. When installing CWP, they automatically install a copy of CSF as a bundle to your server. However, after this repository took over development; you will need to perform a manual upgrade if you want to utilize the latest version.
 
@@ -3165,7 +3165,7 @@ Each sub-script follows the naming scheme `install.<PLATFORM>.sh`. We have provi
 | `install.sh`                    |                                       | Main installer script, detects your platform and re-reroutes your installation request to the correct installer sub-script listed below   |
 | `install.generic.sh`            |                                       | Baremetal                                                                                                                                 |
 | `install.cpanel.sh`             | `/usr/local/cpanel/version`           | cPanel / WHM                                                                                                                              |
-| `install.cwp.sh`                | `/usr/local/cwpsrv`                   | CentOS Web Panel (CWP)                                                                                                                    |
+| `install.cwp.sh`                | `/usr/local/cwpsrv`                   | Control Web Panel (CWP)                                                                                                                    |
 | `install.cyberpanel.sh`         | `/usr/local/CyberCP`                  | CyberPanel                                                                                                                                |
 | `install.directadmin.sh`        | `/usr/local/directadmin/directadmin`  | DirectAdmin                                                                                                                               |
 | `install.interworx.sh`          | `/usr/local/interworx`                | InterWorx                                                                                                                                 |
@@ -3195,7 +3195,7 @@ The `install.cpanel.sh` script is ran in order to integrate CSF with an existing
 ### install.cwp.sh
 
 
-The `install.cwp.sh` script is ran in order to integrate CSF with an existing copy of [CentOS Web Panel (CWP)](https://centos-webpanel.com/). This file triggers when you run `install.sh`, which checks to see if your server has the file `/usr/local/cwpsrv`.
+The `install.cwp.sh` script is ran in order to integrate CSF with an existing copy of [Control Web Panel (CWP)](https://centos-webpanel.com/). This file triggers when you run `install.sh`, which checks to see if your server has the file `/usr/local/cwpsrv`.
 
 <br />
 
