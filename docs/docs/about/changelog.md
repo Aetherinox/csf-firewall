@@ -19,8 +19,12 @@ tags:
 
 ### <!-- md:version stable- --> 15.09 <small>TBA</small> { id="15.09" }
 
-- `refactor(integration)`: add AbuseIPDB template to `/etc/csf/csf.blocklists`
-- `docs(install`: add AbuseIPDB integration to documentation)
+- `chore(directadmin)`: Update `plugin.conf` for CSF
+    - added `update_url` and `version_url` so that DirectAdmin can fetch the latest version
+- `refactor(integration)`: Add AbuseIPDB integration to documentation
+- `refactor(csf)`: add AbuiseIPDB template to `/etc/csf/csf.blocklists` for better integration
+- `fix(directadmin)`: Fix install script error
+    - corrected improperly closed `if` condition in `install.directadmin` script
 
 <br />
 
