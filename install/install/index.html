@@ -4895,16 +4895,33 @@ To access it, go to the left-hand Webmin menu and navigate to:</p>
 <p><br>
 <br></p>
 <h2 id="install-directadmin">Install: DirectAdmin<a class="headerlink" data-preview="" href="#install-directadmin" title="Permanent link">¶</a></h2>
+<div class="grid cards">
+<ul>
+<li>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <path fill="currentColor" d="M48.5 18.4 41 26.1l19 19L78.8 64l-19 19-19 19 7.6 7.6a147 147 0 0 0 7.9 7.6L83 90.6 109.6 64 83 37.4a3437 3437 0 0 0-26.7-26.6l-7.8 7.6M26 41.2c-4 4-7.4 7.5-7.4 7.7 0 .1 3.3 3.6 7.4 7.7l7.5 7.4-7.5 7.4c-4 4.1-7.4 7.6-7.4 7.8 0 .2 3.4 3.7 7.5 7.9l7.5 7.5 15.3-15.3L64.1 64 49 48.9c-8.3-8.3-15.3-15.1-15.4-15.1S30 37 25.9 41.1"></path>
+</svg></span> &nbsp; <strong><a href="https://docs.directadmin.com/getting-started/installation/overview.html#system-requirements">DirectAdmin: System Requirements</a></strong></p>
+<hr>
+<p>System requirements for installing DirectAdmin.</p>
+</li>
+<li>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <path fill="currentColor" d="M48.5 18.4 41 26.1l19 19L78.8 64l-19 19-19 19 7.6 7.6a147 147 0 0 0 7.9 7.6L83 90.6 109.6 64 83 37.4a3437 3437 0 0 0-26.7-26.6l-7.8 7.6M26 41.2c-4 4-7.4 7.5-7.4 7.7 0 .1 3.3 3.6 7.4 7.7l7.5 7.4-7.5 7.4c-4 4.1-7.4 7.6-7.4 7.8 0 .2 3.4 3.7 7.5 7.9l7.5 7.5 15.3-15.3L64.1 64 49 48.9c-8.3-8.3-15.3-15.1-15.4-15.1S30 37 25.9 41.1"></path>
+</svg></span> &nbsp; <strong><a href="https://docs.directadmin.com/getting-started/installation/installguide.html">DirectAdmin: Installation Guide</a></strong></p>
+<hr>
+<p>Official DirectAdmin installation guide.</p>
+</li>
+</ul>
+</div>
 <p>Before you begin installing DirectAdmin, you will need a valid license key. You can obtain one by <a href="https://directadmin.com/pricing.php">purchasing a plan</a>.  </p>
 <p>DirectAdmin offers competitively priced options, with the <strong>Personal Plus</strong> plan starting at just $5.00 USD per month.</p>
 <details class="note">
-<summary>Free Trial</summary>
+<summary>Free Trial Availability</summary>
 <p>Currently, there is no information available regarding a free trial license for DirectAdmin.<br>
 If the DirectAdmin team wishes to clarify this, they can contact us via the <a href="https://github.com/Aetherinox/csf-firewall/issues">GitHub Repository</a>.</p>
 </details>
 <p><br></p>
-<p>Once you have your license, download the DirectAdmin installation script to your server.<br>
-The specific command to use depends on your Linux distribution.</p>
+<p>Once you have your license, download the DirectAdmin installation script to your server. The specific command to use depends on your Linux distribution.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="26:2"><input checked="checked" id="install-directadmin-option-1" name="__tabbed_26" type="radio"><input id="install-directadmin-option-2" name="__tabbed_26" type="radio"><div class="tabbed-labels"><label for="install-directadmin-option-1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 256a256 256 0 1 0 512 0 256 256 0 1 0 -512 0zm176 88c0-13.3 10.7-24 24-24l32 0 0-128-16 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l40 0c13.3 0 24 10.7 24 24l0 152 32 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-112 0c-13.3 0-24-10.7-24-24z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M192 168c0-13.3 10.7-24 24-24l40 0c13.3 0 24 10.7 24 24l0 152 32 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-112 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l32 0 0-128-16 0c-13.3 0-24-10.7-24-24z"></path></svg></span> Option 1</label><label for="install-directadmin-option-2"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 256a256 256 0 1 0 512 0 256 256 0 1 0 -512 0zm176 71.6c0-36.2 22.1-68.7 55.8-81.9l44.7-17.6c6.9-2.7 11.4-9.4 11.4-16.8 0-10-8.1-18-18-18l-62 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l62 0c36.5 0 66 29.6 66 66 0 27.1-16.6 51.5-41.9 61.4l-44.7 17.6c-12.9 5.1-22.1 16.3-24.6 29.6l79.3 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-104 0c-13.3 0-24-10.7-24-24l0-16.4z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M184 169.3c0-13.3 10.7-24 24-24l62 0c36.5 0 66 29.6 66 66 0 27.1-16.6 51.5-41.9 61.4l-44.7 17.6c-12.9 5.1-22.1 16.3-24.6 29.6l79.3 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-104 0c-13.3 0-24-10.7-24-24l0-16.4c0-36.2 22.1-68.7 55.8-81.9l44.7-17.6c6.9-2.7 11.4-9.4 11.4-16.8 0-10-8.1-18-18-18l-62 0c-13.3 0-24-10.7-24-24z"></path></svg></span> Option 2</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -5180,16 +5197,16 @@ The specific command to use depends on your Linux distribution.</p>
     <figcaption>DirectAdmin › Extra Features › <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> Firewall</figcaption>
 </figure>
 <p><br></p>
-<p>The next important page to be aware of is the <strong>Plugins</strong> page:</p>
+<p>The next important page to be aware of is the <strong>Plugins Manager</strong> page:</p>
 <figure>
-    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../assets/images/install/directadmin/06_usage.png" data-desc-position="bottom"><img alt="DirectAdmin › Extra Features › Plugins" src="../../assets/images/install/directadmin/06_usage.png" width="370"></a>
-    <figcaption>DirectAdmin › Extra Features › Plugins</figcaption>
+    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../assets/images/install/directadmin/06_usage.png" data-desc-position="bottom"><img alt="DirectAdmin › Extra Features › Plugins Manager" src="../../assets/images/install/directadmin/06_usage.png" width="370"></a>
+    <figcaption>DirectAdmin › Extra Features › Plugins Manager</figcaption>
 </figure>
 <p><br></p>
 <p>On this page, you can see a list of all currently installed DirectAdmin plugins, including the installed version of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>:</p>
 <figure>
-    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../assets/images/install/directadmin/04_usage.png" data-desc-position="bottom"><img alt="DirectAdmin › Extra Features › Plugins" src="../../assets/images/install/directadmin/04_usage.png" width="800"></a>
-    <figcaption>DirectAdmin › Extra Features › Plugins</figcaption>
+    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../assets/images/install/directadmin/04_usage.png" data-desc-position="bottom"><img alt="DirectAdmin › Extra Features › Plugins Manager" src="../../assets/images/install/directadmin/04_usage.png" width="800"></a>
+    <figcaption>DirectAdmin › Extra Features › Plugins Manager</figcaption>
 </figure>
 <p><br></p>
 <p>At this point, you should have both DirectAdmin and the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> plugin installed on your server. You can now proceed to the <a data-preview="" href="#next-steps">Next Steps</a> or skip the rest of this section and begin our <a data-preview="" href="../../usage/configuration/">Configuration</a> chapter to get things set up.</p>
@@ -7111,7 +7128,7 @@ and whitelisting your IP for security.  </p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="December 16, 2025 17:31:01 UTC"><span class="timeago" datetime="2025-12-16T17:31:01+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="December 16, 2025 17:31:01 UTC">2025-12-16</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="December 16, 2025 18:20:14 UTC"><span class="timeago" datetime="2025-12-16T18:20:14+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="December 16, 2025 18:20:14 UTC">2025-12-16</span>
   </span>
 
     
