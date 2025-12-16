@@ -4003,12 +4003,12 @@
 <p><br></p>
 <p>The Control Web Panel allows you to access <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> through two different navigation links. The main difference between them is that one uses a custom theme developed by the Control Web Panel team <em>(link 1)</em>, while the second link displays the stock <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> theme <em>(link 2)</em>.</p>
 <ol>
-<li><strong>CWP Menu</strong> › <strong>Security</strong> › <strong><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> Firewall</strong><ul>
+<li><strong><abbr title="Control Web Panel (CWP)">CWP</abbr> Menu</strong> › <strong>Security</strong> › <strong><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> Firewall</strong><ul>
 <li>Provided by Control Web Panel. Custom colors and stylesheet</li>
 <li><a href="https://127.0.0.1:2031/admin/index.php?module=csf">https://127.0.0.1:2031/admin/index.php?module=csf</a></li>
 </ul>
 </li>
-<li><strong>CWP Menu</strong> › <strong><abbr title="ConfigServer Security &amp; Firewall Security">ConfigServer Firewall</abbr></strong><ul>
+<li><strong><abbr title="Control Web Panel (CWP)">CWP</abbr> Menu</strong> › <strong><abbr title="ConfigServer Security &amp; Firewall Security">ConfigServer Firewall</abbr></strong><ul>
 <li>Provided by <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>. Original appearance shipped with all downloads.</li>
 <li><a href="https://127.0.0.1:2031/admin/index.php?module=csfofficial">https://127.0.0.1:2031/admin/index.php?module=csfofficial</a></li>
 </ul>
@@ -4024,7 +4024,7 @@
 <br></p>
 <h3 id="control-web-panel-immutable-flags">Control Web Panel Immutable Flags<a class="headerlink" href="#control-web-panel-immutable-flags" title="Permanent link">¶</a></h3>
 <p>Files in Control Web Panel are often protected with the immutable flag <code>+i</code>, which prevents any changes to the file's contents or metadata, including permissions, timestamps, ownership, and link count.</p>
-<p>While this flag enhances security, it can make updating <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> slightly more complex. The Control Web Panel installation script now includes logic to detect whether your CWP files have the <code>+i</code> flag and ensures that it is preserved after installing or updating <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> to a newer version.</p>
+<p>While this flag enhances security, it can make updating <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> slightly more complex. The Control Web Panel installation script now includes logic to detect whether your <abbr title="Control Web Panel (CWP)">CWP</abbr> files have the <code>+i</code> flag and ensures that it is preserved after installing or updating <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> to a newer version.</p>
 <p>This change will <strong>not</strong> set the immutable flag on files that did not previously have it; it will only re-apply the flag for users who already had it enabled. We do not want to start enabling flags on a system that they did not have, and potentially cause the end-user unexpected trouble in the future.</p>
 <p><br>
 <br></p>

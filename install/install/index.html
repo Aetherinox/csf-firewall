@@ -6813,13 +6813,13 @@ Because of this change, new installations of CentOS 7 can no longer fetch or upd
 <h2 id="install-control-web-panel">Install: Control Web Panel<a class="headerlink" data-preview="" href="#install-control-web-panel" title="Permanent link">¶</a></h2>
 <details class="note">
 <summary>Automatic Legacy Installation</summary>
-<p>Control Web Panel (CWP) automatically installs <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> as part of its base installation.
-However, as of <strong>October 10, 2025</strong>, CWP does <strong>not</strong> pull <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> from our official repository and instead installs the <strong>legacy v15.00</strong> release.</p>
+<p>Control Web Panel (<abbr title="Control Web Panel (CWP)">CWP</abbr>) automatically installs <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> as part of its base installation.
+However, as of <strong>October 10, 2025</strong>, <abbr title="Control Web Panel (CWP)">CWP</abbr> does <strong>not</strong> pull <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> from our official repository and instead installs the <strong>legacy v15.00</strong> release.</p>
 <p>To get the most recent version from our repository, you’ll need to perform a <strong>manual upgrade</strong>.</p>
 <p>Instructions for doing so are provided below.</p>
 <p>If you would like to see <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>'s latest version supported, <a href="https://centos-webpanel.com/contact">reach out to Control Web Panel</a> and let them know.</p>
 </details>
-<p>Installing <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> with CWP integration is fairly straight-forward, with a few things to note. When installing CWP, they automatically install a copy of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> as a bundle to your server. However, after this repository took over development; you will need to perform a manual upgrade if you want to utilize the latest version.</p>
+<p>Installing <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> with <abbr title="Control Web Panel (CWP)">CWP</abbr> integration is fairly straight-forward, with a few things to note. When installing <abbr title="Control Web Panel (CWP)">CWP</abbr>, they automatically install a copy of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> as a bundle to your server. However, after this repository took over development; you will need to perform a manual upgrade if you want to utilize the latest version.</p>
 <p>If this changes, we'll keep you updated.</p>
 <p><br></p>
 <p>Log in as the <code>root</code> user via SSH.</p>
@@ -6836,7 +6836,7 @@ However, as of <strong>October 10, 2025</strong>, CWP does <strong>not</strong> 
 </div>
 </div>
 <p><br></p>
-<p>Ensure you have CWP installed. If not, we need to prepare the server by performing some updates.</p>
+<p>Ensure you have <abbr title="Control Web Panel (CWP)">CWP</abbr> installed. If not, we need to prepare the server by performing some updates.</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="67:2"><input checked="checked" id="install-control-web-panel-centos-7" name="__tabbed_67" type="radio"><input id="install-control-web-panel-centos-8almarocky" name="__tabbed_67" type="radio"><div class="tabbed-labels"><label for="install-control-web-panel-centos-7"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M289.6 97.5l31.6 31.7-76.3 76.5 0-108.2 44.7 0zM127.2 129.2l76.3 76.5 0-108.2-44.7 0-31.6 31.7zm41.5-41.6l44.7 0 0 127.9 10.8 10.8 10.8-10.8 0-127.9 44.7 0-55.5-55.6-55.5 55.6zm26.2 168.1l-10.8-10.8-128.6 0 0-44.8-55.5 55.6 55.5 55.6 0-44.8 128.6 0 10.8-10.8zM274.2 235l107.9 0 0-44.8-31.6-31.7-76.3 76.5zm173.3 20.7l-55.5-55.6 0 44.8-127.7 0-10.8 10.8 10.8 10.8 127.7 0 0 44.8 55.5-55.6zM65.4 176.2l32.5-31.7 90.3 90.5 15.3 0 0-15.3-90.3-90.5 31.6-31.7-79.4 0 0 78.7zM382.1 97.5l-78.5 0 31.6 31.7-90.3 90.5 0 15.3 15.3 0 90.3-90.5 31.6 31.7 0-78.7zM203.5 413.9l0-108.1-76.3 76.5 31.6 31.7 44.7 0 0-.1zM65.4 235l108.8 0-76.3-76.5-32.5 31.7 0 44.8zM382.1 335.2l-31.6 31.7-90.3-90.5-15.3 0 0 15.3 90.3 90.5-31.6 31.7 78.5 0 0-78.7zm0-58.8l-107.9 0 76.3 76.5 31.6-31.7 0-44.8zM321.2 382.2l-76.3-76.5 0 108.1 44.7 0 31.6-31.6zM97.9 352.9l76.3-76.5-108.8 0 0 44.8 32.5 31.7zm181.8 70.9l-44.7 0 0-127.9-10.8-10.8-10.8 10.8 0 127.9-44.7 0 55.5 55.6 55.5-55.6zM113.2 382.2l90.3-90.5 0-15.3-15.3 0-90.3 90.5-32.5-31.7 0 78.7 79.4 0-31.6-31.7z"></path></svg></span> CentOS 7</label><label for="install-control-web-panel-centos-8almarocky"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M304 160c0-70.7-57.3-128-128-128l-32 0c-70.7 0-128 57.3-128 128 0 34.6 13.7 66 36 89-31.5 23.3-52 60.8-52 103 0 70.7 57.3 128 128 128l64 0c70.7 0 128-57.3 128-128 0-42.2-20.5-79.7-52-103 22.3-23 36-54.4 36-89zM176.1 288l15.9 0c35.3 0 64 28.7 64 64s-28.7 64-64 64l-64 0c-35.3 0-64-28.7-64-64s28.7-64 64-64l48.1 0zm0-64L144 224c-35.3 0-64-28.7-64-64 0-35.3 28.7-64 64-64l32 0c35.3 0 64 28.7 64 64 0 35.3-28.6 64-64 64z"></path></svg></span> CentOS 8/Alma/Rocky</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -6856,7 +6856,7 @@ However, as of <strong>October 10, 2025</strong>, CWP does <strong>not</strong> 
 </div>
 </div>
 <p><br></p>
-<p>Once your server is back online, you can proceed with the installation of CWP:</p>
+<p>Once your server is back online, you can proceed with the installation of <abbr title="Control Web Panel (CWP)">CWP</abbr>:</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="68:3"><input checked="checked" id="install-control-web-panel-centos-7_1" name="__tabbed_68" type="radio"><input id="install-control-web-panel-centos-8almarocky-recommended" name="__tabbed_68" type="radio"><input id="install-control-web-panel-centos-9alma-9rocky-9-beta" name="__tabbed_68" type="radio"><div class="tabbed-labels"><label for="install-control-web-panel-centos-7_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M289.6 97.5l31.6 31.7-76.3 76.5 0-108.2 44.7 0zM127.2 129.2l76.3 76.5 0-108.2-44.7 0-31.6 31.7zm41.5-41.6l44.7 0 0 127.9 10.8 10.8 10.8-10.8 0-127.9 44.7 0-55.5-55.6-55.5 55.6zm26.2 168.1l-10.8-10.8-128.6 0 0-44.8-55.5 55.6 55.5 55.6 0-44.8 128.6 0 10.8-10.8zM274.2 235l107.9 0 0-44.8-31.6-31.7-76.3 76.5zm173.3 20.7l-55.5-55.6 0 44.8-127.7 0-10.8 10.8 10.8 10.8 127.7 0 0 44.8 55.5-55.6zM65.4 176.2l32.5-31.7 90.3 90.5 15.3 0 0-15.3-90.3-90.5 31.6-31.7-79.4 0 0 78.7zM382.1 97.5l-78.5 0 31.6 31.7-90.3 90.5 0 15.3 15.3 0 90.3-90.5 31.6 31.7 0-78.7zM203.5 413.9l0-108.1-76.3 76.5 31.6 31.7 44.7 0 0-.1zM65.4 235l108.8 0-76.3-76.5-32.5 31.7 0 44.8zM382.1 335.2l-31.6 31.7-90.3-90.5-15.3 0 0 15.3 90.3 90.5-31.6 31.7 78.5 0 0-78.7zm0-58.8l-107.9 0 76.3 76.5 31.6-31.7 0-44.8zM321.2 382.2l-76.3-76.5 0 108.1 44.7 0 31.6-31.6zM97.9 352.9l76.3-76.5-108.8 0 0 44.8 32.5 31.7zm181.8 70.9l-44.7 0 0-127.9-10.8-10.8-10.8 10.8 0 127.9-44.7 0 55.5 55.6 55.5-55.6zM113.2 382.2l90.3-90.5 0-15.3-15.3 0-90.3 90.5-32.5-31.7 0 78.7 79.4 0-31.6-31.7z"></path></svg></span> CentOS 7</label><label for="install-control-web-panel-centos-8almarocky-recommended"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M304 160c0-70.7-57.3-128-128-128l-32 0c-70.7 0-128 57.3-128 128 0 34.6 13.7 66 36 89-31.5 23.3-52 60.8-52 103 0 70.7 57.3 128 128 128l64 0c70.7 0 128-57.3 128-128 0-42.2-20.5-79.7-52-103 22.3-23 36-54.4 36-89zM176.1 288l15.9 0c35.3 0 64 28.7 64 64s-28.7 64-64 64l-64 0c-35.3 0-64-28.7-64-64s28.7-64 64-64l48.1 0zm0-64L144 224c-35.3 0-64-28.7-64-64 0-35.3 28.7-64 64-64l32 0c35.3 0 64 28.7 64 64 0 35.3-28.6 64-64 64z"></path></svg></span> CentOS 8/Alma/Rocky (recommended)</label><label for="install-control-web-panel-centos-9alma-9rocky-9-beta"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M208 320c29.6 0 57.1-8.9 80-24.2l0 32.2c0 48.6-39.4 88-88 88L96 416c-17.7 0-32 14.3-32 32s14.3 32 32 32l104 0c83.9 0 152-68.1 152-152l0-152.1C351.9 96.4 287.5 32 208 32l-48 0C80.5 32 16 96.5 16 176S80.5 320 160 320l48 0zm80-144c0 44.2-35.8 80-80 80l-48 0c-44.2 0-80-35.8-80-80s35.8-80 80-80l48 0c44.2 0 80 35.8 80 80z"></path></svg></span> CentOS 9/Alma 9/Rocky 9 (beta)</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -6880,24 +6880,24 @@ However, as of <strong>October 10, 2025</strong>, CWP does <strong>not</strong> 
 </div>
 </div>
 <p><br></p>
-<p>At the end of the installation, you can now access the CWP dashboard by opening your browser and going to the URL:</p>
+<p>At the end of the installation, you can now access the <abbr title="Control Web Panel (CWP)">CWP</abbr> dashboard by opening your browser and going to the URL:</p>
 <ul>
 <li><code>https://127.0.0.1:2031</code></li>
 </ul>
 <p><br></p>
-<p>You should be greeted with the CWP authentication page. Provide a valid system username and password.</p>
+<p>You should be greeted with the <abbr title="Control Web Panel (CWP)">CWP</abbr> authentication page. Provide a valid system username and password.</p>
 <figure>
     <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../assets/images/install/cwp/1.png" data-desc-position="bottom"><img alt="CWP › Login Screen" src="../../assets/images/install/cwp/1.png" width="700"></a>
-    <figcaption>CWP › Login Screen</figcaption>
+    <figcaption><abbr title="Control Web Panel (CWP)">CWP</abbr> › Login Screen</figcaption>
 </figure>
 <p><br></p>
-<p>After signing in, you should be presented with the CWP dashboard:</p>
+<p>After signing in, you should be presented with the <abbr title="Control Web Panel (CWP)">CWP</abbr> dashboard:</p>
 <figure>
     <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../assets/images/install/cwp/2.png" data-desc-position="bottom"><img alt="CWP › Dashboard" src="../../assets/images/install/cwp/2.png" width="700"></a>
-    <figcaption>CWP › Dashboard</figcaption>
+    <figcaption><abbr title="Control Web Panel (CWP)">CWP</abbr> › Dashboard</figcaption>
 </figure>
 <p><br></p>
-<p>When CWP is installed, it automatically includes <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> along with other essential packages required for proper functionality. However, at the time of writing, CWP does <strong>not</strong> bundle the latest version of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> from this repository.  </p>
+<p>When <abbr title="Control Web Panel (CWP)">CWP</abbr> is installed, it automatically includes <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> along with other essential packages required for proper functionality. However, at the time of writing, <abbr title="Control Web Panel (CWP)">CWP</abbr> does <strong>not</strong> bundle the latest version of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> from this repository.  </p>
 <p>Instead, you will receive version <strong><code>v15.00</code></strong>, which is downloaded from the following external source:</p>
 <ul>
 <li><a href="http://static.cdn-cwp.com/files/csf.tgz"><abbr title="Hypertext Transfer Protocol, the standard protocol for transmitting web data.">http</abbr>://static.cdn-cwp.com/files/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>.tgz</a></li>
@@ -6905,7 +6905,7 @@ However, as of <strong>October 10, 2025</strong>, CWP does <strong>not</strong> 
 <p><br></p>
 <p>If you wish to use the latest copy of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> from our repository, you'll have to perform an update by downloading the latest copy of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> from us, and installing it over-top of the original.</p>
 <p><br></p>
-<p>To do this, set aside CWP for a moment; we need to make sure that we don't have any existing firewalls that need disabled. If so, run the commands below:</p>
+<p>To do this, set aside <abbr title="Control Web Panel (CWP)">CWP</abbr> for a moment; we need to make sure that we don't have any existing firewalls that need disabled. If so, run the commands below:</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="69:2"><input checked="checked" id="install-control-web-panel-ufw" name="__tabbed_69" type="radio"><input id="install-control-web-panel-firewalld" name="__tabbed_69" type="radio"><div class="tabbed-labels"><label for="install-control-web-panel-ufw"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M224 32l192 0 0 80-192 0 0-80zm-32 80l-96 0 0-16c0-35.3 28.7-64 64-64l32 0 0 80zM96 144l208 0 0 96-208 0 0-96zm0 224l0-96 96 0 0 96-96 0zm0 32l176.7 0c-.5 4.7-.7 9.4-.7 14.1 0 22.9 3.7 45.1 10.6 65.9L160 480c-35.3 0-64-28.7-64-64l0-16zM544 144l0 60.2c-12 .3-23.8 3.9-34.1 11-7.9-7.9-15.9-15.6-24.2-23.1-23.8-21.4-60-21.5-83.9-.2-17 15.2-32.9 31.4-47.2 48.1l-18.6 0 0-96 208 0zM224 272l105.2 0c-6.4 8.8-12.3 17.6-17.7 26.3-13.2 21.3-25.1 45.2-32.3 69.7l-55.2 0 0-96zM544 112l-96 0 0-80 32 0c35.3 0 64 28.7 64 64l0 16zM505.7 272.3L518 258.5c5.4-6.1 13.3-8.8 20.9-8.9 7.2 0 14.3 2.6 19.9 7.8 19.7 18.3 39.8 43.2 55 70.6 15.1 27.2 26.2 58.1 26.2 88.1 0 88.7-71.3 159.8-160 159.8-89.6 0-160-71.3-160-159.8 0-37.3 16-73.4 36.8-104.5 20.9-31.3 47.5-59 70.9-80.2 5.7-5.2 13.1-7.7 20.3-7.5s13.4 3.2 18.8 7.5c14.4 11.4 38.9 40.7 38.9 40.7zM544 464.2c0-36.5-37-73-54.8-88.4-5.4-4.7-13.1-4.7-18.5 0-17.7 15.4-54.8 51.9-54.8 88.4 0 35.3 28.7 64 64 64s64-28.7 64-64z"></path></svg></span> UFW</label><label for="install-control-web-panel-firewalld"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M224 32l192 0 0 80-192 0 0-80zm-32 80l-96 0 0-16c0-35.3 28.7-64 64-64l32 0 0 80zM96 144l208 0 0 96-208 0 0-96zm0 224l0-96 96 0 0 96-96 0zm0 32l176.7 0c-.5 4.7-.7 9.4-.7 14.1 0 22.9 3.7 45.1 10.6 65.9L160 480c-35.3 0-64-28.7-64-64l0-16zM544 144l0 60.2c-12 .3-23.8 3.9-34.1 11-7.9-7.9-15.9-15.6-24.2-23.1-23.8-21.4-60-21.5-83.9-.2-17 15.2-32.9 31.4-47.2 48.1l-18.6 0 0-96 208 0zM224 272l105.2 0c-6.4 8.8-12.3 17.6-17.7 26.3-13.2 21.3-25.1 45.2-32.3 69.7l-55.2 0 0-96zM544 112l-96 0 0-80 32 0c35.3 0 64 28.7 64 64l0 16zM505.7 272.3L518 258.5c5.4-6.1 13.3-8.8 20.9-8.9 7.2 0 14.3 2.6 19.9 7.8 19.7 18.3 39.8 43.2 55 70.6 15.1 27.2 26.2 58.1 26.2 88.1 0 88.7-71.3 159.8-160 159.8-89.6 0-160-71.3-160-159.8 0-37.3 16-73.4 36.8-104.5 20.9-31.3 47.5-59 70.9-80.2 5.7-5.2 13.1-7.7 20.3-7.5s13.4 3.2 18.8 7.5c14.4 11.4 38.9 40.7 38.9 40.7zM544 464.2c0-36.5-37-73-54.8-88.4-5.4-4.7-13.1-4.7-18.5 0-17.7 15.4-54.8 51.9-54.8 88.4 0 35.3 28.7 64 64 64s64-28.7 64-64z"></path></svg></span> Firewalld</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -6984,13 +6984,13 @@ However, as of <strong>October 10, 2025</strong>, CWP does <strong>not</strong> 
 <p><br></p>
 <p>Follow any instructions on-screen. If prompted for any additional information, enter it.</p>
 <p><br></p>
-<p>Log back into CWP. Once in, navigate to <strong>Security</strong> › <strong><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> Firewall</strong> from the left-hand menu.</p>
+<p>Log back into <abbr title="Control Web Panel (CWP)">CWP</abbr>. Once in, navigate to <strong>Security</strong> › <strong><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> Firewall</strong> from the left-hand menu.</p>
 <figure>
     <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../assets/images/install/cwp/4.png" data-desc-position="bottom"><img alt="CWP › Security › CSF Firewall" src="../../assets/images/install/cwp/4.png" width="700"></a>
-    <figcaption>CWP › Security › <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> Firewall</figcaption>
+    <figcaption><abbr title="Control Web Panel (CWP)">CWP</abbr> › Security › <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> Firewall</figcaption>
 </figure>
 <p><br></p>
-<p>If the interface matches the screenshot above, the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> integration with CWP is complete.  </p>
+<p>If the interface matches the screenshot above, the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> integration with <abbr title="Control Web Panel (CWP)">CWP</abbr> is complete.  </p>
 <p>You can now proceed to the <a data-preview="" href="#next-steps">Next Steps</a> or skip the rest of this section and begin our <a data-preview="" href="../../usage/configuration/">Configuration</a> chapter to get things set up.</p>
 <p><br>
 <br></p>
@@ -7029,7 +7029,7 @@ You will run the <code>install.sh</code> script, which automatically detects you
 <tr>
 <td><code>install.cwp.sh</code></td>
 <td><code>/usr/local/cwpsrv</code></td>
-<td>Control Web Panel (CWP)</td>
+<td>Control Web Panel (<abbr title="Control Web Panel (CWP)">CWP</abbr>)</td>
 </tr>
 <tr>
 <td><code>install.cyberpanel.sh</code></td>
@@ -7064,7 +7064,7 @@ You will run the <code>install.sh</code> script, which automatically detects you
 <p>The <code>install.cpanel.sh</code> script is ran in order to integrate <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> with an existing <abbr title="A Linux-based control panel used to manage your web hosting.">cPanel</abbr>/<abbr title="WebHost Manager; an app from the same developers as cPanel used to manage web servers through a control panel.">WHM</abbr> installation. This file triggers if you run <code>install.sh</code>, which checks to see if your server has the file <code>/usr/local/cpanel/version</code>. </p>
 <p><br></p>
 <h3 id="installcwpsh">install.cwp.sh<a class="headerlink" data-preview="" href="#installcwpsh" title="Permanent link">¶</a></h3>
-<p>The <code>install.cwp.sh</code> script is ran in order to integrate <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> with an existing copy of <a href="https://centos-webpanel.com/">Control Web Panel (CWP)</a>. This file triggers when you run <code>install.sh</code>, which checks to see if your server has the file <code>/usr/local/cwpsrv</code>.</p>
+<p>The <code>install.cwp.sh</code> script is ran in order to integrate <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> with an existing copy of <a href="https://centos-webpanel.com/">Control Web Panel (<abbr title="Control Web Panel (CWP)">CWP</abbr>)</a>. This file triggers when you run <code>install.sh</code>, which checks to see if your server has the file <code>/usr/local/cwpsrv</code>.</p>
 <p><br></p>
 <h3 id="installcyberpanelsh">install.cyberpanel.sh<a class="headerlink" data-preview="" href="#installcyberpanelsh" title="Permanent link">¶</a></h3>
 <p>The <code>install.cyberpanel.sh</code> script is ran in order to integrate <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> with an existing copy of <a href="https://cyberpanel.net/">Cyber Panel</a>. This file triggers when you run <code>install.sh</code>, which checks to see if your server has the file <code>/usr/local/CyberCP</code>.</p>
