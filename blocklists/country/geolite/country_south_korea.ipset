@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_south_korea_ipset
 #   @uuid           1fd7aee6-6c85-37f8-8489-de18c0cece06
-#   @updated        Tue Dec 16 00:20:14 UTC 2025
+#   @updated        Tue Dec 16 12:12:01 UTC 2025
 #   @entries        116157177 ips
 #                   5728 subnets
 #                   5728 lines
