@@ -182,7 +182,6 @@ theme:
         - navigation.instant
         - navigation.instant.progress
         - navigation.instant.prefetch
-        - navigation.instant.preview
         - navigation.tracking
         - navigation.path
         - navigation.top
@@ -226,7 +225,8 @@ extra_javascript:
 extra:
     status:
         important: Important
-        new: New Addition
+        new: Recently Added
+        deprecated: Deprecated
     social:
         - icon: aetherx/axs/download
           link: https://download.configserver.dev

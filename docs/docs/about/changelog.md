@@ -17,6 +17,13 @@ tags:
 
 </p>
 
+### <!-- md:version stable- --> 15.09 <small>TBA</small> { id="15.09" }
+
+- `refactor(integration)`: add AbuseIPDB template to `/etc/csf/csf.blocklists`
+- `docs(install`: add AbuseIPDB integration to documentation)
+
+<br />
+
 ### <!-- md:version stable- --> 15.08 <small>Dec 12 2025</small> { id="15.08" }
 
 - `feat(cron)`: Perl cron `csget` re-written
