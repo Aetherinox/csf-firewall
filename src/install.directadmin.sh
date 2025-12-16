@@ -149,7 +149,7 @@ if [ "$dr" = "false" ]; then
 	else
 		ok "    Status of all Perl modules are ${greenl}OK${greym}"
 	fi
-fo
+fi
 
 # #
 #	Create Main Structure
