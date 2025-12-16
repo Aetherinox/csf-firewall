@@ -815,19 +815,35 @@ You can now proceed to the [Next Steps](#next-steps) or skip the rest of this se
 
 ## Install: DirectAdmin
 
+
+<div class="grid cards" markdown>
+
+-   :aetherx-axb-directadmin: &nbsp; __[DirectAdmin: System Requirements](https://docs.directadmin.com/getting-started/installation/overview.html#system-requirements)__
+
+    ---
+
+    System requirements for installing DirectAdmin.
+
+-   :aetherx-axb-directadmin: &nbsp; __[DirectAdmin: Installation Guide](https://docs.directadmin.com/getting-started/installation/installguide.html)__
+
+    ---
+
+    Official DirectAdmin installation guide.
+
+</div>
+
 Before you begin installing DirectAdmin, you will need a valid license key. You can obtain one by [purchasing a plan](https://directadmin.com/pricing.php).  
 
 DirectAdmin offers competitively priced options, with the **Personal Plus** plan starting at just $5.00 USD per month.
 
-??? note "Free Trial"
+??? note "Free Trial Availability"
 
     Currently, there is no information available regarding a free trial license for DirectAdmin.  
     If the DirectAdmin team wishes to clarify this, they can contact us via the [GitHub Repository](https://github.com/Aetherinox/csf-firewall/issues).
 
 <br />
 
-Once you have your license, download the DirectAdmin installation script to your server.  
-The specific command to use depends on your Linux distribution.
+Once you have your license, download the DirectAdmin installation script to your server. The specific command to use depends on your Linux distribution.
 
 === ":aetherx-axd-circle-1: Option 1"
 
@@ -1130,11 +1146,11 @@ Clicking the menu item **ConfigServer Security and Firewall** will open the CSF 
 
 <br />
 
-The next important page to be aware of is the **Plugins** page:
+The next important page to be aware of is the **Plugins Manager** page:
 
 <figure markdown="span">
-    ![DirectAdmin › Extra Features › Plugins](../assets/images/install/directadmin/06_usage.png){ width="370" }
-    <figcaption>DirectAdmin › Extra Features › Plugins</figcaption>
+    ![DirectAdmin › Extra Features › Plugins Manager](../assets/images/install/directadmin/06_usage.png){ width="370" }
+    <figcaption>DirectAdmin › Extra Features › Plugins Manager</figcaption>
 </figure>
 
 <br />
@@ -1142,8 +1158,8 @@ The next important page to be aware of is the **Plugins** page:
 On this page, you can see a list of all currently installed DirectAdmin plugins, including the installed version of CSF:
 
 <figure markdown="span">
-    ![DirectAdmin › Extra Features › Plugins](../assets/images/install/directadmin/04_usage.png){ width="800" }
-    <figcaption>DirectAdmin › Extra Features › Plugins</figcaption>
+    ![DirectAdmin › Extra Features › Plugins Manager](../assets/images/install/directadmin/04_usage.png){ width="800" }
+    <figcaption>DirectAdmin › Extra Features › Plugins Manager</figcaption>
 </figure>
 
 

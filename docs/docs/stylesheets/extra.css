@@ -4374,6 +4374,15 @@ figure img
 }
 
 /*
+    Nacigation Cards
+*/
+
+.grid.cards p:nth-of-type(2)
+{
+    font-size: 0.9em;
+}
+
+/*
     Homepage › Hero / Image Elements
 */
 
