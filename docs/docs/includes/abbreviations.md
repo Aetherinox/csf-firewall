@@ -66,3 +66,4 @@
 *[tld]: Top-Level Domain. The last segment of a domain name, appearing after the final dot, such as <code>.com</code>, <code>.org</code>, or <code>.net</code>, which indicates the highest level of the domain hierarchy.
 *[TLD]: Top-Level Domain. The last segment of a domain name, appearing after the final dot, such as <code>.com</code>, <code>.org</code>, or <code>.net</code>, which indicates the highest level of the domain hierarchy.
 *[EOL]: End-of-Life. Stage when a Linux distribution or version no longer receives official updates, patches, or security fixes from its maintainers. Systems running an EOL release are considered unsupported and may be vulnerable unless upgraded or migrated to a maintained version.
+*[CWP]: Control Web Panel (CWP)
