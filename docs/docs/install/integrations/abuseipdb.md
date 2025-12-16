@@ -365,7 +365,86 @@ Once you have modified the values; give CSF a restart using the command:
 
 <br />
 
-You should now be using the parameters you picked from the Blacklist page.
+You should now be using the parameters you picked from the [Blacklist](https://abuseipdb.com/account/blacklist) page.
+
+<br />
+
+---
+
+<br />
+
+## Contribute to AbuseIPDB
+
+In addition to using AbuseIPDB to block malicious traffic, you can also help strengthen the platform by reporting abusive activity detected on your own server. By submitting reports for IP addresses that attempt to carry out malicious actions, you contribute to a shared reputation system that benefits the wider security community.
+
+When CSF detects and blocks a malicious connection attempt, that event can be reported directly to AbuseIPDB. These reports become visible to other AbuseIPDB users, helping them identify and preemptively block the same abusive sources before they cause harm elsewhere.
+
+To make this process easy, AbuseIPDB has provided multiple integration scripts that can be deployed alongside CSF. Since CSF itself is written in **Perl**, a native Perl reporting script is included.
+
+However, they also offer **Bash** and **Python** versions of the integration script, allowing you to choose the language that best fits your environment or workflow. Once configured, these scripts automatically submit reports to AbuseIPDB whenever CSF blocks a malicious IP, turning your firewall into an active contributor to the global abuse reporting network.
+
+<br />
+
+=== ":aetherx-axd-command: Perl"
+
+    ``` perl title="abuseipdb_block.pl" linenums="1"
+    --8<-- "https://gist.githubusercontent.com/Bsebring/f3dd52a99f8035303e89fdb681961a2d/raw/7575508c92446f1e1784810eee996980b93a0b03/abuseipdb_block.pl"
+    ```
+
+=== ":aetherx-axd-command: Bash"
+
+    ``` bash title="abuseipdb_block.sh" linenums="1"
+    --8<-- "https://gist.githubusercontent.com/hemoglobin/f4d52c1c17aa77f89564ffd8f65f5f37/raw/0289a12b8e4336c1e47ec98cd064b7ad562aa58c/abuseipdb_block.sh"
+    ```
+
+=== ":aetherx-axd-command: Python"
+
+    ``` python title="abuseipdb_block.py" linenums="1"
+    --8<-- "https://gist.githubusercontent.com/Bsebring/afcd0ab2c42d5fd603582c7ded2e9368/raw/2b415c9d46730d0c35ff78ccf4942c690dc981b7/abuseipdb_block.py"
+    ```
+
+<br />
+
+Upload one of the scripts provided above to your server and place it in a location of your choice. The file may reside anywhere, as you will specify its path in CSF shortly. Once in place, ensure the script is executable by applying `+x` execute permissions using one of the commands below:
+
+=== ":aetherx-axd-command: Perl"
+
+    ```shell
+    sudo chmod +x abuseipdb_block.pl
+    ```
+
+=== ":aetherx-axd-command: Bash"
+
+    ```shell
+    sudo chmod +x abuseipdb_block.sh
+    ```
+
+=== ":aetherx-axd-command: Python"
+
+    ```shell
+    sudo chmod +x abuseipdb_block.py
+    ```
+
+<br />
+
+Once the permissions have been updated, you can enable reporting for the script. Open the CSF configuration file at `/etc/csf/csf.conf` and modify the following setting. Chnage `/path/to` to the location where you placed one of the scripts provided above:
+
+=== ":material-file: /etc/csf/csf.conf"
+
+    ```shell
+    BLOCK_REPORT = "/path/to/abuseipdb_report.pl"
+    ```
+
+??? note "Blocklist Reporting Process"
+
+    When triggered, **LFD** executes the script specified by the `BLOCK_REPORT` setting as a
+    forked process. If the script does not complete within **10 seconds**, it is automatically
+    terminated.
+
+    Because this script runs with **root** privileges, extreme caution should be taken to
+    ensure the security and integrity of the `BLOCK_REPORT` script.
+
+<br />
 
 <br />
 
