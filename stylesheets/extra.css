@@ -1259,6 +1259,33 @@
         color: #c8ff01;
     }
 
+    /*
+        Definition Tooltips use:
+            md-tooltip2 md-tooltip2--bottom md-tooltip2--active
+    */
+
+    [role="dialog"] > .md-tooltip2__inner
+    {
+        font-size: .54rem;
+        overflow: auto;
+        padding: 0 .8rem;
+        pointer-events: auto;
+        width: var(--md-tooltip-width);
+    }
+
+    .md-tooltip2__inner
+    {
+        scrollbar-gutter: stable;
+        background-color: var(--md-default-bg-color);
+        border-radius: .1rem;
+        box-shadow: var(--md-shadow-z2);
+        left: clamp(.8rem,var(--md-tooltip-host-x) - .8rem,100vw - var(--md-tooltip-width) - .8rem);
+        max-height: 40vh;
+        max-width: calc(100vw - 1.6rem);
+        position: relative;
+        scrollbar-width: thin;
+    }
+
 }
 
 /*
@@ -2463,6 +2490,32 @@
         color: #c8ff01;
     }
 
+    /*
+        Definition Tooltips use:
+            md-tooltip2 md-tooltip2--bottom md-tooltip2--active
+    */
+
+    [role="dialog"] > .md-tooltip2__inner
+    {
+        font-size: .54rem;
+        overflow: auto;
+        padding: 0 .8rem;
+        pointer-events: auto;
+        width: var(--md-tooltip-width);
+    }
+
+    .md-tooltip2__inner
+    {
+        scrollbar-gutter: stable;
+        background-color: var(--md-default-bg-color);
+        border-radius: .1rem;
+        box-shadow: var(--md-shadow-z2);
+        left: clamp(.8rem,var(--md-tooltip-host-x) - .8rem,100vw - var(--md-tooltip-width) - .8rem);
+        max-height: 40vh;
+        max-width: calc(100vw - 1.6rem);
+        position: relative;
+        scrollbar-width: thin;
+    }
 }
 
 /*
