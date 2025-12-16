@@ -748,6 +748,8 @@ sub dostatus6 {
 
 sub doversion
 {
+	my $is_tty = -t STDOUT;
+	
 	my $generic 				= " (cPanel)";
 	if ( $config{GENERIC} )		{ $generic = " (generic)" }
 	if ( $config{DIRECTADMIN} )	{ $generic = " (DirectAdmin)" }
@@ -766,10 +768,11 @@ sub doversion
 	# #
 	#	Output
 	#	
-	#	Control Web Panel shows status information on the Firewall tab. Strip all color codes.
+	#	Strip colors if not using terminal.
+	#	Control Web Panel pulls this status in their web interface.
 	# #
 
-	if ( $config{CWP} ) 
+	if ( !$is_tty )
 	{
 		my @lines = (
 			"ConfigServer Security & Firewall",
