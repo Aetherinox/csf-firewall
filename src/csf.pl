@@ -10,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            12.12.2025
+#   @updated            12.16.2025
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -282,6 +282,42 @@ if ( ( -e "/etc/csf/csf.disable" ) and ( $input{command} ne "--enable" ) and ( $
 	}
 }
 
+# #
+#	Helper > Strip Color Codes
+# #
+
+sub strip_ansi
+{
+    my ( $text ) = @_;
+    return '' unless defined $text;
+
+    $text =~ s/\e\[[0-9;]*[A-Za-z]//g;
+    return $text;
+}
+
+# #
+#	Helper > Sanitize output for HTML
+# #
+
+sub sanitize
+{
+    my ( $text ) = @_;
+    return '' unless defined $text;
+
+    # remove ANSI escape sequences
+    $text = strip_ansi($text);
+
+    # escape HTML special characters
+    $text =~ s/&/&amp;/g;
+    $text =~ s/</&lt;/g;
+    $text =~ s/>/&gt;/g;
+    $text =~ s/"/&quot;/g;
+    $text =~ s/'/&#39;/g;
+
+    return $text;
+}
+
+
 unless (-e $config{IPTABLES})
 {
 	&error(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} (iptables binary location) does not exist!")
@@ -476,12 +512,12 @@ sub csflock
 
 sub load_config
 {
-	my $config = ConfigServer::Config->loadconfig();
-	%config = $config->config;
-	my %configsetting = $config->configsetting;
-	$ipv4reg = $config->ipv4reg;
-	$ipv6reg = $config->ipv6reg;
-	$warning .= $config->{warning};
+	my $config 			= ConfigServer::Config->loadconfig();
+	%config 			= $config->config;
+	my %configsetting 	= $config->configsetting;
+	$ipv4reg 			= $config->ipv4reg;
+	$ipv6reg 			= $config->ipv6reg;
+	$warning 			.= $config->{warning};
 
 	if ($config{CLUSTER_SENDTO} or $config{CLUSTER_RECVFROM})
 	{
@@ -493,7 +529,8 @@ sub load_config
 		import IO::Socket::INET;
 	}
 
-	if ($config{CF_ENABLE}) {
+	if ($config{CF_ENABLE})
+	{
 		require ConfigServer::CloudFlare;
 		import ConfigServer::CloudFlare;
 	}
@@ -716,18 +753,35 @@ sub doversion
 	if ( $config{DIRECTADMIN} )	{ $generic = " (DirectAdmin)" }
 	if ( $config{INTERWORX} ) 	{ $generic = " (InterWorx)" }
 	if ( $config{CYBERPANEL} ) 	{ $generic = " (CyberPanel)" }
-	if ( $config{CWP} )			{ $generic = " (CentOS Web Panel)" }
+	if ( $config{CWP} )			{ $generic = " (Control Web Panel)" }
 	if ( $config{VESTA} )		{ $generic = " (VestaCP)" }
 
 	my $licenseValid 			= userLicenseStatus();
-	my $licenseStatus 			= $licenseValid ? "${greenl}Valid${greym}" : "${yellowl}Invalid${greym}";
+	my $licenseStatus 			= $licenseValid ? "${greenl}Valid${greym}" : "${yellowl}None${greym}";
+	my $releaseChannelSingle	= userIsInsider( $licenseValid ) ? "Insiders Channel" : "Stable Channel";
 	my $releaseChannel 			= userIsInsider( $licenseValid )
-									? "${greyd}Stable Channel${greyd} | ${fuchsial}Insiders Channel${greym}"
-									: "${fuchsial}Stable Channel${greyd} | ${greyd}Insiders Channel${greym}";
+									? "${greyd}Stable Channel${greyd} | ${fuchsial}${releaseChannelSingle}${greym}"
+									: "${fuchsial}${releaseChannelSingle}${greyd} | ${greyd}Insiders Channel${greym}";
 
 	# #
 	#	Output
+	#	
+	#	Control Web Panel shows status information on the Firewall tab. Strip all color codes.
 	# #
+
+	if ( $config{CWP} ) 
+	{
+		my @lines = (
+			"ConfigServer Security & Firewall",
+			"v" . sanitize($version) . sanitize($generic),
+			"License: " . sanitize($licenseStatus),
+			"Channel: " . sanitize($releaseChannelSingle),
+		);
+
+		print join("\n", @lines) . "\n";
+
+		return;
+	}
 
 	log_label	( "" );
 	log_info	( "${yellowd}ConfigServer Security & Firewall" );
