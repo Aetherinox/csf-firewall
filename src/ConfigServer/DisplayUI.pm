@@ -9,7 +9,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            10.14.2025
+#   @updated            12.17.2025
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -2008,7 +2008,7 @@ EOF
 				#  $raw =~ s/>/&gt;/g;
 
 					# #
-					#	push
+					#	Push
 					# #
 
 					push @header_lines, $raw;
@@ -2046,39 +2046,42 @@ EOF
 		{
 			print "<div class='header-block'>\n";
 			print "<div class='section'>$header_title</div>\n";
-			print "<div class='section-body comment'>\n";
+			print "<div class='section-body comment' style='padding-top:0px !important;white-space: pre-wrap;font-family:monospace;line-height:1.2em;'>\n";
 
+			my $first_line = 1;
 			foreach my $hl ( @header_lines )
 			{
-				if ( $hl eq '' )
-				{
-					print "<br>\n";
-					next;
-				}
 
 				# #
 				#	Count leading spaces/tabs
 				# #
 
-				my ( $spaces ) = $hl =~ /^([ \t]*)/;
+				my ($spaces) = $hl =~ /^([ \t]*)/;
 
 				# #
 				#	Convert to &nbsp; if more than 4 spaces
 				# #
-	
-				if ( $spaces && length( $spaces ) > 4 )
+
+				if ($spaces && length($spaces) > 4)
 				{
-					my $nbsp = '&nbsp;' x length( $spaces );
+					my $nbsp = '&nbsp;' x length($spaces);
 					$hl =~ s/^[ \t]+/$nbsp/;
 				}
 
 				# #
-				#	Print HTML as-is
+				#	Skip printing \n only for the very first line
 				# #
-			
-				print "$hl<br>\n";
-			}
 
+				if ($first_line)
+				{
+					print "$hl<br>";
+					$first_line = 0;
+				}
+				else
+				{
+					print "$hl<br>\n";
+				}
+			}
 
 			print "</div>\n";  # close section-body
 			print "</div>\n";  # close header-block
@@ -2088,65 +2091,68 @@ EOF
 		#   Main configuration parsing loop
 		# #
 
+		my $first_line_comment = 1;
 		foreach my $line ( @confdata )
 		{
 			if ( ( $line !~ /^\#/ ) and ( $line =~ /=/ ) )
 			{
-				if ($comment)
+				if ( $comment )
 				{
 					print "</div>\n";
 				}
 
-				$comment = 0;
-				my ($start,$end) = split (/=/,$line,2);
-				my $name = $start;
-				my $cleanname = $start;
-				$cleanname =~ s/\s//g;
-				$name =~ s/\s/\_/g;
+				$comment 			= 0;
+				my ($start,$end) 	= split (/=/,$line,2);
+				my $name 			= $start;
+				my $cleanname 		= $start;
+				$cleanname 			=~ s/\s//g;
+				$name 				=~ s/\s/\_/g;
 	
-				if ($end =~ /\"(.*)\"/)
+				if ( $end =~ /\"(.*)\"/ )
 				{
 					$end = $1;
 				}
 	
-				my $escaped_end = html_escape($end);
-
-				my $size = length($end) + 4;
-				my $class = "value-default";
-				my ($status,$range,$default) = sanity($start,$end);
-				my $showrange = "";
+				my $escaped_end 				= html_escape( $end );
+				my $size 						= length($end) + 4;
+				my $class 						= "value-default";
+				my ($status,$range,$default) 	= sanity($start,$end);
+				my $showrange 					= "";
 				my $showfrom;
 				my $showto;
 
-				if ($range =~ /^(\d+)-(\d+)$/)
+				if ( $range =~ /^(\d+)-(\d+)$/ )
 				{
-					$showfrom = $1;
-					$showto = $2;
+					$showfrom 	= $1;
+					$showto 	= $2;
 				}
 
-				if ($default ne "")
+				if ( $default ne "" )
 				{
 					$showrange = " Default: $default [$range]";
-					if ($end ne $default) {$class = "value-other"}
+					if ( $end ne $default )
+					{
+						$class = "value-other"
+					}
 				}
 	
-				if ($status)
+				if ( $status )
 				{
-					$class = "value-warning";
-					$showrange = " Recommended range: $range (Default: $default)";
+					$class 		= "value-warning";
+					$showrange 	= " Recommended range: $range (Default: $default)";
 				}
 	
-				if ($config{RESTRICT_UI} and ($cleanname eq "CLUSTER_KEY" or $cleanname eq "UI_PASS" or $cleanname eq "UI_USER") )
+				if ( $config{RESTRICT_UI} and ( $cleanname eq "CLUSTER_KEY" or $cleanname eq "UI_PASS" or $cleanname eq "UI_USER" ) )
 				{
 					print "<div class='$class' style='padding-left:5px !important;margin-block-end:3em !important;'><b>$start</b> = <input type='text' value='********' size='14' disabled> (hidden restricted UI item)</div>\n";
 				}
-				elsif ($restricted{$cleanname})
+				elsif ( $restricted{$cleanname} )
 				{
 					print "<div class='$class' style='padding-left:5px !important;margin-block-end:3em !important;'><b>$start</b> = <input type='text' onFocus='CSFexpand(this);' onkeyup='CSFexpand(this);' value='$end' size='$size' disabled> (restricted UI item)</div>\n";
 				}
 				else
 				{
-					if ($range eq "0-1")
+					if ( $range eq "0-1" )
 					{
 						my $switch_checked_0 = "";
 						my $switch_checked_1 = "";
@@ -2164,13 +2170,20 @@ EOF
 						print "</label>\n";
 						print "</div></div>\n";
 					}
-					elsif ($range =~ /^(\d+)-(\d+)$/ and !(-e "/etc/csuibuttondisable") and ($showto - $showfrom <= 20) and $end >= $showfrom and $end <= $showto)
+					elsif ( $range =~ /^(\d+)-(\d+)$/ and !( -e "/etc/csuibuttondisable" ) and ( $showto - $showfrom <= 20 ) and $end >= $showfrom and $end <= $showto )
 					{
 						my $selected = "";
 						print "<div class='$class' style='padding-left:5px !important;margin-block-end:3em !important;'><b>$start</b> = <select name='$name'>\n";
-						for ($showfrom..$showto)
+						for ( $showfrom..$showto )
 						{
-							if ($_ == $end) {$selected = "selected"} else {$selected = ""}
+							if ( $_ == $end )
+							{
+								$selected = "selected"
+							}
+							else
+							{
+								$selected = ""
+							}
 							print "<option $selected>$_</option>\n";
 						}
 						print "</select></div>\n";
@@ -2187,18 +2200,21 @@ EOF
 				#   Skip decorative comments and blank lines
 				# #
 		
-				if ($line =~ /^\#\s*\#/) { next }
-				if ($line =~ /^\#\#/) { next }
-				if ($line =~ /^\s*$/) { next }
+				if ( $line =~ /^\#\s*\#/ ) { next }
+				if ( $line =~ /^\#\#/ ) { next }
+				if ( $line =~ /^\s*$/ ) { next }
 
 				# #
 				#   Handle SECTION markers
 				# #
 		
-				if ($line =~ /^\#\s*SECTION:(.*)/)
+				if ( $line =~ /^\#\s*SECTION:(.*)/ )
 				{
 					push @divnames, $1;
-					unless ($first) {print "</div>\n"}
+					unless ( $first )
+					{
+						print "</div>\n"
+					}
 					print "<div class='virtualpage hidepiece'>\n<div class='section'>$1</div>\n";
 					$first = 0;
 					next;
@@ -2208,9 +2224,10 @@ EOF
 				#   Handle regular comments
 				# #
 
-				if ($line =~ /^\# / and $comment == 0)
+				if ( $line =~ /^\# / and $comment == 0 )
 				{
 					$comment = 1;
+					my $first_line_comment = 1;
 					print "<div class='comment' style='padding-top:0px !important;white-space: pre-wrap;font-family:monospace;line-height:1.2em;'>\n";
 				}
 
@@ -2218,16 +2235,16 @@ EOF
 				#	Capture indentation (spaces/tabs *after* #)
 				# #
 
-				my ($spaces) = $line =~ /^\s*#+([ \t]*)/;
+				my ( $spaces ) = $line =~ /^\s*#+([ \t]*)/;
 				my $nbsp = '';
 
 				# #
 				#	Convert indentation to &nbsp; only if > 4 spaces
 				# #
 	
-				if ($spaces && length($spaces) > 4)
+				if ( $spaces && length( $spaces ) > 4 )
 				{
-					$nbsp = '&nbsp;' x length($spaces);
+					$nbsp = '&nbsp;' x length( $spaces );
 				}
 
 				# #
@@ -2240,7 +2257,20 @@ EOF
 				#   Sanitize line but allow only whitelisted tags
 				# #
 
-				$line = sanitize_line($line);
+				$line = sanitize_line( $line );
+
+				# #
+				#	Convert URLs to clickable links
+				# #
+
+				if ($line =~ m{^\s*https?://})
+				{
+					$line = "<a href=\"$line\" target=\"_blank\" rel=\"noopener noreferrer\">$line</a>";
+				}
+				else
+				{
+					$line = $nbsp . $line;
+				}
 
 				# #
 				#	Prepend indentation (only if > 4 spaces)
@@ -2254,8 +2284,15 @@ EOF
 
 				$line =~ s/\n/<br \/>\n/g;
 
-				print "$line<br />\n";
-
+				if ( $comment && $first_line_comment )
+				{
+					print "$line<br />";
+					$first_line_comment = 0;
+				}
+				else
+				{
+					print "$line\n";
+				}
 			}
 		}
 
