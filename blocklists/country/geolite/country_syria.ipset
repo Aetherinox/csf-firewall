@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_syria_ipset
 #   @uuid           9a66a3c5-3d93-33bd-8b19-51515ea421f2
-#   @updated        Tue Dec 16 12:12:23 UTC 2025
-#   @entries        1318603 ips
-#                   373 subnets
-#                   373 lines
+#   @updated        Wed Dec 17 00:19:06 UTC 2025
+#   @entries        1319114 ips
+#                   375 subnets
+#                   375 lines
 #   @country        Syria (SY)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -43,10 +43,10 @@
 46.58.128.0/17
 46.161.202.0/23
 46.161.204.0/22
-46.183.185.65/32
 46.213.0.0/16
 62.16.80.0/20
 74.118.126.212/30
+74.245.194.0/23
 77.44.128.0/17
 78.110.96.0/20
 78.155.64.0/19
@@ -375,6 +375,7 @@
 2a0b:f2c0::/29
 2a0c:9a40:95bd:6000::/52
 2a0c:de40::/32
+2a0d:3341:c2c0::/42
 2a0d:3341:df00::/40
 2a0d:4100::/32
 2a0d:8b80::/29
@@ -383,6 +384,7 @@
 2a0f:5707:ffa6::/48
 2a0f:85c1:81b:fab0::/60
 2a0f:b940::/29
+2a10:500:6200::/40
 2a10:7540::/29
 2a10:9007:2:1c::/64
 2a10:b6c0::/29

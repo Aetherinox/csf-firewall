@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_comoros_ipset
 #   @uuid           f2a6bb8d-143e-3298-8cc1-5d7feac56ed1
-#   @updated        Tue Dec 16 12:12:00 UTC 2025
+#   @updated        Wed Dec 17 00:18:42 UTC 2025
 #   @entries        10457 ips
-#                   146 subnets
-#                   146 lines
+#                   147 subnets
+#                   147 lines
 #   @country        Comoros (KM)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -160,6 +160,7 @@
 2a0a:6044:f988::/47
 2a0c:9a40:95b3::/52
 2a0f:85c1:81b:f2a0::/60
+2a10:500:1400::/40
 2a10:9007:2:c::/64
 2a11:a685:1000::/36
 2a13:a5c7:2577::/48

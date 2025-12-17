@@ -5,8 +5,8 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_timorleste_ipset
 #   @uuid           bfa1118c-5c38-3038-a67a-95e5831386c1
-#   @updated        Tue Dec 16 12:12:25 UTC 2025
-#   @entries        28978 ips
+#   @updated        Wed Dec 17 00:19:08 UTC 2025
+#   @entries        28466 ips
 #                   194 subnets
 #                   194 lines
 #   @country        Timor-Leste (TL)
@@ -91,7 +91,6 @@
 150.48.177.160/31
 150.228.168.0/23
 150.242.108.0/22
-154.18.202.0/23
 154.30.31.64/26
 157.5.114.224/31
 157.167.30.0/24
@@ -210,6 +209,7 @@
 2a0c:9a40:95bd:b000::/52
 2a0f:1cc5:1fda::/48
 2a0f:85c1:81b:fb00::/60
+2a10:500:4700::/40
 2a11:3a83:e000::/35
 2a13:a5c3:d4b0::/46
 2a13:a5c7:25dc::/48
