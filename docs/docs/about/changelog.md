@@ -19,13 +19,25 @@ tags:
 
 ### <!-- md:version stable- --> 15.09 <small>TBA</small> { id="15.09" }
 
-- `chore(directadmin)`: Update `plugin.conf` for CSF
-    - added `update_url` and `version_url` so that DirectAdmin can fetch the latest version
-- `docs(install)`: Add DirectAdmin to [Install](https://docs.configserver.dev/install/install/#install-directadmin) chapter in documentation
-- `docs(integration)`: Add AbuseIPDB integration to documentation
-- `refactor(csf)`: add AbuiseIPDB template to `/etc/csf/csf.blocklists` for better integration
-- `fix(directadmin)`: Fix install script error
-    - corrected improperly closed `if` condition in `install.directadmin` script
+- `feat(csf)`: urls in `/etc/csf/csf.conf` are now clickable in the **Firewall Configuration** web interface.
+- `feat(csf)`: correctly detect interactive `--version` input in the CLI.
+- `feat(sponsor)`: sponsor icon updates:
+    - added a new setting in `/etc/csf/csf.conf` called `SPONSOR_HIDE_ICON` to hide icons in web interface footer.
+    - sponsor icon will automatically hide if the user enters a sponsor license.
+    - removed the beating animation for the sponsor icon.
+- `feat(webmin)`: restored the **Firewall Configuration** button.
+- `feat(csf)`: added **AbuseIPDB** service template to the blocklist file `/etc/csf/csf.blocklists`.
+- `chore(directadmin)`: updated `plugin.conf` for CSF:
+    - added `update_url` and `version_url` so DirectAdmin can fetch the latest version.
+- `chore(cwp)`: re-branded `CentOS Web Panel` to `Control Web Panel` to reflect correct app name after re-name.
+- `docs(install)`: added DirectAdmin instructions to the [Install](https://docs.configserver.dev/install/install/#install-directadmin) chapter in the documentation.
+- `docs(integration)`: added AbuseIPDB integration to the documentation.
+- `refactor(csf)`: added AbuseIPDB template to `/etc/csf/csf.blocklists` for improved integration.
+- `fix(directadmin)`: corrected an install script error:
+    - fixed an improperly closed `if` condition in the `install.directadmin` script.
+- `fix(webmin)`: descriptions for settings in interface now render correctly on the page with proper structure.
+- `fix(cwp)`: segregated formatted `--version` output with no ANSI colors.
+- `fix(cwp)`: ensured proper sanitization when sending version information to CWP.
 
 <br />
 
