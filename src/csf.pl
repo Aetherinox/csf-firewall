@@ -10,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            12.16.2025
+#   @updated            12.17.2025
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -297,6 +297,15 @@ sub strip_ansi
 
 # #
 #	Helper > Sanitize output for HTML
+#	
+#	Found exploit in CWP which allows any command at all
+#	to be passed to CWP and executed.
+#	
+#	Ensure sanitization of output before it is sent to
+#	CWP.
+#	
+#	Disallows HTML to avoid xss injections
+#	Disallows ansi color codes
 # #
 
 sub sanitize
@@ -304,10 +313,10 @@ sub sanitize
     my ( $text ) = @_;
     return '' unless defined $text;
 
-    # remove ANSI escape sequences
+    # Remove ANSI escape sequences
     $text = strip_ansi($text);
 
-    # escape HTML special characters
+    # Escape HTML special characters
     $text =~ s/&/&amp;/g;
     $text =~ s/</&lt;/g;
     $text =~ s/>/&gt;/g;
@@ -316,7 +325,6 @@ sub sanitize
 
     return $text;
 }
-
 
 unless (-e $config{IPTABLES})
 {
