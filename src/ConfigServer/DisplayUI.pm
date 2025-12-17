@@ -3714,7 +3714,10 @@ END_JS
 		{
 			print "<div class='footer'>";
 				print "<div class='footer-left'>";
-					print "<button id='btn-sponsor' class='btn-footer btn-sponsor'><i class='axs ax-heart'></i></button>";
+				print "<button id='btn-sponsor' class='btn-footer btn-sponsor'><i class='axs ax-heart'></i></button>"
+					if !length( $config{SPONSOR_LICENSE} // '' )
+					&& ( ( $config{UI_SPONSOR_HIDE} // '' ) ne '1' );
+
 					print "<span class='copyright'>&copy; $year ConfigServer Firewall - <code>v$myv ($codename)</code></span>";
 				print "</div>";
 
