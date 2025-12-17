@@ -1870,7 +1870,7 @@ EOF
 	{
 
 	}
-	elsif ($FORM{action} eq "conf")
+	elsif ( $FORM{action} =~ /^(conf|settings)$/ )
 	{
 		sysopen (my $IN, "/etc/csf/csf.conf", O_RDWR | O_CREAT) or die "Unable to open file: $!";
 		flock ($IN, LOCK_SH);
@@ -2138,11 +2138,11 @@ EOF
 	
 				if ($config{RESTRICT_UI} and ($cleanname eq "CLUSTER_KEY" or $cleanname eq "UI_PASS" or $cleanname eq "UI_USER") )
 				{
-					print "<div class='$class'><b>$start</b> = <input type='text' value='********' size='14' disabled> (hidden restricted UI item)</div>\n";
+					print "<div class='$class' style='padding-left:5px !important;margin-block-end:3em !important;'><b>$start</b> = <input type='text' value='********' size='14' disabled> (hidden restricted UI item)</div>\n";
 				}
 				elsif ($restricted{$cleanname})
 				{
-					print "<div class='$class'><b>$start</b> = <input type='text' onFocus='CSFexpand(this);' onkeyup='CSFexpand(this);' value='$end' size='$size' disabled> (restricted UI item)</div>\n";
+					print "<div class='$class' style='padding-left:5px !important;margin-block-end:3em !important;'><b>$start</b> = <input type='text' onFocus='CSFexpand(this);' onkeyup='CSFexpand(this);' value='$end' size='$size' disabled> (restricted UI item)</div>\n";
 				}
 				else
 				{
@@ -2154,7 +2154,7 @@ EOF
 						my $switch_active_1 = "";
 						if ($end == 0) {$switch_checked_0 = "checked"; $switch_active_0 = "active"}
 						if ($end == 1) {$switch_checked_1 = "checked"; $switch_active_1 = "active"}
-						print "<div class='$class'><b>$start</b> = ";
+						print "<div class='$class' style='padding-left:5px !important;margin-block-end:3em !important;'><b>$start</b> = ";
 						print "<div class='btn-group' data-toggle='buttons'>\n";
 						print "<label class='btn btn-default btn-csf-config $switch_active_0'>\n";
 						print "<input type='radio' name='${name}' value='0' $switch_checked_0> Off\n";
@@ -2167,7 +2167,7 @@ EOF
 					elsif ($range =~ /^(\d+)-(\d+)$/ and !(-e "/etc/csuibuttondisable") and ($showto - $showfrom <= 20) and $end >= $showfrom and $end <= $showto)
 					{
 						my $selected = "";
-						print "<div class='$class'><b>$start</b> = <select name='$name'>\n";
+						print "<div class='$class' style='padding-left:5px !important;margin-block-end:3em !important;'><b>$start</b> = <select name='$name'>\n";
 						for ($showfrom..$showto)
 						{
 							if ($_ == $end) {$selected = "selected"} else {$selected = ""}
@@ -2177,7 +2177,7 @@ EOF
 					}
 					else
 					{
-						print "<div class='$class'><b>$start</b> = <input type='text' onFocus='CSFexpand(this);' onkeyup='CSFexpand(this);' name='$name' value='$escaped_end' size='$size'>$showrange</div>\n";
+						print "<div class='$class' style='padding-left:5px !important;margin-block-end:3em !important;'><b>$start</b> = <input type='text' onFocus='CSFexpand(this);' onkeyup='CSFexpand(this);' name='$name' value='$escaped_end' size='$size'>$showrange</div>\n";
 					}
 				}
 			}
@@ -2211,7 +2211,7 @@ EOF
 				if ($line =~ /^\# / and $comment == 0)
 				{
 					$comment = 1;
-					print "<div class='comment'>\n";
+					print "<div class='comment' style='white-space: pre-wrap;font-family:monospace;line-height:1.2em;'>\n";
 				}
 
 				# #
@@ -3380,7 +3380,7 @@ EOF
 
 		__ "<table class='table table-bordered table-striped'>\n";
 		__ "<thead><tr><th colspan='2'>csf - ConfigServer Firewall</th></tr></thead>";
-		__ "<tr><td><form action='$script' method='post'><button name='action' value='conf' type='submit' class='btn btn-default'>Firewall Configuration</button></form></td><td style='width:100%'>Edit the configuration file for the csf firewall and lfd</td></tr>\n";
+		__ "<tr><td><form action='$script' method='post'><button name='action' value='" . ( $codename eq 'webmin' ? 'settings' : 'conf' ) . "' type='submit' class='btn btn-default'>Firewall Configuration</button></form></td><td style='width:100%'>Edit the configuration file for the csf firewall and lfd</td></tr>\n";
 		__ "<tr><td><form action='$script' method='post'><button name='action' value='profiles' type='submit' class='btn btn-default'>Firewall Profiles</button></form></td><td style='width:100%'>Apply pre-configured csf.conf profiles and backup/restore csf.conf</td></tr>\n";
 		__ "<tr><td><form action='$script' method='post'><button name='action' value='status' type='submit' class='btn btn-default'>View iptables Rules</button></form></td><td style='width:100%'>Display the active iptables rules</td></tr>\n";
 		__ "<tr><td><button onClick='\$(\"#grep\").submit();' class='btn btn-default'>Search for IP</button></td><td style='width:100%'><form action='$script' method='post' id='grep'><input type='submit' class='hide'><input type='hidden' name='action' value='grep'>Search iptables for IP address <input type='text' name='ip' value='' size='18'></form></td></tr>\n";
