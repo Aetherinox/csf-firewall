@@ -99,7 +99,7 @@ This document contains:
 
 28. InterWorx
 
-29. CentOS Web Panel (CWP)
+29. Control Web Panel (CWP)
 
 
 1. Introduction
@@ -1736,7 +1736,7 @@ to a suitable email address. After making any changes, restart csf and then
 lfd.
 
 
-28. CentOS Web Panel (CWP)
+28. Control Web Panel (CWP)
 ##########################
 
 CWP integration is available for csf. Since CWP already has some custom

@@ -207,7 +207,7 @@ fi
 #	csf.directadmin.conf			DirectAdmin
 #	csf.cyberpanel.conf				CyberPanel
 #	csf.vesta.conf					Vesta
-#	csf.cwp.conf					CentOS Web Panel
+#	csf.cwp.conf					Control Web Panel
 # #
 
 if [ "$dr" = "false" ]; then
