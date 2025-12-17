@@ -58,7 +58,7 @@ script_dir=$(dirname "${script}")
 # #
 
 ARG_SCRIPT="${1:-install.cwp.sh}"
-ARG_PANEL="${2:-CentOS Web Panel}"
+ARG_PANEL="${2:-Control Web Panel}"
 
 # #
 #	Global Variables
@@ -223,7 +223,7 @@ fi
 #	csf.directadmin.conf			DirectAdmin
 #	csf.cyberpanel.conf				CyberPanel
 #	csf.vesta.conf					Vesta
-#	csf.cwp.conf					CentOS Web Panel
+#	csf.cwp.conf					Control Web Panel
 # #
 
 if [ "$dr" = "false" ]; then
@@ -966,7 +966,7 @@ for file in $files; do
 done
 
 # #
-#	@app			CentOS Web Panel (CWP)
+#	@app			Control Web Panel (CWP)
 #	@desc			Move existing CWP csf.orig.php to csf.php
 # #
 
@@ -977,7 +977,7 @@ if [ -e "/usr/local/cwpsrv/" ]; then
 fi
 
 # #
-#	@app			CentOS Web Panel (CWP)
+#	@app			Control Web Panel (CWP)
 #	@desc			Copies the main CSF integration files over to CWP
 # #
 
@@ -988,7 +988,7 @@ run copi "cwp/configserver.php" "/usr/local/cwpsrv/htdocs/resources/admin/includ
 run chmod 700 /usr/local/cwpsrv/htdocs/resources/admin/modules/csf.pl
 
 # #
-#	@app			CentOS Web Panel (CWP)
+#	@app			Control Web Panel (CWP)
 #	@desc			Store user's existing immutable status; used to restore later
 #						/usr/local/cwpsrv/htdocs
 # #
@@ -996,7 +996,7 @@ run chmod 700 /usr/local/cwpsrv/htdocs/resources/admin/modules/csf.pl
 cwp_flag_immutable=0
 
 # #
-#	@app			CentOS Web Panel (CWP)
+#	@app			Control Web Panel (CWP)
 #	@desc			Check to see if CWP design folder for CSF web files already exists.
 #						/usr/local/cwpsrv/htdocs/admin/design/csf
 # #
@@ -1015,7 +1015,7 @@ else
 fi
 
 # #
-#	@app			CentOS Web Panel (CWP)
+#	@app			Control Web Panel (CWP)
 #	@desc			Checks to see if the CWP base design folder has the +i
 #						immutable flag. Removes flag before modifying files.
 # #
@@ -1029,7 +1029,7 @@ else
 fi
 
 # #
-#	@app			CentOS Web Panel (CWP)
+#	@app			Control Web Panel (CWP)
 #	@desc			Copies local csf folder to CWP installation path.
 #						csf/* › /usr/local/cwpsrv/htdocs/admin/design/csf
 # #
@@ -1049,7 +1049,7 @@ else
 fi
 
 # #
-#	@app			CentOS Web Panel (CWP)
+#	@app			Control Web Panel (CWP)
 #	@desc			CWP › Re-Apply +i Immutable Flag if it was there previously
 # #
 

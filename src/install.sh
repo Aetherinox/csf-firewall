@@ -205,7 +205,7 @@ elif [ -e "/usr/local/directadmin/directadmin" ]; then
 elif [ -e "/usr/local/interworx" ]; then
     run_installer "install.interworx.sh" "InterWorx"
 elif [ -e "/usr/local/cwpsrv" ]; then
-    run_installer "install.cwp.sh" "CentOS Web Panel (CWP)"
+    run_installer "install.cwp.sh" "Control Web Panel (CWP)"
 elif [ -e "/usr/local/vesta" ]; then
     run_installer "install.vesta.sh" "VestaCP"
 elif [ -e "/usr/local/CyberCP" ]; then
