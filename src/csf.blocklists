@@ -95,6 +95,22 @@
 #   SPAMDROPV6|86400|0|https://www.spamhaus.org/drop/dropv6.txt
 
 # #
+#   @blocklist              AbuseIPDB
+#   @details:               https://abuseipdb.com/account/api
+#   @notes:                 Requires you to create an account.
+#                           Requires you to generate an API key.
+#                           Add your generated API key in the URL below by 
+#                               replacing `YOUR_API_KEY`.
+#                           Change the 3rd field `10000` to a higher number
+#                               if you are on a paid plan.
+#   
+#                           Full documentation at:
+#                               https://docs.configserver.dev/install/integrations/abuseipdb/
+# #
+
+#   ABUSEIPDB|86400|10000|https://api.abuseipdb.com/api/v2/blacklist?key=YOUR_API_KEY&plaintext
+
+# #
 #   @blocklist              DShield.org Recommended Block List
 #   @details:               https://dshield.org
 # #
