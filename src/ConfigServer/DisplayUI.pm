@@ -2072,15 +2072,7 @@ EOF
 				#	Skip printing \n only for the very first line
 				# #
 
-				if ($first_line)
-				{
-					print "$hl<br>";
-					$first_line = 0;
-				}
-				else
-				{
-					print "$hl<br>\n";
-				}
+				print "${hl}\n";
 			}
 
 			print "</div>\n";  # close section-body
