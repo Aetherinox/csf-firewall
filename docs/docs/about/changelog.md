@@ -38,6 +38,9 @@ tags:
 - `fix(webmin)`: descriptions for settings in interface now render correctly on the page with proper structure.
 - `fix(cwp)`: segregated formatted `--version` output with no ANSI colors.
 - `fix(cwp)`: ensured proper sanitization when sending version information to CWP.
+- `fix(webmin)`: support for almalinux, redhat, rocky10 based distros
+    - Debian, Ubuntu, ZorinOS: `/usr/share/webmin`
+    - Redhat, AlmaLinux, Rocky 10: `/usr/libexec/webmin`
 
 <br />
 
