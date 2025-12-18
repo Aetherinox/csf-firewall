@@ -1006,14 +1006,24 @@ fi
 # #
 #	@app			Webmin
 #   @desc			Copy Webmin files if destination exists
+#						/usr/share/webmin			Debian, Ubuntu, ZorinOS
+#						/usr/libexec/webmin			AlmaLinux, Redhat, Rocky 10
 # #
 
-if [ -d "${CSF_WEBMIN_HOME}" ]; then
-    run mkdir -p "$CSF_WEBMIN_DESC"                     		# Ensure destination exists
-	run cp -a csf/* "$CSF_WEBMIN_DESC"/							# Copy all files from current folder
-	ok "    CSF Webmin module installed to ${greenl}${CSF_WEBMIN_DESC}${greym}"
+if [ -d "${CSF_WEBMIN_SHARE_HOME}" ]; then
+    run mkdir -p "$CSF_WEBMIN_SHARE_DEST"                     			# Ensure destination exists
+	run cp -a csf/* "$CSF_WEBMIN_SHARE_DEST"/							# Copy all files from current folder
+	ok "    CSF Webmin module installed to ${greenl}${CSF_WEBMIN_SHARE_DEST}${greym}"
 else
-	error "    Webmin home folder ${redl}${CSF_WEBMIN_HOME}${greym} does not exist; skipping Webmin install"
+	warn "    Webmin home folder ${yellowl}${CSF_WEBMIN_SHARE_HOME}${greym} does not exist; trying alternative"
+fi
+
+if [ -d "${CSF_WEBMIN_LIBEXEC_HOME}" ]; then
+    run mkdir -p "$CSF_WEBMIN_LIBEXEC_DEST"                     		# Ensure destination exists
+	run cp -a csf/* "$CSF_WEBMIN_LIBEXEC_DEST"/							# Copy all files from current folder
+	ok "    CSF Webmin module installed to ${greenl}${CSF_WEBMIN_LIBEXEC_DEST}${greym}"
+else
+	error "    Webmin home folder ${redl}${CSF_WEBMIN_LIBEXEC_HOME}${greym} does not exist; skipping Webmin install"
 fi
 
 # #
