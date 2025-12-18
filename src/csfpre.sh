@@ -10,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            12.12.2025
+#   @updated            12.18.2025
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -51,7 +51,7 @@ count_loaded=0
 
 app_name="CSF Script › Pre.d Initialization"                            # name of app
 app_desc="Loads custom scripts into CSF after adding iptable rules."
-app_ver="15.08"                                                         # current script version
+app_ver="15.09"                                                         # current script version
 app_repo="Aetherinox/csf-firewall"                                      # repository
 app_repo_branch="main"                                                  # repository branch
 
