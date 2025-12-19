@@ -3423,9 +3423,9 @@ EOF
 		__ "<div id='csf' class='tab-pane active'>\n";
 		__ "<table class='table table-bordered table-striped'>\n";
 		__ "<thead><tr><th colspan='2'>csf - Quick Actions</th></tr></thead>";
-		__ "<tr><td><button onClick='\$(\"#qallow\").submit();' class='btn btn-default'>Quick Allow</button></td><td style='width:100%'><form action='$script' method='post' id='qallow'><input type='submit' class='hide'><input type='hidden' name='action' value='qallow'>Allow IP address <a href='javascript:fillfield(\"allowip\",\"$ENV{REMOTE_ADDR}\")'><span class='glyphicon glyphicon-cog icon-configserver' style='font-size:1.3em;' data-tooltip='tooltip' title='$ENV{REMOTE_ADDR}'></span></a> <input type='text' name='ip' id='allowip' value='' size='18' style='background-color: #BDECB6'> through the firewall and add to the allow file (csf.allow).<br>Comment for Allow: <input type='text' name='comment' value='' size='30'></form></td></tr>\n";
-		__ "<tr><td><button onClick='\$(\"#qdeny\").submit();' class='btn btn-default'>Quick Deny</button></td><td style='width:100%'><form action='$script' method='post' id='qdeny'><input type='submit' class='hide'><input type='hidden' name='action' value='qdeny'>Block IP address <input type='text' name='ip' value='' size='18' style='background-color: #FFD1DC'> in the firewall and add to the deny file (csf.deny).<br>Comment for Block: <input type='text' name='comment' value='' size='30'></form></td></tr>\n";
-		__ "<tr><td><button onClick='\$(\"#qignore\").submit();' class='btn btn-default'>Quick Ignore</button></td><td style='width:100%'><form action='$script' method='post' id='qignore'><input type='submit' class='hide'><input type='hidden' name='action' value='qignore'>Ignore IP address <a href='javascript:fillfield(\"ignoreip\",\"$ENV{REMOTE_ADDR}\")'><span class='glyphicon glyphicon-cog icon-configserver' style='font-size:1.3em;' data-tooltip='tooltip' title='$ENV{REMOTE_ADDR}'></span></a> <input type='text' name='ip' id='ignoreip' value='' size='18' style='background-color: #D9EDF7'> in lfd, add to the ignore file (csf.ignore) and restart lfd</form></td></tr>\n";
+		__ "<tr><td><button onClick='\$(\"#qallow\").submit();' class='btn btn-default'>Quick Allow</button></td><td style='width:100%'><form action='$script' method='post' id='qallow'><input type='submit' class='hide'><input type='hidden' name='action' value='qallow'>Allow IP address <a href='javascript:fillfield(\"allowip\",\"$ENV{REMOTE_ADDR}\")'><span class='glyphicon glyphicon-cog icon-configserver' style='font-size:1.3em;' data-tooltip='tooltip' title='$ENV{REMOTE_ADDR}'></span></a> <input class='input-allow' type='text' name='ip' id='allowip' value='' size='18'> through the firewall and add to the allow file (csf.allow).<br>Comment for Allow: <input type='text' name='comment' value='' size='30'></form></td></tr>\n";
+		__ "<tr><td><button onClick='\$(\"#qdeny\").submit();' class='btn btn-default'>Quick Deny</button></td><td style='width:100%'><form action='$script' method='post' id='qdeny'><input type='submit' class='hide'><input type='hidden' name='action' value='qdeny'>Block IP address <input class='input-deny' type='text' name='ip' value='' size='18'> in the firewall and add to the deny file (csf.deny).<br>Comment for Block: <input type='text' name='comment' value='' size='30'></form></td></tr>\n";
+		__ "<tr><td><button onClick='\$(\"#qignore\").submit();' class='btn btn-default'>Quick Ignore</button></td><td style='width:100%'><form action='$script' method='post' id='qignore'><input type='submit' class='hide'><input type='hidden' name='action' value='qignore'>Ignore IP address <a href='javascript:fillfield(\"ignoreip\",\"$ENV{REMOTE_ADDR}\")'><span class='glyphicon glyphicon-cog icon-configserver' style='font-size:1.3em;' data-tooltip='tooltip' title='$ENV{REMOTE_ADDR}'></span></a> <input type='text' name='ip' id='ignoreip' value='' size='18'> in lfd, add to the ignore file (csf.ignore) and restart lfd</form></td></tr>\n";
 		__ "<tr><td><button onClick='\$(\"#kill\").submit();' class='btn btn-default'>Quick Unblock</button></td><td style='width:100%'><form action='$script' method='post' id='kill'><input type='submit' class='hide'><input type='hidden' name='action' value='kill'>Remove IP address <input type='text' name='ip' value='' size='18'> from the firewall (temp and perm blocks)</form></td></tr>\n";
 		__ "</table>\n";
 
@@ -3765,9 +3765,11 @@ END_JS
 		{
 			print "<div class='footer'>";
 				print "<div class='footer-left'>";
-				print "<button id='btn-sponsor' class='btn-footer btn-sponsor'><i class='axs ax-heart'></i></button>"
+				print "<button id='btn-sponsor' class='btn-footer btn-sponsor'><i class='axs ax-heart"
+					. ( ( $config{SPONSOR_ICON_ANIM} // '' ) eq '1' ? " heart" : "" )
+					. "'></i></button>"
 					if !length( $config{SPONSOR_LICENSE} // '' )
-					&& ( ( $config{SPONSOR_HIDE_ICON} // '' ) ne '1' );
+					&& ( ( $config{SPONSOR_ICON_HIDE} // '' ) ne '1' );
 
 					print "<span class='copyright'>&copy; $year ConfigServer Firewall - <code>v$myv ($codename)</code></span>";
 				print "</div>";
