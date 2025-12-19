@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_australia_ipset
 #   @uuid           9a8e834c-5116-33bc-a19a-497657c63327
-#   @updated        Thu Dec 18 12:11:21 UTC 2025
+#   @updated        Fri Dec 19 00:19:08 UTC 2025
 #   @entries        52749523 ips
 #                   17982 subnets
 #                   17982 lines
