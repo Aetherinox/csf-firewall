@@ -3802,14 +3802,7 @@ END_JS
 			print "</div>\n";
 		}
 
-		# #
-		#	Adding this padding will cause cyberpanel's main page to show a scrollbar.
-		# #
-
-		if ( $codename ne "cyberpanel" )
-		{
-			print "<div style='padding-bottom: 50px;'></div>";
-		}
+		print "<div style='padding-bottom: 50px;'></div>";
 	}
 
 	return;
