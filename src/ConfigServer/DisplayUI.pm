@@ -3748,7 +3748,7 @@ END_JS
 		{
 			print "<div class='panel panel-info'>\n";
 			print "<div class='panel-heading'>Development Contribution</div>";
-			print "<div class='panel-body'>We are very happy to be able to provide this and other products for free. However, it does take time for us to develop and maintain them. If you would like to help with their development by providing a PayPal contribution, please <a href='mailto:sales\@waytotheweb.com?Subject=ConfigServer%20Contribution'>contact us</a> for details</div>\n";
+			print "<div class='panel-body'>We are very happy to be able to provide this and other products for free. However, it does take time for us to develop and maintain them. If you would like to help with their development by providing a contribution, please <a href='https://buymeacoffee.com/aetherinox'>visit here</a> for details</div>\n";
 			print "</div>\n";
 		}
 
