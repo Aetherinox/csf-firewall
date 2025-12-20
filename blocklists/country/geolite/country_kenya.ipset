@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_kenya_ipset
 #   @uuid           eb893ce5-984d-3451-bb47-ae570c2ee2a9
-#   @updated        Fri Dec 19 12:11:23 UTC 2025
+#   @updated        Sat Dec 20 00:18:26 UTC 2025
 #   @entries        6370021 ips
 #                   1198 subnets
 #                   1198 lines
@@ -956,6 +956,7 @@
 2606:54c3:0:c0d::/64
 2606:54c3:0:e6d::/64
 2606:f4c0:2590::/44
+2606:f4c0:b6d0::/44
 2607:8940:20de::/47
 2607:8940:20e2::/47
 2607:8940:20e6::/47
@@ -1066,7 +1067,6 @@
 2a0a:6044:fa38::/46
 2a0a:6044:fa3c::/47
 2a0a:be00:6000::/47
-2a0a:ce05:5000::/47
 2a0b:21c1:6008::/48
 2a0c:9a40:8f70::/44
 2a0c:9a40:95b7:3000::/52
