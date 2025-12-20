@@ -3764,7 +3764,7 @@ END_JS
 		#	
 		# #
 
-		if ( $codename eq "generic" || $codename eq "directadmin" || $codename eq "cpanel" || $codename eq "interworx" || $codename eq "vestacp" )
+		if ( $codename eq "generic" || $codename eq "cwp" || $codename eq "directadmin" || $codename eq "cpanel" || $codename eq "interworx" || $codename eq "vestacp" )
 		{
 			print "<div class='footer'>";
 				print "<div class='footer-left'>";
