@@ -10,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            10.09.2025
+#   @updated            12.20.2025
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ use lib '/usr/local/csf/lib';
 use ConfigServer::DisplayUI;
 use ConfigServer::Config;
 
-our ($script, $images, $myv, %FORM, %in);
+our ($script, $images, $version, %FORM, %in);
 
 # #
 #	Load configs
@@ -91,35 +91,47 @@ my $codename = getCodename(\%config);
 # #
 
 open (my $IN, "<", "/etc/csf/version.txt");
-$myv = <$IN>;
+$version = <$IN>;
 close ($IN);
-chomp $myv;
+chomp $version;
 
 $script = "/configservercsf/iframe/";
 $images = "/static/configservercsf";
 
 my $file = $ARGV[0];
-unless (-e $file) {die "Cannot find tempfile [$file]"}
-my (undef,undef,$uuid,$ugid) = getpwnam("cyberpanel");
-my $uid = (stat($file))[4];
-my $gid = (stat($file))[5];
-if ($uid != $uuid or $gid != $ugid) {die "Invalid tempfile ownership [$file]"}
+unless ( -e $file )
+{
+	die "Cannot find tempfile [$file]"
+}
+
+my (undef,undef,$uuid,$ugid) 	= getpwnam( "cyberpanel" );
+my $uid 						= ( stat( $file ) )[ 4 ];
+my $gid 						= ( stat( $file ) )[ 5 ];
+if ( $uid != $uuid or $gid != $ugid )
+{
+	die "Invalid tempfile ownership [$file]"
+}
 
 open (my $DATA, "<", $file);
 my $buffer = <$DATA>;
-close ($DATA);
-my @pairs = split(/&/, $buffer);
-foreach my $pair (@pairs) {
-	my ($name, $value) = split(/=/, $pair);
-	$value =~ tr/+/ /;
-	$value =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C", hex($1))/eg;
-	$FORM{$name} = $value;
+close ( $DATA );
+my @pairs = split( /&/, $buffer );
+
+foreach my $pair ( @pairs )
+{
+	my ($name, $value) = split( /=/, $pair );
+
+	$value 			=~ tr/+/ /;
+	$value 			=~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C", hex($1))/eg;
+	$FORM{$name} 	= $value;
 }
 
-#print "<pre>$ARGV[0]:$ARGV[1]:[[$buffer]]</pre>\n";
-#foreach my $key (keys %ENV) {
+# #
+# print "<pre>$ARGV[0]:$ARGV[1]:[[$buffer]]</pre>\n";
+# foreach my $key (keys %ENV) {
 #	print "$key = [$ENV{$key}]<br>\n";
-#}
+# }
+# #
 
 my $csfjs = qq{
 	<script>
@@ -127,19 +139,20 @@ my $csfjs = qq{
 	</script>
 	<script src="$images/csf.min.js"></script>
 };
-my $bootstrapcss = "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css'>";
-my $csfnt = "<script src='$images/csfont.min.js'></script>";
-my $jqueryjs = "<script src='$images/jquery.min.js'></script>";
-my $bootstrapjs = "<script src='$images/bootstrap/js/bootstrap.min.js'></script>";
 
-unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq "logtailcmd" or $FORM{action} eq "loggrepcmd")
+my $bootstrapcss 	= "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css'>";
+my $csfnt 			= "<script src='$images/csfont.min.js'></script>";
+my $jqueryjs 		= "<script src='$images/jquery.min.js'></script>";
+my $bootstrapjs 	= "<script src='$images/bootstrap/js/bootstrap.min.js'></script>";
+
+unless ( $FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq "logtailcmd" or $FORM{action} eq "loggrepcmd" )
 {
 	print <<EOF;
 <!doctype html>
 <html lang='en'>
 <head>
 	<script>
-		(function()
+		( function()
 		{
 			var theme = localStorage.getItem('theme') || 'light';
 			document.documentElement.setAttribute('data-theme', theme);
@@ -170,7 +183,7 @@ unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq
 	display:block;
 }
 EOF
-	if ($config{STYLE_MOBILE})
+	if ( $config{STYLE_MOBILE} )
 	{
 		print <<EOF;
 \@media (max-width: 600px)
@@ -193,9 +206,21 @@ EOF
 <div id="loader"></div>
 <a id='toplink' class='toplink' title='Go to bottom'><span class='glyphicon glyphicon-hand-down'></span></a>
 <div class='container-fluid'>
-<br>
-<div class='panel panel-default'>
-<h4><img src='$images/csf_small.png' style='padding-left: 10px'> ConfigServer Security &amp; Firewall - csf v$myv</h4>
+
+
+<div class="section-header">
+    <div class="header-left">
+        <a href="/">
+            <img class="logo" src="$images/csf.png" alt="ConfigServer Firewall">
+        </a>
+        <div class="app-info">
+            <span class="app-name">ConfigServer Firewall</span>
+            <span class="app-version"><code>v$version</code></span>
+        </div>
+    </div>
+
+    <div class="header-right">
+    </div>
 </div>
 EOF
 }
@@ -204,7 +229,7 @@ EOF
 #open (my $SCRIPTOUT, '>', \$templatehtml);
 #select $SCRIPTOUT;
 
-ConfigServer::DisplayUI::main(\%FORM, $script, $script, $images, $myv);
+ConfigServer::DisplayUI::main(\%FORM, $script, $script, $images, $version);
 
 #close ($SCRIPTOUT);
 #select STDOUT;
@@ -213,32 +238,40 @@ ConfigServer::DisplayUI::main(\%FORM, $script, $script, $images, $myv);
 #close (OUT);
 #print $templatehtml;
 
-unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq "logtailcmd" or $FORM{action} eq "loggrepcmd") {
+unless ( $FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq "logtailcmd" or $FORM{action} eq "loggrepcmd" )
+{
 	print <<EOF;
 <a class='botlink' id='botlink' title='Go to top'><span class='glyphicon glyphicon-hand-up'></span></a>
 <script>
-	function getCookie(cname) {
+	function getCookie(cname)
+	{
 		var name = cname + "=";
 		var ca = document.cookie.split(';');
-		for(var i = 0; i <ca.length; i++) {
+		for(var i = 0; i <ca.length; i++)
+		{
 			var c = ca[i];
-			while (c.charAt(0)==' ') {
+			while (c.charAt(0)==' ')
+			{
 				c = c.substring(1);
 			}
-			if (c.indexOf(name) == 0) {
+			if (c.indexOf(name) == 0)
+			{
 				return c.substring(name.length,c.length);
 			}
 		}
 		return "";
 	} 
 	\$("#loader").hide();
-	\$.fn.scrollBottom = function() { 
+	\$.fn.scrollBottom = function()
+	{
 	  return \$(document).height() - this.scrollTop() - this.height(); 
 	};
-	\$('#botlink').on("click",function(){
+	\$('#botlink').on("click",function()
+	{
 		\$('html,body').animate({ scrollTop: 0 }, 'slow', function () {});
 	});
-	\$('#toplink').on("click",function() {
+	\$('#toplink').on("click",function()
+	{
 		var window_height = \$(window).height();
 		var document_height = \$(document).height();
 		\$('html,body').animate({ scrollTop: window_height + document_height }, 'slow', function () {});
@@ -265,7 +298,8 @@ unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq
 			}
 		});
 EOF
-	if ($config{STYLE_MOBILE}) {
+	if ($config{STYLE_MOBILE})
+	{
 		print <<EOF;
 		var csfview = getCookie('csfview');
 		if (csfview == 'mobile') {
@@ -279,15 +313,20 @@ EOF
 		}
 EOF
 	}
+
 	print "});\n";
-	if ($config{STYLE_MOBILE}) {
+
+	if ($config{STYLE_MOBILE})
+	{
 		print <<EOF;
-	\$("#NormalView").click(function(){
+	\$("#NormalView").click(function()
+	{
 		document.cookie = "csfview=desktop; path=/";
 		\$(".mobilecontainer").css('display','none');
 		\$(".normalcontainer").css('display','block');
 	});
-	\$("#MobileView").click(function(){
+	\$("#MobileView").click(function()
+	{
 		document.cookie = "csfview=mobile; path=/";
 		\$(".mobilecontainer").css('display','block');
 		\$(".normalcontainer").css('display','none');
