@@ -3802,7 +3802,10 @@ END_JS
 			print "</div>\n";
 		}
 
-		print "<div style='padding-bottom: 50px;'></div>";
+		if ( $codename ne "cwp" )
+		{
+			print "<div style='padding-bottom: 50px;'></div>";
+		}
 	}
 
 	return;
