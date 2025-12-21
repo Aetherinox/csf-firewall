@@ -2136,11 +2136,11 @@ EOF
 	
 				if ( $config{RESTRICT_UI} and ( $cleanname eq "CLUSTER_KEY" or $cleanname eq "UI_PASS" or $cleanname eq "UI_USER" ) )
 				{
-					print "<div class='$class' style='padding-left:5px !important;margin-block-end:3em !important;'><b>$start</b> = <input type='text' value='********' size='14' disabled> (hidden restricted UI item)</div>\n";
+					print "<div class='value-restricted' style='padding-left:5px !important;margin-block-end:3em !important;'><b>$start</b> = <input type='text' value='********' size='14' disabled> (hidden restricted UI item)</div>\n";
 				}
 				elsif ( $restricted{$cleanname} )
 				{
-					print "<div class='$class' style='padding-left:5px !important;margin-block-end:3em !important;'><b>$start</b> = <input type='text' onFocus='CSFexpand(this);' onkeyup='CSFexpand(this);' value='$end' size='$size' disabled> (restricted UI item)</div>\n";
+					print "<div class='value-disabled' style='padding-left:5px !important;margin-block-end:3em !important;'><b>$start</b> = <input type='text' onFocus='CSFexpand(this);' onkeyup='CSFexpand(this);' value='$end' size='$size' disabled> (restricted UI item)</div>\n";
 				}
 				else
 				{
