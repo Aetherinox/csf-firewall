@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_saint_pierre_miquelon_ipset
 #   @uuid           dafdc303-5d32-3134-aa6a-c7385f33cbf0
-#   @updated        Mon Dec 22 12:11:52 UTC 2025
+#   @updated        Tue Dec 23 00:20:12 UTC 2025
 #   @entries        7147 ips
 #                   153 subnets
 #                   153 lines
