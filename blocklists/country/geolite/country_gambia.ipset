@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_gambia_ipset
 #   @uuid           14a82e45-a897-3b96-8c16-f8e6db9775d4
-#   @updated        Tue Dec 23 12:11:57 UTC 2025
-#   @entries        278337 ips
-#                   185 subnets
-#                   185 lines
+#   @updated        Wed Dec 24 00:19:25 UTC 2025
+#   @entries        279361 ips
+#                   186 subnets
+#                   186 lines
 #   @country        Gambia (GM)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -33,6 +33,7 @@
 88.202.115.0/24
 102.69.160.0/22
 102.140.128.0/19
+102.203.168.0/22
 102.206.88.0/22
 102.211.12.0/22
 102.211.244.0/22
