@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_nigeria_ipset
 #   @uuid           df2220e4-b94c-35ca-8e22-2b5b31942e9d
-#   @updated        Tue Dec 23 12:12:20 UTC 2025
-#   @entries        3225996 ips
-#                   1568 subnets
-#                   1568 lines
+#   @updated        Wed Dec 24 00:19:48 UTC 2025
+#   @entries        3226252 ips
+#                   1570 subnets
+#                   1570 lines
 #   @country        Nigeria (NG)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -293,6 +293,7 @@
 102.165.184.0/22
 102.176.240.0/21
 102.203.188.0/22
+102.203.192.0/24
 102.204.44.0/23
 102.204.46.0/24
 102.204.76.0/22
@@ -1187,6 +1188,7 @@
 2001:43fc:6000::/48
 2001:43fc:c000::/48
 2001:43fc:e800::/48
+2001:43fd:2800::/48
 2001:43fd:6000::/40
 2001:43fe:1000::/44
 2001:43ff:800::/48

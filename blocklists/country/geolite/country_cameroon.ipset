@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_cameroon_ipset
 #   @uuid           f7c2387c-f16f-35ec-bd8a-0f468b281189
-#   @updated        Tue Dec 23 12:11:40 UTC 2025
-#   @entries        607078 ips
-#                   332 subnets
-#                   332 lines
+#   @updated        Wed Dec 24 00:19:09 UTC 2025
+#   @entries        608102 ips
+#                   333 subnets
+#                   333 lines
 #   @country        Cameroon (CM)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -60,6 +60,7 @@
 88.202.17.0/24
 102.132.16.0/20
 102.135.189.0/24
+102.203.180.0/22
 102.204.240.0/22
 102.208.54.0/23
 102.208.81.0/24
