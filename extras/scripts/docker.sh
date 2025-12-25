@@ -1,33 +1,62 @@
-#!/bin/bash
+#!/bin/sh
+# #
+#   @app                ConfigServer Firewall & Security (CSF)
+#                       Login Failure Daemon (LFD)
+#   @website            https://configserver.dev
+#   @docs               https://docs.configserver.dev
+#   @download           https://download.configserver.dev
+#   @repo               https://github.com/Aetherinox/csf-firewall
+#   @copyright          Copyright (C) 2025-2026 Aetherinox
+#                       Copyright (C) 2006-2025 Jonathan Michaelson
+#                       Copyright (C) 2006-2025 Way to the Web Ltd.
+#   @license            GPLv3
+#   @updated            12.24.2025
+#   
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 3 of the License, or (at
+#   your option) any later version.
+#   
+#   This program is distributed in the hope that it will be useful, but
+#   WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+#   General Public License for more details.
+#   
+#   You should have received a copy of the GNU General Public License
+#   along with this program; if not, see <https://www.gnu.org/licenses>.
+# #
+
 
 # #
+#   ConfigServer Firewall › Docker Patch
 #   
-#   ConfigServer Firewall - Docker Patch
+#   @file               docker.sh
+#   @type               Patch
+#   @desc               This CSF script scans all docker containers that exist within the server and adds each
+#                       container ip to the ConfigServer Firewall.
 #   
-#   @author         Aetherinox
-#   @package        ConfigServer Firewall
-#   @file           docker.sh
-#   @type           Patch
-#   @desc           This CSF script scans all docker containers that exist within the server and adds each
-#                   container ip to the ConfigServer Firewall.
+#   @usage              1.  Automatic
+#                           place this docker.sh file inside
+#                               /usr/local/include/csf/post.d/docker.sh
 #   
-#   @usage          chmod +x /usr/local/include/csf/post.d/docker.sh
-#                   sudo /usr/local/include/csf/post.d/docker.sh
-#
-#                   this can also be installed by executing the install.sh script
+#                       2.  Manual
+#                           chmod +x /usr/local/include/csf/post.d/docker.sh
+#                               sudo /usr/local/include/csf/post.d/docker.sh
 # #
 
 export PATH="$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 # #
-#   define > configs
-#
-#   docker0_eth                 main docker network interface
-#                                   can be created using the command:
-#                                       - `sudo docker network create --driver=bridge --subnet=172.18.0.0/16 --gateway=172.18.0.1 traefik``
-#   file_csf_allow              the defined allow list file
-#   csf_comment                 comment added to each whitelisted ip within iptables
-#   containers_ip_cidr               list of ip address blocks you will be using for your docker setup. these blocks will be whitelisted through ConfigServer Firewall
+#   Define › Config
+#   
+#   docker0_eth         Main docker network interface
+#                       Can be created using the command:
+#                           › sudo docker network create --driver=bridge --subnet=172.18.0.0/16 --gateway=172.18.0.1 traefik
+#   
+#   file_csf_allow      /etc/csf/csf.allow file
+#                       Each docker container's local IP will be added.
+#   
+#   csf_comment         Comment added to each whitelisted ip within /etc/csf/csf.allow
 # #
 
 docker0_eth="docker0"
@@ -35,638 +64,1407 @@ csf_comment="Docker container whitelist"
 file_csf_allow="/etc/csf/csf.allow"
 
 # #
-#   define > network ips
-#
-#   this is the list of IP addresses you will use with docker that must be
-#   whitelisted.
+#   Define › Network Subnets
+#   
+#   This is the list of IP addresses / subnets you will use with docker that must
+#   be whitelisted.
+#   
+#       Single          containers_ip_cidr="172.17.0.0/16"
+#       Multiple        containers_ip_cidr="172.17.0.0/16 10.0.0.0/24 192.168.1.0/24"
 # #
 
-containers_ip_cidr=(
-    '172.17.0.0/16'
-)
+containers_ip_cidr="172.17.0.0/16"
 
 # #
-#   define > system
+#   Define › System
 # #
 
 sys_arch=$(dpkg --print-architecture)
 sys_code=$(lsb_release -cs)
 
 # #
-#   vars > app
+#   Define › App
 # #
 
-app_dir_this_a="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"     # current script full path
+app_dir_this_a="$(cd "$(dirname "$0")" >/dev/null 2>&1 && pwd)"
 app_dir_this_b="${PWD}"                                                             # current script full path (alternative)
 app_file_this=$(basename "$0")                                                      # docker.sh (with ext)
 app_file_bin="${app_file_this%.*}"                                                  # docker (without ext)
 app_pid=$BASHPID                                                                    # app pid
-app_title="ConfigServer Firewall - Docker Patch"                                    # app title; displayed with --version
-app_about="Sets up your firewall rules to work with Docker and Traefik. \n"\
-"     This script requires that you have iptables installed on your system. \n"\
-"     The required packages will be installed if you do not have them."             # app about; displayed with --version
-app_ver=("14" "24" "0")                                                             # current script version
+app_name="ConfigServer Firewall - Docker Patch"                                     # app title; displayed with --version
+app_desc="Sets up your firewall rules to work with Docker and Traefik. \n"\
+"  This script requires that you have iptables installed on your system. \n"\
+"  The required packages will be installed if you do not have them."                # app about; displayed with --version
+app_version="15.0.9"                                                                # current script version
+app_repo_name="csf-firewall"
+app_repo_author="Aetherinox"
+app_repo_branch="main"
+app_repo_url="https://github.com/${app_repo_author}/${app_repo_name}"
 
 # #
-#   define > configs
+#   Define › Flag Defaults
 # #
 
 cfg_dev_enabled=false
 cfg_verbose_enabled=false
 
 # #
-#   define > app repo
+#   Define › Icons
 # #
 
-repo_name="csf-firewall"
-repo_author="Aetherinox"
-repo_branch="main"
-repo_url="https://github.com/${repo_author}/${repo_name}"
+icoSheckmark='✔'       # ✔ $'\u2714'
+icoXmark='✗'           # ❌ $'\u274C'
 
 # #
-#   define > colors
-#
+#   Define › Colors
+#   
 #   Use the color table at:
 #       - https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
 # #
 
-END=$'\e[0m'
-WHITE=$'\e[97m'
-BOLD=$'\e[1m'
-DIM=$'\e[2m'
-UNDERLINE=$'\e[4m'
-STRIKE=$'\e[9m'
-BLINK=$'\e[5m'
-INVERTED=$'\e[7m'
-HIDDEN=$'\e[8m'
-BLACK=$'\e[38;5;0m'
-FUCHSIA1=$'\e[38;5;205m'
-FUCHSIA2=$'\e[38;5;198m'
-RED=$'\e[38;5;160m'
-RED2=$'\e[38;5;196m'
-ORANGE=$'\e[38;5;202m'
-ORANGE2=$'\e[38;5;208m'
-MAGENTA=$'\e[38;5;5m'
-BLUE=$'\e[38;5;033m'
-BLUE2=$'\e[38;5;39m'
-BLUE3=$'\e[38;5;68m'
-CYAN=$'\e[38;5;51m'
-GREEN=$'\e[38;5;2m'
-GREEN2=$'\e[38;5;76m'
-YELLOW=$'\e[38;5;184m'
-YELLOW2=$'\e[38;5;190m'
-YELLOW3=$'\e[38;5;193m'
-GREY1=$'\e[38;5;240m'
-GREY2=$'\e[38;5;244m'
-GREY3=$'\e[38;5;250m'
-NAVY=$'\e[38;5;62m'
-OLIVE=$'\e[38;5;144m'
-PEACH=$'\e[38;5;210m'
+esc=$(printf '\033')
+end="${esc}[0m"
+bgEnd="${esc}[49m"
+fgEnd="${esc}[39m"
+bold="${esc}[1m"
+dim="${esc}[2m"
+underline="${esc}[4m"
+blink="${esc}[5m"
+white="${esc}[97m"
+black="${esc}[0;30m"
+redl="${esc}[0;91m"
+redd="${esc}[38;5;196m"
+magental="${esc}[38;5;197m"
+magentad="${esc}[38;5;161m"
+fuchsial="${esc}[38;5;206m"
+fuchsiad="${esc}[38;5;199m"
+bluel="${esc}[38;5;33m"
+blued="${esc}[38;5;27m"
+greenl="${esc}[38;5;47m"
+greend="${esc}[38;5;35m"
+orangel="${esc}[38;5;208m"
+oranged="${esc}[38;5;202m"
+yellowl="${esc}[38;5;226m"
+yellowd="${esc}[38;5;214m"
+greyl="${esc}[38;5;250m"
+greym="${esc}[38;5;244m"
+greyd="${esc}[38;5;240m"
+navy="${esc}[38;5;62m"
+olive="${esc}[38;5;144m"
+peach="${esc}[38;5;204m"
+cyan="${esc}[38;5;6m"
+bgVerbose="${esc}[1;38;5;15;48;5;125m"
+bgDebug="${esc}[1;38;5;15;48;5;237m"
+bgInfo="${esc}[1;38;5;15;48;5;27m"
+bgOk="${esc}[1;38;5;15;48;5;64m"
+bgWarn="${esc}[1;38;5;16;48;5;214m"
+bgDanger="${esc}[1;38;5;15;48;5;202m"
+bgError="${esc}[1;38;5;15;48;5;160m"
 
 # #
-#   print an error and exit with failure
-#   $1: error message
+#   Define › Args
 # #
 
-function error()
+argDryrun="false"				# runs the logic but doesn't actually install; no changes
+argDetect="false"				# returns the installer name + desc that would have ran, but exits; no changes
+argLegacy="false"				# certain actions will work how pre CSF v15.01 did 
+
+# #
+#   Define › Logging functions
+#   
+#   verbose "This is an verbose message"
+#   debug "This is an debug message"
+#   info "This is an info message"
+#   ok "This is an ok message"
+#   warn "This is a warn message"
+#   danger "This is a danger message"
+#   error "This is an error message"
+# #
+
+verbose( )
 {
-    echo -e "  ⭕ ${GREY2}${app_file_this}${END}: \n     ${BOLD}${RED}Error${END}: ${END}$1"
-    echo -e
-    exit 0
+    case "${argVerbose:-0}" in
+        1|true|TRUE|yes|YES)
+            printf '\033[0m\r%-42s %-65s\n' "   ${bgVerbose} VRBO ${end}" "${greym} $1 ${end}"
+            ;;
+    esac
+}
+
+debug( )
+{
+    if [ "$argDevEnabled" = "true" ] || [ "$argDryrun" = "true" ]; then
+        printf '\033[0m\r%-42s %-65s\n' "   ${bgDebug} DBUG ${end}" "${greym} $1 ${end}"
+    fi
+}
+
+info( )
+{
+    printf '\033[0m\r%-41s %-65s\n' "   ${bgInfo} INFO ${end}" "${greym} $1 ${end}"
+}
+
+ok( )
+{
+    printf '\033[0m\r%-41s %-65s\n' "   ${bgOk} PASS ${end}" "${greym} $1 ${end}"
+}
+
+warn( )
+{
+    printf '\033[0m\r%-42s %-65s\n' "   ${bgWarn} WARN ${end}" "${greym} $1 ${end}"
+}
+
+danger( )
+{
+    printf '\033[0m\r%-42s %-65s\n' "   ${bgDanger} DNGR ${end}" "${greym} $1 ${end}"
+}
+
+error( )
+{
+    printf '\033[0m\r%-42s %-65s\n' "   ${bgError} FAIL ${end}" "${greym} $1 ${end}"
+}
+
+label( )
+{
+    printf '\033[0m\r%-31s %-65s\n' "   ${greyd}        ${end}" "${greyd} $1 ${end}"
+}
+
+print( )
+{
+    echo "${greym}$1${end}"
 }
 
 # #
-#   func > check sudo
-#
-#	this script requires permissions to copy, etc.
-# 	require the user to run as sudo
+#   Run Command
+#   
+#   Added when dryrun mode was added to the install.sh.
+#   Allows for a critical command to be skipped if in --dryrun mode.
+#       Throws a debug message instead of executing.
+#   
+#   argDryrun comes from global export in csf/install.sh
+#   
+#   @usage              run /sbin/chkconfig csf off
+#                       run echo "ConfigServer"
+#                       run chmod -v 700 "./${CSF_AUTO_GENERIC}"
 # #
 
-check_sudo()
+run()
 {
-	if [ "$EUID" -ne 0 ]; then
-        echo -e 
-        echo -e "  ${ORANGE}WARNING      ${END}This script requires ${YELLOW2}sudo${END}"
-        echo -e "               Without this elevated permission; iptables will not add the proper rules."
-        echo -e "               before this script can be ran.${END}"
-        echo -e
-        echo -e "               You may trigger sudo by running the following command:${END}"
-        echo -e "                    ${GREY2}sudo ./${app_file_this}${END}"
-        echo -e
-
-        exit 1
-	fi
-}
-
-# #
-#   func > version > compare greater than
-#
-#   this function compares two versions and determines if an update may
-#   be available. or the user is running a lesser version of a program.
-# #
-
-get_version_compare_gt()
-{
-    test "$(printf '%s\n' "$@" | sort -V | head -n 1)" != "$1";
-}
-
-# #
-#   func > get version
-#
-#   returns current version of app
-#   converts to human string.
-#       e.g.    "1" "2" "4" "0"
-#               1.2.4.0
-# #
-
-get_version()
-{
-    ver_join=${app_ver[@]}
-    ver_str=${ver_join// /.}
-    echo ${ver_str}
-}
-
-# #
-#   func > service exists
-# #
-
-service_exists()
-{
-    local n=$1
-    if [[ $(systemctl list-units --all -t service --full --no-legend "$n.service" | sed 's/^\s*//g' | cut -f1 -d' ') == $n.service ]]; then
+    if [ "${argDryrun}" = "true" ]; then
+        debug "Drymode (skip): $*"
         return 0
     else
-        return 1
+        debug "Run: $*"
+        "$@" >/dev/null 2>&1
+        rc=$?
+        return $rc
     fi
 }
 
 # #
-#   Find CSF path on system; throw error if not found
+#   Truncate Text
+#   
+#   Shows text up to a limited number of characters and then appends ...
+#   
+#   @usage              truncate "This is a long string" 10 "..."
 # #
 
-csf_path=$(command -v csf)
+truncate()
+{
+    text=$1
+    maxlen=$2
+    suffix=${3:-}
 
-if [ -z "$csf_path" ]; then
-    echo -e 
-    echo -e "  ${ORANGE}WARNING      ${END}This Script Requires ConfigServer Firewall${END}"
-    echo -e "               You must install the application ${RED}ConfigServer Firewall${END} on your server"
-    echo -e "               before this script can be ran.${END}"
-    echo -e
-    echo -e "               You can download ConfigServer Firewall from the following links:${END}"
-    echo -e "                    ${GREY2}https://github.com/Aetherinox/csf-firewall/releases${END}"
-    echo -e "                    ${GREY2}https://download.configserver.com/csf.tgz${END}"
-    echo -e
+    len=$( printf %s "${text}" | wc -c | tr -d '[:space:]' )
 
-    exit 0
-fi
+    if [ "${len}" -gt "${maxlen}" ]; then
+        printf '%s%s\n' "$( printf %s "${text}" | cut -c1-"${maxlen}" )" "${suffix}"
+    else
+        printf '%s\n' "${text}"
+    fi
+}
 
 # #
-#   distro
-#
-#   returns distro information.
+#   Print › Demo Notifications
+#   
+#   Outputs a list of example notifications
+#   
+#   @usage          demoNoti
 # #
 
+demoNoti()
+{
+    verbose "This is an verbose message"
+    debug "This is an debug message"
+    info "This is an info message"
+    ok "This is an ok message"
+    warn "This is a warn message"
+    danger "This is a danger message"
+    error "This is an error message"
+}
+
+# #
+#   Print › Line
+#   
+#   Prints single line, no text
+#   
+#   @usage          prin0
+# #
+
+prin0()
+{
+    indent="   "
+    box_width=110
+    line_width=$(( box_width + 2 ))
+
+    line=""
+    i=1
+    while [ "$i" -le "$line_width" ]; do
+        line="${line}─"
+        i=$((i+1))
+    done
+
+    print
+    printf "%b%s%s%b\n" "$greyd" "$indent" "$line" "$reset"
+    print
+}
+
+# #
+#   Print › Box › Crop
+#   
+#   Prints single line with a box surrounding it, excluding the right side
+#   
+#   @usage          princ "Name › Section"
+# #
+
+princ()
+{
+    title="$*"
+    indent="   "
+    padding=6
+    box_width=110
+
+    # Strip ANSI codes
+    visible_title=$(printf '%s' "$title" | sed 's/\033\[[0-9;]*[A-Za-z]//g')
+
+    title_length=${#visible_title}
+    inner_width=$(( title_length + padding ))
+    [ "$inner_width" -lt "$box_width" ] && inner_width=$box_width
+
+    # Horizontal line
+    line=""
+    i=1
+    while [ "$i" -le "$inner_width" ]; do
+        line="${line}─"
+        i=$((i+1))
+    done
+
+    # Spaces
+    spaces=""
+    spaces_needed=$(( inner_width - title_length - 3 ))
+    i=1
+    while [ "$i" -le "$spaces_needed" ]; do
+        spaces="${spaces} "
+        i=$((i+1))
+    done
+
+    print
+    printf "%b%s┌%s┐\n" "$greym" "$indent" "$line"
+    printf "%b%s│  %s%s \n" "$greym" "$indent" "$title" "$spaces"
+    printf "%b%s└%s┘%b\n" "$greym" "$indent" "$line" "$reset"
+    print
+}
+
+# #
+#   Print › Box › Single
+#   
+#   Prints single line with a box surrounding it.
+#   
+#   @usage          prinb "${APP_NAME_SHORT:-CSF} › Customize csf.config"
+# #
+
+prinb()
+{
+    title="$*"
+    indent="   "
+    padding=6
+    box_width=110
+    title_length=${#title}
+    inner_width=$(( title_length + padding ))
+    [ "$inner_width" -lt "$box_width" ] && inner_width=$box_width
+
+    line=""
+    i=1
+    while [ "$i" -le "$inner_width" ]; do
+        line="${line}─"
+        i=$((i+1))
+    done
+
+    print
+    print
+    printf "%b%s┌%s┐\n" "$greym" "$indent" "$line"
+    printf "%b%s│  %-${inner_width}s \n" "$greym" "$indent" "$title"
+    printf "%b%s└%s┘%b\n" "$greym" "$indent" "$line" "$reset"
+    print
+}
+
+# #
+#   Print › Box › Paragraph
+#   
+#   Places an ASCII box around text. Supports multi-lines with \n.
+#   
+#   Determines the character count if color codes are used and ensures that the box borders are aligned properly.
+#   
+#   If using emojis; adjust the spacing so that the far-right line will align with the rest. Add the number of spaces
+#   to increase the value, which is represented with a number enclosed in square brackets.
+#     [1]           add 1 space to the right.
+#     [2]           add 2 spaces to the right.
+#     [-1]          remove 1 space to the right (needed for some emojis depending on if the emoji is 1 or 2 bytes)
+#   
+#   @usage          prinp "Certificate Generation Successful" "Your new certificate and keys have been generated successfully.\n\nYou can find them in the ${greenl}${app_dir_output}${greyd} folder."
+#                   prinp "🎗️[6] test" "The following description will show on multiple lines with a ASCII box around it."
+#                   prinp "📄[2] File Overview" "The following list outlines the files that you have generated using this utility, and what certs/keys may be missing."
+#                   prinp "➡️[19]  ${bluel}Paths${end}"
+#   
+#                   prinp "Add DOCKER-ISOLATION And DOCKER-USER Rules" \
+#                          "This is an example description for a section header which should word-wrap. \
+#                   ${greyd}\n${greyd} \
+#                   ${greyd}\n${yellowd}- ${greym}Point 1${greyd} \
+#                   ${greyd}\n${yellowd}- ${greym}Point 2${greyd} \
+#                   ${greyd}\n${yellowd}- ${greym}Point 3${greyd} \
+#                   ${greyd}\n${yellowd}- ${greym}Point 4${greyd} \
+#                   ${greyd}\n${yellowd}- ${greym}Point 5${greyd}"
+# #
+
+prinp()
+{
     # #
-    #   freedesktop.org and systemd
+    #   Extract title and text
     # #
 
-        if [ -f /etc/os-release ]; then
-            . /etc/os-release
-            sys_os=$NAME
-            sys_os_ver=$VERSION_ID
+    title="$1"
+    shift
+    text="$*"
+
+    indent="  "
+    box_width=110
+    pad=1
+
+    content_width=$(( box_width ))
+    inner_width=$(( box_width - pad*2 ))
+
+    print
+    print
+
+    hline=$(printf '─%.0s' $(seq 1 "$content_width"))
+
+    printf "${greyd}%s┌%s┐\n" "$indent" "$hline"
 
     # #
-    #   linuxbase.org
+    #   Title
+    #   
+    #   Extract optional [N] adjustment from title (signed integer), portably
     # #
 
-        elif type lsb_release >/dev/null 2>&1; then
-            sys_os=$(lsb_release -si)
-            sys_os_ver=$(lsb_release -sr)
+    emoji_adjust=0
+    display_title="$title"
 
     # #
-    #   versions of Debian/Ubuntu without lsb_release cmd
+    #   Get content inside first [...] (if present)
     # #
 
-        elif [ -f /etc/lsb-release ]; then
-            . /etc/lsb-release
-            sys_os=$DISTRIB_ID
-            sys_os_ver=$DISTRIB_RELEASE
+    if printf '%s\n' "$title" | grep -q '\[[[:space:]]*[-0-9][-0-9[:space:]]*\]'; then
 
-    # #
-    #   older Debian/Ubuntu/etc distros
-    # #
+        # #
+        #   Extract numeric inside brackets (allow optional leading -)
+        #   - use sed to capture first bracketed token, then strip non-digit except leading -
+        # #
 
-        elif [ -f /etc/debian_version ]; then
-            sys_os=Debian
-            sys_os_ver=$(cat /etc/debian_version)
+        bracket=$(printf '%s' "$title" | sed -n 's/.*\[\([-0-9][-0-9]*\)\].*/\1/p')
 
-    # #
-    #   fallback: uname, e.g. "Linux <version>", also works for BSD
-    # #
+        # #
+        #   Validate numeric and assign, otherwise fallback to 0
+        # #
 
+        if printf '%s\n' "$bracket" | grep -qE '^-?[0-9]+$'; then
+            emoji_adjust=$bracket
         else
-            sys_os=$(uname -s)
-            sys_os_ver=$(uname -r)
+            emoji_adjust=0
         fi
 
+        # #
+        #   Remove the first [...] token from the display_title
+        # #
+
+        display_title=$(printf '%s' "$title" | sed 's/\[[^]]*\]//')
+    fi
+
+    # #
+    #   Sanity: ensure emoji_adjust is a decimal integer so math works
+    # #
+
+    case "$emoji_adjust" in
+        ''|*[!0-9-]*)
+            emoji_adjust=0
+            ;;
+    esac
+
+    title_width=$(( content_width - pad ))
+
+    # #
+    #   Account for emoji adjustment in visible length calculation
+    # #
+
+    title_vis_len=$(( ${#display_title} - emoji_adjust ))
+    printf "${greyd}%s│%*s${bluel}%s${greyd}%*s│\n" \
+        "$indent" "$pad" "" "$display_title" "$(( title_width - title_vis_len ))" ""
+
+    # #
+    #   Only render body text if provided
+    # #
+
+    if [ -n "$text" ]; then
+        printf "${greyd}%s│%-${content_width}s│\n" "$indent" ""
+
+        # #
+        #   Convert literal \n to real newlines
+        # #
+
+        text=$(printf "%b" "$text")
+
+        # #
+        #   Handle each line with ANSI-aware wrapping and true padding
+        # #
+
+        printf "%s" "$text" | while IFS= read -r line || [ -n "$line" ]; do
+
+            # #
+            #   Blank line
+            # #
+
+            if [ -z "$line" ]; then
+                printf "${greyd}%s│%-*s│\n" "$indent" "$content_width" ""
+                continue
+            fi
+
+            out=""
+            for word in $line; do
+
+                # #
+                #   Strip ANSI for visible width
+                # #
+
+                vis_out=$(printf "%s" "$out" | sed 's/\x1B\[[0-9;]*[A-Za-z]//g')
+                vis_word=$(printf "%s" "$word" | sed 's/\x1B\[[0-9;]*[A-Za-z]//g')
+                vis_len=$(( ${#vis_out} + ( ${#vis_out} > 0 ? 1 : 0 ) + ${#vis_word} ))
+
+                if [ -z "$out" ]; then
+                    out="$word"
+                elif [ $vis_len -le $inner_width ]; then
+                    out="$out $word"
+                else
+
+                    # #
+                    #   Print and pad manually based on visible length
+                    # #
+
+                    vis_len_full=$(printf "%s" "$out" | sed 's/\x1B\[[0-9;]*[A-Za-z]//g' | wc -c | tr -d ' ')
+                    pad_spaces=$(( inner_width - vis_len_full ))
+                    [ $pad_spaces -lt 0 ] && pad_spaces=0
+                    printf "${greyd}%s│%*s%s%*s│\n" "$indent" "$pad" "" "$out" "$(( pad + pad_spaces ))" ""
+                    out="$word"
+                fi
+            done
+
+            # #
+            #   Final flush line
+            # #
+
+            if [ -n "$out" ]; then
+                vis_len_full=$(printf "%s" "$out" | sed 's/\x1B\[[0-9;]*[A-Za-z]//g' | wc -c | tr -d ' ')
+                pad_spaces=$(( inner_width - vis_len_full ))
+                [ $pad_spaces -lt 0 ] && pad_spaces=0
+                printf "${greyd}%s│%*s%s%*s│\n" "$indent" "$pad" "" "$out" "$(( pad + pad_spaces ))" ""
+            fi
+
+        done
+    fi
+
+    printf "${greyd}%s└%s┘${reset}\n" "$indent" "$hline"
+    print
+}
+
 # #
-#   Ensure we're in the correct directory
+#   Define › Logging › Verbose
 # #
 
-cd "${app_dir_this_a}"
+log()
+{
+    case "${argVerbose:-0}" in
+        1|true|TRUE|yes|YES)
+            verbose "$@"
+            ;;
+    esac
+}
 
 # #
-#   clear screen before starting step 1
+#   Helpers › Check Sudo
 # #
 
-clear
+check_sudo( )
+{
+    if [ "$(id -u)" != "0" ]; then
+        error "    ❌ Must run script with ${redl}sudo"
+        exit 1
+    fi
+}
 
 # #
-#   Check sudo
+#   Helpers › Service Exists
+#   
+#   Checks if a service exists.
+#   Look for script in /etc/init.d or a command in PATH.
+#   
+#   @param  n   string  Service name
+#   @return     0       Service exists
+#   @return     1       Service does not exist
+# #
+
+service_exists()
+{
+    n=$1
+
+    # Check if executable script exists in /etc/init.d
+    if [ -x "/etc/init.d/$n" ]; then
+        return 0
+    fi
+
+    # Check if service command exists in PATH
+    if command -v "$n" >/dev/null 2>&1; then
+        return 0
+    fi
+
+    return 1
+}
+
+# #
+#   Run › Check Sudo
 # #
 
 check_sudo
 
 # #
-#   find > iptables
+#   Run › Locate Docker binary
 # #
 
-if ! [ -x "$(command -v iptables)" ]; then
-    echo -e "  ${GREEN}OK           ${END}Installing package ${BLUE2}iptables${END}"
-    sudo apt-get update -y -q >/dev/null 2>&1
-    sudo apt-get install iptables -y -qq >/dev/null 2>&1
+if ! command -v docker >/dev/null 2>&1; then
+    label ""
+    error "    Could not find ${redl}Docker${greym}"
+    label "     ${redl}${bold}This server must have Dockerinstalled before this"
+    label "     ${redl}${bold}script can be ran"
+    label ""
+
+    exit 1
+else
+    ok "    Found installed package ${greenl}Docker"
 fi
 
 # #
-#   iptables > assign path to var
+#   Run › Locate CSF binary
 # #
 
-path_iptables4=$(which iptables)
-path_iptables6=$(which ip6tables)
+if ! command -v csf >/dev/null 2>&1; then
+    label ""
+    error "    Could not find ${redl}ConfigServer Security & Firewall${greym}"
+    label "     ${redl}${bold}This server must have ConfigServer Security & Firewall installed before this"
+    label "     ${redl}${bold}script can be ran"
+    label ""
+    label "     ${greym}Download by going to:"
+    label "         ${yellowd}${app_repo_url}"
+    label ""
 
-# #
-#   empty var > iptables4
-# #
-
-if [ -z "${path_iptables4}" ]; then
-    echo -e 
-    echo -e "  ${ORANGE}WARNING      ${END}This Script Requires Iptables${END}"
-    echo -e "               This package is required before you can utilize this script with ConfigServer Firewall."
-    echo -e
-    echo -e "               Try installing the package with:${END}"
-    echo -e "                    ${GREY2}sudo apt-get update${END}"
-    echo -e "                    ${GREY2}sudo apt-get install iptables${END}"
-    echo -e
-
-    exit 0
+    exit 1
+else
+    ok "    Found installed package ${greenl}CSF + LFD"
 fi
 
 # #
-#   Truncate text; add ...
-#   
-#   @usage          $(trim "$name" 20 "...")
+#   Assign › CSF Binary
 # #
 
-trim()
-{
-    if (( "${#1}" > "$2" )); then
-        echo "${1:0:$2}$3"
+csf_path=$(command -v csf 2>/dev/null)
+
+# #
+#   Run › Install › Iptables
+# #
+
+if ! command -v iptables >/dev/null 2>&1; then
+    info "    Installing ${bluel}iptables${greym}"
+
+    # Debian / Ubuntu
+    if command -v apt-get >/dev/null 2>&1; then
+        apt-get update -y -q >/dev/null 2>&1
+        apt-get install -y -qq iptables >/dev/null 2>&1
+        label "         ${fuchsiad}$app_file_this${greyd} apt-get install -y -qq iptables"
+
+    # RHEL / CentOS / Alma / Rocky (dnf)
+    elif command -v dnf >/dev/null 2>&1; then
+        dnf install -y iptables >/dev/null 2>&1
+        label "         ${fuchsiad}$app_file_this${greyd} dnf install -y iptables"
+
+    # Older RHEL / CentOS (yum)
+    elif command -v yum >/dev/null 2>&1; then
+        yum install -y iptables >/dev/null 2>&1
+        label "         ${fuchsiad}$app_file_this${greyd} yum install -y iptables"
+
     else
-        echo "$1"
+        error "    ${redl}No supported package manager found"
+        exit 1
     fi
-}
+else
+    ok "    Found installed package ${greenl}iptables"
+fi
 
 # #
-#   func > cmd > help
-#
-#   activate using ./install.sh --help or -h
-# #
-
-cmd_help()
-{
-    echo -e
-    echo "${GREY1}  ┌────────────────────────────────────────────────────────────────────────────────────────┐${END}"
-    echo
-    printf "     ${BLUE2}${app_title} (v$(get_version))${END}\n\n" 1>&2
-    printf "     ${GREY2}${app_about}${END}\n" 1>&2
-    echo -e
-
-    printf '  %-5s %-40s\n' "   ${GREEN}Usage:${END}" "" 1>&2
-    printf '  %-5s %-40s\n' "    " "${app_file_this} ${GREY1}[${GREY2}options${END}${GREY1}]${END}" 1>&2
-    printf '  %-5s %-40s\n\n' "    " "${app_file_this} ${GREY1}[${GREY2}-h | --help${END}${GREY1}] [${GREY2}-v | --version${END}${GREY1}] [${GREY2}-d | --dev${END}${GREY1}] [${GREY2}-l | --list${END}${GREY1}] [${GREY2}-r | --reset${END}${GREY1}]" 1>&2
-    printf '  %-5s %-40s\n' "   ${GREEN}Options:${END}" "" 1>&2
-    printf '  %-5s %-18s %-40s\n' "    " "-d, --dev" "developer mode" 1>&2
-    printf '  %-5s %-18s %-40s\n' "    " "" "    ${GREY2}includes verbose logging${END}" 1>&2
-    printf '  %-5s %-18s %-40s\n' "    " "-l, --list" "shows all current docker containers with information" 1>&2
-    printf '  %-5s %-18s %-40s\n' "    " "-c, --clear" "clears entire iptables rule list" 1>&2
-    printf '  %-5s %-18s %-40s\n' "    " "" "    ${GREY2}firewall will be completely open after this finishes${END}" 1>&2
-    printf '  %-5s %-18s %-40s\n' "    " "-r, --restart" "restarts config server firewall and lfd" 1>&2
-    printf '  %-5s %-18s %-40s\n' "    " "" "    ${GREY2}firewall will be completely open after this finishes${END}" 1>&2
-    printf '  %-5s %-18s %-40s\n' "    " "-v, --version" "current version of ${app_file_this} script" 1>&2
-    printf '  %-5s %-18s %-40s\n' "    " "-h, --help" "show help menu" 1>&2
-    echo
-    echo "${GREY1}  └────────────────────────────────────────────────────────────────────────────────────────┘${END}"
-    echo -e
-}
-
-# #
-#   func > cmd > version info & about
+#   Assign › Iptables
 #   
-#   @usage          docker.sh --version
-#                   docker.sh -v
+#   Assign iptables binary to variable
 # #
 
-cmd_version()
-{
-
-    echo -e
-    echo "${GREY1}  ┌────────────────────────────────────────────────────────────────────────────────────────┐${END}"
-    echo
-    printf "     ${BLUE2}${app_title} (v$(get_version))${END}\n\n" 1>&2
-    printf "     ${GREY2}${app_about}${END}\n" 1>&2
-    echo -e
-    printf "     ${GREY2}@repo        ${BLUE2}${repo_url}\n" 1>&2
-    printf "     ${GREY2}@system      ${BLUE2}${sys_os} | ${sys_os_ver}\n" 1>&2
-    printf "     ${GREY2}@notice      ${YELLOW}Before running this script, open ${FUCHSIA1}${app_dir_this_a}/${app_file_this}\n" 1>&2
-    printf "     ${GREY2}             ${YELLOW}and edit the settings at the top of the file.\n" 1>&2
-    echo
-    echo "${GREY1}  └────────────────────────────────────────────────────────────────────────────────────────┘${END}"
-    echo -e
-}
+ipt4=$( command -v iptables 2>/dev/null )
+ipt6=$( command -v ip6tables 2>/dev/null )
 
 # #
-#   func > cmd > clear iptables
+#   Run › Iptables v4 › Binary › Missing
 #   
-#   clears the entire iptables list
+#   Tell the user iptables v4 binary could not be found.
+#   Abort script.
+# #
+
+if [ -z "${ipt4}" ]; then
+    label ""
+    error "    ${yellowd}WARNING:${redl} This Script Requires Iptables"
+    label "     ${redl}${bold}Iptables is required before you can utilize this script with ConfigServer Firewall."
+    label ""
+    label "     ${greym}Try installing the package with:"
+    label "         ${fuchsiad}sudo${yellowd} apt-get update"
+    label "         ${fuchsiad}sudo${yellowd} apt-get install iptables"
+    label ""
+    label "         ${fuchsiad}sudo${yellowd} yum makecache"
+    label "         ${fuchsiad}sudo${yellowd} yum install iptables"
+    label ""
+
+    exit 1
+else
+    ok "    Declared iptables4 binary ${greenl}${ipt4}"
+fi
+
+# #
+#   Run › Iptables v6 › Binary › Missing
+#   
+#   Tell the user iptables v6 binary could not be found.
+#   Warn, but continue.
+# #
+
+if [ -z "${ipt6}" ]; then
+    error "    ${yellowd}WARNING:${redl} Could not find iptables v6"
+    label "     ${greym}This script will continue only in ipv4 mode."
+else
+    ok "    Declared iptables6 binary ${greenl}${ipt6}"
+fi
+
+# #
+#   Clear Iptable Rules
+#   
+#   Flushes and clears all iptales
 #   
 #   @usage          docker.sh --clear
 #                   docker.sh -c
+#   @param          none
 # #
 
 cmd_iptables_clear()
 {
-    sudo ${path_iptables4} -F
-    sudo ${path_iptables4} -X
-    sudo ${path_iptables4} -t nat -F
-    sudo ${path_iptables4} -t nat -X
-    sudo ${path_iptables4} -t mangle -F
-    sudo ${path_iptables4} -t mangle -X
+    info "    Resetting iptable chains and rules"
+    
+    ${ipt4} -F
+    ${ipt4} -X
+    ${ipt4} -t nat -F
+    ${ipt4} -t nat -X
+    ${ipt4} -t mangle -F
+    ${ipt4} -t mangle -X
 
-    echo -e "  ${BOLD}${GREY1}+ IPTABLES      ${WHITE}Successfully reset iptable chains and rules${END}"
+    ok "    Successfully reset iptable chains and rules"
 }
 
 # #
-#   func > cmd > csf > restart
+#   Helpers › Chain › Create
 #   
-#   restarts csf and lfd
+#   Checks if a chain exists; if not, create it.
+#       › Check if the chain exists in the specified table.
+#       › If the chain does not exist, create it with `-N`.
+#       › Print a message showing the chain creation command for debugging/logging.
 #   
-#   @usage          docker.sh --restart
-#                   docker.sh -r
+#   Ensures that a specific iptables chain exists in a given table.
+#       › $1    Name of the chain to check or create
+#       › $2    Table name (optional, defaults to "filter")
 # #
 
-cmd_csf_restart()
+chain_create()
 {
+    chain="$1"
+    table="${2:-filter}"
 
-    echo -e
-
-    if service_exists lfd; then
-        echo -e "  ${BOLD}${GREY1}+ lfd.service   ${END}${GREEN}Restarting${END}"
-        sudo systemctl restart lfd.service
+    if ! "${ipt4}" -t "${table}" -L "${chain}" >/dev/null 2>&1; then
+        "${ipt4}" -t "${table}" -N "${chain}"
+        label "         + CHAIN ${greend}[ADD]${greend} -t ${table} -N ${chain}${end}"
     else
-        echo -e 
-        echo -e "  ${ORANGE}WARNING      ${END}Could not find service ${YELLOW2}lfd.service${END}"
-        echo -e "               It is either not installed or the service is disabled. Enable the service first."
-        echo -e
-        echo -e "               Once CSF is installed, you can enable the service by running:${END}"
-        echo -e "                    ${GREY2}sudo csf -e${END}"
-        echo -e
-
-        sudo systemctl status lfd
+        label "         ! CHAIN ${yellowd}[SKP]${yellowd} -t ${table} -N ${chain}${end}"
     fi
-
-    if service_exists csf; then
-        echo -e "  ${BOLD}${GREY1}+ csf.service   ${END}${GREEN}Restarting${END}"
-        sudo systemctl restart csf.service
-    else
-        echo -e 
-        echo -e "  ${ORANGE}WARNING      ${END}Could not find service ${YELLOW2}csf.service${END}"
-        echo -e "               It is either not installed or the service is disabled. Enable the service first."
-        echo -e
-        echo -e "               Once CSF is installed, you can enable the service by running:${END}"
-        echo -e "                    ${GREY2}sudo csf -e${END}"
-        echo -e
-
-        sudo systemctl status csf
-    fi
-
-    echo -e
 }
 
 # #
-#   func > cmd > list containers
+#   Helpers › Rules › Append
 #   
-#   lists all of the docker containers, with information such as veth adapter, ip, container id, name, etc.
+#   Append an iptables rule only if it does not already exist.
+#       › Check for the rule using `-C`
+#       › Append the rule using `-A` if missing
+#       › Log whether the rule was added or skipped
 #   
-#   @usage          docker.sh --list
-#                   docker.sh -l
+#   Ensures a specific rule is present in the given chain.
+#       › $@    Full iptables rule arguments (everything after -C / -A)
+# #
+
+rule_append()
+{
+    if ! "${ipt4}" -C "$@" >/dev/null 2>&1; then
+        "${ipt4}" -A "$@"
+        label "         + RULES ${greend}[ADD]${greend} -A $*${end}"
+    else
+        label "         ! RULES ${yellowd}[SKP]${yellowd} -A $*${end}"
+    fi
+}
+
+# #
+#   Helpers › Rules › Add
+#   
+#   Add an iptables rule only if it does not already exist.
+#       › Check for the rule using `-C`
+#       › Insert or append the rule if missing
+#       › Log whether the rule was added or skipped
+#   
+#   Ensures a rule is present by checking before inserting.
+#       › $@    Full iptables rule arguments
+# #
+
+rule_add()
+{
+    # #
+    #   Replace -A with -C for existence check
+    # #
+
+    check_args=
+    for arg in "$@"; do
+        if [ "${arg}" = "-A" ]; then
+            check_args="${check_args} -C"
+        else
+            check_args="${check_args} ${arg}"
+        fi
+    done
+
+    # #
+    #   Check if rule exists
+    # #
+
+    if "${ipt4}" ${check_args} >/dev/null 2>&1; then
+        label "         ! RULES ${yellowd}[SKP]${yellowd} $*${end}"
+    else
+        label "         + RULES ${greend}[ADD]${greend} $*${end}"
+        "${ipt4}" "$@"
+    fi
+}
+
+# #
+#   Add › Forward
+#   
+#   Numerous FORWARD chain rules required for Docker traffic.
+# #
+
+add_to_forward()
+{
+    docker_int="$1"
+    rule_append FORWARD -o "${docker_int}" -m conntrack --ctstate NEW,RELATED,ESTABLISHED -j ACCEPT
+    rule_append FORWARD -o "${docker_int}" -j DOCKER
+    rule_append FORWARD -i "${docker_int}" ! -o "${docker_int}" -j ACCEPT
+    rule_append FORWARD -i "${docker_int}" -o "${docker_int}" -j ACCEPT
+}
+
+# #
+#   Add › NAT
+#   
+#   -t, --table         <table>                 table to manipulate (default: `filter')
+#   -C, --check         <chain>                 check for the existence of a rule
+#   -s, --source        <address[/mask]>        source specification
+#   -d, --destination   <address[/mask]>        destination specification
+#   -o, --out-interface <output name[+]>        network interface name ([+] for wildcard)
+#   -j, --jump          <target>                target for rule (may load target extension)
+#   -A, --append        <chain>                 append to chain
+#   -I, --insert        <chain [rulenum]>       insert in chain as rulenum (default 1=first)
+#   -N, --new chain		                        create a new user-defined chain
+# #
+
+add_to_nat()
+{
+    docker_int="$1"
+    subnet="$2"
+
+    #   ipv4
+    if [ "${subnet}" != "${subnet#*[0-9].[0-9]}" ]; then
+        sudo "${ipt4}" -t nat -C POSTROUTING -s "${subnet}" ! -o "${docker_int}" -j MASQUERADE 2>/dev/null || \
+        sudo "${ipt4}" -t nat -A POSTROUTING -s "${subnet}" ! -o "${docker_int}" -j MASQUERADE
+        sudo "${ipt4}" -t nat -C DOCKER -i "${docker_int}" -j RETURN 2>/dev/null || \
+        sudo "${ipt4}" -t nat -A DOCKER -i "${docker_int}" -j RETURN
+
+        label "         + RULES V4 ${greend}[ADD]${greend} -t nat -A POSTROUTING -s \"${subnet}\" ! -o \"${docker_int}\" -j MASQUERADE${end}"
+        label "         + RULES V4 ${greend}[ADD]${greend} -t nat -A DOCKER -i \"${docker_int}\" -j RETURN${end}"
+
+    #   ipv6
+    elif [ "${subnet}" != "${subnet#*:[0-9a-fA-F]}" ]; then
+        sudo "${ipt6}" -t nat -C POSTROUTING -s "${subnet}" ! -o "${docker_int}" -j MASQUERADE 2>/dev/null || \
+        sudo "${ipt6}" -t nat -A POSTROUTING -s "${subnet}" ! -o "${docker_int}" -j MASQUERADE
+        sudo "${ipt6}" -C DOCKER -i "${docker_int}" -j RETURN 2>/dev/null || \
+        sudo "${ipt6}" -A DOCKER -i "${docker_int}" -j RETURN
+
+        label "         + RULES V6 ${greend}[ADD]${greend} -t nat -A POSTROUTING -s \"${subnet}\" ! -o \"${docker_int}\" -j MASQUERADE${end}"
+        label "         + RULES V6 ${greend}[ADD]${greend} -t nat -A DOCKER -i \"${docker_int}\" -j RETURN${end}"
+    else
+        label "         ! RULES ${redl}[ERR]${redl} Unrecognized subnet format ${subnet}${end}"
+    fi
+}
+
+# #
+#   Add › Docker Isolation
+# #
+
+add_to_docker_isolation()
+{
+    docker_int="$1"
+    rule_append DOCKER-ISOLATION-STAGE-1 -i "${docker_int}" ! -o "${docker_int}" -j DOCKER-ISOLATION-STAGE-2
+    rule_append DOCKER-ISOLATION-STAGE-2 -o "${docker_int}" -j DROP
+}
+
+# #
+#   Docker Container › Iflink
+#   
+#   Returns the iflink numberassigned to a container
+#       697
+#       689
+#       Unknown
+# #
+
+get_iflink()
+{
+    cont="$1"
+
+    # Attempt using shell bash
+    if docker exec "${cont}" bash -c 'cat /sys/class/net/eth0/iflink' >/dev/null 2>&1; then
+        docker exec "${cont}" bash -c 'cat /sys/class/net/eth0/iflink' 2>/dev/null
+        return 0
+    fi
+
+    # Attempt using shell sh
+    if docker exec "${cont}" sh -c 'cat /sys/class/net/eth0/iflink' >/dev/null 2>&1; then
+        docker exec "${cont}" sh -c 'cat /sys/class/net/eth0/iflink' 2>/dev/null
+        return 0
+    fi
+
+    # Fallback
+    echo "Unknown"
+    return 0
+}
+
+# #
+#   Docker Container › Veth Interface
+#   
+#   Returns the host's veth interface name corresponding to container's eth0
+#       veth77f050d
+#       veth0c59f79
+#       Unknown
+# #
+
+get_veth_main()
+{
+    cont="$1"
+    idx=$(get_iflink "${cont}")
+
+    # If no valid iflink, return Unknown
+    if [ -z "$idx" ] || [ "$idx" = "Unknown" ]; then
+        echo "Unknown"
+        return 0
+    fi
+
+    # Look for veth interface on host with matching ifindex
+    for f in /sys/class/net/veth*/ifindex; do
+        if [ "$(cat "$f" 2>/dev/null)" = "$idx" ]; then
+            basename "$(dirname "$f")"
+            return 0
+        fi
+    done
+
+    # Fallback
+    echo "Unknown"
+}
+
+# #
+#   Helpers › Container List
 # #
 
 cmd_containers_list()
 {
 
-    # #
-    #   get all containers from docker
-    # #
-
-    containers=`docker ps -q`
+    label ""
 
     # #
-    #   count docker containers; must be greater than 1
+    #   Get container list and count
     # #
 
-    if [ `echo ${containers} | wc -c` -gt "1" ]; then
+    containers=$(docker ps -q)
+    containers_num=$(echo "$containers" | wc -w)
 
-        echo -e
-        echo " ${GREY1}                 ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐${END}"
-        
-        printf '%-17s %-30s %-38s %-26s %-33s %-33s %-30s %-40s %-50s' \
-            " " \
-            "${GREY2}   Container${END}" \
-            "${GREY2}   Name" \
-            "${GREY2}   Shell${END}" \
-            "${GREY2}   IP${END}" \
-            "${GREY2}   IfLink ID${END}" \
-            "${GREY2}   Veth Adapter${END}" \
-            "${GREY2}   Network Mode${END}" \
-            "${GREY2}   Network List${END}"
+    # #
+    #   Cache veth ifindex so that scan is faster.
+    #   veth name map (scan sysfs once)
+    # #
+
+    veth_cache=""
+    for i in /sys/class/net/veth*/ifindex; do
+        idx=$( cat "$i" 2>/dev/null ) || continue
+        name=$( basename "$(dirname "$i")" )
+        veth_cache="${veth_cache}${idx}:${name}
+    "
+    done
+
+    # #
+    #   Whitelist docker containers if count higher than zero (0)
+    # #
+
+    if [ "$containers_num" -gt 0 ]; then
+
+        printf '%-19s %-30s %-38s %-26s %-30s %-33s %-30s %-30s %-50s' \
+            "" \
+            "${yellowd}   Container${end}" \
+            "${yellowd}   Name" \
+            "${yellowd}   Shell${end}" \
+            "${yellowd}   IP${end}" \
+            "${yellowd}   IfLink ID${end}" \
+            "${yellowd}   Veth Adapter${end}" \
+            "${yellowd}   Network Mode${end}" \
+            "${yellowd}   Network List${end}"
 
         # #
         #   Loop containers
+        #   
+        #       cont_id             579fedba3c76
+        #       cont_netmode        traefik
+        #       cont_network        traefik
+        #       cont_network_list   dns traefik
+        #       cont_network_json   {"traefik":{"IPAMConfig":{"IPv4Address":"172.18.1.2"},"Links":null,"Aliases":["authentik-worker","authentik-worker"],"MacAddress":"ee:b2:fa:15:e3:7d","DriverOpts":null,"GwPriority":0,"NetworkID":"81421612a0ce7f8c499c0e35a053135191296b8a3fe6f47cd0027205c3d0b842","EndpointID":"e2199bc25e9cb9882f961dee012cafc6b167335cda07b96db45802471f0c7483","Gateway":"172.18.0.1","IPAddress":"172.18.1.2","IPPrefixLen":16,"IPv6Gateway":"","GlobalIPv6Address":"","GlobalIPv6PrefixLen":0,"DNSNames":["authentik-worker","579fedba3c76","worker"]}}
+        #       cont_name           authentik-worker
+        #       cont_iflink         22
+        #       cont_shell          Bash
         # #
 
-        for cont_id in ${containers}; do
+        for cont_id in $containers; do
 
             # #
             #   Output:
-            #       CONTAINER ............... : 5b251b810e7d
+            #       CONTAINER ............... : e46adb5f1eb2
             #       NETMODE ................. : 63599565ed58b275d60087e218e2875aec3c3258976433d061721f0cb666e0b8
-            #
+            #   
             #   Example:
             #       Running `docker inspect -f "{{.HostConfig.NetworkMode}}" 5b251b810e7d` outputs:
             #       63599565ed58b275d60087e218e2875aec3c3258976433d061721f0cb666e0b8
             # #
 
-            cont_netmode=`docker inspect -f "{{.HostConfig.NetworkMode}}" ${cont_id}`                                                       # mail_default
-            cont_network=`docker inspect -f '{{range $net,$v := .NetworkSettings.Networks}}{{printf "%s\n" $net}}{{end}}' ${cont_id}`       # mail_default \n traefik       (multiple lines)
-            cont_network_list=`docker inspect -f '{{range $net,$v := .NetworkSettings.Networks}}{{printf "%s " $net}}{{end}}' ${cont_id}`   # mail_default traefik          (unformatted list)
-            cont_network_json=`docker inspect -f "{{json .NetworkSettings.Networks}}" ${cont_id}`                                           # {"mail_default":{"IPAMConfig":null,"Links":null,"Aliases":["mail-antispam","antispam"],"MacAddress":"01:22:00:0a:00:01"
-            cont_name=`docker inspect -f "{{.Name}}" ${cont_id}`                                                                            # /mail-smtp
-            cont_name=${cont_name#/}                                                                                                        #  mail-smtp                    (remove forward slash)
-            cont_name=$(echo "$cont_name" | sed "s/ //g")                                                                                   # mail-smtp                     (remove spaces)
-            cont_iflink=`docker exec -i "$cont_id" bash -c 'cat /sys/class/net/eth0/iflink' 2> /dev/null`                                   # 3605
-            cont_shell="Bash"                                                                                                               # bash                          (default shell)
+            cont_asd="$cont_id"                                                                                                                 # 5a92cabbac8c
+            cont_netmode=$( docker inspect -f "{{.HostConfig.NetworkMode}}" "$cont_id" )                                                        # dns
+            cont_network=$( docker inspect -f '{{range $net,$v := .NetworkSettings.Networks}}{{printf "%s\n" $net}}{{end}}' "$cont_id" )        # dns \n traefik                list of networks assigned to container; multi-lined list
+            cont_network_list=$( docker inspect -f '{{range $net,$v := .NetworkSettings.Networks}}{{printf "%s " $net}}{{end}}' "$cont_id" )    # dns traefik                   same as cont_network, but single lined list, no newlines
+            cont_network_json=$( docker inspect -f "{{json .NetworkSettings.Networks}}" "$cont_id" )                                            # {"dns":{"IPAMConfig":{"IPv4Address":"10.10.12.12"},"Links":null,"Aliases":["doh","doh"],"MacAddress":"AB:12:CD:2e:3c:29","DriverOpts":null,"GwPriority":0,"NetworkID":"df59056beef1672177e7ffbed5c589db76a2c2165c68b0055d16f8e1c155aa35","EndpointID":"86b628c57d512886ce23730cae733f7ff85e9f482379a9614d9e8fb49ce2bf22","Gateway":"10.10.0.1","IPAddress":"10.10.12.12","IPPrefixLen":16,"IPv6Gateway":"","GlobalIPv6Address":"","GlobalIPv6PrefixLen":0,"DNSNames":["doh","5a92cabbac8c"]},"traefik":{"IPAMConfig":{"IPv4Address":"172.18.20.2"},"Links":null,"Aliases":["doh","doh"],"MacAddress":"aa:26:ea:0a:70:3c","DriverOpts":null,"GwPriority":0,"NetworkID":"81421612a0ce7f8c499c0e35a053135191296b8a3fe6f47cd0027205c3d0b842","EndpointID":"cecd8bb7c25f80e485461eb602c28452b2f829abcd78cfc82e69a7e1af3c18b2","Gateway":"172.18.0.1","IPAddress":"172.18.20.2","IPPrefixLen":16,"IPv6Gateway":"","GlobalIPv6Address":"","GlobalIPv6PrefixLen":0,"DNSNames":["doh","5a92cabbac8c"]}}
+            cont_name=$( docker inspect -f "{{.Name}}" "$cont_id" )                                                                             # /authentik-worker             raw container name
+            cont_name=${cont_name#/}                                                                                                            # authentik-worker              remove leading slash
+            cont_name=$( echo "${cont_name}" | sed 's/ //g' )                                                                                   # authentik-worker              remove spaces
+            cont_iflink=$( docker exec -i "$cont_id" sh -c 'cat /sys/class/net/eth0/iflink' 2> /dev/null )                                      # 688
+            cont_shell="Unknown"                                                                                                                # initial shell state           "Unknown"
 
-            err_bash_notfound=`echo "$cont_iflink" 2> /dev/null | grep -c "exec failed"`
-        
             # #
-            #   Bash Not Found
+            #   Determine Shell
+            #   
+            #   Loop all shells; figure out which one the container uses.
+            #       bash, sh, ash dash
             # #
 
-            if [[ "$err_bash_notfound" == "1" ]]; then
-                cont_iflink=`docker exec -it "$cont_id" sh -c 'cat /sys/class/net/eth0/iflink' 2>/dev/null`
-                err_sh_notfound=`echo "$cont_iflink" 2> /dev/null | grep -c "exec failed"`
-
-                # #
-                #   Sh Not Found
-                # #
-
-                if [[ "$err_sh_notfound" == "1" ]]; then
-                    cont_shell="Unknown"
-                    cont_iflink="Unknown"
-                else
-                    cont_iflink=`echo "$cont_iflink" | sed 's/[^0-9]*//g'`
-                    cont_shell="SH"
+            for shell in bash sh ash dash; do
+                if docker exec -i "$cont_id" "$shell" -c 'echo ok' >/dev/null 2>&1; then
+                    cont_shell="$shell"
+                    cont_iflink=$(docker exec -i "$cont_id" "$shell" -c 'cat /sys/class/net/eth0/iflink' 2>/dev/null)
+                    break
                 fi
-            else
-                cont_iflink=`echo "$cont_iflink" | sed 's/[^0-9]*//g'`
+            done
+            [ -z "$cont_shell" ] && cont_shell="Unknown"
+            [ -z "$cont_iflink" ] && cont_iflink="Unknown"
+
+            # #
+            #   Clean up cont_iflink (numbers only)
+            # #
+
+            if [ "$cont_iflink" != "Unknown" ]; then
+                cont_iflink=$( echo "$cont_iflink" | sed 's/[^0-9]*//g' )
             fi
 
             # #
-            #   container > running || unresponsive || offline
+            #   Container › running || unresponsive || offline
+            #   
+            #       › docker container inspect -f '{{.State.Running}}' traefik
+            #           returns only true or false
+            #   
+            #       › docker container inspect -f '{{.State.Status}}' traefik
+            #           returns running, exited, paused, or created
             # #
 
-            cont_status=$(docker ps --format '{{.Names}}' | grep -c "^${cont_name}$")
-            if [ "$( docker container inspect -f '{{.State.Running}}' $cont_name )" != "true" ]; then
-                cont_iflink="Offline"
+            cont_status=$( docker ps --format '{{.Names}}' | grep -c "^${cont_name}$" )                         # simple list of container names
+            if [ "$( docker container inspect -f '{{.State.Running}}' ${cont_name} )" != "true" ]; then
+                cont_iflink=$( docker container inspect -f '{{.State.Status}}' ${cont_name} )                   # running, exited, paused, or created
             fi
+
+            # #
+            #   If empty iflink; set status to "No Response"
+            # #
 
             if [ -z "${cont_iflink}" ]; then
-                cont_iflink="Unresponsive"
+                cont_iflink="No Response"
             fi
 
             # #
-            #   Get veth network interface
+            #   Veth › Main
+            #   
+            #   Can find container's main veth by running the two commands below (in order)
+            #       › docker exec pihole cat /sys/class/net/eth0/iflink
+            #           returns 8
+            #       › idx=$(docker exec pihole cat /sys/class/net/eth0/iflink) && for i in /sys/class/net/veth*/ifindex; do [ "$(cat "$i")" = "$idx" ] && basename "$(dirname "$i")"; done
+            #           returns vetha0ecc71
+            #   
+            #   › cont_veth_main
+            #     returns main veth interface
+            #         vetha0ecc71
             # #
 
+            cont_veth_main="Unknown"
+            if [ -n "${cont_iflink}" ] && [ "${cont_iflink}" != "Unknown" ]; then
+                cont_veth_main=$( printf '%s' "${veth_cache}" |
+                    awk -F: -v id="${cont_iflink}" '$1==id { print $2; exit }' )
+            fi
+            [ -z "${cont_veth_main}" ] && cont_veth_main="Unknown"
+
+            # #
+            #   Veth › List
+            #   
+            #   Obtain a list of container veth interfaces with the following commands (in order):
+            #       › sudo grep -l -s "687" /sys/class/net/veth*/ifindex
+            #           returns /sys/class/net/veth7516a61/ifindex
+            #       › echo "veth7516a61" | sed -e 's;^.*net/\(.*\)/ifindex$;\1;'
+            #           returns veth7516a61
+            #   
+            #   › cont_veth
+            #     returns multi-lined list of veth interfaces
+            #         veth034f583
+            #         veth0c59f79
+            # #
+
+            cont_veth=""
             if [ -n "${cont_iflink}" ]; then
-                cont_veth=$(sudo grep -l -s "$cont_iflink" /sys/class/net/veth*/ifindex)
-                cont_veth=`echo "$cont_veth" | sed -e 's;^.*net/\(.*\)/ifindex$;\1;'`
+                cont_veth=$( sudo grep -l -s "$cont_iflink" /sys/class/net/veth*/ifindex )
+                cont_veth=$( echo "$cont_veth" | sed -e 's;^.*net/\(.*\)/ifindex$;\1;' )
 
                 if [ -z "${cont_veth}" ]; then
                     cont_veth="Unknown"
                 fi
-
             fi
+            [ -z "$cont_veth" ] && cont_veth="Unknown"
 
             # #
             #   Chart Truncation
             # #
 
-            cont_name_chart=$(trim "$cont_name" 20 "...")
-            cont_network_list_chart=$(trim "$cont_network_list" 50 "...")
-            cont_network_mode_chart=$(trim "$cont_netmode" 18 "...")
-            cont_network_ip_chart="Not Found"
-            cont_network_list="$cont_network"
-            declare -a cont_network_arr=( $cont_network )
+            cont_name_chart=$( truncate "${cont_name}" 20 "..." )                       # pihole
+            cont_network_list_chart=$( truncate "${cont_network_list}" 50 "..." )       # dns traefik
+            cont_network_mode_chart=$( truncate "${cont_netmode}" 18 "..." )            # dns
+            cont_network_ip_chart="Unknown"
+            cont_network_list="${cont_network}"                                         # dns \n traefik                Multi-line list of networks
+            cont_network_arr="${cont_network_list}"                                     # dns traefik                   space-separated
+            cont_network_arr=$( echo "${cont_network_arr}" | tr '\n' ' ' )              # dns traefik                   List of network
+            cont_network_arr_count=$( echo "${cont_network_arr}" | wc -w | tr -d ' ' )  # 2                             Count of elements (replaces ${#cont_network_arr[@]})
 
             # #
-            #   Netmode > Default
+            #   Netmode › Default
             # #
 
-            if [ "$cont_netmode" == "default" ]; then
+            if [ "${cont_netmode}" = "default" ]; then
                 cont_bridge_name="${docker0_eth}"
-                cont_ipaddr=`docker inspect -f "{{.NetworkSettings.IPAddress}}" ${cont_id}`
-                cont_network_ip_chart="$cont_ipaddr"
+                cont_ipaddr=$( docker inspect -f "{{.NetworkSettings.IPAddress}}" "${cont_id}" )
+                cont_network_ip_chart="${cont_ipaddr}"
 
             # #
-            #   Netmode > Other
+            #   Netmode › Other
             # #
 
             else
-                # Loop Networks
+
+                # #
+                #   Loop Network
+                # #
+
                 while IFS= read -r cont_network_list; do
-                    # cont_bridge_name=`docker inspect -f "{{with index .NetworkSettings.Networks \"bridge\"}}{{.NetworkID}}{{end}}" cb9a6ae9c19e | cut -c -12`
-                    cont_bridge=$(docker inspect -f "{{with index .NetworkSettings.Networks \"${cont_network_list}\"}}{{.NetworkID}}{{end}}" ${cont_id} | cut -c -12)
-
-                    # docker network inspect -f {{"br-e95004d90f8d" | or (index .Options "com.docker.network.bridge.name")}} e95004d90f8d
-                    cont_bridge_name=`docker network inspect -f '{{"'br-$cont_bridge'" | or (index .Options "com.docker.network.bridge.name")}}' $cont_bridge`
-                    cont_ipaddr=`docker inspect -f "{{with index .NetworkSettings.Networks \"${cont_network_list}\"}}{{.IPAddress}}{{end}}" ${cont_id}`
+                    cont_bridge=$( docker inspect -f "{{with index .NetworkSettings.Networks \"${cont_network_list}\"}}{{.NetworkID}}{{end}}" "${cont_id}" | cut -c -12 )
+                    cont_bridge_name=$( docker network inspect -f '{{"'br-${cont_bridge}'" | or (index .Options "com.docker.network.bridge.name")}}' "${cont_bridge}" )
+                    cont_ipaddr=$( docker inspect -f "{{with index .NetworkSettings.Networks \"${cont_network_list}\"}}{{.IPAddress}}{{end}}" "${cont_id}" )
                     cont_ipaddr_orig=${cont_ipaddr}
-                    cont_network_ip_chart="$cont_ipaddr"
+                    cont_network_ip_chart="${cont_ipaddr}"
 
-                    if [ -z "${cont_bridge}" ]; then cont_bridge="${RED2}Not found${END}"; fi
-                    if [ -z "${cont_bridge_name}" ]; then cont_bridge_name="${RED2}Not found${END}"; fi
+                    if [ -z "${cont_bridge}" ]; then cont_bridge="${redl}Unknown${end}"; fi
+                    if [ -z "${cont_bridge_name}" ]; then cont_bridge_name="${redl}Unknown${end}"; fi
                     if [ -z "${cont_ipaddr}" ]; then 
-                        cont_ipaddr="${RED2}Not found${END}";
-                        cont_network_ip_chart="Not Found";
+                        cont_ipaddr="${redl}Unknown${end}";
+                        cont_network_ip_chart="Unknown";
                     fi
-                done <<< "$cont_network_list"
+                done <<EOF
+$cont_network_list
+EOF
             fi
 
             # #
             #   List each container
             # #
 
-            printf '\n%-17s %-30s %-38s %-26s %-33s %-33s %-30s %-40s %-50s' \
-                " " \
-                "${GREY2}   ${cont_id}${END}" \
-                "${GREY2}   ${cont_name_chart}" \
-                "${GREY2}   ${cont_shell}${END}" \
-                "${GREY2}   ${cont_network_ip_chart}${END}" \
-                "${GREY2}   ${cont_iflink}${END}" \
-                "${GREY2}   ${cont_veth}${END}" \
-                "${GREY2}   ${cont_network_mode_chart}${END}" \
-                "${GREY2}   [${#cont_network_arr[@]}] ${cont_network_list_chart}${END}"
+            printf '\n%-19s %-30s %-38s %-26s %-30s %-33s %-30s %-30s %-50s' \
+                "" \
+                "${yellowd}   ${cont_id}${end}" \
+                "${yellowd}   ${cont_name_chart}" \
+                "${yellowd}   ${cont_shell}${end}" \
+                "${yellowd}   ${cont_network_ip_chart}${end}" \
+                "${yellowd}   ${cont_iflink}${end}" \
+                "${yellowd}   ${cont_veth_main}${end}" \
+                "${yellowd}   ${cont_network_mode_chart}${end}" \
+                "${yellowd}   [${cont_network_arr_count}] ${cont_network_list_chart}${end}"
+
+            # #
+            #   Netmode › Default
+            # #
+
+            if [ "${cont_netmode}" = "default" ]; then
+                cont_bridge_name=${docker0_eth}
+
+                #   This will return empty if IP manually assigned from docker-compose.yml for container
+                #   docker inspect -f "{{.NetworkSettings.IPAddress}}" 5b251b810e7d
+
+                cont_ipaddr=$( docker inspect -f "{{.NetworkSettings.IPAddress}}" "$cont_id" )
+
+            # #
+            #   Netmode › Other
+            # #
+
+            else
+
+                # #
+                #   Count networks (used only to detect last line)
+                # #
+
+                cont_network_count=$( printf '%s\n' "${cont_network}" | wc -l | tr -d ' ' )
+                cont_network_idx=0
+
+                # #
+                #   Loop Network
+                # #
+
+                while IFS= read -r cont_network; do
+                    cont_network_idx=$(( cont_network_idx + 1 ))
+
+                    cont_bridge=$( docker inspect -f \
+                        "{{with index .NetworkSettings.Networks \"${cont_network}\"}}{{.NetworkID}}{{end}}" \
+                        "$cont_id" | cut -c -12 )
+
+                    cont_bridge_name=$( docker network inspect -f \
+                        '{{"'br-${cont_bridge}'" | or (index .Options "com.docker.network.bridge.name")}}' \
+                        "${cont_bridge}" )
+
+                    cont_ipaddr=$( docker inspect -f \
+                        "{{with index .NetworkSettings.Networks \"${cont_network}\"}}{{.IPAddress}}{{end}}" \
+                        "$cont_id" )
+
+                    cont_ipaddr_orig=${cont_ipaddr}
+
+                    [ -z "${cont_bridge}" ] && cont_bridge="${redl}Unknown${end}"
+                    [ -z "${cont_bridge_name}" ] && cont_bridge_name="${redl}Unknown${end}"
+                    [ -z "${cont_ipaddr}" ] && cont_ipaddr="${redl}Unknown${end}"
+
+                    # For single-network container, BRIDGE gets ├──, IP gets └──
+                    printf '\n%-23s %-42s %-55s' " " "${greyd}├── ${greyd}BRIDGE" "${bluel}${cont_bridge_name}${end}"
+                    printf '\n%-23s %-42s %-55s' " " "${greyd}└── ${greyd}IP"     "${bluel}${cont_ipaddr}${end}"
+
+done <<EOF
+$cont_network
+EOF
+
+            fi
+
+            # Blank line between containers
+            printf '\n'
+
         done
 
-        echo -e
-        echo " ${GREY1}                 └────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘${END}"
-        echo -e
-        echo -e
     fi
+
 }
 
 # #
-#   command-line options
-#
-#   reminder that any functions which need executed must be defined BEFORE
-#   this point. Bash sucks like that.
-#
-#   --dev           show advanced printing
-#   --help          show help and usage information
-#   --version       display version information
+#   Helpers › Restart
 # #
 
-while [ $# -gt 0 ]; do
+cmd_csf_restart()
+{
+    label ""
+
+    restart_service()
+    {
+        svc="$1"
+
+        if [ -x "/etc/init.d/${svc}" ]; then
+            info "    Restarting ${bluel}${svc}${greym}; using /etc/init.d/${svc}"
+            /etc/init.d/${svc} restart
+            status=$?
+        elif command -v service >/dev/null 2>&1; then
+            info "    Restarting ${bluel}${svc}${greym}; using service command"
+            service "${svc}" restart
+            status=$?
+        else
+            warn "    Could not restart ${yellowl}${svc}${greym}"
+            label "           No init script or service command found"
+            return 1
+        fi
+
+        # Check status
+        if [ "$status" -eq 0 ]; then
+            ok "    ${greenl}${svc}${greym} restarted successfully"
+        else
+            warn "    WARNING: ${yellowl}${svc}${greym} may have failed to restart (exit code ${yellowl}$status${greym})"
+        fi
+    }
+
+    # #
+    #   Restart lfd
+    # #
+
+    if service_exists lfd; then
+        info "    Restarting ${bluel}lfd.service${greym}"
+        restart_service lfd
+    else
+        label ""
+        warn "    WARNING: Could not find service ${yellowl}lfd.service${greym}"
+        label "               It may not be installed or enabled."
+    fi
+
+    # #
+    #   Restart csf
+    # #
+
+    if service_exists csf; then
+        info "    Restarting ${bluel}csf.service${greym}"
+        restart_service csf
+    else
+        label ""
+        warn "    WARNING: Could not find service ${yellowl}csf.service${greym}"
+        label "               It may not be installed or enabled."
+    fi
+
+    label ""
+}
+
+# #
+#   Clean Comments
+#   
+#   Cleans out comments in file /etc/csf/csf.allow.
+#   
+#   Any comment matching the comment added by this script will be cleaned up
+#   each time the script is ran.
+#       CLEANED         199.165.114.125 # Another whitelist Random comment
+#       NOT CLEANED     172.18.0.13 # Docker container whitelist - Wed Dec 24 04:17:35 2025
+# #
+
+if [ -n "${csf_path}" ]; then
+    if [ -e "${file_csf_allow}" ]; then
+        info "    Cleaning comments in csf allow file ${bluel}${file_csf_allow}"
+
+        # Create a temporary file
+        tmpfile=$(mktemp) || exit 1
+
+        # Remove lines matching comment pattern; write to temp file
+        sed "/${csf_comment}/d" "${file_csf_allow}" > "${tmpfile}"
+
+        # Overwrite original file
+        mv "${tmpfile}" "${file_csf_allow}"
+
+    else
+        warn "    Could not find csf allow file ${redl}${file_csf_allow}${greym}. Skip cleaning"
+    fi
+else
+    warn "    Skip cleaning allow file. Variable ${yellowl}\$csf_path${greym} for CSF binary not found."
+fi
+
+# #
+#   Func › Usage Menu
+# #
+
+opt_usage( )
+{
+    echo
+    printf "  ${bluel}${app_name}${end}\n" 1>&2
+    printf "  ${greym}${app_desc}${end}\n" 1>&2
+    printf "  ${greyd}version:${end} ${greyd}${app_version}${end}\n" 1>&2
+    printf "  ${magental}${app_file_this}${end} ${greyd}[ ${greym}--detect${greyd} | ${greym}--dryrun${greyd} |  ${greym}--version${greyd} | ${greym}--help ${greyd}]${end}" 1>&2
+    echo
+    echo
+    printf '   %-5s %-40s\n' "${greyd}Syntax:${end}" "" 1>&2
+    printf '   %-5s %-30s %-40s\n' "    " "${greyd}Command${end}           " "${magental}${app_file_this}${greyd} [ ${greym}--option ${greyd}[ ${yellowd}arg${greyd} ]${greyd} ]${end}" 1>&2
+    printf '   %-5s %-30s %-40s\n' "    " "${greyd}Options${end}           " "${magental}${app_file_this}${greyd} [ ${greym}-h${greyd} | ${greym}--help${greyd} ]${end}" 1>&2
+    printf '   %-5s %-30s %-40s\n' "    " "    ${greym}-A${end}            " "   ${white}required" 1>&2
+    printf '   %-5s %-30s %-40s\n' "    " "    ${greym}-A...${end}         " "   ${white}required; multiple can be specified" 1>&2
+    printf '   %-5s %-30s %-40s\n' "    " "    ${greym}[ -A ]${end}        " "   ${white}optional" 1>&2
+    printf '   %-5s %-30s %-40s\n' "    " "    ${greym}[ -A... ]${end}     " "   ${white}optional; multiple can be specified" 1>&2
+    printf '   %-5s %-30s %-40s\n' "    " "    ${greym}{ -A | -B }${end}   " "   ${white}one or the other; do not use both" 1>&2
+    printf '   %-5s %-30s %-40s\n' "    " "${greyd}Examples${end}          " "${magental}${app_file_this}${end} ${greym}--detect${yellowd} ${end}" 1>&2
+    printf '   %-5s %-30s %-40s\n' "    " "${greyd}${end}                  " "${magental}${app_file_this}${end} ${greym}--dryrun${yellowd} ${end}" 1>&2
+    printf '   %-5s %-30s %-40s\n' "    " "${greyd}${end}                  " "${magental}${app_file_this}${end} ${greym}--version${yellowd} ${end}" 1>&2
+    printf '   %-5s %-30s %-40s\n' "    " "${greyd}${end}                  " "${magental}${app_file_this}${end} ${greym}--help${greyd} | ${greym}-h${greyd} | ${greym}/?${end}" 1>&2
+    echo
+    printf '   %-5s %-40s\n' "${greyd}Flags:${end}" "" 1>&2
+    printf '   %-5s %-81s %-40s\n' "    " "${blued}-D${greyd},${blued}  --detect ${yellowd}${end}                     " "returns installer script that will run; does not install csf ${navy}<default> ${peach}${argDetect:-"disabled"} ${end}" 1>&2
+    printf '   %-5s %-81s %-40s\n' "    " "${blued}-d${greyd},${blued}  --dryrun ${yellowd}${end}                     " "simulates installation, does not install csf ${navy}<default> ${peach}${argDryrun:-"disabled"} ${end}" 1>&2
+    printf '   %-5s %-81s %-40s\n' "    " "${blued}-v${greyd},${blued}  --version ${yellowd}${end}                    " "current version of this utilty ${navy}<current> ${peach}${APP_VERSION:-"unknown"} ${end}" 1>&2
+    printf '   %-5s %-81s %-40s\n' "    " "${blued}-h${greyd},${blued}  --help ${yellowd}${end}                       " "show this help menu ${end}" 1>&2
+    echo
+    echo
+}
+
+# #
+#   Args › Parse
+# #
+
+while [ "$#" -gt 0 ]; do
     case "$1" in
-        -d|--dev)
-            cfg_dev_enabled=true
-            echo -e "  ${MAGENTA}MODE         ${END}Developer Enabled${END}"
+        -d|--dryrun)
+            argDryrun="true"
             ;;
 
-        -h*|--help*)
-            cmd_help
-            exit 1
+        -D|--detect)
+            argDetect="true"
             ;;
 
         -l|--list)
@@ -679,830 +1477,764 @@ while [ $# -gt 0 ]; do
             exit 1
             ;;
 
+        -v|--ver|--version)
+            label ""
+            label "     ${blued}${bold}${app_name}${end} - v${app_version}"
+            label "     ${greenl}${bold}${app_repo_url}"
+            label ""
+            exit 1
+            ;;
+
         -c|--clear)
             cmd_iptables_clear
             exit 1
             ;;
 
-        -v|--version)
-            cmd_version
+        -h|--help|\?)
+            opt_usage
             exit 1
             ;;
+
         *)
-            cmd_help
-            exit 1
-            ;;
+            label
+			error "    ❌ Unknown flag ${redl}$1${greym}. Aborting."
+            label
+			exit 1
+			;;
     esac
     shift
 done
 
 # #
-#   Clean container ips added by script once per restart
-# #
-
-if [[ $csf_path ]]; then
-    echo -e
-    echo -e "  ${BOLD}${GREY1}+ CSF           ${WHITE}Cleaning ${file_csf_allow}${END}"
-    sudo sed --in-place "/${csf_comment}/d" ${file_csf_allow}
-fi
-
-# #
-#   {bridge} 	= docker0
-#   {subnet} 	= 172.17.0.0/16
-#
-#   + MASQUERADE rule: 172.17.0.0/16 on docker0
-#   + FORWARD rule: accept established connections for docker0
-#   + FORWARD rule: allow communication for docker0
-#   + MASQUERADE rule: 172.18.0.0/16 on br-2e0fde4b0664
-#   + FORWARD rule: accept established connections for br-2e0fde4b0664
-#   + FORWARD rule: allow communication for br-2e0fde4b0664
-# #
-
-# #
-#   Chain Exists
-# #
-
-chainExists()
-{
-
-    [ $# -lt 1 -o $# -gt 2 ] && {
-        echo "Usage: chainExists <chain_name> [table]" >&2
-        return 1
-    }
-
-    local chain_name="$1" ; shift
-    [ $# -eq 1 ] && local table="-t $1"
-
-
-    if [ `sudo ${path_iptables4} -n --list "$chain_name" $table 2> /dev/null | grep "$chain_name" | wc -l` -eq 0 ]; then
-        echo 0;
-    else
-        echo 1;
-    fi
-}
-
-# #
-#   Rule Exists
-# #
-
-ruleExists()
-{
-
-    [ $# -lt 1 ] && {
-        echo "Usage: ruleExists <rule>" >&2
-        return 1
-    }
-
-    local chain_rule="$1"
-
-
-    if [ `iptables -C "$chain_rule" > /dev/null 2>&1` ]; then
-        echo 1;
-    else
-        echo 0;
-    fi
-}
-
-# #
-#   Forward > Add
-#
-#   Allow containers to communicate with themselves & outside world
-# #
-
-add_to_forward()
-{
-    local docker_int=$1
-
-    if ! sudo ${path_iptables4} -C FORWARD -o ${docker_int} -m conntrack --ctstate NEW,RELATED,ESTABLISHED -j ACCEPT &>/dev/null; then
-        sudo ${path_iptables4} -A FORWARD -o ${docker_int} -m conntrack --ctstate NEW,RELATED,ESTABLISHED -j ACCEPT
-        echo -e "                  ${GREY1}+ RULE:                  ${FUCHSIA2}-A FORWARD -o ${docker_int} -m conntrack --ctstate NEW,RELATED,ESTABLISHED -j ACCEPT${END}"
-    else
-        echo -e "                  ${GREY1}! RULE:                  ${YELLOW}SKIP:${FUCHSIA2} -A FORWARD -o ${docker_int} -m conntrack --ctstate NEW,RELATED,ESTABLISHED -j ACCEPT${END}"
-    fi
-
-    if ! sudo ${path_iptables4} -C FORWARD -o ${docker_int} -j DOCKER &>/dev/null; then
-        sudo ${path_iptables4} -A FORWARD -o ${docker_int} -j DOCKER
-        echo -e "                  ${GREY1}+ RULE:                  ${FUCHSIA2}-A FORWARD -o ${docker_int} -j DOCKER${END}"
-    else
-        echo -e "                  ${GREY1}! RULE:                  ${YELLOW}SKIP:${FUCHSIA2} -A FORWARD -o ${docker_int} -j DOCKER${END}"
-    fi
-
-    if ! sudo ${path_iptables4} -C FORWARD -i ${docker_int} ! -o ${docker_int} -j ACCEPT &>/dev/null; then
-        sudo ${path_iptables4} -A FORWARD -i ${docker_int} ! -o ${docker_int} -j ACCEPT
-        echo -e "                  ${GREY1}+ RULE:                  ${FUCHSIA2}-A FORWARD -i ${docker_int} ! -o ${docker_int} -j ACCEPT${END}"
-    else
-        echo -e "                  ${GREY1}! RULE:                  ${YELLOW}SKIP:${FUCHSIA2} -A FORWARD -i ${docker_int} ! -o ${docker_int} -j ACCEPT${END}"
-    fi
-
-    if ! sudo ${path_iptables4} -C FORWARD -i ${docker_int} -o ${docker_int} -j ACCEPT &>/dev/null; then
-        sudo ${path_iptables4} -A FORWARD -i ${docker_int} -o ${docker_int} -j ACCEPT
-        echo -e "                  ${GREY1}+ RULE:                  ${FUCHSIA2}-A FORWARD -i ${docker_int} -o ${docker_int} -j ACCEPT${END}"
-    else
-        echo -e "                  ${GREY1}! RULE:                  ${YELLOW}SKIP:${FUCHSIA2} -A FORWARD -i ${docker_int} -o ${docker_int} -j ACCEPT${END}"
-    fi
-}
-
-# #
-#   NAT > Add
-# #
-
-add_to_nat()
-{
-    local docker_int=$1
-    local subnet=$2
-
-    # ipv4
-    if [ "$subnet" != "${subnet#*[0-9].[0-9]}" ]; then
-        sudo ${path_iptables4} -t nat -A POSTROUTING -s ${subnet} ! -o ${docker_int} -j MASQUERADE
-        sudo ${path_iptables4} -t nat -A DOCKER -i ${docker_int} -j RETURN
-
-        echo -e "                  ${GREY1}+ RULE v4:               ${FUCHSIA2}-t nat -A POSTROUTING -s ${subnet} ! -o ${docker_int} -j MASQUERADE${END}"
-        echo -e "                  ${GREY1}+ RULE v4:               ${FUCHSIA2}-t nat -A DOCKER -i ${docker_int} -j RETURN${END}"
-
-    # ipv6
-    elif [ "$subnet" != "${subnet#*:[0-9a-fA-F]}" ]; then
-        sudo ${path_iptables6} -t nat -A POSTROUTING -s ${subnet} ! -o ${docker_int} -j MASQUERADE
-        sudo ${path_iptables6} -A DOCKER -i ${docker_int} -j RETURN
-
-        echo -e "                  ${GREY1}+ RULE v6:               ${FUCHSIA2}-t nat -A POSTROUTING -s ${subnet} ! -o ${docker_int} -j MASQUERADE${END}"
-        echo -e "                  ${GREY1}+ RULE v6:               ${FUCHSIA2}-A DOCKER -i ${docker_int} -j RETURN${END}"
-    else
-        echo "Unrecognized subnet format '$subnet'"
-    fi
-
-}
-
-# #
-#   Docker Isolation > Add
-# #
-
-add_to_docker_isolation()
-{
-    local docker_int=$1
-
-    sudo ${path_iptables4} -A DOCKER-ISOLATION-STAGE-1 -i ${docker_int} ! -o ${docker_int} -j DOCKER-ISOLATION-STAGE-2
-    sudo ${path_iptables4} -A DOCKER-ISOLATION-STAGE-2 -o ${docker_int} -j DROP
-
-    echo -e "                  ${GREY1}+ RULE:                  ${FUCHSIA2}-A DOCKER-ISOLATION-STAGE-1 -i ${docker_int} ! -o ${docker_int} -j DOCKER-ISOLATION-STAGE-2${END}"
-    echo -e "                  ${GREY1}+ RULE:                  ${FUCHSIA2}-A DOCKER-ISOLATION-STAGE-2 -o ${docker_int} -j DROP${END}"
-}
-
-# #
-#   sudo update-alternatives --set iptables /usr/sbin/iptables-legacy
-# #
-
-# #
-#   iptables-save & restore
-# #
-
-sudo iptables-save | grep -v -- '-j DOCKER' | sudo iptables-restore
-
-# #
-#   Chain DOCKER - Flush or Create
+#   Iptables › Save & Restore
 #   
-#   -N <chain>                  Creates new chain
-#   -X <chain>                  Delete a user defined-chain
-#   -F <chain>                  Flush rules in chain
+#   Remove all iptables associated with DOCKER. Leave other rules alone.
 # #
 
-if [ $(chainExists DOCKER) -eq 1 ] ; then
-    echo -e "  ${BOLD}${GREY1}+ IPTABLES      ${END}Flush existing chain DOCKER${END}"
-    sudo ${path_iptables4} -F DOCKER
-    echo -e "                  ${GREY1}+ RULE:                  ${FUCHSIA2}-F DOCKER${END}"
+info "    Stripping all ${bluel}DOCKER${greym} chains from existing iptable rules; restoring without ${bluel}DOCKER${greym} chain"
+iptables-save | grep -v '\-j DOCKER' | iptables-restore
+
+# #
+#   Rule › Docker Chain
+#   
+#   Create required Docker chains
+# #
+
+info "    Re-creating required DOCKER chains"
+chain_create DOCKER
+chain_create DOCKER-USER
+chain_create DOCKER-ISOLATION-STAGE-1
+chain_create DOCKER-ISOLATION-STAGE-2
+chain_create DOCKER nat
+
+# #
+#   Rule › docker0
+#   
+#   Add DOCKER0 rule
+#   
+#   Check with commands:
+#       › sudo iptables -C INPUT -i docker0 -j ACCEPT
+# #
+
+info "    Apply ACCEPT rule DOCKER table for INPUT chain"
+if ip link show ${docker0_eth} >/dev/null 2>&1; then
+    rule_append INPUT -i "${docker0_eth}" -j ACCEPT
 else
-    echo -e "  ${BOLD}${GREY1}+ IPTABLES      ${END}Create new chain DOCKER${END}"
-    sudo ${path_iptables4} -N DOCKER
-    echo -e "                  ${GREY1}+ RULE:                  ${FUCHSIA2}-N DOCKER${END}"
+    echo "    ${yellowl}! WARNING: ${docker0_eth} interface does not exist; skipping INPUT rule${end}"
 fi
 
 # #
-#   Chain DOCKER-ISOLATION-STAGE-1 - Flush or Create
+#   Rule › FORWARD
 #   
-#   -N <chain>                  Creates new chain
-#   -X <chain>                  Delete a user defined-chain
-#   -F <chain>                  Flush rules in chain
+#   Check with commands:
+#       › sudo iptables -C FORWARD -j DOCKER-USER
+#       › sudo iptables -C FORWARD -j DOCKER-ISOLATION-STAGE-1
 # #
 
-if [ $(chainExists DOCKER-ISOLATION-STAGE-1) -eq 1 ] ; then
-    echo -e "  ${BOLD}${GREY1}+ IPTABLES      ${END}Flush existing chain DOCKER-ISOLATION-STAGE-1${END}"
-    sudo ${path_iptables4} -F DOCKER-ISOLATION-STAGE-1
-    echo -e "                  ${GREY1}+ RULE:                  ${FUCHSIA2}-F DOCKER-ISOLATION-STAGE-1${END}"
-else
-    echo -e "  ${BOLD}${GREY1}+ IPTABLES      ${END}Create new chain DOCKER-ISOLATION-STAGE-1${END}"
-    sudo ${path_iptables4} -N DOCKER-ISOLATION-STAGE-1
-    echo -e "                  ${GREY1}+ RULE:                  ${FUCHSIA2}-N DOCKER-ISOLATION-STAGE-1${END}"
-fi
+rule_append FORWARD -j DOCKER-USER
+rule_append FORWARD -j DOCKER-ISOLATION-STAGE-1
 
 # #
-#   Chain DOCKER-ISOLATION-STAGE-2 - Flush or Create
-#   
-#   -N <chain>                  Creates new chain
-#   -X <chain>                  Delete a user defined-chain
-#   -F <chain>                  Flush rules in chain
+#   Add docker0 to forward
 # #
 
-if [ $(chainExists DOCKER-ISOLATION-STAGE-2) -eq 1 ] ; then
-    echo -e "  ${BOLD}${GREY1}+ IPTABLES      ${END}Flush existing chain DOCKER-ISOLATION-STAGE-2${END}"
-    sudo ${path_iptables4} -F DOCKER-ISOLATION-STAGE-2
-    echo -e "                  ${GREY1}+ RULE:                  ${FUCHSIA2}-F DOCKER-ISOLATION-STAGE-2${END}"
-else
-    echo -e "  ${BOLD}${GREY1}+ IPTABLES      ${END}Create new chain DOCKER-ISOLATION-STAGE-2${END}"
-    sudo ${path_iptables4} -N DOCKER-ISOLATION-STAGE-2
-    echo -e "                  ${GREY1}+ RULE:                  ${FUCHSIA2}-N DOCKER-ISOLATION-STAGE-2${END}"
-fi
-
-# #
-#   Chain DOCKER-USER - Flush or Create
-#   
-#   -N <chain>                  Creates new chain
-#   -X <chain>                  Delete a user defined-chain
-#   -F <chain>                  Flush rules in chain
-# #
-
-if [ $(chainExists DOCKER-USER) -eq 1 ] ; then
-    echo -e "  ${BOLD}${GREY1}+ IPTABLES      ${END}Flush existing chain DOCKER-USER${END}"
-    sudo ${path_iptables4} -F DOCKER-USER
-    echo -e "                  ${GREY1}+ RULE:                  ${FUCHSIA2}-F DOCKER-USER${END}"
-else
-    echo -e "  ${BOLD}${GREY1}+ IPTABLES      ${END}Create new chain DOCKER-USER${END}"
-    sudo ${path_iptables4} -N DOCKER-USER
-    echo -e "                  ${GREY1}+ RULE:                  ${FUCHSIA2}-N DOCKER-USER${END}"
-fi
-
-# #
-#   Chain DOCKER-USER (table nat) - Flush or Create
-#   
-#   -N <chain>                  Creates new chain
-#   -X <chain>                  Delete a user defined-chain
-#   -F <chain>                  Flush rules in chain
-#   -t <table>                  Table to manipulate
-# #
-
-if [ $(chainExists DOCKER nat) -eq 1 ] ; then
-    echo -e "  ${BOLD}${GREY1}+ IPTABLES      ${END}Flush existing chain DOCKER; table NAT${END}"
-    sudo ${path_iptables4} -t nat -F DOCKER
-    echo -e "                  ${GREY1}+ RULE:                  ${FUCHSIA2}-t nat -F DOCKER${END}"
-else
-    echo -e "  ${BOLD}${GREY1}+ IPTABLES      ${END}Create new chain DOCKER; table NAT${END}"
-    sudo ${path_iptables4} -t nat -N DOCKER
-    echo -e "                  ${GREY1}+ RULE:                  ${FUCHSIA2}-t nat -N DOCKER${END}"
-fi
-
-# #
-#   Add Rules:
-#       - INPUT                 add docker0 ACCEPT
-#       - FORWARD               add DOCKER-USER
-#       - FORWARD               add DOCKER-ISO-1
-#   
-#   -A <chain> <rule>           Append rule
-#   -i <input-eth>              Incoming network interface
-#   -j <rule>                   Target for rule; ACCEPT, DROP, REJECT
-# #
-
-if ! sudo ${path_iptables4} -C INPUT -i docker0 -j ACCEPT &>/dev/null; then
-    echo -e "  ${BOLD}${GREY1}+ IPTABLES      ${END}Add ACCEPT policy for chain INPUT on DOCKER0 integrate${END}"
-    sudo ${path_iptables4} -A INPUT -i ${docker0_eth} -j ACCEPT
-    echo -e "                  ${GREY1}+ RULE:                  ${FUCHSIA2}-A INPUT -i ${docker0_eth} -j ACCEPT${END}"
-fi
-
-# #
-#   Chain FORWARD (policy DROP)
-#   
-#   target                      prot opt source             destination         
-#   DOCKER-USER                 all  --  anywhere           anywhere            
-# #
-
-if ! sudo ${path_iptables4} -C FORWARD -j DOCKER-USER &>/dev/null; then
-    echo -e "  ${BOLD}${GREY1}+ IPTABLES      ${END}Add JUMP rule in chain FORWARD to chain DOCKER-USER${END}"
-    sudo ${path_iptables4} -A FORWARD -j DOCKER-USER
-    echo -e "                  ${GREY1}+ RULE:                  ${FUCHSIA2}-A FORWARD -j DOCKER-USER${END}"
-fi
-
-# #
-#   Chain FORWARD (policy DROP)
-#   
-#   target                      prot opt source             destination         
-#   DOCKER-ISOLATION-STAGE-1    all  --  anywhere           anywhere 
-# #
-
-if ! sudo ${path_iptables4} -C FORWARD -j DOCKER-ISOLATION-STAGE-1 &>/dev/null; then
-    echo -e "  ${BOLD}${GREY1}+ IPTABLES      ${END}Add JUMP rule in chain FORWARD to chain DOCKER-ISOLATION-STAGE-1${END}"
-    sudo ${path_iptables4} -A FORWARD -j DOCKER-ISOLATION-STAGE-1
-    echo -e "                  ${GREY1}+ RULE:                  ${FUCHSIA2}-A FORWARD -j DOCKER-ISOLATION-STAGE-1${END}"
-fi
-
-# #
-#   add docker0 to forward
-# #
-
-add_to_forward ${docker0_eth}
+add_to_forward "${docker0_eth}"
 
 # #
 #   To view PREROUTING and POSTROUTING rules; add `-t nat` with:
-#       sudo iptables -t nat -L --line-numbers -n
+#       sudo iptables -t nat -L -n -v
 #   
 #   Check if rule exists with:
-#       sudo iptables -C PREROUTING -t nat -m addrtype --dst-type LOCAL -j DOCKER
+#       sudo iptables -t nat -C PREROUTING -m addrtype --dst-type LOCAL -j DOCKER
+#       sudo iptables -t nat -C OUTPUT ! -d 127.0.0.0/8 -m addrtype --dst-type LOCAL -j DOCKER
+#   
+#   Returns blank IF rule exists; or throws error
+#       iptables: Bad rule (does a matching rule exist in that chain?).
 #   
 #   target                      prot opt source             destination         
 #   DOCKER                      0    --  0.0.0.0/0          !127.0.0.0/8          ADDRTYPE match dst-type LOCAL
 # #
 
-sudo ${path_iptables4} -t nat -A PREROUTING -m addrtype --dst-type LOCAL -j DOCKER
-sudo ${path_iptables4} -t nat -A OUTPUT ! -d 127.0.0.0/8 -m addrtype --dst-type LOCAL -j DOCKER
+rule_add -t nat -A PREROUTING -m addrtype --dst-type LOCAL -j DOCKER
+rule_add -t nat -A OUTPUT ! -d 127.0.0.0/8 -m addrtype --dst-type LOCAL -j DOCKER
 
 # #
-#   whitelist ip addresses associated with docker
+#   SECTION › Whitelist Container Network
+#   
+#   Whitelist ip addresses associated with docker
 # #
 
-echo -e
-echo -e " ${GREY1}―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――${END}"
-echo -e
+prinp "Docker Container Network" \
+       "Fetches all Docker container subnets and configures NAT rules to ensure containers can reach external networks correctly. \
+${greyd}\n${greyd} \
+${greyd}\n${yellowd}- ${greym}Masquerade outbound container traffic${greyd} \
+${greyd}\n${yellowd}- ${greym}Avoid adding duplicate NAT rules${greyd} \
+${greyd}\n${yellowd}- ${greym}Route container subnets through Docker bridge${greyd}"
 
-echo -e "  ${BOLD}${GREY1}+ POSTROUTING   ${WHITE}Adding IPs from primary IP list${END}"
+# #
+#   Loop each subnet
+#       172.17.0.0/16
+#       [...]
+# #
 
-for j in "${!containers_ip_cidr[@]}"; do
+for ip_block in $containers_ip_cidr; do
 
     # #
-    #   get ip addresses
+    #   Print Subnet
     # #
 
-    ip_block=${containers_ip_cidr[$j]}
-    echo -e "  ${BOLD}${WHITE}                + ${YELLOW2}${ip_block}${END}"
+    label "         ${bold}${fuchsial}${ip_block}${end}"
 
     # #
-    #   Masquerade outbound connections from containers
+    #   Check and add iptables rules in POSIX-compliant way
     #   
-    #   check rules with:
-    #       sudo iptables -C POSTROUTING -t nat ! -o docker0 -s 172.17.0.0/16 -j MASQUERADE
-    #       sudo iptables -C POSTROUTING -t nat -s 172.17.0.0/16 ! -o docker0 -j MASQUERADE
+    #   Check with commands:
+    #       sudo iptables -t nat -C POSTROUTING ! -o docker0 -s 172.17.0.0/16 -j MASQUERADE
+    #       sudo iptables -t nat -C POSTROUTING ! -o docker0 -s 172.17.0.0/16 -j MASQUERADE
     # #
 
-    if ! `sudo ${path_iptables4} -C POSTROUTING -t nat ! -o ${docker0_eth} -s ${ip_block} -j MASQUERADE &>/dev/null`; then
-        sudo ${path_iptables4} -t nat -A POSTROUTING ! -o ${docker0_eth} -s ${ip_block} -j MASQUERADE
-        echo -e "                  ${GREY1}+ RULE:                  ${FUCHSIA2}-t nat -A POSTROUTING ! -o ${docker0_eth} -s ${ip_block} -j MASQUERADE${END}"
+    if ! sudo "${ipt4}" -t nat -C POSTROUTING ! -o "${docker0_eth}" -s "${ip_block}" -j MASQUERADE >/dev/null 2>&1; then
+        sudo "${ipt4}" -t nat -A POSTROUTING ! -o "${docker0_eth}" -s "${ip_block}" -j MASQUERADE
+        label "         + RULES ${greend}[ADD]${greend} -t nat -A POSTROUTING ! -o ${docker0_eth} -s ${ip_block} -j MASQUERADE${end}"
     else
-        echo -e "                  ${GREY1}! RULE:                  ${YELLOW}SKIP:${FUCHSIA2} -t nat -A POSTROUTING ! -o ${docker0_eth} -s ${ip_block} -j MASQUERADE${END}"
+        label "         ! RULES ${yellowd}[SKP]${yellowd} -t nat -A POSTROUTING ! -o ${docker0_eth} -s ${ip_block} -j MASQUERADE${end}"
     fi
 
-    if ! `sudo ${path_iptables4} -C POSTROUTING -t nat -s ${ip_block} ! -o ${docker0_eth} -j MASQUERADE &>/dev/null`; then
-        sudo ${path_iptables4} -t nat -A POSTROUTING -s ${ip_block} ! -o ${docker0_eth} -j MASQUERADE
-        echo -e "                  ${GREY1}+ RULE:                  ${FUCHSIA2}-t nat -A POSTROUTING -s ${ip_block} ! -o ${docker0_eth} -j MASQUERADE${END}"
+    if ! sudo "${ipt4}" -t nat -C POSTROUTING -s "${ip_block}" ! -o "${docker0_eth}" -j MASQUERADE >/dev/null 2>&1; then
+        sudo "${ipt4}" -t nat -A POSTROUTING -s "${ip_block}" ! -o "${docker0_eth}" -j MASQUERADE
+        label "         + RULES ${greend}[ADD]${greend} -t nat -A POSTROUTING -s ${ip_block} ! -o ${docker0_eth} -j MASQUERADE${end}"
     else
-        echo -e "                  ${GREY1}! RULE:                  ${YELLOW}SKIP:${FUCHSIA2} -t nat -A POSTROUTING -s ${ip_block} ! -o ${docker0_eth} -j MASQUERADE${END}"
+        label "         ! RULES ${yellowd}[SKP]${yellowd} -t nat -A POSTROUTING -s ${ip_block} ! -o ${docker0_eth} -j MASQUERADE${end}"
     fi
+
 done
 
 # #
-#   Separator
+#   SECTION › Bridges
+#   
+#   Get all Docker bridge network IDs
 # #
 
-echo -e
-echo -e " ${GREY1}―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――${END}"
-echo -e
+prinp "Network Bridges" \
+       "This part of the wizard inspects Docker network bridges and creates the required rules. \
+${greyd}\n${greyd} \
+${greyd}\n${yellowd}- ${greym}Masquerade outbound traffic so containers use the host IP${greyd} \
+${greyd}\n${yellowd}- ${greym}Skip extra NAT rules for incoming bridge traffic${greyd} \
+${greyd}\n${yellowd}- ${greym}Allow forwarded traffic for new and established connections${greyd} \
+${greyd}\n${yellowd}- ${greym}Block traffic between different bridges${greyd} \
+${greyd}\n${yellowd}- ${greym}Allow traffic within the same bridge${greyd}"
 
 # #
-#   Get bridges
-#
-#   Output:
-#       7018d23c9bb4
-#       2e0fde4b0664
+#   Get Bridges
+#   
+#   bridges
+#       2eceaf004a4e
+#       df59056beef1
+#       81421612a0ce
+#   
+#   bridge_ids
+#       2eceaf004a4e
+#       df59056beef1
+#       81421612a0ce
 # #
 
-echo -e "  ${BOLD}${GREY1}+ BRIDGES       ${WHITE}Configuring network bridges${END}"
+bridges=$(docker network ls -q --filter driver=bridge)
+bridge_ids=$(docker network ls -q --filter driver=bridge --format "{{.ID}}")
 
-bridges=`docker network ls -q --filter='Driver=bridge'`
-bridge_ids=`docker network ls -q --filter driver=bridge --format "{{.ID}}"`
+# #
+#   Loop through each bridge network
+#   
+#   bridge
+#       2eceaf004a4e
+#       df59056beef1
+#       81421612a0ce
+#   
+#   View all available bridges with command:
+#       docker network ls --filter driver=bridge
+# #
 
-for cont_bridge in $bridges; do
+for bridge in $bridges; do
 
     # #
-    #   Output:
-    #       BRIDGE ............... : 242441c7d76c
-    #       DOCKER_NET_INT_1 ..... : docker0
-    #       SUBNET ............... : 172.17.0.0/16
+    #   Docker network name (traefik, bridge, dns)
     # #
 
-    cont_bridge_name=`docker network inspect -f '{{"'br-$cont_bridge'" | or (index .Options "com.docker.network.bridge.name")}}' $cont_bridge`
-    subnet=`docker network inspect -f '{{(index .IPAM.Config 0).Subnet}}' $cont_bridge`
+    net_name=$(docker network inspect -f '{{.Name}}' "$bridge")
 
-	printf '\n%-17s %-35s %-55s' " " "${GREY1}BRIDGE" "${BLUE2}${cont_bridge}${END}"
-	printf '\n%-17s %-35s %-55s' " " "${GREY1}DOCKER INTERFACE" "${BLUE2}${cont_bridge_name}${END}"
-	printf '\n%-17s %-35s %-55s' " " "${GREY1}SUBNET" "${BLUE2}${subnet}${END}"
-	echo -e
+    # #
+    #   Linux bridge interface (br-xxxx)
+    # #
 
-    add_to_nat ${cont_bridge_name} ${subnet}
-    add_to_forward ${cont_bridge_name}
-    add_to_docker_isolation ${cont_bridge_name}
+    cont_bridge_name=$(docker network inspect -f '{{if .Options.com.docker.network.bridge.name}}{{.Options.com.docker.network.bridge.name}}{{else}}br-'$bridge'{{end}}' "$bridge")
+
+    # #
+    #   Subnet
+    # #
+
+    subnet=$(docker network inspect -f '{{(index .IPAM.Config 0).Subnet}}' "$bridge")
+
+    # #
+    #   Print Subnet
+    # #
+
+    label "         ${bold}${fuchsial}${net_name} (${cont_bridge_name})${greyd} | ${subnet}${end}"
+
+    # #
+    #   Call functions with bridge info
+    # #
+
+    add_to_nat "${cont_bridge_name}" "$subnet"
+    add_to_forward "${cont_bridge_name}"
+    add_to_docker_isolation "${cont_bridge_name}"
+
+    label ""
+
 done
 
 # #
-#   Separator
+#   SECTION › Containers
+#   
+#   Get all Docker bridge network IDs
 # #
 
-echo -e
-echo -e " ${GREY1}―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――${END}"
-echo -e
+prinp "Docker Containers" \
+       "This part of the wizard inspects Docker containers and updates the CSF firewall allow list. \
+${greyd}\n${greyd} \
+${greyd}\n${yellowd}- ${greym}List all running Docker containers${greyd} \
+${greyd}\n${yellowd}- ${greym}Get container name, shell, network mode, and IPs${greyd} \
+${greyd}\n${yellowd}- ${greym}Map the container's veth interface${greyd} \
+${greyd}\n${yellowd}- ${greym}Whitelist container IPs in CSF if missing${greyd} \
+${greyd}\n${yellowd}- ${greym}Add iptables rules for exposed ports${greyd}"
 
 # #
-#   Loop containers
+#   Get container list and count
 # #
 
-echo -e "  ${BOLD}${GREY1}+ CONTAINERS    ${WHITE}Configure containers${END}"
+containers=$(docker ps -q)
+containers_num=$(echo "$containers" | wc -w)
 
 # #
-#   get all containers from docker
+#   Cache veth ifindex so that scan is faster.
+#   veth name map (scan sysfs once)
 # #
 
-containers=`docker ps -q`
+veth_cache=""
+for i in /sys/class/net/veth*/ifindex; do
+    idx=$( cat "$i" 2>/dev/null ) || continue
+    name=$( basename "$(dirname "$i")" )
+    veth_cache="${veth_cache}${idx}:${name}
+"
+done
 
 # #
-#   count docker containers; must be greater than 1
+#   Whitelist docker containers if count higher than zero (0)
 # #
 
-if [ `echo ${containers} | wc -c` -gt "1" ]; then
+if [ "$containers_num" -gt 0 ]; then
+
+    printf '%-0s %-30s %-38s %-26s %-30s %-33s %-30s %-30s %-50s' \
+        "" \
+        "${greym}   Container${end}" \
+        "${greym}   Name" \
+        "${greym}   Shell${end}" \
+        "${greym}   IP${end}" \
+        "${greym}   IfLink ID${end}" \
+        "${greym}   Veth Adapter${end}" \
+        "${greym}   Network Mode${end}" \
+        "${greym}   Network List${end}"
 
     # #
     #   Loop containers
+    #   
+    #       cont_id             579fedba3c76
+    #       cont_netmode        traefik
+    #       cont_network        traefik
+    #       cont_network_list   dns traefik
+    #       cont_network_json   {"traefik":{"IPAMConfig":{"IPv4Address":"172.18.1.2"},"Links":null,"Aliases":["authentik-worker","authentik-worker"],"MacAddress":"ee:b2:fa:15:e3:7d","DriverOpts":null,"GwPriority":0,"NetworkID":"81421612a0ce7f8c499c0e35a053135191296b8a3fe6f47cd0027205c3d0b842","EndpointID":"e2199bc25e9cb9882f961dee012cafc6b167335cda07b96db45802471f0c7483","Gateway":"172.18.0.1","IPAddress":"172.18.1.2","IPPrefixLen":16,"IPv6Gateway":"","GlobalIPv6Address":"","GlobalIPv6PrefixLen":0,"DNSNames":["authentik-worker","579fedba3c76","worker"]}}
+    #       cont_name           authentik-worker
+    #       cont_iflink         22
+    #       cont_shell          Bash
     # #
 
-    for cont_id in ${containers}; do
+    for cont_id in $containers; do
 
         # #
         #   Output:
-        #       CONTAINER ............... : 5b251b810e7d
+        #       CONTAINER ............... : e46adb5f1eb2
         #       NETMODE ................. : 63599565ed58b275d60087e218e2875aec3c3258976433d061721f0cb666e0b8
-        #
+        #   
         #   Example:
         #       Running `docker inspect -f "{{.HostConfig.NetworkMode}}" 5b251b810e7d` outputs:
         #       63599565ed58b275d60087e218e2875aec3c3258976433d061721f0cb666e0b8
         # #
 
-        cont_netmode=`docker inspect -f "{{.HostConfig.NetworkMode}}" ${cont_id}`
-        cont_network=`docker inspect -f '{{range $net,$v := .NetworkSettings.Networks}}{{printf "%s\n" $net}}{{end}}' ${cont_id}`
-        cont_network_list=`docker inspect -f '{{range $net,$v := .NetworkSettings.Networks}}{{printf "%s " $net}}{{end}}' ${cont_id}`
-        cont_network_json=`docker inspect -f "{{json .NetworkSettings.Networks}}" ${cont_id}`
-        cont_name=`docker inspect -f "{{.Name}}" ${cont_id}`
-        cont_name=${cont_name#/}                                        # remove forward slash
-        cont_name=$(echo "$cont_name" | sed "s/ //g")                   # remove spaces
-        cont_iflink=`docker exec -i "$cont_id" bash -c 'cat /sys/class/net/eth0/iflink' 2> /dev/null`
-        cont_shell="Bash"
+        cont_asd="$cont_id"                                                                                                                 # 5a92cabbac8c
+        cont_netmode=$( docker inspect -f "{{.HostConfig.NetworkMode}}" "$cont_id" )                                                        # dns
+        cont_network=$( docker inspect -f '{{range $net,$v := .NetworkSettings.Networks}}{{printf "%s\n" $net}}{{end}}' "$cont_id" )        # dns \n traefik                list of networks assigned to container; multi-lined list
+        cont_network_list=$( docker inspect -f '{{range $net,$v := .NetworkSettings.Networks}}{{printf "%s " $net}}{{end}}' "$cont_id" )    # dns traefik                   same as cont_network, but single lined list, no newlines
+        cont_network_json=$( docker inspect -f "{{json .NetworkSettings.Networks}}" "$cont_id" )                                            # {"dns":{"IPAMConfig":{"IPv4Address":"10.10.12.12"},"Links":null,"Aliases":["doh","doh"],"MacAddress":"AB:12:CD:2e:3c:29","DriverOpts":null,"GwPriority":0,"NetworkID":"df59056beef1672177e7ffbed5c589db76a2c2165c68b0055d16f8e1c155aa35","EndpointID":"86b628c57d512886ce23730cae733f7ff85e9f482379a9614d9e8fb49ce2bf22","Gateway":"10.10.0.1","IPAddress":"10.10.12.12","IPPrefixLen":16,"IPv6Gateway":"","GlobalIPv6Address":"","GlobalIPv6PrefixLen":0,"DNSNames":["doh","5a92cabbac8c"]},"traefik":{"IPAMConfig":{"IPv4Address":"172.18.20.2"},"Links":null,"Aliases":["doh","doh"],"MacAddress":"aa:26:ea:0a:70:3c","DriverOpts":null,"GwPriority":0,"NetworkID":"81421612a0ce7f8c499c0e35a053135191296b8a3fe6f47cd0027205c3d0b842","EndpointID":"cecd8bb7c25f80e485461eb602c28452b2f829abcd78cfc82e69a7e1af3c18b2","Gateway":"172.18.0.1","IPAddress":"172.18.20.2","IPPrefixLen":16,"IPv6Gateway":"","GlobalIPv6Address":"","GlobalIPv6PrefixLen":0,"DNSNames":["doh","5a92cabbac8c"]}}
+        cont_name=$( docker inspect -f "{{.Name}}" "$cont_id" )                                                                             # /authentik-worker             raw container name
+        cont_name=${cont_name#/}                                                                                                            # authentik-worker              remove leading slash
+        cont_name=$( echo "${cont_name}" | sed 's/ //g' )                                                                                   # authentik-worker              remove spaces
+        cont_iflink=$( docker exec -i "$cont_id" sh -c 'cat /sys/class/net/eth0/iflink' 2> /dev/null )                                      # 688
+        cont_shell="Unknown"                                                                                                                # initial shell state           "Unknown"
 
-        err_bash_notfound=`echo "$cont_iflink" 2> /dev/null | grep -c "exec failed"`
-    
         # #
-        #   Bash Not Found
+        #   Determine Shell
+        #   
+        #   Loop all shells; figure out which one the container uses.
+        #       bash, sh, ash dash
         # #
 
-        if [[ "$err_bash_notfound" == "1" ]]; then
-            cont_iflink=`docker exec -it "$cont_id" sh -c 'cat /sys/class/net/eth0/iflink' 2>/dev/null`
-            err_sh_notfound=`echo "$cont_iflink" 2> /dev/null | grep -c "exec failed"`
-
-            # #
-            #   Sh Not Found
-            # #
-
-            if [[ "$err_sh_notfound" == "1" ]]; then
-                cont_shell="Unknown"
-                cont_iflink="Unknown"
-            else
-                cont_iflink=`echo "$cont_iflink" | sed 's/[^0-9]*//g'`
-                cont_shell="SH"
+        for shell in bash sh ash dash; do
+            if docker exec -i "$cont_id" "$shell" -c 'echo ok' >/dev/null 2>&1; then
+                cont_shell="$shell"
+                cont_iflink=$(docker exec -i "$cont_id" "$shell" -c 'cat /sys/class/net/eth0/iflink' 2>/dev/null)
+                break
             fi
-        else
-            cont_iflink=`echo "$cont_iflink" | sed 's/[^0-9]*//g'`
+        done
+        [ -z "$cont_shell" ] && cont_shell="Unknown"
+        [ -z "$cont_iflink" ] && cont_iflink="Unknown"
+
+        # #
+        #   Clean up cont_iflink (numbers only)
+        # #
+
+        if [ "$cont_iflink" != "Unknown" ]; then
+            cont_iflink=$( echo "$cont_iflink" | sed 's/[^0-9]*//g' )
         fi
 
         # #
-        #   Container > Running
+        #   Container › running || unresponsive || offline
+        #   
+        #       › docker container inspect -f '{{.State.Running}}' traefik
+        #           returns only true or false
+        #   
+        #       › docker container inspect -f '{{.State.Status}}' traefik
+        #           returns running, exited, paused, or created
         # #
 
-        cont_status=$(docker ps --format '{{.Names}}' | grep -c "^${cont_name}$")
-        if [ "$( docker container inspect -f '{{.State.Running}}' $cont_name )" != "true" ]; then
-            cont_iflink="Not running"
+        cont_status=$( docker ps --format '{{.Names}}' | grep -c "^${cont_name}$" )                         # simple list of container names
+        if [ "$( docker container inspect -f '{{.State.Running}}' ${cont_name} )" != "true" ]; then
+            cont_iflink=$( docker container inspect -f '{{.State.Status}}' ${cont_name} )                   # running, exited, paused, or created
         fi
+
+        # #
+        #   If empty iflink; set status to "No Response"
+        # #
 
         if [ -z "${cont_iflink}" ]; then
-            cont_iflink="Unresponsive"
+            cont_iflink="No Response"
         fi
 
         # #
-        #   Get veth network interface
+        #   Veth › Main
+        #   
+        #   Can find container's main veth by running the two commands below (in order)
+        #       › docker exec pihole cat /sys/class/net/eth0/iflink
+        #           returns 8
+        #       › idx=$(docker exec pihole cat /sys/class/net/eth0/iflink) && for i in /sys/class/net/veth*/ifindex; do [ "$(cat "$i")" = "$idx" ] && basename "$(dirname "$i")"; done
+        #           returns vetha0ecc71
+        #   
+        #   › cont_veth_main
+        #     returns main veth interface
+        #         vetha0ecc71
         # #
 
+        cont_veth_main="Unknown"
+        if [ -n "${cont_iflink}" ] && [ "${cont_iflink}" != "Unknown" ]; then
+            cont_veth_main=$( printf '%s' "${veth_cache}" |
+                awk -F: -v id="${cont_iflink}" '$1==id { print $2; exit }' )
+        fi
+        [ -z "${cont_veth_main}" ] && cont_veth_main="Unknown"
+
+        # #
+        #   Veth › List
+        #   
+        #   Obtain a list of container veth interfaces with the following commands (in order):
+        #       › sudo grep -l -s "687" /sys/class/net/veth*/ifindex
+        #           returns /sys/class/net/veth7516a61/ifindex
+        #       › echo "veth7516a61" | sed -e 's;^.*net/\(.*\)/ifindex$;\1;'
+        #           returns veth7516a61
+        #   
+        #   › cont_veth
+        #     returns multi-lined list of veth interfaces
+        #         veth034f583
+        #         veth0c59f79
+        # #
+
+        cont_veth=""
         if [ -n "${cont_iflink}" ]; then
-            cont_veth=$(sudo grep -l -s "$cont_iflink" /sys/class/net/veth*/ifindex)
-            cont_veth=`echo "$cont_veth" | sed -e 's;^.*net/\(.*\)/ifindex$;\1;'`
+            cont_veth=$( sudo grep -l -s "$cont_iflink" /sys/class/net/veth*/ifindex )
+            cont_veth=$( echo "$cont_veth" | sed -e 's;^.*net/\(.*\)/ifindex$;\1;' )
 
             if [ -z "${cont_veth}" ]; then
                 cont_veth="Unknown"
             fi
-
         fi
+        [ -z "$cont_veth" ] && cont_veth="Unknown"
 
         # #
         #   Chart Truncation
         # #
 
-        cont_name_chart=$(trim "$cont_name" 20 "...")
-        cont_network_list_chart=$(trim "$cont_network_list" 50 "...")
-        cont_network_mode_chart=$(trim "$cont_netmode" 18 "...")
-        cont_network_ip_chart="Not Found"
-        cont_network_list="$cont_network"
-        declare -a cont_network_arr=( $cont_network )
+        cont_name_chart=$( truncate "${cont_name}" 20 "..." )                       # pihole
+        cont_network_list_chart=$( truncate "${cont_network_list}" 50 "..." )       # dns traefik
+        cont_network_mode_chart=$( truncate "${cont_netmode}" 18 "..." )            # dns
+        cont_network_ip_chart="Unknown"
+        cont_network_list="${cont_network}"                                         # dns \n traefik                Multi-line list of networks
+        cont_network_arr="${cont_network_list}"                                     # dns traefik                   space-separated
+        cont_network_arr=$( echo "${cont_network_arr}" | tr '\n' ' ' )              # dns traefik                   List of network
+        cont_network_arr_count=$( echo "${cont_network_arr}" | wc -w | tr -d ' ' )  # 2                             Count of elements (replaces ${#cont_network_arr[@]})
 
         # #
-        #   Netmode > Default
+        #   Netmode › Default
         # #
 
-        if [ $cont_netmode == "default" ]; then
-            cont_bridge_name=${docker0_eth}
-            cont_ipaddr=`docker inspect -f "{{.NetworkSettings.IPAddress}}" ${cont_id}`
-            cont_network_ip_chart="$cont_ipaddr"
+        if [ "${cont_netmode}" = "default" ]; then
+            cont_bridge_name="${docker0_eth}"
+            cont_ipaddr=$( docker inspect -f "{{.NetworkSettings.IPAddress}}" "${cont_id}" )
+            cont_network_ip_chart="${cont_ipaddr}"
 
         # #
-        #   Netmode > Other
+        #   Netmode › Other
         # #
 
         else
-            # Loop Networks
+
+            # #
+            #   Loop Network
+            # #
+
             while IFS= read -r cont_network_list; do
-                # cont_bridge_name=`docker inspect -f "{{with index .NetworkSettings.Networks \"bridge\"}}{{.NetworkID}}{{end}}" cb9a6ae9c19e | cut -c -12`
-                cont_bridge=$(docker inspect -f "{{with index .NetworkSettings.Networks \"${cont_network_list}\"}}{{.NetworkID}}{{end}}" ${cont_id} | cut -c -12)           # 2e0fde4b0664
+                cont_bridge=$( docker inspect -f "{{with index .NetworkSettings.Networks \"${cont_network_list}\"}}{{.NetworkID}}{{end}}" "${cont_id}" | cut -c -12 )
+                cont_bridge_name=$( docker network inspect -f '{{"'br-${cont_bridge}'" | or (index .Options "com.docker.network.bridge.name")}}' "${cont_bridge}" )
+                cont_ipaddr=$( docker inspect -f "{{with index .NetworkSettings.Networks \"${cont_network_list}\"}}{{.IPAddress}}{{end}}" "${cont_id}" )
+                cont_ipaddr_orig=${cont_ipaddr}
+                cont_network_ip_chart="${cont_ipaddr}"
 
-                # docker network inspect -f {{"br-e95004d90f8d" | or (index .Options "com.docker.network.bridge.name")}} e95004d90f8d
-                cont_bridge_name=`docker network inspect -f '{{"'br-$cont_bridge'" | or (index .Options "com.docker.network.bridge.name")}}' $cont_bridge`                  # br-2e0fde4b0664
-                cont_ipaddr=`docker inspect -f "{{with index .NetworkSettings.Networks \"${cont_network_list}\"}}{{.IPAddress}}{{end}}" ${cont_id}`                         # 172.18.0.13
-                cont_ipaddr_orig=${cont_ipaddr}                                                                                                                             # 172.18.0.13
-                cont_network_ip_chart="$cont_ipaddr"                                                                                                                        # 172.18.0.13
-
-                if [ -z "${cont_bridge}" ]; then cont_bridge="${RED2}Not found${END}"; fi
-                if [ -z "${cont_bridge_name}" ]; then cont_bridge_name="${RED2}Not found${END}"; fi
+                if [ -z "${cont_bridge}" ]; then cont_bridge="${redl}Unknown${end}"; fi
+                if [ -z "${cont_bridge_name}" ]; then cont_bridge_name="${redl}Unknown${end}"; fi
                 if [ -z "${cont_ipaddr}" ]; then 
-                    cont_ipaddr="${RED2}Not found${END}";
-                    cont_network_ip_chart="Not Found";
+                    cont_ipaddr="${redl}Unknown${end}";
+                    cont_network_ip_chart="Unknown";
                 fi
-            done <<< "$cont_network_list"
+            done <<EOF
+$cont_network_list
+EOF
         fi
+
+        # #
+        #   Prep list of rules; will be used to determine how file-tree looks.
+        #   And then shown later.
+        #   
+        #   Example output:
+        #       22/tcp->0.0.0.0:22
+        #       22/tcp->[::]:22
+        #       80/tcp->0.0.0.0:80
+        #       80/tcp->[::]:80
+        # #
+    
+        rules=$( docker port "${cont_id}" | sed 's/ //g' )
 
         # #
         #   List each container
         # #
 
-        echo -e
-        echo " ${GREY1}                 ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐${END}"
-        echo " ${GREY1}                 │                                                                                                                                                                │"
-
-        printf '%-17s %-30s %-38s %-26s %-33s %-33s %-30s %-40s %-50s' \
-            " " \
-            "${GREY2}   Container${END}" \
-            "${GREY2}   Name" \
-            "${GREY2}   Shell${END}" \
-            "${GREY2}   IP${END}" \
-            "${GREY2}   IfLink ID${END}" \
-            "${GREY2}   Veth Adapter${END}" \
-            "${GREY2}   Network Mode${END}" \
-            "${GREY2}   Network List${END}"
-
-        printf '\n%-17s %-30s %-38s %-26s %-33s %-33s %-30s %-40s %-50s' \
-            " " \
-            "${GREY2}   ${cont_id}${END}" \
-            "${GREY2}   ${cont_name_chart}" \
-            "${GREY2}   ${cont_shell}${END}" \
-            "${GREY2}   ${cont_network_ip_chart}${END}" \
-            "${GREY2}   ${cont_iflink}${END}" \
-            "${GREY2}   ${cont_veth}${END}" \
-            "${GREY2}   ${cont_network_mode_chart}${END}" \
-            "${GREY2}   [${#cont_network_arr[@]}] ${cont_network_list_chart}${END}"
-
-        echo -e
-        echo " ${GREY1}                 │                                                                                                                                                                │"
-        echo " ${GREY1}                 └────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘${END}"
+        printf '\n%-0s %-30s %-38s %-26s %-30s %-33s %-30s %-30s %-50s' \
+            "" \
+            "${greym}   ${cont_id}${end}" \
+            "${greym}   ${cont_name_chart}" \
+            "${greym}   ${cont_shell}${end}" \
+            "${greym}   ${cont_network_ip_chart}${end}" \
+            "${greym}   ${cont_iflink}${end}" \
+            "${greym}   ${cont_veth_main}${end}" \
+            "${greym}   ${cont_network_mode_chart}${end}" \
+            "${greym}   [${cont_network_arr_count}] ${cont_network_list_chart}${end}"
 
         # #
-        #   Netmode > Default
+        #   Netmode › Default
         # #
 
-        if [ $cont_netmode == "default" ]; then
+        if [ "${cont_netmode}" = "default" ]; then
             cont_bridge_name=${docker0_eth}
 
             #   This will return empty if IP manually assigned from docker-compose.yml for container
             #   docker inspect -f "{{.NetworkSettings.IPAddress}}" 5b251b810e7d
 
-            cont_ipaddr=`docker inspect -f "{{.NetworkSettings.IPAddress}}" ${cont_id}`
+            cont_ipaddr=$( docker inspect -f "{{.NetworkSettings.IPAddress}}" "$cont_id" )
 
         # #
-        #   Netmode > Other
+        #   Netmode › Other
         # #
 
         else
 
             # #
-            #   return all container info
-            #       sudo docker inspect -f '' badaaca1d5da
+            #   Count networks (used only to detect last line)
             # #
 
-            # #
-            #   network_adapter=$(docker container inspect -f '{{range $net,$v := .NetworkSettings.Networks}}{{printf "%s\n" $net}}{{end}}' ${container})
-            #
-            #   RETURNS:
-            #       'traefik'
-            # #
+            cont_network_count=$( printf '%s\n' "${cont_network}" | wc -l | tr -d ' ' )
+            cont_network_idx=0
 
             # #
-            #   should return:
-            #       2e0fde4b0664
+            #   Loop Network
             # #
 
-            # Loop Network
             while IFS= read -r cont_network; do
+                cont_network_idx=$(( cont_network_idx + 1 ))
 
-                printf '\n%-17s %-46s' " " "${GREY1}│ ${END}"
+                cont_bridge=$( docker inspect -f \
+                    "{{with index .NetworkSettings.Networks \"${cont_network}\"}}{{.NetworkID}}{{end}}" \
+                    "$cont_id" | cut -c -12 )
 
-                cont_bridge=$(docker inspect -f "{{with index .NetworkSettings.Networks \"${cont_network}\"}}{{.NetworkID}}{{end}}" ${cont_id} | cut -c -12)
+                cont_bridge_name=$( docker network inspect -f \
+                    '{{"'br-${cont_bridge}'" | or (index .Options "com.docker.network.bridge.name")}}' \
+                    "${cont_bridge}" )
 
-                # #
-                #   should return:
-                #       br-2e0fde4b0664
-                # #
+                cont_ipaddr=$( docker inspect -f \
+                    "{{with index .NetworkSettings.Networks \"${cont_network}\"}}{{.IPAddress}}{{end}}" \
+                    "$cont_id" )
 
-                cont_bridge_name=`docker network inspect -f '{{"'br-$cont_bridge'" | or (index .Options "com.docker.network.bridge.name")}}' $cont_bridge`
-
-                # #
-                #   should return:
-                #       172.18.0.7 (or any other IP)
-                # #
-
-                cont_ipaddr=`docker inspect -f "{{with index .NetworkSettings.Networks \"${cont_network}\"}}{{.IPAddress}}{{end}}" ${cont_id}`
                 cont_ipaddr_orig=${cont_ipaddr}
 
-                if [ -z "${cont_bridge}" ]; then cont_bridge="${RED2}Not found${END}"; fi
-                if [ -z "${cont_bridge_name}" ]; then cont_bridge_name="${RED2}Not found${END}"; fi
-                if [ -z "${cont_ipaddr}" ]; then cont_ipaddr="${RED2}Not found${END}"; fi
+                [ -z "${cont_bridge}" ] && cont_bridge="${redl}Unknown${end}"
+                [ -z "${cont_bridge_name}" ] && cont_bridge_name="${redl}Unknown${end}"
+                [ -z "${cont_ipaddr}" ] && cont_ipaddr="${redl}Unknown${end}"
 
-                printf '\n%-17s %-46s %-55s' " " "${GREY1}├── ${GREY1}BRIDGE" "${BLUE2}${cont_bridge_name}${END}"
-             #  printf '\n%-17s %-46s %-55s' " " "${GREY1}├── ${GREY1}DOCKER_NET" "${BLUE2}${cont_bridge_name}${END}"
-                printf '\n%-17s %-46s %-55s' " " "${GREY1}├── ${GREY1}IP" "${BLUE2}${cont_ipaddr}${END}"
+                # For single-network container, BRIDGE gets ├──, IP gets └──
+                printf '\n%-4s %-42s %-55s' " " "${greyd}├── ${greyd}BRIDGE" "${bluel}${cont_bridge_name}${end}"
+                printf '\n%-4s %-42s %-55s' " " "${greyd}├── ${greyd}IP"     "${bluel}${cont_ipaddr}${end}"
 
-                if [ "${cfg_dev_enabled}" == "true" ]; then
-                    echo -e "                                           ${GREY1}docker inspect -f \"{{with index .NetworkSettings.Networks \"${cont_network}\"}}{{.NetworkID}}{{end}}\" ${cont_id} | cut -c -12${END}"
-                    echo -e "                                           ${GREY1}docker network inspect -f '{{\"'br-$cont_bridge'\" | or (index .Options \"com.docker.network.bridge.name\")}}' ${cont_bridge}${END}"
-                    echo -e "                                           ${GREY1}docker inspect -f '{{with index .NetworkSettings.Networks \"${cont_network}\"}}{{.IPAddress}}{{end}}' ${cont_id}${END}"
-                fi
+done <<EOF
+$cont_network
+EOF
 
-            done <<< "$cont_network"
         fi
 
         # #
         #   CHeck if containers IP is currently in CSF allow list /etc/csf/csf.allow
+        #   
+        #   To skip an add to the csf allowlist, must match both the word AND the color of the text; otherwise it will
+        #   return false.
+        #       "$cont_ipaddr" != "${redl}Unknown${end}"
         # #
 
-        if [[ -n "${cont_ipaddr}" ]] && [[ "$cont_ipaddr" != "${RED2}Not found${END}" ]]; then
+        if [ -n "${cont_ipaddr}" ] && [ "${cont_ipaddr}" != "${redl}Not found${end}" ] && [ "${cont_ipaddr}" != "${redl}Unknown${end}" ]; then
 
-            if sudo grep -q "\b${cont_ipaddr}\b" ${file_csf_allow}; then
-                printf '\n%-17s %-46s %-55s' " " "${GREY1}└── ${GREY1}WHITELIST" "${YELLOW2}Already whitelisted in: ${END}${file_csf_allow}${END}"
+            if sudo grep -Fq "${cont_ipaddr}" "$file_csf_allow"; then
+                if [ -n "$rules" ]; then
+                    printf '\n%-4s %-42s %-55s' " " "${greyd}├── ${greyd}WHITELIST" "${yellowl}Already whitelisted in: ${end}${file_csf_allow}${end}"
+                else
+                    printf '\n%-4s %-42s %-55s' " " "${greyd}└── ${greyd}WHITELIST" "${yellowl}Already whitelisted in: ${end}${file_csf_allow}${end}"
+                fi
             else
-
                 # #
                 #   Found CSF binary, add container IP to allow list /etc/csf/csf.allow
                 # #
 
-                if [[ $csf_path ]]; then
-                    printf '\n%-17s %-46s %-55s' " " "${GREY1}└── ${GREY1}WHITELIST" "${GREEN2}Adding ${cont_ipaddr} to allow list ${file_csf_allow}${END}"
-                 #   $csf_path -a ${cont_ipaddr} ${csf_comment} >/dev/null 2>&1
+                if [ -n "$csf_path" ]; then
+                    if [ -n "$rules" ]; then
+                        printf '\n%-4s %-42s %-55s' " " "${greyd}├── ${greyd}WHITELIST" "${greenl}Adding ${cont_ipaddr} to allow list ${file_csf_allow}${end}"
+                    else
+                        printf '\n%-4s %-42s %-55s' " " "${greyd}└── ${greyd}WHITELIST" "${greenl}Adding ${cont_ipaddr} to allow list ${file_csf_allow}${end}"
+                    fi
+
+                    # Write whitelist to file
+                    "$csf_path" -a "${cont_ipaddr}" "$csf_comment" >/dev/null 2>&1
                 fi
             fi
+
         else
-            printf '\n%-17s %-46s %-55s' " " "${GREY1}└── ${GREY1}WHITELIST" "${RED2}Found blank IP, cannot be added to ${file_csf_allow}${END}"
+            printf '\n%-4s %-42s %-55s' " " "${greyd}└── ${greyd}WHITELIST" "${redl}Found blank or unknown IP, cannot be added to ${file_csf_allow}${end}"
         fi
 
         # #
-        #   22/tcp->0.0.0.0:22
-        #   22/tcp->[::]:22
-        #   80/tcp->0.0.0.0:80
-        #   80/tcp->[::]:80
-        #   443/tcp->0.0.0.0:443
-        #   443/tcp->[::]:443
-        #   2222/tcp->0.0.0.0:2222
-        #   2222/tcp->[::]:2222
+        #   Only proceed if there are rules
         # #
 
-        rules=`docker port ${cont_id} | sed 's/ //g'`
+        if [ "$( printf '%s' "$rules" | wc -c )" -gt 1 ]; then
 
-        # #
-        #   manage ip:port rules
-        # #
-
-        if [ `echo ${rules} | wc -c` -gt "1" ]; then
-
-            for rule in ${rules}; do
+            for rule in $rules; do
 
                 # #
-                #   pull ip:port from each rule and format it appropriately
+                #   Extract source and destination
                 # #
 
-                src=`echo ${rule} | awk -F'->' '{ print $2 }'`
-                dst=`echo ${rule} | awk -F'->' '{ print $1 }'`
-
-                src_ip=`echo ${src} | sed 's|^\(.*\):.*$|\1|'`
-                src_port=`echo ${src} | awk -F':' '{ print $2 }'`
-
-                dst_port=`echo ${dst} | awk -F'/' '{ print $1 }'`
-                dst_proto=`echo ${dst} | awk -F'/' '{ print $2 }'`
+                src=$( echo "$rule" | awk -F'->' '{print $2}' )
+                dst=$( echo "$rule" | awk -F'->' '{print $1}' )
 
                 # #
-                #   SOURCE          0.0.0.0:22                            
-                #   DESTINATION     22/tcp                                
-                #   PORT            22                                    
-                #   PROTOTYPE       tcp    
-                # #
-                
-                printf '\n%-17s %-46s' " " "${GREY1}│ ${END}"
-                printf '\n%-17s %-46s %-55s' " " "${GREY1}├── ${GREY1}SOURCE" "${FUCHSIA2}${src}${END}"
-                printf '\n%-17s %-46s %-55s' " " "${GREY1}└── ${GREY1}DESTINATION" "${FUCHSIA2}${dst}${END}"
-                # printf '\n%-17s %-35s %-55s' " " "${GREY1}PORT" "${FUCHSIA2}${dst_port}${END}"
-                # printf '\n%-17s %-35s %-55s' " " "${GREY1}PROTOTYPE" "${FUCHSIA2}${dst_proto}${END}"
-                echo -e
-
-                # #
-                #   IPTABLE RULE > Add container ip:port for each entry
+                #   Detect if IPv4 or IPv6
                 # #
 
-                sudo ${path_iptables4} -A DOCKER -d ${cont_ipaddr}/32 ! -i ${cont_bridge_name} -o ${cont_bridge_name} -p ${dst_proto} -m ${dst_proto} --dport ${dst_port} -j ACCEPT
-                sudo ${path_iptables4} -t nat -A POSTROUTING -s ${cont_ipaddr}/32 -d ${cont_ipaddr}/32 -p ${dst_proto} -m ${dst_proto} --dport ${dst_port} -j MASQUERADE
+                case "$src" in
+                    \[*\]*)
 
-                echo -e "                  ${GREY1}    ├── + RULE:    ${GREY1}-A DOCKER -d ${cont_ipaddr}/32 ! -i ${cont_bridge_name} -o ${cont_bridge_name} -p ${dst_proto} -m ${dst_proto} --dport ${dst_port} -j ACCEPT${END}"
-                echo -e "                  ${GREY1}    ├── + RULE:    ${GREY1}-t nat -A POSTROUTING -s ${cont_ipaddr}/32 -d ${cont_ipaddr}/32 -p ${dst_proto} -m ${dst_proto} --dport ${dst_port} -j MASQUERADE${END}"
+                        # #
+                        #   IPv6
+                        # #
 
-                # #
-                #   Support for IPv4
-                # #
+                        src_ip=$( echo "$src" | sed 's|^\[\(.*\)\]:.*$|\1|' )
+                        src_port=$( echo "$src" | awk -F':' '{print $2}' )
+                        dst_port=$( echo "$dst" | awk -F'/' '{print $1}' )
+                        dst_proto=$( echo "$dst" | awk -F'/' '{print $2}' )
 
-                iptables_opt_src=""
-                if [ ${src_ip} != "0.0.0.0" ]; then
-                    iptables_opt_src="-d ${src_ip}/32 "
-                fi
+                        # Fetch container IPv6 address from Docker inspect
+                        cont_ipaddr6=$(docker inspect -f \
+                            "{{with index .NetworkSettings.Networks \"${cont_network}\"}}{{.GlobalIPv6Address}}{{end}}" \
+                            "$cont_id")
 
-                if [[ ${src_ip} =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-                    sudo ${path_iptables4} -t nat -A DOCKER ${iptables_opt_src}! -i ${cont_bridge_name} -p ${dst_proto} -m ${dst_proto} --dport ${src_port} -j DNAT --to-destination ${cont_ipaddr}:${dst_port}
-                    echo -e "                  ${GREY1}    └── + RULE:    ${GREY1}-t nat -A DOCKER ${iptables_opt_src}! -i ${cont_bridge_name} -p ${dst_proto} -m ${dst_proto} --dport ${src_port} -j DNAT --to-destination ${cont_ipaddr}:${dst_port}${END}"
-                fi
+                        # Skip if container has no IPv6
+                        if [ -z "$cont_ipaddr6" ]; then
+                            label "                         ! RULES V6 ${yellowl}[NFO]${yellowl} No valid IPv6 address assigned${end}"
+                            continue
+                        fi
+
+                        # #
+                        #   Print nicely formatted
+                        # #
+
+                        printf '\n%-4s %-42s %-55s' " " "${greyd}┌── ${greyd}SOURCE" "${fuchsial}${src}${end}"
+                        printf '\n%-4s %-42s %-55s' " " "${greyd}└── ${greyd}DEST" "${fuchsial}${dst}${end}"
+                        printf '\n'
+
+                        # #
+                        #   Iptables › IPv6
+                        # #
+
+                        sudo "${ipt6}" -A DOCKER -d "${cont_ipaddr6}/128" ! -i "${cont_bridge_name}" -o "${cont_bridge_name}" \
+                            -p "${dst_proto}" -m "${dst_proto}" --dport "${dst_port}" -j ACCEPT
+
+                        sudo "${ipt6}" -t nat -A POSTROUTING -s "${cont_ipaddr6}/128" -d "${cont_ipaddr6}/128" \
+                            -p "${dst_proto}" -m "${dst_proto}" --dport "${dst_port}" -j MASQUERADE
+
+                        label "                         + RULES V6 ${greend}[ADD]${greend} -A DOCKER -d ${cont_ipaddr6}/128 ! -i ${cont_bridge_name} -o ${cont_bridge_name} -p ${dst_proto} -m ${dst_proto} --dport ${dst_port} -j ACCEPT${end}"
+                        label "                         + RULES V6 ${greend}[ADD]${greend} -t nat -A POSTROUTING -s ${cont_ipaddr6}/128 -d ${cont_ipaddr6}/128 -p ${dst_proto} -m ${dst_proto} --dport ${dst_port} -j MASQUERADE${end}"
+                        ;;
+
+                    *)
+                        # #
+                        #   IPv4
+                        # #
+
+                        src_ip=$( echo "$src" | sed 's|^\(.*\):.*$|\1|' )
+                        src_port=$( echo "$src" | awk -F':' '{print $2}' )
+                        dst_port=$( echo "$dst" | awk -F'/' '{print $1}' )
+                        dst_proto=$( echo "$dst" | awk -F'/' '{print $2}' )
+
+                        # #
+                        #   Print nicely formatted
+                        # #
+                    
+                        printf '\n%-4s %-42s %-55s' " " "${greyd}┌── ${greyd}SOURCE" "${fuchsial}${src}${end}"
+                        printf '\n%-4s %-42s %-55s' " " "${greyd}└── ${greyd}DEST" "${fuchsial}${dst}${end}"
+                        printf '\n'
+
+                        # #
+                        #   Iptables Rules › IPv4
+                        # #
+                    
+                        sudo "${ipt4}" -A DOCKER -d "${cont_ipaddr}/32" ! -i "${cont_bridge_name}" -o "${cont_bridge_name}" \
+                            -p "${dst_proto}" -m "${dst_proto}" --dport "${dst_port}" -j ACCEPT
+
+                        sudo "${ipt4}" -t nat -A POSTROUTING -s "${cont_ipaddr}/32" -d "${cont_ipaddr}/32" \
+                            -p "${dst_proto}" -m "${dst_proto}" --dport "${dst_port}" -j MASQUERADE
+
+                        label "                         + RULES V4 ${greend}[ADD]${greend} -A DOCKER -d ${cont_ipaddr}/32 ! -i ${cont_bridge_name} -o ${cont_bridge_name} -p ${dst_proto} -m ${dst_proto} --dport ${dst_port} -j ACCEPT${end}"
+                        label "                         + RULES V4 ${greend}[ADD]${greend} -t nat -A POSTROUTING -s ${cont_ipaddr}/32 -d ${cont_ipaddr}/32 -p ${dst_proto} -m ${dst_proto} --dport ${dst_port} -j MASQUERADE${end}"
+
+                        # #
+                        #   Support for IPv4 DNAT
+                        # #
+
+                        iptables_opt_src=""
+                        if [ "$src_ip" != "0.0.0.0" ]; then
+                            iptables_opt_src="-d ${src_ip}/32 "
+                        fi
+
+                        # #
+                        #   Only apply DNAT if src_ip is a valid IPv4
+                        # #
+
+                        if echo "$src_ip" | grep -qE '^[0-9]{1,3}(\.[0-9]{1,3}){3}$'; then
+                            sudo "${ipt4}" -t nat -A DOCKER ${iptables_opt_src}! -i "${cont_bridge_name}" \
+                                -p "${dst_proto}" -m "${dst_proto}" --dport "${src_port}" -j DNAT --to-destination "${cont_ipaddr}:${dst_port}"
+
+                            label "                         + RULES V4 ${greend}[ADD]${greend} -t nat -A DOCKER ${iptables_opt_src}! -i ${cont_bridge_name} -p ${dst_proto} -m ${dst_proto} --dport ${src_port} -j DNAT --to-destination ${cont_ipaddr}:${dst_port}${end}"
+                        fi
+                        ;;
+                esac
             done
         fi
 
-        echo -e
-        echo -e
+        # Blank line between containers
+        printf '\n'
 
     done
-fi
 
-echo -e
-echo -e
-
-# #
-#   DOCKER-ISOLATION-STAGE
-# #
-
-echo " ${GREY1}                 ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐${END}"
-echo -e "  ${BOLD}${GREY1}+ RULES         │  ${WHITE}Add DOCKER-ISOLATION-STAGE & DOCKER-USER rules${GREY1}                                                                                                                │"
-echo " ${GREY1}                 └────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘${END}"
-
-chain_docker_iso_stage_1_exiss=`sudo ${path_iptables4} -nvL DOCKER-ISOLATION-STAGE-1 2> /dev/null | grep "RETURN" | grep -c "0.0.0.0/0"`
-chain_docker_iso_stage_2_exiss=`sudo ${path_iptables4} -nvL DOCKER-ISOLATION-STAGE-2 2> /dev/null | grep "RETURN" | grep -c "0.0.0.0/0"`
-chain_docker_user_exiss=`sudo ${path_iptables4} -nvL DOCKER-USER 2> /dev/null | grep "RETURN" | grep -c "0.0.0.0/0"`
-
-if [[ "$chain_docker_iso_stage_1_exiss" == "0" ]]; then
-    printf '\n%-17s %-29s %-55s' " " "${GREY1}+ RULE" "${FUCHSIA2}-A DOCKER-ISOLATION-STAGE-1 -j RETURN${END}"
-    sudo ${path_iptables4} -A DOCKER-ISOLATION-STAGE-1 -j RETURN
-else
-    printf '\n%-17s %-29s %-55s' " " "${GREY1}! RULE" "${END}Already exists: ${FUCHSIA2}-A DOCKER-ISOLATION-STAGE-1 -j RETURN${END} already exists ${END}"
-fi
-
-if [[ "$chain_docker_iso_stage_2_exiss" == "0" ]]; then
-    printf '\n%-17s %-29s %-55s' " " "${GREY1}+ RULE" "${FUCHSIA2}-A DOCKER-ISOLATION-STAGE-2 -j RETURN${END}"
-    sudo ${path_iptables4} -A DOCKER-ISOLATION-STAGE-2 -j RETURN
-else
-    printf '\n%-17s %-29s %-55s' " " "${GREY1}! RULE" "${END}Already exists: ${FUCHSIA2}-A DOCKER-ISOLATION-STAGE-2 -j RETURN${END} already exists ${END}"
-fi
-
-if [[ "$chain_docker_user_exiss" == "0" ]]; then
-    printf '\n%-17s %-29s %-55s' " " "${GREY1}+ RULE" "${FUCHSIA2}-A DOCKER-USER -j RETURN${END}"
-    sudo ${path_iptables4} -A DOCKER-USER -j RETURN
-else
-    printf '\n%-17s %-29s %-55s' " " "${GREY1}! RULE" "${END}Already exists: ${FUCHSIA2}-A DOCKER-USER -j RETURN${END}"
 fi
 
 # #
-#   Check if docker0 inside DOCKER chain
+#   SECTION › DOCKER-ISOLATION-STAGE
+#   
+#   Get all Docker bridge network IDs
 # #
 
-printf '\n%-17s %-29s %-55s' " " "${GREY1}+ TASK" "${FUCHSIA2}Checking ${END}${docker0_eth}${FUCHSIA2} status${END}"
-if [ `sudo ${path_iptables4} -t nat -nvL DOCKER 2> /dev/null | grep ${docker0_eth} | wc -l` -eq 0 ]; then
-    sudo ${path_iptables4} -t nat -I DOCKER -i ${docker0_eth} -j RETURN
-    printf '\n%-17s %-29s %-55s' " " "${GREY1}+ RULE" "${FUCHSIA2}-t nat -I DOCKER -i ${docker0_eth} -j RETURN${END}"
-else
-    printf '\n%-17s %-29s %-55s' " " "${GREY1}! RULE" "${END}Already exists: ${FUCHSIA2}-t nat -I DOCKER -i ${docker0_eth} -j RETURN${END}"
-fi
+prinp "Add DOCKER-ISOLATION And DOCKER-USER Rules" \
+       "This step ensures that the Docker core firewall chains are present and safely configured so CSF and Docker do not interfere with each other. asdasd asdasdsad \
+${greyd}\n${greyd} \
+${greyd}\n${yellowd}- ${greym}DOCKER-ISOLATION-STAGE-1 exists and returns traffic correctly${greyd} \
+${greyd}\n${yellowd}- ${greym}DOCKER-ISOLATION-STAGE-2 exists to enforce bridge isolation${greyd} \
+${greyd}\n${yellowd}- ${greym}DOCKER-USER chain returns traffic to CSF rules${greyd} \
+${greyd}\n${yellowd}- ${greym}Prevent Docker isolation chains from blocking legitimate traffic${greyd} \
+${greyd}\n${yellowd}- ${greym}Ensure docker0 traffic skips extra NAT processing${greyd}"
 
-echo -e
-echo -e
+# #
+#   Ensure Docker isolation and user chains allow traffic by default using RETURN rules.
+#   
+#   Prevent CSF or custom rules from blocking Docker-managed flows and allows Docker to
+#   manage isolation and user filtering safely
+#   
+#   DOCKER                      Handles port forwarding and NAT rules for running containers.
+#                               This is where traffic is routed from the host to container ports.
+#   DOCKER-USER                 User-defined firewall rules that run BEFORE Docker’s own rules.
+#                               Used by CSF or custom firewalls to allow or block container traffic safely.
+#   DOCKER-ISOLATION-STAGE-1    First step in Docker’s network isolation.
+#                               Identifies traffic moving between different Docker bridges.
+#   DOCKER-ISOLATION-STAGE-2    Second step in Docker’s network isolation.
+#                               Blocks cross-bridge traffic unless explicitly allowed.
+#   DOCKER-INGRESS              Used for Docker Swarm services and overlay networking.
+#                               Not used by standalone containers.
+# #
+
+rule_add -A DOCKER-ISOLATION-STAGE-1 -j RETURN
+rule_add -A DOCKER-ISOLATION-STAGE-2 -j RETURN
+rule_add -A DOCKER-USER -j RETURN
+rule_add -t nat -I DOCKER -i "${docker0_eth}" -j RETURN
+
+# #
+#   Finish
+# #
+
+ok "    Completed adding all ${greenl}Docker${greym} rules."
