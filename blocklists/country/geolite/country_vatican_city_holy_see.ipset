@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_vatican_city_holy_see_ipset
 #   @uuid           72d18d64-d2e0-3aef-ab4b-fa94b88bec9d
-#   @updated        Thu Dec 25 12:12:17 UTC 2025
+#   @updated        Fri Dec 26 00:19:29 UTC 2025
 #   @entries        17039 ips
 #                   154 subnets
 #                   154 lines
