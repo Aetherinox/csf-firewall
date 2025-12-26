@@ -511,18 +511,18 @@ Ensure you have Webmin installed. If not, download the Webmin installer script:
 
 === ":aetherx-axd-command: Command"
 
-      ```shell
-      curl -o webmin-setup-repo.sh \
-        https://raw.githubusercontent.com/webmin/webmin/master/webmin-setup-repo.sh
-      ```
+    ```shell
+    curl -o webmin-setup-repo.sh \
+    https://raw.githubusercontent.com/webmin/webmin/master/webmin-setup-repo.sh
+    ```
 
 === ":aetherx-axs-square-terminal: Output"
 
-      ```shell
-        % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                      Dload  Upload   Total   Spent    Left  Speed
-      100 17604  100 17604    0     0  59917      0 --:--:-- --:--:-- --:--:-- 60081
-      ```
+    ```shell
+    % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                    Dload  Upload   Total   Spent    Left  Speed
+    100 17604  100 17604    0     0  59917      0 --:--:-- --:--:-- --:--:-- 60081
+    ```
 
 <br />
 
@@ -554,6 +554,21 @@ Run the Webmin installer:
 
 <br />
 
+??? note "Setup Script"
+
+    One of the first actions performed when running the `webmin-setup-repo.sh` script is that the developer's GPG key
+    will be downloaded to your system.
+
+    You can do this manually by running the command:
+
+    === ":aetherx-axd-command: Command"
+
+        ```shell
+        sudo curl -4 -v -fSL -o /tmp/developers-key.asc http://download.webmin.com/developers-key.asc
+        ```
+
+<br />
+
 Do as instructed on-screen and run the command to install the required dependencies and the Webmin package. When prompted, press `Y`:
 
 === ":aetherx-axb-debian: Debian/Ubuntu (apt-get)"
@@ -564,8 +579,16 @@ Do as instructed on-screen and run the command to install the required dependenc
 
 === ":aetherx-axb-redhat: CentOS/RHEL (yum/dnf)"
 
+    To perfor ma standard install of Webmin:
+
     ```bash
     sudo dnf install webmin
+    ```
+
+    To skip all GPG / SSL checks:
+
+    ```bash
+    sudo dnf install webmin --setopt=sslverify=false --nogpgcheck
     ```
 
 === ":aetherx-axs-square-terminal: Output"
@@ -605,7 +628,7 @@ Do as instructed on-screen and run the command to install the required dependenc
 
 After installation is complete, open your browser and navigate to:
 
-- `https://127.0.0.1:10000/`
+- https://127.0.0.1:10000/
 
 <br />
 
@@ -831,6 +854,8 @@ You can now proceed to the [Next Steps](#next-steps) or skip the rest of this se
     Official DirectAdmin installation guide.
 
 </div>
+
+<br />
 
 Before you begin installing DirectAdmin, you will need a valid license key. You can obtain one by [purchasing a plan](https://directadmin.com/pricing.php).  
 
@@ -1303,6 +1328,54 @@ InterWorx should start the installation process. At this point, InterWorx will t
 <figure markdown="span">
   ![InterWorx › Setting Up Firewall](../assets/images/install/interworx/2.png){ width=350 } ![InterWorx › Installation Complete](../assets/images/install/interworx/3.png){ width=350 }
 </figure>
+
+<br />
+
+During our tests, we noticed a slightly annoying issue with Interworx regarding the web installer. If you enter your license key, and for whatever reason, Interworx fails to communicate with the Interworx license server, getting the web installer to work again is rather tricky. Each additional time you attempt to register after the first fail, will cause Interworx to go into a loop, and you'll be asked to enter your information again.
+
+If you want to avoid the web installer, you can also use the CLI installation wizard by typing:
+
+=== ":aetherx-axd-command: Command"
+
+      ```shell
+      sudo ~iworx/bin/goiworx.pex
+      ```
+
+<br />
+
+Here you will be asked for your credentials and license key:
+
+=== ":aetherx-axs-square-terminal: Output"
+
+      ```shell
+      +----------------------------------------------------------------------+
+      |                            Go! InterWorx                             |
+      +----------------------------------------------------------------------+
+
+      [WARNING] The IP address (XX.XX.XX.XX) of this server was not set!
+      Continue? [y/N] y
+
+      [NOTE] Getting things ready for activation...
+      [NOTE] This step can take up to 2 minutes. Please be patient...
+
+      +----------------------------------------------------------------------+
+      |                         License Key Setup...                         |
+      +----------------------------------------------------------------------+
+
+      LICENSE KEY: INTERWORX_XXXXXXXXXXXX
+      You entered 'INTERWORX_XXXXXXXXXXXX'.
+
+      Is this correct? [Y/n] y
+
+      +----------------------------------------------------------------------+
+      |                    Default NodeWorx User Setup...                    |
+      +----------------------------------------------------------------------+
+
+      e-mail address: hello@configserver.dev
+
+      password: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+      confirm : XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+      ```
 
 <br />
 
@@ -2343,7 +2416,7 @@ You can now proceed to the [Next Steps](#next-steps) or skip the rest of this se
 <br />
 <br />
 
-### Add CSF to VestaCP Menu
+### Add CSF Menu
 
 If you absolutely need CSF to appear in your VestaCP top nav menu, you're going to have to change the source file, re-build VestaCP, and replace your existing `index.html`, `.css` and `.js` files. We will provide very brief instructions.
 
@@ -2992,6 +3065,34 @@ Once your server is back online, you can proceed with the installation of CWP:
     wget http://centos-webpanel.com/cwp-el9-latest
     sh cwp-el9-latest
     ```
+
+??? note "Re-install Notes"
+
+    During our run, we had the install fail during the installation of MySQL / MariaDB due to a bad repository source.
+
+    The problem was that after we installed the correct MariaDB packages and attempted to re-install CWP, we were greeted with the error:
+
+    === ":aetherx-axs-square-terminal: Output"
+
+        ```shell
+        CWP is already installed on your server.
+        If you want to update it, run this command: sh /scripts/update_cwp
+        ```
+
+    The installation script has no flag available to `--force` a new install; so we had to open the installation script `/usr/local/src/cwp-el9-latest`
+    and remove / comment out the following code:
+
+    === ":aetherx-axs-block-brick-fire: /usr/local/src/cwp-el9-latest"
+
+        ```bash
+        if [ -e "/usr/local/cwpsrv/" ]; then
+          echo
+          echo "CWP is already installed on your server."
+          echo "If you want to update it, run this command: sh /scripts/update_cwp"
+          echo
+          exit 1
+        fi
+        ```
 
 <br />
 

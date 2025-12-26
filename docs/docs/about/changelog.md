@@ -33,6 +33,13 @@ tags:
 - `docs(install)`: added DirectAdmin instructions to the [Install](https://docs.configserver.dev/install/install/#install-directadmin) chapter in the documentation.
 - `docs(integration)`: added AbuseIPDB integration to the documentation.
 - `refactor(csf)`: added AbuseIPDB template to `/etc/csf/csf.blocklists` for improved integration.
+- `refactor(docker)`: re-wrote docker integration script in `extras/docker.sh`
+    - added caching for docker container list generation
+    - POSIX compliant
+    - added optional `--flags` such as `--help`, `--dryrun`, etc.
+- `refactor(openvpn)`: re-wrote openvpn integration script in `extras/openvpn.sh`
+    - POSIX compliant
+    - added optional `--flags` such as `--help`, `--dryrun`, etc.
 - `fix(directadmin)`: corrected an install script error:
     - fixed an improperly closed `if` condition in the `install.directadmin` script.
 - `fix(webmin)`: descriptions for settings in interface now render correctly on the page with proper structure.
