@@ -359,7 +359,6 @@ This folder contains your own custom `pre` and `post` initialization scripts for
                     └── :aetherx-axd-file:{ .icon-clr-tree-file } custom_script.sh  
                 └── :aetherx-axs-folder:{ .icon-clr-tree-folder } post.d  
                     └── :aetherx-axd-file:{ .icon-clr-tree-file } custom_script.sh  
-
 </code>
 </div>
 

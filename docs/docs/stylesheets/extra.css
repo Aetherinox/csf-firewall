@@ -763,15 +763,6 @@
     }
 
     /*
-        Badge > Left Padding
-    */
-
-    .mdx-badge .mdx-badge__icon .twemoji
-    {
-        padding-left: 1px;
-    }
-
-    /*
         Badge > Override Icon Color
     */
 
@@ -848,6 +839,11 @@
     .mdx-badge--files-group-right .mdx-badge.mdx-badge--files-view
     {
         padding-right: 5px;
+    }
+
+    .mdx-badge.mdx-badge--files-download .mdx-badge__icon
+    {
+        padding-right: 7px !important;
     }
 
     /*
@@ -1284,6 +1280,11 @@
         max-width: calc(100vw - 1.6rem);
         position: relative;
         scrollbar-width: thin;
+    }
+
+    a .twemoji svg
+    {
+        color: #fa204f;
     }
 
 }
@@ -2003,15 +2004,6 @@
     }
 
     /*
-        Badge > Left Padding
-    */
-
-    .mdx-badge .mdx-badge__icon .twemoji
-    {
-        padding-left: 1px;
-    }
-
-    /*
         Badge > Override Icon Color
     */
 
@@ -2088,6 +2080,11 @@
     .mdx-badge--files-group-right .mdx-badge.mdx-badge--files-view
     {
         padding-right: 5px;
+    }
+
+    .mdx-badge.mdx-badge--files-download .mdx-badge__icon
+    {
+        padding-right: 7px !important;
     }
 
     /*
@@ -2515,6 +2512,11 @@
         max-width: calc(100vw - 1.6rem);
         position: relative;
         scrollbar-width: thin;
+    }
+
+    a .twemoji svg
+    {
+        color: #FFF;
     }
 }
 

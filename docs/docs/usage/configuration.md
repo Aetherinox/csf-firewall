@@ -55,13 +55,17 @@ Testing mode is a feature built into CSF and LFD which does the following when e
 
 ```ini
 # #
-#   Testing flag - enables a CRON job that clears iptables incase of
-#   configuration problems when you start csf. This should be enabled until you
-#   are sure that the firewall works - i.e. incase you get locked out of your
-#   server! Then do remember to set it to 0 and restart csf when you're sure
-#   everything is OK. Stopping csf will remove the line from /etc/crontab
+#   SECTION:Initial Settings
+# #
+#   Testing flag - enables a cron job that clears iptables if there are
+#   configuration problems when csf starts. Keep this enabled until you are
+#   confident the firewall is working correctly. This helps prevent getting
+#   locked out of your server.
 #   
-#   lfd will not start while this is enabled
+#   Once confirmed, set this flag to 0 and restart csf. Stopping csf will
+#   remove the cron job from /etc/crontab.
+#   
+#   Note:       lfd will not start while this flag is enabled.
 # #
 
 TESTING = "0"

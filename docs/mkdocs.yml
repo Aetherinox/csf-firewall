@@ -68,7 +68,7 @@ markdown_extensions:
     - pymdownx.highlight:
           use_pygments: true
           anchor_linenums: true
-          line_spans: __span
+          #line_spans: __span
           pygments_lang_class: true
     - pymdownx.superfences:
           custom_fences:
@@ -286,8 +286,9 @@ nav:
           - Enable Web Interface: 'install/webui.md'
           - Uninstall: 'install/uninstall.md'
           - Update:
-                - v14.x to v15.x: 'install/update/v14-to-v15.md'
-                - v15.x to Newer: 'install/update/v15-to-newer.md'
+                - install/update/index.md
+                - v15.00 to v15.01: 'install/update/v1500-to-v1501.md'
+                - v15.01 to Newer: 'install/update/v1501-to-newer.md'
           - Integrations:
                 - AbuseIPDB: 'install/integrations/abuseipdb.md'
                 - Authentik: 'install/integrations/authentik.md'
