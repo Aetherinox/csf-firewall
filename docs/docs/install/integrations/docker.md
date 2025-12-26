@@ -9,6 +9,7 @@ tags:
 ---
 
 # Docker Integration
+<!-- md:version stable-15.0.0 --> <!-- md:fileViewDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/scripts/docker.sh https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/scripts/docker.sh left -->
 
 Running CSF in environments that leverage Docker requires special considerations due to containerized networking and isolated interfaces.
 
@@ -24,7 +25,7 @@ Following these steps will help maintain both security and functionality in your
 
 ## What is Docker?
 
-Docker is a platform that lets you run applications inside **containers**, which are small, isolated environments that bundle everything your app needs to run.
+[:aetherx-axb-docker: Docker](https://docker.com/) is a platform that lets you run applications inside **containers**, which are small, isolated environments that bundle everything your app needs to run.
 
 A container can be described as a sealed mini virtual machine which includes:
 
@@ -42,14 +43,6 @@ Unlike full virtual machines, Docker containers don’t include an entire operat
 - Faster startup
 - Lower resource usage
 
-<br />
-
----
-
-<br />
-
-## Docker and CSF
-
 Docker containers run isolated from the host system and from each other, using their own virtualized networking interfaces. ConfigServer Firewall (CSF) needs to understand this containerized network environment in order to properly manage traffic.
 
 By supporting Docker, CSF can allow containers to communicate with each other internally, while also controlling and securing access to the public internet.
@@ -64,9 +57,9 @@ CSF ensures that container-to-container communication, external access, and port
 
 <br />
 
-## Enable Docker Mode
+## Setup
 
-Open your CSF config file located at `/etc/csf/csf.conf` and change the following setting to the value `1`:
+Open your CSF config file :aetherx-axd-file: `/etc/csf/csf.conf` and change the following setting to the value :aetherx-axd-gear: `1`:
 
 === ":aetherx-axs-file-magnifying-glass: Find"
 
@@ -82,7 +75,79 @@ Open your CSF config file located at `/etc/csf/csf.conf` and change the followin
 
 <br />
 
-Save the file and then give CSF a restart:
+Create a new folder on your server where we can download and place the Docker integration script. 
+
+=== ":aetherx-axs-command: Command"
+
+    ```bash
+    sudo mkdir -p /usr/local/include/csf/{pre.d,post.d}
+    ```
+
+<br />
+
+The command above will create two folders:
+
+1. :aetherx-axd-folder: `/usr/local/include/csf/pre.d/`
+    - Place all bash scripts inside this folder to have firewall rules added **BEFORE** CSF configures iptables.
+2. :aetherx-axd-folder: `/usr/local/include/csf/post.d/`
+    - Place all bash scripts inside this folder to have firewall rules added **AFTER** CSF configures iptables.
+
+<br />
+
+We need to download the **:aetherx-axb-docker: Docker integration script** from our [:aetherx-axb-github: repository](), and place it within the newly created folder :aetherx-axd-folder: `/usr/local/include/csf/post.d/`. 
+
+To download the Docker integration script, run ONE of the two commands below:
+
+=== ":aetherx-axb-wget: Wget"
+
+    ```bash
+    wget -qO "usr/local/include/csf/post.d/docker.sh" \
+        "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/scripts/docker.sh"
+    ```
+
+=== ":aetherx-axb-curl: Curl"
+
+    ```bash
+    curl -fsSL "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/scripts/docker.sh" \
+      -o "usr/local/include/csf/post.d/docker.sh"
+    ```
+
+<br />
+
+You should now have the following structure:
+
+<div class="icon-tree" markdown>
+<code>
+└── :aetherx-axs-folder:{ .icon-clr-tree-folder } usr  
+    └── :aetherx-axs-folder:{ .icon-clr-tree-folder } local  
+        └── :aetherx-axs-folder:{ .icon-clr-tree-folder } include  
+            └── :aetherx-axs-folder:{ .icon-clr-tree-folder } csf  
+                └── :aetherx-axs-folder:{ .icon-clr-tree-folder } pre.d  
+                └── :aetherx-axs-folder:{ .icon-clr-tree-folder } post.d  
+                    └── :aetherx-axd-file:{ .icon-clr-tree-file } docker.sh  
+        └── :aetherx-axs-folder:{ .icon-clr-tree-folder } csf  
+            └── :aetherx-axs-folder:{ .icon-clr-tree-folder } bin  
+                ├── :aetherx-axd-file:{ .icon-clr-tree-file } csfpre.sh  
+                └── :aetherx-axd-file:{ .icon-clr-tree-file } csfpost.sh  
+</code>
+</div>
+
+<br />
+
+Next, open up the file :aetherx-axd-file: `/usr/local/include/csf/post.d/docker.sh` and locate the configurable settings at the top:
+
+=== ":aetherx-axd-file: /usr/local/include/csf/post.d/docker.sh"
+
+    ```bash
+    docker0_eth="docker0"
+    csf_comment="Docker container whitelist"
+    file_csf_allow="/etc/csf/csf.allow"
+    containers_ip_cidr="172.17.0.0/16"
+    ```
+
+<br />
+
+Adjust the settings to fit your needs. Save the file and then give CSF a restart:
 
 === ":aetherx-axd-command: Command"
 
@@ -92,13 +157,263 @@ Save the file and then give CSF a restart:
 
 <br />
 
-Afterward, give your Docker service a restart:
+CSF may take slightly longer to restart; the Docker integration script needs to be able to scan your entire Docker setup, find all other bridges, find each container, and set up a firewall rules.
+
+You will see output similar to the following:
+
+=== ":aetherx-axs-square-terminal: Output"
+
+      ```shell
+      INFO               Initializing csfpost script /usr/local/csf/bin/csfpost.sh
+      INFO               Script /usr/local/csf/bin/csfpost.sh loading post.d initialzation scripts in folder /usr/local/include/csf/post.d 
+      PASS               Found installed package CSF + LFD  
+      PASS               Found installed package Docker     
+      PASS               Found installed package iptables   
+      PASS               Declared iptables4 binary /usr/sbin/iptables 
+      PASS               Declared iptables6 binary /usr/sbin/ip6tables 
+      INFO               Cleaning comments in csf allow file /etc/csf/csf.allow 
+      INFO               Stripping all DOCKER chains from existing iptable rules; restoring without DOCKER chain 
+      INFO               Re-creating required DOCKER chains           
+                            + CHAIN [ADD] -t filter -N DOCKER 
+                            + CHAIN [ADD] -t filter -N DOCKER-USER 
+                            + CHAIN [ADD] -t filter -N DOCKER-ISOLATION-STAGE-1 
+                            + CHAIN [ADD] -t filter -N DOCKER-ISOLATION-STAGE-2 
+                            + CHAIN [ADD] -t nat -N DOCKER 
+      INFO               Apply ACCEPT rule DOCKER table for INPUT chain 
+                            + RULES [ADD] -A INPUT -i docker0 -j ACCEPT 
+                            + RULES [ADD] -A FORWARD -j DOCKER-USER 
+                            + RULES [ADD] -A FORWARD -j DOCKER-ISOLATION-STAGE-1 
+                            + RULES [ADD] -A FORWARD -o docker0 -m conntrack --ctstate NEW,RELATED,ESTABLISHED -j ACCEPT 
+                            + RULES [ADD] -A FORWARD -o docker0 -j DOCKER 
+                            + RULES [ADD] -A FORWARD -i docker0 ! -o docker0 -j ACCEPT 
+                            + RULES [ADD] -A FORWARD -i docker0 -o docker0 -j ACCEPT 
+                            + RULES [ADD] -t nat -A PREROUTING -m addrtype --dst-type LOCAL -j DOCKER 
+                            + RULES [ADD] -t nat -A OUTPUT ! -d 127.0.0.0/8 -m addrtype --dst-type LOCAL -j DOCKER 
+
+      INFO               Configuring Docker subnet      
+                            172.17.0.0/16        
+                            + RULES [ADD] -t nat -A POSTROUTING ! -o docker0 -s 172.17.0.0/16 -j MASQUERADE 
+                            ! RULES [SKP] -t nat -A POSTROUTING -s 172.17.0.0/16 ! -o docker0 -j MASQUERADE 
+      PASS               Finished configuring Docker subnet 
+      ```
+
+<br />
+
+After the Docker integration script runs, you should now have your Docker network firewall rules set up with CSF and iptables.
+
+Finally, give your Docker service a restart:
 
 === ":aetherx-axd-command: Command"
 
       ```shell
       sudo service docker restart
       ```
+
+<br />
+
+For more information about the Docker integration script, review the next section below.
+
+<br />
+
+---
+
+<br />
+
+## Integration Script
+
+CSF utilizes a **Docker Integration** script that we have developed to work alongside of CSF. You can view or download the full integration script [here](https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/scripts/docker.sh).
+
+<br />
+
+You have two ways to run this script:
+
+1. Place the file in your CSF pre/post folder via :aetherx-axd-folder: `/usr/local/include/csf/post.d/docker.sh`, and automatically load it by restarting CSF.
+2. Manually run the script directly.
+
+<br />
+
+### Automatic 
+
+To run the script automatically, drop it in the folder:
+
+<div class="icon-tree" markdown>
+<code>
+└── :aetherx-axs-folder:{ .icon-clr-tree-folder } usr  
+    └── :aetherx-axs-folder:{ .icon-clr-tree-folder } local  
+        └── :aetherx-axs-folder:{ .icon-clr-tree-folder } include  
+            └── :aetherx-axs-folder:{ .icon-clr-tree-folder } csf  
+                └── :aetherx-axs-folder:{ .icon-clr-tree-folder } pre.d  
+                └── :aetherx-axs-folder:{ .icon-clr-tree-folder } post.d  
+                    └── :aetherx-axd-file:{ .icon-clr-tree-file } docker.sh  
+        └── :aetherx-axs-folder:{ .icon-clr-tree-folder } csf  
+            └── :aetherx-axs-folder:{ .icon-clr-tree-folder } bin  
+                ├── :aetherx-axd-file:{ .icon-clr-tree-file } csfpre.sh  
+                └── :aetherx-axd-file:{ .icon-clr-tree-file } csfpost.sh  
+</code>
+</div>
+
+<br />
+
+Once the script is added to the correct path, restart CSF:
+
+=== ":aetherx-axs-command: Command"
+
+    ``` shell
+    sudo csf -ra
+    ```
+
+<br />
+
+### Manual
+
+You can activate the `docker.sh` script manually. You will need to download it from our [:aetherx-axb-github: repository](https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/scripts/docker.sh) and place it somewhere on your server.
+
+Then set the permission to be **executable**:
+
+=== ":aetherx-axs-command: Command"
+
+    ```bash
+    sudo chmod +x /path/to/docker.sh
+    ```
+
+<br />
+
+Finally, run the script with the command:
+
+=== ":aetherx-axs-command: Command"
+
+    ```bash
+    sudo sh /usr/local/include/csf/post.d/docker.sh
+    ```
+
+<br />
+
+You should see the following output:
+
+=== ":aetherx-axs-square-terminal: Output"
+
+      ```shell
+      INFO               Initializing csfpost script /usr/local/csf/bin/csfpost.sh
+      INFO               Script /usr/local/csf/bin/csfpost.sh loading post.d initialzation scripts in folder /usr/local/include/csf/post.d 
+      PASS               Found installed package CSF + LFD  
+      PASS               Found installed package Docker     
+      PASS               Found installed package iptables   
+      PASS               Declared iptables4 binary /usr/sbin/iptables 
+      PASS               Declared iptables6 binary /usr/sbin/ip6tables 
+      INFO               Cleaning comments in csf allow file /etc/csf/csf.allow 
+      INFO               Stripping all DOCKER chains from existing iptable rules; restoring without DOCKER chain 
+      INFO               Re-creating required DOCKER chains           
+                            + CHAIN [ADD] -t filter -N DOCKER 
+                            + CHAIN [ADD] -t filter -N DOCKER-USER 
+                            + CHAIN [ADD] -t filter -N DOCKER-ISOLATION-STAGE-1 
+                            + CHAIN [ADD] -t filter -N DOCKER-ISOLATION-STAGE-2 
+                            + CHAIN [ADD] -t nat -N DOCKER 
+      INFO               Apply ACCEPT rule DOCKER table for INPUT chain 
+                            + RULES [ADD] -A INPUT -i docker0 -j ACCEPT 
+                            + RULES [ADD] -A FORWARD -j DOCKER-USER 
+                            + RULES [ADD] -A FORWARD -j DOCKER-ISOLATION-STAGE-1 
+                            + RULES [ADD] -A FORWARD -o docker0 -m conntrack --ctstate NEW,RELATED,ESTABLISHED -j ACCEPT 
+                            + RULES [ADD] -A FORWARD -o docker0 -j DOCKER 
+                            + RULES [ADD] -A FORWARD -i docker0 ! -o docker0 -j ACCEPT 
+                            + RULES [ADD] -A FORWARD -i docker0 -o docker0 -j ACCEPT 
+                            + RULES [ADD] -t nat -A PREROUTING -m addrtype --dst-type LOCAL -j DOCKER 
+                            + RULES [ADD] -t nat -A OUTPUT ! -d 127.0.0.0/8 -m addrtype --dst-type LOCAL -j DOCKER 
+
+      INFO               Configuring Docker subnet      
+                            172.17.0.0/16        
+                            + RULES [ADD] -t nat -A POSTROUTING ! -o docker0 -s 172.17.0.0/16 -j MASQUERADE 
+                            ! RULES [SKP] -t nat -A POSTROUTING -s 172.17.0.0/16 ! -o docker0 -j MASQUERADE 
+      PASS               Finished configuring Docker subnet 
+      ```
+
+<br />
+
+### Command Flags
+
+This script includes numerous flags you can specify if you run the `docker.sh` script manually.
+
+<br />
+
+#### Help
+<!-- md:version stable-15.0.1 --> <!-- md:command `-h,  --help` -->
+
+Shows a list of all available commands included in the Docker integration script:
+
+=== ":aetherx-axs-command: Command"
+
+    ```bash
+    sudo sh /usr/local/include/csf/post.d/docker.sh --help
+    ```
+
+<br />
+<br />
+
+#### List
+<!-- md:version stable-15.0.9 --> <!-- md:command `-l, --list` -->
+
+Will display a list of all available docker containers, and their assigned ports and subnets
+
+=== ":aetherx-axs-command: Command"
+
+    ```bash
+    sudo sh /usr/local/include/csf/post.d/docker.sh --list
+    ```
+
+<br />
+<br />
+
+#### Restart
+<!-- md:version stable-15.0.9 --> <!-- md:command `-r, --restart` -->
+
+Restarts **csf** and **lfd** services.
+
+=== ":aetherx-axs-command: Command"
+
+    ```bash
+    sudo sh /usr/local/include/csf/post.d/docker.sh --restart
+    ```
+
+<br />
+<br />
+
+#### Flush
+<!-- md:version stable-15.0.9 --> <!-- md:command `-f, --flush` -->
+
+Completely flushes all **iptable** rules.
+
+=== ":aetherx-axs-command: Command"
+
+    ```bash
+    sudo sh /usr/local/include/csf/post.d/docker.sh --flush
+    ```
+
+<br />
+<br />
+
+#### Dryrun
+<!-- md:version stable-15.0.5 --> <!-- md:command `-d, --dryrun` -->
+
+Simulates running the entire script but does not actually make changes.
+
+=== ":aetherx-axs-command: Command"
+
+    ```bash
+    sudo sh /usr/local/include/csf/post.d/docker.sh --dryrun
+    ```
+
+<br />
+<br />
+
+#### Version
+<!-- md:version stable-15.0.0 --> <!-- md:command `-v, --version` -->
+
+Shows information about the current version of the integration script you are running.
+
+=== ":aetherx-axs-command: Command"
+
+    ```bash
+    sudo sh /usr/local/include/csf/post.d/docker.sh --version
+    ```
 
 <br />
 
