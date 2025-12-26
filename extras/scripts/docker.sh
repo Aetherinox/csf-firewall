@@ -10,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            12.24.2025
+#   @updated            12.25.2025
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -76,37 +76,23 @@ file_csf_allow="/etc/csf/csf.allow"
 containers_ip_cidr="172.17.0.0/16"
 
 # #
-#   Define › System
-# #
-
-sys_arch=$(dpkg --print-architecture)
-sys_code=$(lsb_release -cs)
-
-# #
 #   Define › App
 # #
 
-app_dir_this_a="$(cd "$(dirname "$0")" >/dev/null 2>&1 && pwd)"
-app_dir_this_b="${PWD}"                                                             # current script full path (alternative)
+app_dir_this="$(cd "$(dirname "$0")" >/dev/null 2>&1 && pwd)"                       # folder where script exists
+app_dir_ranfrom="${PWD}"                                                            # absolute path to where script was ran from
 app_file_this=$(basename "$0")                                                      # docker.sh (with ext)
 app_file_bin="${app_file_this%.*}"                                                  # docker (without ext)
 app_pid=$BASHPID                                                                    # app pid
 app_name="ConfigServer Firewall - Docker Patch"                                     # app title; displayed with --version
-app_desc="Sets up your firewall rules to work with Docker and Traefik. \n"\
-"  This script requires that you have iptables installed on your system. \n"\
-"  The required packages will be installed if you do not have them."                # app about; displayed with --version
+app_desc="Sets up your firewall rules to work with Docker and Traefik.\n\
+   This script requires that you have iptables installed on your system.\n\
+   The required packages will be installed if you do not have them."                # app about; displayed with --version
 app_version="15.0.9"                                                                # current script version
 app_repo_name="csf-firewall"
 app_repo_author="Aetherinox"
 app_repo_branch="main"
 app_repo_url="https://github.com/${app_repo_author}/${app_repo_name}"
-
-# #
-#   Define › Flag Defaults
-# #
-
-cfg_dev_enabled=false
-cfg_verbose_enabled=false
 
 # #
 #   Define › Icons
@@ -166,8 +152,14 @@ bgError="${esc}[1;38;5;15;48;5;160m"
 # #
 
 argDryrun="false"				# runs the logic but doesn't actually install; no changes
-argDetect="false"				# returns the installer name + desc that would have ran, but exits; no changes
-argLegacy="false"				# certain actions will work how pre CSF v15.01 did 
+argVerbose="false"				# enable verbose logging
+
+# #
+#   Define › System
+# #
+
+sys_arch=$(dpkg --print-architecture)
+sys_code=$(lsb_release -cs)
 
 # #
 #   Define › Logging functions
@@ -249,10 +241,10 @@ print( )
 run()
 {
     if [ "${argDryrun}" = "true" ]; then
-        debug "Drymode (skip): $*"
+        debug "    Dryrun (skip): $*"
         return 0
     else
-        debug "Run: $*"
+        debug "    Run: $*"
         "$@" >/dev/null 2>&1
         rc=$?
         return $rc
@@ -618,6 +610,12 @@ check_sudo( )
 }
 
 # #
+#   Run › Check Sudo
+# #
+
+check_sudo
+
+# #
 #   Helpers › Service Exists
 #   
 #   Checks if a service exists.
@@ -646,53 +644,6 @@ service_exists()
 }
 
 # #
-#   Run › Check Sudo
-# #
-
-check_sudo
-
-# #
-#   Run › Locate Docker binary
-# #
-
-if ! command -v docker >/dev/null 2>&1; then
-    label ""
-    error "    Could not find ${redl}Docker${greym}"
-    label "     ${redl}${bold}This server must have Dockerinstalled before this"
-    label "     ${redl}${bold}script can be ran"
-    label ""
-
-    exit 1
-else
-    ok "    Found installed package ${greenl}Docker"
-fi
-
-# #
-#   Run › Locate CSF binary
-# #
-
-if ! command -v csf >/dev/null 2>&1; then
-    label ""
-    error "    Could not find ${redl}ConfigServer Security & Firewall${greym}"
-    label "     ${redl}${bold}This server must have ConfigServer Security & Firewall installed before this"
-    label "     ${redl}${bold}script can be ran"
-    label ""
-    label "     ${greym}Download by going to:"
-    label "         ${yellowd}${app_repo_url}"
-    label ""
-
-    exit 1
-else
-    ok "    Found installed package ${greenl}CSF + LFD"
-fi
-
-# #
-#   Assign › CSF Binary
-# #
-
-csf_path=$(command -v csf 2>/dev/null)
-
-# #
 #   Run › Install › Iptables
 # #
 
@@ -703,24 +654,22 @@ if ! command -v iptables >/dev/null 2>&1; then
     if command -v apt-get >/dev/null 2>&1; then
         apt-get update -y -q >/dev/null 2>&1
         apt-get install -y -qq iptables >/dev/null 2>&1
-        label "         ${fuchsiad}$app_file_this${greyd} apt-get install -y -qq iptables"
+        label "         ${fuchsiad}${app_file_this}${greyd} apt-get install -y -qq iptables"
 
     # RHEL / CentOS / Alma / Rocky (dnf)
     elif command -v dnf >/dev/null 2>&1; then
         dnf install -y iptables >/dev/null 2>&1
-        label "         ${fuchsiad}$app_file_this${greyd} dnf install -y iptables"
+        label "         ${fuchsiad}${app_file_this}${greyd} dnf install -y iptables"
 
     # Older RHEL / CentOS (yum)
     elif command -v yum >/dev/null 2>&1; then
         yum install -y iptables >/dev/null 2>&1
-        label "         ${fuchsiad}$app_file_this${greyd} yum install -y iptables"
+        label "         ${fuchsiad}${app_file_this}${greyd} yum install -y iptables"
 
     else
         error "    ${redl}No supported package manager found"
         exit 1
     fi
-else
-    ok "    Found installed package ${greenl}iptables"
 fi
 
 # #
@@ -753,8 +702,6 @@ if [ -z "${ipt4}" ]; then
     label ""
 
     exit 1
-else
-    ok "    Declared iptables4 binary ${greenl}${ipt4}"
 fi
 
 # #
@@ -767,8 +714,6 @@ fi
 if [ -z "${ipt6}" ]; then
     error "    ${yellowd}WARNING:${redl} Could not find iptables v6"
     label "     ${greym}This script will continue only in ipv4 mode."
-else
-    ok "    Declared iptables6 binary ${greenl}${ipt6}"
 fi
 
 # #
@@ -781,16 +726,25 @@ fi
 #   @param          none
 # #
 
-cmd_iptables_clear()
+cmd_iptables_flush()
 {
-    info "    Resetting iptable chains and rules"
+    info "    Resetting iptable chains and rules for ${bluel}IPv4${end}"
     
-    ${ipt4} -F
-    ${ipt4} -X
-    ${ipt4} -t nat -F
-    ${ipt4} -t nat -X
-    ${ipt4} -t mangle -F
-    ${ipt4} -t mangle -X
+    run "${ipt4}" -F
+    run "${ipt4}" -X
+    run "${ipt4}" -t nat -F
+    run "${ipt4}" -t nat -X
+    run "${ipt4}" -t mangle -F
+    run "${ipt4}" -t mangle -X
+
+    info "    Resetting iptable chains and rules for ${bluel}IPv6${end}"
+    
+    run "${ipt6}" -F
+    run "${ipt6}" -X
+    run "${ipt6}" -t nat -F
+    run "${ipt6}" -t nat -X
+    run "${ipt6}" -t mangle -F
+    run "${ipt6}" -t mangle -X
 
     ok "    Successfully reset iptable chains and rules"
 }
@@ -814,7 +768,7 @@ chain_create()
     table="${2:-filter}"
 
     if ! "${ipt4}" -t "${table}" -L "${chain}" >/dev/null 2>&1; then
-        "${ipt4}" -t "${table}" -N "${chain}"
+        run "${ipt4}" -t "${table}" -N "${chain}"
         label "         + CHAIN ${greend}[ADD]${greend} -t ${table} -N ${chain}${end}"
     else
         label "         ! CHAIN ${yellowd}[SKP]${yellowd} -t ${table} -N ${chain}${end}"
@@ -836,7 +790,7 @@ chain_create()
 rule_append()
 {
     if ! "${ipt4}" -C "$@" >/dev/null 2>&1; then
-        "${ipt4}" -A "$@"
+        run "${ipt4}" -A "$@"
         label "         + RULES ${greend}[ADD]${greend} -A $*${end}"
     else
         label "         ! RULES ${yellowd}[SKP]${yellowd} -A $*${end}"
@@ -878,7 +832,7 @@ rule_add()
         label "         ! RULES ${yellowd}[SKP]${yellowd} $*${end}"
     else
         label "         + RULES ${greend}[ADD]${greend} $*${end}"
-        "${ipt4}" "$@"
+        run "${ipt4}" "$@"
     fi
 }
 
@@ -918,20 +872,20 @@ add_to_nat()
 
     #   ipv4
     if [ "${subnet}" != "${subnet#*[0-9].[0-9]}" ]; then
-        sudo "${ipt4}" -t nat -C POSTROUTING -s "${subnet}" ! -o "${docker_int}" -j MASQUERADE 2>/dev/null || \
-        sudo "${ipt4}" -t nat -A POSTROUTING -s "${subnet}" ! -o "${docker_int}" -j MASQUERADE
-        sudo "${ipt4}" -t nat -C DOCKER -i "${docker_int}" -j RETURN 2>/dev/null || \
-        sudo "${ipt4}" -t nat -A DOCKER -i "${docker_int}" -j RETURN
+        run "${ipt4}" -t nat -C POSTROUTING -s "${subnet}" ! -o "${docker_int}" -j MASQUERADE 2>/dev/null || \
+        run "${ipt4}" -t nat -A POSTROUTING -s "${subnet}" ! -o "${docker_int}" -j MASQUERADE
+        run "${ipt4}" -t nat -C DOCKER -i "${docker_int}" -j RETURN 2>/dev/null || \
+        run "${ipt4}" -t nat -A DOCKER -i "${docker_int}" -j RETURN
 
         label "         + RULES V4 ${greend}[ADD]${greend} -t nat -A POSTROUTING -s \"${subnet}\" ! -o \"${docker_int}\" -j MASQUERADE${end}"
         label "         + RULES V4 ${greend}[ADD]${greend} -t nat -A DOCKER -i \"${docker_int}\" -j RETURN${end}"
 
     #   ipv6
     elif [ "${subnet}" != "${subnet#*:[0-9a-fA-F]}" ]; then
-        sudo "${ipt6}" -t nat -C POSTROUTING -s "${subnet}" ! -o "${docker_int}" -j MASQUERADE 2>/dev/null || \
-        sudo "${ipt6}" -t nat -A POSTROUTING -s "${subnet}" ! -o "${docker_int}" -j MASQUERADE
-        sudo "${ipt6}" -C DOCKER -i "${docker_int}" -j RETURN 2>/dev/null || \
-        sudo "${ipt6}" -A DOCKER -i "${docker_int}" -j RETURN
+        run "${ipt6}" -t nat -C POSTROUTING -s "${subnet}" ! -o "${docker_int}" -j MASQUERADE 2>/dev/null || \
+        run "${ipt6}" -t nat -A POSTROUTING -s "${subnet}" ! -o "${docker_int}" -j MASQUERADE
+        run "${ipt6}" -C DOCKER -i "${docker_int}" -j RETURN 2>/dev/null || \
+        run "${ipt6}" -A DOCKER -i "${docker_int}" -j RETURN
 
         label "         + RULES V6 ${greend}[ADD]${greend} -t nat -A POSTROUTING -s \"${subnet}\" ! -o \"${docker_int}\" -j MASQUERADE${end}"
         label "         + RULES V6 ${greend}[ADD]${greend} -t nat -A DOCKER -i \"${docker_int}\" -j RETURN${end}"
@@ -1181,7 +1135,7 @@ cmd_containers_list()
 
             cont_veth=""
             if [ -n "${cont_iflink}" ]; then
-                cont_veth=$( sudo grep -l -s "$cont_iflink" /sys/class/net/veth*/ifindex )
+                cont_veth=$( grep -l -s "$cont_iflink" /sys/class/net/veth*/ifindex )
                 cont_veth=$( echo "$cont_veth" | sed -e 's;^.*net/\(.*\)/ifindex$;\1;' )
 
                 if [ -z "${cont_veth}" ]; then
@@ -1354,7 +1308,8 @@ cmd_csf_restart()
         if [ "$status" -eq 0 ]; then
             ok "    ${greenl}${svc}${greym} restarted successfully"
         else
-            warn "    WARNING: ${yellowl}${svc}${greym} may have failed to restart (exit code ${yellowl}$status${greym})"
+            warn "    ${yellowl}WARNING:${end} ${yellowl}${svc} may have failed to restart"
+            label "     returned exit code ${yellowl}$status${greym}"
         fi
     }
 
@@ -1367,8 +1322,8 @@ cmd_csf_restart()
         restart_service lfd
     else
         label ""
-        warn "    WARNING: Could not find service ${yellowl}lfd.service${greym}"
-        label "               It may not be installed or enabled."
+        warn "    ${yellowl}WARNING:${end} ${yellowl}Could not find service ${orangel}lfd.service"
+        label "     It may not be installed or enabled.${greym}"
     fi
 
     # #
@@ -1380,12 +1335,219 @@ cmd_csf_restart()
         restart_service csf
     else
         label ""
-        warn "    WARNING: Could not find service ${yellowl}csf.service${greym}"
-        label "               It may not be installed or enabled."
+        warn "    ${yellowl}WARNING:${end} ${yellowl}Could not find service ${orangel}csf.service"
+        label "     It may not be installed or enabled.${greym}"
     fi
 
     label ""
 }
+
+# #
+#   Help › Usage Menu
+# #
+
+opt_usage( )
+{
+    echo
+    print "   ${blued}${bold}${app_name}${end} - v${app_version}"
+    print "   ${greenl}${bold}${app_repo_url}"
+    printf "   ${greym}${bold}${app_desc}\n"
+    printf "   ${magental}${app_file_this}${end} ${greyd}[ ${greym}--list${greyd} | ${greym}--restart${greyd} | ${greym}--flush${greyd} | ${greym}--detect${greyd} | ${greym}--dryrun${greyd} | ${greym}--version${greyd} | ${greym}--help ${greyd}]${end}" 1>&2
+    echo
+    echo
+    printf '   %-5s %-40s\n' "${greyd}Syntax:${end}" "" 1>&2
+    printf '   %-5s %-30s %-40s\n' "    " "${greyd}Command${end}           " "${magental}${app_file_this}${greyd} [ ${greym}--option ${greyd}[ ${yellowd}arg${greyd} ]${greyd} ]${end}" 1>&2
+    printf '   %-5s %-30s %-40s\n' "    " "${greyd}Options${end}           " "${magental}${app_file_this}${greyd} [ ${greym}-h${greyd} | ${greym}--help${greyd} ]${end}" 1>&2
+    printf '   %-5s %-30s %-40s\n' "    " "    ${greym}-A${end}            " "   ${white}required" 1>&2
+    printf '   %-5s %-30s %-40s\n' "    " "    ${greym}-A...${end}         " "   ${white}required; multiple can be specified" 1>&2
+    printf '   %-5s %-30s %-40s\n' "    " "    ${greym}[ -A ]${end}        " "   ${white}optional" 1>&2
+    printf '   %-5s %-30s %-40s\n' "    " "    ${greym}[ -A... ]${end}     " "   ${white}optional; multiple can be specified" 1>&2
+    printf '   %-5s %-30s %-40s\n' "    " "    ${greym}{ -A | -B }${end}   " "   ${white}one or the other; do not use both" 1>&2
+    printf '   %-5s %-30s %-40s\n' "    " "${greyd}Examples${end}          " "${magental}${app_file_this}${end} ${greym}--detect${yellowd} ${end}" 1>&2
+    printf '   %-5s %-30s %-40s\n' "    " "${greyd}${end}                  " "${magental}${app_file_this}${end} ${greym}--dryrun${yellowd} ${end}" 1>&2
+    printf '   %-5s %-30s %-40s\n' "    " "${greyd}${end}                  " "${magental}${app_file_this}${end} ${greym}--version${yellowd} ${end}" 1>&2
+    printf '   %-5s %-30s %-40s\n' "    " "${greyd}${end}                  " "${magental}${app_file_this}${end} ${greym}--help${greyd} | ${greym}-h${greyd} | ${greym}/?${end}" 1>&2
+    echo
+    printf '   %-5s %-40s\n' "${greyd}Flags:${end}" "" 1>&2
+    printf '   %-5s %-81s %-40s\n' "    " "${blued}-l${greyd},${blued}  --list ${yellowd}${end}                       " "list all docker containers and associated information${end}" 1>&2
+    printf '   %-5s %-81s %-40s\n' "    " "${blued}-r${greyd},${blued}  --restart ${yellowd}${end}                    " "restart csf and lfd services${end}" 1>&2
+    printf '   %-5s %-81s %-40s\n' "    " "${blued}-f${greyd},${blued}  --flush ${yellowd}${end}                      " "flush all iptable rules from server${end}" 1>&2
+    printf '   %-5s %-81s %-40s\n' "    " "${blued}-d${greyd},${blued}  --dryrun ${yellowd}${end}                     " "simulates installation, does not install csf ${navy}<default> ${peach}${argDryrun:-"disabled"} ${end}" 1>&2
+    printf '   %-5s %-81s %-40s\n' "    " "${blued}-v${greyd},${blued}  --version ${yellowd}${end}                    " "current version of this utilty ${navy}<current> ${peach}${app_version:-"unknown"} ${end}" 1>&2
+    printf '   %-5s %-81s %-40s\n' "    " "${blued}-h${greyd},${blued}  --help ${yellowd}${end}                       " "show this help menu ${end}" 1>&2
+    echo
+    echo
+}
+
+# #
+#   Commands › Parse
+# #
+
+while [ "$#" -gt 0 ]; do
+    case "$1" in
+
+        -d|--dryrun)
+            argDryrun="true"
+            ;;
+
+        -l|--list)
+            cmd_containers_list
+            exit 1
+            ;;
+
+        -r|--restart)
+            cmd_csf_restart
+            exit 1
+            ;;
+
+        -v|--ver|--version)
+            label ""
+            print "   ${blued}${bold}${app_name}${end} - v${app_version}"
+            print "   ${greenl}${bold}${app_repo_url}"
+            printf "   ${greym}${bold}${app_desc}\n"
+            label ""
+            exit 1
+            ;;
+
+        -f|--flush)
+            cmd_iptables_flush
+            exit 1
+            ;;
+
+        -h|--help|\?)
+            opt_usage
+            exit 1
+            ;;
+
+        *)
+            label
+			error "    ❌ Unknown flag ${redl}$1${greym}. Aborting."
+            label
+			exit 1
+			;;
+    esac
+    shift
+done
+
+# #
+#   Run › Locate CSF binary
+# #
+
+if ! command -v csf >/dev/null 2>&1; then
+    label ""
+    error "    Could not find ${redl}ConfigServer Security & Firewall${greym}"
+    label "     ${redl}${bold}This server must have ConfigServer Security & Firewall installed before this"
+    label "     ${redl}${bold}script can be ran"
+    label ""
+    label "     ${greym}Download by going to:"
+    label "         ${yellowd}${app_repo_url}"
+    label ""
+
+    exit 1
+else
+    ok "    Found installed package ${greenl}CSF + LFD"
+fi
+
+# #
+#   Assign › CSF Binary
+# #
+
+csf_path=$( command -v csf 2>/dev/null )
+
+# #
+#   Run › Locate Docker binary
+# #
+
+if ! command -v docker >/dev/null 2>&1; then
+    label ""
+    error "    Could not find ${redl}Docker${greym}"
+    label "     ${redl}${bold}This server must have Docker installed before this"
+    label "     ${redl}${bold}script can be ran"
+    label ""
+
+    exit 1
+else
+    ok "    Found installed package ${greenl}Docker"
+fi
+
+# #
+#   Run › Install › Iptables
+# #
+
+if ! command -v iptables >/dev/null 2>&1; then
+    info "    Installing ${bluel}iptables${greym}"
+
+    # Debian / Ubuntu
+    if command -v apt-get >/dev/null 2>&1; then
+        apt-get update -y -q >/dev/null 2>&1
+        apt-get install -y -qq iptables >/dev/null 2>&1
+        label "         ${fuchsiad}${app_file_this}${greyd} apt-get install -y -qq iptables"
+
+    # RHEL / CentOS / Alma / Rocky (dnf)
+    elif command -v dnf >/dev/null 2>&1; then
+        dnf install -y iptables >/dev/null 2>&1
+        label "         ${fuchsiad}${app_file_this}${greyd} dnf install -y iptables"
+
+    # Older RHEL / CentOS (yum)
+    elif command -v yum >/dev/null 2>&1; then
+        yum install -y iptables >/dev/null 2>&1
+        label "         ${fuchsiad}${app_file_this}${greyd} yum install -y iptables"
+
+    else
+        error "    ${redl}No supported package manager found"
+        exit 1
+    fi
+else
+    ok "    Found installed package ${greenl}iptables"
+fi
+
+# #
+#   Assign › Iptables
+#   
+#   Assign iptables binary to variable
+# #
+
+ipt4=$( command -v iptables 2>/dev/null )
+ipt6=$( command -v ip6tables 2>/dev/null )
+
+# #
+#   Run › Iptables v4 › Binary › Missing
+#   
+#   Tell the user iptables v4 binary could not be found.
+#   Abort script.
+# #
+
+if [ -z "${ipt4}" ]; then
+    label ""
+    error "    ${yellowd}WARNING:${redl} This Script Requires Iptables"
+    label "     ${redl}${bold}Iptables is required before you can utilize this script with ConfigServer Firewall."
+    label ""
+    label "     ${greym}Try installing the package with:"
+    label "         ${fuchsiad}sudo${yellowd} apt-get update"
+    label "         ${fuchsiad}sudo${yellowd} apt-get install iptables"
+    label ""
+    label "         ${fuchsiad}sudo${yellowd} yum makecache"
+    label "         ${fuchsiad}sudo${yellowd} yum install iptables"
+    label ""
+
+    exit 1
+else
+    ok "    Declared iptables4 binary ${greenl}${ipt4}"
+fi
+
+# #
+#   Run › Iptables v6 › Binary › Missing
+#   
+#   Tell the user iptables v6 binary could not be found.
+#   Warn, but continue.
+# #
+
+if [ -z "${ipt6}" ]; then
+    error "    ${yellowd}WARNING:${redl} Could not find iptables v6"
+    label "     ${greym}This script will continue only in ipv4 mode."
+else
+    ok "    Declared iptables6 binary ${greenl}${ipt6}"
+fi
 
 # #
 #   Clean Comments
@@ -1417,93 +1579,6 @@ if [ -n "${csf_path}" ]; then
 else
     warn "    Skip cleaning allow file. Variable ${yellowl}\$csf_path${greym} for CSF binary not found."
 fi
-
-# #
-#   Func › Usage Menu
-# #
-
-opt_usage( )
-{
-    echo
-    printf "  ${bluel}${app_name}${end}\n" 1>&2
-    printf "  ${greym}${app_desc}${end}\n" 1>&2
-    printf "  ${greyd}version:${end} ${greyd}${app_version}${end}\n" 1>&2
-    printf "  ${magental}${app_file_this}${end} ${greyd}[ ${greym}--detect${greyd} | ${greym}--dryrun${greyd} |  ${greym}--version${greyd} | ${greym}--help ${greyd}]${end}" 1>&2
-    echo
-    echo
-    printf '   %-5s %-40s\n' "${greyd}Syntax:${end}" "" 1>&2
-    printf '   %-5s %-30s %-40s\n' "    " "${greyd}Command${end}           " "${magental}${app_file_this}${greyd} [ ${greym}--option ${greyd}[ ${yellowd}arg${greyd} ]${greyd} ]${end}" 1>&2
-    printf '   %-5s %-30s %-40s\n' "    " "${greyd}Options${end}           " "${magental}${app_file_this}${greyd} [ ${greym}-h${greyd} | ${greym}--help${greyd} ]${end}" 1>&2
-    printf '   %-5s %-30s %-40s\n' "    " "    ${greym}-A${end}            " "   ${white}required" 1>&2
-    printf '   %-5s %-30s %-40s\n' "    " "    ${greym}-A...${end}         " "   ${white}required; multiple can be specified" 1>&2
-    printf '   %-5s %-30s %-40s\n' "    " "    ${greym}[ -A ]${end}        " "   ${white}optional" 1>&2
-    printf '   %-5s %-30s %-40s\n' "    " "    ${greym}[ -A... ]${end}     " "   ${white}optional; multiple can be specified" 1>&2
-    printf '   %-5s %-30s %-40s\n' "    " "    ${greym}{ -A | -B }${end}   " "   ${white}one or the other; do not use both" 1>&2
-    printf '   %-5s %-30s %-40s\n' "    " "${greyd}Examples${end}          " "${magental}${app_file_this}${end} ${greym}--detect${yellowd} ${end}" 1>&2
-    printf '   %-5s %-30s %-40s\n' "    " "${greyd}${end}                  " "${magental}${app_file_this}${end} ${greym}--dryrun${yellowd} ${end}" 1>&2
-    printf '   %-5s %-30s %-40s\n' "    " "${greyd}${end}                  " "${magental}${app_file_this}${end} ${greym}--version${yellowd} ${end}" 1>&2
-    printf '   %-5s %-30s %-40s\n' "    " "${greyd}${end}                  " "${magental}${app_file_this}${end} ${greym}--help${greyd} | ${greym}-h${greyd} | ${greym}/?${end}" 1>&2
-    echo
-    printf '   %-5s %-40s\n' "${greyd}Flags:${end}" "" 1>&2
-    printf '   %-5s %-81s %-40s\n' "    " "${blued}-D${greyd},${blued}  --detect ${yellowd}${end}                     " "returns installer script that will run; does not install csf ${navy}<default> ${peach}${argDetect:-"disabled"} ${end}" 1>&2
-    printf '   %-5s %-81s %-40s\n' "    " "${blued}-d${greyd},${blued}  --dryrun ${yellowd}${end}                     " "simulates installation, does not install csf ${navy}<default> ${peach}${argDryrun:-"disabled"} ${end}" 1>&2
-    printf '   %-5s %-81s %-40s\n' "    " "${blued}-v${greyd},${blued}  --version ${yellowd}${end}                    " "current version of this utilty ${navy}<current> ${peach}${APP_VERSION:-"unknown"} ${end}" 1>&2
-    printf '   %-5s %-81s %-40s\n' "    " "${blued}-h${greyd},${blued}  --help ${yellowd}${end}                       " "show this help menu ${end}" 1>&2
-    echo
-    echo
-}
-
-# #
-#   Args › Parse
-# #
-
-while [ "$#" -gt 0 ]; do
-    case "$1" in
-        -d|--dryrun)
-            argDryrun="true"
-            ;;
-
-        -D|--detect)
-            argDetect="true"
-            ;;
-
-        -l|--list)
-            cmd_containers_list
-            exit 1
-            ;;
-
-        -r|--restart)
-            cmd_csf_restart
-            exit 1
-            ;;
-
-        -v|--ver|--version)
-            label ""
-            label "     ${blued}${bold}${app_name}${end} - v${app_version}"
-            label "     ${greenl}${bold}${app_repo_url}"
-            label ""
-            exit 1
-            ;;
-
-        -c|--clear)
-            cmd_iptables_clear
-            exit 1
-            ;;
-
-        -h|--help|\?)
-            opt_usage
-            exit 1
-            ;;
-
-        *)
-            label
-			error "    ❌ Unknown flag ${redl}$1${greym}. Aborting."
-            label
-			exit 1
-			;;
-    esac
-    shift
-done
 
 # #
 #   Iptables › Save & Restore
@@ -1584,12 +1659,14 @@ rule_add -t nat -A OUTPUT ! -d 127.0.0.0/8 -m addrtype --dst-type LOCAL -j DOCKE
 #   Whitelist ip addresses associated with docker
 # #
 
-prinp "Docker Container Network" \
+prinp "Docker Subnet" \
        "Fetches all Docker container subnets and configures NAT rules to ensure containers can reach external networks correctly. \
 ${greyd}\n${greyd} \
 ${greyd}\n${yellowd}- ${greym}Masquerade outbound container traffic${greyd} \
 ${greyd}\n${yellowd}- ${greym}Avoid adding duplicate NAT rules${greyd} \
 ${greyd}\n${yellowd}- ${greym}Route container subnets through Docker bridge${greyd}"
+
+info "    Configuring ${bluel}Docker subnet${end}"
 
 # #
 #   Loop each subnet
@@ -1613,21 +1690,23 @@ for ip_block in $containers_ip_cidr; do
     #       sudo iptables -t nat -C POSTROUTING ! -o docker0 -s 172.17.0.0/16 -j MASQUERADE
     # #
 
-    if ! sudo "${ipt4}" -t nat -C POSTROUTING ! -o "${docker0_eth}" -s "${ip_block}" -j MASQUERADE >/dev/null 2>&1; then
-        sudo "${ipt4}" -t nat -A POSTROUTING ! -o "${docker0_eth}" -s "${ip_block}" -j MASQUERADE
+    if ! "${ipt4}" -t nat -C POSTROUTING ! -o "${docker0_eth}" -s "${ip_block}" -j MASQUERADE >/dev/null 2>&1; then
+        run "${ipt4}" -t nat -A POSTROUTING ! -o "${docker0_eth}" -s "${ip_block}" -j MASQUERADE
         label "         + RULES ${greend}[ADD]${greend} -t nat -A POSTROUTING ! -o ${docker0_eth} -s ${ip_block} -j MASQUERADE${end}"
     else
         label "         ! RULES ${yellowd}[SKP]${yellowd} -t nat -A POSTROUTING ! -o ${docker0_eth} -s ${ip_block} -j MASQUERADE${end}"
     fi
 
-    if ! sudo "${ipt4}" -t nat -C POSTROUTING -s "${ip_block}" ! -o "${docker0_eth}" -j MASQUERADE >/dev/null 2>&1; then
-        sudo "${ipt4}" -t nat -A POSTROUTING -s "${ip_block}" ! -o "${docker0_eth}" -j MASQUERADE
+    if ! "${ipt4}" -t nat -C POSTROUTING -s "${ip_block}" ! -o "${docker0_eth}" -j MASQUERADE >/dev/null 2>&1; then
+        run "${ipt4}" -t nat -A POSTROUTING -s "${ip_block}" ! -o "${docker0_eth}" -j MASQUERADE
         label "         + RULES ${greend}[ADD]${greend} -t nat -A POSTROUTING -s ${ip_block} ! -o ${docker0_eth} -j MASQUERADE${end}"
     else
         label "         ! RULES ${yellowd}[SKP]${yellowd} -t nat -A POSTROUTING -s ${ip_block} ! -o ${docker0_eth} -j MASQUERADE${end}"
     fi
 
 done
+
+ok "    Finished configuring ${greenl}Docker subnet${end}"
 
 # #
 #   SECTION › Bridges
@@ -1643,6 +1722,8 @@ ${greyd}\n${yellowd}- ${greym}Skip extra NAT rules for incoming bridge traffic${
 ${greyd}\n${yellowd}- ${greym}Allow forwarded traffic for new and established connections${greyd} \
 ${greyd}\n${yellowd}- ${greym}Block traffic between different bridges${greyd} \
 ${greyd}\n${yellowd}- ${greym}Allow traffic within the same bridge${greyd}"
+
+info "    Configuring ${bluel}Network Bridges${end}"
 
 # #
 #   Get Bridges
@@ -1710,6 +1791,8 @@ for bridge in $bridges; do
     label ""
 
 done
+
+ok "    Finished configuring ${greenl}Network Bridges${end}"
 
 # #
 #   SECTION › Containers
@@ -1885,7 +1968,7 @@ if [ "$containers_num" -gt 0 ]; then
 
         cont_veth=""
         if [ -n "${cont_iflink}" ]; then
-            cont_veth=$( sudo grep -l -s "$cont_iflink" /sys/class/net/veth*/ifindex )
+            cont_veth=$( grep -l -s "$cont_iflink" /sys/class/net/veth*/ifindex )
             cont_veth=$( echo "$cont_veth" | sed -e 's;^.*net/\(.*\)/ifindex$;\1;' )
 
             if [ -z "${cont_veth}" ]; then
@@ -2042,7 +2125,7 @@ EOF
 
         if [ -n "${cont_ipaddr}" ] && [ "${cont_ipaddr}" != "${redl}Not found${end}" ] && [ "${cont_ipaddr}" != "${redl}Unknown${end}" ]; then
 
-            if sudo grep -Fq "${cont_ipaddr}" "$file_csf_allow"; then
+            if grep -Fq "${cont_ipaddr}" "$file_csf_allow"; then
                 if [ -n "$rules" ]; then
                     printf '\n%-4s %-42s %-55s' " " "${greyd}├── ${greyd}WHITELIST" "${yellowl}Already whitelisted in: ${end}${file_csf_allow}${end}"
                 else
@@ -2123,10 +2206,10 @@ EOF
                         #   Iptables › IPv6
                         # #
 
-                        sudo "${ipt6}" -A DOCKER -d "${cont_ipaddr6}/128" ! -i "${cont_bridge_name}" -o "${cont_bridge_name}" \
+                        run "${ipt6}" -A DOCKER -d "${cont_ipaddr6}/128" ! -i "${cont_bridge_name}" -o "${cont_bridge_name}" \
                             -p "${dst_proto}" -m "${dst_proto}" --dport "${dst_port}" -j ACCEPT
 
-                        sudo "${ipt6}" -t nat -A POSTROUTING -s "${cont_ipaddr6}/128" -d "${cont_ipaddr6}/128" \
+                        run "${ipt6}" -t nat -A POSTROUTING -s "${cont_ipaddr6}/128" -d "${cont_ipaddr6}/128" \
                             -p "${dst_proto}" -m "${dst_proto}" --dport "${dst_port}" -j MASQUERADE
 
                         label "                         + RULES V6 ${greend}[ADD]${greend} -A DOCKER -d ${cont_ipaddr6}/128 ! -i ${cont_bridge_name} -o ${cont_bridge_name} -p ${dst_proto} -m ${dst_proto} --dport ${dst_port} -j ACCEPT${end}"
@@ -2155,10 +2238,10 @@ EOF
                         #   Iptables Rules › IPv4
                         # #
                     
-                        sudo "${ipt4}" -A DOCKER -d "${cont_ipaddr}/32" ! -i "${cont_bridge_name}" -o "${cont_bridge_name}" \
+                        run "${ipt4}" -A DOCKER -d "${cont_ipaddr}/32" ! -i "${cont_bridge_name}" -o "${cont_bridge_name}" \
                             -p "${dst_proto}" -m "${dst_proto}" --dport "${dst_port}" -j ACCEPT
 
-                        sudo "${ipt4}" -t nat -A POSTROUTING -s "${cont_ipaddr}/32" -d "${cont_ipaddr}/32" \
+                        run "${ipt4}" -t nat -A POSTROUTING -s "${cont_ipaddr}/32" -d "${cont_ipaddr}/32" \
                             -p "${dst_proto}" -m "${dst_proto}" --dport "${dst_port}" -j MASQUERADE
 
                         label "                         + RULES V4 ${greend}[ADD]${greend} -A DOCKER -d ${cont_ipaddr}/32 ! -i ${cont_bridge_name} -o ${cont_bridge_name} -p ${dst_proto} -m ${dst_proto} --dport ${dst_port} -j ACCEPT${end}"
@@ -2178,7 +2261,7 @@ EOF
                         # #
 
                         if echo "$src_ip" | grep -qE '^[0-9]{1,3}(\.[0-9]{1,3}){3}$'; then
-                            sudo "${ipt4}" -t nat -A DOCKER ${iptables_opt_src}! -i "${cont_bridge_name}" \
+                            run "${ipt4}" -t nat -A DOCKER ${iptables_opt_src}! -i "${cont_bridge_name}" \
                                 -p "${dst_proto}" -m "${dst_proto}" --dport "${src_port}" -j DNAT --to-destination "${cont_ipaddr}:${dst_port}"
 
                             label "                         + RULES V4 ${greend}[ADD]${greend} -t nat -A DOCKER ${iptables_opt_src}! -i ${cont_bridge_name} -p ${dst_proto} -m ${dst_proto} --dport ${src_port} -j DNAT --to-destination ${cont_ipaddr}:${dst_port}${end}"
@@ -2209,6 +2292,8 @@ ${greyd}\n${yellowd}- ${greym}DOCKER-ISOLATION-STAGE-2 exists to enforce bridge 
 ${greyd}\n${yellowd}- ${greym}DOCKER-USER chain returns traffic to CSF rules${greyd} \
 ${greyd}\n${yellowd}- ${greym}Prevent Docker isolation chains from blocking legitimate traffic${greyd} \
 ${greyd}\n${yellowd}- ${greym}Ensure docker0 traffic skips extra NAT processing${greyd}"
+
+info "    Configuring tables ${bluel}DOCKER-ISOLATION${greym} and ${bluel}DOCKER-USER${end}"
 
 # #
 #   Ensure Docker isolation and user chains allow traffic by default using RETURN rules.
