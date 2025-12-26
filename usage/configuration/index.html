@@ -1185,6 +1185,10 @@
     
       
         
+          
+        
+      
+        
       
         
       
@@ -1204,8 +1208,9 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8">
         
           
-          <label class="md-nav__link" for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
-            
+          <div class="md-nav__link md-nav__container">
+            <a href="../../install/update/" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
@@ -1219,8 +1224,14 @@
   
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
         <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_8">
@@ -1234,20 +1245,22 @@
           <ul class="md-nav__list" data-md-scrollfix>
             
               
+            
+              
                 
   
   
   
   
     <li class="md-nav__item">
-      <a href="../../install/update/v14-to-v15/" class="md-nav__link">
+      <a href="../../install/update/v1500-to-v1501/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    v14.x to v15.x
+    v15.00 to v15.01
   
 
     
@@ -1268,14 +1281,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../install/update/v15-to-newer.md" class="md-nav__link">
+      <a href="../../install/update/v1501-to-newer/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    v15.x to Newer
+    v15.01 to Newer
   
 
     
@@ -3938,8 +3951,8 @@
 <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="location-command" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="location-command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> Command</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo nano /etc/csf/csf.conf
-</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo nano /etc/csf/csf.conf
+</code></pre></div>
 </div>
 </div>
 </div>
@@ -3961,18 +3974,22 @@
 <li>IPs in <code>csf.allow</code> and <code>csf.deny</code> are processed for testing but <strong>not enforced</strong>.</li>
 <li>Displays currently listening ports to sysadmin; helps safely configure <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> before enabling enforcement.</li>
 </ul>
-<div class="language-ini highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># #</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1">#   Testing flag - enables a CRON job that clears iptables incase of</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1">#   configuration problems when you start csf. This should be enabled until you</span>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1">#   are sure that the firewall works - i.e. incase you get locked out of your</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1">#   server! Then do remember to set it to 0 and restart csf when you're sure</span>
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="c1">#   everything is OK. Stopping csf will remove the line from /etc/crontab</span>
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1">#   </span>
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="c1">#   lfd will not start while this is enabled</span>
-</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="c1"># #</span>
-</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
-</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="na">TESTING</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"0"</span>
-</span></code></pre></div>
+<div class="language-ini highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># #</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1">#   SECTION:Initial Settings</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1"># #</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1">#   Testing flag - enables a cron job that clears iptables if there are</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1">#   configuration problems when csf starts. Keep this enabled until you are</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="c1">#   confident the firewall is working correctly. This helps prevent getting</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1">#   locked out of your server.</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="c1">#   </span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="c1">#   Once confirmed, set this flag to 0 and restart csf. Stopping csf will</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1">#   remove the cron job from /etc/crontab.</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="c1">#   </span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="c1">#   Note:       lfd will not start while this flag is enabled.</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="c1"># #</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="na">TESTING</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"0"</span>
+</code></pre></div>
 <p><br>
 <br></p>
 <h3 id="tcp_in-tcp_out">TCP_IN, TCP_OUT<a class="headerlink" data-preview="" href="#tcp_in-tcp_out" title="Permanent link">¶</a></h3>
@@ -3982,12 +3999,12 @@
 <div class="tabbed-set tabbed-alternate" data-tabs="2:3"><input checked="checked" id="tcp_in-tcp_out-config" name="__tabbed_2" type="radio"><input id="tcp_in-tcp_out-common-ports" name="__tabbed_2" type="radio"><input id="tcp_in-tcp_out-notes" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="tcp_in-tcp_out-config"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-277.5c0-17-6.7-33.3-18.7-45.3L258.7 18.7C246.7 6.7 230.5 0 213.5 0L64 0zM325.5 176L232 176c-13.3 0-24-10.7-24-24L208 58.5 325.5 176z"></path></svg></span> Config</label><label for="tcp_in-tcp_out-common-ports"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zM96 288a32 32 0 1 0 0-64 32 32 0 1 0 0 64zm32-144a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zM96 400a32 32 0 1 0 0-64 32 32 0 1 0 0 64zm96-280c-13.3 0-24 10.7-24 24s10.7 24 24 24l160 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-160 0zm0 112c-13.3 0-24 10.7-24 24s10.7 24 24 24l160 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-160 0zm0 112c-13.3 0-24 10.7-24 24s10.7 24 24 24l160 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-160 0z"></path></svg></span> Common Ports</label><label for="tcp_in-tcp_out-notes"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M64 480c-35.3 0-64-28.7-64-64L0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 213.5c0 17-6.7 33.3-18.7 45.3L322.7 461.3c-12 12-28.3 18.7-45.3 18.7L64 480zM389.5 304L296 304c-13.3 0-24 10.7-24 24l0 93.5 117.5-117.5z"></path></svg></span> Notes</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-ini highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Allow incoming TCP ports</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="na">TCP_IN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"22,53,80,110,143,443,465,587,993,995"</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># Allow outgoing TCP ports</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="na">TCP_OUT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"22,53,80,110,143,443,465,587,993,995"</span>
-</span></code></pre></div>
+<div class="language-ini highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Allow incoming TCP ports</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="na">TCP_IN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"22,53,80,110,143,443,465,587,993,995"</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># Allow outgoing TCP ports</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="na">TCP_OUT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"22,53,80,110,143,443,465,587,993,995"</span>
+</code></pre></div>
 </div>
 <div class="tabbed-block">
 <p>The following are a list of the most common ports that you may find useful allowing traffic through.</p>
@@ -4073,14 +4090,14 @@
 <div class="tabbed-block">
 <p></p><h3>Samba Users</h3><p></p>
 <p>You must have the following <code>TCP</code> ports unblocked:</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nv">TCP_IN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"445,139"</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nv">TCP_OUT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"445,139"</span>
-</span></code></pre></div>
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nv">TCP_IN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"445,139"</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nv">TCP_OUT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"445,139"</span>
+</code></pre></div>
 <p><br></p>
 <p>You must have the following <code>UDP</code> ports unblocked:</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nv">UDP_IN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"137,138,445"</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nv">UDP_OUT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"137,138,445"</span>
-</span></code></pre></div>
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nv">UDP_IN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"137,138,445"</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nv">UDP_OUT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"137,138,445"</span>
+</code></pre></div>
 </div>
 </div>
 </div>
@@ -4093,13 +4110,13 @@
 <div class="tabbed-set tabbed-alternate" data-tabs="3:3"><input checked="checked" id="udp_in-udp_out-config" name="__tabbed_3" type="radio"><input id="udp_in-udp_out-common-ports" name="__tabbed_3" type="radio"><input id="udp_in-udp_out-notes" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="udp_in-udp_out-config"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-277.5c0-17-6.7-33.3-18.7-45.3L258.7 18.7C246.7 6.7 230.5 0 213.5 0L64 0zM325.5 176L232 176c-13.3 0-24-10.7-24-24L208 58.5 325.5 176z"></path></svg></span> Config</label><label for="udp_in-udp_out-common-ports"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zM96 288a32 32 0 1 0 0-64 32 32 0 1 0 0 64zm32-144a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zM96 400a32 32 0 1 0 0-64 32 32 0 1 0 0 64zm96-280c-13.3 0-24 10.7-24 24s10.7 24 24 24l160 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-160 0zm0 112c-13.3 0-24 10.7-24 24s10.7 24 24 24l160 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-160 0zm0 112c-13.3 0-24 10.7-24 24s10.7 24 24 24l160 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-160 0z"></path></svg></span> Common Ports</label><label for="udp_in-udp_out-notes"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M64 480c-35.3 0-64-28.7-64-64L0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 213.5c0 17-6.7 33.3-18.7 45.3L322.7 461.3c-12 12-28.3 18.7-45.3 18.7L64 480zM389.5 304L296 304c-13.3 0-24 10.7-24 24l0 93.5 117.5-117.5z"></path></svg></span> Notes</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-ini highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Allow incoming UDP ports</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="na">UDP_IN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"20,21,53,853,80,443"</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1"># Allow outgoing UDP ports</span>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="c1"># To allow outgoing traceroute add 33434:33523 to this list </span>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="na">UDP_OUT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"20,21,53,853,113,123"</span>
-</span></code></pre></div>
+<div class="language-ini highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Allow incoming UDP ports</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="na">UDP_IN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"20,21,53,853,80,443"</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1"># Allow outgoing UDP ports</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="c1"># To allow outgoing traceroute add 33434:33523 to this list </span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="na">UDP_OUT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"20,21,53,853,113,123"</span>
+</code></pre></div>
 </div>
 <div class="tabbed-block">
 <p>The following are a list of the most common ports that you may find useful allowing traffic through.</p>
@@ -4193,14 +4210,14 @@
 <div class="tabbed-block">
 <p></p><h3>Samba Users</h3><p></p>
 <p>You must have the following <code>TCP</code> ports unblocked:</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nv">TCP_IN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"445,139"</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nv">TCP_OUT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"445,139"</span>
-</span></code></pre></div>
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nv">TCP_IN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"445,139"</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nv">TCP_OUT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"445,139"</span>
+</code></pre></div>
 <p><br></p>
 <p>You must have the following <code>UDP</code> ports unblocked:</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nv">UDP_IN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"137,138,445"</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nv">UDP_OUT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"137,138,445"</span>
-</span></code></pre></div>
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nv">UDP_IN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"137,138,445"</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nv">UDP_OUT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"137,138,445"</span>
+</code></pre></div>
 </div>
 </div>
 </div>
@@ -4213,25 +4230,25 @@
 <p>Keep in mind that raising the limit on servers with low memory (such as Virtuozzo or OpenVZ) may cause network slowdowns if thousands of rules are loaded.  </p>
 <p>When the limit is reached, <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> will automatically rotate the entries; meaning that the oldest entries (at the top of the file) are removed, and the newest ones are added. This check only happens when using <code>csf -d</code>, which is also what <code>lfd</code> relies on. Setting this value to <code>0</code> disables the limit entirely.  </p>
 <p>If you need to allow a much larger number of blocked IPs or CIDRs, it’s recommended to use <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>'s <a data-preview="" href="../ipset/">IPSETs</a> integration instead for better performance.</p>
-<div class="language-cfg highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># #</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="c1">#   Limit the number of IP's kept in the /etc/csf/csf.deny file</span>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="c1">#   </span>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1">#   Care should be taken when increasing this value on servers with low memory</span>
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="c1">#   resources or hard limits (such as Virtuozzo/OpenVZ) as too many rules (in the</span>
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="c1">#   thousands) can sometimes cause network slowdown</span>
-</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="c1">#   </span>
-</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="c1">#   The value set here is the maximum number of IPs/CIDRs allowed</span>
-</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="c1">#   if the limit is reached, the entries will be rotated so that the oldest</span>
-</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="c1">#   entries (i.e. the ones at the top) will be removed and the latest is added.</span>
-</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="c1">#   The limit is only checked when using csf -d (which is what lfd also uses)</span>
-</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="c1">#   Set to 0 to disable limiting</span>
-</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="c1">#   </span>
-</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="c1">#   For implementations wishing to set this value significantly higher, we</span>
-</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="c1">#   recommend using the IPSET option</span>
-</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="c1"># #</span>
-</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>
-</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="na">DENY_IP_LIMIT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"200"</span>
-</span></code></pre></div>
+<div class="language-cfg highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># #</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="c1">#   Limit the number of IP's kept in the /etc/csf/csf.deny file</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="c1">#   </span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1">#   Care should be taken when increasing this value on servers with low memory</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="c1">#   resources or hard limits (such as Virtuozzo/OpenVZ) as too many rules (in the</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="c1">#   thousands) can sometimes cause network slowdown</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="c1">#   </span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="c1">#   The value set here is the maximum number of IPs/CIDRs allowed</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="c1">#   if the limit is reached, the entries will be rotated so that the oldest</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="c1">#   entries (i.e. the ones at the top) will be removed and the latest is added.</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="c1">#   The limit is only checked when using csf -d (which is what lfd also uses)</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="c1">#   Set to 0 to disable limiting</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="c1">#   </span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="c1">#   For implementations wishing to set this value significantly higher, we</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="c1">#   recommend using the IPSET option</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="c1"># #</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="na">DENY_IP_LIMIT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"200"</span>
+</code></pre></div>
 <p><br>
 <br></p>
 <h3 id="ct_limit">CT_LIMIT<a class="headerlink" data-preview="" href="#ct_limit" title="Permanent link">¶</a></h3>
@@ -4240,24 +4257,24 @@
 <p><strong>Connection Tracking</strong> lets the firewall keep track of how many connections each IP address makes to your server. If an IP opens more connections than the set limit, it will be automatically blocked. This can help protect against certain types of DoS (Denial of Service) attacks.  </p>
 <p>Be cautious when enabling this option. Some <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> like <strong>FTP</strong>, <strong>IMAP</strong>, and <strong>HTTP</strong> naturally create many connections, including ones left in <code>TIME_WAIT</code>, which can lead to false positives. On busy servers, it’s easy for legitimate traffic to hit the limit. For servers at higher risk of DoS attacks, however, this feature can be very useful. A practical starting value is usually around <code>300</code> connections.</p>
 <p>To disable this feature, set this to 0</p>
-<div class="language-ini highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># #</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="c1">#   Connection Tracking. This option enables tracking of all connections from IP</span>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="c1">#   addresses to the server. If the total number of connections is greater than</span>
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1">#   this value then the offending IP address is blocked. This can be used to help</span>
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="c1">#   prevent some types of DOS attack.</span>
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="c1">#</span>
-</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="c1">#   Care should be taken with this option. It's entirely possible that you will</span>
-</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="c1">#   see false-positives. Some protocols can be connection hungry, e.g. FTP, IMAPD</span>
-</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="c1">#   and HTTP so it could be quite easy to trigger, especially with a lot of</span>
-</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="c1">#   closed connections in TIME_WAIT. However, for a server that is prone to DOS</span>
-</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="c1">#   attacks this may be very useful. A reasonable setting for this option might</span>
-</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="c1">#   be around 300.</span>
-</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="c1">#   </span>
-</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="c1">#   To disable this feature, set this to 0</span>
-</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="c1"># #</span>
-</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>
-</span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="na">CT_LIMIT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"0"</span>
-</span></code></pre></div>
+<div class="language-ini highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># #</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="c1">#   Connection Tracking. This option enables tracking of all connections from IP</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="c1">#   addresses to the server. If the total number of connections is greater than</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1">#   this value then the offending IP address is blocked. This can be used to help</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="c1">#   prevent some types of DOS attack.</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="c1">#</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="c1">#   Care should be taken with this option. It's entirely possible that you will</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="c1">#   see false-positives. Some protocols can be connection hungry, e.g. FTP, IMAPD</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="c1">#   and HTTP so it could be quite easy to trigger, especially with a lot of</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="c1">#   closed connections in TIME_WAIT. However, for a server that is prone to DOS</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="c1">#   attacks this may be very useful. A reasonable setting for this option might</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="c1">#   be around 300.</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="c1">#   </span>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="c1">#   To disable this feature, set this to 0</span>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="c1"># #</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="na">CT_LIMIT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"0"</span>
+</code></pre></div>
 <p><br>
 <br></p>
 <h3 id="ui_block_private_net">UI_BLOCK_PRIVATE_NET<a class="headerlink" data-preview="" href="#ui_block_private_net" title="Permanent link">¶</a></h3>
@@ -4273,24 +4290,24 @@
 <p>When this setting is enabled with the value <code>1</code>, <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> will block access attempts originating from local network IPs. This helps prevent unauthorized access from internal containers, proxy bridges, or other <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> running within the same host environment. It’s a useful safeguard against loopback-style attacks or accidental internal exposure.</p>
 <p>If you intentionally access the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface through a local bridge such as a <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> container using a proxy IP like 172.18.0.2; you may need to disable this feature by setting the value to <code>0</code>.</p>
 <p>Keeping this feature enabled is recommended for most setups, as it adds an extra layer of protection against internal or bridged network access. When blocked, the browser will typically display an error such as <code>PR_CONNECT_RESET_ERROR</code> when attempting to connect.</p>
-<div class="language-ini highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># #</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="c1">#   Connection Tracking. This option enables tracking of all connections from IP</span>
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="c1">#   addresses to the server. If the total number of connections is greater than</span>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1">#   this value then the offending IP address is blocked. This can be used to help</span>
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="c1">#   prevent some types of DOS attack.</span>
-</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="c1">#</span>
-</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="c1">#   Care should be taken with this option. It's entirely possible that you will</span>
-</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="c1">#   see false-positives. Some protocols can be connection hungry, e.g. FTP, IMAPD</span>
-</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="c1">#   and HTTP so it could be quite easy to trigger, especially with a lot of</span>
-</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="c1">#   closed connections in TIME_WAIT. However, for a server that is prone to DOS</span>
-</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="c1">#   attacks this may be very useful. A reasonable setting for this option might</span>
-</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="c1">#   be around 300.</span>
-</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="c1">#   </span>
-</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="c1">#   To disable this feature, set this to 0</span>
-</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="c1"># #</span>
-</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>
-</span><span id="__span-10-17"><a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a><span class="na">CT_LIMIT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"0"</span>
-</span></code></pre></div>
+<div class="language-ini highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># #</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="c1">#   Connection Tracking. This option enables tracking of all connections from IP</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="c1">#   addresses to the server. If the total number of connections is greater than</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1">#   this value then the offending IP address is blocked. This can be used to help</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="c1">#   prevent some types of DOS attack.</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="c1">#</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="c1">#   Care should be taken with this option. It's entirely possible that you will</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="c1">#   see false-positives. Some protocols can be connection hungry, e.g. FTP, IMAPD</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="c1">#   and HTTP so it could be quite easy to trigger, especially with a lot of</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="c1">#   closed connections in TIME_WAIT. However, for a server that is prone to DOS</span>
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="c1">#   attacks this may be very useful. A reasonable setting for this option might</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="c1">#   be around 300.</span>
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="c1">#   </span>
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="c1">#   To disable this feature, set this to 0</span>
+<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="c1"># #</span>
+<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>
+<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a><span class="na">CT_LIMIT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"0"</span>
+</code></pre></div>
 <p><br>
 <br></p>
 <h3 id="ui">UI<a class="headerlink" data-preview="" href="#ui" title="Permanent link">¶</a></h3>
@@ -4301,25 +4318,25 @@
 <p>Because the web interface runs under the system's root account, a successful login grants full root access to your server. It is essential to configure and use this feature with caution. Additional security measures are included to help make using the interface safer, but careful management is still strongly recommended.</p>
 <p>We recommend placing the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface behind either a tunnel, or reverse proxy such as Nginx or <abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr>.</p>
 </details>
-<div class="language-ini highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># # </span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="c1">#   SECTION:Integrated User Interface</span>
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="c1"># # </span>
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="c1">#   Integrated User Interface. This feature provides a HTML UI to csf and lfd,</span>
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="c1">#   without requiring a control panel or web server. The UI runs as a sub process</span>
-</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="c1">#   to the lfd daemon</span>
-</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="c1">#   </span>
-</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="c1">#   As it runs under the root account and successful login provides root access</span>
-</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="c1">#   to the server, great care should be taken when configuring and using this</span>
-</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="c1">#   feature. There are additional restrictions to enhance secure access to the UI</span>
-</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="c1">#   </span>
-</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="c1">#   See readme.txt for more information about using this feature BEFORE enabling</span>
-</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="c1">#   it for security and access reasons</span>
-</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="c1">#   </span>
-</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="c1">#   1 to enable, 0 to disable</span>
-</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="c1"># # </span>
-</span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>
-</span><span id="__span-11-18"><a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="na">UI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"1"</span>
-</span></code></pre></div>
+<div class="language-ini highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># # </span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="c1">#   SECTION:Integrated User Interface</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="c1"># # </span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="c1">#   Integrated User Interface. This feature provides a HTML UI to csf and lfd,</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="c1">#   without requiring a control panel or web server. The UI runs as a sub process</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="c1">#   to the lfd daemon</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="c1">#   </span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="c1">#   As it runs under the root account and successful login provides root access</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="c1">#   to the server, great care should be taken when configuring and using this</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="c1">#   feature. There are additional restrictions to enhance secure access to the UI</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="c1">#   </span>
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="c1">#   See readme.txt for more information about using this feature BEFORE enabling</span>
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="c1">#   it for security and access reasons</span>
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="c1">#   </span>
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="c1">#   1 to enable, 0 to disable</span>
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="c1"># # </span>
+<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>
+<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="na">UI</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"1"</span>
+</code></pre></div>
 <p><br>
 <br></p>
 <p><br></p>
@@ -4378,7 +4395,7 @@ larger lists more efficiently and improve performance as your ruleset grows.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="December 14, 2025 16:42:23 UTC"><span class="timeago" datetime="2025-12-14T16:42:23+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="December 14, 2025 16:42:23 UTC">2025-12-14</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="December 26, 2025 23:46:24 UTC"><span class="timeago" datetime="2025-12-26T23:46:24+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="December 26, 2025 23:46:24 UTC">2025-12-26</span>
   </span>
 
     

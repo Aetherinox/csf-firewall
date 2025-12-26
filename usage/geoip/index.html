@@ -1185,6 +1185,10 @@
     
       
         
+          
+        
+      
+        
       
         
       
@@ -1204,8 +1208,9 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8">
         
           
-          <label class="md-nav__link" for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
-            
+          <div class="md-nav__link md-nav__container">
+            <a href="../../install/update/" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
@@ -1219,8 +1224,14 @@
   
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
         <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_8">
@@ -1234,20 +1245,22 @@
           <ul class="md-nav__list" data-md-scrollfix>
             
               
+            
+              
                 
   
   
   
   
     <li class="md-nav__item">
-      <a href="../../install/update/v14-to-v15/" class="md-nav__link">
+      <a href="../../install/update/v1500-to-v1501/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    v14.x to v15.x
+    v15.00 to v15.01
   
 
     
@@ -1268,14 +1281,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../install/update/v15-to-newer.md" class="md-nav__link">
+      <a href="../../install/update/v1501-to-newer/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    v15.x to Newer
+    v15.01 to Newer
   
 
     
@@ -3925,29 +3938,29 @@ every time you start or restart <abbr title="ConfigServer Security &amp; Firewal
 </div>
 <p><br></p>
 <p>To change which database is used for geo blocking; open your <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>'s <code>/etc/csf/csf.conf</code> config file and locate the setting <code>CC_SRC</code>. If you have the <a data-preview="" href="../../install/webui/">ConfigServer web interface</a> enabled; you can access these settings from the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface.</p>
-<div class="language-ini highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">#</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1"># Advantages: The ipdeny.com databases form CC blocking are better optimised</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1"># and so are quicker to process and create fewer iptables entries. All of these</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># databases are free to download without requiring login or key</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1">#</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1"># Disadvantages: Multiple sources mean that any one of the three could</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1"># interrupt the provision of these features. It may also mean that there are</span>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c1"># inconsistences between them</span>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="c1">#</span>
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1"># https://db-ip.com/db/lite.php</span>
-</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="c1"># http://ipdeny.com/</span>
-</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="c1"># https://iptoasn.com/</span>
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="c1"># http://download.geonames.org/export/dump/readme.txt</span>
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
-</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="c1"># Set the following to your preferred source:</span>
-</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="c1">#</span>
-</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="c1"># "1" - MaxMind</span>
-</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="c1"># "2" - db-ip, ipdeny, iptoasn</span>
-</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="c1">#</span>
-</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="c1"># The default is "2" on new installations of csf, or set to "1" to use the</span>
-</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="c1"># MaxMind databases after obtaining a license key</span>
-</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="na">CC_SRC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"2"</span>
-</span></code></pre></div>
+<div class="language-ini highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">#</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1"># Advantages: The ipdeny.com databases form CC blocking are better optimised</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1"># and so are quicker to process and create fewer iptables entries. All of these</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># databases are free to download without requiring login or key</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1">#</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1"># Disadvantages: Multiple sources mean that any one of the three could</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1"># interrupt the provision of these features. It may also mean that there are</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c1"># inconsistences between them</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="c1">#</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1"># https://db-ip.com/db/lite.php</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="c1"># http://ipdeny.com/</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="c1"># https://iptoasn.com/</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="c1"># http://download.geonames.org/export/dump/readme.txt</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="c1"># Set the following to your preferred source:</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="c1">#</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="c1"># "1" - MaxMind</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="c1"># "2" - db-ip, ipdeny, iptoasn</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="c1">#</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="c1"># The default is "2" on new installations of csf, or set to "1" to use the</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="c1"># MaxMind databases after obtaining a license key</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="na">CC_SRC</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"2"</span>
+</code></pre></div>
 <p><br></p>
 <hr>
 <p><br></p>
@@ -3988,76 +4001,76 @@ every time you start or restart <abbr title="ConfigServer Security &amp; Firewal
 <summary>Firewall › Allow Connection</summary>
 <p>If you are using a firewall, <code>geoipupdate</code> requires that the DNS and HTTPS <code>443</code> ports be open.</p>
 <p>Starting in 2024, MaxMind began using R2 presigned URLs for database downloads. If your server is refusing the connection during download, make sure that your servers can make HTTPS connections to the following hostname:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>mm-prod-geoip-databases.a2649acb697e2c09b632799562c076f2.r2.cloudflarestorage.com
-</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>mm-prod-geoip-databases.a2649acb697e2c09b632799562c076f2.r2.cloudflarestorage.com
+</code></pre></div>
 </details>
 <p><br></p>
 <p>First, install:</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>add-apt-repository<span class="w"> </span>ppa:maxmind/ppa
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>geoipupdate
-</span></code></pre></div>
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>add-apt-repository<span class="w"> </span>ppa:maxmind/ppa
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>update
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>geoipupdate
+</code></pre></div>
 <p><br></p>
 <p>Once installed make sure you have a License key generated on the maxmind website, you will then need to create a new file in <code>/etc/</code>:</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudo<span class="w"> </span>touch<span class="w"> </span>/etc/GeoIP.conf
-</span></code></pre></div>
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudo<span class="w"> </span>touch<span class="w"> </span>/etc/GeoIP.conf
+</code></pre></div>
 <p><br></p>
 <p>Add the following code to your newly created <code>/etc/GeoIP.conf</code>. After you paste the code below; you must change the following values:</p>
 <ul>
 <li><code>AccountID</code></li>
 <li><code>LicenseKey</code></li>
 </ul>
-<div class="language-ini highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Please see https://dev.maxmind.com/geoip/updating-databases?lang=en for</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1"># instructions on setting up geoipupdate, including information on how to</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1"># download a pre-filled GeoIP.conf file.</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="c1"># Replace YOUR_ACCOUNT_ID_HERE and YOUR_LICENSE_KEY_HERE with an active account</span>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="c1"># ID and license key combination associated with your MaxMind account. These</span>
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="c1"># are available from https://www.maxmind.com/en/my_license_key.</span>
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="na">AccountID 1000101</span>
-</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="na">LicenseKey ABC1234_56af7s8dshF53Ha_abck</span>
-</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
-</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="c1"># Enter the edition IDs of the databases you would like to update.</span>
-</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="c1"># Multiple edition IDs are separated by spaces.</span>
-</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="na">EditionIDs GeoLite2-ASN GeoLite2-City GeoLite2-Country</span>
-</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>
-</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="c1"># The remaining settings are OPTIONAL.</span>
-</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>
-</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="c1"># The directory to store the database files. Defaults to /usr/share/GeoIP</span>
-</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="c1"># DatabaseDirectory /usr/share/GeoIP</span>
-</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>
-</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="c1"># The server to use. Defaults to "updates.maxmind.com".</span>
-</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="c1"># Host updates.maxmind.com</span>
-</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>
-</span><span id="__span-4-23"><a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="c1"># The proxy host name or IP address. You may optionally specify a</span>
-</span><span id="__span-4-24"><a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="c1"># port number, e.g., 127.0.0.1:8888. If no port number is specified, 1080</span>
-</span><span id="__span-4-25"><a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a><span class="c1"># will be used.</span>
-</span><span id="__span-4-26"><a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a><span class="c1"># Proxy 127.0.0.1:8888</span>
-</span><span id="__span-4-27"><a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a>
-</span><span id="__span-4-28"><a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a><span class="c1"># The user name and password to use with your proxy server.</span>
-</span><span id="__span-4-29"><a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a><span class="c1"># ProxyUserPassword username:password</span>
-</span><span id="__span-4-30"><a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a>
-</span><span id="__span-4-31"><a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a><span class="c1"># Whether to preserve modification times of files downloaded from the server.</span>
-</span><span id="__span-4-32"><a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a><span class="c1"># Defaults to "0".</span>
-</span><span id="__span-4-33"><a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a><span class="c1"># PreserveFileTimes 0</span>
-</span><span id="__span-4-34"><a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a>
-</span><span id="__span-4-35"><a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a><span class="c1"># The lock file to use. This ensures only one geoipupdate process can run at a</span>
-</span><span id="__span-4-36"><a id="__codelineno-4-36" name="__codelineno-4-36" href="#__codelineno-4-36"></a><span class="c1"># time.</span>
-</span><span id="__span-4-37"><a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a><span class="c1"># Note: Once created, this lockfile is not removed from the filesystem.</span>
-</span><span id="__span-4-38"><a id="__codelineno-4-38" name="__codelineno-4-38" href="#__codelineno-4-38"></a><span class="c1"># Defaults to ".geoipupdate.lock" under the DatabaseDirectory.</span>
-</span><span id="__span-4-39"><a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a><span class="c1"># LockFile /usr/share/GeoIP/.geoipupdate.lock</span>
-</span><span id="__span-4-40"><a id="__codelineno-4-40" name="__codelineno-4-40" href="#__codelineno-4-40"></a>
-</span><span id="__span-4-41"><a id="__codelineno-4-41" name="__codelineno-4-41" href="#__codelineno-4-41"></a><span class="c1"># The amount of time to retry for when errors during HTTP transactions are</span>
-</span><span id="__span-4-42"><a id="__codelineno-4-42" name="__codelineno-4-42" href="#__codelineno-4-42"></a><span class="c1"># encountered. It can be specified as a (possibly fractional) decimal number</span>
-</span><span id="__span-4-43"><a id="__codelineno-4-43" name="__codelineno-4-43" href="#__codelineno-4-43"></a><span class="c1"># followed by a unit suffix. Valid time units are "ns", "us" (or "µs"), "ms",</span>
-</span><span id="__span-4-44"><a id="__codelineno-4-44" name="__codelineno-4-44" href="#__codelineno-4-44"></a><span class="c1"># "s", "m", "h".</span>
-</span><span id="__span-4-45"><a id="__codelineno-4-45" name="__codelineno-4-45" href="#__codelineno-4-45"></a><span class="c1"># Defaults to "5m" (5 minutes).</span>
-</span><span id="__span-4-46"><a id="__codelineno-4-46" name="__codelineno-4-46" href="#__codelineno-4-46"></a><span class="c1"># RetryFor 5m</span>
-</span><span id="__span-4-47"><a id="__codelineno-4-47" name="__codelineno-4-47" href="#__codelineno-4-47"></a>
-</span><span id="__span-4-48"><a id="__codelineno-4-48" name="__codelineno-4-48" href="#__codelineno-4-48"></a><span class="c1"># The number of parallel database downloads.</span>
-</span><span id="__span-4-49"><a id="__codelineno-4-49" name="__codelineno-4-49" href="#__codelineno-4-49"></a><span class="c1"># Defaults to "1".</span>
-</span><span id="__span-4-50"><a id="__codelineno-4-50" name="__codelineno-4-50" href="#__codelineno-4-50"></a><span class="c1"># Parallelism 1</span>
-</span></code></pre></div>
+<div class="language-ini highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Please see https://dev.maxmind.com/geoip/updating-databases?lang=en for</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1"># instructions on setting up geoipupdate, including information on how to</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1"># download a pre-filled GeoIP.conf file.</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="c1"># Replace YOUR_ACCOUNT_ID_HERE and YOUR_LICENSE_KEY_HERE with an active account</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="c1"># ID and license key combination associated with your MaxMind account. These</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="c1"># are available from https://www.maxmind.com/en/my_license_key.</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="na">AccountID 1000101</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="na">LicenseKey ABC1234_56af7s8dshF53Ha_abck</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="c1"># Enter the edition IDs of the databases you would like to update.</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="c1"># Multiple edition IDs are separated by spaces.</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="na">EditionIDs GeoLite2-ASN GeoLite2-City GeoLite2-Country</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="c1"># The remaining settings are OPTIONAL.</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="c1"># The directory to store the database files. Defaults to /usr/share/GeoIP</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="c1"># DatabaseDirectory /usr/share/GeoIP</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="c1"># The server to use. Defaults to "updates.maxmind.com".</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="c1"># Host updates.maxmind.com</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="c1"># The proxy host name or IP address. You may optionally specify a</span>
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="c1"># port number, e.g., 127.0.0.1:8888. If no port number is specified, 1080</span>
+<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a><span class="c1"># will be used.</span>
+<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a><span class="c1"># Proxy 127.0.0.1:8888</span>
+<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a>
+<a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a><span class="c1"># The user name and password to use with your proxy server.</span>
+<a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a><span class="c1"># ProxyUserPassword username:password</span>
+<a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a>
+<a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a><span class="c1"># Whether to preserve modification times of files downloaded from the server.</span>
+<a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a><span class="c1"># Defaults to "0".</span>
+<a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a><span class="c1"># PreserveFileTimes 0</span>
+<a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a>
+<a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a><span class="c1"># The lock file to use. This ensures only one geoipupdate process can run at a</span>
+<a id="__codelineno-4-36" name="__codelineno-4-36" href="#__codelineno-4-36"></a><span class="c1"># time.</span>
+<a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a><span class="c1"># Note: Once created, this lockfile is not removed from the filesystem.</span>
+<a id="__codelineno-4-38" name="__codelineno-4-38" href="#__codelineno-4-38"></a><span class="c1"># Defaults to ".geoipupdate.lock" under the DatabaseDirectory.</span>
+<a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a><span class="c1"># LockFile /usr/share/GeoIP/.geoipupdate.lock</span>
+<a id="__codelineno-4-40" name="__codelineno-4-40" href="#__codelineno-4-40"></a>
+<a id="__codelineno-4-41" name="__codelineno-4-41" href="#__codelineno-4-41"></a><span class="c1"># The amount of time to retry for when errors during HTTP transactions are</span>
+<a id="__codelineno-4-42" name="__codelineno-4-42" href="#__codelineno-4-42"></a><span class="c1"># encountered. It can be specified as a (possibly fractional) decimal number</span>
+<a id="__codelineno-4-43" name="__codelineno-4-43" href="#__codelineno-4-43"></a><span class="c1"># followed by a unit suffix. Valid time units are "ns", "us" (or "µs"), "ms",</span>
+<a id="__codelineno-4-44" name="__codelineno-4-44" href="#__codelineno-4-44"></a><span class="c1"># "s", "m", "h".</span>
+<a id="__codelineno-4-45" name="__codelineno-4-45" href="#__codelineno-4-45"></a><span class="c1"># Defaults to "5m" (5 minutes).</span>
+<a id="__codelineno-4-46" name="__codelineno-4-46" href="#__codelineno-4-46"></a><span class="c1"># RetryFor 5m</span>
+<a id="__codelineno-4-47" name="__codelineno-4-47" href="#__codelineno-4-47"></a>
+<a id="__codelineno-4-48" name="__codelineno-4-48" href="#__codelineno-4-48"></a><span class="c1"># The number of parallel database downloads.</span>
+<a id="__codelineno-4-49" name="__codelineno-4-49" href="#__codelineno-4-49"></a><span class="c1"># Defaults to "1".</span>
+<a id="__codelineno-4-50" name="__codelineno-4-50" href="#__codelineno-4-50"></a><span class="c1"># Parallelism 1</span>
+</code></pre></div>
 <p><br></p>
 <p>After you have created the above config; you need to launch the <code>geoipupdate</code> app. Multiple commands are provided below depending on if you want to specify where you placed your downloaded databases. A list of arguments are also provided. In our example, we are going to start <code>geoipupdate</code> and download the databases to the path <code>/var/lib/csf/Geo/</code>.</p>
 <p><br></p>
@@ -4107,16 +4120,16 @@ every time you start or restart <abbr title="ConfigServer Security &amp; Firewal
 <div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="using-maxmind-start-basic" name="__tabbed_1" type="radio"><input id="using-maxmind-start-custom-paths" name="__tabbed_1" type="radio"><input id="using-maxmind-start-verbose-logging" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="using-maxmind-start-basic">Start (Basic)</label><label for="using-maxmind-start-custom-paths">Start (Custom Paths)</label><label for="using-maxmind-start-verbose-logging">Start (Verbose Logging)</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sudo<span class="w"> </span>geoipupdate
-</span></code></pre></div>
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sudo<span class="w"> </span>geoipupdate
+</code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sudo<span class="w"> </span>geoipupdate<span class="w"> </span>--database-directory<span class="w"> </span>/var/lib/csf/Geo/<span class="w"> </span>--config-file<span class="w"> </span>/etc/GeoIP.conf
-</span></code></pre></div>
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sudo<span class="w"> </span>geoipupdate<span class="w"> </span>--database-directory<span class="w"> </span>/var/lib/csf/Geo/<span class="w"> </span>--config-file<span class="w"> </span>/etc/GeoIP.conf
+</code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sudo<span class="w"> </span>geoipupdate<span class="w"> </span>-v<span class="w"> </span>--database-directory<span class="w"> </span>/var/lib/csf/Geo/<span class="w"> </span>--config-file<span class="w"> </span>/etc/GeoIP.conf
-</span></code></pre></div>
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sudo<span class="w"> </span>geoipupdate<span class="w"> </span>-v<span class="w"> </span>--database-directory<span class="w"> </span>/var/lib/csf/Geo/<span class="w"> </span>--config-file<span class="w"> </span>/etc/GeoIP.conf
+</code></pre></div>
 </div>
 </div>
 </div>
@@ -4143,45 +4156,45 @@ every time you start or restart <abbr title="ConfigServer Security &amp; Firewal
 <li><code>CC_ALLOW</code></li>
 </ul>
 <p><br></p>
-<div class="language-ini highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># The iptables rules are for incoming connections only</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="c1">#</span>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="c1"># Additionally, ASN numbers can also be added to the comma separated lists</span>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1"># below that also list Country Codes. The same WARNINGS for Country Codes apply</span>
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="c1"># to the use of ASNs. More about Autonomous System Numbers (ASN):</span>
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="c1"># http://www.iana.org/assignments/as-numbers/as-numbers.xhtml</span>
-</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="c1"># ASNs must be listed as ASnnnn (where nnnn is the ASN number)</span>
-</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="c1">#</span>
-</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="c1"># You should consider using LF_IPSET when using any of the following options</span>
-</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="c1">#</span>
-</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="c1"># WARNING: These lists are never 100% accurate and some ISP's (e.g. AOL) use</span>
-</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="c1"># non-geographic IP address designations for their clients</span>
-</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="c1">#</span>
-</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="c1"># WARNING: Some of the CIDR lists are huge and each one requires a rule within</span>
-</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="c1"># the incoming iptables chain. This can result in significant performance</span>
-</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="c1"># overheads and could render the server inaccessible in some circumstances. For</span>
-</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="c1"># this reason (amongst others) we do not recommend using these options</span>
-</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="c1">#</span>
-</span><span id="__span-8-19"><a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="c1"># WARNING: Due to the resource constraints on VPS servers this feature should</span>
-</span><span id="__span-8-20"><a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="c1"># not be used on such systems unless you choose very small CC zones</span>
-</span><span id="__span-8-21"><a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="c1">#</span>
-</span><span id="__span-8-22"><a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a><span class="c1"># WARNING: CC_ALLOW allows access through all ports in the firewall. For this</span>
-</span><span id="__span-8-23"><a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a><span class="c1"># reason CC_ALLOW probably has very limited use and CC_ALLOW_FILTER is</span>
-</span><span id="__span-8-24"><a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a><span class="c1"># preferred</span>
-</span><span id="__span-8-25"><a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a><span class="c1">#</span>
-</span><span id="__span-8-26"><a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a><span class="c1"># Each option is a comma separated list of CC's, e.g. "US,GB,DE"</span>
-</span><span id="__span-8-27"><a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a><span class="na">CC_DENY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">""</span>
-</span><span id="__span-8-28"><a id="__codelineno-8-28" name="__codelineno-8-28" href="#__codelineno-8-28"></a><span class="hll"><span class="na">CC_ALLOW</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">""</span>
-</span></span></code></pre></div>
+<div class="language-ini highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># The iptables rules are for incoming connections only</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="c1">#</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="c1"># Additionally, ASN numbers can also be added to the comma separated lists</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1"># below that also list Country Codes. The same WARNINGS for Country Codes apply</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="c1"># to the use of ASNs. More about Autonomous System Numbers (ASN):</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="c1"># http://www.iana.org/assignments/as-numbers/as-numbers.xhtml</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="c1"># ASNs must be listed as ASnnnn (where nnnn is the ASN number)</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="c1">#</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="c1"># You should consider using LF_IPSET when using any of the following options</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="c1">#</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="c1"># WARNING: These lists are never 100% accurate and some ISP's (e.g. AOL) use</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="c1"># non-geographic IP address designations for their clients</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="c1">#</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="c1"># WARNING: Some of the CIDR lists are huge and each one requires a rule within</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="c1"># the incoming iptables chain. This can result in significant performance</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="c1"># overheads and could render the server inaccessible in some circumstances. For</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="c1"># this reason (amongst others) we do not recommend using these options</span>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="c1">#</span>
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="c1"># WARNING: Due to the resource constraints on VPS servers this feature should</span>
+<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="c1"># not be used on such systems unless you choose very small CC zones</span>
+<a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="c1">#</span>
+<a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a><span class="c1"># WARNING: CC_ALLOW allows access through all ports in the firewall. For this</span>
+<a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a><span class="c1"># reason CC_ALLOW probably has very limited use and CC_ALLOW_FILTER is</span>
+<a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a><span class="c1"># preferred</span>
+<a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a><span class="c1">#</span>
+<a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a><span class="c1"># Each option is a comma separated list of CC's, e.g. "US,GB,DE"</span>
+<a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a><span class="na">CC_DENY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">""</span>
+<a id="__codelineno-8-28" name="__codelineno-8-28" href="#__codelineno-8-28"></a><span class="hll"><span class="na">CC_ALLOW</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">""</span>
+</span></code></pre></div>
 <p><br></p>
 <p>In our example, we will blacklist the country <strong>China</strong>, which uses the abbreviation <code>CN</code>. To do so; our config will look like the following:</p>
-<div class="language-ini highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="na">CC_DENY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"CN"</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="na">CC_ALLOW</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">""</span>
-</span></code></pre></div>
+<div class="language-ini highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="na">CC_DENY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"CN"</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="na">CC_ALLOW</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">""</span>
+</code></pre></div>
 <p><br></p>
 <p>To specify multiple countries; add a comma <code>,</code> delimiter between each country.</p>
-<div class="language-ini highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="na">CC_DENY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"CN"</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="na">CC_ALLOW</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"US,GB,DE"</span>
-</span></code></pre></div>
+<div class="language-ini highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="na">CC_DENY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"CN"</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="na">CC_ALLOW</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"US,GB,DE"</span>
+</code></pre></div>
 <p><br></p>
 <p>Our rules above mean:</p>
 <table>
@@ -4211,9 +4224,9 @@ every time you start or restart <abbr title="ConfigServer Security &amp; Firewal
 <p>Select the tab <strong><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr></strong>, scroll down and select <strong>Firewall Configuration</strong>, and then in the top dropdown box in the middle of the page, select <strong>Country Code Lists and Settings</strong>.</p>
 <p><br></p>
 <p>We will add the following to each setting:</p>
-<div class="language-ini highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="na">CC_DENY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"CN"</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="na">CC_ALLOW</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"US,GB,DE"</span>
-</span></code></pre></div>
+<div class="language-ini highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="na">CC_DENY</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"CN"</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="na">CC_ALLOW</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"US,GB,DE"</span>
+</code></pre></div>
 <p><br></p>
 <p>Below is an animated gif showing the steps.</p>
 <figure>
@@ -4230,8 +4243,8 @@ every time you start or restart <abbr title="ConfigServer Security &amp; Firewal
 <p><br></p>
 <p><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code>-ra, --restartall</code></span></span></p>
 <p>Restart firewall rules (<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>) and then restart <abbr title="Login Failure Daemon">lfd daemon</abbr>. Both <abbr title="ConfigServer Security &amp; Firewall">csf</abbr> and then <abbr title="Login Failure Daemon">lfd</abbr> should be restarted after making any changes to the configuration files</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-ra
-</span></code></pre></div>
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-ra
+</code></pre></div>
 <p><br></p>
 <hr>
 <p><br></p>

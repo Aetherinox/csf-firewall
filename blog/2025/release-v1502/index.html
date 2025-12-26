@@ -1190,6 +1190,10 @@
     
       
         
+          
+        
+      
+        
       
         
       
@@ -1209,8 +1213,9 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8">
         
           
-          <label class="md-nav__link" for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
-            
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../install/update/" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
@@ -1224,8 +1229,14 @@
   
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
         <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_8">
@@ -1239,20 +1250,22 @@
           <ul class="md-nav__list" data-md-scrollfix>
             
               
+            
+              
                 
   
   
   
   
     <li class="md-nav__item">
-      <a href="../../../install/update/v14-to-v15/" class="md-nav__link">
+      <a href="../../../install/update/v1500-to-v1501/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    v14.x to v15.x
+    v15.00 to v15.01
   
 
     
@@ -1273,14 +1286,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../install/update/v15-to-newer.md" class="md-nav__link">
+      <a href="../../../install/update/v1501-to-newer/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    v15.x to Newer
+    v15.01 to Newer
   
 
     
@@ -4070,8 +4083,8 @@ These builds may contain incomplete features, untested changes, or critical bugs
 <p><br></p>
 <h4 id="enable-alpha-releases">Enable Alpha Releases<a class="headerlink" href="#enable-alpha-releases" title="Permanent link">¶</a></h4>
 <p>To enable the Alpha channel, edit your <code>/etc/csf/csf.conf</code> file and add the following line:</p>
-<div class="language-ini highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="na">RELEASE_ALPHA</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"1"</span>
-</span></code></pre></div>
+<div class="language-ini highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="na">RELEASE_ALPHA</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"1"</span>
+</code></pre></div>
 <details class="danger">
 <summary>⚠️ <strong>DANGER</strong> ⚠️ Alpha Releases</summary>
 <p>This setting is not included by default to prevent accidental use on production systems.</p>
@@ -4137,15 +4150,15 @@ These builds may contain incomplete features, untested changes, or critical bugs
 <p><br></p>
 <h3 id="automatic-download-server">Automatic Download Server<a class="headerlink" href="#automatic-download-server" title="Permanent link">¶</a></h3>
 <p>The update servers are now fully back online, restoring the same functionality as the original developer's website. A new help page has also been added to the download service for easier guidance:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>url:            https://download.configserver.dev/help
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>name:           Download Service › Help
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>desc:           Shows a list of commands that can be utilized with the CSF download service
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>image:          https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/docs/images/logos/csf.png
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>favicon:        https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/docs/images/logos/csf.png
-</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>favicon_size:   25
-</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>target:         new
-</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>accent:         353535E0
-</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>url:            https://download.configserver.dev/help
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>name:           Download Service › Help
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>desc:           Shows a list of commands that can be utilized with the CSF download service
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>image:          https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/docs/images/logos/csf.png
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>favicon:        https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/docs/images/logos/csf.png
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>favicon_size:   25
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>target:         new
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>accent:         353535E0
+</code></pre></div>
 <p><br></p>
 <p>Additionally, a few companies have reached out to offer <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr> like reputation identity, which <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> previously supported. These integrations are being reviewed and implemented carefully, with security and privacy as the top priorities, which means no data collection, no extra open ports, and no compromises on safety.</p>
 <p><br></p>
@@ -4168,15 +4181,15 @@ These builds may contain incomplete features, untested changes, or critical bugs
 </ul>
 <p><br></p>
 <p>Full documentation and usage instructions can be found here:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>url:            https://docs.configserver.dev/usage/prepost/
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>name:           Docs › Pre &amp; Post
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>desc:           CSF includes dedicated directories where you can place custom Bash scripts to run at specific stages of the firewall’s startup process. 
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>image:          https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/docs/images/logos/csf.png
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>favicon:        https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/docs/images/logos/csf.png
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>favicon_size:   25
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>target:         new
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>accent:         353535E0
-</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>url:            https://docs.configserver.dev/usage/prepost/
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>name:           Docs › Pre &amp; Post
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>desc:           CSF includes dedicated directories where you can place custom Bash scripts to run at specific stages of the firewall’s startup process. 
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>image:          https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/docs/images/logos/csf.png
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>favicon:        https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/docs/images/logos/csf.png
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>favicon_size:   25
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>target:         new
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>accent:         353535E0
+</code></pre></div>
 <p><br></p>
 <p>With the updated logic, you can now place your pre and post shell scripts in multiple locations for greater flexibility:</p>
 <h4 id="csfpresh"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0C28.7 0 0 28.7 0 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M224 0c15.4 0 30.1 6.1 41 17L367 119c10.9 10.9 17 25.6 17 41l-128 0c-17.7 0-32-14.3-32-32L224 0z"></path></svg></span> <a href="#+csfpre.sh" id="+csfpre.sh"><code>csfpre.sh</code></a><a class="headerlink" href="#csfpresh" title="Permanent link">¶</a></h4>
@@ -4211,30 +4224,30 @@ These builds may contain incomplete features, untested changes, or critical bugs
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="example-output-output-example-1" name="__tabbed_1" type="radio"><input id="example-output-output-example-2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="example-output-output-example-1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path fill="currentColor" d="M32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l64 0 0 320-64 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l192 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0 0-352c0-17.7-14.3-32-32-32L32 32z"></path></svg></span> Output Example 1</label><label for="example-output-output-example-2"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M48 64c0-17.7 14.3-32 32-32l171 0c60.2 0 109 48.8 109 109 0 43.8-26.2 83.3-66.4 100.4l-139.1 59C119 315.4 96 350.2 96 388.7l0 27.3 224 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L64 480c-17.7 0-32-14.3-32-32l0-59.3c0-64.2 38.4-122.2 97.5-147.3l139.1-59c16.6-7.1 27.4-23.4 27.4-41.4 0-24.9-20.2-45-45-45L80 96C62.3 96 48 81.7 48 64z"></path></svg></span> Output Example 2</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-console highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="gp">$ </span>sudo<span class="w"> </span>sh<span class="w"> </span>src/install.sh<span class="w"> </span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="gp"># </span><span class="c1">#</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="gp">#  </span>ConfigServer<span class="w"> </span>Security<span class="w"> </span><span class="p">&amp;</span><span class="w"> </span>Firewall<span class="w"> </span>›<span class="w"> </span>Installer
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="gp">#  </span>version:<span class="w"> </span><span class="m">15</span>.02
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="gp"># </span><span class="c1">#</span>
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="go">OK                  Starting installer CyberPanel › install.cyberpanel.sh </span>
-</span></code></pre></div>
+<div class="language-console highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="gp">$ </span>sudo<span class="w"> </span>sh<span class="w"> </span>src/install.sh<span class="w"> </span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="gp"># </span><span class="c1">#</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="gp">#  </span>ConfigServer<span class="w"> </span>Security<span class="w"> </span><span class="p">&amp;</span><span class="w"> </span>Firewall<span class="w"> </span>›<span class="w"> </span>Installer
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="gp">#  </span>version:<span class="w"> </span><span class="m">15</span>.02
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="gp"># </span><span class="c1">#</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="go">OK                  Starting installer CyberPanel › install.cyberpanel.sh </span>
+</code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="language-console highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="gp">$ </span>sudo<span class="w"> </span>sh<span class="w"> </span>src/install.sh<span class="w"> </span>--help
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="go">ConfigServer Security &amp; Firewall</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="go">Robust linux iptables/nftables firewall</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="go">version: 15.02</span>
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="go">install.sh [ --detect | --dryrun |  --version | --help ]</span>
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="go">Flags:                                         </span>
-</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="go">      -D,  --detect             returns installer script that will run; does not install csf &lt;default&gt; false</span>
-</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="go">      -d,  --dryrun             simulates installation, does not install csf &lt;default&gt; false</span>
-</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="go">      -v,  --version            current version of this utilty &lt;current&gt; 15.02</span>
-</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="go">      -h,  --help               show this help menu</span>
-</span></code></pre></div>
+<div class="language-console highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="gp">$ </span>sudo<span class="w"> </span>sh<span class="w"> </span>src/install.sh<span class="w"> </span>--help
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="go">ConfigServer Security &amp; Firewall</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="go">Robust linux iptables/nftables firewall</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="go">version: 15.02</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="go">install.sh [ --detect | --dryrun |  --version | --help ]</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="go">Flags:                                         </span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="go">      -D,  --detect             returns installer script that will run; does not install csf &lt;default&gt; false</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="go">      -d,  --dryrun             simulates installation, does not install csf &lt;default&gt; false</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="go">      -v,  --version            current version of this utilty &lt;current&gt; 15.02</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="go">      -h,  --help               show this help menu</span>
+</code></pre></div>
 </div>
 </div>
 </div>
@@ -4259,15 +4272,15 @@ These builds may contain incomplete features, untested changes, or critical bugs
 <h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">¶</a></h2>
 <p>This update builds upon existing functionality while preserving the stability and behavior users rely on. The goal is to deliver a seamless transition; keeping automation and workflows intact, while improving integration support and resolving previously broken functionality.</p>
 <p>As always, community feedback is encouraged. If you have feature suggestions or ideas that could enhance the user experience, feel free to open a ticket on the official GitHub repository:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>url:            https://github.com/Aetherinox/csf-firewall/issues/new
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>name:           Github › Submit Issue
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>desc:           Submit a bug or new feature request.
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>image:          https://i.pinimg.com/564x/5c/2b/c5/5c2bc53db08acad9c2c1162e5cfd87ba.jpg
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>favicon:        https://i.pinimg.com/564x/5c/2b/c5/5c2bc53db08acad9c2c1162e5cfd87ba.jpg
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>favicon_size:   25
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>target:         new
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>accent:         353535E0
-</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>url:            https://github.com/Aetherinox/csf-firewall/issues/new
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>name:           Github › Submit Issue
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>desc:           Submit a bug or new feature request.
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>image:          https://i.pinimg.com/564x/5c/2b/c5/5c2bc53db08acad9c2c1162e5cfd87ba.jpg
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>favicon:        https://i.pinimg.com/564x/5c/2b/c5/5c2bc53db08acad9c2c1162e5cfd87ba.jpg
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>favicon_size:   25
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>target:         new
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>accent:         353535E0
+</code></pre></div>
 <p><br></p>
 <hr>
 <p><br></p>

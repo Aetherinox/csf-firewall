@@ -1190,6 +1190,10 @@
     
       
         
+          
+        
+      
+        
       
         
       
@@ -1209,8 +1213,9 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8">
         
           
-          <label class="md-nav__link" for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
-            
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../install/update/" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
@@ -1224,8 +1229,14 @@
   
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
         <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_8">
@@ -1239,20 +1250,22 @@
           <ul class="md-nav__list" data-md-scrollfix>
             
               
+            
+              
                 
   
   
   
   
     <li class="md-nav__item">
-      <a href="../../../install/update/v14-to-v15/" class="md-nav__link">
+      <a href="../../../install/update/v1500-to-v1501/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    v14.x to v15.x
+    v15.00 to v15.01
   
 
     
@@ -1273,14 +1286,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../install/update/v15-to-newer.md" class="md-nav__link">
+      <a href="../../../install/update/v1501-to-newer/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    v15.x to Newer
+    v15.01 to Newer
   
 
     
@@ -3927,12 +3940,12 @@
 </svg></span> Perl</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>/etc/cron.daily/csget<span class="w"> </span>--nodaemon
-</span></code></pre></div>
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>/etc/cron.daily/csget<span class="w"> </span>--nodaemon
+</code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>perl<span class="w"> </span>/etc/cron.daily/csget<span class="w"> </span>--nodaemon
-</span></code></pre></div>
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>perl<span class="w"> </span>/etc/cron.daily/csget<span class="w"> </span>--nodaemon
+</code></pre></div>
 </div>
 </div>
 </div>
@@ -4105,14 +4118,14 @@ add or remove from your whitelist.</p>
 </span> Command</label><label for="add-port-output"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Output</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>--addport<span class="w"> </span>TCP_IN:21140
-</span></code></pre></div>
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>--addport<span class="w"> </span>TCP_IN:21140
+</code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>$<span class="w"> </span>sudo<span class="w"> </span>csf<span class="w"> </span>--addport<span class="w"> </span>TCP_IN:21140
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>PASS<span class="w">               </span>Successfully<span class="w"> </span>added<span class="w"> </span>port<span class="w"> </span>TCP_IN:21140<span class="w"> </span><span class="k">in</span><span class="w"> </span>/etc/csf/csf.conf
-</span></code></pre></div>
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>$<span class="w"> </span>sudo<span class="w"> </span>csf<span class="w"> </span>--addport<span class="w"> </span>TCP_IN:21140
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>PASS<span class="w">               </span>Successfully<span class="w"> </span>added<span class="w"> </span>port<span class="w"> </span>TCP_IN:21140<span class="w"> </span><span class="k">in</span><span class="w"> </span>/etc/csf/csf.conf
+</code></pre></div>
 </div>
 </div>
 </div>
@@ -4128,14 +4141,14 @@ add or remove from your whitelist.</p>
 </span> Command</label><label for="remove-port-output"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Output</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>--removeport<span class="w"> </span>TCP_IN:21140
-</span></code></pre></div>
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>--removeport<span class="w"> </span>TCP_IN:21140
+</code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>$<span class="w"> </span>sudo<span class="w"> </span>csf<span class="w"> </span>--removeport<span class="w"> </span>TCP_IN:21140
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>PASS<span class="w">               </span>Successfully<span class="w"> </span>removed<span class="w"> </span>port<span class="w"> </span>TCP_IN:21140<span class="w"> </span>from<span class="w"> </span>/etc/csf/csf.conf
-</span></code></pre></div>
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>$<span class="w"> </span>sudo<span class="w"> </span>csf<span class="w"> </span>--removeport<span class="w"> </span>TCP_IN:21140
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>PASS<span class="w">               </span>Successfully<span class="w"> </span>removed<span class="w"> </span>port<span class="w"> </span>TCP_IN:21140<span class="w"> </span>from<span class="w"> </span>/etc/csf/csf.conf
+</code></pre></div>
 </div>
 </div>
 </div>
@@ -4152,20 +4165,20 @@ allow connections to pass through.</p>
 </span> Command</label><label for="list-ports-output"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Output</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>--listports
-</span></code></pre></div>
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>--listports
+</code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>$<span class="w"> </span>sudo<span class="w"> </span>csf<span class="w"> </span>--listports
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span>INFO<span class="w">              </span>Configured<span class="w"> </span>CSF<span class="w"> </span>Ports:<span class="w">                           </span>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">                      </span>The<span class="w"> </span>following<span class="w"> </span>are<span class="w"> </span>a<span class="w"> </span>list<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>whitelisted<span class="w"> </span>ports<span class="w"> </span>configured<span class="w"> </span><span class="k">in</span><span class="w"> </span>your<span class="w"> </span>/etc/csf/csf.conf
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>
-</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">                      </span>TCP_IN:<span class="w"> </span><span class="m">22</span>,25,80,143,443
-</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">                      </span>TCP_OUT:<span class="w"> </span><span class="m">22</span>,25,80,113,443
-</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">                      </span>UDP_IN:<span class="w"> </span><span class="m">53</span>,80,443,853
-</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">                      </span>UDP_OUT:<span class="w"> </span><span class="m">53</span>,113,123,853
-</span></code></pre></div>
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>$<span class="w"> </span>sudo<span class="w"> </span>csf<span class="w"> </span>--listports
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span>INFO<span class="w">              </span>Configured<span class="w"> </span>CSF<span class="w"> </span>Ports:<span class="w">                           </span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">                      </span>The<span class="w"> </span>following<span class="w"> </span>are<span class="w"> </span>a<span class="w"> </span>list<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>whitelisted<span class="w"> </span>ports<span class="w"> </span>configured<span class="w"> </span><span class="k">in</span><span class="w"> </span>your<span class="w"> </span>/etc/csf/csf.conf
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">                      </span>TCP_IN:<span class="w"> </span><span class="m">22</span>,25,80,143,443
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">                      </span>TCP_OUT:<span class="w"> </span><span class="m">22</span>,25,80,113,443
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">                      </span>UDP_IN:<span class="w"> </span><span class="m">53</span>,80,443,853
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">                      </span>UDP_OUT:<span class="w"> </span><span class="m">53</span>,113,123,853
+</code></pre></div>
 </div>
 </div>
 </div>

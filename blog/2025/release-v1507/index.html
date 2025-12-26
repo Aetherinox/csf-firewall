@@ -1192,6 +1192,10 @@
     
       
         
+          
+        
+      
+        
       
         
       
@@ -1211,8 +1215,9 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8">
         
           
-          <label class="md-nav__link" for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
-            
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../install/update/" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
@@ -1226,8 +1231,14 @@
   
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
         <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_8">
@@ -1241,20 +1252,22 @@
           <ul class="md-nav__list" data-md-scrollfix>
             
               
+            
+              
                 
   
   
   
   
     <li class="md-nav__item">
-      <a href="../../../install/update/v14-to-v15/" class="md-nav__link">
+      <a href="../../../install/update/v1500-to-v1501/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    v14.x to v15.x
+    v15.00 to v15.01
   
 
     
@@ -1275,14 +1288,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../install/update/v15-to-newer.md" class="md-nav__link">
+      <a href="../../../install/update/v1501-to-newer/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    v15.x to Newer
+    v15.01 to Newer
   
 
     
@@ -3851,10 +3864,10 @@
 <br></p>
 <h3 id="fixed-cyberpanel-error-data-supplied-is-not-accepted-forbidden-characters">Fixed Cyberpanel error: Data supplied is not accepted - forbidden characters<a class="headerlink" href="#fixed-cyberpanel-error-data-supplied-is-not-accepted-forbidden-characters" title="Permanent link">¶</a></h3>
 <p>We have fixed an issue which triggered the following error to occur when accessing the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> <strong>Firewall Configuration</strong> page and attempting to save any changes made to the application:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>{"error_message": "Data supplied is not accepted, following characters are not allowed in the input ` $ &amp; ( ) [ ] { } ; : 
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  \u2018 &lt; &gt;.", "errorMessage": "Data supplied is not accepted, following characters are not allowed in the input 
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  ` $ &amp; ( ) [ ] { } ; : \u2018 &lt; &gt;."}
-</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>{"error_message": "Data supplied is not accepted, following characters are not allowed in the input ` $ &amp; ( ) [ ] { } ; : 
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  \u2018 &lt; &gt;.", "errorMessage": "Data supplied is not accepted, following characters are not allowed in the input 
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  ` $ &amp; ( ) [ ] { } ; : \u2018 &lt; &gt;."}
+</code></pre></div>
 <p><br></p>
 <p>To resolve this issue, you must run the installation script <code>src/install.sh</code> for <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> <code>v15.07</code> or newer, which applies the necessary fixes to allow you to save your <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> settings correctly.</p>
 <p>The alternative to this is that all input fields within your settings must not contain a <span class="keys"><kbd class="key-colon">:</kbd></span>, this includes the following settings:</p>
@@ -3872,13 +3885,13 @@
 <h3 id="fixed-whitespace-breaking-ipsets">Fixed whitespace breaking ipsets<a class="headerlink" href="#fixed-whitespace-breaking-ipsets" title="Permanent link">¶</a></h3>
 <p>A bug has been resolved that previously caused IPSet-based blocklists to fail loading when the blocklist definitions in <code>/etc/csf/csf.blocklists</code> were formatted with extra whitespace for readability.  </p>
 <p>For example, the following style would previously break IPSet loading:</p>
-<div class="language-ini highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="na">CSF_HIGHRISK        |43200      | 5 |   http</span><span class="o">:</span><span class="s">//blocklist.configserver.dev/highrisk.ipset</span>
-</span></code></pre></div>
+<div class="language-ini highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="na">CSF_HIGHRISK        |43200      | 5 |   http</span><span class="o">:</span><span class="s">//blocklist.configserver.dev/highrisk.ipset</span>
+</code></pre></div>
 <p><br></p>
 <p>Many users prefer to align entries for clarity, such as:</p>
-<div class="language-ini highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="na">CSF_MASTER      | 43200 | 0 | http</span><span class="o">:</span><span class="s">//blocklist.configserver.dev/master.ipset</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="na">CSF_HIGHRISK    | 43200 | 5 | http</span><span class="o">:</span><span class="s">//blocklist.configserver.dev/highrisk.ipset</span>
-</span></code></pre></div>
+<div class="language-ini highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="na">CSF_MASTER      | 43200 | 0 | http</span><span class="o">:</span><span class="s">//blocklist.configserver.dev/master.ipset</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="na">CSF_HIGHRISK    | 43200 | 5 | http</span><span class="o">:</span><span class="s">//blocklist.configserver.dev/highrisk.ipset</span>
+</code></pre></div>
 <p><br></p>
 <p>This issue has now been fixed — you can safely use aligned or “pretty-print” your blocklist definitions without affecting IPSet loading.</p>
 <p><br>

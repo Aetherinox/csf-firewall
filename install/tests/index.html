@@ -1287,6 +1287,10 @@
     
       
         
+          
+        
+      
+        
       
         
       
@@ -1309,8 +1313,9 @@
         <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8">
         
           
-          <label class="md-nav__link" for="__nav_3_8" id="__nav_3_8_label" tabindex="">
-            
+          <div class="md-nav__link md-nav__container">
+            <a href="../update/" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
@@ -1324,8 +1329,14 @@
   
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_8" id="__nav_3_8_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
         <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_8">
@@ -1339,20 +1350,22 @@
           <ul class="md-nav__list" data-md-scrollfix>
             
               
+            
+              
                 
   
   
   
   
     <li class="md-nav__item">
-      <a href="../update/v14-to-v15/" class="md-nav__link">
+      <a href="../update/v1500-to-v1501/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    v14.x to v15.x
+    v15.00 to v15.01
   
 
     
@@ -1373,14 +1386,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../update/v15-to-newer.md" class="md-nav__link">
+      <a href="../update/v1501-to-newer/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    v15.x to Newer
+    v15.01 to Newer
   
 
     
@@ -3832,30 +3845,30 @@
 <p>If any issues are detected, the script will report them so you can fix missing <abbr title="A list of packages required for CSF to function properly">dependencies</abbr> or adjust your system configuration. Running this script is a recommended step before installing <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> to your server, as it ensures that your server is properly prepared for firewall deployment.</p>
 <p><br></p>
 <p>To run these tests; ensure you have the package <code>perl</code> installed on your system as explained in the previous step <a data-preview="" href="../dependencies/"><abbr title="A list of packages required for CSF to function properly">Dependencies</abbr></a>. You also need to have <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> extracted to your server. After these are complete, run the tests:</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>perl<span class="w"> </span>csf/csftest.pl
-</span></code></pre></div>
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>perl<span class="w"> </span>csf/csftest.pl
+</code></pre></div>
 <details class="note">
 <summary>Running Tests After Install</summary>
 <p>You can also run the tests again at any time with the command:</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>perl<span class="w"> </span>/usr/local/csf/bin/csftest.pl
-</span></code></pre></div>
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>perl<span class="w"> </span>/usr/local/csf/bin/csftest.pl
+</code></pre></div>
 </details>
 <p><br></p>
 <p>When the tests run; you should see the following:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Testing ip_tables/iptable_filter...OK
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>Testing ipt_LOG...OK
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>Testing ipt_multiport/xt_multiport...OK
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>Testing ipt_REJECT...OK
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>Testing ipt_state/xt_state...OK
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>Testing ipt_limit/xt_limit...OK
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>Testing ipt_recent...OK
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>Testing xt_connlimit...OK
-</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>Testing ipt_owner/xt_owner...OK
-</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>Testing iptable_nat/ipt_REDIRECT...OK
-</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>Testing iptable_nat/ipt_DNAT...OK
-</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>
-</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>RESULT: csf should function on this server
-</span></code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Testing ip_tables/iptable_filter...OK
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>Testing ipt_LOG...OK
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>Testing ipt_multiport/xt_multiport...OK
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>Testing ipt_REJECT...OK
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>Testing ipt_state/xt_state...OK
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>Testing ipt_limit/xt_limit...OK
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>Testing ipt_recent...OK
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>Testing xt_connlimit...OK
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>Testing ipt_owner/xt_owner...OK
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>Testing iptable_nat/ipt_REDIRECT...OK
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>Testing iptable_nat/ipt_DNAT...OK
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>RESULT: csf should function on this server
+</code></pre></div>
 <dl>
 <dt><br></dt>
 <dd>
@@ -3873,8 +3886,8 @@
 <p><br .></p>
 <h3 id="unknown-option-dport-csf-requires-legacy-iptables">unknown option --dport: (<abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> requires legacy <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr>)<a class="headerlink" data-preview="" href="#unknown-option-dport-csf-requires-legacy-iptables" title="Permanent link">¶</a></h3>
 <p>If you see this error during the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> tests, your system is using the <abbr title="A Linux firewall framework that replaces iptables with a simpler, faster system.">nftables</abbr> backend for <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr>. <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> requires the legacy <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> backend. Check the current setting with:</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--display<span class="w"> </span>iptables
-</span></code></pre></div>
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--display<span class="w"> </span>iptables
+</code></pre></div>
 <p><br></p>
 <p>If you see <code>link currently points to /usr/sbin/iptables-nft</code>, you need to change this over to <code>/usr/sbin/iptables-legacy</code>. Two methods are listed below for doing this, <strong>pick one</strong>:</p>
 <p><br></p>
@@ -3882,22 +3895,22 @@
 <div class="tabbed-content">
 <div class="tabbed-block">
 <p>To switch over to <code>/usr/sbin/iptables-legacy</code>, run the command:</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--config<span class="w"> </span>iptables
-</span></code></pre></div>
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--config<span class="w"> </span>iptables
+</code></pre></div>
 <p><br></p>
 <p>You will see the following:</p>
-<div class="language-console highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="go">There are 2 choices for the alternative iptables (providing /usr/sbin/iptables).</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="go">  Selection    Path                       Priority   Status</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="go">------------------------------------------------------------</span>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="go">* 0            /usr/sbin/iptables-nft      20        auto mode</span>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="go">  1            /usr/sbin/iptables-legacy   10        manual mode</span>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="go">  2            /usr/sbin/iptables-nft      20        manual mode</span>
-</span></code></pre></div>
+<div class="language-console highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="go">There are 2 choices for the alternative iptables (providing /usr/sbin/iptables).</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="go">  Selection    Path                       Priority   Status</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="go">------------------------------------------------------------</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="go">* 0            /usr/sbin/iptables-nft      20        auto mode</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="go">  1            /usr/sbin/iptables-legacy   10        manual mode</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="go">  2            /usr/sbin/iptables-nft      20        manual mode</span>
+</code></pre></div>
 <p><br></p>
 <p>There may be an asterisk next to <code>selection</code> <span class="keys"><kbd class="key-0">0</kbd></span>, you need to press <span class="keys"><kbd class="key-1">1</kbd></span> and press <span class="keys"><kbd class="key-enter">Enter</kbd></span> to switch over to <code>/usr/sbin/iptables-legacy</code>. Then repeat these steps for IPv6</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--config<span class="w"> </span>ip6tables
-</span></code></pre></div>
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--config<span class="w"> </span>ip6tables
+</code></pre></div>
 <p><br></p>
 <p>Along with ipv4 and ipv6, there are two other tables you can switch, which are <code>arptables</code> and <code>ebtables</code>. </p>
 <details class="note">
@@ -3917,9 +3930,9 @@
 </details>
 <p><br></p>
 <p>If you need to switch the other options over to legacy, those commands are:</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--config<span class="w"> </span>arptables
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--config<span class="w"> </span>ebtables
-</span></code></pre></div>
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--config<span class="w"> </span>arptables
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--config<span class="w"> </span>ebtables
+</code></pre></div>
 </div>
 <div class="tabbed-block">
 <p>To switch over to <code>/usr/sbin/iptables-legacy</code>, run the commands listed below:</p>
@@ -3930,63 +3943,63 @@
 <summary>Error: Not registered; Not setting</summary>
 <p>On newer systems (Debian 11+, Ubuntu 20.04+, RHEL 8+), <code>ebtables</code> and <code>arptables</code> are often completely replaced by <abbr title="A Linux firewall framework that replaces iptables with a simpler, faster system.">nftables</abbr>, so there isn’t always a legacy version available. This means that
 you may not have any binaries installed for these two types and could receive the following error if you attempt to change <code>ebtables</code> and <code>arptables</code>:</p>
-<div class="language-console highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="go">update-alternatives: error: alternative /usr/sbin/ebtables-legacy for ebtables not registered; not setting</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="go">update-alternatives: error: alternative /usr/sbin/arptables-legacy for arptables not registered; not setting</span>
-</span></code></pre></div>
+<div class="language-console highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="go">update-alternatives: error: alternative /usr/sbin/ebtables-legacy for ebtables not registered; not setting</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="go">update-alternatives: error: alternative /usr/sbin/arptables-legacy for arptables not registered; not setting</span>
+</code></pre></div>
 <p>If you receive the error(s) above; simply skip setting <code>ebtables</code> and <code>arptables</code>. Only focus on switching <code>iptables</code> and <code>ip6tables</code> over to <code>iptables-legacy</code></p>
 </details>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--set<span class="w"> </span>iptables<span class="w"> </span>/usr/sbin/iptables-legacy
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--set<span class="w"> </span>ip6tables<span class="w"> </span>/usr/sbin/ip6tables-legacy
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--set<span class="w"> </span>arptables<span class="w"> </span>/usr/sbin/arptables-legacy
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--set<span class="w"> </span>ebtables<span class="w"> </span>/usr/sbin/ebtables-legacy
-</span></code></pre></div>
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--set<span class="w"> </span>iptables<span class="w"> </span>/usr/sbin/iptables-legacy
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--set<span class="w"> </span>ip6tables<span class="w"> </span>/usr/sbin/ip6tables-legacy
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--set<span class="w"> </span>arptables<span class="w"> </span>/usr/sbin/arptables-legacy
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--set<span class="w"> </span>ebtables<span class="w"> </span>/usr/sbin/ebtables-legacy
+</code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>sudo<span class="w"> </span>alternatives<span class="w"> </span>--config<span class="w"> </span>iptables
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>sudo<span class="w"> </span>alternatives<span class="w"> </span>--config<span class="w"> </span>ip6tables
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>sudo<span class="w"> </span>alternatives<span class="w"> </span>--config<span class="w"> </span>arptables
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>sudo<span class="w"> </span>alternatives<span class="w"> </span>--config<span class="w"> </span>ebtables
-</span></code></pre></div>
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>sudo<span class="w"> </span>alternatives<span class="w"> </span>--config<span class="w"> </span>iptables
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>sudo<span class="w"> </span>alternatives<span class="w"> </span>--config<span class="w"> </span>ip6tables
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>sudo<span class="w"> </span>alternatives<span class="w"> </span>--config<span class="w"> </span>arptables
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>sudo<span class="w"> </span>alternatives<span class="w"> </span>--config<span class="w"> </span>ebtables
+</code></pre></div>
 </div>
 </div>
 </div>
 <p><br></p>
 <p>You’ll be presented with a numbered list of installed binaries (usually <abbr title="A Linux firewall framework that replaces iptables with a simpler, faster system.">nftables</abbr> and legacy). You need to type the number corresponding to the legacy version so that <code>iptables-legacy</code> becomes the default.</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>There<span class="w"> </span>are<span class="w"> </span><span class="m">2</span><span class="w"> </span>choices<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>alternative<span class="w"> </span>iptables<span class="w"> </span><span class="o">(</span>providing<span class="w"> </span>/usr/sbin/iptables<span class="o">)</span>.
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span>Selection<span class="w">    </span>Path<span class="w">                       </span>Priority<span class="w">   </span>Status
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>------------------------------------------------------------
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>*<span class="w"> </span><span class="m">0</span><span class="w">            </span>/usr/sbin/iptables-nft<span class="w">      </span><span class="m">20</span><span class="w">        </span>auto<span class="w"> </span>mode
-</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">  </span><span class="m">1</span><span class="w">            </span>/usr/sbin/iptables-legacy<span class="w">   </span><span class="m">10</span><span class="w">        </span>manual<span class="w"> </span>mode
-</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">  </span><span class="m">2</span><span class="w">            </span>/usr/sbin/iptables-nft<span class="w">      </span><span class="m">20</span><span class="w">        </span>manual<span class="w"> </span>mode
-</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>
-</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>Enter<span class="w"> </span>to<span class="w"> </span>keep<span class="w"> </span>the<span class="w"> </span>current<span class="w"> </span>selection<span class="o">[</span>+<span class="o">]</span>,<span class="w"> </span>or<span class="w"> </span><span class="nb">type</span><span class="w"> </span>selection<span class="w"> </span>number:<span class="w"> </span><span class="m">1</span>
-</span></code></pre></div>
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>There<span class="w"> </span>are<span class="w"> </span><span class="m">2</span><span class="w"> </span>choices<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>alternative<span class="w"> </span>iptables<span class="w"> </span><span class="o">(</span>providing<span class="w"> </span>/usr/sbin/iptables<span class="o">)</span>.
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span>Selection<span class="w">    </span>Path<span class="w">                       </span>Priority<span class="w">   </span>Status
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>------------------------------------------------------------
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>*<span class="w"> </span><span class="m">0</span><span class="w">            </span>/usr/sbin/iptables-nft<span class="w">      </span><span class="m">20</span><span class="w">        </span>auto<span class="w"> </span>mode
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">  </span><span class="m">1</span><span class="w">            </span>/usr/sbin/iptables-legacy<span class="w">   </span><span class="m">10</span><span class="w">        </span>manual<span class="w"> </span>mode
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">  </span><span class="m">2</span><span class="w">            </span>/usr/sbin/iptables-nft<span class="w">      </span><span class="m">20</span><span class="w">        </span>manual<span class="w"> </span>mode
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>Enter<span class="w"> </span>to<span class="w"> </span>keep<span class="w"> </span>the<span class="w"> </span>current<span class="w"> </span>selection<span class="o">[</span>+<span class="o">]</span>,<span class="w"> </span>or<span class="w"> </span><span class="nb">type</span><span class="w"> </span>selection<span class="w"> </span>number:<span class="w"> </span><span class="m">1</span>
+</code></pre></div>
 </div>
 </div>
 </div>
 <p><br></p>
 <p>Confirm your changes by running the command:</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>iptables<span class="w"> </span>-V
-</span></code></pre></div>
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>iptables<span class="w"> </span>-V
+</code></pre></div>
 <p><br></p>
 <p>Which should return:</p>
-<div class="language-console highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="gp">$ </span>iptables<span class="w"> </span>-V
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="go">iptables v1.8.7 (legacy)</span>
-</span></code></pre></div>
+<div class="language-console highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="gp">$ </span>iptables<span class="w"> </span>-V
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="go">iptables v1.8.7 (legacy)</span>
+</code></pre></div>
 <p><br></p>
 <p>You can also run:</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--display<span class="w"> </span>iptables
-</span></code></pre></div>
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--display<span class="w"> </span>iptables
+</code></pre></div>
 <p><br></p>
 <p>Which should output:</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>iptables<span class="w"> </span>-<span class="w"> </span>manual<span class="w"> </span>mode
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>link<span class="w"> </span>currently<span class="w"> </span>points<span class="w"> </span>to<span class="w"> </span>/usr/sbin/iptables-legacy
-</span></code></pre></div>
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>iptables<span class="w"> </span>-<span class="w"> </span>manual<span class="w"> </span>mode
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>link<span class="w"> </span>currently<span class="w"> </span>points<span class="w"> </span>to<span class="w"> </span>/usr/sbin/iptables-legacy
+</code></pre></div>
 <p><br></p>
 <p>You can always switch back to <code>iptables-nft</code> by running:</p>
-<div class="language-shell highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--set<span class="w"> </span>iptables<span class="w"> </span>/usr/sbin/iptables-nft
-</span></code></pre></div>
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>sudo<span class="w"> </span>update-alternatives<span class="w"> </span>--set<span class="w"> </span>iptables<span class="w"> </span>/usr/sbin/iptables-nft
+</code></pre></div>
 <p><br></p>
 <hr>
 <p><br></p>
