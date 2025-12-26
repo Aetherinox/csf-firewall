@@ -632,7 +632,7 @@ check_sudo
 #   Checks if a service exists.
 #   Look for script in /etc/init.d or a command in PATH.
 #   
-#   @param  n   string  Service name
+#   @param  n   str     Service name
 #   @return     0       Service exists
 #   @return     1       Service does not exist
 # #
@@ -816,18 +816,20 @@ if [ -z "${ipt6}" ]; then
 fi
 
 # #
-#   Clear Iptable Rules
+#   Iptable › Flush
 #   
 #   Flushes and clears all iptales
 #   
-#   @usage          docker.sh --clear
-#                   docker.sh -c
-#   @param          none
+#   @usage              docker.sh --flush
+#                       docker.sh -f
+#   
+#   @param              null
+#   @return             null
 # #
 
-cmd_iptables_flush()
+iptables_flush()
 {
-    info "    Resetting iptable chains and rules for ${bluel}IPv4${end}"
+    info "    Flushing iptable chains and rules for ${bluel}IPv4${end}"
     
     run "${ipt4}" -F
     run "${ipt4}" -X
@@ -836,7 +838,7 @@ cmd_iptables_flush()
     run "${ipt4}" -t mangle -F
     run "${ipt4}" -t mangle -X
 
-    info "    Resetting iptable chains and rules for ${bluel}IPv6${end}"
+    info "    Flushing iptable chains and rules for ${bluel}IPv6${end}"
     
     run "${ipt6}" -F
     run "${ipt6}" -X
@@ -845,7 +847,7 @@ cmd_iptables_flush()
     run "${ipt6}" -t mangle -F
     run "${ipt6}" -t mangle -X
 
-    ok "    Successfully reset iptable chains and rules"
+    ok "    Successfully flushed iptable chains and rules"
 }
 
 # #
@@ -1103,7 +1105,7 @@ while [ "$#" -gt 0 ]; do
             ;;
 
         -f|--flush)
-            cmd_iptables_flush
+            iptables_flush
             exit 1
             ;;
 

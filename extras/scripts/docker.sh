@@ -49,31 +49,38 @@ export PATH="$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 # #
 #   Define › Config
 #   
-#   docker0_eth         Main docker network interface
-#                       Can be created using the command:
-#                           › sudo docker network create --driver=bridge --subnet=172.18.0.0/16 --gateway=172.18.0.1 traefik
+#   bridge_default      Default docker network bridge
+#                       To locate the name of your bridge for the value to enter; run the command
+#                           › docker network inspect bridge --format '{{ index .Options "com.docker.network.bridge.name" }}'
+#                       Typically this is called 'docker0'
 #   
 #   file_csf_allow      /etc/csf/csf.allow file
-#                       Each docker container's local IP will be added.
+#                       Each docker container's local IP will be added / whitelisted and a comment will be added at the end.
 #   
 #   csf_comment         Comment added to each whitelisted ip within /etc/csf/csf.allow
 # #
 
-docker0_eth="docker0"
+bridge_default="docker0"
 csf_comment="Docker container whitelist"
 file_csf_allow="/etc/csf/csf.allow"
 
 # #
-#   Define › Network Subnets
+#   Define › User-defined Bridge (Subnets)
 #   
-#   This is the list of IP addresses / subnets you will use with docker that must
-#   be whitelisted.
+#   This is the list of IP addresses / subnets you have assigned to your user-defined
+#   docker bridges.
 #   
-#       Single          containers_ip_cidr="172.17.0.0/16"
-#       Multiple        containers_ip_cidr="172.17.0.0/16 10.0.0.0/24 192.168.1.0/24"
+#   These subnets are defined when you create user bridges using a command such as:
+#       › sudo docker network create --driver=bridge --subnet=172.18.0.0/16 --gateway=172.18.0.1 traefik
+#   
+#   Once the user-defined bridge is created with the command above, add the subnet value to 'bridge_user_subnets'
+#       › 172.18.0.0/16
+#   
+#   Single          bridge_user_subnets="172.17.0.0/16"
+#   Multiple        bridge_user_subnets="172.17.0.0/16 10.0.0.0/24 192.168.1.0/24"
 # #
 
-containers_ip_cidr="172.17.0.0/16"
+bridge_user_subnets="172.17.0.0/16"
 
 # #
 #   Define › App
@@ -621,7 +628,7 @@ check_sudo
 #   Checks if a service exists.
 #   Look for script in /etc/init.d or a command in PATH.
 #   
-#   @param  n   string  Service name
+#   @param  n   str     Service name
 #   @return     0       Service exists
 #   @return     1       Service does not exist
 # #
@@ -717,18 +724,20 @@ if [ -z "${ipt6}" ]; then
 fi
 
 # #
-#   Clear Iptable Rules
+#   Iptable › Flush
 #   
 #   Flushes and clears all iptales
 #   
-#   @usage          docker.sh --clear
-#                   docker.sh -c
-#   @param          none
+#   @usage              docker.sh --flush
+#                       docker.sh -f
+#   
+#   @param              null
+#   @return             null
 # #
 
-cmd_iptables_flush()
+iptables_flush()
 {
-    info "    Resetting iptable chains and rules for ${bluel}IPv4${end}"
+    info "    Flushing iptable chains and rules for ${bluel}IPv4${end}"
     
     run "${ipt4}" -F
     run "${ipt4}" -X
@@ -737,7 +746,7 @@ cmd_iptables_flush()
     run "${ipt4}" -t mangle -F
     run "${ipt4}" -t mangle -X
 
-    info "    Resetting iptable chains and rules for ${bluel}IPv6${end}"
+    info "    Flushing iptable chains and rules for ${bluel}IPv6${end}"
     
     run "${ipt6}" -F
     run "${ipt6}" -X
@@ -746,7 +755,7 @@ cmd_iptables_flush()
     run "${ipt6}" -t mangle -F
     run "${ipt6}" -t mangle -X
 
-    ok "    Successfully reset iptable chains and rules"
+    ok "    Successfully flushed iptable chains and rules"
 }
 
 # #
@@ -1162,7 +1171,7 @@ cmd_containers_list()
             # #
 
             if [ "${cont_netmode}" = "default" ]; then
-                cont_bridge_name="${docker0_eth}"
+                cont_bridge_name="${bridge_default}"
                 cont_ipaddr=$( docker inspect -f "{{.NetworkSettings.IPAddress}}" "${cont_id}" )
                 cont_network_ip_chart="${cont_ipaddr}"
 
@@ -1214,7 +1223,7 @@ EOF
             # #
 
             if [ "${cont_netmode}" = "default" ]; then
-                cont_bridge_name=${docker0_eth}
+                cont_bridge_name="${bridge_default}"
 
                 #   This will return empty if IP manually assigned from docker-compose.yml for container
                 #   docker inspect -f "{{.NetworkSettings.IPAddress}}" 5b251b810e7d
@@ -1410,7 +1419,7 @@ while [ "$#" -gt 0 ]; do
             ;;
 
         -f|--flush)
-            cmd_iptables_flush
+            iptables_flush
             exit 1
             ;;
 
@@ -1603,7 +1612,7 @@ chain_create DOCKER-ISOLATION-STAGE-2
 chain_create DOCKER nat
 
 # #
-#   Rule › docker0
+#   Rule › Default Docker Bridge › docker0
 #   
 #   Add DOCKER0 rule
 #   
@@ -1611,11 +1620,11 @@ chain_create DOCKER nat
 #       › sudo iptables -C INPUT -i docker0 -j ACCEPT
 # #
 
-info "    Apply ACCEPT rule DOCKER table for INPUT chain"
-if ip link show ${docker0_eth} >/dev/null 2>&1; then
-    rule_append INPUT -i "${docker0_eth}" -j ACCEPT
+info "    Apply ACCEPT rule to default docker bridge INPUT chain"
+if ip link show ${bridge_default} >/dev/null 2>&1; then
+    rule_append INPUT -i "${bridge_default}" -j ACCEPT
 else
-    echo "    ${yellowl}! WARNING: ${docker0_eth} interface does not exist; skipping INPUT rule${end}"
+    echo "    ${yellowl}! WARNING: ${bridge_default} bridge does not exist; skipping ACCEPT rule${end}"
 fi
 
 # #
@@ -1633,7 +1642,7 @@ rule_append FORWARD -j DOCKER-ISOLATION-STAGE-1
 #   Add docker0 to forward
 # #
 
-add_to_forward "${docker0_eth}"
+add_to_forward "${bridge_default}"
 
 # #
 #   To view PREROUTING and POSTROUTING rules; add `-t nat` with:
@@ -1654,13 +1663,13 @@ rule_add -t nat -A PREROUTING -m addrtype --dst-type LOCAL -j DOCKER
 rule_add -t nat -A OUTPUT ! -d 127.0.0.0/8 -m addrtype --dst-type LOCAL -j DOCKER
 
 # #
-#   SECTION › Whitelist Container Network
+#   SECTION › User-Defined Bridge › Whitelist
 #   
 #   Whitelist ip addresses associated with docker
 # #
 
-prinp "Docker Subnet" \
-       "Fetches all Docker container subnets and configures NAT rules to ensure containers can reach external networks correctly. \
+prinp "User-Defined Bridges" \
+       "Fetches all Docker bridge subnets and configures NAT rules to ensure containers can reach external networks correctly. \
 ${greyd}\n${greyd} \
 ${greyd}\n${yellowd}- ${greym}Masquerade outbound container traffic${greyd} \
 ${greyd}\n${yellowd}- ${greym}Avoid adding duplicate NAT rules${greyd} \
@@ -1674,7 +1683,7 @@ info "    Configuring ${bluel}Docker subnet${end}"
 #       [...]
 # #
 
-for ip_block in $containers_ip_cidr; do
+for ip_block in $bridge_user_subnets; do
 
     # #
     #   Print Subnet
@@ -1690,18 +1699,18 @@ for ip_block in $containers_ip_cidr; do
     #       sudo iptables -t nat -C POSTROUTING ! -o docker0 -s 172.17.0.0/16 -j MASQUERADE
     # #
 
-    if ! "${ipt4}" -t nat -C POSTROUTING ! -o "${docker0_eth}" -s "${ip_block}" -j MASQUERADE >/dev/null 2>&1; then
-        run "${ipt4}" -t nat -A POSTROUTING ! -o "${docker0_eth}" -s "${ip_block}" -j MASQUERADE
-        label "         + RULES ${greend}[ADD]${greend} -t nat -A POSTROUTING ! -o ${docker0_eth} -s ${ip_block} -j MASQUERADE${end}"
+    if ! "${ipt4}" -t nat -C POSTROUTING ! -o "${bridge_default}" -s "${ip_block}" -j MASQUERADE >/dev/null 2>&1; then
+        run "${ipt4}" -t nat -A POSTROUTING ! -o "${bridge_default}" -s "${ip_block}" -j MASQUERADE
+        label "         + RULES ${greend}[ADD]${greend} -t nat -A POSTROUTING ! -o ${bridge_default} -s ${ip_block} -j MASQUERADE${end}"
     else
-        label "         ! RULES ${yellowd}[SKP]${yellowd} -t nat -A POSTROUTING ! -o ${docker0_eth} -s ${ip_block} -j MASQUERADE${end}"
+        label "         ! RULES ${yellowd}[SKP]${yellowd} -t nat -A POSTROUTING ! -o ${bridge_default} -s ${ip_block} -j MASQUERADE${end}"
     fi
 
-    if ! "${ipt4}" -t nat -C POSTROUTING -s "${ip_block}" ! -o "${docker0_eth}" -j MASQUERADE >/dev/null 2>&1; then
-        run "${ipt4}" -t nat -A POSTROUTING -s "${ip_block}" ! -o "${docker0_eth}" -j MASQUERADE
-        label "         + RULES ${greend}[ADD]${greend} -t nat -A POSTROUTING -s ${ip_block} ! -o ${docker0_eth} -j MASQUERADE${end}"
+    if ! "${ipt4}" -t nat -C POSTROUTING -s "${ip_block}" ! -o "${bridge_default}" -j MASQUERADE >/dev/null 2>&1; then
+        run "${ipt4}" -t nat -A POSTROUTING -s "${ip_block}" ! -o "${bridge_default}" -j MASQUERADE
+        label "         + RULES ${greend}[ADD]${greend} -t nat -A POSTROUTING -s ${ip_block} ! -o ${bridge_default} -j MASQUERADE${end}"
     else
-        label "         ! RULES ${yellowd}[SKP]${yellowd} -t nat -A POSTROUTING -s ${ip_block} ! -o ${docker0_eth} -j MASQUERADE${end}"
+        label "         ! RULES ${yellowd}[SKP]${yellowd} -t nat -A POSTROUTING -s ${ip_block} ! -o ${bridge_default} -j MASQUERADE${end}"
     fi
 
 done
@@ -1995,7 +2004,7 @@ if [ "$containers_num" -gt 0 ]; then
         # #
 
         if [ "${cont_netmode}" = "default" ]; then
-            cont_bridge_name="${docker0_eth}"
+            cont_bridge_name="${bridge_default}"
             cont_ipaddr=$( docker inspect -f "{{.NetworkSettings.IPAddress}}" "${cont_id}" )
             cont_network_ip_chart="${cont_ipaddr}"
 
@@ -2060,7 +2069,7 @@ EOF
         # #
 
         if [ "${cont_netmode}" = "default" ]; then
-            cont_bridge_name=${docker0_eth}
+            cont_bridge_name="${bridge_default}"
 
             #   This will return empty if IP manually assigned from docker-compose.yml for container
             #   docker inspect -f "{{.NetworkSettings.IPAddress}}" 5b251b810e7d
@@ -2316,7 +2325,7 @@ info "    Configuring tables ${bluel}DOCKER-ISOLATION${greym} and ${bluel}DOCKER
 rule_add -A DOCKER-ISOLATION-STAGE-1 -j RETURN
 rule_add -A DOCKER-ISOLATION-STAGE-2 -j RETURN
 rule_add -A DOCKER-USER -j RETURN
-rule_add -t nat -I DOCKER -i "${docker0_eth}" -j RETURN
+rule_add -t nat -I DOCKER -i "${bridge_default}" -j RETURN
 
 # #
 #   Finish
