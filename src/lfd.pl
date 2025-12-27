@@ -10883,24 +10883,48 @@ EOF
 <div id="loader"></div>
 <a id='toplink' class='toplink' title='Go to bottom'><span class='glyphicon glyphicon-hand-down'></span></a>
 <div class='container-fluid'>
+
+
+<div class="section-header">
+    <div class="header-left">
+        <a href="/$session/">
+            <img class="logo" src="$images/csf.png" alt="ConfigServer Firewall">
+        </a>
+        <div class="app-info">
+            <span class="app-name">ConfigServer Firewall</span>
+            <span class="app-version"><code>v$version</code></span>
+        </div>
+    </div>
+
+    <div class="header-right">
 EOF
 								}
-								unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq "logtailcmd" or $FORM{action} eq "loggrepcmd") {
+
+								unless ( $FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq "logtailcmd" or $FORM{action} eq "loggrepcmd")
+								{
 									print "<div class='pull-right' style='margin:8px'>\n";
-									if ($config{UI_CXS} or $config{UI_CSE}) {
+									if ( $config{UI_CXS} or $config{UI_CSE} )
+									{
 										print "<form action='$script' method='post'><select name='csfapp'><option>csf</option>";
-										if ($config{UI_CXS}) {print "<option>cxs</option>"}
-										if ($config{UI_CSE}) {print "<option>cse</option>"}
+
+										if ( $config{UI_CXS} )
+										{
+											print "<option>cxs</option>"
+										}
+
+										if ( $config{UI_CSE} )
+										{
+											print "<option>cse</option>"
+										}
+									
 										print "<", "/select> <input class='btn btn-default' type='submit' value='Switch'></form>\n";
 									}
-									print " <a class='btn btn-default' href='/$session/?csfaction=csflogout'>csf Logout</a>\n";
+
 									print "</div>\n";
 									print <<EOF;
-<div class='panel panel-default panel-body'>
-<a href="/$session/">
-	<img align='absmiddle' src='$images/csf_small.png' alt='ConfigServer Firewall &amp; Security' style='float:left'>
-</a>
-<h3>ConfigServer Security &amp; Firewall - csf v$myv</h3>
+									
+        <button class="header-btn"><a class='btn-settings-base btn-logout' href='/$session/?csfaction=csflogout'>Logout</a></button>
+    </div>
 </div>
 EOF
 								}
