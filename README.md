@@ -413,8 +413,34 @@ Before enabling and configuring CSF, it is crucial to test whether it is compati
 
 If the test completes successfully, you will see `RESULT: csf should function on this server`. If there are any problems, the test will provide information on how to resolve them.
 
+Change directory:
+
+```shell
+cd csf
+```
+
+Now run the Pre-install Test:
+
 ```shell
 sudo perl csf/csftest.pl
+```
+
+You should see:
+
+```
+Testing ip_tables/iptable_filter...OK
+Testing ipt_LOG...OK
+Testing ipt_multiport/xt_multiport...OK
+Testing ipt_REJECT...OK
+Testing ipt_state/xt_state...OK
+Testing ipt_limit/xt_limit...OK
+Testing ipt_recent...OK
+Testing xt_connlimit...OK
+Testing ipt_owner/xt_owner...OK
+Testing iptable_nat/ipt_REDIRECT...OK
+Testing iptable_nat/ipt_DNAT...OK
+
+RESULT: csf should function on this server:
 ```
 
 <br />
