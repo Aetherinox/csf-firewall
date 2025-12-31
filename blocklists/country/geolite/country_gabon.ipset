@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_gabon_ipset
 #   @uuid           b1fb9988-aeda-3423-b9a4-0cb5297908bf
-#   @updated        Tue Dec 30 12:11:44 UTC 2025
+#   @updated        Wed Dec 31 00:20:34 UTC 2025
 #   @entries        397301 ips
-#                   187 subnets
-#                   187 lines
+#                   189 subnets
+#                   189 lines
 #   @country        Gabon (GA)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -119,6 +119,7 @@
 2001:470:28:849::/64
 2001:470:36:ca::/64
 2001:470:36:87a::/64
+2001:470:36:11d5::/64
 2001:470:6d:9fc::/64
 2001:470:6f:98e::/64
 2001:470:71:18d::/64
@@ -129,6 +130,7 @@
 2001:470:efd5::/48
 2001:470:fe6b::/48
 2001:43f8:1160::/47
+2600:70ff:a76e::/48
 2600:70ff:aa52::/48
 2600:70ff:b12c::/48
 2606:40:a18::/46
