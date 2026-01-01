@@ -335,6 +335,24 @@ To install the latest version of CSF manually, run the following commands:
 
 <br />
 
+  - For **Debian 13**:
+
+    ```shell
+    sudo apt-get update && sudo apt-get install -y \
+      ipset \
+      libwww-perl \
+      libcrypt-ssleay-perl \
+      libio-socket-inet6-perl \
+      libio-socket-ssl-perl \
+      libnet-libidn-perl \
+      libsocket6-perl \
+      postfix \
+      perl \
+      wget
+    ```
+
+<br />
+
   - For **CentOS/RHEL**:
 
     ```shell
