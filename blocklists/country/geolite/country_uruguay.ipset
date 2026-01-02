@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_uruguay_ipset
 #   @uuid           c4d5d814-f1eb-380f-acbe-c98f4030f44f
-#   @updated        Fri Jan  2 00:21:37 UTC 2026
+#   @updated        Fri Jan  2 12:12:24 UTC 2026
 #   @entries        281474979254577 ips
 #                   443 subnets
 #                   443 lines
