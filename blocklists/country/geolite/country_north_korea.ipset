@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_north_korea_ipset
 #   @uuid           8e30e8dc-6c70-3f55-81c6-1ad746e8203e
-#   @updated        Fri Jan  2 12:11:42 UTC 2026
+#   @updated        Sat Jan  3 00:19:28 UTC 2026
 #   @entries        2825 ips
-#                   481 subnets
-#                   481 lines
+#                   479 subnets
+#                   479 lines
 #   @country        North Korea (KP)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -123,7 +123,6 @@
 2001:470:19:aff::/64
 2001:470:19:b04::/64
 2001:470:19:b10::/64
-2001:470:19:b19::/64
 2001:470:19:b3f::/64
 2001:470:19:b47::/64
 2001:470:19:b5b::/64
@@ -456,7 +455,6 @@
 2600:70ff:a9ea::/48
 2600:70ff:a9f9::/48
 2600:70ff:a9fe::/48
-2600:70ff:aa21::/48
 2600:70ff:aa2b::/48
 2600:70ff:aa5e::/48
 2600:70ff:aa90::/48
