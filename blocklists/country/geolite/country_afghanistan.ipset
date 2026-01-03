@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_afghanistan_ipset
 #   @uuid           08cd1aec-051b-3b4b-988a-87488b4fa719
-#   @updated        Fri Jan  2 12:11:04 UTC 2026
+#   @updated        Sat Jan  3 00:18:49 UTC 2026
 #   @entries        186817 ips
-#                   827 subnets
-#                   827 lines
+#                   828 subnets
+#                   828 lines
 #   @country        Afghanistan (AF)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -642,6 +642,7 @@
 2001:470:1f29:216::/64
 2001:470:1f29:22e::/64
 2001:470:1f29:269::/64
+2001:470:1f29:26a::/64
 2001:470:1f29:296::/64
 2001:470:1f29:2b6::/64
 2001:470:1f29:2c9::/64
