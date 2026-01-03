@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_gambia_ipset
 #   @uuid           14a82e45-a897-3b96-8c16-f8e6db9775d4
-#   @updated        Sat Jan  3 00:19:17 UTC 2026
+#   @updated        Sat Jan  3 12:11:07 UTC 2026
 #   @entries        279617 ips
 #                   187 subnets
 #                   187 lines
