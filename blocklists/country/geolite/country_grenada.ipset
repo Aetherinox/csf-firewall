@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_grenada_ipset
 #   @uuid           e9560a79-3344-34a9-a11e-edfc2ec214df
-#   @updated        Sat Jan  3 12:11:06 UTC 2026
+#   @updated        Sun Jan  4 00:21:44 UTC 2026
 #   @entries        32067 ips
 #                   215 subnets
 #                   215 lines
