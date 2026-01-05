@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_isle_of_man_ipset
 #   @uuid           146a7291-5994-351c-80d6-378bcd05968b
-#   @updated        Sun Jan  4 12:11:41 UTC 2026
+#   @updated        Mon Jan  5 00:20:43 UTC 2026
 #   @entries        136143 ips
 #                   346 subnets
 #                   346 lines
