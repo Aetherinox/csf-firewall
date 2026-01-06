@@ -1,5 +1,116 @@
 ChangeLog:
 
+15.09 - URLs in /etc/csf/csf.conf are now clickable in the Firewall
+        Configuration web interface.
+
+        Correctly detect interactive --version input in the CLI.
+
+        Sponsor icon updates:
+            - Added new setting in /etc/csf/csf.conf "SPONSOR_HIDE_ICON" to
+              hide icons in the web interface footer.
+            - Sponsor icon automatically hides if the user enters a sponsor
+              license.
+            - Removed the beating animation for the sponsor icon.
+
+        Automatically install Webmin module without requiring the user to
+            /usr/local/csf/csfwebmin.tgz.
+
+        Added csf.conf optional setting to show Firewall Configuration button in
+        Webmin next to other buttons:
+            - UI_WEBMIN_SHOW_BUTTON_CONFIG = "1"
+
+        Added AbuseIPDB service template to the blocklist file:
+            /etc/csf/csf.blocklists.
+
+        Updated DirectAdmin plugin.conf:
+            - Added update_url and version_url so DirectAdmin can fetch the
+              latest version.
+
+        Rebranded CentOS Web Panel to Control Web Panel to reflect the correct
+        app name.
+
+        Added AbuseIPDB template to /etc/csf/csf.blocklists for improved
+        integration.
+
+        Rewrote Docker integration script in "extras/docker.sh":
+            - Added caching for docker container list generation.
+            - POSIX compliant.
+            - Added optional flags such as --help, --dryrun, etc.
+
+        Rewrote OpenVPN integration script in "extras/openvpn.sh":
+            - POSIX compliant.
+            - Added optional flags such as --help, --dryrun, etc.
+
+        Corrected an install script error in install.directadmin:
+            - Fixed an improperly closed "if" condition.
+
+        Descriptions for Webmin settings now render correctly with proper
+        structure.
+
+        Segregated formatted --version output in Control Web Panel to remove
+        ANSI colors.
+
+        Ensured proper sanitization when sending version information to Control
+        Web Panel.
+
+        Added support for AlmaLinux, RedHat, and Rocky 10 based distributions:
+            - Debian, Ubuntu, ZorinOS: /usr/share/webmin
+            - RedHat, AlmaLinux, Rocky 10: /usr/libexec/webmin
+
+        Added DirectAdmin installation instructions to the Install chapter in
+        the documentation.
+
+        Added AbuseIPDB integration instructions to the documentation.
+
+15.08 - Refactor Perl module csget for improved maintainability.
+
+        Add CLI commands to manage ports:
+            --addport, -ap
+            --removeport, -rp
+            --listports, -lp
+
+        Improve installation script output for better clarity.
+
+        Add logic to handle immutable flag +i on Control Web Panel installs;
+        restores flag after installation.
+
+        Automatically install Webmin module
+            /usr/local/csf/csfwebmin.tgz.
+
+        Optimize blocklist generation scripts in the CSF GitHub repository.
+
+        Rename Control Web Panel navigation label:
+            ConfigServer Scripts to ConfigServer Firewall.
+
+        Update JSON response structure for license and Insiders service
+        endpoints.
+
+        Refactor protect.sh and all install.*.sh bash scripts to be fully
+        POSIX compliant.
+
+        Add warning if LF_MODSEC_PERM is set below 3600 seconds (1 hour).
+
+        Add comment in csf.conf specifying input value type for LF_MODSEC_PERM.
+
+        Update configuration description for LF_MODSEC.
+
+        Add longdesc property to module.info in CSF Webmin module.
+
+        Update csf.blocklists with revised URLs to blocklist services.
+
+        Fix Control Web Panel menu link csfofficial returning a blank page.
+
+        Suppress update notifications when the latest version is installed
+        without a terminal present.
+
+        Remove duplicate entries from highrisk.ipset static blocklist.
+
+        Add ShellCheck directive to extras/scripts/protect.sh in GitHub
+        repository.
+
+        Fix csget assigning incorrect user:group to files, resolving SELinux
+        security errors.
+
 15.07 - Add new tab "Resources" to tab interface.
 
         Add Privacy Policy to CSF.
@@ -64,8 +175,7 @@ ChangeLog:
 
         New footer design for improved consistency and navigation
 
-        Integrate csfpre.sh and csfpost.sh for native pre/post
-        script support
+        Integrate csfpre.sh and csfpost.sh for native pre/post script support
 
         Added new "HEADER:" flag to config files
 
@@ -74,13 +184,13 @@ ChangeLog:
         Added Light/Dark mode toggle in the footer
 
         Added optional Content Security Policy (CSP) protection to web interface
-        New csf.conf settings:
-            UI_CSP_ENABLED
-            UI_CSP_ADVANCED_ENABLED
-            UI_CSP_ADVANCED_RULE
+            New csf.conf settings:
+                UI_CSP_ENABLED
+                UI_CSP_ADVANCED_ENABLED
+                UI_CSP_ADVANCED_RULE
 
-        Modified config file comments for clarity; more descriptive, 
-        organized, and include practical examples
+        Modified config file comments for clarity; more descriptive, organized,
+        and include practical examples
 
         Modified "ports-blacklist"; now POSIX compliant
 
@@ -107,8 +217,8 @@ ChangeLog:
 
         Changed csf update server code to point to new csf domain
 
-        Fixed bug with invalid sessions still being able to access backend
-        web interface assets
+        Fixed bug with invalid sessions still being able to access backend web
+        interface assets
 
 15.00 - Final version released by Jonathan Michaelson / configserver.com
 
@@ -125,7 +235,9 @@ ChangeLog:
 14.24 - Fixed regression bug in v14.23 "Modified UI HTTP header checks to be
         case agnostic"
 
-14.23 - Modified Apache regexes to detect "remote" or "client" as the IP trigger
+14.23 - Modified Apache regexes to detect "remote" or "client" as the IP
+        trigger
+
         Mdified UI HTTP header checks to be case agnostic
 
         Sanitise CC list strings
@@ -192,11 +304,11 @@ ChangeLog:
 14.16 - Removed some spurious debug code
 
         Modified alert templates for: 
-        LF_WEBMIN_EMAIL_ALERT
-        LF_CPANEL_ALERT
-        LF_SUDO_EMAIL_ALERT
-        LF_SU_EMAIL_ALERT
-        LF_SSH_EMAIL_ALERT
+            LF_WEBMIN_EMAIL_ALERT
+            LF_CPANEL_ALERT
+            LF_SUDO_EMAIL_ALERT
+            LF_SU_EMAIL_ALERT
+            LF_SSH_EMAIL_ALERT
         These have been changed to include the log line that triggered the
         alert to help give context to the alert and the date/time from the
         log to identify when the event occurred. All the relevant templates
