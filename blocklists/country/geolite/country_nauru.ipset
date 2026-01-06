@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_nauru_ipset
 #   @uuid           5f7b9b68-4b02-35ad-afb5-0ef3d2f170a1
-#   @updated        Mon Jan  5 12:12:00 UTC 2026
+#   @updated        Tue Jan  6 00:20:20 UTC 2026
 #   @entries        13262 ips
 #                   146 subnets
 #                   146 lines
