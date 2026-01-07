@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_yemen_ipset
 #   @uuid           290e7290-dc10-3df1-8d05-97d46b576e40
-#   @updated        Wed Jan  7 00:19:12 UTC 2026
+#   @updated        Wed Jan  7 12:13:23 UTC 2026
 #   @entries        238555 ips
 #                   231 subnets
 #                   231 lines
