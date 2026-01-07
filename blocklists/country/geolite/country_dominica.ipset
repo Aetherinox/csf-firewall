@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_dominica_ipset
 #   @uuid           1cadca1e-26f0-397e-91ca-4e5bd25b1087
-#   @updated        Tue Jan  6 12:11:59 UTC 2026
-#   @entries        30689 ips
-#                   218 subnets
-#                   218 lines
+#   @updated        Wed Jan  7 00:18:03 UTC 2026
+#   @entries        30433 ips
+#                   219 subnets
+#                   219 lines
 #   @country        Dominica (DM)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -110,7 +110,8 @@
 196.199.77.0/24
 198.101.28.0/22
 199.16.58.0/23
-199.127.196.0/22
+199.127.196.0/23
+199.127.198.0/24
 199.189.114.0/23
 199.195.220.0/24
 204.195.244.43/32
