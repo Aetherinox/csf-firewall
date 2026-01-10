@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_oman_ipset
 #   @uuid           e0eddb8e-3c58-355a-9370-75290a584bc8
-#   @updated        Fri Jan  9 12:12:31 UTC 2026
-#   @entries        1104227 ips
-#                   500 subnets
-#                   500 lines
+#   @updated        Sat Jan 10 00:19:40 UTC 2026
+#   @entries        1104259 ips
+#                   501 subnets
+#                   501 lines
 #   @country        Oman (OM)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -178,6 +178,7 @@
 146.75.162.68/31
 146.75.166.118/31
 146.75.166.120/31
+148.64.13.224/27
 148.151.0.0/16
 150.48.181.186/31
 150.48.181.188/30

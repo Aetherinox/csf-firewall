@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_tuvalu_ipset
 #   @uuid           eac4219d-af9b-3cee-b08f-741e267524be
-#   @updated        Fri Jan  9 12:12:44 UTC 2026
+#   @updated        Sat Jan 10 00:19:55 UTC 2026
 #   @entries        11811 ips
-#                   148 subnets
-#                   148 lines
+#                   149 subnets
+#                   149 lines
 #   @country        Tuvalu (TV)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -98,6 +98,7 @@
 2400:3500::/32
 2401:c720::/32
 2406:2d40:7440::/42
+2406:2d40:a700::/40
 2600:70ff:a5e6::/48
 2606:40:60c::/46
 2606:40:95c::/46
