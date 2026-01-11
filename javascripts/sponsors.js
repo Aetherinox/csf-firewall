@@ -44,7 +44,7 @@ document$.subscribe( async function( )
     
     try
     {
-        const response = await fetch( 'https://license.configserver.dev/users' );
+        const response = await fetch( 'https://license.configserver.dev/insiders' );
 
         if ( !response.ok )
             throw new Error( 'Failed to fetch Insiders members: ' + response.status );
@@ -130,7 +130,7 @@ document$.subscribe( async function( )
 
     try
     {
-        const response = await fetch( 'https://sponsors.configserver.dev/buymeacoffee' );
+        const response = await fetch( 'https://license.configserver.dev/buymeacoffee' );
 
         if ( !response.ok )
             throw new Error( 'Failed to fetch BuyMeACoffee sponsors: ' + response.status );
