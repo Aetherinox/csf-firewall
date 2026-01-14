@@ -5,7 +5,7 @@
 #   @source         https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/blocklists/highrisk.ipset
 #   @id             highrisk_ipset
 #   @uuid           036a7f19-6a5a-3109-af90-7e946d57b164
-#   @updated        Wed Jan 14 00:16:09 UTC 2026
+#   @updated        Wed Jan 14 12:07:56 UTC 2026
 #   @entries        1003770 ips
 #                   111 subnets
 #                   6505 lines
