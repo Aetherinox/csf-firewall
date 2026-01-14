@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_sao_tome_principe_ipset
 #   @uuid           a2a88f2c-d5b1-3b65-9ab7-28d6c4a9dfdd
-#   @updated        Wed Jan 14 00:19:53 UTC 2026
-#   @entries        17294 ips
-#                   143 subnets
-#                   143 lines
+#   @updated        Wed Jan 14 12:12:29 UTC 2026
+#   @entries        17550 ips
+#                   148 subnets
+#                   148 lines
 #   @country        Sao Tome Principe (ST)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -25,6 +25,7 @@
 57.82.64.0/23
 57.84.128.0/20
 102.206.44.0/22
+103.204.122.0/24
 104.28.13.46/31
 104.28.13.48/32
 104.28.21.211/32
@@ -91,14 +92,18 @@
 204.195.243.7/32
 204.195.243.8/31
 204.195.243.10/32
+2001:470:d:121::/64
 2001:470:19:5a::/64
+2001:470:24:ef::/64
 2001:470:36:19e::/64
 2001:470:36:257::/64
 2001:470:36:2bd::/64
 2001:470:1f1b:42b::/64
 2001:470:ed00::/48
 2001:470:ed59::/48
+2001:470:f117::/48
 2001:470:f83b::/48
+2001:470:fd6f::/48
 2606:40:758::/45
 2606:40:760::/45
 2606:40:10c0::/44
