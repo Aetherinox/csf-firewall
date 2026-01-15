@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_reunion_ipset
 #   @uuid           9188dc00-8bd1-3e95-9f01-c49ad3430716
-#   @updated        Wed Jan 14 12:12:23 UTC 2026
+#   @updated        Thu Jan 15 00:20:38 UTC 2026
 #   @entries        677091 ips
 #                   270 subnets
 #                   270 lines
