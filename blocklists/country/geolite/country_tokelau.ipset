@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_tokelau_ipset
 #   @uuid           2aad9207-a8a0-3264-a45b-9764b2798746
-#   @updated        Fri Jan 16 12:12:58 UTC 2026
+#   @updated        Sat Jan 17 00:19:50 UTC 2026
 #   @entries        3245 ips
-#                   135 subnets
-#                   135 lines
+#                   136 subnets
+#                   136 lines
 #   @country        Tokelau (TK)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -155,3 +155,4 @@
 2a11:3a83:c000::/35
 2a13:a5c7:25db::/48
 2a13:a5c7:25ff:db00::/56
+2a14:c380:7ef::/48

@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_guatemala_ipset
 #   @uuid           bf3a0112-a689-3c9e-8edc-abd284b3121d
-#   @updated        Fri Jan 16 12:12:13 UTC 2026
+#   @updated        Sat Jan 17 00:19:11 UTC 2026
 #   @entries        697246 ips
-#                   769 subnets
-#                   769 lines
+#                   772 subnets
+#                   772 lines
 #   @country        Guatemala (GT)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -542,6 +542,7 @@
 216.230.128.0/19
 217.76.240.0/24
 2001:470:5:bc::/64
+2001:470:5:244::/64
 2001:470:5:257::/64
 2001:470:5:2ad::/64
 2001:470:5:2c2::/64
@@ -558,6 +559,7 @@
 2001:470:d89d::/48
 2001:470:d8dc::/48
 2001:470:d962::/48
+2001:470:d9a0::/48
 2001:470:d9a6::/48
 2001:470:ede7::/48
 2001:470:f1d1::/48
@@ -789,3 +791,4 @@
 2a11:f887:6000::/47
 2a13:a5c7:255b::/48
 2a13:a5c7:25ff:5a00::/56
+2a14:c380:792::/48

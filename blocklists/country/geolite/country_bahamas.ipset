@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_bahamas_ipset
 #   @uuid           81e3248a-a3ac-3059-9c28-6328a845f663
-#   @updated        Fri Jan 16 12:11:47 UTC 2026
+#   @updated        Sat Jan 17 00:18:49 UTC 2026
 #   @entries        159803 ips
-#                   324 subnets
-#                   324 lines
+#                   325 subnets
+#                   325 lines
 #   @country        Bahamas (BS)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -344,3 +344,4 @@
 2a13:a5c7:2520::/48
 2a13:a5c7:25ff:1f00::/56
 2a14:7584:e015::/48
+2a14:c380:798::/48
