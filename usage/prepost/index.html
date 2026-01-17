@@ -108,7 +108,7 @@
               </button>
             
             
-    Documentation is currently being developed
+    <span class="csf-alert">:aetherx-axs-exclamation: Security Alert: Original ConfigServer Update Domain Hihacked</span>
 
           </div>
           
@@ -4013,7 +4013,7 @@ as-is.</p>
 <h3 id="loader-files">Loader Files<a class="headerlink" data-preview="" href="#loader-files" title="Permanent link">¶</a></h3>
 <p>As mentioned above, when installing <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>, two files will be loaded to your system. Those files are outlined below:</p>
 <dl>
-<dt><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0C28.7 0 0 28.7 0 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M224 0c15.4 0 30.1 6.1 41 17L367 119c10.9 10.9 17 25.6 17 41l-128 0c-17.7 0-32-14.3-32-32L224 0z"></path></svg></span> <a data-preview="" href="#+/usr/local/csf/bin/csfpre.sh" id="+/usr/local/csf/bin/csfpre.sh"><code>/usr/local/csf/bin/csfpre.sh</code></a></dt>
+<dt><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0C28.7 0 0 28.7 0 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M224 0c15.4 0 30.1 6.1 41 17L367 119c10.9 10.9 17 25.6 17 41l-128 0c-17.7 0-32-14.3-32-32L224 0z"></path></svg></span> <a data-preview="" href="#-usr-local-csf-bin-csfpre-sh" id="-usr-local-csf-bin-csfpre-sh"><code>/usr/local/csf/bin/csfpre.sh</code></a></dt>
 <dd>
 <ul>
 <li>The <code>csfpre.sh</code> loader executes <strong>every custom Bash script</strong> located in the<br>
@@ -4030,7 +4030,7 @@ as-is.</p>
 </dl>
 <p><br></p>
 <dl>
-<dt><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0C28.7 0 0 28.7 0 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M224 0c15.4 0 30.1 6.1 41 17L367 119c10.9 10.9 17 25.6 17 41l-128 0c-17.7 0-32-14.3-32-32L224 0z"></path></svg></span> <a data-preview="" href="#+/usr/local/csf/bin/csfpost.sh" id="+/usr/local/csf/bin/csfpost.sh"><code>/usr/local/csf/bin/csfpost.sh</code></a></dt>
+<dt><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0C28.7 0 0 28.7 0 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M224 0c15.4 0 30.1 6.1 41 17L367 119c10.9 10.9 17 25.6 17 41l-128 0c-17.7 0-32-14.3-32-32L224 0z"></path></svg></span> <a data-preview="" href="#-usr-local-csf-bin-csfpost-sh" id="-usr-local-csf-bin-csfpost-sh"><code>/usr/local/csf/bin/csfpost.sh</code></a></dt>
 <dd>
 <ul>
 <li>The <code>csfpost.sh</code> loader executes <strong>every custom Bash script</strong> located in the<br>
@@ -4067,14 +4067,14 @@ as-is.</p>
 <p>When the <a data-preview="" href="#loader-scripts">loader scripts</a> <code>/usr/local/csf/bin/csfpre.sh</code> and <code>/usr/local/csf/bin/csfpost.sh</code> run, they check specific folders to see if you have placed any custom bash scripts inside. By placing custom bash scripts in these folders, you can write bash scripts which assist with setting up custom firewall rules which are automatically applied every time <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> starts or restarts, ensuring your custom rules persist.</p>
 <p><br></p>
 <dl>
-<dt><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M64 448l384 0c35.3 0 64-28.7 64-64l0-240c0-35.3-28.7-64-64-64L298.7 80c-6.9 0-13.7-2.2-19.2-6.4L241.1 44.8C230 36.5 216.5 32 202.7 32L64 32C28.7 32 0 60.7 0 96L0 384c0 35.3 28.7 64 64 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d=""></path></svg></span> <a data-preview="" href="#+/usr/local/include/csf/pre.d/" id="+/usr/local/include/csf/pre.d/"><code>/usr/local/include/csf/pre.d/</code></a></dt>
+<dt><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M64 448l384 0c35.3 0 64-28.7 64-64l0-240c0-35.3-28.7-64-64-64L298.7 80c-6.9 0-13.7-2.2-19.2-6.4L241.1 44.8C230 36.5 216.5 32 202.7 32L64 32C28.7 32 0 60.7 0 96L0 384c0 35.3 28.7 64 64 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d=""></path></svg></span> <a data-preview="" href="#-usr-local-include-csf-pre-d-" id="-usr-local-include-csf-pre-d-"><code>/usr/local/include/csf/pre.d/</code></a></dt>
 <dd>
 <ul>
 <li>Your custom bash scripts will run <strong>before</strong> <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> applies any default <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> rules.</li>
 <li>Scripts placed here run automatically every time <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> starts or restarts.</li>
 </ul>
 </dd>
-<dt><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M64 448l384 0c35.3 0 64-28.7 64-64l0-240c0-35.3-28.7-64-64-64L298.7 80c-6.9 0-13.7-2.2-19.2-6.4L241.1 44.8C230 36.5 216.5 32 202.7 32L64 32C28.7 32 0 60.7 0 96L0 384c0 35.3 28.7 64 64 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d=""></path></svg></span> <a data-preview="" href="#+/usr/local/include/csf/post.d/" id="+/usr/local/include/csf/post.d/"><code>/usr/local/include/csf/post.d/</code></a></dt>
+<dt><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M64 448l384 0c35.3 0 64-28.7 64-64l0-240c0-35.3-28.7-64-64-64L298.7 80c-6.9 0-13.7-2.2-19.2-6.4L241.1 44.8C230 36.5 216.5 32 202.7 32L64 32C28.7 32 0 60.7 0 96L0 384c0 35.3 28.7 64 64 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d=""></path></svg></span> <a data-preview="" href="#-usr-local-include-csf-post-d-" id="-usr-local-include-csf-post-d-"><code>/usr/local/include/csf/post.d/</code></a></dt>
 <dd>
 <ul>
 <li>Your custom bash scripts will run <strong>after</strong> <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> applies any default <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> rules.</li>
