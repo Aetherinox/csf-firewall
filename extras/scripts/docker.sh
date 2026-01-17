@@ -303,106 +303,29 @@ demoNoti()
 # #
 #   Print › Line
 #   
-#   Prints single line, no text
+#   Prints single line horizontal line, no text
 #   
 #   @usage          prin0
 # #
 
 prin0()
 {
-    indent="   "
-    box_width=110
-    line_width=$(( box_width + 2 ))
+    _p0_indent="  "
+    _p0_box_width=110
+    _p0_line_width=$(( _p0_box_width + 2 ))
 
-    line=""
+    _p0_line=""
     i=1
-    while [ "$i" -le "$line_width" ]; do
-        line="${line}─"
-        i=$((i+1))
+    while [ "$i" -le "${_p0_line_width}" ]; do
+        _p0_line="${_p0_line}─"
+        i=$(( i + 1 ))
     done
 
-    print
-    printf "%b%s%s%b\n" "$greyd" "$indent" "$line" "$reset"
-    print
-}
+    printf '\n'
+    printf "%b%s%s%b\n" "${greyd}" "${_p0_indent}" "${_p0_line}" "${reset}"
+    printf '\n'
 
-# #
-#   Print › Box › Crop
-#   
-#   Prints single line with a box surrounding it, excluding the right side
-#   
-#   @usage          princ "Name › Section"
-# #
-
-princ()
-{
-    title="$*"
-    indent="   "
-    padding=6
-    box_width=110
-
-    # Strip ANSI codes
-    visible_title=$(printf '%s' "$title" | sed 's/\033\[[0-9;]*[A-Za-z]//g')
-
-    title_length=${#visible_title}
-    inner_width=$(( title_length + padding ))
-    [ "$inner_width" -lt "$box_width" ] && inner_width=$box_width
-
-    # Horizontal line
-    line=""
-    i=1
-    while [ "$i" -le "$inner_width" ]; do
-        line="${line}─"
-        i=$((i+1))
-    done
-
-    # Spaces
-    spaces=""
-    spaces_needed=$(( inner_width - title_length - 3 ))
-    i=1
-    while [ "$i" -le "$spaces_needed" ]; do
-        spaces="${spaces} "
-        i=$((i+1))
-    done
-
-    print
-    printf "%b%s┌%s┐\n" "$greym" "$indent" "$line"
-    printf "%b%s│  %s%s \n" "$greym" "$indent" "$title" "$spaces"
-    printf "%b%s└%s┘%b\n" "$greym" "$indent" "$line" "$reset"
-    print
-}
-
-# #
-#   Print › Box › Single
-#   
-#   Prints single line with a box surrounding it.
-#   
-#   @usage          prinb "${APP_NAME_SHORT:-CSF} › Customize csf.config"
-# #
-
-prinb()
-{
-    title="$*"
-    indent="   "
-    padding=6
-    box_width=110
-    title_length=${#title}
-    inner_width=$(( title_length + padding ))
-    [ "$inner_width" -lt "$box_width" ] && inner_width=$box_width
-
-    line=""
-    i=1
-    while [ "$i" -le "$inner_width" ]; do
-        line="${line}─"
-        i=$((i+1))
-    done
-
-    print
-    print
-    printf "%b%s┌%s┐\n" "$greym" "$indent" "$line"
-    printf "%b%s│  %-${inner_width}s \n" "$greym" "$indent" "$title"
-    printf "%b%s└%s┘%b\n" "$greym" "$indent" "$line" "$reset"
-    print
+    unset _p0_indent _p0_box_width _p0_line_width _p0_line i
 }
 
 # #

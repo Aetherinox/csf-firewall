@@ -283,59 +283,29 @@ demoNoti()
 # #
 #   Print › Line
 #   
-#   Prints single line, no text
+#   Prints single line horizontal line, no text
 #   
 #   @usage          prin0
 # #
 
 prin0()
 {
-    local indent="   "
-    local box_width=110
-    local line_width=$(( box_width + 2 ))
+    _p0_indent="  "
+    _p0_box_width=110
+    _p0_line_width=$(( _p0_box_width + 2 ))
 
-    local line
-    line=$(printf '─%.0s' $(seq 1 "$line_width"))
+    _p0_line=""
+    i=1
+    while [ "$i" -le "${_p0_line_width}" ]; do
+        _p0_line="${_p0_line}─"
+        i=$(( i + 1 ))
+    done
 
-    print
-    printf "%b%s%s%b\n" "${greyd}" "$indent" "$line" "${reset}"
-    print
-}
+    printf '\n'
+    printf "%b%s%s%b\n" "${greyd}" "${_p0_indent}" "${_p0_line}" "${reset}"
+    printf '\n'
 
-# #
-#   Print › Box › Crop
-#   
-#   Prints single line with a box surrounding it, excluding the right side
-#   
-#   @usage          princ "Name › Section"
-# #
-
-princ()
-{
-    local title="$*"
-    local indent="   "
-    local padding=6
-    
-    local visible_title
-    visible_title=$(echo -e "$title" | sed 's/\x1b\[[0-9;]*m//g')
-    
-    local title_length=${#visible_title}
-    local inner_width=$(( title_length + padding ))
-    local box_width=110
-
-    [ "$inner_width" -lt ${box_width} ] && inner_width=${box_width}
-
-    local line
-    line=$(printf '─%.0s' $(seq 1 "$inner_width"))
-
-    local spaces_needed=$(( inner_width - title_length - 3 ))
-    local spaces=$(printf ' %.0s' $(seq 1 "$spaces_needed"))
-
-    print
-    printf "%b%s┌%s┐\n" "${greym}" "$indent" "$line"
-    printf "%b%s│  %s%s \n" "${greym}" "$indent" "$title" "$spaces"
-    printf "%b%s└%s┘%b\n" "${greym}" "$indent" "$line" "${reset}"
-    print
+    unset _p0_indent _p0_box_width _p0_line_width _p0_line i
 }
 
 # #
@@ -346,42 +316,39 @@ princ()
 #   @usage          prinb "${APP_NAME_SHORT:-CSF} › Customize csf.config"
 # #
 
-prinb( )
+prinb()
 {
-    # #
-    #   Dynamic boxed title printer
-    # #
+    _prinb_title="$*"
+    _prinb_indent="   "                                                         # Left padding
+    _prinb_padding=6                                                            # Extra horizontal space around text
+    _prinb_title_length=${#_prinb_title}
+    _prinb_inner_width=$(( _prinb_title_length + _prinb_padding ))
+    _prinb_box_width=110
 
-    local title="$*"
-    local indent="   "                              # Left padding
-    local padding=6                                 # Extra horizontal space around text
-    local title_length=${#title}
-    local inner_width=$(( title_length + padding ))
-    local box_width=110
+    # Minimum width for aesthetics
+    if [ "$_prinb_inner_width" -lt "$_prinb_box_width" ]; then
+        _prinb_inner_width=$_prinb_box_width
+    fi
 
-    # #
-    #   Minimum width for aesthetics
-    # #
+    # Horizontal border
+    _prinb_line=""
+    i=1
+    while [ "$i" -le "$_prinb_inner_width" ]; do
+        _prinb_line="${_prinb_line}─"
+        i=$(( i + 1 ))
+    done
 
-    [ "$inner_width" -lt ${box_width} ] && inner_width=${box_width}
+    # Draw box
+    printf '\n'
+    printf '\n'
+    printf "%b%s┌%s┐\n" "${greym}" "$_prinb_indent" "$_prinb_line"
+    printf "%b%s│  %-${_prinb_inner_width}s \n" "${greym}" "$_prinb_indent" "$_prinb_title"
+    printf "%b%s└%s┘%b\n" "${greym}" "$_prinb_indent" "$_prinb_line" "${reset}"
+    printf '\n'
 
-    # #
-    #   Horizontal border
-    # #
-
-    local line
-    line=$(printf '─%.0s' $(seq 1 "$inner_width"))
-
-    # #
-    #   Draw box
-    # #
-
-    print
-    print
-    printf "%b%s┌%s┐\n" "${greym}" "$indent" "$line"
-    printf "%b%s│  %-${inner_width}s \n" "${greym}" "$indent" "$title"
-    printf "%b%s└%s┘%b\n" "${greym}" "$indent" "$line" "${reset}"
-    print
+    unset _prinb_title _prinb_indent _prinb_padding \
+          _prinb_title_length _prinb_inner_width _prinb_box_width \
+          _prinb_line i
 }
 
 # #
