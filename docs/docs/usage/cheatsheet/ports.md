@@ -6,6 +6,7 @@ tags:
   - configs
   - resource
   - ports
+  - app-samba
 ---
 
 # Cheatsheet: Port List <!-- omit from toc -->
@@ -33,12 +34,12 @@ The following list of ports can be referenced when setting up CSF firewall with 
 | `110`    | ✅  |     | POP3 (non-secure email retrieval) |
 | `113`    | ✅  | ✅  | Identification Protocol (Ident) (RFC 1413) |
 | `123`    |     | ✅  | NTP (Network Time Protocol) / Pihole |
-| `137`    |     | ✅  | NetBIOS Name Service (Samba name resolution) |
-| `138`    |     | ✅  | NetBIOS Datagram Service (Samba broadcasts) |
-| `139`    | ✅  |     | NetBIOS Session Service (Samba file/printer sharing) |
+| `137`    |     | ✅  | NetBIOS Name Service (Samba name resolution) (NBNS) |
+| `138`    |     | ✅  | NetBIOS Datagram Service (Samba broadcasts) (NBDS) |
+| `139`    | ✅  |     | NetBIOS Session Service (Samba file/printer sharing) (SMB over NetBIOS) |
 | `143`    | ✅  |     | IMAP (non-secure email retrieval) |
 | `443`    | ✅  | ✅  | HTTPS / QUIC / DoH (DNS over HTTPS, HTTP/3) |
-| `445`    | ✅  | ✅  | Microsoft-DS / SMB over TCP/IP (Samba) |
+| `445`    | ✅  | ✅  | Microsoft-DS / SMB over TCP/IP (Samba) (Modern Windows SMB) |
 | `458`    |     |      | Apple QuickTime / Real-Time Streaming Protocol (RTSP) |
 | `465`    | ✅  |     | SMTPS (secure SMTP) |
 | `546`    |     | ✅  | DHCPv6 Client | 
@@ -129,6 +130,53 @@ The following list of ports can be referenced when setting up CSF firewall with 
 | `50001`  |     | ✅   | [AnyDesk](https://anydesk.com) Discovery - Identify devices on the local network |
 | `50002`  |     | ✅   | [AnyDesk](https://anydesk.com) Discovery - Identify devices on the local network |
 | `50003`  |     | ✅   | [AnyDesk](https://anydesk.com) Discovery - Identify devices on the local network |
+
+<br />
+
+---
+
+<br />
+
+## Troubleshooting
+
+The following is a list of questions a user may have regarding updates to CSF, and information about certain issues that may arise:
+
+<br />
+
+??? faq "How do I allow Samba services through CSF?"
+
+    Samba utilizes the following ports to send and receive information:
+
+    | Port | Protocol | Purpose                                    |
+    | ---- | -------- | ------------------------------------------ |
+    | 137  | UDP      | NetBIOS Name Service (NBNS)                |
+    | 138  | UDP      | NetBIOS Datagram Service (NBDS)            |
+    | 139  | TCP      | NetBIOS Session Service (SMB over NetBIOS) |
+    | 445  | TCP      | Direct SMB over TCP (modern Windows SMB)   |
+
+    <br />
+
+    Open your CSF config file :aetherx-axd-file:{ .icon-clr-tree-file } `/etc/csf/csf.conf`, or access the CSF web interface, and whitelist the following ports:
+
+    === ":material-file: /etc/csf/csf.conf"
+
+        ```shell
+        TCP_IN = "139,445"
+        TCP_OUT = "139,445"
+
+        UDP_IN = "137,138"
+        UDP_OUT = "137,138"
+        ```
+
+    <br />
+
+    Give CSF a restart:
+
+    === ":aetherx-axs-command: Command"
+
+        ``` shell
+        sudo csf -ra
+        ```
 
 [^1]: Some sources list UDP for port 22, but officially SSH only uses TCP. UDP is not standard for this service.
 
