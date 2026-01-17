@@ -108,7 +108,7 @@
               </button>
             
             
-    Documentation is currently being developed
+    <span class="csf-alert">:aetherx-axs-exclamation: Security Alert: Original ConfigServer Update Domain Hihacked</span>
 
           </div>
           
@@ -1770,7 +1770,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#ipset-disabled" class="md-nav__link">
+  <a href="#ipset-disabled_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         IPSET Disabled
@@ -1781,7 +1781,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#ipset-enabled" class="md-nav__link">
+  <a href="#ipset-enabled_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         IPSET Enabled
@@ -3836,7 +3836,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#ipset-disabled" class="md-nav__link">
+  <a href="#ipset-disabled_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         IPSET Disabled
@@ -3847,7 +3847,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#ipset-enabled" class="md-nav__link">
+  <a href="#ipset-enabled_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         IPSET Enabled
@@ -4068,14 +4068,14 @@
 <h2 id="how-blocklists-work">How Blocklists Work<a class="headerlink" data-preview="" href="#how-blocklists-work" title="Permanent link">¶</a></h2>
 <p><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> supports <strong>two</strong> different methods for handling blocklists, and the choice depends on how large your lists are and the efficiency you want.  </p>
 <p><br></p>
-<h3 id="ipset-disabled"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l64 0 0 320-64 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l192 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0 0-352c0-17.7-14.3-32-32-32L32 32z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d=""></path></svg></span> <a disabled="Disabled" data-preview="" href="#+IPSET Disabled" id="+IPSET"><code>IPSET Disabled</code></a><a class="headerlink" data-preview="" href="#ipset-disabled" title="Permanent link">¶</a></h3>
+<h3 id="ipset-disabled_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l64 0 0 320-64 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l192 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0 0-352c0-17.7-14.3-32-32-32L32 32z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d=""></path></svg></span> <a data-preview="" href="#ipset-disabled" id="ipset-disabled"><code>IPSET Disabled</code></a><a class="headerlink" data-preview="" href="#ipset-disabled_1" title="Permanent link">¶</a></h3>
 <p>Blocklists are processed line-by-line, and each entry becomes its own rule in <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr>. This option should be selected if you plan to have very small lists that do not contain more than a few thousand entries.</p>
 <ul>
 <li><span class="twemoji icon-clr-green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M160 198.7l0 186.6c0 19.4 8.9 37.8 24 50l12.2 9.7c28.4 22.7 63.6 35.1 99.9 35.1l87.9 0c26.5 0 48-21.5 48-48 0-6.3-1.3-12.2-3.4-17.7 20.4-5.5 35.4-24.1 35.4-46.3 0-9.1-2.6-17.6-7-24.9 22.2-4.2 39-23.7 39-47.1 0-19.7-11.9-36.6-28.9-44 17-7.4 28.9-24.3 28.9-44 0-26.5-21.5-48-48-48l-160 0 28.2-70.4c2.5-6.3 3.8-13.1 3.8-19.9l0-4.2c0-27.3-22.1-49.4-49.4-49.4-18.7 0-35.8 10.6-44.2 27.3L170.1 155.7c-6.7 13.3-10.1 28-10.1 42.9z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M0 192c0-17.7 14.3-32 32-32l48 0c17.7 0 32 14.3 32 32l0 256c0 17.7-14.3 32-32 32l-48 0c-17.7 0-32-14.3-32-32L0 192z"></path></svg></span> <strong>Pros</strong>: Simple, no extra <abbr title="A list of packages required for CSF to function properly">dependencies</abbr>, works out of box.</li>
 <li><span class="twemoji icon-clr-red"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M160 126.8l0 186.6c0 14.9 3.5 29.6 10.1 42.9l56.2 112.4c8.4 16.8 25.5 27.3 44.2 27.3 27.3 0 49.4-22.1 49.4-49.4l0-4.2c0-6.8-1.3-13.6-3.8-19.9L288 352 448 352c26.5 0 48-21.5 48-48 0-19.7-11.9-36.6-28.9-44 17-7.4 28.9-24.3 28.9-44 0-23.4-16.8-42.9-39-47.1 4.4-7.3 7-15.8 7-24.9 0-22.2-15-40.8-35.4-46.3 2.2-5.5 3.4-11.5 3.4-17.7 0-26.5-21.5-48-48-48l-87.9 0c-36.3 0-71.6 12.4-99.9 35.1L184 76.8c-15.2 12.1-24 30.5-24 50z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M0 384c0 17.7 14.3 32 32 32l48 0c17.7 0 32-14.3 32-32l0-256c0-17.7-14.3-32-32-32L32 96C14.3 96 0 110.3 0 128L0 384z"></path></svg></span> <strong>Cons</strong>: Becomes slow and inefficient with large blocklists.</li>
 </ul>
 <p><br></p>
-<h3 id="ipset-enabled"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M48 64c0-17.7 14.3-32 32-32l171 0c60.2 0 109 48.8 109 109 0 43.8-26.2 83.3-66.4 100.4l-139.1 59C119 315.4 96 350.2 96 388.7l0 27.3 224 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L64 480c-17.7 0-32-14.3-32-32l0-59.3c0-64.2 38.4-122.2 97.5-147.3l139.1-59c16.6-7.1 27.4-23.4 27.4-41.4 0-24.9-20.2-45-45-45L80 96C62.3 96 48 81.7 48 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d=""></path></svg></span> <a enabled="Enabled" data-preview="" href="#+IPSET Enabled" id="+IPSET"><code>IPSET Enabled</code></a><a class="headerlink" data-preview="" href="#ipset-enabled" title="Permanent link">¶</a></h3>
+<h3 id="ipset-enabled_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M48 64c0-17.7 14.3-32 32-32l171 0c60.2 0 109 48.8 109 109 0 43.8-26.2 83.3-66.4 100.4l-139.1 59C119 315.4 96 350.2 96 388.7l0 27.3 224 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L64 480c-17.7 0-32-14.3-32-32l0-59.3c0-64.2 38.4-122.2 97.5-147.3l139.1-59c16.6-7.1 27.4-23.4 27.4-41.4 0-24.9-20.2-45-45-45L80 96C62.3 96 48 81.7 48 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d=""></path></svg></span> <a data-preview="" href="#ipset-enabled" id="ipset-enabled"><code>IPSET Enabled</code></a><a class="headerlink" data-preview="" href="#ipset-enabled_1" title="Permanent link">¶</a></h3>
 <p>Blocklists are imported into kernel-managed sets, allowing <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> to check connections against a single set rather than thousands of rules.  This option is acceptable if your blocklist contains thousands of entries.</p>
 <ul>
 <li><span class="twemoji icon-clr-green"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M160 198.7l0 186.6c0 19.4 8.9 37.8 24 50l12.2 9.7c28.4 22.7 63.6 35.1 99.9 35.1l87.9 0c26.5 0 48-21.5 48-48 0-6.3-1.3-12.2-3.4-17.7 20.4-5.5 35.4-24.1 35.4-46.3 0-9.1-2.6-17.6-7-24.9 22.2-4.2 39-23.7 39-47.1 0-19.7-11.9-36.6-28.9-44 17-7.4 28.9-24.3 28.9-44 0-26.5-21.5-48-48-48l-160 0 28.2-70.4c2.5-6.3 3.8-13.1 3.8-19.9l0-4.2c0-27.3-22.1-49.4-49.4-49.4-18.7 0-35.8 10.6-44.2 27.3L170.1 155.7c-6.7 13.3-10.1 28-10.1 42.9z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M0 192c0-17.7 14.3-32 32-32l48 0c17.7 0 32 14.3 32 32l0 256c0 17.7-14.3 32-32 32l-48 0c-17.7 0-32-14.3-32-32L0 192z"></path></svg></span> <strong>Pros</strong>: Extremely efficient and scalable, can handle very large lists.</li>
@@ -4267,11 +4267,11 @@ degradation.</p>
 <a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="na">^NAME^     ^INTERVAL^  ^MAX_ENTRIES^              ^BLOCKLIST_URL^              </span>
 </code></pre></div>
 <dl>
-<dt><a data-preview="" href="#+NAME" id="+NAME"><code>NAME</code></a></dt>
+<dt><a data-preview="" href="#name" id="name"><code>NAME</code></a></dt>
 <dd>
 <p>Blocklist name with all uppercase alphabetic characters with no spaces and a maximum of 25 characters - this will be used as the <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> chain name</p>
 </dd>
-<dt><a data-preview="" href="#+INTERVAL" id="+INTERVAL"><code>INTERVAL</code></a></dt>
+<dt><a data-preview="" href="#interval" id="interval"><code>INTERVAL</code></a></dt>
 <dd>
 <p>Cache refresh interval (in seconds) to keep the list, must be a minimum of 3600 seconds (an hour). After this time has expired, entries in the blocklist will be refreshed.</p>
 <ul>
@@ -4279,12 +4279,12 @@ degradation.</p>
 <li><code>86400</code>: 24 hours</li>
 </ul>
 </dd>
-<dt><a data-preview="" href="#+MAX_ENTRIES" id="+MAX_ENTRIES"><code>MAX_ENTRIES</code></a></dt>
+<dt><a data-preview="" href="#max_entries" id="max_entries"><code>MAX_ENTRIES</code></a></dt>
 <dd>
 <p>This is the maximum number of entries to load from a list. A value of <span class="keys"><kbd class="key-0">0</kbd></span> means all entries will be loaded (see note below).
     If you add a blocklist with 50,000 entries, and you set this value to 20,000; then you will only load the first 20,000 entries within the blocklist.</p>
 </dd>
-<dt><a data-preview="" href="#+URL" id="+URL"><code>URL</code></a></dt>
+<dt><a data-preview="" href="#url" id="url"><code>URL</code></a></dt>
 <dd>
 <p>The URL to download the ipset from</p>
 </dd>
