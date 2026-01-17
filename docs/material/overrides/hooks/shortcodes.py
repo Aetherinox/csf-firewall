@@ -103,7 +103,7 @@ PAGE_CONVENTIONS = "about/conventions.md"
 # #
 
 def on_page_markdown( markdown: str, *, page: Page, config: MkDocsConfig, files: Files ):
-    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Loading Page: ' + clr.YELLOW + str(page) + clr.WHITE )
+    print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' + Page: ' + clr.YELLOW + str(page) + clr.WHITE )
 
     def replace(match: Match):
         esc_marker, type, args = match.groups( )
@@ -637,9 +637,8 @@ def badgeDocs( text: str, page: Page, files: Files ):
 # #
 
 def badgeOption( type: str ):
-    parts   = re.split( r"[.:]", type )
-    name    = parts[-1]  # last chunk only
-    return f"[`{type}`](#+{type}){{ #+{type} }}\n\n"
+    slug = re.sub(r"[^a-z0-9_-]+", "-", type.lower())
+    return f"[`{type}`](#{slug}){{ #{slug} }}\n\n"
 
 # #
 #   Badge › Setting
@@ -774,7 +773,7 @@ def badgeMarkdown( text: str, page: Page, files: Files ):
 
 def badgeArgument( text: str, page: Page, files: Files ):
     icon    = "aetherx-axs-head-side-gear"
-    href    = _resolve_path( f"{PAGE_CONVENTIONS}#command-argument", page, files )
+    href    = _resolve_path( f"{PAGE_CONVENTIONS}#argument", page, files )
 
     print(clr.MAGENTA + 'VERBOSE - ' + clr.WHITE + ' Running ' + clr.YELLOW + inspect.stack( )[ 0 ][ 3 ] + clr.WHITE + ' for page ' + clr.GREY + str(href) + clr.WHITE )
 
