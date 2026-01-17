@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_philippines_ipset
 #   @uuid           d0ff69cc-a4d8-3afd-974c-904ff5140b09
-#   @updated        Fri Jan 16 12:12:44 UTC 2026
-#   @entries        6643125 ips
-#                   3048 subnets
-#                   3048 lines
+#   @updated        Sat Jan 17 00:19:37 UTC 2026
+#   @entries        6643382 ips
+#                   3052 subnets
+#                   3052 lines
 #   @country        Philippines (PH)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -920,6 +920,7 @@
 104.30.165.245/32
 104.30.166.151/32
 104.30.167.184/32
+104.30.168.133/32
 104.30.168.198/32
 104.30.176.9/32
 104.30.178.27/32
@@ -1616,6 +1617,7 @@
 172.70.124.0/24
 172.71.87.0/24
 172.85.104.0/23
+172.94.60.0/24
 172.94.119.0/24
 172.225.55.192/27
 172.225.59.96/27
@@ -2942,6 +2944,7 @@
 2a09:bac0:1000:c96::/64
 2a09:bac0:1000:d1f::/64
 2a09:bac0:1000:ecb::/64
+2a09:bac0:1000:fc0::/64
 2a09:bac0:1000:fd8::/64
 2a09:bac0:1000:1103::/64
 2a09:bac0:1001:1f5::/64
@@ -3068,3 +3071,4 @@
 2a13:aac7:2::/48
 2a14:7580:6600::/40
 2a14:7581:a060::/44
+2a14:c380:7d2::/47

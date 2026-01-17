@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_macedonia_republic_ipset
 #   @uuid           fbeeabfd-60e1-301e-a1f2-fb31f8ffe56e
-#   @updated        Fri Jan 16 12:12:31 UTC 2026
+#   @updated        Sat Jan 17 00:19:27 UTC 2026
 #   @entries        709937 ips
-#                   407 subnets
-#                   407 lines
+#                   408 subnets
+#                   408 lines
 #   @country        Macedonia Republic (MK)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -427,3 +427,4 @@
 2a13:a5c7:2590::/48
 2a13:a5c7:25ff:8f00::/56
 2a14:2680::/29
+2a14:c380:75d::/48

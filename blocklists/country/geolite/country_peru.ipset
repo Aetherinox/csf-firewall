@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_peru_ipset
 #   @uuid           71d5151d-8e2f-3be1-99ce-861c8ce9b877
-#   @updated        Fri Jan 16 12:12:43 UTC 2026
-#   @entries        3674050 ips
-#                   1872 subnets
-#                   1872 lines
+#   @updated        Sat Jan 17 00:19:37 UTC 2026
+#   @entries        3674562 ips
+#                   1876 subnets
+#                   1876 lines
 #   @country        Peru (PE)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -558,6 +558,7 @@
 150.48.180.0/30
 150.48.180.4/31
 151.101.228.0/22
+153.67.28.0/23
 153.72.24.128/26
 153.80.4.0/24
 153.80.73.0/24
@@ -1753,6 +1754,7 @@
 2a02:5747:159::/48
 2a02:6ea0:500::/40
 2a02:6ea0:5500::/40
+2a02:6ea0:cd00::/48
 2a03:2880:f043::/48
 2a03:2880:f143::/48
 2a03:2880:f243::/48
@@ -1892,3 +1894,5 @@
 2a13:9500:a5::/48
 2a13:a5c7:25ae::/48
 2a13:a5c7:25ff:ad00::/56
+2a14:c380:785::/48
+2a14:c380:786::/48
