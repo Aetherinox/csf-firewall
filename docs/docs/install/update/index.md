@@ -5,59 +5,40 @@ tags:
   - legacy
 ---
 
+This section provides guidance on updating your CSF installation. The update process you should follow
+depends on the version of CSF currently installed on your system.
+
+Before proceeding, review the [About Versioning](#about-versioning) section below to understand how CSF
+releases are divided into different eras and to determine the correct update path for your installation.
+
+<br />
+
+---
+
+<br />
+
 ## About Versioning
 
-This repository categorizes **ConfigServer Security & Firewall (CSF)** into two distinct development eras:
+These docs break CSF up into **two** distinct development eras:
 
-| Version Range                                 | Developer                     | Description                           |
-| --------------------------------------------- |------------------------------ |-------------------------------------- |
-| [v15.01 and Newer](#v1501-and-newer)         | Aetherinox                    | Maintained after August 2025          |
-| [v15.00 and Older](#v1500-and-older)         | Way to the Web                | Legacy releases prior to August 2025  |
-
-<br />
-
-The final release of CSF **v15.00** by *Way to the Web* removed all automatic update functionality as a result of the company shutting down. Consequently, automatic updates no longer work on that version.
-
-[CSF **v15.01**](https://github.com/Aetherinox/csf-firewall/releases/tag/15.01) was the first release maintained by this [:aetherx-axb-github: repository](https://github.com/Aetherinox/csf-firewall/releases/), which restored automatic update support by introducing new servers.
-
-To regain automatic update functionality, any server running CSF **v15.00 and older** by the company **Web to the Web**, must be migrated to this repository’s maintained version of [CSF **v15.01**](https://github.com/Aetherinox/csf-firewall/releases/tag/15.01) and newer.
+| Version Range                                                                       | Codename              | Developer           | Description                       |
+| ----------------------------------------------------------------------------------- | --------------------- | ------------------- | --------------------------------- |
+| :aetherx-axb-csf-fill-stable:{ .csf-logo } [v15.01 and Newer](#v1501-to-newer)      | Modern                | Aetherinox          | Maintained after August 2025      |
+| :aetherx-axb-csf-legacy-02:{ .csf-logo } [v15.00 and Older](#v1500-to-newer)        | Legacy                | Way to the Web      | Maintained prior to August 2025   |
 
 <br />
 
----
+The final release of CSF **v15.00** by *Way to the Web Ltd.* removed all automatic update functionality. After this 
+release, the company shut down their website, rendering all versions of CSF prior to August 2025 (_v15.00 and older_) 
+unable to perform automatic updates.
 
-<br />
+[CSF **v15.01**](https://github.com/Aetherinox/csf-firewall/releases/tag/15.01) is the first version maintained by 
+[:aetherx-axb-github: our repository](https://github.com/Aetherinox/csf-firewall/releases/), which restores automatic update 
+functionality by introducing new servers.
 
-## v15.01 and Newer
-
-If you are currently running Aetherinox's version of CSF and wish to update to a newer version, you can read the following guide:
-
-<div class="grid cards" markdown>
-
--   :aetherx-axb-abuseipdb: &nbsp; __[Update from v15.01 to Newer](../../install/update/v1501-to-newer.md)__
-
-    ---
-
-    Provides instructions on updating CSF v15.01 to newer versions.
-
-</div>
-
-<br />
-<br />
-
-## v15.00 and Older
-
-If you are currently running the original CSF release developed by Way to the Web, and want to switch over to Aetherinox's [CSF **v15.01**](https://github.com/Aetherinox/csf-firewall/releases/tag/15.01) or newer, view the guide below:
-
-<div class="grid cards" markdown>
-
--   :aetherx-axb-abuseipdb: &nbsp; __[Update from v15.00 Legacy to v15.01](../../install/update/v1500-to-v1501.md)__
-
-    ---
-
-    Provides instructions on updating from Way To The Web CSF v15.00 or older over to this new repository.
-
-</div>
+Any server using CSF **v15.00 and older**, should be migrated to this repository’s maintained version of 
+[CSF **v15.01**](https://github.com/Aetherinox/csf-firewall/releases/tag/15.01) and newer, if you want automatic updates to 
+function again.
 
 <br />
 
@@ -65,38 +46,43 @@ If you are currently running the original CSF release developed by Way to the We
 
 <br />
 
-## Next Steps <!-- omit from toc -->
+## v15.01 to Newer
 
-{==
+Use the guide below if all of the following apply to your setup:
 
-Select what documentation you would like to proceed with next ...
-
-==}
+- [x] You are currently running **CSF v15.01 or newer**.
+- [x] Your current installation is **not** the legacy **v15.00** release from *Way to the Web*.
+- [x] You want to update your existing CSF installation to a newer version.
 
 <div class="grid cards" markdown>
 
--   :aetherx-axs-gear-complex: &nbsp; __[Start System Services](../install/services.md)__
+-   :aetherx-axb-csf-fill-stable:{ .csf-logo } &nbsp; __[Update from v15.01 to Newer](../../install/update/v1501-to-newer.md)__
 
     ---
 
-    Starting CSF requires disabling testing mode and enabling the firewall so it
-    runs normally.  
+    Explains how to update your CSF installation when running **CSF v15.01 or newer**, and how to 
+    upgrade to the latest available release.
 
-    This chapter explains how to start both CSF and LFD services and ensure they
-    launch on boot.  
+</div>
 
-    You’ll also find troubleshooting tips for common startup errors and how to
-    fix them quickly.  
+<br />
+<br />
 
--   :aetherx-axs-browser: &nbsp; __[Enable Web Interface](../install/webui.md)__
+## v15.00 to Newer
+
+Use the guide below if all of the following apply to your setup:
+
+- [x] You are currently running **CSF v15.00 or earlier**, released by the original developer (*Way to the Web Ltd.*).
+- [x] You want to migrate from the original developer’s version over to this maintained version.
+
+<div class="grid cards" markdown>
+
+-   :aetherx-axb-csf-legacy-02:{ .csf-logo } &nbsp; __[Update from v15.00 legacy to Newer](../../install/update/v1500-to-newer.md)__
 
     ---
 
-    The web interface lets you manage your firewall through a browser instead
-    of a command line.  
-
-    This chapter covers installation of dependencies, enabling the interface,
-    and whitelisting your IP for security.  
+    Describes the process for updating your CSF installation from the legacy versions developed by **Way to the Web**.
+    This includes all versions developed before August 2025 (14.x, 13.x, etc.)
 
 </div>
 

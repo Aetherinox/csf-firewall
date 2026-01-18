@@ -287,7 +287,7 @@ nav:
           - Uninstall: 'install/uninstall.md'
           - Update:
                 - install/update/index.md
-                - v15.00 to v15.01: 'install/update/v1500-to-v1501.md'
+                - v15.00 to Newer: 'install/update/v1500-to-newer.md'
                 - v15.01 to Newer: 'install/update/v1501-to-newer.md'
           - Integrations:
                 - AbuseIPDB: 'install/integrations/abuseipdb.md'

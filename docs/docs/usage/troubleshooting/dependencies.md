@@ -88,7 +88,7 @@ Most dependencies are automatically installed with the majority of Linux distrib
 When accessing the [Web Interface](../../install/webui.md), the following error may appear at the top of the page:
 
 <figure markdown="span">
-    ![CSF Web Interface › Perl GETURL Dependency Error](../../../assets/images/usage/troubleshooting/dependencies/01.png){ width="700" }
+    ![CSF Web Interface › Perl GETURL Dependency Error](../../assets/images/usage/troubleshooting/dependencies/01.png){ width="700" }
     <figcaption>CSF Web Interface › Perl `GETURL` Dependency Error</figcaption>
 </figure>
 

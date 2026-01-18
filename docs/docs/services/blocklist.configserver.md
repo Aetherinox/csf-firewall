@@ -13,7 +13,7 @@ IPSET files are formatted one entry per line (IP or CIDR), fully compatible with
 
 The blocklists aggregate trusted sources, including high-confidence feeds like AbusiveIPDB top offenders, known brute-force ranges, port scanners, and botnets. While built for CSF, the lists can also be used with Fail2Ban, FireHOL, pfSense, Shorewall, and other compatible firewall tools.
 
-Read the chapter [Blocklists](../../usage/blocklists.md) for more information about this feature and service.
+Read the chapter [Blocklists](../usage/blocklists.md) for more information about this feature and service.
 
 <br />
 

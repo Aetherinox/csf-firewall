@@ -18,7 +18,7 @@ By default, running the script downloads the latest CSF release to the current d
 
     When we initially developed addons for CSF, we pushed all of our releases in a `.zip` archive. 
     
-    However, after taking over full development of CSF, we opted to migrate back to the `.tgz` format to keep conformity with how the original developer packaged releases. This is why our scripts mention both extensions, and why our scripts look for both.
+    However, after taking over full development of CSF, we opted to migrate back to the `.tgz` format to keep conformity with how the original developer packaged releases. This is why our scripts mention both extensions, and why CSF supports both.
 
 <br />
 
@@ -318,7 +318,7 @@ The [get.sh](https://get.configserver.dev) script includes numerous arguments th
 <br />
 
 ### Extract
-<!-- md:version stable-15.10 --> <!-- md:fileDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/get.sh -->  <!-- md:source get.sh --> <!-- md:command `-e,  --extract` --> 
+<!-- md:version stable-15.09 --> <!-- md:fileDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/get.sh -->  <!-- md:source get.sh --> <!-- md:command `-e,  --extract` --> 
 
 Downloads the latest version of CSF, saves it to your machine as `csf.zip` or `csf.tgz`, extracts it to a local folder.
 
@@ -326,7 +326,7 @@ Downloads the latest version of CSF, saves it to your machine as `csf.zip` or `c
 <br />
 
 ### Install
-<!-- md:version stable-15.10 --> <!-- md:fileDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/get.sh -->  <!-- md:source get.sh --> <!-- md:command `-i,  --install` --> 
+<!-- md:version stable-15.09 --> <!-- md:fileDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/get.sh -->  <!-- md:source get.sh --> <!-- md:command `-i,  --install` --> 
 
 Downloads the latest version of CSF, saves it to your machine as `csf.zip` or `csf.tgz`, extracts it to a local folder., and then run the CSF `install.sh` installation wizard.
 
@@ -334,7 +334,7 @@ Downloads the latest version of CSF, saves it to your machine as `csf.zip` or `c
 <br />
 
 ### Install Only
-<!-- md:version stable-15.10 --> <!-- md:fileDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/get.sh -->  <!-- md:source get.sh --> <!-- md:command `-I,  --install-only` --> 
+<!-- md:version stable-15.09 --> <!-- md:fileDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/get.sh -->  <!-- md:source get.sh --> <!-- md:command `-I,  --install-only` --> 
 
 Requires an existing local extracted version of CSF which resides in a folder (defaults to :aetherx-axd-folder: `csf`). Default folder can be changed with `-f`, `--folder`
 
@@ -342,7 +342,7 @@ Requires an existing local extracted version of CSF which resides in a folder (d
 <br />
 
 ### Folder
-<!-- md:version stable-15.10 --> <!-- md:fileDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/get.sh -->  <!-- md:source get.sh --> <!-- md:command `-f,  --folder` --> 
+<!-- md:version stable-15.09 --> <!-- md:fileDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/get.sh -->  <!-- md:source get.sh --> <!-- md:command `-f,  --folder` --> 
 
 Allows you to override the default extraction and installation folder :aetherx-axd-folder: `csf`. Can be used in combination with:
 
@@ -353,7 +353,7 @@ Allows you to override the default extraction and installation folder :aetherx-a
 <br />
 
 ### Preserve Original Filename
-<!-- md:version stable-15.10 --> <!-- md:fileDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/get.sh -->  <!-- md:source get.sh --> <!-- md:command `-p,  --preserve-name` --> 
+<!-- md:version stable-15.09 --> <!-- md:fileDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/get.sh -->  <!-- md:source get.sh --> <!-- md:command `-p,  --preserve-name` --> 
 
 When downloading the latest version of CSF, the script automatically re-names the latest release archive file from `csf-firewall-vXX.XX.zip` to `csf.zip`. Passing this parameter skips the re-name, and downloads the file to your system as `csf-firewall-vXX.XX.zip`.
 
@@ -361,7 +361,7 @@ When downloading the latest version of CSF, the script automatically re-names th
 <br />
 
 ### Dryrun
-<!-- md:version stable-15.10 --> <!-- md:fileDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/get.sh -->  <!-- md:source get.sh --> <!-- md:command `-D,  --dryrun` --> 
+<!-- md:version stable-15.09 --> <!-- md:fileDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/get.sh -->  <!-- md:source get.sh --> <!-- md:command `-D,  --dryrun` --> 
 
 When `--install` or `--install-only` are passed, this arguments simulations installation, but does not actually install CSF to your system.
 
@@ -369,7 +369,7 @@ When `--install` or `--install-only` are passed, this arguments simulations inst
 <br />
 
 ### Clean
-<!-- md:version stable-15.10 --> <!-- md:fileDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/get.sh -->  <!-- md:source get.sh --> <!-- md:command `-c,  --clean` --> 
+<!-- md:version stable-15.09 --> <!-- md:fileDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/get.sh -->  <!-- md:source get.sh --> <!-- md:command `-c,  --clean` --> 
 
 Removes any `csf.zip` or `csf.tgz` files lintering within the folder. Also removes any extracted csf files and folders.
 
@@ -377,7 +377,7 @@ Removes any `csf.zip` or `csf.tgz` files lintering within the folder. Also remov
 <br />
 
 ### Help
-<!-- md:version stable-15.10 --> <!-- md:fileDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/get.sh -->  <!-- md:source get.sh --> <!-- md:command `-h,  --help` --> 
+<!-- md:version stable-15.09 --> <!-- md:fileDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/get.sh -->  <!-- md:source get.sh --> <!-- md:command `-h,  --help` --> 
 
 Shows the help menu for the [get.sh](https://get.configserver.dev) script. Performs no other actions.
 
@@ -385,7 +385,7 @@ Shows the help menu for the [get.sh](https://get.configserver.dev) script. Perfo
 <br />
 
 ### Version
-<!-- md:version stable-15.10 --> <!-- md:fileDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/get.sh -->  <!-- md:source get.sh --> <!-- md:command `-v,  --version` --> 
+<!-- md:version stable-15.09 --> <!-- md:fileDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/get.sh -->  <!-- md:source get.sh --> <!-- md:command `-v,  --version` --> 
 
 Shows the current version of the [get.sh](https://get.configserver.dev) script being used.
 

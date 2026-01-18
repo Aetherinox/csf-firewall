@@ -46,7 +46,7 @@ By joining our Insiders Program as a sponsor, you’ll receive the following ben
 
 - **Exclusive early access** to the ConfigServer Security & Firewall release channel  
 - **Sponsor role** on our [Discord](https://discord.configserver.dev) server  
-- Your GitHub avatar featured on our [Sponsors](../insiders/sponsors.md) page  
+- Your GitHub avatar featured on our [Sponsors](../../insiders/sponsors.md) page  
 - The opportunity to **suggest new perks** and help shape the future of the program  
 
 <br />

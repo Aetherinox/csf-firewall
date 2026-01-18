@@ -269,7 +269,7 @@ Our rules above mean:
 
 ### Manage with CSF WebUI
 
-Sign into the [ConfigServer WebUI](../../webui/). 
+Sign into the [ConfigServer WebUI](../install/webui.md). 
 
 Select the tab **CSF**, scroll down and select **Firewall Configuration**, and then in the top dropdown box in the middle of the page, select **Country Code Lists and Settings**.
 

@@ -376,7 +376,7 @@ CSF_HIGHRISK | 43200 | 0 | https://blocklist.configserver.dev/highrisk.ipset
 
     The official [master.ipset](https://blocklist.configserver.dev/master.ipset) blocklist contains millions of IP addresses. 
 
-    We strongly recommend [enabling IPSET](#enable) before using this list. Without IPSET, CSF will create a separate iptables rule for every IP, which will dramatically increase memory usage and slow down firewall operations.
+    We strongly recommend [enabling IPSET](#enable-ipset) before using this list. Without IPSET, CSF will create a separate iptables rule for every IP, which will dramatically increase memory usage and slow down firewall operations.
 
     Using this list without IPSET may lead to performance issues or even system instability on servers with limited resources (memory).
 
@@ -460,7 +460,7 @@ Now that you have our official blocklists defined in ++"/etc/csf/csf.blocklists"
     
     The [master.ipset](https://blocklist.configserver.dev/master.ipset) file currently contains approximately 350,000 entries. To allow for future updates and ensure safe operation, set ++"LF_IPSET_MAXELEM"++ to around ++"500000"++.
 
-    Instructions for doing this are available in the next section [Increase Max Limit](#increase-maximum-entry-limit).
+    Instructions for doing this are available in the next section [Increase Max Limit](#set-lf_ipset_maxelem).
 
 <br />
 

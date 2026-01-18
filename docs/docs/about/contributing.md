@@ -41,48 +41,6 @@ Please review everything on this page before you submit your contribution.
 
 <br />
 
-- [About](#about)
-- [Issues, Bugs, Ideas](#issues-bugs-ideas)
-- [Contributing](#contributing)
-  - [Before Submitting Pull Requests](#before-submitting-pull-requests)
-  - [Conventional Commit Specification](#conventional-commit-specification)
-    - [Types](#types)
-      - [Example 1:](#example-1)
-      - [Example 2:](#example-2)
-  - [Committing](#committing)
-  - [Languages](#languages)
-    - [Perl](#perl)
-      - [Indentation](#indentation)
-      - [Line Length](#line-length)
-      - [Blank Lines](#blank-lines)
-      - [Imports](#imports)
-      - [Commenting](#commenting)
-      - [Casing](#casing)
-    - [Python](#python)
-      - [Indentation](#indentation-1)
-      - [Line Length](#line-length-1)
-      - [Blank Lines](#blank-lines-1)
-      - [Imports](#imports-1)
-      - [Commenting](#commenting-1)
-      - [Casing](#casing-1)
-    - [NodeJS](#nodejs)
-      - [Prettier](#prettier)
-      - [ESLint](#eslint)
-        - [v9 \& Newer (Config)](#v9--newer-config)
-        - [v8 \& Older (Config)](#v8--older-config)
-      - [Packages](#packages)
-      - [Indentation](#indentation-2)
-      - [Style](#style)
-      - [Line Length](#line-length-2)
-      - [Commenting](#commenting-2)
-      - [Casing](#casing-2)
-
-<br />
-
----
-
-<br />
-
 ## Issues, Bugs, Ideas
 
 Stuff happens, and sometimes as best as we try, there may be issues within this project that we are unaware of. That is the great thing about open-source; anyone can use the program and contribute to making it better.

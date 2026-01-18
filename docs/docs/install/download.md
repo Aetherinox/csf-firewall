@@ -8,7 +8,7 @@ tags:
 
 # Download CSF <!-- omit from toc -->
 
-In the previous section, we explained how to install all the required dependencies for CSF. Now, we’ll guide you through downloading the latest version of ConfigServer Security & Firewall.
+In the previous section, we explained how to install all the required dependencies for CSF. Now, we’ll guide you through downloading the latest version of CSF.
 
 <br />
 
@@ -26,7 +26,7 @@ This page covers the following:
 
     When we initially developed addons for CSF, we pushed all of our releases in a `.zip` archive. 
     
-    However, after taking over full development of CSF, we opted to migrate back to the `.tgz` format to keep conformity with how the original developer packaged releases. This is why our scripts mention both extensions, and why our scripts look for both.
+    However, after taking over full development of CSF, we opted to migrate back to the `.tgz` format to keep conformity with how the original developer packaged releases. This is why our scripts mention both extensions, and why CSF supports both.
 
 <br />
 

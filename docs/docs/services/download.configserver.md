@@ -17,7 +17,7 @@ This mirrors the service originally offered by the CSF developers, which was the
 
     When we initially developed addons for CSF, we pushed all of our releases in a `.zip` archive. 
     
-    However, after taking over full development of CSF, we opted to migrate back to the `.tgz` format to keep conformity with how the original developer packaged releases. This is why our scripts mention both extensions, and why our scripts look for both.
+    However, after taking over full development of CSF, we opted to migrate back to the `.tgz` format to keep conformity with how the original developer packaged releases. This is why our scripts mention both extensions, and why CSF supports both.
 
 <br />
 

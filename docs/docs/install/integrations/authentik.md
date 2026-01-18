@@ -6,6 +6,7 @@ tags:
     - configure
     - integration
     - authentik
+    - traefik
     - authentication
     - 2fa
     - passkey
@@ -13,7 +14,8 @@ tags:
 
 # Authentik Integration
 
-This section explains how to add Authentik as a **middleware** through [Traefik](../traefik/) so that you can secure the CSF web interface behind an authentication server.
+This section explains how to add Authentik as a **middleware** through [Traefik](../integrations/traefik.md) 
+so that you can secure the CSF web interface behind an authentication server.
 
 <br />
 
@@ -23,11 +25,18 @@ This section explains how to add Authentik as a **middleware** through [Traefik]
 
 ## What is Authentik?
 
-[Authentik](https://goauthentik.io/) is an open-source identity provider that helps you manage authentication and access control for your applications. It acts as a centralized system for securely verifying the identity of users before they can access your services. By using Authentik, you can enforce consistent security policies across all the software you manage, rather than relying on separate logins for each service.
+[Authentik](https://goauthentik.io/) is an open-source identity provider that helps you manage authentication 
+and access control for your applications. It acts as a centralized system for securely verifying the identity 
+of users before they can access your services. By using Authentik, you can enforce consistent security policies 
+across all the software you manage, rather than relying on separate logins for each service.
 
-With Authentik, you can protect your applications using traditional passwords, implement two-factor authentication (2FA), or even leverage modern passkey solutions. This includes hardware keys such as YubiKey, or software-based passkeys stored in password managers like KeePassXC or Vaultwarden.
+With Authentik, you can protect your applications using traditional passwords, implement two-factor 
+authentication (2FA), or even leverage modern passkey solutions. This includes hardware keys such as YubiKey, 
+or software-based passkeys stored in password managers like KeePassXC or Vaultwarden.
 
-Using Authentik adds an extra layer of security and simplifies access management, ensuring that only authorized users can reach sensitive applications like the CSF web interface. It can also integrate with middleware to enforce access policies without exposing your services to the public internet.
+Using Authentik adds an extra layer of security and simplifies access management, ensuring that only authorized 
+users can reach sensitive applications like the CSF web interface. It can also integrate with middleware to 
+enforce access policies without exposing your services to the public internet.
 
 <br />
 
@@ -37,16 +46,19 @@ Using Authentik adds an extra layer of security and simplifies access management
 
 ## Before You Begin
 
-Currently, CSF does not have built-in functionality to detect if your system is protected by an authentication service such as [Authentik](https://goauthentik.io/) or [Authelia](https://authelia.com/).
+Currently, CSF does not have built-in functionality to detect if your system is protected by an authentication 
+service such as [Authentik](https://goauthentik.io/) or [Authelia](https://authelia.com/).
 
-If you choose to put CSF behind Authentik, you will encounter two authentication prompts when accessing the CSF web interface:
+If you choose to put CSF behind Authentik, you will encounter two authentication prompts when accessing the CSF 
+web interface:
 
 1. The Authentik sign-in screen
 2. CSF’s native login interface
 
 <br />
 
-We are working on a feature that will allow CSF to disable its built-in login system and rely entirely on a third-party authentication app. When this is implemented, you will only see a single login screen.
+We are working on a feature that will allow CSF to disable its built-in login system and rely entirely on a 
+third-party authentication app. When this is implemented, you will only see a single login screen.
 
 <br />
 
@@ -56,7 +68,9 @@ We are working on a feature that will allow CSF to disable its built-in login sy
 
 ## Setup
 
-If you are adding [Authentik](https://goauthentik.io/) as middleware in the steps above; the last thing you must do is log in to your Authentik admin panel and add a new **Provider** so that we can access the CSF web interface via your domain.
+If you are adding [Authentik](https://goauthentik.io/) as middleware in the steps above; the last thing you must 
+do is log in to your Authentik admin panel and add a new **Provider** so that we can access the CSF web interface 
+via your domain.
 
 <br />
 
@@ -195,7 +209,8 @@ You should be able to access `csf.domain.com` and be prompted now to authenticat
 
 ## Authentication Types
 
-When CSF is placed behind Authentik, you will be prompted to log in through Authentik to access the CSF web interface. The method of login depends on your Authentik configuration. Common authentication types include:
+When CSF is placed behind Authentik, you will be prompted to log in through Authentik to access the CSF web 
+interface. The method of login depends on your Authentik configuration. Common authentication types include:
 
 - [Username + password](https://docs.goauthentik.io/users-sources/user/user_basic_operations/)
 - [Username + password + secondary authentication (2FA)](https://docs.goauthentik.io/users-sources/user/user_basic_operations/)
@@ -205,7 +220,8 @@ When CSF is placed behind Authentik, you will be prompted to log in through Auth
 
 <br />
 
-This guide does not cover the full setup of Authentik, as that is outside the scope of CSF. However, there are many tutorials and video guides available online that explain the process in detail.
+This guide does not cover the full setup of Authentik, as that is outside the scope of CSF. However, there are many 
+tutorials and video guides available online that explain the process in detail.
 
 <br />
 
@@ -223,7 +239,7 @@ Select what documentation you would like to proceed with next ...
 
 <div class="grid cards" markdown>
 
--   :aetherx-axd-earth-europe: &nbsp; __[Geographical IP Block Integration](../usage/geoip.md)__
+-   :aetherx-axd-earth-europe: &nbsp; __[Geographical IP Block Integration](../../usage/geoip.md)__
 
     ---
 

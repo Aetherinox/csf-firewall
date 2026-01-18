@@ -9,7 +9,7 @@ tags:
 ---
 
 # Docker Integration
-<!-- md:version stable-15.0.0 --> <!-- md:fileViewDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/scripts/docker.sh https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/scripts/docker.sh left -->
+<!-- md:version stable-15.00 --> <!-- md:fileViewDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/scripts/docker.sh https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/scripts/docker.sh left -->
 
 Running CSF in environments that leverage Docker requires special considerations due to containerized networking and isolated interfaces.
 
@@ -335,7 +335,7 @@ This script includes numerous flags you can specify if you run the `docker.sh` s
 <br />
 
 #### Help
-<!-- md:version stable-15.0.1 --> <!-- md:command `-h,  --help` -->
+<!-- md:version stable-15.01 --> <!-- md:command `-h,  --help` -->
 
 Shows a list of all available commands included in the Docker integration script:
 
@@ -349,7 +349,7 @@ Shows a list of all available commands included in the Docker integration script
 <br />
 
 #### List
-<!-- md:version stable-15.0.9 --> <!-- md:command `-l, --list` -->
+<!-- md:version stable-15.09 --> <!-- md:command `-l, --list` -->
 
 Will display a list of all available docker containers, and their assigned ports and subnets
 
@@ -363,7 +363,7 @@ Will display a list of all available docker containers, and their assigned ports
 <br />
 
 #### Restart
-<!-- md:version stable-15.0.9 --> <!-- md:command `-r, --restart` -->
+<!-- md:version stable-15.09 --> <!-- md:command `-r, --restart` -->
 
 Restarts **csf** and **lfd** services.
 
@@ -377,7 +377,7 @@ Restarts **csf** and **lfd** services.
 <br />
 
 #### Flush
-<!-- md:version stable-15.0.9 --> <!-- md:command `-f, --flush` -->
+<!-- md:version stable-15.09 --> <!-- md:command `-f, --flush` -->
 
 Completely flushes all **iptable** rules.
 
@@ -391,7 +391,7 @@ Completely flushes all **iptable** rules.
 <br />
 
 #### Dryrun
-<!-- md:version stable-15.0.5 --> <!-- md:command `-d, --dryrun` -->
+<!-- md:version stable-15.05 --> <!-- md:command `-d, --dryrun` -->
 
 Simulates running the entire script but does not actually make changes.
 
@@ -405,7 +405,7 @@ Simulates running the entire script but does not actually make changes.
 <br />
 
 #### Version
-<!-- md:version stable-15.0.0 --> <!-- md:command `-v, --version` -->
+<!-- md:version stable-15.00 --> <!-- md:command `-v, --version` -->
 
 Shows information about the current version of the integration script you are running.
 
@@ -486,7 +486,7 @@ Select what documentation you would like to proceed with next ...
 
 <div class="grid cards" markdown>
 
--   :aetherx-axb-authentik: &nbsp; __[Authentik Integration](../install/integrations/authentik.md)__
+-   :aetherx-axb-authentik: &nbsp; __[Authentik Integration](../integrations/authentik.md)__
 
     ---
 
@@ -499,7 +499,7 @@ Select what documentation you would like to proceed with next ...
     With this setup, CSF is protected by modern authentication methods such as
     passwords, two-factor authentication (2FA), or passkeys.
 
--   :aetherx-axd-earth-europe: &nbsp; __[Geographical IP Block Integration](../usage/geoip.md)__
+-   :aetherx-axd-earth-europe: &nbsp; __[Geographical IP Block Integration](../../usage/geoip.md)__
 
     ---
 

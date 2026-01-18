@@ -6,7 +6,10 @@ tags:
 ---
 
 # Download Patches <!-- omit from toc -->
-After you have installed CSF, [ConfigServer WebUI](../../webui/), and enabled both lfd and csf services; it's now time to run the patcher. The patcher will check your current configuration, and add a series of iptable rules so that apps like Docker and OpenVPN can communicate with the outside world and users can access your services.
+After you have installed CSF, [ConfigServer WebUI](../install/webui.md), and enabled both lfd
+and csf services; it's now time to run the patcher. The patcher will check your current 
+configuration, and add a series of iptable rules so that apps like Docker and OpenVPN can 
+communicate with the outside world and users can access your services.
 
 <br />
 
@@ -63,7 +66,8 @@ sudo chmod +x /patch/install.sh
 
 <br />
 
-The patcher is now on your system and ready to run. However, before we run the patcher; there are a few things that need to be configured. **Do not run the patch yet**. 
+The patcher is now on your system and ready to run. However, before we run the patcher; there 
+are a few things that need to be configured. **Do not run the patch yet**. 
 
 Proceed to the [Configure](../configure/) section.
 

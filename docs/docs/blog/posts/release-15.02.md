@@ -175,7 +175,7 @@ This issue has been resolved, but there are some important considerations to not
 
 React-based VestaCP templates are now minified `.js` and `.css` files rather than simple PHP and HTML. This change makes it significantly more challenging to modify the header and re-add CSF to the navigation menu, especially given hashed filenames in the build process; which we want to preserve the integrity of.
 
-Rather than rebuilding the templates ourselves which seems like a drastic approach; I have provided instructions for users to manually integrate CSF into the VestaCP menu: [Add CSF to VestaCP Menu](https://docs.configserver.dev/install/install/#add-csf-to-vestacp-menu).
+Rather than rebuilding the templates ourselves which seems like a drastic approach; I have provided instructions for users to manually integrate CSF into the VestaCP menu: [Add CSF to VestaCP Menu](../../install/install.md#add-csf-menu).
 
 Ideally, this would be solved by adding a conditional menu item in the header template, but VestaCP has not seen updates in some time, which brings us to the next point.
 

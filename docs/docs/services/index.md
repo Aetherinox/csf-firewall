@@ -30,7 +30,7 @@ Together, these services provide a streamlined way to keep CSF installations up 
 <br />
 
 ## :aetherx-axs-block-brick-fire: blocklist.configserver.dev <!-- omit from toc -->
-<!-- md:docs ../advanced/services/blocklist.configserver/ self -->
+<!-- md:docs ../services/blocklist.configserver.md self -->
 
 <div align="center" class="icon-container" markdown>
 
@@ -49,7 +49,7 @@ By centralizing access, the service eliminates the complexity of pulling blockli
 <br />
 
 ## :aetherx-axs-download: download.configserver.dev <!-- omit from toc -->
-<!-- md:docs ../advanced/services/download.configserver/ self -->
+<!-- md:docs ../services/download.configserver.md self -->
 
 <div align="center" class="icon-container" markdown>
 
@@ -68,7 +68,7 @@ In addition to basic downloads, the service offers advanced features for users w
 <br />
 
 ## :aetherx-axs-box-isometric: get.configserver.dev <!-- omit from toc -->
-<!-- md:docs ../advanced/services/get.configserver/ self -->
+<!-- md:docs ../services/get.configserver.md self -->
 
 <div align="center" class="icon-container" markdown>
 
