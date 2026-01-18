@@ -276,7 +276,7 @@ The second option requires that you open your Firefox browser and add the defaul
     - You can add multiple ports to the list as long as they are comma delimited: `6666,6667,...`
 
 <figure markdown="span">
-    ![Firefox › Whitelist Port](../../../assets/images/usage/troubleshooting/webui/firefox_01.gif){ width="700" }
+    ![Firefox › Whitelist Port](../../assets/images/usage/troubleshooting/webui/firefox_01.gif){ width="700" }
     <figcaption>Firefox › Whitelist Port</figcaption>
 </figure>
 
@@ -304,7 +304,7 @@ Allowing restricted ports in Google Chrome requires you to take the original Chr
 4. Click on **Apply** and then click on **OK**.
 
 <figure markdown="span">
-    ![Chrome › Whitelist Port](../../../assets/images/usage/troubleshooting/webui/chrome_01.png){ width="370" }
+    ![Chrome › Whitelist Port](../../assets/images/usage/troubleshooting/webui/chrome_01.png){ width="370" }
     <figcaption>Chrome › Whitelist Port</figcaption>
 </figure>
 

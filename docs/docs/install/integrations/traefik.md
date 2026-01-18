@@ -23,7 +23,7 @@ This section of the guide covers setting up CSF with Traefik as a reverse proxy.
 
 Traefik is a modern reverse proxy and load balancer that makes it easier to manage how traffic flows to your applications and services. Instead of exposing each service directly to the internet, Traefik acts as a gateway, routing requests securely and efficiently to the correct destination. This setup is especially useful for servers running multiple web-based tools or dashboards, since Traefik helps organize and protect all of them under one entry point.
 
-One of the biggest advantages of Traefik is its support for middleware. Middleware are modular features you can “attach” to your routes. For example, you can use IP whitelisting middleware to ensure only trusted addresses can access your CSF web interface. You could also add geo-blocking rules to limit access based on country, or integrate with external identity providers like [Authentik](../install/integrations/authentik.md) to require secure authentication before anyone can reach your [firewall web interface / dashboard](../install/webui.md).
+One of the biggest advantages of Traefik is its support for middleware. Middleware are modular features you can “attach” to your routes. For example, you can use IP whitelisting middleware to ensure only trusted addresses can access your CSF web interface. You could also add geo-blocking rules to limit access based on country, or integrate with external identity providers like [Authentik](../integrations/authentik.md) to require secure authentication before anyone can reach your [firewall web interface / dashboard](../../install/webui.md).
 
 With Traefik handling these protections, you don’t need to open sensitive ports directly to the outside world. Instead, Traefik listens on your chosen ports (like 80 or 443) and enforces the security rules you define before traffic ever reaches your applications. This layered approach not only reduces your attack surface, but also gives you fine-grained control over who can connect, from where, and under what conditions.
 
@@ -696,7 +696,7 @@ Select what documentation you would like to proceed with next ...
 
 <div class="grid cards" markdown>
 
--   :aetherx-axb-authentik: &nbsp; __[Authentik Integration](../install/integrations/authentik.md)__
+-   :aetherx-axb-authentik: &nbsp; __[Authentik Integration](../integrations/authentik.md)__
 
     ---
 
@@ -709,7 +709,7 @@ Select what documentation you would like to proceed with next ...
     With this setup, CSF is protected by modern authentication methods such as
     passwords, two-factor authentication (2FA), or passkeys.
 
--   :aetherx-axd-earth-europe: &nbsp; __[Geographical IP Block Integration](../usage/geoip.md)__
+-   :aetherx-axd-earth-europe: &nbsp; __[Geographical IP Block Integration](../../usage/geoip.md)__
 
     ---
 

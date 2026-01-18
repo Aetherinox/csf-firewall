@@ -45,7 +45,7 @@ Each individual setting with a detailed description
 <br />
 
 #### <!-- md:flag setting --> DOCKER_INT 
-<!-- md:version stable-2.0.0 --> <!-- md:default `docker0` --> <!-- md:flag required -->
+<!-- md:version stable-15.01 --> <!-- md:default `docker0` --> <!-- md:flag required -->
 
 The main docker visual bridge network name; this is usually `docker0`, however, it can be changed. You can find a list of these by running the command
 
@@ -64,7 +64,7 @@ ip link show
 <br />
 
 #### <!-- md:flag setting --> CSF_FILE_ALLOW 
-<!-- md:version stable-2.0.0 --> <!-- md:default `/etc/csf/csf.allow` --> <!-- md:flag required -->
+<!-- md:version stable-15.01 --> <!-- md:default `/etc/csf/csf.allow` --> <!-- md:flag required -->
 
 The full path to your ConfigServer's `csf.allow` file. Each time an IP from one of your docker containers is detected, the IP will be whitelisted in ConfigServer Firewall.
 
@@ -78,7 +78,7 @@ The full path to your ConfigServer's `csf.allow` file. Each time an IP from one 
 <br />
 
 #### <!-- md:flag setting --> CSF_COMMENT 
-<!-- md:version stable-2.0.0 --> <!-- md:default `Docker container whitelist` --> <!-- md:flag required -->
+<!-- md:version stable-15.01 --> <!-- md:default `Docker container whitelist` --> <!-- md:flag required -->
 
 This is the comment that will be appended to each IP that is added to your ConfigServer's `allow.csf` whitelist file.
 
@@ -100,7 +100,7 @@ This is the comment that will be appended to each IP that is added to your Confi
 <br />
 
 #### <!-- md:flag setting --> DEBUG_ENABLED 
-<!-- md:version stable-2.0.0 --> <!-- md:default `false` --> <!-- md:flag required -->
+<!-- md:version stable-15.01 --> <!-- md:default `false` --> <!-- md:flag required -->
 
 If set `true`, additional information will be printed to terminal when the user executes `sudo csf -ra`
 
@@ -114,7 +114,7 @@ If set `true`, additional information will be printed to terminal when the user 
 <br />
 
 #### <!-- md:flag setting --> IP_CONTAINERS 
-<!-- md:version stable-2.0.0 --> <!-- md:default `172.17.0.0/16` --> <!-- md:flag required -->
+<!-- md:version stable-15.01 --> <!-- md:default `172.17.0.0/16` --> <!-- md:flag required -->
 
 A list of IP blocks that you use within docker for container assignment.
 
@@ -167,7 +167,7 @@ Each individual setting with a detailed description
 <br />
 
 #### <!-- md:flag setting --> ETH_ADAPTER 
-<!-- md:version stable-2.0.0 --> <!-- md:default `$(ip route | grep default | sed -e "s/^.*dev.//" -e "s/.proto.*//")` --> <!-- md:flag required -->
+<!-- md:version stable-15.01 --> <!-- md:default `$(ip route | grep default | sed -e "s/^.*dev.//" -e "s/.proto.*//")` --> <!-- md:flag required -->
 
 The name of your primary server network adapter. This is usually `eth*`, `enp*`, etc.
 
@@ -223,7 +223,7 @@ You can usually find your main network adapter with the command:
 <br />
 
 #### <!-- md:flag setting --> TUN_ADAPTER 
-<!-- md:version stable-2.0.0 --> <!-- md:default `$(ip -br l | awk '$1 ~ "^tun[0-9]" { print $1}')` --> <!-- md:flag required -->
+<!-- md:version stable-15.01 --> <!-- md:default `$(ip -br l | awk '$1 ~ "^tun[0-9]" { print $1}')` --> <!-- md:flag required -->
 
 The name of the primary OpenVPN tunnel adapter name. This is usually `tun*`.
 
@@ -270,7 +270,7 @@ You can usually find your main network adapter with the command:
 <br />
 
 #### <!-- md:flag setting --> IP_PUBLIC 
-<!-- md:version stable-2.0.0 --> <!-- md:default `$(curl -s ipinfo.io/ip)` --> <!-- md:flag required -->
+<!-- md:version stable-15.01 --> <!-- md:default `$(curl -s ipinfo.io/ip)` --> <!-- md:flag required -->
 
 The public IP address of your server.
 
@@ -323,7 +323,7 @@ There are a few ways that you can obtain your server's public IP address:
 <br />
 
 #### <!-- md:flag setting --> DEBUG_ENABLED 
-<!-- md:version stable-2.0.0 --> <!-- md:default `false` --> <!-- md:flag required -->
+<!-- md:version stable-15.01 --> <!-- md:default `false` --> <!-- md:flag required -->
 
 If set `true`, additional information will be printed to terminal when the patch is ran.
 
@@ -337,7 +337,7 @@ If set `true`, additional information will be printed to terminal when the patch
 <br />
 
 #### <!-- md:flag setting --> IP_POOL 
-<!-- md:version stable-2.0.0 --> <!-- md:default `10.8.0.0/24` --> <!-- md:flag required -->
+<!-- md:version stable-15.01 --> <!-- md:default `10.8.0.0/24` --> <!-- md:flag required -->
 
 A list of subnets assigned to your OpenVPN server.
 

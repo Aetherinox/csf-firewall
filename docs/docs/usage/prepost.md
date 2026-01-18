@@ -110,7 +110,7 @@ As mentioned above, when installing CSF, two files will be loaded to your system
 
 ### Loader Folders
 
-When the [loader scripts](#loader-scripts) `/usr/local/csf/bin/csfpre.sh` and `/usr/local/csf/bin/csfpost.sh` run, they check specific folders to see if you have placed any custom bash scripts inside. By placing custom bash scripts in these folders, you can write bash scripts which assist with setting up custom firewall rules which are automatically applied every time CSF starts or restarts, ensuring your custom rules persist.
+When the [loader files](#loader-files) `/usr/local/csf/bin/csfpre.sh` and `/usr/local/csf/bin/csfpost.sh` run, they check specific folders to see if you have placed any custom bash scripts inside. By placing custom bash scripts in these folders, you can write bash scripts which assist with setting up custom firewall rules which are automatically applied every time CSF starts or restarts, ensuring your custom rules persist.
 
 <br />
 

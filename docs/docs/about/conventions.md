@@ -12,48 +12,232 @@ The badges in this section are for general use.
 
 ### <!-- md:flag -->  Flags { #flags data-toc-label="Flags" }
 
-=== "Description"
+These icons denote / mark a particular item with a specific category type. Use these to indicate that a feature or service is `experimental`, 
+`dangerous`, `setting`, or `required`.
 
-    These icons denote / mark a particular item with a specific category type. Use these to indicate that a feature or service is `experimental`, 
-    `dangerous`, `setting`, or `required`.
-
-    `Examples`
-
-    :   <!-- md:flag --> Default  `<!-- @md:flag -->`
-    :   <!-- md:flag experimental --> Experimental  `<!-- @md:flag experimental -->`
-    :   <!-- md:flag required --> Required  `<!-- @md:flag required -->`
-    :   <!-- md:flag customization --> Customization  `<!-- @md:flag customization -->`
-    :   <!-- md:flag metadata --> Metadata  `<!-- @md:flag metadata -->`
-    :   <!-- md:flag dangerous --> Dangerous  `<!-- @md:flag dangerous -->`
-    :   <!-- md:flag multiple --> Multiple  `<!-- @md:flag multiple -->`
-    :   <!-- md:flag setting --> Setting  `<!-- @md:flag setting -->`
-
-
+:   <!-- md:flag --> Default  `<!-- @md:flag -->`
+:   <!-- md:flag experimental --> Experimental  `<!-- @md:flag experimental -->`
+:   <!-- md:flag required --> Required  `<!-- @md:flag required -->`
+:   <!-- md:flag customization --> Customization  `<!-- @md:flag customization -->`
+:   <!-- md:flag metadata --> Metadata  `<!-- @md:flag metadata -->`
+:   <!-- md:flag dangerous --> Dangerous  `<!-- @md:flag dangerous -->`
+:   <!-- md:flag multiple --> Multiple  `<!-- @md:flag multiple -->`
+:   <!-- md:flag setting --> Setting  `<!-- @md:flag setting -->`
 
 <br />
 
+#### Default
+<!-- md:flag --> Default  `<!-- @md:flag -->`
 
+Indicates that an entry is a configurable setting or feature. Not specifying a valid flag will simply show an icon with no label.
 
-### <!-- md:control --> Controls { #controls data-toc-label="Controls" }
+<br />
+<br />
 
-=== "Description"
+#### Experimental
+<!-- md:flag experimental --> Experimental  `<!-- @md:flag experimental -->`
 
-    These icons deonote what type of control a specified setting uses if the settings are controlled by a graphical user interface.
+Indicates that this feature is experimental or in a testing phase. Its behavior may change in future releases.
 
-    `Examples`
+<br />
+<br />
 
-    :   <!-- md:control --> default  `<!-- @md:control -->`
-    :   <!-- md:control toggle --> toggle  `<!-- @md:control toggle -->`
-    :   <!-- md:control toggle_on --> toggle on  `<!-- @md:control toggle_on -->`
-    :   <!-- md:control toggle_off --> toggle off  `<!-- @md:control toggle_off -->`
-    :   <!-- md:control textbox --> textbox  `<!-- @md:control textbox -->`
-    :   <!-- md:control dropdown --> dropdown  `<!-- @md:control dropdown -->`
-    :   <!-- md:control button --> button  `<!-- @md:control button -->`
-    :   <!-- md:control slider --> slider  `<!-- @md:control slider -->`
-    :   <!-- md:control volume --> docker volume  `<!-- @md:control volume -->`
-    :   <!-- md:control env --> env variable  `<!-- @md:control env -->`
-    :   <!-- md:control color #FFFFFF #121315 -->  `<!-- @md:control color #FFFFFF #121315 -->`
+#### Required
+<!-- md:flag required --> Required  `<!-- @md:flag required -->`
 
+Indicates that this setting cannot be empty or null. A value **must** be provided for CSF to successfully validate it.
+
+<br />
+<br />
+
+#### Customization
+<!-- md:flag customization --> Customization  `<!-- @md:flag customization -->`
+
+Indicates that the thing described is a customization that must be added by the end-user.
+
+<br />
+<br />
+
+#### Metadata
+<!-- md:flag metadata --> Metadata  `<!-- @md:flag metadata -->`
+
+This symbol denotes that the thing described is a metadata property, which can be 
+used in Markdown documents as part of the front matter definition.
+
+<br />
+<br />
+
+#### Multiple Instances
+<!-- md:flag multiple --> Multiple  `<!-- @md:flag multiple -->`
+
+Indicates that a specific feature can be utilized in multiple-instances, or it denotes multiple CSF themes.
+
+<br />
+<br />
+
+#### Setting
+<!-- md:flag setting --> Setting  `<!-- @md:flag setting -->`
+
+Indicates the subject being described is a user configurable setting, or is part of the CSF config file at
+`/etc/csf/csf.conf`.
+
+<br />
+<br />
+
+#### Dangerous
+<!-- md:flag dangerous --> Dangerous  `<!-- @md:flag dangerous -->`
+
+Indicates that modifying the specified setting, or changing a specific feature within CSF, can result 
+in stability issues, or be less secure than the alternative.
+
+Change this setting at your own descretion.
+
+<br />
+<br />
+
+---
+
+<br />
+<br />
+
+### <!-- md:control -->  Controls { #controls data-toc-label="Controls" }
+
+These icons deonote what type of control a specified setting uses if the settings are controlled by a graphical user interface.
+
+:   <!-- md:control --> default  `<!-- @md:control -->`
+:   <!-- md:control toggle --> toggle  `<!-- @md:control toggle -->`
+:   <!-- md:control toggle_on --> toggle on  `<!-- @md:control toggle_on -->`
+:   <!-- md:control toggle_off --> toggle off  `<!-- @md:control toggle_off -->`
+:   <!-- md:control textbox --> textbox  `<!-- @md:control textbox -->`
+:   <!-- md:control dropdown --> dropdown  `<!-- @md:control dropdown -->`
+:   <!-- md:control button --> button  `<!-- @md:control button -->`
+:   <!-- md:control slider --> slider  `<!-- @md:control slider -->`
+:   <!-- md:control volume --> docker volume  `<!-- @md:control volume -->`
+:   <!-- md:control env --> env variable  `<!-- @md:control env -->`
+:   <!-- md:control color #FFFFFF #121315 -->  `<!-- @md:control color #FFFFFF #121315 -->`
+
+<br />
+
+#### Default
+<!-- md:control --> Default  `<!-- @md:control -->`
+
+Indicates that a control is a textbox.
+
+<br />
+<br />
+
+#### Toggle
+<!-- md:control toggle --> Toggle  `<!-- @md:control toggle -->`
+
+Indicates that a graphical user interface control is a toggle switch.
+
+<br />
+<br />
+
+#### Toggle (On)
+<!-- md:control toggle_on --> Toggle (On) `<!-- @md:control toggle_on -->`
+
+Indicates that a graphical user interface control is a toggle switch set in the **on** position.
+
+<br />
+<br />
+
+#### Toggle (Off)
+<!-- md:control toggle_off --> Toggle (Off) `<!-- @md:control toggle_off -->`
+
+Indicates that a graphical user interface control is a toggle switch set in the **off** position.
+
+<br />
+<br />
+
+#### Textbox
+<!-- md:control textbox --> Textbox `<!-- @md:control textbox -->`
+
+Indicates that a graphical user interface control is a textbox.
+
+<br />
+<br />
+
+#### Dropdown
+<!-- md:control dropdown --> Dropdown `<!-- @md:control dropdown -->`
+
+Indicates that a graphical user interface control is a dropdown / select box.
+
+<br />
+<br />
+
+#### Button
+<!-- md:control button --> Button `<!-- @md:control button -->`
+
+Indicates that a graphical user interface control is a button.
+
+<br />
+<br />
+
+#### Slider
+<!-- md:control slider --> Slider `<!-- @md:control slider -->`
+
+Indicates that a graphical user interface control is a slider / range input.
+
+<br />
+<br />
+
+#### Docker Volume  { #volume data-toc-label="Volume" }
+<!-- md:control volume --> Volume `<!-- @md:control volume -->`
+
+Indicates that an item is a mountable docker volume.
+
+<br />
+<br />
+
+#### Env
+<!-- md:control env --> Environment Variable `<!-- @md:control env -->`
+
+Indicates that an item is a environment variable.
+
+<br />
+<br />
+
+#### Color
+<!-- md:control color #FFFFFF #121315 --> Color `<!-- @md:control color #FFFFFF #121315 -->`
+
+Indicates that a graphical user interface control accepts a color property.
+
+<br />
+<br />
+
+---
+
+<br />
+<br />
+
+### <!-- md:argument -->  Argument { #argumentsdata-toc-label="Argument" }
+
+Denotes a command argument.
+
+:   <!-- md:argument --> default  `<!-- @md:argument -->`
+:   <!-- md:argument `<protocol>` --> default  `<!-- @md:argument `<protocol>` -->`
+
+<br />
+
+#### Default
+<!-- md:argument --> Default  `<!-- @md:argument -->`
+
+Not specifying an argument simply shows an icon.
+
+<br />
+
+#### Defined
+<!-- md:argument `<protocol>` --> <protocol>  `<!-- @md:argument `<protocol>` -->`
+
+Denotes a specified command argument.
+
+<br />
+<br />
+
+---
+
+<br />
 <br />
 
 ### <!-- md:version --> Release Type { #release-types data-toc-label="Release Types" }
@@ -68,9 +252,9 @@ The badges in this section are for general use.
     :   <!-- md:version --> default  `<!-- @md:version -->`
     :   <!-- md:version stable- --> stable  `<!-- @md:version stable -->`
     :   <!-- md:version development- --> development  `<!-- @md:version development -->`
-    :   <!-- md:version 1.6.1 -->  `<!-- @md:version 1.6.1 -->`
-    :   <!-- md:version stable-1.6.1 -->  `<!-- @md:version stable-1.6.1 -->`
-    :   <!-- md:version development-1.6.1 -->  `<!-- @md:version development-1.6.1 -->`
+    :   <!-- md:version 15.00 -->  `<!-- @md:version 15.00 -->`
+    :   <!-- md:version stable-15.00 -->  `<!-- @md:version stable-15.00 -->`
+    :   <!-- md:version development-15.00 -->  `<!-- @md:version development-15.00 -->`
 
 
 
@@ -140,8 +324,8 @@ The badges in this section are for general use.
     `Examples`
 
     :   <!-- md:docs -->  `<!-- @md:docs -->`
-    :   <!-- md:docs ../advanced/services/blocklist.configserver/ self --> `<!-- @md:docs ../advanced/services/blocklist.configserver/ self -->`
-    :   <!-- md:docs ../advanced/services/blocklist.configserver/ self --> `<!-- @md:docs ../advanced/services/blocklist.configserver/ new -->`
+    :   <!-- md:docs ../services/blocklist.configserver.md self --> `<!-- @md:docs ../services/blocklist.configserver.md self -->`
+    :   <!-- md:docs ../services/blocklist.configserver.md new --> `<!-- @md:docs ../services/blocklist.configserver.md new -->`
 
 <br />
 
@@ -404,7 +588,7 @@ These are just generic examples with no specific purpose. They demonstrate how b
 <br />
 
 #### <!-- md:flag setting --> DEBUG_ENABLED 
-<!-- md:version stable-2.0.0 --> <!-- md:default `false` --> <!-- md:flag required --> <!-- md:fileViewDLExt test.zip https://example.com/test.zip -->
+<!-- md:version stable-15.00  --> <!-- md:default `false` --> <!-- md:flag required --> <!-- md:fileViewDLExt test.zip https://example.com/test.zip -->
 
 This is an example setting.
 
@@ -412,7 +596,7 @@ This is an example setting.
 
     ```markdown
     #### <!-- @md:flag setting --> DEBUG_ENABLED 
-    <!-- @md:version stable-2.0.0 --> <!-- @md:default `false` --> <!-- @md:flag required --> <!-- @md:fileViewDLExt test.zip -->
+    <!-- @md:version stable-15.00 --> <!-- @md:default `false` --> <!-- @md:flag required --> <!-- @md:fileViewDLExt test.zip -->
 
     This is an example setting.
     ```

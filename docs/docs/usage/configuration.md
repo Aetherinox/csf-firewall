@@ -40,7 +40,7 @@ This section outlines some of the most important settings that you may want to r
 
 ### TESTING
 
-<!-- md:flag required --> <!-- md:fileViewDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf --> <!-- md:source /etc/csf/csf.conf --> <!-- md:default `1` -->
+<!-- md:flag required --> <!-- md:fileDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf --> <!-- md:source /etc/csf/csf.conf --> <!-- md:default `1` -->
 
 <br />
 
@@ -76,11 +76,17 @@ TESTING = "0"
 
 ### TCP_IN, TCP_OUT
 
-<!-- md:flag required --> <!-- md:fileViewDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf --> <!-- md:source /etc/csf/csf.conf --> <!-- md:default `22,53,80,110,143,443,465,587,993,995` -->
+<!-- md:flag required --> <!-- md:fileDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf --> <!-- md:source /etc/csf/csf.conf --> <!-- md:default `22,53,80,110,143,443,465,587,993,995` -->
 
 <br />
 
 Define the allowed incoming and outgoing TCP ports, respectively. Add or remove ports as required, separated by commas.
+
+??? Notes "Full list of common TCP & UDP ports"
+
+    For a full list of common ports, visit our [Ports Cheatsheet](../usage/cheatsheet/ports.md).
+
+<br />
 
 === ":aetherx-axs-file: Config"
 
@@ -116,26 +122,6 @@ Define the allowed incoming and outgoing TCP ports, respectively. Add or remove 
       | 993  | IMAP over SSL (secure email retrieval) |
       | 995  | POP3 over SSL (secure email download) |
 
-=== ":aetherx-axs-note-sticky: Notes"
-
-      <h3>Samba Users</h3>
-
-      You must have the following `TCP` ports unblocked:
-
-      ``` shell
-      TCP_IN = "445,139"
-      TCP_OUT = "445,139"
-      ```
-
-      <br />
-
-      You must have the following `UDP` ports unblocked:
-
-      ``` shell
-      UDP_IN = "137,138,445"
-      UDP_OUT = "137,138,445"
-      ```
-
 <br />
 <br />
 
@@ -146,6 +132,12 @@ Define the allowed incoming and outgoing TCP ports, respectively. Add or remove 
 <br />
 
 Define the allowed incoming and outgoing UDP ports, respectively. Add or remove ports as required, separated by commas.
+
+??? Notes "Full list of common TCP & UDP ports"
+
+    For a full list of common ports, visit our [Ports Cheatsheet](../usage/cheatsheet/ports.md).
+
+<br />
 
 === ":aetherx-axs-file: Config"
 
@@ -183,26 +175,6 @@ Define the allowed incoming and outgoing UDP ports, respectively. Add or remove 
       | 1900       | SSDP (Simple Service Discovery Protocol, used in UPnP) |
       | 4500       | IPsec NAT traversal |
       | 33434–33523 | Traceroute / ICMP UDP probe ports |
-
-=== ":aetherx-axs-note-sticky: Notes"
-
-      <h3>Samba Users</h3>
-
-      You must have the following `TCP` ports unblocked:
-
-      ``` shell
-      TCP_IN = "445,139"
-      TCP_OUT = "445,139"
-      ```
-
-      <br />
-
-      You must have the following `UDP` ports unblocked:
-
-      ``` shell
-      UDP_IN = "137,138,445"
-      UDP_OUT = "137,138,445"
-      ```
 
 <br />
 <br />
@@ -324,9 +296,11 @@ CT_LIMIT = "0"
 
 ### UI
 
-<!-- md:flag required --> <!-- md:fileDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf --> <!-- md:source /etc/csf/csf.conf --> <!-- md:default `0` --> <!-- md:version stable-8.00 -->
+<!-- md:flag required --> <!-- md:fileDLExt https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/extras/example_configs/etc/csf/csf.conf --> <!-- md:source /etc/csf/csf.conf --> <!-- md:default `0` --> <!-- md:version stable-15.00 -->
 
-This setting enables the **CSF Web Interface**, a user-friendly, HTML-based graphical interface for managing **ConfigServer Firewall (CSF)** and **Login Failure Daemon (LFD)**. With the web interface, you can easily configure and monitor your firewall without needing a control panel or separate web server. The interface runs as a subprocess of the LFD daemon, providing direct interaction with CSF.
+This setting enables the CSF [Web Interface](../install/webui.md), a user-friendly, HTML-based graphical interface for managing CSF and LFD. 
+
+With the web interface, you can easily configure and monitor your firewall without needing a control panel or separate web server. The interface runs as a subprocess of the LFD daemon, providing direct interaction with CSF.
 
 ??? danger "Security Notice"
 
@@ -354,14 +328,6 @@ This setting enables the **CSF Web Interface**, a user-friendly, HTML-based grap
 
 UI = "1"
 ```
-
-
-
-
-
-
-<br />
-<br />
 
 <br />
 

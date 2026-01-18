@@ -1,46 +1,77 @@
 ---
 title: "Update › v15.01 to Newer"
 tags:
-  - waytotheweb
   - update
-  - legacy
+  - modern
+  - codename-modern
 ---
 
-## About Versioning
+This page describes the steps required to update CSF from an older version maintained by us to the most 
+recent release.
 
-This repository categorizes **ConfigServer Security & Firewall (CSF)** into two distinct development eras:
+If your system is currently running CSF **v15.00** originally developed by **Way to the Web**, you must 
+first perform a one-time **manual update** by following the instructions in the chapter 
+[Update: v15.00 to Newer](../../install/update/v1500-to-newer.md). This initial update is mandatory before 
+you can use the built-in automatic update system.
 
-| Version Range                                 | Developer                     | Description                           | This Page Covers  |
-| --------------------------------------------- |------------------------------ |-------------------------------------- | ----------------- |
-| [v15.01 and Newer](../../install/update/v1501-to-newer.md)         | Aetherinox                    | Maintained after August 2025          | :aetherx-axs-square-check: |
-| [v15.00 and Older](../../install/update/v1500-to-v1501.md)         | Way to the Web                | Legacy releases prior to August 2025  | :aetherx-axd-square: |
+<br />
+<br />
+
+---
+
+<br />
+<br />
+
+## About Versioning <!-- omit from toc -->
+
+These docs break CSF up into **two** distinct development eras:
+
+| Version Range                                                                                             | Codename              | Developer           | Description             | This Page Covers            |
+| --------------------------------------------------------------------------------------------------------- | --------------------- | ------------------- | ----------------------- | --------------------------- |
+| :aetherx-axb-csf-fill-stable:{ .csf-logo } [v15.01 & Newer](#perform-update)                              | Modern                | Aetherinox          | After August 2025       | :aetherx-axs-square-check:  |
+| :aetherx-axb-csf-legacy-02:{ .csf-logo } [v15.00 & Older](../../install/update/v1500-to-newer.md)         | Legacy                | Way to the Web      | Before August 2025      | :aetherx-axd-square:        |
 
 <br />
 
-The final release of CSF **v15.00** by *Way to the Web* removed all automatic update functionality as a result of the company shutting down. Consequently, automatic updates no longer work on that version.
+The final release of CSF **v15.00** by *Way to the Web Ltd.* removed all automatic update functionality. After this 
+release, the company shut down their website, rendering all versions of CSF prior to August 2025 (_v15.00 and older_) 
+unable to perform automatic updates.
 
-[CSF **v15.01**](https://github.com/Aetherinox/csf-firewall/releases/tag/15.01) was the first release maintained by this [:aetherx-axb-github: repository](https://github.com/Aetherinox/csf-firewall/releases/), which restored automatic update support by introducing new servers.
+[CSF **v15.01**](https://github.com/Aetherinox/csf-firewall/releases/tag/15.01) is the first version maintained by 
+[:aetherx-axb-github: our repository](https://github.com/Aetherinox/csf-firewall/releases/), which restores automatic update 
+functionality by introducing new servers.
 
-To regain automatic update functionality, any server running CSF **v15.00 and older** by the company **Web to the Web**, must be migrated to this repository’s maintained version of [CSF **v15.01**](https://github.com/Aetherinox/csf-firewall/releases/tag/15.01) and newer.
-
-<br />
-
-## Update from v15.x to Newer <!-- omit from toc -->
-
-This page outlines the process for updating **ConfigServer Security & Firewall (CSF)** after you have completed the initial installation on your server.
-
-These instructions assume that you currently have CSF v15.x or newer installed on your server, and are looking to update to the latest version.
-
-If you are already running CSF v15.x by Aetherinox, updating to the latest version is extremely simple.
-
-There are two methods you can use for updating CSF:
-
-1. [Automatic using the built-in update utility](#automatic).
-2. [Manually by downloading the latest CSF files and running the `install.sh` script](#manually).
+Any server using CSF **v15.00 and older**, should be migrated to this repository’s maintained version of 
+[CSF **v15.01**](https://github.com/Aetherinox/csf-firewall/releases/tag/15.01) and newer, if you want automatic updates to 
+function again.
 
 <br />
 
-### Automatic
+## Perform Update <!-- omit from toc -->
+
+??? Notes "Before You Update ..."
+
+    Make sure to back up any important configuration files located in :aetherx-axd-folder: `/etc/csf/`.
+
+    Although existing files are never overwritten during the update process, it is strongly recommended
+    to create backups before proceeding, as a general best practice.
+
+If you are already running on an existing version of CSF from our 
+[:aetherx-axb-github: repository](https://github.com/Aetherinox/csf-firewall/releases/), the update process is simple. 
+
+These instructions assume that you currently have **CSF v15.01 or newer** installed on your server, and are looking to 
+update to the latest version.
+
+There are a few methods you can use for updating CSF, pick one:
+
+- [Using Command Line](#using-command-line)
+- [Using install.sh script](#using-installsh-script)
+- [Using Web Interface](#using-web-interface)
+
+<br />
+<br />
+
+### Using Command Line
 
 To update CSF automatically, you can run the terminal command to check for updates:
 
@@ -58,7 +89,7 @@ To update CSF automatically, you can run the terminal command to check for updat
 
 <br />
 
-You should see one of the following depending on if an update is available or not:
+You should see one of the following, if an update is available or not:
 
 === ":aetherx-axs-square-terminal: Terminal (Update Available)"
 
@@ -74,7 +105,8 @@ You should see one of the following depending on if an update is available or no
 
 <br />
 
-If you want CSF to automatically update without performing a check first, use the command below. If a newer version is available, it will install it immediately without any prior notification.
+If you want CSF to update automatically without performing a check first, use the command below. If a 
+newer version is available, it will install immediately without any prior notification.
 
 === ":aetherx-axs-square-terminal: Terminal `-u`"
 
@@ -90,7 +122,9 @@ If you want CSF to automatically update without performing a check first, use th
 
 <br />
 
-You can also run a forced update, which installs the latest available version of CSF regardless of whether an update is detected. This command will overwrite the current installation files even if you’re already up to date.
+You can also run a forced update, which installs the latest version of CSF available regardless of whether 
+an update is found. This command will overwrite the current installation files even if you already have
+the latest version.
 
 === ":aetherx-axs-square-terminal: Terminal"
 
@@ -99,11 +133,16 @@ You can also run a forced update, which installs the latest available version of
     ```
 
 <br />
+
+The update process is automatically completed by the command you execute. Afterward,
+the CSF and LFD services will restart and you can now use CSF as normal.
+
+<br />
 <br />
 
-### Manually
+### Using install.sh script
 
-To update CSF manually, verify the current running version with the command below:
+To update CSF manually, verify the current version with the command below:
 
 === ":aetherx-axd-command: Command"
 
@@ -119,7 +158,9 @@ To update CSF manually, verify the current running version with the command belo
 
 <br />
 
-Once you have established the current running version, you can check our official [:aetherx-axb-github: repository](https://github.com/Aetherinox/csf-firewall/releases/) releases page for the latest version available.
+Once you have established the current running version, you can check our official 
+[:aetherx-axb-github: repository](https://github.com/Aetherinox/csf-firewall/releases/) releases page for 
+the latest version available.
 
 To download the latest version, grab it using one of the commands below:
 
@@ -171,7 +212,9 @@ Run the CSF installation script:
 
 <br />
 
-Follow any instructions on-screen. If prompted for any additional information, enter it. Once the wizard completes, you can confirm if CSF is installed and functioning by accessing your server via SSH, and running the CSF version command:
+Follow any instructions on-screen. If prompted for any additional information, enter it. Once the wizard 
+completes, you can confirm if CSF is installed and functioning by accessing your server via SSH, and 
+running the CSF version command:
 
 === ":aetherx-axd-command: Command"
 
@@ -208,9 +251,73 @@ Confirm the status of `csf` by running:
       ```
 
 <br />
+<br />
+
+### Using Web Interface
+
+If you have the CSF [web interface](../../install/webui.md) enabled, you can install updates directly from the interface.
+
+??? Notes "Enabling The Web Interface"
+
+    If you have not yet enabled the CSF web interface and want to, read the instructions on the page
+     [Enable Web Interface](../../install/webui.md).
+
+<br />
+
+Open the CSF web interface in your browser using the IP address and port configured in 
+:aetherx-axd-file:{ .icon-clr-tree-file } `/etc/csf/csf.conf`. By default, the interface listens on 
+port :aetherx-axd-gear: `6666` [^1].
+
+```shell
+https://127.0.0.1:6666
+```
+
+<br />
+
+<figure markdown="span">
+    ![CSF Login Interface](../../assets/images/install/update/csf_webui_update_01.png){ width="700" }
+    <figcaption>CSF Login Interface</figcaption>
+</figure>
+
+<br />
+
+On the home page of CSF, you'll see one of two buttons:
+
+1. **Manual Check**
+    - Displays when the automated system has not yet detected a newer version available.
+2. **Upgrade CSF**
+    - Displays when the automated system has located a newer version of CSF available to install.
+
+<br />
+
+<div align="center" class="grid" markdown>
+
+![CSF Update Option 1](../../assets/images/install/update/csf_webui_update_02.png?text=1){ width="300" }
+![CSF Update Option 2](../../assets/images/install/update/csf_webui_update_03.png?text=2){ width="300" }
+
+</div>
+
+<br />
+
+Performing a **Manual Check** will connect to the CSF servers and check for available updates.
+
+<figure markdown="span">
+    ![CSF Manual Update](../../assets/images/install/update/csf_webui_update_04.png){ width="700" }
+    <figcaption>CSF Manual Update</figcaption>
+</figure>
+
+<br />
+
+If updates are available; they will be downloaded and installed. The CSF & LFD services will be restarted.
+Once the page refreshes, you will now be on the current version of CSF.
+
+
+<br />
+<br />
 
 ---
 
+<br />
 <br />
 
 ## Next Steps <!-- omit from toc -->
@@ -223,7 +330,7 @@ Select what documentation you would like to proceed with next ...
 
 <div class="grid cards" markdown>
 
--   :aetherx-axs-gear-complex: &nbsp; __[Start System Services](../install/services.md)__
+-   :aetherx-axs-gear-complex: &nbsp; __[Start System Services](../../install/services.md)__
 
     ---
 
@@ -236,7 +343,7 @@ Select what documentation you would like to proceed with next ...
     You’ll also find troubleshooting tips for common startup errors and how to
     fix them quickly.  
 
--   :aetherx-axs-browser: &nbsp; __[Enable Web Interface](../install/webui.md)__
+-   :aetherx-axs-browser: &nbsp; __[Enable Web Interface](../../install/webui.md)__
 
     ---
 

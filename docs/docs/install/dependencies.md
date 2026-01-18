@@ -13,7 +13,9 @@ tags:
 
 # Dependencies <!-- omit from toc -->
 
-To ensure ConfigServer Security & Firewall (CSF) functions correctly, all required dependencies must be installed. Some dependencies are essential for the core operation of CSF, while others are only necessary if you plan to use specific optional features.
+To ensure CSF functions correctly, all required dependencies must be installed. Some dependencies are
+essential for the core operation of CSF, while others are only necessary if you plan to use specific 
+optional features.
 
 <br />
 
@@ -29,13 +31,17 @@ This page provides an overview of the following topics:
 
 ## Install
 
-For our documentation, we are going to include all packages you will need in order to run all functionality within CSF. A lot of the packages listed below will be installed along with the base `perl` package; however, we've included them to ensure nothing gets left behind.
+For our documentation, we are going to include all packages you will need in order to run all functionality 
+within CSF. A lot of the packages listed below will be installed along with the base `perl` package; however, 
+we've included them to ensure nothing gets left behind.
 
 <br />
 
 ### Minimal Dependencies
 
-The following are a list of the minimal dependencies required for CSF to function. This does not include packages such as gd library which are required if you plan to make use of the statistics feature which is enabled in the `/etc/csf/csf.conf` with the setting `ST_ENABLE = "1"`.
+The following are a list of the minimal dependencies required for CSF to function. This does not include 
+packages such as GD library which are required if you plan to make use of the statistics feature which is 
+enabled in the `/etc/csf/csf.conf` with the setting `ST_ENABLE = "1"`.
 
 <br />
 
@@ -136,7 +142,8 @@ The following are a list of the minimal dependencies required for CSF to functio
 
 ### Full Dependencies
 
-The following commands allow you to install the full list of dependencies for CSF. This includes all optional features such as the statistics module, and `sendmail`.
+The following commands allow you to install the full list of dependencies for CSF. This includes all optional 
+features such as the statistics module, and `sendmail`.
 
 <br />
 
@@ -286,7 +293,9 @@ The following commands allow you to install the full list of dependencies for CS
 
 ### Optional Dependencies
 
-If you decided to opt for the [Full Dependencies](#full-dependencies) install above, you do not need to do this step since the full dependency instructions already include these packages.
+If you decided to install the [Full Dependencies](#full-dependencies) above, you do not need to continue to 
+this step. The list below is only for users who wish to manually install each dependency they wish to use 
+features for.
 
 <br />
 <br />
@@ -294,7 +303,8 @@ If you decided to opt for the [Full Dependencies](#full-dependencies) install ab
 
 #### <!-- md:feature Email Alerts -->
 
-CSF can send email alerts for blocked IPs, login failures, or other events. To enable this functionality, you need a working Mail Transfer Agent (MTA) such as `sendmail` or `postfix`.
+CSF can send email alerts for blocked IPs, login failures, or other events. To enable this functionality, you 
+need a working Mail Transfer Agent (MTA) such as `sendmail` or `postfix`.
 
 ??? Notes "Important Notes to Remember"
 
@@ -326,7 +336,8 @@ CSF can send email alerts for blocked IPs, login failures, or other events. To e
 
 #### <!-- md:feature Statistics / Graphs -->
 
-CSF comes with an optional **Statistics** module which allows you to generate charts / graphs for various monitored aspects of CSF. To enable Statistics, you need the following:
+CSF comes with an optional **Statistics** module which allows you to generate charts / graphs for various 
+monitored aspects of CSF. To enable Statistics, you need the following:
 
   - :aetherx-axd-box-isometric:{ .icon-clr-purple } **CSF Config File**
       - Must open `/etc/csf/csf.conf` and set `ST_ENABLE = "1"`
@@ -386,7 +397,9 @@ CSF comes with an optional **Statistics** module which allows you to generate ch
 
 #### <!-- md:feature Blocklists -->
 
-[Blocklists](../usage/blocklists.md) in CSF allow you to manage lists of IP addresses that should be denied access to your server. Blocklists can come from official CSF sources, or from third-party vendors. They help automate the process of blocking potentially harmful traffic from gaining access to your server.
+[Blocklists](../usage/blocklists.md) in CSF allow you to manage lists of IP addresses that should be denied 
+access to your server. Blocklists can come from official CSF sources, or from third-party vendors. They help 
+automate the process of blocking potentially harmful traffic from gaining access to your server.
 
 Blocklists can be handled in two ways:
 
@@ -395,7 +408,8 @@ Blocklists can be handled in two ways:
 
 <br />
 
-If you would like to utilize CSF's built-in IPSET integration, you will need to install the following dependencies:
+If you would like to utilize CSF's built-in IPSET integration, you will need to install the following 
+dependencies:
 
 === ":aetherx-axb-debian: Debian/Ubuntu (apt-get)"
 
@@ -414,8 +428,8 @@ If you would like to utilize CSF's built-in IPSET integration, you will need to 
 
 <br />
 
-This section does not give detailed instructions on how to set up Blocklists or IPSETs, however, if you want to
-read the full chapter on setting this up, see [Introduction to IPSETs](../usage/ipset.md) and 
+This section does not give detailed instructions on how to set up Blocklists or IPSETs, however, if you 
+want to read the full chapter on setting this up, see [Introduction to IPSETs](../usage/ipset.md) and 
 [Setting Up Blocklists](../usage/blocklists.md).
 
 <div class="grid" markdown>
@@ -434,11 +448,16 @@ read the full chapter on setting this up, see [Introduction to IPSETs](../usage/
 
 #### <!-- md:feature DNS Lookups -->
 
-CSF supports optional DNS Lookups, which allow the firewall to resolve IP addresses into hostnames and perform reverse lookups. This can be useful for logging, reporting, or applying rules based on domain names rather than just IP addresses. For example, CSF can show resolved hostnames in alert emails or in the web interface, making it easier to understand who is connecting to your server.
+CSF supports optional DNS Lookups, which allow the firewall to resolve IP addresses into hostnames and 
+perform reverse lookups. This can be useful for logging, reporting, or applying rules based on domain 
+names rather than just IP addresses. For example, CSF can show resolved hostnames in alert emails or in 
+the web interface, making it easier to understand who is connecting to your server.
 
-Additionally, the `csf -g` and `csf -a` commands can use DNS lookups if the required packages are installed, allowing IP addresses to be automatically resolved to hostnames when searching or adding entries.
+Additionally, the `csf -g` and `csf -a` commands can use DNS lookups if the required packages are installed, 
+allowing IP addresses to be automatically resolved to hostnames when searching or adding entries.
 
-To enable DNS lookups, CSF requires the `dnsutils` package (on Debian/Ubuntu) or `bind-utils` (on RedHat/CentOS). These packages provide tools such as `dig` and `nslookup` that CSF uses to perform DNS queries.
+To enable DNS lookups, CSF requires the `dnsutils` package (on Debian/Ubuntu) or `bind-utils` (on 
+RedHat/CentOS). These packages provide tools such as `dig` and `nslookup` that CSF uses to perform DNS queries.
 
 === ":aetherx-axb-debian: Debian/Ubuntu (apt-get)"
 
@@ -460,9 +479,12 @@ To enable DNS lookups, CSF requires the `dnsutils` package (on Debian/Ubuntu) or
 
 #### <!-- md:feature GeoIP Blocking -->
 
-[Geographical IP Blocks](../usage/geoip.md) in CSF allows you to block or allow traffic based on the country of origin. This is useful for restricting access to your server from certain regions or implementing geo-specific rules.  
+[Geographical IP Blocks](../usage/geoip.md) in CSF allows you to block or allow traffic based on the 
+country of origin. This is useful for restricting access to your server from certain regions or implementing 
+geo-specific rules.  
 
-This feature does **not require a traditional system package** to function. Instead, it relies on external databases that map IP addresses to countries. 
+This feature does **not require a traditional system package** to function. Instead, it relies on external 
+databases that map IP addresses to countries. 
 
 <br />
 
@@ -509,7 +531,7 @@ however, if you want to read the full instructions for setting this up, review t
 #### <!-- md:feature CSGet -->
 
 [CSGet](../advanced/csget/index.md) is a Perl-based script which runs as a system cron job. Its primary role is to 
-communicate with the official CSF update servers and determine whether a new CSF version is available.
+communicate with the official CSF update servers and determine whether a new version of CSF is available.
 
 This component is used as an extension for the [CSF Web Interface](../install/webui.md).
 

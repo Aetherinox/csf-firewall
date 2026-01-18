@@ -7,7 +7,20 @@ tags:
 
 # Enable Web Interface <!-- omit from toc -->
 
-ConfigServer Firewall provides an optional web-based interface that lets you manage CSF from your browser. With it, you can configure settings, and blacklist or whitelist IPs without using commands or editing configuration files manually. If you choose not to enable the interface, all management must be done directly through the CSF config files, or by running commands through your shell.
+CSF provides an optional web-based interface which lets you manage CSF from 
+your browser. With it, you can configure settings, and blacklist or whitelist 
+IPs without using commands or editing configuration files manually. If you 
+choose not to enable the interface, all management must be done directly 
+through the CSF config files, or by running commands through your shell.
+
+??? danger "Security Notice"
+
+    Because the web interface runs under the system's root account, a successful login grants full root 
+    access to your server. It is essential to configure and use this feature with caution. Additional 
+    security measures are included to help make using the interface safer, but careful management is 
+    still strongly recommended.
+
+    We recommend placing the CSF web interface behind either a tunnel, or reverse proxy such as Nginx or Traefik.
 
 <br />
 
@@ -17,19 +30,24 @@ ConfigServer Firewall provides an optional web-based interface that lets you man
 
 ## Setup
 
-This section covers the initial setup of the CSF web interface with only the essential requirements. Follow these steps to get the web interface up and running quickly.
+This section covers the initial setup of the CSF web interface with only the 
+essential requirements. Follow these steps to get the web interface up and 
+running quickly.
 
 <br />
 
 ### Step 1: Install Perl Modules
 
-CSF's web interface requires several Perl modules. If you followed our [dependencies](./dependencies.md) guide, these modules may already be installed. If not, run one of the commands below on your server.
+CSF's web interface requires several Perl modules. If you followed our 
+[dependencies](./dependencies.md) guide, these modules may already be 
+installed. If not, run one of the commands below on your server.
 
 <br />
 
 #### Installation Options
 
-You only need to **choose one** of the methods below. We provide multiple options for your convenience:
+You only need to **choose one** of the methods below. We provide multiple 
+options for your convenience:
 
 - :aetherx-axb-debian: **Debian/Ubuntu** › using `apt-get`
 - :aetherx-axb-redhat: **CentOS/RHEL** › using `yum` or `dnf`
@@ -245,7 +263,8 @@ sudo nano /etc/csf/csf.conf
 
 <br />
 
-We need to update the following values. Click :material-plus-circle: to see information about each setting.
+We need to update the following values. Click :material-plus-circle: to see
+information about each setting.
 
 ```ini title="<span>/etc/csf/csf.conf</span>"
 # #
@@ -278,7 +297,7 @@ UI_USER = "admin" # (4)!
 #   Set a strong password for authentication 
 # #
 
-UI_PASS = "admin" # (5)!
+UI_PASS = "password" # (5)!
 ```
 
 1.  :aetherx-axdr-lightbulb:{ .pulsate .icon-clr-yellow } Defines if the CSF web interface is enabled or not. Will be
@@ -305,7 +324,9 @@ UI_PASS = "admin" # (5)!
 
 <br />
 
-Save and exit. Then open the file `/etc/csf/ui/ui.allow` and add your client IP to allow access to the CSF web interface. Ensure you only add one IP address per line:
+Save and exit. Then open the file `/etc/csf/ui/ui.allow` and add your client IP
+to allow access to the CSF web interface. Ensure you only add one IP address 
+per line:
 
 === ":material-file: /etc/csf/ui/ui.allow"
 
@@ -327,7 +348,8 @@ Save and exit. Then open the file `/etc/csf/ui/ui.allow` and add your client IP 
 
 <br />
 
-If you opt to define an IP address to CSF by setting `UI_IP`, you must ensure you whitelist the gateway address in your `/etc/csf/ui/ui.allow`
+If you opt to define an IP address to CSF by setting `UI_IP`, you must ensure 
+you whitelist the gateway address in your `/etc/csf/ui/ui.allow`
 
 === ":material-file: /etc/csf/csf.conf"
 
@@ -347,7 +369,8 @@ If you opt to define an IP address to CSF by setting `UI_IP`, you must ensure yo
 
 <br />
 
-The CSF web interface works under the `lfd daemon` _LFD_. We need to restart the LFD on your system using the command:
+The CSF web interface works under the `lfd daemon` _LFD_. We need to restart 
+the LFD on your system using the command:
 
 ```shell
 sudo service lfd restart
@@ -355,7 +378,8 @@ sudo service lfd restart
 
 <br />
 
-In order to gain access to the online admin panel; you must ensure LFD and CSF are running. You can check by running the commands:
+In order to gain access to the online admin panel; you must ensure LFD and CSF 
+are running. You can check by running the commands:
 
 ```shell
 sudo service lfd status
@@ -435,7 +459,8 @@ sudo csf -ra
 
 ### Step 3: Access Web UI
 
-Access the CSF interface in your browser with the specified IP and port. For these docs; we used port `1025`. 
+Access the CSF interface in your browser with the specified IP and port. For
+these docs; we used port `1025`. 
 
 ```shell
 https://127.0.0.1:1025
@@ -445,9 +470,12 @@ https://127.0.0.1:1025
 
 ??? danger "Default Web Interface Username & Password"
 
-    You cannot keep the web interface username and password defaulted to `admin`; you will get an error that the credentials must be changed within `/etc/csf/csf.conf`.
+    You cannot keep the web interface username and password defaulted to 
+    `admin`; you will get an error that the credentials must be changed within 
+    `/etc/csf/csf.conf`.
 
-    Ggo back to the `/etc/csf/csf.conf` set `UI_USER` and `UI_PASS` to something else.
+    Go back to the `/etc/csf/csf.conf` set `UI_USER` and `UI_PASS` to something
+    else.
 
 <br />
 
@@ -467,7 +495,8 @@ After successful login, you should see the following:
 
 <br />
 
-If you try to access the CSF web interface in your browser and you get an error similar to the following:
+If you try to access the CSF web interface in your browser and you get an error
+similar to the following:
 
 ```
 Secure Connection Failed
@@ -476,13 +505,16 @@ An error occurred during a connection to 172.17.0.1:1025. PR_CONNECT_RESET_ERROR
 
 Error code: PR_CONNECT_RESET_ERROR
 
-    The page you are trying to view cannot be shown because the authenticity of the received data could not be verified.
-    Please contact the website owners to inform them of this problem.
+    The page you are trying to view cannot be shown because the authenticity of
+    the received data could not be verified. Please contact the website owners
+     to inform them of this problem.
 ```
 
 <br />
 
-Open your lfd logs at `/var/logs/lfd.log` and see if any messages state that you attempted to access the web interface, but were denied access. The message will be similar to the following:
+Open your lfd logs at `/var/logs/lfd.log` and see if any messages state that 
+you attempted to access the web interface, but were denied access. The message 
+will be similar to the following:
 
 ```shell
 Oct  2 02:55:38 configserver lfd[42635]: UI: Access attempt from an IP not in /etc/csf/ui/ui.allow - denied [127.0.0.1]
@@ -490,11 +522,16 @@ Oct  2 02:55:38 configserver lfd[42635]: UI: Access attempt from an IP not in /e
 
 <br />
 
-An error like above means that you have not whitelisted the correct IP in your `/etc/csf/ui/ui.allow` file. You must whitelist the correct IP before you'll be able to access the web interface.
+An error like above means that you have not whitelisted the correct IP in your 
+`/etc/csf/ui/ui.allow` file. You must whitelist the correct IP before you'll be
+able to access the web interface.
 
 <br />
 
-We will cover how to actually use the CSF web interface in another section. As of right now you should at least be able to access the web interface by going to `http://127.0.0.1:1025` in your browser. Or whatever IP and port you assigned within the `/etc/csf/csf.conf`.
+We will cover how to actually use the CSF web interface in another section. As
+of right now you should at least be able to access the web interface by going
+to `http://127.0.0.1:1025` in your browser. Or whatever IP and port you 
+assigned within the `/etc/csf/csf.conf`.
 
 <br />
 
@@ -511,9 +548,14 @@ By this point in the guide, you should have:
 
 ---
 
-The next section will show you how to put the CSF web interface behind third-party apps such as [Traefik Reverse Proxy](../install/integrations/traefik.md) and secure it with [Authentik](../install/integrations/authentik.md).  
+The next section will show you how to put the CSF web interface behind 
+third-party apps such as:
+[Traefik Reverse Proxy](../install/integrations/traefik.md) and secure it with 
+[Authentik](../install/integrations/authentik.md).  
 
-These steps are **optional**. They enhance the security of your web interface and help prevent unauthorized access, but you do not need to perform them to continue using CSF.
+These steps are **optional**. They enhance the security of your web interface 
+and help prevent unauthorized access, but you do not need to perform them to 
+continue using CSF.
 
 <br />
 
@@ -535,52 +577,66 @@ Select what documentation you would like to proceed with next ...
 
     ---
 
-    This section explains how to run CSF and Docker together in the same 
-    environment. By using CSF’s integrated Docker mode and the included 
-    Docker scripts, you can strengthen your server’s security while 
-    running your containers safely within a controlled setup.
+    This section explains how to run CSF and Docker
+    together in the same environment. By using CSF’s 
+    integrated Docker mode and the included Docker 
+    scripts, you can strengthen your server’s security 
+    while running your containers safely within a 
+    controlled setup.
 
-    We’ve provided a detailed set of instructions along with troubleshooting 
-    guidance to help you resolve any issues that may arise during setup.
+    We’ve provided a detailed set of instructions 
+    along with troubleshooting guidance to help you 
+    resolve any issues that may arise during setup.
 
 -   :aetherx-axb-traefikproxy: &nbsp; __[Traefik Integration](../install/integrations/traefik.md)__
 
     ---
 
-    Protect your CSF installation by placing it behind a **Traefik Reverse Proxy**.
-    
-    This setup lets you filter and control traffic to the CSF web interface using
-    Traefik’s middleware, all with the added bonus that you do not need to expose
-    or open the ports to your server.
-    
-    With middleware, you can whitelist your own IP for secure access and enforce
-    geographic restrictions to allow or block traffic from specific countries.
+    Protect your CSF installation by placing it behind a 
+    **Traefik Reverse Proxy**.
+
+    This setup lets you filter and control traffic to the 
+    CSF web interface using Traefik’s middleware, all 
+    with the added bonus that you do not need to 
+    expose or open the ports to your server.
+
+    With middleware, you can whitelist your own IP 
+    for secure access and enforce geographic 
+    restrictions to allow or block traffic from specific
+    countries.
 
 -   :aetherx-axb-authentik: &nbsp; __[Authentik Integration](../install/integrations/authentik.md)__
 
     ---
 
-    Enhance the security of CSF by placing it behind the **Authentik** identity 
-    provider using a forward proxy. 
-    
-    This ensures that all traffic to the CSF web interface passes through Authentik, 
-    giving you centralized control over authentication and access.
-    
-    With this setup, CSF is protected by modern authentication methods such as
-    passwords, two-factor authentication (2FA), or passkeys.
+    Enhance the security of CSF by placing it behind the 
+    Authentik identity provider using a forward proxy. 
+
+    This ensures that all traffic to the CSF web 
+    interface passes through Authentik, giving you 
+    centralized control over authentication and 
+    access.
+
+    With this setup, CSF is protected by modern 
+    authentication methods such as passwords, 
+    two-factor authentication (2FA), or passkeys.
 
 -   :material-file: &nbsp; __[Usage Introduction](../usage/getting-started.md)__
 
     ---
 
-    If you don’t plan to set up Traefik or Authentik with the CSF web interface, 
-    you can skip ahead to the [Usage](../usage/getting-started.md) section. 
+    If you don’t plan to set up Traefik or Authentik with the 
+    CSF web interface, you can skip ahead to the [Usage](../usage/getting-started.md) 
+    section. 
     
-    The next chapter covers CSF’s core features, basic configuration, available
-    commands, folder structure, and everything you need to get started.
+    The next chapter covers CSF’s core features, 
+    basic configuration, available commands, folder 
+    structure, and everything you need to get 
+    started.
 
-    You will be taken on a more detailed dive of how CSF can benefit you and
-    what options you have for securing your server.
+    You will be taken on a more detailed dive of how 
+    CSF can benefit you and what options you have 
+    for securing your server.
 
 </div>
 

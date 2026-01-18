@@ -2040,11 +2040,11 @@ You can now proceed to the [Next Steps](#next-steps) or skip the rest of this se
 
     To restore the CSF menu link, the **VestaCP developers would need to add a conditional menu item** that detects when CSF is installed and ready to use. After they add this change to their source menu code, they can re-build the React .js file to push for public release.
 
-    If you absolutely must have **CSF** in your main VestaCP top menu, follow the [instructions below](#add-csf-to-vestacp-menu).
+    If you absolutely must have **CSF** in your main VestaCP top menu, follow the [instructions below](#add-csf-menu).
 
     Unfortunately, due to the lack of recent updates from the VestaCP team, this integration may never be corrected, and users will need to access CSF directly via its URL.
 
-    We have however, provided instructions on how you can get CSF to appear in the top menu, but it involves you re-building VestaCP yourself. If you are interested in this patch; [view the instructions below](#add-csf-to-vestacp-menu).
+    We have however, provided instructions on how you can get CSF to appear in the top menu, but it involves you re-building VestaCP yourself. If you are interested in this patch; [view the instructions below](#add-csf-menu).
 
 ??? note "Note: Project Status Unknown"
 
@@ -2386,7 +2386,7 @@ Log back into VestaCP.  At this point, you're probably asking _"Where is the men
     
     However, this does not address the VestaCP top nav menu not showing **CSF**.
     
-    A fix for this has been provided as instructions [below](#add-csf-to-vestacp-menu).
+    A fix for this has been provided as instructions [below](#add-csf-menu).
 
 As of **VestaCP v1.0**, the application was migrated to **React**, which fundamentally changes how the web interface works. The UI is now compiled into a series of `.CSS` and `.JS` files, rather than using the older PHP/HTML templates.
 
