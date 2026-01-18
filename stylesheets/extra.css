@@ -417,7 +417,7 @@
 
     details .tabbed-content
     {
-        background-color: #eaeaea !important;
+        background-color: #eaeaea;
         border-bottom-left-radius: 4px;
         border-bottom-right-radius: 4px;
     }
@@ -709,8 +709,7 @@
 
     h3 .mdx-badge__icon 
     {
-        padding-left: 3px;
-        padding-right: 3px;
+
     }
 
     /*
@@ -1087,7 +1086,7 @@
 
     .highlight span.filename
     {
-        background-color: var(--md-code-bg-color);
+        background-color: initial;
         border-bottom: .05rem solid var(--md-default-fg-color--lightest);
         border-top-left-radius: .1rem;
         border-top-right-radius: .1rem;
@@ -1285,6 +1284,25 @@
     a .twemoji svg
     {
         color: #fa204f;
+    }
+
+    /*
+        Summary / FAQ Dropdown > Main Text
+    */
+
+    .md-typeset summary
+    {
+        font-weight: 400;
+    }
+
+    /*
+        Summary / FAQ Dropdown > Strong
+    */
+
+    summary strong
+    {
+        color: #ff2682;
+        font-weight: 700;
     }
 
 }
@@ -1657,7 +1675,7 @@
 
     details .tabbed-content
     {
-        background-color: #1c1c1c !important;
+        background-color: #262626;
         border-bottom-left-radius: 4px;
         border-bottom-right-radius: 4px;
     }
@@ -1950,8 +1968,7 @@
 
     h3 .mdx-badge__icon 
     {
-        padding-left: 3px;
-        padding-right: 3px;
+
     }
 
     /*
@@ -2298,7 +2315,7 @@
 
     .highlight span.filename
     {
-        background-color: var(--md-code-bg-color);
+        background-color: initial;
         border-bottom: .05rem solid var(--md-default-fg-color--lightest);
         border-top-left-radius: .1rem;
         border-top-right-radius: .1rem;
@@ -2518,6 +2535,25 @@
     {
         color: #FFF;
     }
+
+    /*
+        Summary / FAQ Dropdown > Main Text
+    */
+
+    .md-typeset summary
+    {
+        font-weight: 400;
+    }
+
+    /*
+        Summary / FAQ Dropdown > Strong
+    */
+
+    summary strong
+    {
+        color: #ff2682;
+        font-weight: 700;
+    }
 }
 
 /*
@@ -2545,7 +2581,12 @@
     --md-icon-size: 1.130em;
     display: inline-flex;
     height: var(--md-icon-size);
+}
+
+.md-typeset h3 .mdx-badge .twemoji
+{
     vertical-align: middle;
+    display: inline-flex;
 }
 
 /* Reset to default inside tooltips (optional safety) */
@@ -3124,6 +3165,18 @@ h2:has(.mdx-badge) > .mdx-badge svg
 :is(h1, h2, h3, h4, h5, h6) .mdx-badge__icon svg
 {
     padding-right: 1px;
+}
+
+.md-typeset dd .mdx-badge .twemoji
+{
+    margin-top: 2px;
+    margin-left: 0px;
+}
+
+.md-typeset .mdx-badge .twemoji
+{
+    margin-top: 1px;
+    margin-left: -1px;
 }
 
 .md-typeset .mdx-badge a[title^="Requires"] svg, .md-typeset .mdx-badge a[title^="Default"] svg
@@ -4382,6 +4435,27 @@ figure img
 .grid.cards p:nth-of-type(2)
 {
     font-size: 0.9em;
+}
+
+/*
+    CSF Logo (in table and grids)
+*/
+
+table .csf-logo, .grid.cards .csf-logo
+{
+    --md-icon-size: 1.6em !important;
+    padding-right: 5px;
+}
+
+/*
+    Table > Sort Icon
+
+    Keeps sorting icon from wrapping to the next line
+*/
+
+.md-typeset table th[role="columnheader"]
+{
+    white-space: nowrap;
 }
 
 /*

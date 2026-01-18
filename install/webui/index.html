@@ -1408,14 +1408,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../update/v1500-to-v1501/" class="md-nav__link">
+      <a href="../update/v1500-to-newer/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    v15.00 to v15.01
+    v15.00 to Newer
   
 
     
@@ -3910,18 +3910,35 @@
 
 
 <h1 id="enable-web-interface">Enable Web Interface <!-- omit from toc --><a class="headerlink" data-preview="" href="#enable-web-interface" title="Permanent link">¶</a></h1>
-<p><abbr title="ConfigServer Security &amp; Firewall Security">ConfigServer Firewall</abbr> provides an optional web-based interface that lets you manage <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> from your browser. With it, you can configure settings, and blacklist or whitelist IPs without using commands or editing configuration files manually. If you choose not to enable the interface, all management must be done directly through the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> config files, or by running commands through your shell.</p>
+<p><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> provides an optional web-based interface which lets you manage <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> from 
+your browser. With it, you can configure settings, and blacklist or whitelist 
+IPs without using commands or editing configuration files manually. If you 
+choose not to enable the interface, all management must be done directly 
+through the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> config files, or by running commands through your shell.</p>
+<details class="danger">
+<summary>Security Notice</summary>
+<p>Because the web interface runs under the system's root account, a successful login grants full root 
+access to your server. It is essential to configure and use this feature with caution. Additional 
+security measures are included to help make using the interface safer, but careful management is 
+still strongly recommended.</p>
+<p>We recommend placing the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface behind either a tunnel, or reverse proxy such as Nginx or <abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr>.</p>
+</details>
 <p><br></p>
 <hr>
 <p><br></p>
 <h2 id="setup">Setup<a class="headerlink" data-preview="" href="#setup" title="Permanent link">¶</a></h2>
-<p>This section covers the initial setup of the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface with only the essential requirements. Follow these steps to get the web interface up and running quickly.</p>
+<p>This section covers the initial setup of the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface with only the 
+essential requirements. Follow these steps to get the web interface up and 
+running quickly.</p>
 <p><br></p>
 <h3 id="step-1-install-perl-modules">Step 1: Install Perl Modules<a class="headerlink" data-preview="" href="#step-1-install-perl-modules" title="Permanent link">¶</a></h3>
-<p><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>'s web interface requires several Perl modules. If you followed our <a data-preview="" href="../dependencies/"><abbr title="A list of packages required for CSF to function properly">dependencies</abbr></a> guide, these modules may already be installed. If not, run one of the commands below on your server.</p>
+<p><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>'s web interface requires several Perl modules. If you followed our 
+<a data-preview="" href="../dependencies/"><abbr title="A list of packages required for CSF to function properly">dependencies</abbr></a> guide, these modules may already be 
+installed. If not, run one of the commands below on your server.</p>
 <p><br></p>
 <h4 id="installation-options">Installation Options<a class="headerlink" data-preview="" href="#installation-options" title="Permanent link">¶</a></h4>
-<p>You only need to <strong>choose one</strong> of the methods below. We provide multiple options for your convenience:</p>
+<p>You only need to <strong>choose one</strong> of the methods below. We provide multiple 
+options for your convenience:</p>
 <ul>
 <li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M380.4 245.6c3-7.6 5.5-14 5.2-24.4l-4.3 9c4.4-13.2 4-27.1 3.6-40.4-.2-6-.3-11.8 0-17.4l-1.8-.5c-1.5-45.2-40.6-93.1-75.3-109.4-30-13.8-76.1-16.2-97.3-5.8 1.3-1.1 4.2-2 6.8-2.7l.3-.1c3.3-1 6-1.7 4-2.9-19.2 1.9-24.9 5.5-31.1 9.4l-.1 0c-4.6 2.9-9.5 6-20.3 8.7-3.5 3.4 1.7 2 5.8 .9s7.2-1.9-.1 2.4c-3.5 1-6.6 1.3-9.6 1.6l-.1 0c-8.3 .8-15.8 1.6-30.7 17 .8 1.3 3.4-.2 5.3-1.3l.1-.1c2.3-1.4 3.4-2-1.7 4.4-19.1-2.4-60.3 43.7-69.1 59l4.6 .8c-3.2 8-6.8 14.8-10 20.8-4.3 8.1-7.9 14.9-8.7 21.3-.3 5.1-1 11-1.7 17.3-.1 1-.2 2-.3 3l-.1 .6c-3 27.3-6.7 60.8 3.9 73l-1.3 13c.6 1.2 1.1 2.3 1.6 3.5 .2 .4 .4 .8 .5 1.1 1 2.1 2 4.2 3.3 6.2l-3 .2c7 22.1 10.8 22.5 15.1 22.9 4.4 .4 9.3 .9 18.7 24.2-2.7-.9-5.5-1.9-9.4-7.2-.5 4.1 5.8 16.3 13.1 25.8l-3.1 3.6c2.1 3.7 4.8 6.2 7.6 8.8 1 .9 2.1 1.9 3.1 2.9-11.9-6.5 3.2 13.7 11.9 25.2 .8 1.1 1.5 2 2.2 2.9 1.4 1.9 2.5 3.4 2.9 4.1l2.4-4.2c-.3 6.1 4.3 13.9 13.1 24.7l7.3-.3c3 6 14 16.7 20.7 17.2l-4.4 5.8c8.1 2.6 10.3 4.3 12.7 6.2 2.6 2.1 5.4 4.3 16.1 8.1l-4.2-7.4c3.5 3 6.2 5.9 8.8 8.7l.1 .1c5.2 5.6 9.9 10.6 19.7 15.3 10.7 3.7 16.6 4.7 22.7 5.8 .3 0 .6 .1 .9 .1 5.4 .8 11.2 1.8 20.8 4.5-1.1-.1-2.2-.1-3.3-.1-2.3-.1-4.7-.1-7-.1-14.4-.2-29.2-.4-42.7-5.2-96.6-25.7-184.9-139-178.4-255.6-.6-9.9-.3-20.9 0-30.7 .4-13.5 .7-24.8-1.6-28.3l1-3.1c5.3-17.4 11.7-38.2 23.8-62.8l-.1-.2 0-.1c.4 .4 3.4 3.4 8.8-5.8 .8-1.8 1.6-3.7 2.4-5.6 .5-1.1 .9-2.2 1.4-3.2 2.5-6.1 5.1-12.3 8.4-17.9l2.6-.6c1.7-10.1 17-23.8 29.8-35.2l1.1-1c5.7-5.1 10.7-9.7 13.6-13.1l.7 4.4c17-15.9 44.6-27.5 65.6-36.4l.5-.2c4.8-2 9.3-3.9 13.3-5.7-3.4 3.8 2.2 2.7 10 1 4.8-1 10.4-2.1 15.3-2.4l-3.9 2.1c-2.7 1.4-5.4 2.8-8 4.6 8.1-2 11.7-1.4 15.7-.8l.3 0c3.5 .6 7.3 1.2 14.6 .2-5.6 .8-12.3 3-11.2 3.8 7.9 .9 12.8-.1 17.2-1l.2 0c5.5-1.1 10.3-2 19.3 .9l-1-4.8c7.3 2.6 12.7 4.3 17.5 5.8l.5 .1c10 3 17.6 5.3 34.2 14.1 3.2 .2 5.3-.5 7.4-1.2l.1 0c3.6-1.1 7-2.1 15.2 1.2 .3 .5 .5 1 .7 1.4 .1 .2 .2 .5 .3 .7l0 .1c1 2.6 1.8 4.6 14.6 12.1 1.7-.7-2.7-4.7-6.4-8.2l-.1-.1c-.2-.1-.3-.3-.5-.4 32.2 17.3 67.3 54.1 78 93.5-6-11.1-5.2-5.5-4.3 .5 .6 4 1.2 8.1-.2 7.5 4.5 12.1 8.1 24.5 10.4 37.4l-.8-2.9-.1-.3c-3.3-11.9-9.6-34.3-19.9-49.3-.4 4.3-2.8 3.9-5.2 3.5l-.1 0c-3.3-.6-6.2-1.1-1.9 12.6 2.6 3.8 3.1 2.4 3.5 1.1 .5-1.5 .9-2.7 4.7 5.2 .1 4.1 1 8.2 2.1 12.7l.1 .6c.1 .3 .1 .5 .2 .8l.1 .6c.6 2.6 1.3 5.4 1.8 8.4-1.1-.2-2.3-2.2-3.4-4.2-1.4-2.4-2.8-4.7-3.7-3.2 2.4 11.5 6.5 17.4 8 18.3-.3 .6-.6 .7-1.1 .7-.8 0-1.8 .1-1.9 5.3 .7 13.7 3.3 12.5 5.3 11.6 .6-.3 1.2-.6 1.7-.4-.6 2.5-1.6 5.1-2.7 7.9-2.8 7.1-6 15.4-3.4 26.1-.8-3-2-6-3.1-8.9l-.1-.4c-.2-.5-.4-1-.6-1.5-.3-.8-.6-1.6-.9-2.3-.6 4.4-.3 7.7-.1 10.6l0 .7c.4 5.3 .7 10-3 19.9 4.3-14.2 3.8-26.9-.2-20.8 1 10.9-3.7 20.4-8 28.9l-.1 .2c-3.6 7.1-6.8 13.5-5.9 19.3l-5.2-7.1c-7.5 10.9-7 13.3-6.5 15.5l0 .1c.5 1.9 1 3.8-3.4 10.8 1.7-2.9 1.3-3.6 1-4.2-.4-.8-.7-1.5 1.7-5.1-1.6 .1-5.5 3.9-10.1 8.5-3.9 3.9-8.5 8.4-12.8 11.8-37.5 30.1-82.3 34-125.6 17.8 .2-1-.2-2.1-3.1-4.1-36.8-28.2-58.5-52.1-50.9-107.5 2.1-1.6 3.6-5.8 5.3-10.8l.2-.4 .1-.3 0-.1c2.9-8.4 6.5-18.8 14.3-23.8 7.8-17.3 31.3-33.3 56.4-33.7 25.6-1.4 47.2 13.7 58.1 27.9-19.8-18.4-52.1-24-79.7-10.4-28.2 12.7-45 43.8-42.5 74.7 .3-.4 .6-.6 .9-.8l.2-.2c.6-.5 1.1-.9 1.4-3.3-.9 60.2 64.8 104.3 112.1 82l.6 1.3c12.7-3.5 15.9-6.5 20.3-10.7l.1-.1c2.2-2.1 4.7-4.5 8.9-7.3-.3 .7-1.3 1.7-2.4 2.7-2.2 2.1-4.6 4.5-1.6 4.6 5-1.3 18.5-13.4 28.5-22.3 .6-.5 1.2-1 1.7-1.5 1.5-1.3 2.8-2.5 4-3.6l.3-.3c1.9-4.2 1.6-5.6 1.3-7l0-.1c-.4-1.6-.8-3.3 2.4-9.6l7.3-3.7c.8-2.1 1.5-4.1 2.2-6 .2-.6 .5-1.2 .7-1.8l-.4-.2-.1-.1zM248 334.1c-6-3-13.7-8.9-14.8-11.4l-.4 .3c-.3 .6-.5 1.3-.2 2.2-12.2-5.7-23.4-14.3-32.6-24.9 4.9 7.1 10.1 14.1 17 19.5-6.9-2.3-15.1-11.8-21.6-19.3l-.1-.1c-4.3-5-7.9-9.1-9.7-9.5 19.8 35.5 80.5 62.3 112.3 49-14.7 .5-33.4 .3-49.9-5.8zm79.3-119.7l-.1-.2c-.5-1.5-1.1-3.1-1.7-3.4 1.4-5.8 5.4-10.7 4.4 4.6-1 3.8-1.8 1.5-2.6-1zm-4.2 22.2c-1.3 7.9-5 15.5-10.1 22.5 .2-2-1.2-2.4-2.6-2.8-2.9-.8-5.9-1.6 5.6-16.1-.5 1.9-2.1 4.6-3.7 7.3l-.3 .4c-3.6 5.9-6.7 11 4 4.3l1-1.8c2.6-4.5 5-8.8 6-13.8l.1 0zm-55.6 33.9c7.1 .6 14.1 .6 21-1.1-2.5 2.4-5.2 4.8-8.3 7.2-11.1-1.7-21.2-6-12.7-6.1zm-92.6 11.6c3.6 7.1 6.4 11.5 9 15.7l.1 .2c2.3 3.7 4.4 7.1 6.8 11.7-5.1-4.2-8.7-9.5-12.5-15l-.3-.5c-1.4-2.1-2.8-4.2-4.4-6.2l1.2-5.9 .1 0zm7.5-9.6c1.6 3.3 3.2 6.4 5.7 9.1l2.6 7.7-1.3-2.1c-3.2-5.3-6.3-10.6-8-16.7l1 2zm238.9-41.6c-2.3 17.4-7.7 34.6-16 50.3 7.6-14.9 12.5-30.9 14.8-47.2l1.2-3.1zM35.8 110.6c.4 .8 1.4 .5 2.3 .3 1.9-.5 3.6-.9-.1 7.6-.5 .3-1 .7-1.5 1-1.4 .9-2.8 1.9-3.9 3 1.9-3.8 3.5-7.4 3.2-11.9zM25.5 152.3c-.7 3.7-1.5 7.9-3.4 13.9 .2-1.9 0-3.5-.2-4.9l0-.1c-.4-3.4-.7-6.3 4.3-12.8-.3 1.2-.5 2.5-.7 3.8l0 .1z"></path></svg></span> <strong>Debian/Ubuntu</strong> › using <code>apt-get</code></li>
 <li><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M341.5 285.6c33.7 0 82.3-6.9 82.3-47 .2-6.7 .9-1.8-20.9-96.2-4.6-19.1-8.7-27.8-42.3-44.6-26.1-13.3-82.9-35.4-99.7-35.4-15.7 0-20.2 20.2-38.9 20.2-18 0-31.3-15.1-48.1-15.1-16.1 0-26.7 11-34.8 33.6-27.5 77.6-26.3 74.3-26.1 78.3 0 24.8 97.6 106.1 228.5 106.1zM429 254.8c4.7 22 4.7 24.3 4.7 27.2 0 37.7-42.3 58.6-98 58.6-125.7 .1-235.9-73.6-235.9-122.3 0-6.8 1.4-13.5 4.1-19.7-45.2 2.3-103.8 10.3-103.8 62 0 84.7 200.6 189 359.5 189 121.8 0 152.5-55.1 152.5-98.6 0-34.2-29.6-73-82.9-96.2z"></path></svg></span> <strong>CentOS/RHEL</strong> › using <code>yum</code> or <code>dnf</code></li>
@@ -4127,7 +4144,8 @@
 <div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>nano<span class="w"> </span>/etc/csf/csf.conf
 </code></pre></div>
 <p><br></p>
-<p>We need to update the following values. Click <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z"></path></svg></span> to see information about each setting.</p>
+<p>We need to update the following values. Click <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 13h-4v4h-2v-4H7v-2h4V7h2v4h4m-5-9A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2Z"></path></svg></span> to see
+information about each setting.</p>
 <div class="language-ini highlight"><span class="filename"><span>/etc/csf/csf.conf</span></span><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># #</span>
 <a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="c1">#   1 to enable, 0 to disable web ui </span>
 <a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="c1"># #</span>
@@ -4158,7 +4176,7 @@
 <a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a><span class="c1">#   Set a strong password for authentication </span>
 <a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a><span class="c1"># #</span>
 <a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a>
-<a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a><span class="na">UI_PASS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"admin"</span><span class="w"> </span><span class="c1"># (5)!</span>
+<a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a><span class="na">UI_PASS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"password"</span><span class="w"> </span><span class="c1"># (5)!</span>
 </code></pre></div>
 <ol>
 <li><span class="twemoji pulsate icon-clr-yellow"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M48 192c0 38.4 15 73.2 39.5 99.1 21.3 22.4 44.9 54 53.3 92.9l102.4 0c8.4-39 32-70.5 53.3-92.9 24.5-25.9 39.5-60.7 39.5-99.1 0-79.5-64.5-144-144-144S48 112.5 48 192zm48-8c0-48.6 39.4-88 88-88 13.3 0 24 10.7 24 24s-10.7 24-24 24c-22.1 0-40 17.9-40 40 0 13.3-10.7 24-24 24s-24-10.7-24-24z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M296.5 291.1C321 265.2 336 230.4 336 192 336 112.5 271.5 48 192 48S48 112.5 48 192c0 38.4 15 73.2 39.5 99.1 21.3 22.4 44.9 54 53.3 92.9l102.4 0c8.4-39 32-70.5 53.3-92.9zm34.8 33C307.7 349 288 379.4 288 413.7l0 18.3c0 44.2-35.8 80-80 80l-32 0c-44.2 0-80-35.8-80-80l0-18.3C96 379.4 76.3 349 52.7 324.1 20 289.7 0 243.2 0 192 0 86 86 0 192 0S384 86 384 192c0 51.2-20 97.7-52.7 132.1zM144 184c0 13.3-10.7 24-24 24s-24-10.7-24-24c0-48.6 39.4-88 88-88 13.3 0 24 10.7 24 24s-10.7 24-24 24c-22.1 0-40 17.9-40 40z"></path></svg></span> Defines if the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface is enabled or not. Will be
@@ -4184,7 +4202,9 @@
     <div class="yellow right"><small'>Values: <code>A-Z,a-z,0-9,!@#$%^&amp;*()-_=+</code></small'></div></li>
 </ol>
 <p><br></p>
-<p>Save and exit. Then open the file <code>/etc/csf/ui/ui.allow</code> and add your client IP to allow access to the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface. Ensure you only add one IP address per line:</p>
+<p>Save and exit. Then open the file <code>/etc/csf/ui/ui.allow</code> and add your client IP
+to allow access to the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface. Ensure you only add one IP address 
+per line:</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="step-2-enable-web-ui-etccsfuiuiallow" name="__tabbed_2" type="radio"><input id="step-2-enable-web-ui-command" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="step-2-enable-web-ui-etccsfuiuiallow"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 9V3.5L18.5 9M6 2c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6Z"></path></svg></span> /etc/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>/ui/ui.allow</label><label for="step-2-enable-web-ui-command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Command</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -4202,7 +4222,8 @@
 </div>
 </div>
 <p><br></p>
-<p>If you opt to define an IP address to <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> by setting <code>UI_IP</code>, you must ensure you whitelist the gateway address in your <code>/etc/csf/ui/ui.allow</code></p>
+<p>If you opt to define an IP address to <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> by setting <code>UI_IP</code>, you must ensure 
+you whitelist the gateway address in your <code>/etc/csf/ui/ui.allow</code></p>
 <div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="step-2-enable-web-ui-etccsfcsfconf" name="__tabbed_3" type="radio"><input id="step-2-enable-web-ui-etccsfuiuiallow_1" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="step-2-enable-web-ui-etccsfcsfconf"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 9V3.5L18.5 9M6 2c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6Z"></path></svg></span> /etc/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>/<abbr title="The default csf config file, usually in &lt;pre&gt;/etc/csf/csf.conf&lt;/pre&gt;">csf.conf</abbr></label><label for="step-2-enable-web-ui-etccsfuiuiallow_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 9V3.5L18.5 9M6 2c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6Z"></path></svg></span> /etc/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>/ui/ui.allow</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -4220,11 +4241,13 @@
 </div>
 </div>
 <p><br></p>
-<p>The <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface works under the <code>lfd daemon</code> <em><abbr title="Login Failure Daemon">LFD</abbr></em>. We need to restart the <abbr title="Login Failure Daemon">LFD</abbr> on your system using the command:</p>
+<p>The <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface works under the <code>lfd daemon</code> <em><abbr title="Login Failure Daemon">LFD</abbr></em>. We need to restart 
+the <abbr title="Login Failure Daemon">LFD</abbr> on your system using the command:</p>
 <div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>sudo<span class="w"> </span>service<span class="w"> </span>lfd<span class="w"> </span>restart
 </code></pre></div>
 <p><br></p>
-<p>In order to gain access to the online admin panel; you must ensure <abbr title="Login Failure Daemon">LFD</abbr> and <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> are running. You can check by running the commands:</p>
+<p>In order to gain access to the online admin panel; you must ensure <abbr title="Login Failure Daemon">LFD</abbr> and <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> 
+are running. You can check by running the commands:</p>
 <div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>sudo<span class="w"> </span>service<span class="w"> </span>lfd<span class="w"> </span>status
 </code></pre></div>
 <p><br></p>
@@ -4278,14 +4301,18 @@
 <p><br>
 <br></p>
 <h3 id="step-3-access-web-ui">Step 3: Access Web UI<a class="headerlink" data-preview="" href="#step-3-access-web-ui" title="Permanent link">¶</a></h3>
-<p>Access the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> interface in your browser with the specified IP and port. For these docs; we used port <code>1025</code>. </p>
+<p>Access the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> interface in your browser with the specified IP and port. For
+these docs; we used port <code>1025</code>. </p>
 <div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>https://127.0.0.1:1025
 </code></pre></div>
 <p><br></p>
 <details class="danger">
 <summary>Default Web Interface Username &amp; Password</summary>
-<p>You cannot keep the web interface username and password defaulted to <code>admin</code>; you will get an error that the credentials must be changed within <code>/etc/csf/csf.conf</code>.</p>
-<p>Ggo back to the <code>/etc/csf/csf.conf</code> set <code>UI_USER</code> and <code>UI_PASS</code> to something else.</p>
+<p>You cannot keep the web interface username and password defaulted to 
+<code>admin</code>; you will get an error that the credentials must be changed within 
+<code>/etc/csf/csf.conf</code>.</p>
+<p>Go back to the <code>/etc/csf/csf.conf</code> set <code>UI_USER</code> and <code>UI_PASS</code> to something
+else.</p>
 </details>
 <p><br></p>
 <figure>
@@ -4299,24 +4326,33 @@
     <figcaption><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> Main Dashboard</figcaption>
 </figure>
 <p><br></p>
-<p>If you try to access the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface in your browser and you get an error similar to the following:</p>
+<p>If you try to access the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface in your browser and you get an error
+similar to the following:</p>
 <div class="language-text highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>Secure Connection Failed
 <a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>
 <a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>An error occurred during a connection to 172.17.0.1:1025. PR_CONNECT_RESET_ERROR
 <a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>
 <a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>Error code: PR_CONNECT_RESET_ERROR
 <a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>
-<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>    The page you are trying to view cannot be shown because the authenticity of the received data could not be verified.
-<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>    Please contact the website owners to inform them of this problem.
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>    The page you are trying to view cannot be shown because the authenticity of
+<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>    the received data could not be verified. Please contact the website owners
+<a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>     to inform them of this problem.
 </code></pre></div>
 <p><br></p>
-<p>Open your <abbr title="Login Failure Daemon">lfd</abbr> logs at <code>/var/logs/lfd.log</code> and see if any messages state that you attempted to access the web interface, but were denied access. The message will be similar to the following:</p>
+<p>Open your <abbr title="Login Failure Daemon">lfd</abbr> logs at <code>/var/logs/lfd.log</code> and see if any messages state that 
+you attempted to access the web interface, but were denied access. The message 
+will be similar to the following:</p>
 <div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>Oct<span class="w">  </span><span class="m">2</span><span class="w"> </span><span class="m">02</span>:55:38<span class="w"> </span>configserver<span class="w"> </span>lfd<span class="o">[</span><span class="m">42635</span><span class="o">]</span>:<span class="w"> </span>UI:<span class="w"> </span>Access<span class="w"> </span>attempt<span class="w"> </span>from<span class="w"> </span>an<span class="w"> </span>IP<span class="w"> </span>not<span class="w"> </span><span class="k">in</span><span class="w"> </span>/etc/csf/ui/ui.allow<span class="w"> </span>-<span class="w"> </span>denied<span class="w"> </span><span class="o">[</span><span class="m">127</span>.0.0.1<span class="o">]</span>
 </code></pre></div>
 <p><br></p>
-<p>An error like above means that you have not whitelisted the correct IP in your <code>/etc/csf/ui/ui.allow</code> file. You must whitelist the correct IP before you'll be able to access the web interface.</p>
+<p>An error like above means that you have not whitelisted the correct IP in your 
+<code>/etc/csf/ui/ui.allow</code> file. You must whitelist the correct IP before you'll be
+able to access the web interface.</p>
 <p><br></p>
-<p>We will cover how to actually use the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface in another section. As of right now you should at least be able to access the web interface by going to <code>http://127.0.0.1:1025</code> in your browser. Or whatever IP and port you assigned within the <code>/etc/csf/csf.conf</code>.</p>
+<p>We will cover how to actually use the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface in another section. As
+of right now you should at least be able to access the web interface by going
+to <code>http://127.0.0.1:1025</code> in your browser. Or whatever IP and port you 
+assigned within the <code>/etc/csf/csf.conf</code>.</p>
 <p><br></p>
 <hr>
 <p><br></p>
@@ -4327,8 +4363,13 @@
 <li>Access to the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface via an IP and port</li>
 </ul>
 <hr>
-<p>The next section will show you how to put the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface behind third-party apps such as <a data-preview="" href="../integrations/traefik/"><abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik Reverse Proxy</abbr></a> and secure it with <a data-preview="" href="../integrations/authentik/"><abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr></a>.  </p>
-<p>These steps are <strong>optional</strong>. They enhance the security of your web interface and help prevent unauthorized access, but you do not need to perform them to continue using <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>.</p>
+<p>The next section will show you how to put the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface behind 
+third-party apps such as:
+<a data-preview="" href="../integrations/traefik/"><abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik Reverse Proxy</abbr></a> and secure it with 
+<a data-preview="" href="../integrations/authentik/"><abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr></a>.  </p>
+<p>These steps are <strong>optional</strong>. They enhance the security of your web interface 
+and help prevent unauthorized access, but you do not need to perform them to 
+continue using <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>.</p>
 <p><br></p>
 <hr>
 <p><br></p>
@@ -4341,22 +4382,29 @@
 <li>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M349.9 236.3l-66.1 0 0-59.4 66.1 0 0 59.4zm0-204.3l-66.1 0 0 60.7 66.1 0 0-60.7zm78.2 144.8l-66.1 0 0 59.4 66.1 0 0-59.4zM271.8 104.7l-66.1 0 0 60.1 66.1 0 0-60.1zm78.1 0l-66.1 0 0 60.1 66.1 0 0-60.1zm276.8 100c-14.4-9.7-47.6-13.2-73.1-8.4-3.3-24-16.7-44.9-41.1-63.7l-14-9.3-9.3 14c-18.4 27.8-23.4 73.6-3.7 103.8-8.7 4.7-25.8 11.1-48.4 10.7l-434.7 0c-8.7 50.8 5.8 116.8 44 162.1 37.1 43.9 92.7 66.2 165.4 66.2 157.4 0 273.9-72.5 328.4-204.2 21.4 .4 67.6 .1 91.3-45.2 1.5-2.5 6.6-13.2 8.5-17.1l-13.3-8.9zM115.6 176.8l-66 0 0 59.4 66.1 0 0-59.4-.1 0zm78.1 0l-66.1 0 0 59.4 66.1 0 0-59.4zm78.1 0l-66.1 0 0 59.4 66.1 0 0-59.4zm-78.1-72.1l-66.1 0 0 60.1 66.1 0 0-60.1z"></path></svg></span> &nbsp; <strong><a data-preview="" href="../integrations/docker/"><abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> Integration</a></strong></p>
 <hr>
-<p>This section explains how to run <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> and <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> together in the same 
-environment. By using <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>’s integrated <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> mode and the included 
-<abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> scripts, you can strengthen your server’s security while 
-running your containers safely within a controlled setup.</p>
-<p>We’ve provided a detailed set of instructions along with troubleshooting 
-guidance to help you resolve any issues that may arise during setup.</p>
+<p>This section explains how to run <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> and <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr>
+together in the same environment. By using <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>’s 
+integrated <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> mode and the included <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> 
+scripts, you can strengthen your server’s security 
+while running your containers safely within a 
+controlled setup.</p>
+<p>We’ve provided a detailed set of instructions 
+along with troubleshooting guidance to help you 
+resolve any issues that may arise during setup.</p>
 </li>
 <li>
 <p><span class="twemoji"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Traefik Proxy</title><path d="M12 1.19c1.088 0 2.056.768 2.056 1.714 0 .947-.921 1.715-2.056 1.715-.13 0-.3-.022-.509-.064a.685.685 0 0 0-.475.076l-7.37 4.195a.344.344 0 0 0 .001.597l7.99 4.49c.208.116.461.116.669 0l8.034-4.468a.343.343 0 0 0 .003-.598l-2.507-1.424a.683.683 0 0 0-.67-.003l-2.647 1.468a.234.234 0 0 0-.119.18l-.001.025c0 .946-.921 1.714-2.056 1.714s-2.056-.768-2.056-1.714c0-.947.921-1.715 2.056-1.715.042 0 .09.002.145.007l.087.008.096.013a.685.685 0 0 0 .425-.08l3.913-2.173c.3-.166.662-.171.965-.017l.04.023 5.465 3.104c.686.39.693 1.368.03 1.773l-.037.021-3.656 2.033a.343.343 0 0 0 .007.604l3.62 1.906c.72.378.736 1.402.03 1.804l-10.995 6.272a1.03 1.03 0 0 1-1.019 0L.526 16.43a1.03 1.03 0 0 1 .034-1.806l3.66-1.911a.343.343 0 0 0 .01-.603L.524 10.029a1.03 1.03 0 0 1-.041-1.77l.036-.021L9.618 3.06a.688.688 0 0 0 .308-.369l.011-.036c.32-.952 1.046-1.466 2.063-1.466Zm5.076 12.63-4.492 2.586-.041.022c-.306.158-.671.152-.973-.018l-4.478-2.527a.682.682 0 0 0-.65-.01L3.86 15.224a.343.343 0 0 0-.012.602l7.887 4.515c.21.12.467.121.677 0l7.956-4.547a.343.343 0 0 0-.01-.602l-2.623-1.384a.683.683 0 0 0-.659.012z"></path></svg></span> &nbsp; <strong><a data-preview="" href="../integrations/traefik/"><abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr> Integration</a></strong></p>
 <hr>
-<p>Protect your <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> installation by placing it behind a <strong><abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik Reverse Proxy</abbr></strong>.</p>
-<p>This setup lets you filter and control traffic to the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface using
-<abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr>’s <abbr title="A component in Traefik that modifies requests or responses before they reach a service or client.">middleware</abbr>, all with the added bonus that you do not need to expose
-or open the ports to your server.</p>
-<p>With <abbr title="A component in Traefik that modifies requests or responses before they reach a service or client.">middleware</abbr>, you can whitelist your own IP for secure access and enforce
-geographic restrictions to allow or block traffic from specific countries.</p>
+<p>Protect your <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> installation by placing it behind a 
+<strong><abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik Reverse Proxy</abbr></strong>.</p>
+<p>This setup lets you filter and control traffic to the 
+<abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface using <abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr>’s <abbr title="A component in Traefik that modifies requests or responses before they reach a service or client.">middleware</abbr>, all 
+with the added bonus that you do not need to 
+expose or open the ports to your server.</p>
+<p>With <abbr title="A component in Traefik that modifies requests or responses before they reach a service or client.">middleware</abbr>, you can whitelist your own IP 
+for secure access and enforce geographic 
+restrictions to allow or block traffic from specific
+countries.</p>
 </li>
 <li>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300">
@@ -4364,22 +4412,29 @@ geographic restrictions to allow or block traffic from specific countries.</p>
 </svg>
 </span> &nbsp; <strong><a data-preview="" href="../integrations/authentik/"><abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> Integration</a></strong></p>
 <hr>
-<p>Enhance the security of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> by placing it behind the <strong><abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr></strong> identity 
-provider using a forward proxy. </p>
-<p>This ensures that all traffic to the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface passes through <abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr>, 
-giving you centralized control over authentication and access.</p>
-<p>With this setup, <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> is protected by modern authentication methods such as
-passwords, two-factor authentication (2FA), or passkeys.</p>
+<p>Enhance the security of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> by placing it behind the 
+<abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> identity provider using a forward proxy. </p>
+<p>This ensures that all traffic to the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web 
+interface passes through <abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr>, giving you 
+centralized control over authentication and 
+access.</p>
+<p>With this setup, <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> is protected by modern 
+authentication methods such as passwords, 
+two-factor authentication (2FA), or passkeys.</p>
 </li>
 <li>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 9V3.5L18.5 9M6 2c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6Z"></path></svg></span> &nbsp; <strong><a data-preview="" href="../../usage/getting-started/">Usage Introduction</a></strong></p>
 <hr>
-<p>If you don’t plan to set up <abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr> or <abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> with the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface, 
-you can skip ahead to the <a data-preview="" href="../../usage/getting-started/">Usage</a> section. </p>
-<p>The next chapter covers <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>’s core features, basic configuration, available
-commands, folder structure, and everything you need to get started.</p>
-<p>You will be taken on a more detailed dive of how <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> can benefit you and
-what options you have for securing your server.</p>
+<p>If you don’t plan to set up <abbr title="A modern reverse proxy and load balancer that manages HTTP, HTTPS, and TCP traffic.">Traefik</abbr> or <abbr title="An open-source identity provider for authentication and single sign-on (SSO).">Authentik</abbr> with the 
+<abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface, you can skip ahead to the <a data-preview="" href="../../usage/getting-started/">Usage</a> 
+section. </p>
+<p>The next chapter covers <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>’s core features, 
+basic configuration, available commands, folder 
+structure, and everything you need to get 
+started.</p>
+<p>You will be taken on a more detailed dive of how 
+<abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> can benefit you and what options you have 
+for securing your server.</p>
 </li>
 </ul>
 </div>
@@ -4406,7 +4461,7 @@ what options you have for securing your server.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="October 23, 2025 16:07:34 UTC"><span class="timeago" datetime="2025-10-23T16:07:34+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 23, 2025 16:07:34 UTC">2025-10-23</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="January 18, 2026 00:06:21 UTC"><span class="timeago" datetime="2026-01-18T00:06:21+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="January 18, 2026 00:06:21 UTC">2026-01-18</span>
   </span>
 
     

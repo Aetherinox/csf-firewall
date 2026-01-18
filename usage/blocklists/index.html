@@ -1253,14 +1253,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../install/update/v1500-to-v1501/" class="md-nav__link">
+      <a href="../../install/update/v1500-to-newer/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    v15.00 to v15.01
+    v15.00 to Newer
   
 
     
@@ -4332,7 +4332,7 @@ degradation.</p>
 <details class="danger">
 <summary>Using the <code>master.ipset</code> blocklist without enabling IPSET can cause server instability &amp; increased memory usage</summary>
 <p>The official <a href="https://blocklist.configserver.dev/master.ipset">master.ipset</a> blocklist contains millions of IP addresses. </p>
-<p>We strongly recommend <a data-preview="" href="#enable">enabling IPSET</a> before using this list. Without IPSET, <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> will create a separate <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> rule for every IP, which will dramatically increase memory usage and slow down firewall operations.</p>
+<p>We strongly recommend <a data-preview="" href="#enable-ipset">enabling IPSET</a> before using this list. Without IPSET, <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> will create a separate <abbr title="An older Linux firewall tool for packet filtering, now gradually replaced by nftables.">iptables</abbr> rule for every IP, which will dramatically increase memory usage and slow down firewall operations.</p>
 <p>Using this list without IPSET may lead to performance issues or even system instability on servers with limited resources (memory).</p>
 </details>
 <p><br></p>
@@ -4434,7 +4434,7 @@ degradation.</p>
 <summary>Official master blocklist requires increased <span class="keys"><kbd>LF_IPSET_MAXELEM</kbd></span></summary>
 <p>If you plan to use our official blocklist, <a href="https://blocklist.configserver.dev/master.ipset">master.ipset</a>, you <strong>must</strong> increase the <span class="keys"><kbd>LF_IPSET_MAXELEM</kbd></span> setting in <span class="keys"><kbd>/etc/csf/csf.conf</kbd></span>. </p>
 <p>The <a href="https://blocklist.configserver.dev/master.ipset">master.ipset</a> file currently contains approximately 350,000 entries. To allow for future updates and ensure safe operation, set <span class="keys"><kbd>LF_IPSET_MAXELEM</kbd></span> to around <span class="keys"><kbd>500000</kbd></span>.</p>
-<p>Instructions for doing this are available in the next section <a data-preview="" href="#increase-maximum-entry-limit">Increase Max Limit</a>.</p>
+<p>Instructions for doing this are available in the next section <a data-preview="" href="#set-lf_ipset_maxelem">Increase Max Limit</a>.</p>
 </details>
 <p><br></p>
 <hr>
@@ -4581,7 +4581,7 @@ regional access rules safely and efficiently.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="December 14, 2025 16:42:23 UTC"><span class="timeago" datetime="2025-12-14T16:42:23+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="December 14, 2025 16:42:23 UTC">2025-12-14</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="January 18, 2026 00:06:21 UTC"><span class="timeago" datetime="2026-01-18T00:06:21+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="January 18, 2026 00:06:21 UTC">2026-01-18</span>
   </span>
 
     
