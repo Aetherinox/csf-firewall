@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_malawi_ipset
 #   @uuid           1a801e6d-a38b-372d-88c0-5e4e99df7c4a
-#   @updated        Sun Jan 18 00:21:40 UTC 2026
+#   @updated        Sun Jan 18 12:11:43 UTC 2026
 #   @entries        561406 ips
 #                   255 subnets
 #                   255 lines
