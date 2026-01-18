@@ -1247,14 +1247,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../../install/update/v1500-to-v1501/" class="md-nav__link">
+      <a href="../../install/update/v1500-to-newer/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    v15.00 to v15.01
+    v15.00 to Newer
   
 
     
@@ -3679,7 +3679,10 @@
 
 
 <h1 id="download-patches">Download Patches <!-- omit from toc --><a class="headerlink" href="#download-patches" title="Permanent link">¶</a></h1>
-<p>After you have installed <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>, <a href="../../webui/">ConfigServer WebUI</a>, and enabled both <abbr title="Login Failure Daemon">lfd</abbr> and <abbr title="ConfigServer Security &amp; Firewall">csf</abbr> <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr>; it's now time to run the patcher. The patcher will check your current configuration, and add a series of iptable rules so that apps like <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> and OpenVPN can communicate with the outside world and users can access your <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr>.</p>
+<p>After you have installed <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>, <a data-preview="" href="../../install/webui/">ConfigServer WebUI</a>, and enabled both <abbr title="Login Failure Daemon">lfd</abbr>
+and <abbr title="ConfigServer Security &amp; Firewall">csf</abbr> <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr>; it's now time to run the patcher. The patcher will check your current 
+configuration, and add a series of iptable rules so that apps like <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> and OpenVPN can 
+communicate with the outside world and users can access your <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr>.</p>
 <p><br></p>
 <h2 id="about">About<a class="headerlink" href="#about" title="Permanent link">¶</a></h2>
 <p>The patcher includes several patches:</p>
@@ -3716,7 +3719,8 @@ the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> firewall.</p>
 <div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudo<span class="w"> </span>chmod<span class="w"> </span>+x<span class="w"> </span>/patch/install.sh
 </code></pre></div>
 <p><br></p>
-<p>The patcher is now on your system and ready to run. However, before we run the patcher; there are a few things that need to be configured. <strong>Do not run the patch yet</strong>. </p>
+<p>The patcher is now on your system and ready to run. However, before we run the patcher; there 
+are a few things that need to be configured. <strong>Do not run the patch yet</strong>. </p>
 <p>Proceed to the <a href="../configure/">Configure</a> section.</p>
 <p><br></p>
 <hr>
@@ -3754,7 +3758,7 @@ the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> firewall.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="February 16, 2025 00:09:11 UTC"><span class="timeago" datetime="2025-02-16T00:09:11+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="February 16, 2025 00:09:11 UTC">2025-02-16</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="January 18, 2026 00:06:21 UTC"><span class="timeago" datetime="2026-01-18T00:06:21+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="January 18, 2026 00:06:21 UTC">2026-01-18</span>
   </span>
 
     
@@ -3765,12 +3769,13 @@ the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> firewall.</p>
   <span class="md-source-file__fact">
     <span class="md-icon" title="Contributors">
       
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4Z"></path></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 5.5A3.5 3.5 0 0 1 15.5 9a3.5 3.5 0 0 1-3.5 3.5A3.5 3.5 0 0 1 8.5 9 3.5 3.5 0 0 1 12 5.5M5 8c.56 0 1.08.15 1.53.42-.15 1.43.27 2.85 1.13 3.96C7.16 13.34 6.16 14 5 14a3 3 0 0 1-3-3 3 3 0 0 1 3-3m14 0a3 3 0 0 1 3 3 3 3 0 0 1-3 3c-1.16 0-2.16-.66-2.66-1.62a5.536 5.536 0 0 0 1.13-3.96c.45-.27.97-.42 1.53-.42M5.5 18.25c0-2.07 2.91-3.75 6.5-3.75s6.5 1.68 6.5 3.75V20h-13v-1.75M0 20v-1.5c0-1.39 1.89-2.56 4.45-2.9-.59.68-.95 1.62-.95 2.65V20H0m24 0h-3.5v-1.75c0-1.03-.36-1.97-.95-2.65 2.56.34 4.45 1.51 4.45 2.9V20Z"></path></svg>
       
     </span>
     <nav>
       
-        <a href="mailto:github-actions[bot]@users.noreply.github.com">github-actions[bot]</a>
+        <a href="mailto:github-actions[bot]@users.noreply.github.com">github-actions[bot]</a>, 
+        <a href="mailto:aetherinox@proton.me">Aetherinox</a>
     </nav>
   </span>
 
@@ -3787,6 +3792,11 @@ the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> firewall.</p>
 
     
     <nav>
+      
+        <a href="https://github.com/Aetherinox" class="md-author" title="@Aetherinox">
+          
+          <img src="https://avatars.githubusercontent.com/u/118329232?v=4&amp;size=72" alt="Aetherinox">
+        </a>
       
         <a href="https://github.com/apps/github-actions" class="md-author" title="@github-actions[bot]">
           
