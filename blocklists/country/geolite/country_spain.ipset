@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_spain_ipset
 #   @uuid           5ea61cb6-dd28-3604-9e77-7827fcb7e3c3
-#   @updated        Wed Jan 21 00:20:35 UTC 2026
+#   @updated        Wed Jan 21 12:12:37 UTC 2026
 #   @entries        35548925 ips
 #                   15071 subnets
 #                   15071 lines
