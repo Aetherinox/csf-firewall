@@ -5,7 +5,7 @@ tags:
 ---
 
 <figure markdown="span">
-    ![Main CSF Interface](https://github.com/user-attachments/assets/df9085af-788e-4a55-ad0e-17815f95741c){ width="800" }
+    ![Main CSF Interface](../assets/images/interface/dark_01.gif){ width="800" }
     <figcaption>Main CSF Interface</figcaption>
 </figure>
 
