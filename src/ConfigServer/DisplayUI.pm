@@ -3646,6 +3646,18 @@ print <<END_JS;
 <script>
 (async function()
 {
+	function escapeHTML( str )
+	{
+		return String(str).replace(/[&<>"']/g, m => (
+		{
+			'&':'&amp;',
+			'<':'&lt;',
+			'>':'&gt;',
+			'"':'&quot;',
+			"'":'&#39;'
+		})[m]);
+	}
+
     const license = '$sponsorLicense';
     const url = 'https://license.configserver.dev/?license=' + license;
 
@@ -3666,8 +3678,15 @@ print <<END_JS;
         }
 		else
 		{
-        	const errorMsg = (data.message && data.message.response) || (data.error || 'unknown');
-        	licenseDiv.innerHTML = "<tr><td colspan='2'>❌ No sponsorship (" + errorMsg + ")<br><div style='padding-top:10px;'><a href='https://docs.configserver.dev/insiders/sponsors/' target='_blank' class='btn btn-success'>Become a Sponsor</a></div></td></tr>";
+			const errorMsg = escapeHTML(
+				(data.message && data.message.response) || (data.error || 'unknown')
+			);
+
+			licenseDiv.innerHTML =
+				"<tr><td colspan='2'>❌ No sponsorship (" + errorMsg + ")<br>" +
+				"<div style='padding-top:10px;'>" +
+				"<a href='https://docs.test.dev/insiders/sponsors/' target='_blank' class='btn btn-success'>Become a Sponsor</a>" +
+				"</div></td></tr>";
         }
 
 		/*
@@ -3683,7 +3702,11 @@ print <<END_JS;
 	catch (err)
 	{
         const licenseDiv = document.getElementById( 'license-status' );
-        licenseDiv.innerHTML = "<tr><td colspan='2'>⚠️ License check failed: " + err.message + "</td></tr>";
+
+		licenseDiv.innerHTML =
+			"<tr><td colspan='2'>⚠️ License check failed: " +
+			escapeHTML(err.message) +
+			"</td></tr>";
 
         const insidersDiv = document.getElementById( 'insiders-status' );
         insidersDiv.innerHTML = "⚠️ Status check failed";
