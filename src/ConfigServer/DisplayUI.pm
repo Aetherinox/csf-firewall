@@ -34,7 +34,7 @@ use File::Basename;
 use File::Copy;
 use Net::CIDR::Lite;
 use IPC::Open3;
-use JSON qw(encode_json);
+use JSON;
 use URI::Escape;
 
 use ConfigServer::Config;
@@ -119,17 +119,42 @@ sub getCodename
 		$cname = "webmin";
 	}
 
-	# #
-    #	Optional debug output
-	# #
-
-	#	print "$cname\n";
-
-	# #
-    #	Return the value so it can be used in conditionals
-	# #
-
 	return $cname;
+}
+
+# #
+#	License › Status
+#	
+#	Returns both the license status of a user, as well as any errors that
+#	may return from the validation process.
+#	
+#	@return			int			isValid		0,1
+#					str			errorMsg
+# #
+
+sub userLicenseStatus
+{
+    my $license = $config{SPONSOR_LICENSE} // '';
+    return ( 0, 'No license configured' ) unless $license;
+
+    my ( $statusCode, $resp ) =
+        $urlget->urlget( "https://license.configserver.dev/?license=$license" );
+
+    return ( 0, 'License server unreachable' ) if $statusCode;
+
+    my $data;
+    eval { $data = decode_json( $resp ) };
+    return ( 0, 'Invalid response from license server' ) if $@;
+
+    my $valid = $data->{message}{valid} ? 1 : 0;
+    my $msg = $data->{message}{response} // 'Unknown error';
+
+    $msg = "$msg";
+    $msg =~ s/[\x00-\x1F\x7F]//g;
+    $msg =~ s/\s+/ /g;
+    $msg = substr( $msg, 0, 200 );
+
+    return ( $valid, $msg );
 }
 
 # #
@@ -232,13 +257,6 @@ sub main
 	my $config = ConfigServer::Config->loadconfig();
 	%config = $config->config;
 	$config{THIS_UI} = $thisui;
-
-	# #
-	#	Get sponsorship license
-	# #
-
-	my $sponsorLicense 	= getSponsorship(\%config);
-	my $sponsorUrl		= 'https://license.configserver.dev/?license=' . uri_escape( $sponsorLicense );
 
 	# #
 	#	Get codename
@@ -3648,68 +3666,54 @@ EOF
 # #
 #	Sponsorship License
 #	
+#	Fetch the current status of a user's license.
+#	
 #	@todo		Migrate to dedicated lib; json perl dependency
-#	@note		remove all sponsorship text if user inputs any type of key, cleans
-#					up interface.
+#	@note		removes all sponsorship text from interface once a key is provided.
 # #
+
+my ( $licenseValid, $licenseMsg ) = userLicenseStatus( );
+my $licenseObj =
+{
+    licenseValid 	=> $licenseValid ? \1 : \0,
+    insidersFlag   	=> ( $config{SPONSOR_RELEASE_INSIDERS} // 0 ) ? \1 : \0,
+    licenseMsg     	=> $licenseMsg // '',
+};
+my $licenseJson = encode_json( $licenseObj );
 
 print <<END_JS;
 <script>
-(async function()
+( function( )
 {
-	function reqPrepare( str )
+	// Redundancy
+    function reqPrepare( str )
 	{
-		return String( str )
-			.replace( /[&<>"']/g, m => (
-			{ 
-				'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;', '/': '&#x2F;', '=': '&#x3D;', '`': '&#x60;'
-			})[m] );
-	}
-
-    try
-	{
-		const res = await fetch( '$sponsorUrl' );
-		const data = await res.json();
-
-		/*
-			Status > License
-		*/
-
-        const licenseDiv = document.getElementById( 'license-status' );
-		licenseDiv.textContent = "";
-
-        if ( data.success )
+        return String( str ).replace( /[&<>"']/g, m => (
 		{
-            const msg = document.createElement( 'div' );
-            msg.textContent = "✅ You are a sponsor";
-            licenseDiv.appendChild( msg );
-		}
-		else
-		{
-			const msg = document.createElement( 'div' );
-			msg.textContent = "❌ No sponsorship";
-			licenseDiv.appendChild( msg );
-		}
-
-		// Status > Insiders Channel
-        const insidersDiv 			= document.getElementById( 'insiders-status' );
-        const insidersEnabled 		= data.valid && ( '$config{SPONSOR_RELEASE_INSIDERS}' === "1" );
-		insidersDiv.textContent 	= "";
-		insidersDiv.textContent 	= insidersEnabled ? "✅ Enabled" : "❌ Disabled";
-
+            '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;',
+            '/':'&#x2F;', '=':'&#x3D;', '`':'&#x60;'
+        })[m]);
     }
-	catch ( err )
+
+    const data 				= $licenseJson;
+    const licenseDiv 		= document.getElementById( 'license-status' );
+    licenseDiv.textContent 	= '';
+
+    if ( data.licenseValid )
 	{
-		const licenseDiv = document.getElementById( 'license-status' );
-		licenseDiv.textContent = "";
-
-		const msg = document.createElement("div");
-		msg.textContent = "⚠️ License check failed: " + reqPrepare( err.message );
-		licenseDiv.appendChild( msg );
-
-		const insidersDiv = document.getElementById( 'insiders-status' );
-		insidersDiv.textContent = "⚠️ Status check failed"
+        const msg 			= document.createElement( 'div' );
+        msg.textContent 	= '✅ You are a sponsor';
+        licenseDiv.appendChild( msg );
     }
+	else
+	{
+        const msg 			= document.createElement( 'div' );
+        msg.textContent 	= '❌ No sponsorship: ' + reqPrepare( data.licenseMsg );
+        licenseDiv.appendChild( msg );
+    }
+
+    const insidersDiv = document.getElementById( 'insiders-status' );
+    insidersDiv.textContent = ( data.licenseValid && data.insidersFlag ) ? '✅ Enabled' : '❌ Disabled';
 })();
 </script>
 END_JS
