@@ -34,6 +34,8 @@ use File::Basename;
 use File::Copy;
 use Net::CIDR::Lite;
 use IPC::Open3;
+use JSON qw(encode_json);
+use URI::Escape;
 
 use ConfigServer::Config;
 use ConfigServer::CheckIP qw(checkip);
@@ -235,7 +237,8 @@ sub main
 	#	Get sponsorship license
 	# #
 
-	my $sponsorLicense = getSponsorship(\%config);
+	my $sponsorLicense 	= getSponsorship(\%config);
+	my $sponsorUrl		= 'https://license.configserver.dev/?license=' . uri_escape( $sponsorLicense );
 
 	# #
 	#	Get codename
@@ -3347,6 +3350,8 @@ EOF
 		#	
 		#	This allows that process to take place, without modifying Webmin's theme by adding a second button since we have
 		#	zero control over the theme.
+		#	
+		#	Should be disabled by default to as not mess with the Webmin developer's look.
 		# #
 
 		if ( $codename eq 'webmin' )
@@ -3614,18 +3619,21 @@ EOF
 		__ 			"<div id='sponsor' class='tab-pane'>\n";
 		__ 				"<div class='panel panel-default'>\n";
 		__ 					"<div class='panel-heading text-center'><h4>Insiders Program & Sponsorship</h4></div>\n";
-		__					"<div class='panel-body'>\n";
-		__						"The ConfigServer Security & Firewall <b>Insiders Program</b> is for users who want to help support and shape the future of ConfigServer Security & Firewall. As an Insider, you’ll gain early access to upcoming features and experimental functionality before it is released to the public.<br><br />\n";
-		__						"We don’t believe in putting security behind a paywall because your safety shouldn’t depend on your wallet. The Insiders Program simply gives people a way to contribute to CSF by testing upcoming versions, keeping our lights on, and helping us catch bugs before a release rolls out to the public channel.\n";
-		__						"<br><br><strong>By sponsoring our project, you will receive the following:</strong>\n";
-		__						"<ul style='text-align:left;'>\n";
-		__							"<li><a href='https://docs.configserver.dev/insiders'>Insiders</a> access to ConfigServer Security and Firewall release channel</b></li>\n";
-		__							"<li><a href='https://discord.configserver.dev'>Discord</a> <b>Sponsor</b> role</li>\n";
-		__							"<li>Listed on our project <a href='https://docs.configserver.dev/insiders/sponsors/'>Sponsor</a> page</li>\n";
-		__							"<li>Tell us additional perks you'd like to see as a Sponsor</li>\n";
-		__							"<li>A huge thank you</li>\n";
-		__						"</ul>\n";
-		__					"</div>\n";
+							if ( !$config{SPONSOR_LICENSE} )
+							{
+		__						"<div class='panel-body'>\n";
+		__							"The ConfigServer Security & Firewall <b>Insiders Program</b> is for users who want to help support and shape the future of ConfigServer Security & Firewall. As an Insider, you’ll gain early access to upcoming features and experimental functionality before it is released to the public.<br><br />\n";
+		__							"We don’t believe in putting security behind a paywall because your safety shouldn’t depend on your wallet. The Insiders Program simply gives people a way to contribute to CSF by testing upcoming versions, keeping our lights on, and helping us catch bugs before a release rolls out to the public channel.\n";
+		__							"<br><br><strong>By sponsoring our project, you will receive the following:</strong>\n";
+		__							"<ul style='text-align:left;'>\n";
+		__								"<li><a href='https://docs.configserver.dev/insiders'>Insiders</a> access to ConfigServer Security and Firewall release channel</b></li>\n";
+		__								"<li><a href='https://discord.configserver.dev'>Discord</a> <b>Sponsor</b> role</li>\n";
+		__								"<li>Listed on our project <a href='https://docs.configserver.dev/insiders/sponsors/'>Sponsor</a> page</li>\n";
+		__								"<li>Tell us additional perks you'd like to see as a Sponsor</li>\n";
+		__								"<li>A huge thank you</li>\n";
+		__							"</ul>\n";
+		__						"</div>\n";
+							}
 		__					"<form action='$script' method='post'>\n";
 		__ 						"<table class='table table-bordered table-striped' style='margin-bottom:0px;'>\n";
 		__ 							"<tr><td><a href='https://docs.configserver.dev/insiders/sponsors/' target='_blank' class='btn btn-default' style='width: 200px;'>Sponsor Status</a></td><td style='width:100%'><div id='license-status' class='panel-body'>Checking license ... </div></td></tr>\n";
@@ -3635,81 +3643,72 @@ EOF
 		__				"</div>\n";
 		__			"</div>\n";
 		__ 		"</div> <!-- end id='insiders' -->\n"; # end TAB id='insiders'
-
 		__ "</div><!-- end class='tab-content' -->\n"; # end TAB class='tab-content'
 
 # #
 #	Sponsorship License
+#	
+#	@todo		Migrate to dedicated lib; json perl dependency
+#	@note		remove all sponsorship text if user inputs any type of key, cleans
+#					up interface.
 # #
 
 print <<END_JS;
 <script>
 (async function()
 {
-	function escapeHTML( str )
+	function reqPrepare( str )
 	{
-		return String(str).replace(/[&<>"']/g, m => (
-		{
-			'&':'&amp;',
-			'<':'&lt;',
-			'>':'&gt;',
-			'"':'&quot;',
-			"'":'&#39;'
-		})[m]);
+		return String( str )
+			.replace( /[&<>"']/g, m => (
+			{ 
+				'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;', '/': '&#x2F;', '=': '&#x3D;', '`': '&#x60;'
+			})[m] );
 	}
-
-    const license = '$sponsorLicense';
-    const url = 'https://license.configserver.dev/?license=' + license;
 
     try
 	{
-        const res = await fetch(url);
-        const data = await res.json();
+		const res = await fetch( '$sponsorUrl' );
+		const data = await res.json();
 
 		/*
 			Status > License
 		*/
 
-        const licenseDiv = document.getElementById('license-status');
-	
-		if ( data.message && data.message.valid )
+        const licenseDiv = document.getElementById( 'license-status' );
+		licenseDiv.textContent = "";
+
+        if ( data.success )
 		{
-            licenseDiv.innerHTML = "<tr><td colspan='2'>✅ You are a sponsor</td></tr>";
-        }
+            const msg = document.createElement( 'div' );
+            msg.textContent = "✅ You are a sponsor";
+            licenseDiv.appendChild( msg );
+		}
 		else
 		{
-			const errorMsg = escapeHTML(
-				(data.message && data.message.response) || (data.error || 'unknown')
-			);
+			const msg = document.createElement( 'div' );
+			msg.textContent = "❌ No sponsorship";
+			licenseDiv.appendChild( msg );
+		}
 
-			licenseDiv.innerHTML =
-				"<tr><td colspan='2'>❌ No sponsorship (" + errorMsg + ")<br>" +
-				"<div style='padding-top:10px;'>" +
-				"<a href='https://docs.test.dev/insiders/sponsors/' target='_blank' class='btn btn-success'>Become a Sponsor</a>" +
-				"</div></td></tr>";
-        }
-
-		/*
-			Status > Insiders Channel
-		*/
-
-        const insidersDiv = document.getElementById( 'insiders-status' );
-        const insidersEnabled = data.valid && ( '$config{SPONSOR_RELEASE_INSIDERS}' === "1" );
-
-        insidersDiv.innerHTML = insidersEnabled ? "✅ Enabled" : "❌ Disabled";
+		// Status > Insiders Channel
+        const insidersDiv 			= document.getElementById( 'insiders-status' );
+        const insidersEnabled 		= data.valid && ( '$config{SPONSOR_RELEASE_INSIDERS}' === "1" );
+		insidersDiv.textContent 	= "";
+		insidersDiv.textContent 	= insidersEnabled ? "✅ Enabled" : "❌ Disabled";
 
     }
-	catch (err)
+	catch ( err )
 	{
-        const licenseDiv = document.getElementById( 'license-status' );
+		const licenseDiv = document.getElementById( 'license-status' );
+		licenseDiv.textContent = "";
 
-		licenseDiv.innerHTML =
-			"<tr><td colspan='2'>⚠️ License check failed: " +
-			escapeHTML(err.message) +
-			"</td></tr>";
+		const msg = document.createElement("div");
+		msg.textContent = "⚠️ License check failed: " + reqPrepare( err.message );
+		licenseDiv.appendChild( msg );
 
-        const insidersDiv = document.getElementById( 'insiders-status' );
-        insidersDiv.innerHTML = "⚠️ Status check failed";
+		const insidersDiv = document.getElementById( 'insiders-status' );
+		insidersDiv.textContent = "⚠️ Status check failed"
     }
 })();
 </script>
