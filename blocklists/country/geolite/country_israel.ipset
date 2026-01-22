@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_israel_ipset
 #   @uuid           464e44d2-39df-37be-ab6d-510fa06a3ed0
-#   @updated        Wed Jan 21 12:12:51 UTC 2026
+#   @updated        Thu Jan 22 00:20:43 UTC 2026
 #   @entries        8912327 ips
 #                   3263 subnets
 #                   3263 lines
