@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_bangladesh_ipset
 #   @uuid           c6b3cf0c-838a-354d-8190-6b3b0ccf3d51
-#   @updated        Wed Jan 21 12:12:19 UTC 2026
+#   @updated        Thu Jan 22 00:20:12 UTC 2026
 #   @entries        2088715 ips
 #                   4497 subnets
 #                   4497 lines
