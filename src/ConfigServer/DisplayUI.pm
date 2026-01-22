@@ -9,7 +9,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            12.17.2025
+#   @updated            01.22.2025
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -99,6 +99,7 @@ sub getSponsorship
 #	
 #	@args			$config
 #	@usage			my $codename = getCodename(\%config);
+#	@return			str
 # #
 
 sub getCodename
@@ -132,9 +133,9 @@ sub getCodename
 #					str			errorMsg
 # #
 
-sub userLicenseStatus
+sub getLicenseStatus
 {
-    my $license = $config{SPONSOR_LICENSE} // '';
+    my $license = getSponsorship(\%config) // '';
     return ( 0, 'No license configured' ) unless $license;
 
     my ( $statusCode, $resp ) =
@@ -164,20 +165,16 @@ sub userLicenseStatus
 my %allowed_tags = map { $_ => 1 } qw(b u span);
 
 # #
-#   Sanitize lines but allow whitelisted HTML tags
+#   Line › Sanitize
 #	
-#   This subroutine is intended for rendering comment or
-#   documentation lines inside the HTML interface.
+#	Allow only certain whitelisted HTML tags to display a setting.
 #     - Escapes all HTML-sensitive characters ( &, <, > )
 #     - Restores a whitelist of safe HTML tags ( <b>, <i>, <a> )
-#	
-#   Use this for lines that may contain markup to preserve
-#   for display purposes, such as comments or notes.
 #	
 #	Primarily used for the csf.conf HEADER: feature.
 # #
 
-sub sanitize_line
+sub line_sanitize
 {
     my ($line) = @_;
 
@@ -203,19 +200,17 @@ sub sanitize_line
 }
 
 # #
-#   Function to fully escape text for safe use in HTML attributes
+#   Line › Escape HTML
 #	
-#   This subroutine is intended for user-input or config values
-#   that will be inserted into HTML elements (e.g., <input value="...">).
+#   Fully escape text for safe use in HTML attributes
+#		(e.g., <input value="...">).
 #	
 #   Escapes all HTML-sensitive characters (&, <, >, ", ')
-#   Used to prevent any possibility of HTML or JavaScript injection, 
-#	and do NOT want to allow any tags.
 #	
-#	Built for use with settings such as CSP (Content Security Policy).
+#	Utilized in conjunction with settings such as CSP (Content Security Policy).
 # #
 
-sub html_escape
+sub line_escape_html
 {
     my ($text) = @_;
     return '' unless defined $text;
@@ -2126,7 +2121,7 @@ EOF
 					$end = $1;
 				}
 	
-				my $escaped_end 				= html_escape( $end );
+				my $escaped_end 				= line_escape_html( $end );
 				my $size 						= length($end) + 4;
 				my $class 						= "value-default";
 				my ($status,$range,$default) 	= sanity($start,$end);
@@ -2270,7 +2265,7 @@ EOF
 				#   Sanitize line but allow only whitelisted tags
 				# #
 
-				$line = sanitize_line( $line );
+				$line = line_sanitize( $line );
 
 				# #
 				#	Convert URLs to clickable links
@@ -3672,7 +3667,7 @@ EOF
 #	@note		removes all sponsorship text from interface once a key is provided.
 # #
 
-my ( $licenseValid, $licenseMsg ) = userLicenseStatus( );
+my ( $licenseValid, $licenseMsg ) = getLicenseStatus( );
 my $licenseObj =
 {
     licenseValid 	=> $licenseValid ? \1 : \0,
