@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_faroe_islands_ipset
 #   @uuid           fe41ff40-f9e5-3c51-8116-e00a97c34fb3
-#   @updated        Thu Jan 22 12:12:05 UTC 2026
+#   @updated        Fri Jan 23 00:20:57 UTC 2026
 #   @entries        45486 ips
 #                   145 subnets
 #                   145 lines
