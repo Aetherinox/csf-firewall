@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_cayman_islands_ipset
 #   @uuid           923c99a8-b5f3-3e79-b106-398622ce5cee
-#   @updated        Fri Jan 23 00:21:15 UTC 2026
+#   @updated        Fri Jan 23 12:12:28 UTC 2026
 #   @entries        121140 ips
 #                   289 subnets
 #                   289 lines
