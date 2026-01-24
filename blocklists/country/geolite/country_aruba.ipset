@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_aruba_ipset
 #   @uuid           20bfc7f9-a6c5-369b-afe6-e7a089262bd0
-#   @updated        Fri Jan 23 12:11:54 UTC 2026
+#   @updated        Sat Jan 24 00:19:54 UTC 2026
 #   @entries        114404 ips
-#                   214 subnets
-#                   214 lines
+#                   212 subnets
+#                   212 lines
 #   @country        Aruba (AW)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -131,7 +131,6 @@
 2001:470:d:356::/64
 2001:470:d:f69::/64
 2001:470:d:11b4::/64
-2001:470:d:11bb::/64
 2001:470:19:c9a::/64
 2001:470:24:70b::/64
 2001:470:24:1168::/64
@@ -170,7 +169,7 @@
 2001:470:ee01::/48
 2001:470:f1a8::/48
 2001:470:f398::/48
-2001:470:f693::/48
+2001:470:f69a::/48
 2001:470:ff9d::/48
 2600:70ff:c819::/48
 2606:40:ec0::/43
@@ -231,6 +230,5 @@
 2a0a:6044:f878::/46
 2a0c:9a40:95b0:c000::/52
 2a0f:85c1:81b:f0b0::/60
-2a11:a680:8000::/36
 2a13:a5c7:250e::/48
 2a13:a5c7:25ff:d00::/56

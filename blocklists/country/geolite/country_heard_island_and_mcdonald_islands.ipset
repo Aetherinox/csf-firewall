@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_heard_island_and_mcdonald_islands_ipset
 #   @uuid           fa478431-576b-37de-a4f6-8f69aa6877f9
-#   @updated        Fri Jan 23 12:12:20 UTC 2026
+#   @updated        Sat Jan 24 00:20:25 UTC 2026
 #   @entries        783 ips
-#                   46 subnets
-#                   46 lines
+#                   45 subnets
+#                   45 lines
 #   @country        Heard Island and McDonald Islands (HM)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -62,7 +62,6 @@
 2a09:bac4:2f8::/45
 2a09:bac4:12f8::/45
 2a0c:9a40:95b6::/52
-2a11:a684:4000::/36
 2a13:a5c7:2560::/48
 2a13:a5c7:25ff:5f00::/56
 2a14:7584:eff0::/48

@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_andorra_ipset
 #   @uuid           41aa7540-c884-31b0-a452-7d9653a74b5e
-#   @updated        Fri Jan 23 12:11:51 UTC 2026
+#   @updated        Sat Jan 24 00:19:49 UTC 2026
 #   @entries        69572 ips
-#                   422 subnets
-#                   422 lines
+#                   421 subnets
+#                   421 lines
 #   @country        Andorra (AD)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -362,12 +362,12 @@
 2607:8940:4240:4400::/56
 2a01:fb00:8000::/33
 2a01:fb02::/34
-2a01:fb02:c000::/34
+2a01:fb02:8000::/33
 2a01:fb03::/32
 2a01:fb05::/35
 2a01:fb05:2000::/36
 2a01:fb05:4000::/36
-2a01:fb05:7000::/36
+2a01:fb05:6000::/35
 2a01:fb05:8000::/36
 2a01:fb05:b000::/36
 2a01:fb05:c000::/34
@@ -439,6 +439,5 @@
 2a0f:1cc5:1f18::/48
 2a0f:85c1:81b:f040::/60
 2a10:500:6c00::/40
-2a11:3a86:e000::/35
 2a13:a5c7:2501::/48
 2a13:a5c7:25ff::/56

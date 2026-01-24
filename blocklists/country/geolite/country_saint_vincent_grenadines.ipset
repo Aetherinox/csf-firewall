@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_saint_vincent_grenadines_ipset
 #   @uuid           8eaf2405-bc9a-3054-8831-87718a25262b
-#   @updated        Fri Jan 23 12:13:08 UTC 2026
+#   @updated        Sat Jan 24 00:21:22 UTC 2026
 #   @entries        28936 ips
 #                   191 subnets
 #                   191 lines
@@ -138,6 +138,7 @@
 2001:470:24:8ae::/64
 2001:470:36:1c9::/64
 2001:470:1f21:23d::/64
+2001:470:f694::/48
 2001:470:fc9b::/48
 2001:470:fd41::/48
 2001:470:ffc3::/48
@@ -208,6 +209,5 @@
 2a0c:9a40:95bb:d000::/52
 2a0f:1cc5:1f4b::/48
 2a0f:85c1:81b:f950::/60
-2a11:3a85:2000::/35
 2a13:a5c7:25ec::/48
 2a13:a5c7:25ff:ec00::/56
