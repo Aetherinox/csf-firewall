@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_republic_moldova_ipset
 #   @uuid           ceb0444f-9c98-363b-867e-0d4a5e4c35d5
-#   @updated        Fri Jan 23 12:12:32 UTC 2026
-#   @entries        1351090 ips
-#                   2140 subnets
-#                   2140 lines
+#   @updated        Sat Jan 24 00:20:40 UTC 2026
+#   @entries        1350834 ips
+#                   2141 subnets
+#                   2141 lines
 #   @country        Republic Moldova (MD)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -343,7 +343,8 @@
 95.141.251.0/24
 95.153.64.0/18
 95.182.76.0/24
-103.35.188.0/22
+103.35.188.0/23
+103.35.191.0/24
 103.52.26.0/26
 103.106.0.0/24
 103.106.2.0/24
@@ -921,6 +922,7 @@
 2001:470:1f1b:2f6::/64
 2001:470:1f1b:415::/64
 2001:470:1f1b:427::/64
+2001:470:1f1b:4c1::/64
 2001:470:1f1b:4ce::/64
 2001:470:1f1b:734::/64
 2001:470:1f1b:820::/64
@@ -2082,7 +2084,6 @@
 2a11:3c00::/29
 2a11:4c00::/29
 2a11:7e00::/29
-2a11:a686::/36
 2a13:400::/29
 2a13:4c0::/29
 2a13:c00::/29
