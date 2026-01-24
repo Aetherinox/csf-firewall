@@ -340,7 +340,7 @@ function newStatus( elm_container, msg )
 }
 
 /*
-    Subscribie to stream
+    Subscribe to stream
 */
 
 document$.subscribe( async function( )
