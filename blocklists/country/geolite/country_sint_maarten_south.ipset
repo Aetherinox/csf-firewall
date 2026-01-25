@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_sint_maarten_south_ipset
 #   @uuid           abf4b2f6-069f-3f55-a779-85465e9257d9
-#   @updated        Sat Jan 24 12:12:16 UTC 2026
+#   @updated        Sun Jan 25 00:22:37 UTC 2026
 #   @entries        37105 ips
 #                   144 subnets
 #                   144 lines
