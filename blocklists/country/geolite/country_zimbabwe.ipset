@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_zimbabwe_ipset
 #   @uuid           bb1063c0-e007-3fd7-bf19-b0bb6b190bd0
-#   @updated        Sun Jan 25 00:22:58 UTC 2026
+#   @updated        Sun Jan 25 12:12:45 UTC 2026
 #   @entries        252471 ips
 #                   384 subnets
 #                   384 lines
