@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_myanmar_ipset
 #   @uuid           ee0c67be-abe0-3cfa-b30f-b463c29cbc05
-#   @updated        Sun Jan 25 12:12:03 UTC 2026
+#   @updated        Mon Jan 26 00:21:35 UTC 2026
 #   @entries        273074 ips
 #                   729 subnets
 #                   729 lines
