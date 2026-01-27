@@ -5,7 +5,7 @@
 #   @source         https://my.pingdom.com/probes/ipv4 | https://my.pingdom.com/probes/ipv6
 #   @id             privacy_pingdom_ipset
 #   @uuid           b5c33ba7-0bce-3d84-b803-c055dbe15e0f
-#   @updated        Tue Jan 27 00:17:29 UTC 2026
+#   @updated        Tue Jan 27 12:09:52 UTC 2026
 #   @entries        150 ips
 #                   0 subnets
 #                   150 lines
