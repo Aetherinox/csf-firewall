@@ -113,55 +113,55 @@ sub processline {
 
 #openSSH
 #RH
-	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd\[\d+\]: pam_unix\(sshd:auth\): authentication failure; logname=\S* uid=\S* euid=\S* tty=\S* ruser=\S* rhost=(\S+)\s+(user=(\S+))?/)) {
+	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd(?:[\-0-9a-zA-Z_]*)?\[\d+\]: pam_unix\(sshd:auth\): authentication failure; logname=\S* uid=\S* euid=\S* tty=\S* ruser=\S* rhost=(\S+)\s+(user=(\S+))?/)) {
 		my $ip = $3;
 		my $acc = $5;
 		$ip =~ s/^::ffff://;
 		if (checkip(\$ip)) {return ("Failed SSH login from","$ip|$acc","sshd")} else {return}
 	}
-	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd\[\d+\]: Failed none for (\S*) from (\S+) port \S+/)) {
+	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd(?:[\-0-9a-zA-Z_]*)?\[\d+\]: Failed none for (\S*) from (\S+) port \S+/)) {
         my $ip = $4;
 		my $acc = $3;
 		$ip =~ s/^::ffff://;
 		if (checkip(\$ip)) {return ("Failed SSH login from","$ip|$acc","sshd")} else {return}
 	}
-	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd\[\d+\]: Failed password for (invalid user |illegal user )?(\S*) from (\S+)( port \S+ \S+\s*)?/)) {
+	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd(?:[\-0-9a-zA-Z_]*)?\[\d+\]: Failed password for (invalid user |illegal user )?(\S*) from (\S+)( port \S+ \S+\s*)?/)) {
         my $ip = $5;
 		my $acc = $4;
 		$ip =~ s/^::ffff://;
 		if (checkip(\$ip)) {return ("Failed SSH login from","$ip|$acc","sshd")} else {return}
 	}
-	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd\[\d+\]: Failed keyboard-interactive(\/pam)? for (invalid user )?(\S*) from (\S+) port \S+/)) {
+	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd(?:[\-0-9a-zA-Z_]*)?\[\d+\]: Failed keyboard-interactive(\/pam)? for (invalid user )?(\S*) from (\S+) port \S+/)) {
         my $ip = $6;
 		my $acc = $4;
 		$ip =~ s/^::ffff://;
 		if (checkip(\$ip)) {return ("Failed SSH login from","$ip|$acc","sshd")} else {return}
 	}
-	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd\[\d+\]: Invalid user (\S*) from (\S+)/)) {
+	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd(?:[\-0-9a-zA-Z_]*)?\[\d+\]: Invalid user (\S*) from (\S+)/)) {
         my $ip = $4;
 		my $acc = $3;
 		$ip =~ s/^::ffff://;
 		if (checkip(\$ip)) {return ("Failed SSH login from","$ip|$acc","sshd")} else {return}
 	}
-	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd\[\d+\]: User (\S*) from (\S+)\s* not allowed because not listed in AllowUsers/)) {
+	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd(?:[\-0-9a-zA-Z_]*)?\[\d+\]: User (\S*) from (\S+)\s* not allowed because not listed in AllowUsers/)) {
         my $ip = $4;
 		my $acc = $3;
 		$ip =~ s/^::ffff://;
 		if (checkip(\$ip)) {return ("Failed SSH login from","$ip|$acc","sshd")} else {return}
 	}
-	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd\[\d+\]: Did not receive identification string from (\S+)/)) {
+	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd(?:[\-0-9a-zA-Z_]*)?\[\d+\]: Did not receive identification string from (\S+)/)) {
         my $ip = $3;
 		my $acc = "";
 		$ip =~ s/^::ffff://;
 		if (checkip(\$ip)) {return ("Failed SSH login from","$ip|$acc","sshd")} else {return}
 	}
-	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd\[\d+\]: refused connect from (\S+)/)) {
+	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd(?:[\-0-9a-zA-Z_]*)?\[\d+\]: refused connect from (\S+)/)) {
         my $ip = $3;
 		my $acc = "";
 		$ip =~ s/^::ffff://;
 		if (checkip(\$ip)) {return ("Failed SSH login from","$ip|$acc","sshd")} else {return}
 	}
-	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd\[\d+\]: error: maximum authentication attempts exceeded for (\S*) from (\S+)/)) {
+	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd(?:[\-0-9a-zA-Z_]*)?\[\d+\]: error: maximum authentication attempts exceeded for (\S*) from (\S+)/)) {
         my $ip = $4;
 		my $acc = "";
 		$ip =~ s/^::ffff://;
@@ -169,7 +169,7 @@ sub processline {
 	}
 
 #Debian/Ubuntu
-	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd\[\d+\]: Illegal user (\S*) from (\S+)/)) {
+	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd(?:[\-0-9a-zA-Z_]*)?\[\d+\]: Illegal user (\S*) from (\S+)/)) {
         my $ip = $4;
 		my $acc = $3;
 		$ip =~ s/^::ffff://;
@@ -177,7 +177,7 @@ sub processline {
 	}
 
 #Gentoo
-	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd\[\d+\]: error: PAM: Authentication failure for (\S*) from (\S+)/)) {
+	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd(?:[\-0-9a-zA-Z_]*)?\[\d+\]: error: PAM: Authentication failure for (\S*) from (\S+)/)) {
         my $ip = $4;
 		my $acc = $3;
 		$ip =~ s/^::ffff://;
@@ -675,7 +675,7 @@ sub processloginline {
 sub processsshline {
 	my $line = shift;
 
-	if (($config{LF_SSH_EMAIL_ALERT}) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd\[\d+\]: Accepted (\S+) for (\S+) from (\S+) port \S+/)) {
+	if (($config{LF_SSH_EMAIL_ALERT}) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd(?:[\-0-9a-zA-Z_]*)?\[\d+\]: Accepted (\S+) for (\S+) from (\S+) port \S+/)) {
         my $ip = $5;
 		my $acc = $4;
 		my $how = $3;
