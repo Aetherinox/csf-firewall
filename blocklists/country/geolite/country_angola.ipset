@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_angola_ipset
 #   @uuid           2009e126-96e5-334f-a7d0-26f46ee87055
-#   @updated        Tue Jan 27 12:13:18 UTC 2026
-#   @entries        1295123 ips
-#                   596 subnets
-#                   596 lines
+#   @updated        Wed Jan 28 00:20:20 UTC 2026
+#   @entries        1294867 ips
+#                   601 subnets
+#                   601 lines
 #   @country        Angola (AO)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -234,7 +234,12 @@
 157.167.98.0/24
 159.26.127.4/30
 160.119.240.0/22
-160.224.0.0/18
+160.224.0.0/21
+160.224.8.0/23
+160.224.11.0/24
+160.224.12.0/22
+160.224.16.0/20
+160.224.32.0/19
 160.224.64.0/19
 160.224.96.0/20
 160.224.112.0/22
