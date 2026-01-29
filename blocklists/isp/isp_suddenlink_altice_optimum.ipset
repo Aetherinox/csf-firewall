@@ -5,10 +5,10 @@
 #   @source         None
 #   @id             isp_suddenlink_altice_optimum_ipset
 #   @uuid           10b6335a-b4db-3e3e-a5f9-80a82a8db3f9
-#   @updated        Thu Jan 29 00:19:11 UTC 2026
+#   @updated        Thu Jan 29 12:11:19 UTC 2026
 #   @entries        6979840 ips
-#                   440 subnets
-#                   440 lines
+#                   441 subnets
+#                   441 lines
 #   @expires        6 hours
 #   @category       Uncategorized
 #
@@ -450,6 +450,7 @@
 2600:5400:8000::/33
 2600:5400:8000::/48
 2600:5400:8001::/48
+2600:5400:8800::/48
 2600:5400:9000::/48
 2600:5400:9001::/48
 2600:5400:9002::/48
