@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_tanzania_ipset
 #   @uuid           67b8d595-408f-3ac5-8a3d-35fdc886fbef
-#   @updated        Thu Jan 29 12:14:40 UTC 2026
+#   @updated        Fri Jan 30 00:24:02 UTC 2026
 #   @entries        1149943 ips
 #                   515 subnets
 #                   515 lines
