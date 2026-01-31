@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_argentina_ipset
 #   @uuid           bb580c66-5180-3cd0-aa88-796509949a56
-#   @updated        Fri Jan 30 12:13:32 UTC 2026
+#   @updated        Sat Jan 31 00:22:18 UTC 2026
 #   @entries        19607274 ips
-#                   5424 subnets
-#                   5424 lines
+#                   5426 subnets
+#                   5426 lines
 #   @country        Argentina (AR)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -3562,6 +3562,7 @@
 2001:470:36:34f::/64
 2001:470:36:39c::/64
 2001:470:36:b4f::/64
+2001:470:36:1301::/64
 2001:470:4b:231::/64
 2001:470:67:30::/64
 2001:470:6f:1c7::/64
@@ -3622,7 +3623,7 @@
 2001:470:1f2b:3c::/64
 2001:470:1f2b:61::/64
 2001:470:1f2b:6d::/64
-2001:470:1f2b:82::/64
+2001:470:1f2b:82::/63
 2001:470:1f2b:84::/64
 2001:470:1f2b:a3::/64
 2001:470:1f2b:ad::/64
@@ -3759,6 +3760,7 @@
 2600:1419:b600::/48
 2600:70ff:909d::/48
 2600:70ff:a68f::/48
+2600:70ff:a7d6::/48
 2600:70ff:a9aa::/48
 2600:70ff:ab09::/48
 2600:70ff:abb8::/48
