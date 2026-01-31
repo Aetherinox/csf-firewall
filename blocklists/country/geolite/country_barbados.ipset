@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_barbados_ipset
 #   @uuid           35844e1f-fc26-348b-9ca9-2f7640631b68
-#   @updated        Fri Jan 30 12:13:34 UTC 2026
+#   @updated        Sat Jan 31 00:22:21 UTC 2026
 #   @entries        138582 ips
 #                   317 subnets
 #                   317 lines
