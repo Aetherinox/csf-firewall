@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_samoa_ipset
 #   @uuid           a0c3eb98-7d17-398a-bf82-681be1465959
-#   @updated        Sat Jan 31 00:23:48 UTC 2026
+#   @updated        Sat Jan 31 12:13:05 UTC 2026
 #   @entries        24076 ips
 #                   164 subnets
 #                   164 lines
