@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_azerbaijan_ipset
 #   @uuid           605c3c5d-be18-3c4a-bd9b-833bec79c44a
-#   @updated        Sun Feb  1 12:11:47 UTC 2026
+#   @updated        Mon Feb  2 00:23:22 UTC 2026
 #   @entries        784782 ips
 #                   735 subnets
 #                   735 lines

@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_curacao_ipset
 #   @uuid           9fbaba46-3c5a-34cc-8153-ebeefb61eb48
-#   @updated        Sun Feb  1 12:11:58 UTC 2026
+#   @updated        Mon Feb  2 00:23:35 UTC 2026
 #   @entries        190226 ips
 #                   220 subnets
 #                   220 lines
