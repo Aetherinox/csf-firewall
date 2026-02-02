@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_qatar_ipset
 #   @uuid           de3f8d1a-6313-3317-995c-429749e852bd
-#   @updated        Mon Feb  2 00:24:23 UTC 2026
+#   @updated        Mon Feb  2 12:15:41 UTC 2026
 #   @entries        1300829 ips
 #                   1387 subnets
 #                   1387 lines

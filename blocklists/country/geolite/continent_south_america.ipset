@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             continent_south_america_ipset
 #   @uuid           c4d5f795-a326-3443-85e4-13fd310ce537
-#   @updated        Mon Feb  2 00:23:17 UTC 2026
+#   @updated        Mon Feb  2 12:14:38 UTC 2026
 #   @entries        281475144184739 ips
 #                   52964 subnets
 #                   52964 lines
