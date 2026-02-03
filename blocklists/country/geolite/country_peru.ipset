@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_peru_ipset
 #   @uuid           71d5151d-8e2f-3be1-99ce-861c8ce9b877
-#   @updated        Mon Feb  2 12:15:37 UTC 2026
+#   @updated        Tue Feb  3 00:24:58 UTC 2026
 #   @entries        3674549 ips
 #                   1889 subnets
 #                   1889 lines
