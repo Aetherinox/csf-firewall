@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_dominica_ipset
 #   @uuid           1cadca1e-26f0-397e-91ca-4e5bd25b1087
-#   @updated        Wed Feb  4 00:21:24 UTC 2026
+#   @updated        Wed Feb  4 12:14:34 UTC 2026
 #   @entries        27105 ips
 #                   217 subnets
 #                   217 lines
