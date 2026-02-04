@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_panama_ipset
 #   @uuid           9225892a-530e-3f73-b322-b26fe8cdeb68
-#   @updated        Tue Feb  3 12:16:17 UTC 2026
-#   @entries        2042446 ips
-#                   969 subnets
-#                   969 lines
+#   @updated        Wed Feb  4 00:22:07 UTC 2026
+#   @entries        2040654 ips
+#                   970 subnets
+#                   970 lines
 #   @country        Panama (PA)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -116,8 +116,7 @@
 38.134.250.0/24
 38.145.128.0/21
 38.156.248.0/22
-38.191.68.0/22
-38.191.72.0/21
+38.191.72.0/22
 38.248.28.0/22
 38.252.0.0/22
 45.59.176.0/24
@@ -185,6 +184,7 @@
 103.86.97.0/24
 103.86.98.0/24
 103.173.150.0/23
+104.22.54.0/24
 104.28.12.92/31
 104.28.12.94/32
 104.28.20.0/30
@@ -665,6 +665,7 @@
 2001:1368::/32
 2001:13b3:4000::/34
 2400:cb00:90::/48
+2400:cb00:1271::/48
 2407:e8c0:11::/48
 2407:e8c0:12::/47
 2407:e8c0:14::/46
