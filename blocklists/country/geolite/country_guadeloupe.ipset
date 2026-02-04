@@ -5,10 +5,10 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_guadeloupe_ipset
 #   @uuid           f97a66b7-47ac-3650-88e2-4b03e9f401fc
-#   @updated        Tue Feb  3 12:15:48 UTC 2026
-#   @entries        285466 ips
-#                   338 subnets
-#                   338 lines
+#   @updated        Wed Feb  4 00:21:36 UTC 2026
+#   @entries        281114 ips
+#                   337 subnets
+#                   337 lines
 #   @country        Guadeloupe (GP)
 #   @expires        24 hours
 #   @category       Geolocation
@@ -70,7 +70,6 @@
 90.15.0.0/16
 90.36.0.0/17
 90.82.48.0/20
-92.49.64.0/20
 92.49.96.0/20
 93.121.128.0/17
 93.176.16.0/22
@@ -123,7 +122,6 @@
 109.62.103.0/24
 109.62.111.0/24
 109.62.112.0/21
-109.203.228.0/23
 109.203.232.0/21
 109.203.244.0/23
 136.23.23.41/32
@@ -169,6 +167,7 @@
 188.115.72.0/21
 188.115.88.0/21
 188.115.112.0/20
+192.139.192.0/24
 193.218.114.0/24
 193.248.0.0/22
 193.248.4.0/25
