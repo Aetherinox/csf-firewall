@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_new_zealand_ipset
 #   @uuid           0c39e926-a00f-3b4d-9b4d-c98235337755
-#   @updated        Wed Feb  4 12:15:11 UTC 2026
+#   @updated        Thu Feb  5 00:25:00 UTC 2026
 #   @entries        7346597 ips
 #                   4161 subnets
 #                   4161 lines
