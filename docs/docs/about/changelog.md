@@ -25,7 +25,7 @@ tags:
     - added a new setting in `/etc/csf/csf.conf` called `SPONSOR_HIDE_ICON` to hide icons in web interface footer.
     - sponsor icon will automatically hide if the user enters a sponsor license.
     - removed the beating animation for the sponsor icon.
-- `feat(webmin)`: restored the **Firewall Configuration** button.
+- `feat(webmin)`: add setting `UI_WEBMIN_SHOW_BUTTON_CONFIG` to restore **Firewall Configuration** button in Webmin.
 - `feat(csf)`: added **AbuseIPDB** service template to the blocklist file `/etc/csf/csf.blocklists`.
 - `chore(directadmin)`: updated `plugin.conf` for CSF:
     - added `update_url` and `version_url` so DirectAdmin can fetch the latest version.
@@ -39,6 +39,7 @@ tags:
     - added optional `--flags` such as `--help`, `--dryrun`, etc.
 - `refactor(openvpn)`: re-wrote openvpn integration script in `extras/openvpn.sh`
     - POSIX compliant
+- `security(csf)`: re-write backend after initial transition from CSF old developer to new
     - added optional `--flags` such as `--help`, `--dryrun`, etc.
 - `fix(directadmin)`: corrected an install script error:
     - fixed an improperly closed `if` condition in the `install.directadmin` script.
