@@ -32,6 +32,9 @@ tags:
 - `chore(cwp)`: re-branded `CentOS Web Panel` to `Control Web Panel` to reflect correct app name after re-name.
 - `docs(install)`: added DirectAdmin instructions to the [Install](https://docs.configserver.dev/install/install/#install-directadmin) chapter in the documentation.
 - `docs(integration)`: added AbuseIPDB integration to the documentation.
+- `refactor(blocklists)`: CSF blocklist service files migrated to repository:
+    - https://github.com/ConfigServerApps/service-blocklists
+- `refactor(repo)`: github repo cleaned up to reduze size after blocklist migration
 - `refactor(csf)`: added AbuseIPDB template to `/etc/csf/csf.blocklists` for improved integration.
 - `refactor(docker)`: re-wrote docker integration script in `extras/docker.sh`
     - added caching for docker container list generation
