@@ -3,20 +3,18 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Details regarding CSF release v15.08
+        <meta name="description" content="Details regarding CSF release v15.09
 ">
       
       
         <meta name="author" content="Aetherinox">
       
       
-        <link rel="canonical" href="https://aetherinox.github.io/csf-firewall/blog/2025/release-v1508/">
+        <link rel="canonical" href="https://aetherinox.github.io/csf-firewall/blog/2025/release-v1509/">
       
       
-        <link rel="prev" href="../release-v1507/">
+        <link rel="prev" href="../release-v1508/">
       
-      
-        <link rel="next" href="../release-v1509/">
       
       
         
@@ -27,7 +25,7 @@
     
     
       
-        <title>Release v15.08
+        <title>Release v15.09
  - ConfigServer Security &amp; Firewall</title>
       
     
@@ -96,7 +94,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#release-v1508" class="md-skip">
+        <a href="#release-v1509" class="md-skip">
           Skip to content
         </a>
       
@@ -167,7 +165,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Release v15.08
+              Release v15.09
 
             
           </span>
@@ -3621,10 +3619,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#webmin-automated-installation" class="md-nav__link">
+  <a href="#introducing-abuseipdb" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Webmin Automated Installation
+        Introducing AbuseIPDB
       
     </span>
   </a>
@@ -3632,10 +3630,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#new-csget-module" class="md-nav__link">
+  <a href="#sponsor-icon" class="md-nav__link">
     <span class="md-ellipsis">
       
-        New CSGet Module
+        Sponsor Icon
       
     </span>
   </a>
@@ -3643,10 +3641,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#detailed-installation-wizard" class="md-nav__link">
+  <a href="#directadmin-new-docs" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Detailed Installation Wizard
+        DirectAdmin: New Docs
       
     </span>
   </a>
@@ -3654,10 +3652,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#control-web-panel-links" class="md-nav__link">
+  <a href="#directadmin-install-error" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Control Web Panel Links
+        DirectAdmin: Install Error
       
     </span>
   </a>
@@ -3665,10 +3663,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#control-web-panel-immutable-flags" class="md-nav__link">
+  <a href="#cyberpanel-fixed-vertical-scrollbar" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Control Web Panel Immutable Flags
+        CyberPanel: Fixed Vertical Scrollbar
       
     </span>
   </a>
@@ -3676,22 +3674,66 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#new-terminal-commands" class="md-nav__link">
+  <a href="#cwp-rebranding" class="md-nav__link">
     <span class="md-ellipsis">
       
-        New Terminal Commands
+        CWP: Rebranding
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="New Terminal Commands">
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cwp-output-sanitization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CWP: Output Sanitization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cwp-fixed-terminal-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CWP: Fixed Terminal Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#webmin-firewall-button-restored" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Webmin: Firewall Button Restored
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#openvpn-and-docker-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OpenVPN and Docker Integration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="OpenVPN and Docker Integration">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#arguments" class="md-nav__link">
+  <a href="#automatic" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Arguments
+        Automatic
       
     </span>
   </a>
@@ -3699,44 +3741,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#commands" class="md-nav__link">
+  <a href="#manual" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Commands
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Commands">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#add-port" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Add Port
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#remove-port" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Remove Port
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#list-ports" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        List Ports
+        Manual
       
     </span>
   </a>
@@ -3745,33 +3753,6 @@
         
       </ul>
     </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#selinux-permission-conformity" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        SELinux Permission Conformity
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#blocklist-service-enhancements" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Blocklist Service Enhancements
-      
-    </span>
-  </a>
   
 </li>
         
@@ -3847,7 +3828,7 @@
                     <li class="md-nav__item">
                       <div class="md-nav__link">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5v-5Z"></path></svg>
-                        <time datetime="2025-12-11 00:00:00+00:00" class="md-ellipsis">Thursday, December 11, 2025</time>
+                        <time datetime="2025-12-16 00:00:00+00:00" class="md-ellipsis">Tuesday, December 16, 2025</time>
                       </div>
                     </li>
                     
@@ -3872,7 +3853,7 @@
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7h1.5Z"></path></svg>
                           <span class="md-ellipsis">
                             
-                              6 min read
+                              8 min read
                             
                           </span>
                         </div>
@@ -3896,7 +3877,7 @@
 
 
   
-    <a href="https://github.com/aetherinox/csf-firewall/edit/main/docs/docs/blog/posts/release-15.08.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/aetherinox/csf-firewall/edit/main/docs/docs/blog/posts/release-15.09.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"></path></svg>
     </a>
@@ -3905,16 +3886,16 @@
     
       
     
-    <a href="https://github.com/aetherinox/csf-firewall/raw/main/docs/docs/blog/posts/release-15.08.md" title="View source of this page" class="md-content__button md-icon">
+    <a href="https://github.com/aetherinox/csf-firewall/raw/main/docs/docs/blog/posts/release-15.09.md" title="View source of this page" class="md-content__button md-icon">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 18c.56 0 1 .44 1 1s-.44 1-1 1-1-.44-1-1 .44-1 1-1m0-3c-2.73 0-5.06 1.66-6 4 .94 2.34 3.27 4 6 4s5.06-1.66 6-4c-.94-2.34-3.27-4-6-4m0 6.5a2.5 2.5 0 0 1-2.5-2.5 2.5 2.5 0 0 1 2.5-2.5 2.5 2.5 0 0 1 2.5 2.5 2.5 2.5 0 0 1-2.5 2.5M9.27 20H6V4h7v5h5v4.07c.7.08 1.36.25 2 .49V8l-6-6H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h4.5a8.15 8.15 0 0 1-1.23-2Z"></path></svg>
     </a>
   
 
 
-<h1 id="release-v1508">Release: v15.08<a class="headerlink" href="#release-v1508" title="Permanent link">¶</a></h1>
-<p>Our <strong>v15.08</strong> update delivers a cleaner, more reliable experience with a strong focus on bug fixes, third-party integration improvements, optimizations, and clearer user feedback during both installation and day-to-day operation.</p>
-<p>This release includes significant fixes for <strong>CyberPanel</strong> and <strong>Control Web Panel</strong>, along with automatic Webmin module installation. This means that Webmin users no longer need to manually import the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> module. It is now handled automatically as part of the installation process.</p>
+<h1 id="release-v1509">Release: v15.09<a class="headerlink" href="#release-v1509" title="Permanent link">¶</a></h1>
+<p>Release <strong>v15.09</strong> enhances support for <a href="https://directadmin.com">DirectAdmin</a>, including a major bug fix, an updated module interface, enables automatic updates for the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> DirectAdmin web interface,, and a newly added <a href="https://docs.configserver.dev/install/install/#install-directadmin">DirectAdmin Installation Guide</a>.</p>
+<p>This release also resolves a few issues regarding the installation process, and includes multiple performance improvements that significantly increase file read efficiency.</p>
 <!-- more -->
 
 <p><br></p>
@@ -3923,278 +3904,502 @@
 <h2 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">¶</a></h2>
 <p>A list of the most important changes are listed below.</p>
 <p><br></p>
-<h3 id="webmin-automated-installation">Webmin Automated Installation<a class="headerlink" href="#webmin-automated-installation" title="Permanent link">¶</a></h3>
-<p>Prior to <strong><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> v15.08</strong>, Webmin users were required to manually import the file<br>
-<code>/usr/local/csf/csfwebmin.tgz</code> to enable the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> Webmin module. Although the process was rather simple, it introduced an additional manual step during installation.</p>
-<p>As of <strong><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> v15.08</strong>, this step has been fully automated for both new installations and version upgrades. The Webmin module is now imported automatically, without the need for manual installation. Simply run the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> <code>install.sh</code> script, and Webmin integration is handled automatically.</p>
-<p><br>
-<br></p>
-<h3 id="new-csget-module">New CSGet Module<a class="headerlink" href="#new-csget-module" title="Permanent link">¶</a></h3>
-<p>This update includes an entirely re-written CSGet perl module.</p>
-<p>The <a data-preview="" href="../../../advanced/csget/">CSGet</a> module is a core component of the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> update system used by the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface. Its primary role is to keep every installation of <abbr title="ConfigServer Security &amp; Firewall Security">ConfigServer Security</abbr> and Firewall informed of new releases. CSGet runs quietly in the background, requiring no user interaction while monitoring for updates.</p>
-<p>When <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> is installed for the first time, the <code>csget.pl</code> file will automatically be installed to your system. The script will initially be ran once to confirm that you are using the latest version. After that initial run, your system's cron service will take over the task of running CSGet multiple times a day in order to notify you of updates.</p>
-<p>Along with its base functionality, we have now included the ability to trigger the script manually, with optional flags which can be specified from your terminal. For basic use, you can run CSGet as a foreground process which executes once and then exits the process. A manual execution can be accomplished with one of the commands below <em>(both bash and perl command variants available)</em>:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="new-csget-module-bash" name="__tabbed_1" type="radio"><input id="new-csget-module-perl" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="new-csget-module-bash"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-  <path fill="currentColor" fill-rule="evenodd" d="M21.038,4.9l-7.577-4.498C13.009,0.134,12.505,0,12,0c-0.505,0-1.009,0.134-1.462,0.403L2.961,4.9 C2.057,5.437,1.5,6.429,1.5,7.503v8.995c0,1.073,0.557,2.066,1.462,2.603l7.577,4.497C10.991,23.866,11.495,24,12,24 c0.505,0,1.009-0.134,1.461-0.402l7.577-4.497c0.904-0.537,1.462-1.529,1.462-2.603V7.503C22.5,6.429,21.943,5.437,21.038,4.9z M15.17,18.946l0.013,0.646c0.001,0.078-0.05,0.167-0.111,0.198l-0.383,0.22c-0.061,0.031-0.111-0.007-0.112-0.085L14.57,19.29 c-0.328,0.136-0.66,0.169-0.872,0.084c-0.04-0.016-0.057-0.075-0.041-0.142l0.139-0.584c0.011-0.046,0.036-0.092,0.069-0.121 c0.012-0.011,0.024-0.02,0.036-0.026c0.022-0.011,0.043-0.014,0.062-0.006c0.229,0.077,0.521,0.041,0.802-0.101 c0.357-0.181,0.596-0.545,0.592-0.907c-0.003-0.328-0.181-0.465-0.613-0.468c-0.55,0.001-1.064-0.107-1.072-0.917 c-0.007-0.667,0.34-1.361,0.889-1.8l-0.007-0.652c-0.001-0.08,0.048-0.168,0.111-0.2l0.37-0.236 c0.061-0.031,0.111,0.007,0.112,0.087l0.006,0.653c0.273-0.109,0.511-0.138,0.726-0.088c0.047,0.012,0.067,0.076,0.048,0.151 l-0.144,0.578c-0.011,0.044-0.036,0.088-0.065,0.116c-0.012,0.012-0.025,0.021-0.038,0.028c-0.019,0.01-0.038,0.013-0.057,0.009 c-0.098-0.022-0.332-0.073-0.699,0.113c-0.385,0.195-0.52,0.53-0.517,0.778c0.003,0.297,0.155,0.387,0.681,0.396 c0.7,0.012,1.003,0.318,1.01,1.023C16.105,17.747,15.736,18.491,15.17,18.946z M19.143,17.859c0,0.06-0.008,0.116-0.058,0.145 l-1.916,1.164c-0.05,0.029-0.09,0.004-0.09-0.056v-0.494c0-0.06,0.037-0.093,0.087-0.122l1.887-1.129 c0.05-0.029,0.09-0.004,0.09,0.056V17.859z M20.459,6.797l-7.168,4.427c-0.894,0.523-1.553,1.109-1.553,2.187v8.833 c0,0.645,0.26,1.063,0.66,1.184c-0.131,0.023-0.264,0.039-0.398,0.039c-0.42,0-0.833-0.114-1.197-0.33L3.226,18.64 c-0.741-0.44-1.201-1.261-1.201-2.142V7.503c0-0.881,0.46-1.702,1.201-2.142l7.577-4.498c0.363-0.216,0.777-0.33,1.197-0.33 c0.419,0,0.833,0.114,1.197,0.33l7.577,4.498c0.624,0.371,1.046,1.013,1.164,1.732C21.686,6.557,21.12,6.411,20.459,6.797z"></path>
-</svg>
-</span> Bash</label><label for="new-csget-module-perl"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-  <path fill="currentColor" fill-rule="evenodd" d="M11.638 0c-.148 0-.207.689-.252 2.925-.058 2.86-.07 2.949-.51 3.914-.36.793-1.623 2.676-2.037 3.04-.373.328-1.183 1.56-1.58 2.401-.71 1.504-.659 3.52-.04 5.047.518 1.194 1.262 2.156 2.46 3.182.94.805 1.23.919 1.375.544.049-.128-.162-.572-.483-1.018-.313-.436-.843-1.362-1.178-2.059-1.382-2.926-.7-5.357.902-8.045.89-1.393 1.403-2.642 1.579-3.852.22-1.515.043-6.079-.236-6.079zm-.757 1.215c-.186 0-.228.26-.228 1.422 0 .782-.08 1.654-.177 1.938-.312.914-1.154 1.737-3.482 3.404-1.684 1.205-3.096 2.652-3.64 3.732-1.666 3.299-.195 7.311 3.42 9.333 1.613.902 2.966 1.253 2.966.768 0-.126-.054-.228-.121-.228s-.632-.332-1.254-.738c-2.69-1.755-3.947-3.927-3.747-6.482.15-1.91.873-3.08 3.796-6.135 2.522-2.636 2.69-2.97 2.693-5.304.001-1.42-.036-1.71-.226-1.71zm1.508.632c-.103.017-.14.905-.142 2.903l-.004 2.926-.744 2.812c-.83 2.54-.954 5.133-.345 7.725.558 2.202.796 2.638 1.567 2.857.343.098.89.355 1.216.572.736.49 1.395.435 2.715-.232 1.92-.97 3.209-2.222 4.067-3.953.745-1.648.856-3.71.068-5.35-.7-1.414-1.882-2.554-4.358-4.197-2.162-1.436-2.617-1.82-3.15-2.652-.322-.503-.369-.724-.308-1.444.04-.468.126-.978.192-1.134.101-.239.069-.268-.202-.182-.26.082-.34.027-.42-.286-.061-.245-.112-.372-.152-.365zm.714 4.586c.034-.007.135.113.252.306.144.237 1.022 1 1.952 1.697 2.888 2.189 5.27 4.378 4.087 8.2-.405 1.146-.99 2.07-1.963 3.098-.544.575-1.266 1.09-1.53 1.09-.047 0 .252-.43.664-.954 1.337-1.7 1.972-3.718 1.79-5.674-.168-1.796-1.557-3.975-3.753-5.89-.912-.796-1.518-1.536-1.512-1.846 0-.016.005-.025.013-.027zm-1.089 15.492c-.208-.006-.297.349-.297 1.121 0 .94.018.988.342.942.302-.042.347-.15.387-.899.032-.613-.019-.902-.183-1.039-.097-.08-.18-.123-.249-.125zm-1.052.28c-.124-.002-.226.14-.327.43-.085.245-.253.481-.373.527-.322.124-.264.55.075.55.162 0 .402-.109.534-.24.441-.442.579-.824.382-1.062-.111-.134-.206-.203-.29-.205zm2.074.063c-.312 0-.28.61.053 1.034.309.392.908.567.908.264 0-.252-.775-1.298-.961-1.298z"></path>
-</svg></span> Perl</label></div>
+<h3 id="introducing-abuseipdb">Introducing AbuseIPDB<a class="headerlink" href="#introducing-abuseipdb" title="Permanent link">¶</a></h3>
+<p><br></p>
+<p align="center">
+    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../assets/images/blog/release-1509/abuseipdb.png" data-desc-position="bottom"><img src="../../../assets/images/blog/release-1509/abuseipdb.png" alt="AbuseIPDB"></a>
+</p>
+
+<p><br></p>
+<p>We have added a new <strong>AbuseIPDB integration</strong> to the file <code>/etc/csf/csf.blocklists</code>. When enabled, this integration allows <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> to automatically block known malicious IP addresses before they can reach your server.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="introducing-abuseipdb-etccsfcsfblocklists" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="introducing-abuseipdb-etccsfcsfblocklists"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 9V3.5L18.5 9M6 2c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6Z"></path></svg></span> /etc/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>.blocklists</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>sudo<span class="w"> </span>/etc/cron.daily/csget<span class="w"> </span>--nodaemon
-</code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>sudo<span class="w"> </span>perl<span class="w"> </span>/etc/cron.daily/csget<span class="w"> </span>--nodaemon
+<div class="language-ini highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># #</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1">#   @blocklist              AbuseIPDB</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1">#   @details:               https://abuseipdb.com/account/api</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1">#   @notes:                 Requires you to create an account.</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1">#                           Requires you to generate an API key.</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1">#                           Add your generated API key in the URL below by </span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1">#                               replacing `YOUR_API_KEY`.</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c1">#                           Change the 3rd field `10000` to a higher number</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="c1">#                               if you are on a paid plan.</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="c1">#   </span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="c1">#                           Full documentation at:</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="c1">#                               https://docs.configserver.dev/install/integrations/abuseipdb/</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="c1"># #</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="c1">#   ABUSEIPDB|86400|10000|https://api.abuseipdb.com/api/v2/blacklist?key=YOUR_API_KEY&amp;plaintext</span>
 </code></pre></div>
 </div>
 </div>
 </div>
 <p><br></p>
-<p>CSGet now includes numerous flags which are outlined below:</p>
-<table>
-<thead>
-<tr>
-<th>Flag</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text" style="width:110px !important; display:inline-block; text-align:center; padding-top:2px; padding-bottom:2px;"><code>-d,  --debug</code></span></span></td>
-<td>CSGet script runs immediately once and exits, no forked background process / daemonization.</td>
-</tr>
-<tr>
-<td><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text" style="width:110px !important; display:inline-block; text-align:center; padding-top:2px; padding-bottom:2px;"><code>-r,  --response</code></span></span></td>
-<td>Runs CSGet in the foreground once and then exits with a numerical response.<br>Returns <code>0</code> on Success <br> Returns <code>1</code> on Failures</td>
-</tr>
-<tr>
-<td><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text" style="width:110px !important; display:inline-block; text-align:center; padding-top:2px; padding-bottom:2px;"><code>-k,  --kill</code></span></span></td>
-<td>Kills all running processes of CSGet.</td>
-</tr>
-<tr>
-<td><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text" style="width:110px !important; display:inline-block; text-align:center; padding-top:2px; padding-bottom:2px;"><code>-l,  --list</code></span></span></td>
-<td>Lists all running processes of CSGet.</td>
-</tr>
-<tr>
-<td><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text" style="width:110px !important; display:inline-block; text-align:center; padding-top:2px; padding-bottom:2px;"><code>-d,  --diag</code></span></span></td>
-<td>Show diagnostic information.</td>
-</tr>
-<tr>
-<td><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text" style="width:110px !important; display:inline-block; text-align:center; padding-top:2px; padding-bottom:2px;"><code>-D,  --debug</code></span></span></td>
-<td>Show verbose logs and additional details; disables forked child process daemonization.</td>
-</tr>
-<tr>
-<td><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text" style="width:110px !important; display:inline-block; text-align:center; padding-top:2px; padding-bottom:2px;"><code>-v,  --version</code></span></span></td>
-<td>Show version information about CSGet and <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>.</td>
-</tr>
-<tr>
-<td><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text" style="width:110px !important; display:inline-block; text-align:center; padding-top:2px; padding-bottom:2px;"><code>-h,  --help</code></span></span></td>
-<td>Show help menu, list of commands, and usage examples.</td>
-</tr>
-</tbody>
-</table>
-<p><br></p>
-<mark class="critic block">
-<p>Our documentation has been updated to explain CSGet in detail, as well as provide examples on how to utilize it, and the list of available flags. 
-<a data-preview="" href="../../../advanced/csget/">You can read more about CSGet here</a></p>
-</mark>
-<p><br>
-<br></p>
-<h3 id="detailed-installation-wizard">Detailed Installation Wizard<a class="headerlink" href="#detailed-installation-wizard" title="Permanent link">¶</a></h3>
-<p>Historically, one of the biggest challenges with ConfigServer was the installation process. If an installation failed, many users struggled to identify exactly where things went wrong.</p>
-<p>The installation workflow has been fully segmented, with nearly every major step being monitored. Each stage now provides clear status reporting, indicating whether it <strong>passed</strong> or <strong>failed</strong>.</p>
-<p>This improvement makes it significantly easier to diagnose issues as they occur and provides users with clearer insight into any problems that may arise during installation.</p>
-<p>There are additional changes coming in the future, but this current phase of the revamp will dramatically help with any potential issues.</p>
-<p><br>
-<br></p>
-<h3 id="control-web-panel-links">Control Web Panel Links<a class="headerlink" href="#control-web-panel-links" title="Permanent link">¶</a></h3>
-<p>This update fixes a bug in Control Web Panel where the <abbr title="ConfigServer Security &amp; Firewall Security">ConfigServer Firewall</abbr> navigation menu would display a blank page instead of redirecting users to the appropriate <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> configuration page.</p>
-<p>Previously, the second navigation link <em>(stock <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> interface)</em> would trigger an error. It now correctly redirects users to the URL:</p>
+<p>Think of AbuseIPDB like the classic arcade game <strong>Asteroids</strong>: hostile attackers and abusive IPs are the incoming asteroids, and your server’s firewall is the laser cannon. As soon as a threat gets too close, it’s eliminated, along with 100 points per hit.</p>
+<p>By leveraging AbuseIPDB’s real-time threat intelligence, you gain a proactive defense layer that helps keep your server protected in the ongoing battle against malicious activity across the digital cosmos.</p>
+<p>We’ve also added a dedicated documentation page that explains the AbuseIPDB integration in detail. You can read more about it here:  </p>
 <ul>
-<li><a href="https://127.0.0.1:2031/admin/index.php?module=csfofficial">https://127.0.0.1:2031/admin/index.php?module=csfofficial</a></li>
+<li><a href="https://docs.configserver.dev/install/integrations/abuseipdb/">AbuseIPDB Integration Documentation</a></li>
 </ul>
 <p><br></p>
-<p>The Control Web Panel allows you to access <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> through two different navigation links. The main difference between them is that one uses a custom theme developed by the Control Web Panel team <em>(link 1)</em>, while the second link displays the stock <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> theme <em>(link 2)</em>.</p>
-<ol>
-<li><strong><abbr title="Control Web Panel (CWP)">CWP</abbr> Menu</strong> › <strong>Security</strong> › <strong><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> Firewall</strong><ul>
-<li>Provided by Control Web Panel. Custom colors and stylesheet</li>
-<li><a href="https://127.0.0.1:2031/admin/index.php?module=csf">https://127.0.0.1:2031/admin/index.php?module=csf</a></li>
-</ul>
+<p>Review our list of curated guides related to AbuseIPDB below:</p>
+<div class="grid cards">
+<ul>
+<li>
+<p><span class="twemoji"><!--?xml version="1.0" encoding="UTF-8"?-->
+<svg width="162.18" height="162.18" version="1.1" viewBox="0 0 162.18244 162.18244" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
+<metadata>
+<rdf:rdf>
+<cc:work rdf:about="">
+<dc:format>image/svg+xml</dc:format>
+<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"></dc:type>
+<dc:title></dc:title>
+</cc:work>
+</rdf:rdf>
+</metadata>
+<defs>
+<linearGradient id="f" x1="54.759" x2="49.053" y1="600.57" y2="631.41" gradientTransform="scale(1.5608 .64069)" gradientUnits="userSpaceOnUse" xlink:href="#a"></linearGradient>
+<linearGradient id="g" x1="32.103" x2="56.402" y1="808.54" y2="808.54" gradientTransform="scale(2.195 .45558)" gradientUnits="userSpaceOnUse" xlink:href="#a"></linearGradient>
+<linearGradient id="e" x1="48.693" x2="46.452" y1="670.39" y2="673.16" gradientTransform="scale(1.7812 .56142)" gradientUnits="userSpaceOnUse">
+<stop stop-opacity=".408" offset="0"></stop>
+<stop stop-opacity="0" offset="1"></stop>
+</linearGradient>
+<linearGradient id="a">
+<stop stop-color="#fff" stop-opacity=".175" offset="0"></stop>
+<stop stop-color="#fff" stop-opacity=".375" offset="1"></stop>
+</linearGradient>
+</defs>
+<g transform="translate(-16.984 -331)" fill-rule="evenodd">
+<path d="m48.388 396.53c0.9599-4.2739 1.9198-33.716 10.559-33.241 30.717 0.94974 62.394-30.867 85.432 39.89 71.033 33.241 4.9391 59.953-51.295 57.579-55.567-2.3264-103.01-42.383-44.696-64.227z" fill-opacity=".992"></path>
+<path d="m46.948 406.03c35.516 22.319 94.071 8.5478 96.47-2.3744 3.3597 3.799 0 14.246 0 14.246-15.358 19.945-89.751 15.671-97.91 1.4246-0.95991-3.799 0.9599-11.872 1.4399-13.296z" fill="#fff"></path>
+<g stroke-width="1.25">
+<path d="m60.387 370.41c9.1191-8.0729 48.955 3.3241 54.235 9.4975 1.9198 10.447-48.955 2.3744-54.235-9.4975z" fill="url(#e)"></path>
+<path d="m60.387 382.29c4.3196 9.9724 21.118 33.241 49.435 10.922-23.518 0.94977-33.597-1.8995-49.435-10.922z" fill="url(#f)"></path>
+<path d="m70.466 362.82c6.2394 2.8492 45.596 13.771 49.915 10.447 4.7995-1.8995 3.8396-2.8493 1.4399-3.3241-3.8396 2.3744-10.559 3.799-51.355-7.1231z" fill="url(#g)"></path>
+</g>
+<path d="m52.701 411.24c5.762 2.7324 23.528 6.3756 30.251 6.831 4.8017 3.1878 2.4008 8.1972 0.48019 11.84-12.964 0-27.85-3.1878-31.691-7.2864-2.4008-4.0986-1.4405-7.2864 0.96034-11.385z" fill="#4d4d4d" fill-opacity=".317"></path>
+</g>
+<circle cx="81.091" cy="81.091" r="75.091" fill="none" stroke="#f00" stroke-width="12"></circle>
+<path d="m26.794 25.237 105.89 112.79" fill="none" stroke="#f00" stroke-width="12"></path>
+<g transform="translate(-16.984 -331)">
+<g transform="matrix(1.0215 0 0 .99183 -1.0406 3.2411)" fill-rule="evenodd">
+<path d="m48.388 396.53c-30.511 40.982-1.0945 30.276 44.696 64.228-55.567-2.3264-103.01-42.383-44.696-64.227z" fill-opacity=".992"></path>
+</g>
+</g>
+</svg>
+</span> &nbsp; <strong><a href="https://docs.configserver.dev/install/integrations/abuseipdb/"><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>: AbuseIPDB Integration Guide</a></strong></p>
+<hr>
+<p>Our official documentation for integrating AbuseIPDB into <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>.</p>
 </li>
-<li><strong><abbr title="Control Web Panel (CWP)">CWP</abbr> Menu</strong> › <strong><abbr title="ConfigServer Security &amp; Firewall Security">ConfigServer Firewall</abbr></strong><ul>
-<li>Provided by <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>. Original appearance shipped with all downloads.</li>
-<li><a href="https://127.0.0.1:2031/admin/index.php?module=csfofficial">https://127.0.0.1:2031/admin/index.php?module=csfofficial</a></li>
-</ul>
+<li>
+<p><span class="twemoji"><!--?xml version="1.0" encoding="UTF-8"?-->
+<svg width="162.18" height="162.18" version="1.1" viewBox="0 0 162.18244 162.18244" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
+<metadata>
+<rdf:rdf>
+<cc:work rdf:about="">
+<dc:format>image/svg+xml</dc:format>
+<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"></dc:type>
+<dc:title></dc:title>
+</cc:work>
+</rdf:rdf>
+</metadata>
+<defs>
+<linearGradient id="f" x1="54.759" x2="49.053" y1="600.57" y2="631.41" gradientTransform="scale(1.5608 .64069)" gradientUnits="userSpaceOnUse" xlink:href="#a"></linearGradient>
+<linearGradient id="g" x1="32.103" x2="56.402" y1="808.54" y2="808.54" gradientTransform="scale(2.195 .45558)" gradientUnits="userSpaceOnUse" xlink:href="#a"></linearGradient>
+<linearGradient id="e" x1="48.693" x2="46.452" y1="670.39" y2="673.16" gradientTransform="scale(1.7812 .56142)" gradientUnits="userSpaceOnUse">
+<stop stop-opacity=".408" offset="0"></stop>
+<stop stop-opacity="0" offset="1"></stop>
+</linearGradient>
+<linearGradient id="a">
+<stop stop-color="#fff" stop-opacity=".175" offset="0"></stop>
+<stop stop-color="#fff" stop-opacity=".375" offset="1"></stop>
+</linearGradient>
+</defs>
+<g transform="translate(-16.984 -331)" fill-rule="evenodd">
+<path d="m48.388 396.53c0.9599-4.2739 1.9198-33.716 10.559-33.241 30.717 0.94974 62.394-30.867 85.432 39.89 71.033 33.241 4.9391 59.953-51.295 57.579-55.567-2.3264-103.01-42.383-44.696-64.227z" fill-opacity=".992"></path>
+<path d="m46.948 406.03c35.516 22.319 94.071 8.5478 96.47-2.3744 3.3597 3.799 0 14.246 0 14.246-15.358 19.945-89.751 15.671-97.91 1.4246-0.95991-3.799 0.9599-11.872 1.4399-13.296z" fill="#fff"></path>
+<g stroke-width="1.25">
+<path d="m60.387 370.41c9.1191-8.0729 48.955 3.3241 54.235 9.4975 1.9198 10.447-48.955 2.3744-54.235-9.4975z" fill="url(#e)"></path>
+<path d="m60.387 382.29c4.3196 9.9724 21.118 33.241 49.435 10.922-23.518 0.94977-33.597-1.8995-49.435-10.922z" fill="url(#f)"></path>
+<path d="m70.466 362.82c6.2394 2.8492 45.596 13.771 49.915 10.447 4.7995-1.8995 3.8396-2.8493 1.4399-3.3241-3.8396 2.3744-10.559 3.799-51.355-7.1231z" fill="url(#g)"></path>
+</g>
+<path d="m52.701 411.24c5.762 2.7324 23.528 6.3756 30.251 6.831 4.8017 3.1878 2.4008 8.1972 0.48019 11.84-12.964 0-27.85-3.1878-31.691-7.2864-2.4008-4.0986-1.4405-7.2864 0.96034-11.385z" fill="#4d4d4d" fill-opacity=".317"></path>
+</g>
+<circle cx="81.091" cy="81.091" r="75.091" fill="none" stroke="#f00" stroke-width="12"></circle>
+<path d="m26.794 25.237 105.89 112.79" fill="none" stroke="#f00" stroke-width="12"></path>
+<g transform="translate(-16.984 -331)">
+<g transform="matrix(1.0215 0 0 .99183 -1.0406 3.2411)" fill-rule="evenodd">
+<path d="m48.388 396.53c-30.511 40.982-1.0945 30.276 44.696 64.228-55.567-2.3264-103.01-42.383-44.696-64.227z" fill-opacity=".992"></path>
+</g>
+</g>
+</svg>
+</span> &nbsp; <strong><a href="https://abuseipdb.com/csf">AbuseIPDB: <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> Integration</a></strong></p>
+<hr>
+<p><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> Integration guide provided by AbuseIPDB.</p>
 </li>
-</ol>
+<li>
+<p><span class="twemoji"><!--?xml version="1.0" encoding="UTF-8"?-->
+<svg width="162.18" height="162.18" version="1.1" viewBox="0 0 162.18244 162.18244" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
+<metadata>
+<rdf:rdf>
+<cc:work rdf:about="">
+<dc:format>image/svg+xml</dc:format>
+<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"></dc:type>
+<dc:title></dc:title>
+</cc:work>
+</rdf:rdf>
+</metadata>
+<defs>
+<linearGradient id="f" x1="54.759" x2="49.053" y1="600.57" y2="631.41" gradientTransform="scale(1.5608 .64069)" gradientUnits="userSpaceOnUse" xlink:href="#a"></linearGradient>
+<linearGradient id="g" x1="32.103" x2="56.402" y1="808.54" y2="808.54" gradientTransform="scale(2.195 .45558)" gradientUnits="userSpaceOnUse" xlink:href="#a"></linearGradient>
+<linearGradient id="e" x1="48.693" x2="46.452" y1="670.39" y2="673.16" gradientTransform="scale(1.7812 .56142)" gradientUnits="userSpaceOnUse">
+<stop stop-opacity=".408" offset="0"></stop>
+<stop stop-opacity="0" offset="1"></stop>
+</linearGradient>
+<linearGradient id="a">
+<stop stop-color="#fff" stop-opacity=".175" offset="0"></stop>
+<stop stop-color="#fff" stop-opacity=".375" offset="1"></stop>
+</linearGradient>
+</defs>
+<g transform="translate(-16.984 -331)" fill-rule="evenodd">
+<path d="m48.388 396.53c0.9599-4.2739 1.9198-33.716 10.559-33.241 30.717 0.94974 62.394-30.867 85.432 39.89 71.033 33.241 4.9391 59.953-51.295 57.579-55.567-2.3264-103.01-42.383-44.696-64.227z" fill-opacity=".992"></path>
+<path d="m46.948 406.03c35.516 22.319 94.071 8.5478 96.47-2.3744 3.3597 3.799 0 14.246 0 14.246-15.358 19.945-89.751 15.671-97.91 1.4246-0.95991-3.799 0.9599-11.872 1.4399-13.296z" fill="#fff"></path>
+<g stroke-width="1.25">
+<path d="m60.387 370.41c9.1191-8.0729 48.955 3.3241 54.235 9.4975 1.9198 10.447-48.955 2.3744-54.235-9.4975z" fill="url(#e)"></path>
+<path d="m60.387 382.29c4.3196 9.9724 21.118 33.241 49.435 10.922-23.518 0.94977-33.597-1.8995-49.435-10.922z" fill="url(#f)"></path>
+<path d="m70.466 362.82c6.2394 2.8492 45.596 13.771 49.915 10.447 4.7995-1.8995 3.8396-2.8493 1.4399-3.3241-3.8396 2.3744-10.559 3.799-51.355-7.1231z" fill="url(#g)"></path>
+</g>
+<path d="m52.701 411.24c5.762 2.7324 23.528 6.3756 30.251 6.831 4.8017 3.1878 2.4008 8.1972 0.48019 11.84-12.964 0-27.85-3.1878-31.691-7.2864-2.4008-4.0986-1.4405-7.2864 0.96034-11.385z" fill="#4d4d4d" fill-opacity=".317"></path>
+</g>
+<circle cx="81.091" cy="81.091" r="75.091" fill="none" stroke="#f00" stroke-width="12"></circle>
+<path d="m26.794 25.237 105.89 112.79" fill="none" stroke="#f00" stroke-width="12"></path>
+<g transform="translate(-16.984 -331)">
+<g transform="matrix(1.0215 0 0 .99183 -1.0406 3.2411)" fill-rule="evenodd">
+<path d="m48.388 396.53c-30.511 40.982-1.0945 30.276 44.696 64.228-55.567-2.3264-103.01-42.383-44.696-64.227z" fill-opacity=".992"></path>
+</g>
+</g>
+</svg>
+</span> &nbsp; <strong><a href="https://docs.abuseipdb.com/#introduction">AbuseIPDB: API Docs</a></strong></p>
+<hr>
+<p>Full API documentation for AbuseIPDB.</p>
+</li>
+<li>
+<p><span class="twemoji"><!--?xml version="1.0" encoding="UTF-8"?-->
+<svg width="162.18" height="162.18" version="1.1" viewBox="0 0 162.18244 162.18244" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
+<metadata>
+<rdf:rdf>
+<cc:work rdf:about="">
+<dc:format>image/svg+xml</dc:format>
+<dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"></dc:type>
+<dc:title></dc:title>
+</cc:work>
+</rdf:rdf>
+</metadata>
+<defs>
+<linearGradient id="f" x1="54.759" x2="49.053" y1="600.57" y2="631.41" gradientTransform="scale(1.5608 .64069)" gradientUnits="userSpaceOnUse" xlink:href="#a"></linearGradient>
+<linearGradient id="g" x1="32.103" x2="56.402" y1="808.54" y2="808.54" gradientTransform="scale(2.195 .45558)" gradientUnits="userSpaceOnUse" xlink:href="#a"></linearGradient>
+<linearGradient id="e" x1="48.693" x2="46.452" y1="670.39" y2="673.16" gradientTransform="scale(1.7812 .56142)" gradientUnits="userSpaceOnUse">
+<stop stop-opacity=".408" offset="0"></stop>
+<stop stop-opacity="0" offset="1"></stop>
+</linearGradient>
+<linearGradient id="a">
+<stop stop-color="#fff" stop-opacity=".175" offset="0"></stop>
+<stop stop-color="#fff" stop-opacity=".375" offset="1"></stop>
+</linearGradient>
+</defs>
+<g transform="translate(-16.984 -331)" fill-rule="evenodd">
+<path d="m48.388 396.53c0.9599-4.2739 1.9198-33.716 10.559-33.241 30.717 0.94974 62.394-30.867 85.432 39.89 71.033 33.241 4.9391 59.953-51.295 57.579-55.567-2.3264-103.01-42.383-44.696-64.227z" fill-opacity=".992"></path>
+<path d="m46.948 406.03c35.516 22.319 94.071 8.5478 96.47-2.3744 3.3597 3.799 0 14.246 0 14.246-15.358 19.945-89.751 15.671-97.91 1.4246-0.95991-3.799 0.9599-11.872 1.4399-13.296z" fill="#fff"></path>
+<g stroke-width="1.25">
+<path d="m60.387 370.41c9.1191-8.0729 48.955 3.3241 54.235 9.4975 1.9198 10.447-48.955 2.3744-54.235-9.4975z" fill="url(#e)"></path>
+<path d="m60.387 382.29c4.3196 9.9724 21.118 33.241 49.435 10.922-23.518 0.94977-33.597-1.8995-49.435-10.922z" fill="url(#f)"></path>
+<path d="m70.466 362.82c6.2394 2.8492 45.596 13.771 49.915 10.447 4.7995-1.8995 3.8396-2.8493 1.4399-3.3241-3.8396 2.3744-10.559 3.799-51.355-7.1231z" fill="url(#g)"></path>
+</g>
+<path d="m52.701 411.24c5.762 2.7324 23.528 6.3756 30.251 6.831 4.8017 3.1878 2.4008 8.1972 0.48019 11.84-12.964 0-27.85-3.1878-31.691-7.2864-2.4008-4.0986-1.4405-7.2864 0.96034-11.385z" fill="#4d4d4d" fill-opacity=".317"></path>
+</g>
+<circle cx="81.091" cy="81.091" r="75.091" fill="none" stroke="#f00" stroke-width="12"></circle>
+<path d="m26.794 25.237 105.89 112.79" fill="none" stroke="#f00" stroke-width="12"></path>
+<g transform="translate(-16.984 -331)">
+<g transform="matrix(1.0215 0 0 .99183 -1.0406 3.2411)" fill-rule="evenodd">
+<path d="m48.388 396.53c-30.511 40.982-1.0945 30.276 44.696 64.228-55.567-2.3264-103.01-42.383-44.696-64.227z" fill-opacity=".992"></path>
+</g>
+</g>
+</svg>
+</span> &nbsp; <strong><a href="https://abuseipdb.com/account/api">AbuseIPDB: Create API Key</a></strong></p>
+<hr>
+<p>Create an AbuseIPDB and generate an API key.</p>
+</li>
+</ul>
+</div>
+<p><br>
+<br></p>
+<h3 id="sponsor-icon">Sponsor Icon<a class="headerlink" href="#sponsor-icon" title="Permanent link">¶</a></h3>
+<p>We have decided to make slight adjustments to the <strong>Sponsor</strong> icon that rests within the footer of the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> interface:</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked><span class="task-list-indicator"></span></label> Removed heartbeat animation.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked><span class="task-list-indicator"></span></label> Sponsor icon no longer shows if you are a sponsor with a valid license.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked><span class="task-list-indicator"></span></label> Added new setting <code>SPONSOR_ICON_HIDE</code> to file <code>/etc/csf/csf.conf</code> which will hide the icon.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked><span class="task-list-indicator"></span></label> Added new setting <code>SPONSOR_ICON_ANIM</code> to file <code>/etc/csf/csf.conf</code> which will stop icon animation.</li>
+</ul>
+<p><br></p>
+<p>We have added the following new settings to the <code>/etc/csf/csf.conf</code>:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="sponsor-icon-etccsfcsfconf" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="sponsor-icon-etccsfcsfconf"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 9V3.5L18.5 9M6 2c-1.11 0-2 .89-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6Z"></path></svg></span> /etc/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>/<abbr title="The default csf config file, usually in &lt;pre&gt;/etc/csf/csf.conf&lt;/pre&gt;">csf.conf</abbr></label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-perl highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># #</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1">#   This will enable or disable the beating heart animation</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1">#   for the footer sponsor icon.</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1">#   </span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1">#   0       = No animation          (default)</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="c1">#   1       = Show animatin</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1">#   empty   = Uses default</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="c1"># #</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="n">SPONSOR_ICON_ANIM</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"0"</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="c1"># #</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="c1">#   This will hide the heart icon in the footer which leads</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="c1">#   to the sponsor website if clicked.</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="c1">#   </span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="c1">#   If you remove this, please consider sponsoring to help</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="c1">#   support the project. Even five dollars helps.</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="c1">#   </span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="c1">#   0       = Show                  (default)</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="c1">#   1       = Hide</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="c1">#   empty   = Uses default</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="c1"># #</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="n">SPONSOR_ICON_HIDE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"0"</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p><br>
+<br></p>
+<h3 id="directadmin-new-docs">DirectAdmin: New Docs<a class="headerlink" href="#directadmin-new-docs" title="Permanent link">¶</a></h3>
+<p>We have added a new section to our documentation that walks through the process of installing DirectAdmin alongside <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> on a server.</p>
+<p>This completes our installation guides, as DirectAdmin was the last remaining supported control panel without dedicated documentation.</p>
+<p>To view this documentation, visit:</p>
+<div class="grid cards">
+<ul>
+<li>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <path fill="currentColor" d="M48.5 18.4 41 26.1l19 19L78.8 64l-19 19-19 19 7.6 7.6a147 147 0 0 0 7.9 7.6L83 90.6 109.6 64 83 37.4a3437 3437 0 0 0-26.7-26.6l-7.8 7.6M26 41.2c-4 4-7.4 7.5-7.4 7.7 0 .1 3.3 3.6 7.4 7.7l7.5 7.4-7.5 7.4c-4 4.1-7.4 7.6-7.4 7.8 0 .2 3.4 3.7 7.5 7.9l7.5 7.5 15.3-15.3L64.1 64 49 48.9c-8.3-8.3-15.3-15.1-15.4-15.1S30 37 25.9 41.1"></path>
+</svg></span> &nbsp; <strong><a data-preview="" href="../../../install/install/#install-directadmin"><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>: Install DirectAdmin</a></strong></p>
+<hr>
+<p>Official <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> documentation for installing DirectAdmin and <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> integration.</p>
+</li>
+</ul>
+</div>
+<p><br>
+<br></p>
+<h3 id="directadmin-install-error">DirectAdmin: Install Error<a class="headerlink" href="#directadmin-install-error" title="Permanent link">¶</a></h3>
+<p>We have resolved an installation issue affecting the <a href="https://directadmin.com/">DirectAdmin</a> control panel that could cause the installation process to fail completely.</p>
+<p>Previously, users may have encountered the following error during installation:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:1"><input checked="checked" id="directadmin-install-error-output" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="directadmin-install-error-output"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Output</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>./install.directadmin.sh:<span class="w"> </span>line<span class="w"> </span><span class="m">1196</span>:<span class="w"> </span>syntax<span class="w"> </span>error:<span class="w"> </span>unexpected<span class="w"> </span>end<span class="w"> </span>of<span class="w"> </span>file
+</code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>After the <code>v15.09</code> update, the ability to install <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> integration into DirectAdmin should be restored.</p>
+<p><br>
+<br></p>
+<h3 id="cyberpanel-fixed-vertical-scrollbar">CyberPanel: Fixed Vertical Scrollbar<a class="headerlink" href="#cyberpanel-fixed-vertical-scrollbar" title="Permanent link">¶</a></h3>
+<p><a href="https://cyberpanel.net/">CyberPanel</a> previously had a bug that caused a small vertical scrollbar to appear at the top of each <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> page. This meant that when navigating to a new page, users had to scroll slightly further than expected for the page content to display correctly.</p>
+<p>We have now removed this unnecessary internal scrollbar. The embedded iframe automatically adjusts its height to match the loaded <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> page, providing a smoother and more seamless scrolling experience.</p>
+<p>We have provided a gif of the bug as it was:</p>
+<figure>
+    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../assets/images/blog/release-1509/cyberpanel_scrollbar.gif" data-desc-position="bottom"><img alt="Cyberpanel › Verticle Scrollbar" src="../../../assets/images/blog/release-1509/cyberpanel_scrollbar.gif" width="500"></a>
+    <figcaption>Cyberpanel › Verticle Scrollbar</figcaption>
+</figure>
+<p><br>
+<br></p>
+<h3 id="cwp-rebranding"><abbr title="Control Web Panel (CWP)">CWP</abbr>: Rebranding<a class="headerlink" href="#cwp-rebranding" title="Permanent link">¶</a></h3>
+<p>Across various areas of the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> codebase and documentation, the control panel now known as <a href="https://control-webpanel.com/">Control Web Panel</a> was previously referred to as <strong>CentOS Web Panel</strong>.</p>
+<p>This update corrects those references by rebranding all mentions of <strong>CentOS Web Panel</strong> to <strong>Control Web Panel</strong>, ensuring consistency with the panel’s current and official name.</p>
+<p><strong>Why the change:</strong><br>
+The control panel was originally named <em>CentOS Web Panel</em>, but was later renamed to <em>Control Web Panel</em> to avoid naming conflicts. Our updates simply reflect this change and do not alter functionality.</p>
+<p><br>
+<br></p>
+<h3 id="cwp-output-sanitization"><abbr title="Control Web Panel (CWP)">CWP</abbr>: Output Sanitization<a class="headerlink" href="#cwp-output-sanitization" title="Permanent link">¶</a></h3>
+<p>During routine bug fixes related to Control Web Panel (<abbr title="Control Web Panel (CWP)">CWP</abbr>) integration, we identified an opportunity to further enhance security at the interface level.</p>
+<p>To improve overall safety and reliability, we have updated our code to sanitize all data exchanged between <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> and Control Web Panel. This ensures that any information sent to or received from the control panel is properly filtered and validated before being processed or displayed.</p>
+<p><strong>What this means:</strong>
+Output sanitization prevents unexpected or unsafe data from being interpreted by the control panel. This reduces the risk of malformed input, unintended behavior, or potential abuse; without affecting normal functionality or the user experience.</p>
+<p><br>
+<br></p>
+<h3 id="cwp-fixed-terminal-output"><abbr title="Control Web Panel (CWP)">CWP</abbr>: Fixed Terminal Output<a class="headerlink" href="#cwp-fixed-terminal-output" title="Permanent link">¶</a></h3>
+<p>In update <code>v15.08</code>, we introduced a newly formatted output style for commands related to <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>. While this improved the terminal experience, it unintentionally affected <a href="https://control-webpanel.com/">Control Web Panel</a> users.</p>
+<p>As a result, the <strong>Firewall Manager</strong> section within the Control Web Panel displayed raw ANSI color codes instead of clean, readable output. This behavior was not intended and has now been corrected, ensuring the output is properly formatted when viewed through the control panel.</p>
 <p><br></p>
 <figure>
-    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../assets/images/blog/release-1508/cwp_01.png" data-desc-position="bottom"><img alt="Webmin › Bug › Footer" src="../../../assets/images/blog/release-1508/cwp_01.png" width="600"></a>
-    <figcaption>Control Web Panel › Menu Differences</figcaption>
+    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../assets/images/blog/release-1509/cwp_firewall_manager_problem.png" data-desc-position="bottom"><img alt="Control Web Panel › Firewall Manager › Solution" src="../../../assets/images/blog/release-1509/cwp_firewall_manager_problem.png" width="500"></a>
+    <figcaption>Control Web Panel › Firewall Manager › Problem</figcaption>
 </figure>
 <p><br></p>
+<p>We have added new logic which differentiates between <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> commands accessed via a GUI, and commands that have been triggered via TTY.</p>
+<figure>
+    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../assets/images/blog/release-1509/cwp_firewall_manager_fix.png" data-desc-position="bottom"><img alt="Control Web Panel › Firewall Manager › Solution" src="../../../assets/images/blog/release-1509/cwp_firewall_manager_fix.png" width="500"></a>
+    <figcaption>Control Web Panel › Firewall Manager › Solution</figcaption>
+</figure>
 <p><br>
 <br></p>
-<h3 id="control-web-panel-immutable-flags">Control Web Panel Immutable Flags<a class="headerlink" href="#control-web-panel-immutable-flags" title="Permanent link">¶</a></h3>
-<p>Files in Control Web Panel are often protected with the immutable flag <code>+i</code>, which prevents any changes to the file's contents or metadata, including permissions, timestamps, ownership, and link count.</p>
-<p>While this flag enhances security, it can make updating <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> slightly more complex. The Control Web Panel installation script now includes logic to detect whether your <abbr title="Control Web Panel (CWP)">CWP</abbr> files have the <code>+i</code> flag and ensures that it is preserved after installing or updating <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> to a newer version.</p>
-<p>This change will <strong>not</strong> set the immutable flag on files that did not previously have it; it will only re-apply the flag for users who already had it enabled. We do not want to start enabling flags on a system that they did not have, and potentially cause the end-user unexpected trouble in the future.</p>
+<h3 id="webmin-firewall-button-restored">Webmin: Firewall Button Restored<a class="headerlink" href="#webmin-firewall-button-restored" title="Permanent link">¶</a></h3>
+<p>In Webmin’s Authentic theme (dark mode), built-in JavaScript caused the <strong>Firewall Configuration</strong> button on the home page to be hidden when the page loaded.</p>
+<p>The <strong>Firewall Configuration</strong> button provides direct access to <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>’s internal configuration page, allowing users to modify <code>/etc/csf/csf.conf</code> through a graphical interface instead of editing the file manually.</p>
+<p>Although Webmin replaced the hidden button with a small icon in the top-left corner of the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> home page that links to the same configuration area, the original button was no longer visible.</p>
+<p>This update restores the <strong>Firewall Configuration</strong> button while retaining the icon added by Webmin, ensuring both access methods remain available.</p>
+<figure>
+    <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../../assets/images/blog/release-1509/webmin_firewall_configuration.png" data-desc-position="bottom"><img alt="Webmin › Firewall Configuration" src="../../../assets/images/blog/release-1509/webmin_firewall_configuration.png" width="600"></a>
+    <figcaption>Webmin › Firewall Configuration</figcaption>
+</figure>
 <p><br>
 <br></p>
-<h3 id="new-terminal-commands">New Terminal Commands<a class="headerlink" href="#new-terminal-commands" title="Permanent link">¶</a></h3>
-<p>New terminal commands have been added to <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> regarding <strong>Port Management</strong>. These commands will allow you to add and remove ports from your whitelist, without the need to open and edit your <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> config file <code>/etc/csf/csf.conf</code>. </p>
-<p>This release includes the following new commands:</p>
-<table>
-<thead>
-<tr>
-<th>Command</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text" style="width:110px !important; display:inline-block; text-align:center; padding-top:2px; padding-bottom:2px;"><code>-ap,  --addport</code></span></span></td>
-<td>Add a new port to your <code>/etc/csf/csf.conf</code> whitelist. <br> Requires <code>&lt;protocol&gt;:&lt;port&gt;</code></td>
-</tr>
-<tr>
-<td><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text" style="width:110px !important; display:inline-block; text-align:center; padding-top:2px; padding-bottom:2px;"><code>-rp,  --removeport</code></span></span></td>
-<td>Remove port from your <code>/etc/csf/csf.conf</code> whitelist. <br> Requires <code>&lt;protocol&gt;:&lt;port&gt;</code></td>
-</tr>
-<tr>
-<td><span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text" style="width:110px !important; display:inline-block; text-align:center; padding-top:2px; padding-bottom:2px;"><code>-lp,  --listports</code></span></span></td>
-<td>List all ports and their protocols currently whitelisted in <code>/etc/csf/csf.conf</code>.</td>
-</tr>
-</tbody>
-</table>
+<h3 id="openvpn-and-docker-integration">OpenVPN and <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> Integration<a class="headerlink" href="#openvpn-and-docker-integration" title="Permanent link">¶</a></h3>
+<p>As we have worked toward making all bash related scripts POSIX compliant; this change in standards caused our <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">Docker</abbr> and OpenVPN integration scripts to break.</p>
+<p>We have now re-worked the scripts to be fully POSIX compliant, and also updated the code to be more optimized and clean.</p>
+<p>Along with these changes, we have also introduced flags that are available for these scripts.</p>
+<p>To view the scripts, you can download them from our <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M64 448l384 0c35.3 0 64-28.7 64-64l0-240c0-35.3-28.7-64-64-64L298.7 80c-6.9 0-13.7-2.2-19.2-6.4L241.1 44.8C230 36.5 216.5 32 202.7 32L64 32C28.7 32 0 60.7 0 96L0 384c0 35.3 28.7 64 64 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d=""></path></svg></span> <code>extras</code> folder within our <a href="https://github.com/Aetherinox/csf-firewall/tree/main/extras/scripts">repository</a>.</p>
 <p><br></p>
-<h4 id="arguments">Arguments<a class="headerlink" href="#arguments" title="Permanent link">¶</a></h4>
-<p>Two of the commands specified above <code>--addport</code> and <code>--removeport</code> require <strong>two</strong> additional arguments to be passed with each command. These arguments are required in order for these commands to execute successfully.</p>
-<ul>
-<li><code>sudo csf --addport &lt;protocol&gt;:&lt;port&gt;</code></li>
-<li><code>sudo csf --removeport &lt;protocol&gt;:&lt;port&gt;</code></li>
-</ul>
+<p>You have two ways to activate these scripts</p>
+<ol>
+<li>Drop them in your <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> pre/post folder via <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M64 448l384 0c35.3 0 64-28.7 64-64l0-240c0-35.3-28.7-64-64-64L298.7 80c-6.9 0-13.7-2.2-19.2-6.4L241.1 44.8C230 36.5 216.5 32 202.7 32L64 32C28.7 32 0 60.7 0 96L0 384c0 35.3 28.7 64 64 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d=""></path></svg></span> <code>/usr/local/include/csf/post.d/openvpn.sh</code>, and automatically load them by restarting <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>.</li>
+<li>Manually activate the scripts directly.</li>
+</ol>
 <p><br></p>
-<p>The third command does not require any additional arguments, and can simply be ran with just the base command:</p>
-<ul>
-<li><code>sudo csf --listports</code></li>
-</ul>
+<h4 id="automatic">Automatic<a class="headerlink" href="#automatic" title="Permanent link">¶</a></h4>
+<p>To activate these scripts automatically, drop them inside the folder:</p>
+<div class="icon-tree">
+<p><code>
+└── <span class="twemoji icon-clr-tree-folder"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M64 448l384 0c35.3 0 64-28.7 64-64l0-240c0-35.3-28.7-64-64-64L298.7 80c-6.9 0-13.7-2.2-19.2-6.4L241.1 44.8C230 36.5 216.5 32 202.7 32L64 32C28.7 32 0 60.7 0 96L0 384c0 35.3 28.7 64 64 64z"></path></svg></span> usr<br>
+&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="twemoji icon-clr-tree-folder"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M64 448l384 0c35.3 0 64-28.7 64-64l0-240c0-35.3-28.7-64-64-64L298.7 80c-6.9 0-13.7-2.2-19.2-6.4L241.1 44.8C230 36.5 216.5 32 202.7 32L64 32C28.7 32 0 60.7 0 96L0 384c0 35.3 28.7 64 64 64z"></path></svg></span> local<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="twemoji icon-clr-tree-folder"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M64 448l384 0c35.3 0 64-28.7 64-64l0-240c0-35.3-28.7-64-64-64L298.7 80c-6.9 0-13.7-2.2-19.2-6.4L241.1 44.8C230 36.5 216.5 32 202.7 32L64 32C28.7 32 0 60.7 0 96L0 384c0 35.3 28.7 64 64 64z"></path></svg></span> include<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="twemoji icon-clr-tree-folder"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M64 448l384 0c35.3 0 64-28.7 64-64l0-240c0-35.3-28.7-64-64-64L298.7 80c-6.9 0-13.7-2.2-19.2-6.4L241.1 44.8C230 36.5 216.5 32 202.7 32L64 32C28.7 32 0 60.7 0 96L0 384c0 35.3 28.7 64 64 64z"></path></svg></span> <abbr title="ConfigServer Security &amp; Firewall">csf</abbr><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="twemoji icon-clr-tree-folder"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M64 448l384 0c35.3 0 64-28.7 64-64l0-240c0-35.3-28.7-64-64-64L298.7 80c-6.9 0-13.7-2.2-19.2-6.4L241.1 44.8C230 36.5 216.5 32 202.7 32L64 32C28.7 32 0 60.7 0 96L0 384c0 35.3 28.7 64 64 64z"></path></svg></span> pre.d<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="twemoji icon-clr-tree-folder"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M64 448l384 0c35.3 0 64-28.7 64-64l0-240c0-35.3-28.7-64-64-64L298.7 80c-6.9 0-13.7-2.2-19.2-6.4L241.1 44.8C230 36.5 216.5 32 202.7 32L64 32C28.7 32 0 60.7 0 96L0 384c0 35.3 28.7 64 64 64z"></path></svg></span> post.d<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="twemoji icon-clr-tree-file"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0C28.7 0 0 28.7 0 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M224 0c15.4 0 30.1 6.1 41 17L367 119c10.9 10.9 17 25.6 17 41l-128 0c-17.7 0-32-14.3-32-32L224 0z"></path></svg></span> <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">docker</abbr>.sh<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="twemoji icon-clr-tree-file"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0C28.7 0 0 28.7 0 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M224 0c15.4 0 30.1 6.1 41 17L367 119c10.9 10.9 17 25.6 17 41l-128 0c-17.7 0-32-14.3-32-32L224 0z"></path></svg></span> openvpn.sh<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── <span class="twemoji icon-clr-tree-folder"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M64 448l384 0c35.3 0 64-28.7 64-64l0-240c0-35.3-28.7-64-64-64L298.7 80c-6.9 0-13.7-2.2-19.2-6.4L241.1 44.8C230 36.5 216.5 32 202.7 32L64 32C28.7 32 0 60.7 0 96L0 384c0 35.3 28.7 64 64 64z"></path></svg></span> <abbr title="ConfigServer Security &amp; Firewall">csf</abbr><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── <span class="twemoji icon-clr-tree-folder"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M64 448l384 0c35.3 0 64-28.7 64-64l0-240c0-35.3-28.7-64-64-64L298.7 80c-6.9 0-13.7-2.2-19.2-6.4L241.1 44.8C230 36.5 216.5 32 202.7 32L64 32C28.7 32 0 60.7 0 96L0 384c0 35.3 28.7 64 64 64z"></path></svg></span> bin<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;├── <span class="twemoji icon-clr-tree-file"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0C28.7 0 0 28.7 0 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M224 0c15.4 0 30.1 6.1 41 17L367 119c10.9 10.9 17 25.6 17 41l-128 0c-17.7 0-32-14.3-32-32L224 0z"></path></svg></span> csfpre.sh<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;└── <span class="twemoji icon-clr-tree-file"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-288-128 0c-17.7 0-32-14.3-32-32L224 0 64 0C28.7 0 0 28.7 0 64z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M224 0c15.4 0 30.1 6.1 41 17L367 119c10.9 10.9 17 25.6 17 41l-128 0c-17.7 0-32-14.3-32-32L224 0z"></path></svg></span> csfpost.sh<br>
+</code></p>
+</div>
 <p><br></p>
-<p>A detailed description of each argument is provided below:</p>
-<p><br></p>
-<dl>
-<dt><span class="mdx-badge mdx-badge--argument"><span class="mdx-badge__icon"><a href="../../../about/conventions/#argument" title="Command argument"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M329.7 448c-5.1 0-9.7 3.7-9.7 8.8l0 7.2c0 26.5-21.5 48-48 48l-160 0c-26.5 0-48-21.5-48-48l0-63.6c0-12.6-5.1-24.5-13.1-34.2-31.8-38.7-50.9-88.2-50.9-142.2 0-123.7 100.3-224 224-224 112.7 0 206 83.3 221.7 191.7 .4 3 1.7 5.9 3.6 8.3l35.8 42.9c7 8.4 10.9 19.1 10.9 30.1 0 25.9-21 47-47 47l-1 0c-8.8 0-16 7.2-16 16l0 48c0 35.3-28.7 64-64 64l-38.3 0zm7-284.1c6.3-3.6 9.5-11.1 6.8-18-2.1-5.5-4.6-10.8-7.4-15.9l-2.3-4c-3.1-5.1-6.5-9.9-10.2-14.5-4.6-5.7-12.7-6.7-19-3l-2.9 1.7c-9.2 5.3-20.4 4-29.6-1.3S256 94.4 256 83.8l0-3.4c0-7.3-4.9-13.8-12.1-14.9-6.5-1-13.1-1.5-19.9-1.5s-13.4 .5-19.9 1.5c-7.2 1.1-12.1 7.6-12.1 14.9l0 3.4c0 10.6-6.9 19.8-16.1 25.1s-20.4 6.6-29.6 1.3l-2.9-1.7c-6.3-3.6-14.4-2.6-19 3-3.7 4.6-7.1 9.5-10.2 14.6l-2.3 3.9c-2.8 5.1-5.3 10.4-7.4 15.9-2.6 6.8 .5 14.3 6.8 18l2.9 1.7c9.2 5.3 13.7 15.8 13.7 26.4s-4.5 21.1-13.7 26.4l-3 1.7c-6.3 3.6-9.5 11.1-6.8 18 2.1 5.5 4.6 10.7 7.4 15.8l2.4 4.1c3.1 5.1 6.4 9.9 10.1 14.5 4.6 5.7 12.7 6.7 19 3l2.9-1.7c9.2-5.3 20.4-4 29.6 1.3S192 289.6 192 300.2l0 3.4c0 7.3 4.9 13.8 12.1 14.9 6.5 1 13.1 1.5 19.9 1.5s13.4-.5 19.9-1.5c7.2-1.1 12.1-7.6 12.1-14.9l0-3.4c0-10.6 6.9-19.8 16.1-25.1s20.4-6.6 29.6-1.3l2.9 1.7c6.3 3.6 14.4 2.6 19-3 3.7-4.6 7.1-9.4 10.1-14.5l2.4-4.2c2.8-5.1 5.3-10.3 7.4-15.8 2.6-6.8-.5-14.3-6.8-18l-3-1.7c-9.2-5.3-13.7-15.8-13.7-26.4s4.5-21.1 13.7-26.4l3-1.7zM184 192a40 40 0 1 1 80 0 40 40 0 1 1 -80 0z"></path></svg></span></a></span><span class="mdx-badge__text"><code>&lt;protocol&gt;</code></span></span></dt>
-<dd>
-<dl>
-<dt>A <code>&lt;protocol&gt;</code> must be specified when adding or removing ports. Failing to provide the correct protocol will result in an error. The following values are accepted for <code>&lt;protocol&gt;</code>:</dt>
-<dd>
-<p>TCP_IN</p>
-<p>TCP_OUT</p>
-<p>UDP_IN</p>
-<p>UDP_OUT</p>
-</dd>
-</dl>
-</dd>
-</dl>
-<p><br></p>
-<dl>
-<dt><span class="mdx-badge mdx-badge--argument"><span class="mdx-badge__icon"><a href="../../../about/conventions/#argument" title="Command argument"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M329.7 448c-5.1 0-9.7 3.7-9.7 8.8l0 7.2c0 26.5-21.5 48-48 48l-160 0c-26.5 0-48-21.5-48-48l0-63.6c0-12.6-5.1-24.5-13.1-34.2-31.8-38.7-50.9-88.2-50.9-142.2 0-123.7 100.3-224 224-224 112.7 0 206 83.3 221.7 191.7 .4 3 1.7 5.9 3.6 8.3l35.8 42.9c7 8.4 10.9 19.1 10.9 30.1 0 25.9-21 47-47 47l-1 0c-8.8 0-16 7.2-16 16l0 48c0 35.3-28.7 64-64 64l-38.3 0zm7-284.1c6.3-3.6 9.5-11.1 6.8-18-2.1-5.5-4.6-10.8-7.4-15.9l-2.3-4c-3.1-5.1-6.5-9.9-10.2-14.5-4.6-5.7-12.7-6.7-19-3l-2.9 1.7c-9.2 5.3-20.4 4-29.6-1.3S256 94.4 256 83.8l0-3.4c0-7.3-4.9-13.8-12.1-14.9-6.5-1-13.1-1.5-19.9-1.5s-13.4 .5-19.9 1.5c-7.2 1.1-12.1 7.6-12.1 14.9l0 3.4c0 10.6-6.9 19.8-16.1 25.1s-20.4 6.6-29.6 1.3l-2.9-1.7c-6.3-3.6-14.4-2.6-19 3-3.7 4.6-7.1 9.5-10.2 14.6l-2.3 3.9c-2.8 5.1-5.3 10.4-7.4 15.9-2.6 6.8 .5 14.3 6.8 18l2.9 1.7c9.2 5.3 13.7 15.8 13.7 26.4s-4.5 21.1-13.7 26.4l-3 1.7c-6.3 3.6-9.5 11.1-6.8 18 2.1 5.5 4.6 10.7 7.4 15.8l2.4 4.1c3.1 5.1 6.4 9.9 10.1 14.5 4.6 5.7 12.7 6.7 19 3l2.9-1.7c9.2-5.3 20.4-4 29.6 1.3S192 289.6 192 300.2l0 3.4c0 7.3 4.9 13.8 12.1 14.9 6.5 1 13.1 1.5 19.9 1.5s13.4-.5 19.9-1.5c7.2-1.1 12.1-7.6 12.1-14.9l0-3.4c0-10.6 6.9-19.8 16.1-25.1s20.4-6.6 29.6-1.3l2.9 1.7c6.3 3.6 14.4 2.6 19-3 3.7-4.6 7.1-9.4 10.1-14.5l2.4-4.2c2.8-5.1 5.3-10.3 7.4-15.8 2.6-6.8-.5-14.3-6.8-18l-3-1.7c-9.2-5.3-13.7-15.8-13.7-26.4s4.5-21.1 13.7-26.4l3-1.7zM184 192a40 40 0 1 1 80 0 40 40 0 1 1 -80 0z"></path></svg></span></a></span><span class="mdx-badge__text"><code>&lt;port&gt;</code></span></span></dt>
-<dd>
-<p>The <code>&lt;port&gt;</code> parameter represents the port that you wish to 
-add or remove from your whitelist.</p>
-<p>Valid port numbers range from <code>0</code> to <code>65535</code>.</p>
-</dd>
-</dl>
-<p><br></p>
-<h4 id="commands">Commands<a class="headerlink" href="#commands" title="Permanent link">¶</a></h4>
-<p>The following commands have been added in this release:</p>
-<p><br></p>
-<h5 id="add-port">Add Port<a class="headerlink" href="#add-port" title="Permanent link">¶</a></h5>
-<p><span class="mdx-badge mdx-badge--version"><span class="mdx-badge__icon"><a href="../../../about/conventions/#release-types" title="Requires stable version 15.08"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M0 80V229.5c0 17 6.7 33.3 18.7 45.3l176 176c25 25 65.5 25 90.5 0L418.7 317.3c25-25 25-65.5 0-90.5l-176-176c-12-12-28.3-18.7-45.3-18.7H48C21.5 32 0 53.5 0 80zm112 32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"></path></svg></span></a></span><span class="mdx-badge__text"><a data-preview="" href="../../../about/changelog/#15.08">15.08</a></span></span> <span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code><abbr title="ConfigServer Security &amp; Firewall">csf</abbr> --addport &lt;protocol&gt;:&lt;port&gt;</code></span></span></p>
-<p>The following command will allow you to <strong>add</strong> a new port to your whitelist.</p>
-<p><br></p>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="add-port-command" name="__tabbed_2" type="radio"><input id="add-port-output" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="add-port-command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-  <path fill="currentColor" fill-rule="evenodd" d="M21.038,4.9l-7.577-4.498C13.009,0.134,12.505,0,12,0c-0.505,0-1.009,0.134-1.462,0.403L2.961,4.9 C2.057,5.437,1.5,6.429,1.5,7.503v8.995c0,1.073,0.557,2.066,1.462,2.603l7.577,4.497C10.991,23.866,11.495,24,12,24 c0.505,0,1.009-0.134,1.461-0.402l7.577-4.497c0.904-0.537,1.462-1.529,1.462-2.603V7.503C22.5,6.429,21.943,5.437,21.038,4.9z M15.17,18.946l0.013,0.646c0.001,0.078-0.05,0.167-0.111,0.198l-0.383,0.22c-0.061,0.031-0.111-0.007-0.112-0.085L14.57,19.29 c-0.328,0.136-0.66,0.169-0.872,0.084c-0.04-0.016-0.057-0.075-0.041-0.142l0.139-0.584c0.011-0.046,0.036-0.092,0.069-0.121 c0.012-0.011,0.024-0.02,0.036-0.026c0.022-0.011,0.043-0.014,0.062-0.006c0.229,0.077,0.521,0.041,0.802-0.101 c0.357-0.181,0.596-0.545,0.592-0.907c-0.003-0.328-0.181-0.465-0.613-0.468c-0.55,0.001-1.064-0.107-1.072-0.917 c-0.007-0.667,0.34-1.361,0.889-1.8l-0.007-0.652c-0.001-0.08,0.048-0.168,0.111-0.2l0.37-0.236 c0.061-0.031,0.111,0.007,0.112,0.087l0.006,0.653c0.273-0.109,0.511-0.138,0.726-0.088c0.047,0.012,0.067,0.076,0.048,0.151 l-0.144,0.578c-0.011,0.044-0.036,0.088-0.065,0.116c-0.012,0.012-0.025,0.021-0.038,0.028c-0.019,0.01-0.038,0.013-0.057,0.009 c-0.098-0.022-0.332-0.073-0.699,0.113c-0.385,0.195-0.52,0.53-0.517,0.778c0.003,0.297,0.155,0.387,0.681,0.396 c0.7,0.012,1.003,0.318,1.01,1.023C16.105,17.747,15.736,18.491,15.17,18.946z M19.143,17.859c0,0.06-0.008,0.116-0.058,0.145 l-1.916,1.164c-0.05,0.029-0.09,0.004-0.09-0.056v-0.494c0-0.06,0.037-0.093,0.087-0.122l1.887-1.129 c0.05-0.029,0.09-0.004,0.09,0.056V17.859z M20.459,6.797l-7.168,4.427c-0.894,0.523-1.553,1.109-1.553,2.187v8.833 c0,0.645,0.26,1.063,0.66,1.184c-0.131,0.023-0.264,0.039-0.398,0.039c-0.42,0-0.833-0.114-1.197-0.33L3.226,18.64 c-0.741-0.44-1.201-1.261-1.201-2.142V7.503c0-0.881,0.46-1.702,1.201-2.142l7.577-4.498c0.363-0.216,0.777-0.33,1.197-0.33 c0.419,0,0.833,0.114,1.197,0.33l7.577,4.498c0.624,0.371,1.046,1.013,1.164,1.732C21.686,6.557,21.12,6.411,20.459,6.797z"></path>
-</svg>
-</span> Command</label><label for="add-port-output"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Output</label></div>
+<p>Once the scripts are added to the correct path, restart <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> using the command:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:1"><input checked="checked" id="automatic-command" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="automatic-command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M104 208l40 0 0 96-40 0C46.6 304 0 350.6 0 408s46.6 104 104 104 104-46.6 104-104l0-40 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104l-40 0 0-96 40 0c57.4 0 104-46.6 104-104S465.4 0 408 0 304 46.6 304 104l0 40-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm152 96l-48 0 0-96 96 0 0 96-48 0zM104 144c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40-40 0zm40 264c0 22.1-17.9 40-40 40s-40-17.9-40-40 17.9-40 40-40l40 0 0 40zM368 144l0-40c0-22.1 17.9-40 40-40s40 17.9 40 40-17.9 40-40 40l-40 0zm40 224c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40 40 0z"></path></svg></span> Command</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>--addport<span class="w"> </span>TCP_IN:21140
-</code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>$<span class="w"> </span>sudo<span class="w"> </span>csf<span class="w"> </span>--addport<span class="w"> </span>TCP_IN:21140
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>PASS<span class="w">               </span>Successfully<span class="w"> </span>added<span class="w"> </span>port<span class="w"> </span>TCP_IN:21140<span class="w"> </span><span class="k">in</span><span class="w"> </span>/etc/csf/csf.conf
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-ra
 </code></pre></div>
 </div>
 </div>
 </div>
-<p><br>
-<br></p>
-<h5 id="remove-port">Remove Port<a class="headerlink" href="#remove-port" title="Permanent link">¶</a></h5>
-<p><span class="mdx-badge mdx-badge--version"><span class="mdx-badge__icon"><a href="../../../about/conventions/#release-types" title="Requires stable version 15.08"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M0 80V229.5c0 17 6.7 33.3 18.7 45.3l176 176c25 25 65.5 25 90.5 0L418.7 317.3c25-25 25-65.5 0-90.5l-176-176c-12-12-28.3-18.7-45.3-18.7H48C21.5 32 0 53.5 0 80zm112 32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"></path></svg></span></a></span><span class="mdx-badge__text"><a data-preview="" href="../../../about/changelog/#15.08">15.08</a></span></span> <span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code><abbr title="ConfigServer Security &amp; Firewall">csf</abbr> --removeport &lt;protocol&gt;:&lt;port&gt;</code></span></span></p>
-<p>The following command will allow you to <strong>remove</strong> an existing port from your whitelist.</p>
 <p><br></p>
-<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="remove-port-command" name="__tabbed_3" type="radio"><input id="remove-port-output" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="remove-port-command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-  <path fill="currentColor" fill-rule="evenodd" d="M21.038,4.9l-7.577-4.498C13.009,0.134,12.505,0,12,0c-0.505,0-1.009,0.134-1.462,0.403L2.961,4.9 C2.057,5.437,1.5,6.429,1.5,7.503v8.995c0,1.073,0.557,2.066,1.462,2.603l7.577,4.497C10.991,23.866,11.495,24,12,24 c0.505,0,1.009-0.134,1.461-0.402l7.577-4.497c0.904-0.537,1.462-1.529,1.462-2.603V7.503C22.5,6.429,21.943,5.437,21.038,4.9z M15.17,18.946l0.013,0.646c0.001,0.078-0.05,0.167-0.111,0.198l-0.383,0.22c-0.061,0.031-0.111-0.007-0.112-0.085L14.57,19.29 c-0.328,0.136-0.66,0.169-0.872,0.084c-0.04-0.016-0.057-0.075-0.041-0.142l0.139-0.584c0.011-0.046,0.036-0.092,0.069-0.121 c0.012-0.011,0.024-0.02,0.036-0.026c0.022-0.011,0.043-0.014,0.062-0.006c0.229,0.077,0.521,0.041,0.802-0.101 c0.357-0.181,0.596-0.545,0.592-0.907c-0.003-0.328-0.181-0.465-0.613-0.468c-0.55,0.001-1.064-0.107-1.072-0.917 c-0.007-0.667,0.34-1.361,0.889-1.8l-0.007-0.652c-0.001-0.08,0.048-0.168,0.111-0.2l0.37-0.236 c0.061-0.031,0.111,0.007,0.112,0.087l0.006,0.653c0.273-0.109,0.511-0.138,0.726-0.088c0.047,0.012,0.067,0.076,0.048,0.151 l-0.144,0.578c-0.011,0.044-0.036,0.088-0.065,0.116c-0.012,0.012-0.025,0.021-0.038,0.028c-0.019,0.01-0.038,0.013-0.057,0.009 c-0.098-0.022-0.332-0.073-0.699,0.113c-0.385,0.195-0.52,0.53-0.517,0.778c0.003,0.297,0.155,0.387,0.681,0.396 c0.7,0.012,1.003,0.318,1.01,1.023C16.105,17.747,15.736,18.491,15.17,18.946z M19.143,17.859c0,0.06-0.008,0.116-0.058,0.145 l-1.916,1.164c-0.05,0.029-0.09,0.004-0.09-0.056v-0.494c0-0.06,0.037-0.093,0.087-0.122l1.887-1.129 c0.05-0.029,0.09-0.004,0.09,0.056V17.859z M20.459,6.797l-7.168,4.427c-0.894,0.523-1.553,1.109-1.553,2.187v8.833 c0,0.645,0.26,1.063,0.66,1.184c-0.131,0.023-0.264,0.039-0.398,0.039c-0.42,0-0.833-0.114-1.197-0.33L3.226,18.64 c-0.741-0.44-1.201-1.261-1.201-2.142V7.503c0-0.881,0.46-1.702,1.201-2.142l7.577-4.498c0.363-0.216,0.777-0.33,1.197-0.33 c0.419,0,0.833,0.114,1.197,0.33l7.577,4.498c0.624,0.371,1.046,1.013,1.164,1.732C21.686,6.557,21.12,6.411,20.459,6.797z"></path>
-</svg>
-</span> Command</label><label for="remove-port-output"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Output</label></div>
+<h4 id="manual">Manual<a class="headerlink" href="#manual" title="Permanent link">¶</a></h4>
+<p>You can activate the <code>docker.sh</code> and <code>openvpn.sh</code> integration scripts manually. First you will need to download them from our <a href="https://github.com/Aetherinox/csf-firewall/tree/main/extras/scripts">repository</a> and place them somewhere on your server.</p>
+<p>Once you have them on your server, set the permissions to be <strong>executable</strong>:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:1"><input checked="checked" id="manual-command" name="__tabbed_5" type="radio"><div class="tabbed-labels"><label for="manual-command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M104 208l40 0 0 96-40 0C46.6 304 0 350.6 0 408s46.6 104 104 104 104-46.6 104-104l0-40 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104l-40 0 0-96 40 0c57.4 0 104-46.6 104-104S465.4 0 408 0 304 46.6 304 104l0 40-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm152 96l-48 0 0-96 96 0 0 96-48 0zM104 144c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40-40 0zm40 264c0 22.1-17.9 40-40 40s-40-17.9-40-40 17.9-40 40-40l40 0 0 40zM368 144l0-40c0-22.1 17.9-40 40-40s40 17.9 40 40-17.9 40-40 40l-40 0zm40 224c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40 40 0z"></path></svg></span> Command</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>--removeport<span class="w"> </span>TCP_IN:21140
-</code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>$<span class="w"> </span>sudo<span class="w"> </span>csf<span class="w"> </span>--removeport<span class="w"> </span>TCP_IN:21140
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>PASS<span class="w">               </span>Successfully<span class="w"> </span>removed<span class="w"> </span>port<span class="w"> </span>TCP_IN:21140<span class="w"> </span>from<span class="w"> </span>/etc/csf/csf.conf
+<div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>chmod<span class="w"> </span>+x<span class="w"> </span>/path/to/docker.sh
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>sudo<span class="w"> </span>chmod<span class="w"> </span>+x<span class="w"> </span>/path/to/openvpn.sh
 </code></pre></div>
 </div>
 </div>
 </div>
-<p><br>
-<br></p>
-<h5 id="list-ports">List Ports<a class="headerlink" href="#list-ports" title="Permanent link">¶</a></h5>
-<p><span class="mdx-badge mdx-badge--version"><span class="mdx-badge__icon"><a href="../../../about/conventions/#release-types" title="Requires stable version 15.08"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M0 80V229.5c0 17 6.7 33.3 18.7 45.3l176 176c25 25 65.5 25 90.5 0L418.7 317.3c25-25 25-65.5 0-90.5l-176-176c-12-12-28.3-18.7-45.3-18.7H48C21.5 32 0 53.5 0 80zm112 32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"></path></svg></span></a></span><span class="mdx-badge__text"><a data-preview="" href="../../../about/changelog/#15.08">15.08</a></span></span> <span class="mdx-badge mdx-badge--command"><span class="mdx-badge__icon"><a href="../../../about/conventions/#command" title="Terminal / Console Command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 19v-3h8v3h-8m-4.5-6L2.47 7h4.24l4.96 4.95c.58.59.58 1.55 0 2.12L6.74 19H2.5l6-6Z"></path></svg></span></a></span><span class="mdx-badge__text"><code><abbr title="ConfigServer Security &amp; Firewall">csf</abbr> --listports</code></span></span></p>
-<p>This command will list all ports that have been whitelisted through <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> and actively
-allow connections to pass through.</p>
 <p><br></p>
-<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="list-ports-command" name="__tabbed_4" type="radio"><input id="list-ports-output" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="list-ports-command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-  <path fill="currentColor" fill-rule="evenodd" d="M21.038,4.9l-7.577-4.498C13.009,0.134,12.505,0,12,0c-0.505,0-1.009,0.134-1.462,0.403L2.961,4.9 C2.057,5.437,1.5,6.429,1.5,7.503v8.995c0,1.073,0.557,2.066,1.462,2.603l7.577,4.497C10.991,23.866,11.495,24,12,24 c0.505,0,1.009-0.134,1.461-0.402l7.577-4.497c0.904-0.537,1.462-1.529,1.462-2.603V7.503C22.5,6.429,21.943,5.437,21.038,4.9z M15.17,18.946l0.013,0.646c0.001,0.078-0.05,0.167-0.111,0.198l-0.383,0.22c-0.061,0.031-0.111-0.007-0.112-0.085L14.57,19.29 c-0.328,0.136-0.66,0.169-0.872,0.084c-0.04-0.016-0.057-0.075-0.041-0.142l0.139-0.584c0.011-0.046,0.036-0.092,0.069-0.121 c0.012-0.011,0.024-0.02,0.036-0.026c0.022-0.011,0.043-0.014,0.062-0.006c0.229,0.077,0.521,0.041,0.802-0.101 c0.357-0.181,0.596-0.545,0.592-0.907c-0.003-0.328-0.181-0.465-0.613-0.468c-0.55,0.001-1.064-0.107-1.072-0.917 c-0.007-0.667,0.34-1.361,0.889-1.8l-0.007-0.652c-0.001-0.08,0.048-0.168,0.111-0.2l0.37-0.236 c0.061-0.031,0.111,0.007,0.112,0.087l0.006,0.653c0.273-0.109,0.511-0.138,0.726-0.088c0.047,0.012,0.067,0.076,0.048,0.151 l-0.144,0.578c-0.011,0.044-0.036,0.088-0.065,0.116c-0.012,0.012-0.025,0.021-0.038,0.028c-0.019,0.01-0.038,0.013-0.057,0.009 c-0.098-0.022-0.332-0.073-0.699,0.113c-0.385,0.195-0.52,0.53-0.517,0.778c0.003,0.297,0.155,0.387,0.681,0.396 c0.7,0.012,1.003,0.318,1.01,1.023C16.105,17.747,15.736,18.491,15.17,18.946z M19.143,17.859c0,0.06-0.008,0.116-0.058,0.145 l-1.916,1.164c-0.05,0.029-0.09,0.004-0.09-0.056v-0.494c0-0.06,0.037-0.093,0.087-0.122l1.887-1.129 c0.05-0.029,0.09-0.004,0.09,0.056V17.859z M20.459,6.797l-7.168,4.427c-0.894,0.523-1.553,1.109-1.553,2.187v8.833 c0,0.645,0.26,1.063,0.66,1.184c-0.131,0.023-0.264,0.039-0.398,0.039c-0.42,0-0.833-0.114-1.197-0.33L3.226,18.64 c-0.741-0.44-1.201-1.261-1.201-2.142V7.503c0-0.881,0.46-1.702,1.201-2.142l7.577-4.498c0.363-0.216,0.777-0.33,1.197-0.33 c0.419,0,0.833,0.114,1.197,0.33l7.577,4.498c0.624,0.371,1.046,1.013,1.164,1.732C21.686,6.557,21.12,6.411,20.459,6.797z"></path>
-</svg>
-</span> Command</label><label for="list-ports-output"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Output</label></div>
+<p>Finally, you can run the scripts with the commands:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="6:1"><input checked="checked" id="manual-command_1" name="__tabbed_6" type="radio"><div class="tabbed-labels"><label for="manual-command_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M104 208l40 0 0 96-40 0C46.6 304 0 350.6 0 408s46.6 104 104 104 104-46.6 104-104l0-40 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104l-40 0 0-96 40 0c57.4 0 104-46.6 104-104S465.4 0 408 0 304 46.6 304 104l0 40-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm152 96l-48 0 0-96 96 0 0 96-48 0zM104 144c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40-40 0zm40 264c0 22.1-17.9 40-40 40s-40-17.9-40-40 17.9-40 40-40l40 0 0 40zM368 144l0-40c0-22.1 17.9-40 40-40s40 17.9 40 40-17.9 40-40 40l-40 0zm40 224c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40 40 0z"></path></svg></span> Command</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>--listports
+<div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>sudo<span class="w"> </span>sh<span class="w"> </span>/usr/local/include/csf/post.d/openvpn.sh
 </code></pre></div>
 </div>
+</div>
+</div>
+<p><br></p>
+<p>You should see the following output:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="7:1"><input checked="checked" id="manual-output" name="__tabbed_7" type="radio"><div class="tabbed-labels"><label for="manual-output"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Output</label></div>
+<div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>$<span class="w"> </span>sudo<span class="w"> </span>csf<span class="w"> </span>--listports
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span>INFO<span class="w">              </span>Configured<span class="w"> </span>CSF<span class="w"> </span>Ports:<span class="w">                           </span>
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">                      </span>The<span class="w"> </span>following<span class="w"> </span>are<span class="w"> </span>a<span class="w"> </span>list<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>whitelisted<span class="w"> </span>ports<span class="w"> </span>configured<span class="w"> </span><span class="k">in</span><span class="w"> </span>your<span class="w"> </span>/etc/csf/csf.conf
-<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>
-<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">                      </span>TCP_IN:<span class="w"> </span><span class="m">22</span>,25,80,143,443
-<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">                      </span>TCP_OUT:<span class="w"> </span><span class="m">22</span>,25,80,113,443
-<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">                      </span>UDP_IN:<span class="w"> </span><span class="m">53</span>,80,443,853
-<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">                      </span>UDP_OUT:<span class="w"> </span><span class="m">53</span>,113,123,853
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>PASS<span class="w">               </span>Found<span class="w"> </span>installed<span class="w"> </span>package<span class="w"> </span>CSF<span class="w"> </span>+<span class="w"> </span>LFD<span class="w">  </span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>PASS<span class="w">               </span>Found<span class="w"> </span>installed<span class="w"> </span>package<span class="w"> </span>OpenVPN<span class="w">    </span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>PASS<span class="w">               </span>Found<span class="w"> </span>installed<span class="w"> </span>package<span class="w"> </span>iptables<span class="w">   </span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>PASS<span class="w">               </span>Declared<span class="w"> </span>iptables4<span class="w"> </span>binary<span class="w"> </span>/usr/sbin/iptables<span class="w"> </span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>PASS<span class="w">               </span>Declared<span class="w"> </span>iptables6<span class="w"> </span>binary<span class="w"> </span>/usr/sbin/ip6tables<span class="w"> </span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>INFO<span class="w">               </span>Using<span class="w"> </span>the<span class="w"> </span>following<span class="w"> </span>values:<span class="w">                  </span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">                      </span>Ethernet<span class="w"> </span>Adapter<span class="w">         </span>eth0
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">                      </span>Public<span class="w"> </span>IP<span class="w">                </span>XX.XX.XX.XX
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">                      </span>VPN<span class="w"> </span>Tunnel<span class="w"> </span>Adapter<span class="w">       </span>tun0
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>INFO<span class="w">               </span>Starting<span class="w"> </span>OpenVPN<span class="w"> </span>integration<span class="w"> </span>with<span class="w"> </span>CSF<span class="w"> </span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">                      </span>+<span class="w"> </span>RULES<span class="w"> </span><span class="o">[</span>ADD<span class="o">]</span><span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-i<span class="w"> </span>tun+<span class="w"> </span>-j<span class="w"> </span>ACCEPT<span class="w"> </span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">                      </span>+<span class="w"> </span>RULES<span class="w"> </span><span class="o">[</span>ADD<span class="o">]</span><span class="w"> </span>-A<span class="w"> </span>FORWARD<span class="w"> </span>-i<span class="w"> </span>tun+<span class="w"> </span>-j<span class="w"> </span>ACCEPT<span class="w"> </span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="w">                      </span>+<span class="w"> </span>RULES<span class="w"> </span><span class="o">[</span>ADD<span class="o">]</span><span class="w"> </span>-A<span class="w"> </span>FORWARD<span class="w"> </span>-o<span class="w"> </span>tun0<span class="w"> </span>-j<span class="w"> </span>ACCEPT<span class="w"> </span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="w">                      </span>+<span class="w"> </span>RULES<span class="w"> </span><span class="o">[</span>ADD<span class="o">]</span><span class="w"> </span>-t<span class="w"> </span>nat<span class="w"> </span>-A<span class="w"> </span>POSTROUTING<span class="w"> </span>-o<span class="w"> </span>eth0<span class="w"> </span>-j<span class="w"> </span>MASQUERADE<span class="w"> </span>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="w">                      </span>+<span class="w"> </span>RULES<span class="w"> </span><span class="o">[</span>ADD<span class="o">]</span><span class="w"> </span>-t<span class="w"> </span>nat<span class="w"> </span>-A<span class="w"> </span>POSTROUTING<span class="w"> </span>-s<span class="w"> </span><span class="m">10</span>.8.0.0/24<span class="w"> </span>-o<span class="w"> </span>eth0<span class="w"> </span>-j<span class="w"> </span>MASQUERADE<span class="w"> </span>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="w">                      </span>+<span class="w"> </span>RULES<span class="w"> </span><span class="o">[</span>ADD<span class="o">]</span><span class="w"> </span>-A<span class="w"> </span>INPUT<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-m<span class="w"> </span>state<span class="w"> </span>--state<span class="w"> </span>NEW<span class="w"> </span>-p<span class="w"> </span>udp<span class="w"> </span>--dport<span class="w"> </span><span class="m">1194</span><span class="w"> </span>-j<span class="w"> </span>ACCEPT<span class="w"> </span>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="w">                      </span>+<span class="w"> </span>RULES<span class="w"> </span><span class="o">[</span>ADD<span class="o">]</span><span class="w"> </span>-A<span class="w"> </span>FORWARD<span class="w"> </span>-i<span class="w"> </span>tun+<span class="w"> </span>-o<span class="w"> </span>eth0<span class="w"> </span>-m<span class="w"> </span>state<span class="w"> </span>--state<span class="w"> </span>RELATED,ESTABLISHED<span class="w"> </span>-j<span class="w"> </span>ACCEPT<span class="w"> </span>
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="w">                      </span>+<span class="w"> </span>RULES<span class="w"> </span><span class="o">[</span>ADD<span class="o">]</span><span class="w"> </span>-A<span class="w"> </span>FORWARD<span class="w"> </span>-i<span class="w"> </span>eth0<span class="w"> </span>-o<span class="w"> </span>tun+<span class="w"> </span>-m<span class="w"> </span>state<span class="w"> </span>--state<span class="w"> </span>RELATED,ESTABLISHED<span class="w"> </span>-j<span class="w"> </span>ACCEPT<span class="w"> </span>
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="w">                      </span>+<span class="w"> </span>RULES<span class="w"> </span><span class="o">[</span>ADD<span class="o">]</span><span class="w"> </span>-t<span class="w"> </span>nat<span class="w"> </span>-A<span class="w"> </span>POSTROUTING<span class="w"> </span>-j<span class="w"> </span>SNAT<span class="w"> </span>--to-source<span class="w"> </span>XX.XX.XX.XX<span class="w"> </span>
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="w">                      </span>+<span class="w"> </span>RULES<span class="w"> </span><span class="o">[</span>ADD<span class="o">]</span><span class="w"> </span>-A<span class="w"> </span>OUTPUT<span class="w"> </span>-o<span class="w"> </span>tun+<span class="w"> </span>-j<span class="w"> </span>ACCEPT<span class="w"> </span>
 </code></pre></div>
 </div>
 </div>
 </div>
+<p><br></p>
+<p>You can also activate the <code>--help</code> flag:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="8:1"><input checked="checked" id="manual-command_2" name="__tabbed_8" type="radio"><div class="tabbed-labels"><label for="manual-command_2"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M104 208l40 0 0 96-40 0C46.6 304 0 350.6 0 408s46.6 104 104 104 104-46.6 104-104l0-40 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104l-40 0 0-96 40 0c57.4 0 104-46.6 104-104S465.4 0 408 0 304 46.6 304 104l0 40-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm152 96l-48 0 0-96 96 0 0 96-48 0zM104 144c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40-40 0zm40 264c0 22.1-17.9 40-40 40s-40-17.9-40-40 17.9-40 40-40l40 0 0 40zM368 144l0-40c0-22.1 17.9-40 40-40s40 17.9 40 40-17.9 40-40 40l-40 0zm40 224c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40 40 0z"></path></svg></span> Command</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-bash highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sudo<span class="w"> </span>sh<span class="w"> </span>/usr/local/include/csf/post.d/openvpn.sh<span class="w"> </span>--help
+</code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>Which will output:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="9:1"><input checked="checked" id="manual-output_1" name="__tabbed_9" type="radio"><div class="tabbed-labels"><label for="manual-output_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Output</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-console highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="go">ConfigServer Firewall - Docker Patch - v15.0.9</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="go">https://github.com/Aetherinox/csf-firewall</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="go">Sets up your firewall rules t work alongside OpenVPN.</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="go">This script requires that you have iptables installed on your system.</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="go">The required packages will be installed if you do not have them.</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="go">openvpn.sh [ --restart | --flush | --detect | --dryrun | --version | --help ]</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="go">Syntax:                                         </span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="go">      Command            openvpn.sh [ --option [ arg ] ]</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="go">      Options            openvpn.sh [ -h | --help ]</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="go">          -A                required                        </span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="go">          -A...             required; multiple can be specified</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="go">          [ -A ]            optional                        </span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="go">          [ -A... ]         optional; multiple can be specified</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="go">          { -A | -B }       one or the other; do not use both</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="go">      Examples           openvpn.sh --detect </span>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="go">                          openvpn.sh --dryrun </span>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="go">                          openvpn.sh --version </span>
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="go">                          openvpn.sh --help | -h | /?</span>
+<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a>
+<a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="go">Flags:                                         </span>
+<a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a><span class="go">      -D,  --detect                       lists the detected values for ethernet adapter, tunnel, and public ip</span>
+<a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a><span class="go">      -r,  --restart                      restart csf and lfd services        </span>
+<a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a><span class="go">      -f,  --flush                        flush all iptable rules from server </span>
+<a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a><span class="go">      -d,  --dryrun                       simulates installation, does not install csf &lt;default&gt; false </span>
+<a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a><span class="go">      -v,  --version                      current version of this utilty &lt;current&gt; 15.0.9 </span>
+<a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a><span class="go">      -h,  --help                         show this help menu          </span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
 <p><br>
 <br></p>
-<h3 id="selinux-permission-conformity">SELinux Permission Conformity<a class="headerlink" href="#selinux-permission-conformity" title="Permanent link">¶</a></h3>
-<p>To comply with SELinux security requirements, the ownership of <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> files is now adjusted during installation or updates. Specifically, the installed <a data-preview="" href="../../../advanced/csget/">CSGet</a> cron job is now set to <code>root:root</code> rather than the user who initiated the installation.</p>
-<p><br>
-<br></p>
-<h3 id="blocklist-service-enhancements">Blocklist Service Enhancements<a class="headerlink" href="#blocklist-service-enhancements" title="Permanent link">¶</a></h3>
-<p>The Blocklist service has been significantly improved for both performance and efficiency.</p>
-<p>The scripts responsible for generating these blocklists have been optimized for speed. While this change is mostly behind the scenes, it ensures that blocklist generation completes on time without unnecessary delays.</p>
-<p>We have also refined the <a href="https://blocklist.configserver.dev/highrisk.ipset">highrisk</a> blocklist. Duplicate entries have been removed, dramatically reducing the total number of entries. This not only improves clarity for end-users but also reduces memory usage on your server.</p>
-<p>We will soon be enhancing the Blocklist service by adding our own ASN IP sets. This feature will allow you to block entire service providers or organizations from accessing your server, giving you greater control and security.</p>
 <p><br></p>
 <hr>
 <p><br></p>
@@ -4222,7 +4427,7 @@ allow connections to pass through.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="December 16, 2025 18:31:32 UTC"><span class="timeago" datetime="2025-12-16T18:31:32+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="December 16, 2025 18:31:32 UTC">2025-12-16</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="February 6, 2026 16:20:37 UTC"><span class="timeago" datetime="2026-02-06T16:20:37+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="February 6, 2026 16:20:37 UTC">2026-02-06</span>
   </span>
 
     
@@ -4340,7 +4545,7 @@ allow connections to pass through.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer">
         
           
-          <a href="../release-v1507/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Release v15.07
+          <a href="../release-v1508/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Release v15.08
 ">
             <div class="md-footer__button md-icon">
               
@@ -4351,30 +4556,12 @@ allow connections to pass through.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Release v15.07
+                Release v15.08
 
               </div>
             </div>
           </a>
         
-        
-          
-          <a href="../release-v1509/" class="md-footer__link md-footer__link--next" aria-label="Next: Release v15.09
-">
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              <div class="md-ellipsis">
-                Release v15.09
-
-              </div>
-            </div>
-            <div class="md-footer__button md-icon">
-              
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
-            </div>
-          </a>
         
       </nav>
     
