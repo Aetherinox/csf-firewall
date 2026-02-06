@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_guinea_ipset
 #   @uuid           fcef6a45-284a-341d-a11d-46aae90a8d48
-#   @updated        Fri Feb  6 00:22:10 UTC 2026
+#   @updated        Fri Feb  6 12:16:02 UTC 2026
 #   @entries        43769 ips
 #                   186 subnets
 #                   186 lines
