@@ -94,14 +94,6 @@ on:
             default:      false
             type:         boolean
 
-    # #
-    #   Trigger › Cron Schedule
-    # #
-
-    schedule:
-    # - cron: '0 2,8,14,20 * * *'
-      - cron: '0 */12 * * *'
-
 # #
 #   environment variables
 # #
