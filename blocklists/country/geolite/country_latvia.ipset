@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_latvia_ipset
 #   @uuid           a3ab1f3e-0098-3e7c-a516-467dd308d0e0
-#   @updated        Fri Feb  6 00:22:25 UTC 2026
+#   @updated        Fri Feb  6 12:16:19 UTC 2026
 #   @entries        2143682 ips
 #                   1610 subnets
 #                   1610 lines
