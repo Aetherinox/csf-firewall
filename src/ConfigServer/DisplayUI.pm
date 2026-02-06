@@ -3367,7 +3367,7 @@ EOF
 		#	Should be disabled by default to as not mess with the Webmin developer's look.
 		# #
 
-		if ( $codename eq 'webmin' )
+		if ( $codename eq 'webmin' && $config{UI_WEBMIN_SHOW_BUTTON_CONFIG} == 1 )
 		{
 			__ "<tr><td><form action='$script' method='post'><button name='action' value='settings' type='submit' class='btn btn-default' style='width: 200px;'>Firewall Configuration</button></form></td><td style='width:100%'>Edit the configuration file for the csf firewall and lfd</td></tr>\n";
 			__ "<tr style='display:none;'><td><form action='$script' method='post'><button name='action' value='conf' type='submit' class='btn btn-default' style='width: 200px;'>Firewall Configuration</button></form></td><td style='width:100%'>Edit the configuration file for the csf firewall and lfd</td></tr>\n";
