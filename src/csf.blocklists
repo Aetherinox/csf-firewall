@@ -9,7 +9,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            12.05.2025
+#   @updated            02.06.2025
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -67,11 +67,16 @@
 #   The official CSF blocklists contain a large number of IPs which range from various 
 #   different services, including AbuseIPDB (100% confidency).
 #   
-#   You can also use our blocklist service:
+#   If using our blocklist service, we must rate-limit the usage. However, our standard
+#   blocklists will always be free and available at:
+#       https://github.com/ConfigServerApps/service-blocklists
+#   
+#   For help and a feature list, visit our blocklist service at:
+#       https://blocklist.configserver.dev/help
+#   
+#   Main blocklists are located at::
 #       http://blocklist.configserver.dev/master.ipset
 #       http://blocklist.configserver.dev/highrisk.ipset
-#   
-#   We offer many others, but these two are the primary ones.
 #   
 #   Requires you to edit /etc/csf/csf.conf setting:
 #       LF_IPSET_MAXELEM = "4000000"
