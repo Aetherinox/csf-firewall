@@ -5,7 +5,7 @@
 #   @source         http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country-CSV.zip
 #   @id             country_honduras_ipset
 #   @uuid           0514a696-77aa-30fa-b5dc-6fce585fb215
-#   @updated        Thu Feb  5 12:16:35 UTC 2026
+#   @updated        Fri Feb  6 00:22:13 UTC 2026
 #   @entries        492331 ips
 #                   616 subnets
 #                   616 lines
