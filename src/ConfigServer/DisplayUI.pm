@@ -3353,30 +3353,7 @@ EOF
 		print "<table class='table table-bordered table-striped'>\n";
 		print "<thead><tr><th colspan='2'>Server Information</th></tr></thead>";
 
-		# #
-		#	Webmin
-		#	
-		#	Numerous users have wanted the return of the "Firewall Configuration" button.
-		#	
-		#	Webmin authentik-dark js looks for element "conf", takes the url from it, and adds a settings button at the top, and
-		#	then hides the original button.
-		#	
-		#	This allows that process to take place, without modifying Webmin's theme by adding a second button since we have
-		#	zero control over the theme.
-		#	
-		#	Should be disabled by default to as not mess with the Webmin developer's look.
-		# #
-
-		if ( $codename eq 'webmin' && $config{UI_WEBMIN_SHOW_BUTTON_CONFIG} == 1 )
-		{
-			__ "<tr><td><form action='$script' method='post'><button name='action' value='settings' type='submit' class='btn btn-default' style='width: 200px;'>Firewall Configuration</button></form></td><td style='width:100%'>Edit the configuration file for the csf firewall and lfd</td></tr>\n";
-			__ "<tr style='display:none;'><td><form action='$script' method='post'><button name='action' value='conf' type='submit' class='btn btn-default' style='width: 200px;'>Firewall Configuration</button></form></td><td style='width:100%'>Edit the configuration file for the csf firewall and lfd</td></tr>\n";
-		}
-		else
-		{
-			__ "<tr><td><form action='$script' method='post'><button name='action' value='conf' type='submit' class='btn btn-default' style='width: 200px;'>Firewall Configuration</button></form></td><td style='width:100%'>Edit the configuration file for the csf firewall and lfd</td></tr>\n";
-		}
-
+		print "<tr><td><button name='action' value='servercheck' type='submit' class='btn btn-default'>Check Server Security</button></td><td style='width:100%'>Perform a basic security, stability and settings check on the server</td></tr>\n";
 		print "<tr><td><button name='action' value='readme' type='submit' class='btn btn-default' style='width: 200px;'>Firewall Information</button></td><td style='width:100%'>View the csf+lfd readme.txt file</td></tr>\n";
 		print "<tr><td><button name='action' value='logtail' type='submit' class='btn btn-default' style='width: 200px;'>Watch System Logs</button></td><td style='width:100%'>Watch (tail) various system log files (listed in csf.syslogs)</td></tr>\n";
 		print "<tr><td><button name='action' value='loggrep' type='submit' class='btn btn-default' style='width: 200px;'>Search System Logs</button></td><td style='width:100%'>Search (grep) various system log files (listed in csf.syslogs)</td></tr>\n";
