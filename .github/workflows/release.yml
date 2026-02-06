@@ -1202,9 +1202,9 @@ jobs:
                   startsWith( inputs.RC_RELEASE, true ) ||
                   startsWith( env.RC_RELEASE, true )
               env:
-                  GITHUB_TOKEN: ${{ secrets.ADMINSERV_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.ADMINSERV_TOKEN_CL }}
               with:
-                  token: ${{ secrets.ADMINSERV_TOKEN }}
+                  token: ${{ secrets.ADMINSERV_TOKEN_CL }}
                   name: v${{ env.VERSION_CSF }}
                   tag_name: ${{ env.VERSION_CSF }}
                   target_commitish: ${{ github.event.inputs.branch }}
