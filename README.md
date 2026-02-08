@@ -348,6 +348,7 @@ To install the latest version of CSF manually, run the following commands:
       libsocket6-perl \
       postfix \
       perl \
+	  libjson-perl \
       wget
     ```
 
