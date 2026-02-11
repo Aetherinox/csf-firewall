@@ -10,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            10.15.2025
+#   @updated            02.12.2026
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -352,12 +352,12 @@ case "$COMMAND" in
                 rc_status -v
             fi
         elif [ -f /etc/debian_version ] || [ -f /etc/lsb-release ] || [ -f /etc/gentoo-release ]; then
-			ok "    Successfully started ${greenl}${DAEMON} "
+			ok "    Successfully started ${greenl}${DAEMON}"
         else
             if command -v success >/dev/null 2>&1; then
                 success
             else
-				ok "    Successfully started ${greenl}${DAEMON} "
+				ok "    Successfully started ${greenl}${DAEMON}"
             fi
         fi
 
@@ -368,8 +368,8 @@ case "$COMMAND" in
         ;;
 
     stop)
-		error "    ${redd}WARNING:${redl} This script should ONLY be used by the init process"
-		label "    ${redl}To restart csf use the CLI command 'csf -r"
+		debug "    ${redd}WARNING:${redl} This script should ONLY be used by the init process."
+		debug "    ${redl}To restart csf use the CLI command 'csf -r"
 
         status_msg="$("$DAEMON" --initdown 2>&1)"
 		status "    Stopping ${bluel}${DAEMON}${end}: ${status_msg}"
