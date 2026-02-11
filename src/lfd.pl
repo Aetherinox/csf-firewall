@@ -9553,7 +9553,8 @@ sub messengerstop {
 # end messengerstop
 ###############################################################################
 # start messenger
-sub messenger {
+sub messenger
+{
 	my $port = shift;
 	my $user = shift;
 	my $type = shift;
@@ -9591,7 +9592,8 @@ sub messenger {
 # end messenger
 ###############################################################################
 # start messengerv2
-sub messengerv2 {
+sub messengerv2
+{
 	my $timer = time;
 
 	$SIG{CHLD} = 'IGNORE';
@@ -9639,7 +9641,8 @@ sub messengerv3 {
 # end messengerv3
 ###############################################################################
 # start domessenger
-sub domessenger {
+sub domessenger
+{
 	my $ip = shift;
 	my $delete = shift;
 	my $ports = shift;
@@ -9732,17 +9735,23 @@ sub domessenger {
 	}
 	return;
 }
-# end domessenger
-###############################################################################
-# start ui
-sub ui {
+
+# #
+#	Interface
+# #
+
+sub ui
+{
 	$SIG{CHLD} = 'IGNORE';
-	unless (defined ($childpid = fork)) {
+	unless (defined ($childpid = fork))
+	{
 		&cleanup(__LINE__,"*Error* cannot fork: $!");
 	} 
+
 	$forks{$childpid} = 1;
 	$uiip = $childpid;
-	unless ($childpid) {
+	unless ($childpid)
+	{
 		$0 = "lfd UI";
 		$SIG{INT} = \&childcleanup;
 		$SIG{TERM} = \&childcleanup;
@@ -9752,7 +9761,9 @@ sub ui {
 
 		my @alert = slurp("/usr/local/csf/tpl/uialert.txt");
 		my $server;
-		if ($config{IPV6}) {
+
+		if ($config{IPV6})
+		{
 			$server = IO::Socket::SSL->new(
 						Domain => AF_INET6,
 						LocalAddr => $config{UI_IP},
@@ -9768,7 +9779,9 @@ sub ui {
 						SSL_key_file => '/etc/csf/ui/server.key',
 						SSL_cert_file => '/etc/csf/ui/server.crt',
 			) or &childcleanup(__LINE__,"UI: *Error* cannot open server on port $config{UI_PORT}: ".IO::Socket::SSL->errstr);
-		} else {
+		}
+		else
+		{
 			$server = IO::Socket::SSL->new(
 						Domain => AF_INET,
 						LocalAddr => $config{UI_IP},
@@ -9787,23 +9800,35 @@ sub ui {
 		}
 
 		my $looperrors;
-		while (1) {
+		while (1)
+		{
 			my $client = $server->accept();
-			unless ($client) {
+			unless ($client)
+			{
 				$looperrors++;
-				if ($looperrors > 1000) {
-					logfile("UI: *Error* looping process");
+				if ($looperrors > 1000)
+				{
+					logfile( "UI: *Error* looping process" );
 					last;
 				}
-				if ($config{DEBUG} >= 1) {logfile("UI debug: [loop:$looperrors] [$@]")}
+	
+				if ($config{DEBUG} >= 1)
+				{
+					logfile( "UI debug: [loop:$looperrors] [$@]" )
+				}
+
 				next;
 			}
+
 			$SIG{CHLD} = 'IGNORE';
+
 			my $pid = fork;
-			if ($pid == 0) {
+			if ($pid == 0)
+			{
 				eval {
 					local $SIG{__DIE__} = undef;
 					local $SIG{'ALRM'} = sub {die "Connection timeout!\n"};
+
 					alarm(10);
 					close $server;
 
@@ -9831,11 +9856,17 @@ sub ui {
 					my $peeraddress = $client->peerhost;
 
 					if ($peeraddress =~ /^::ffff:(\d+\.\d+\.\d+\.\d+)$/) {$peeraddress = $1}
-					if ($peeraddress eq "") {
+					if ($peeraddress eq "")
+					{
 						close ($client);
 						alarm(0);
 						exit;
 					}
+
+					# #
+					#	Get user peer address
+					# #
+
 					$ENV{REMOTE_ADDR} = $peeraddress; ##no critic
 
 					if ($config{UI_BLOCK_PRIVATE_NET} == 1)
@@ -9856,6 +9887,7 @@ sub ui {
 								}
 								ConfigServer::Sendmail::relay("", "", @message);
 							}
+
 							close ($client);
 							alarm(0);
 							exit;
@@ -9863,24 +9895,35 @@ sub ui {
 					}
 					else
 					{
-						logfile("UI: [ WARNING ] UI_BLOCK_PRIVATE_NET set to 0. Accepting connection to UI through local IP [$peeraddress]");
+						# #
+						#	[Dangerous] 	User has modified settings to allow external and internal connections.
+						# #
+
+						logfile( "UI: [ WARNING ] UI_BLOCK_PRIVATE_NET in /etc/csf/csf.conf set to 0. Accepting both internal and external attempts to UI through IP [$peeraddress]" );
 					}
 
-					if ($config{"UI_BAN"}) {
+					if ($config{"UI_BAN"})
+					{
 						open (my $UIBAN,"<","/etc/csf/ui/ui.ban");
 						flock ($UIBAN, LOCK_SH);
 						my @records = <$UIBAN>;
 						chomp @records;
 						close ($UIBAN);
-						foreach my $record (@records) {
-							if ($record =~ /^(\#|\s|\r|\n)/) {next}
+
+						foreach my $record (@records)
+						{
+							if ($record =~ /^(\#|\s|\r|\n)/) { next }
 							my ($rip,undef) = split(/\s/,$record);
-							if ($rip eq $peeraddress) {
-								logfile("UI: Access attempt from a banned IP address in /etc/csf/ui/ui.ban - denied [$peeraddress]");
-								if ($config{UI_ALERT} >= 4) {
+
+							if ($rip eq $peeraddress)
+							{
+								logfile( "UI: Access attempt from a banned IP address in /etc/csf/ui/ui.ban - denied [$peeraddress]" );
+								if ($config{UI_ALERT} >= 4)
+								{
 									my @message;
 									my $tip = iplookup($peeraddress);
-									foreach my $line (@alert) {
+									foreach my $line (@alert)
+									{
 										$line =~ s/\[ip\]/$tip/ig;
 										$line =~ s/\[alert\]/Access attempt from banned IP/ig;
 										$line =~ s/\[text\]/Access attempt from a banned IP $tip in \/etc\/csf\/ui\/ui\.ban - denied/ig;
@@ -9967,48 +10010,65 @@ sub ui {
 							$session = $1;
 							$file = $2;
 						}
-					} else {
+					}
+					else
+					{
 						close ($client);
 						alarm(0);
 						exit;
 					}
+
 					my $linecnt;
 					while (1) {
 						my $line;
 						$clientcnt = 0;
-						while ($line !~ /\n$/) {
+						while ($line !~ /\n$/)
+						{
 							my $char;
 							$client->read($char,1);
 							$line .= $char;
 							$clientcnt++;
-							if ($char eq "") {
+
+							if ($char eq "")
+							{
 								if ($config{DEBUG} >= 2) {logfile("UI debug: Child [header] finished")}
 								close ($client);
 								alarm(0);
 								exit;
 							}
-							if ($clientcnt > $maxline) {
+
+							if ($clientcnt > $maxline)
+							{
 								&ui_413;
 								close ($client);
 								alarm(0);
 								exit;
 							}
 						}
+
 						if ($line =~ /^\r\n$/) {last}
 						$line =~ s/\r\n$//;
 						my ($field,$value) = split(/\:\s/,$line);
 						$field = lc($field);
 						$header{$field} = $value;
-						if ($config{DEBUG} >= 2) {logfile("UI debug: header [$field] [$value]")}
+
+						if ($config{DEBUG} >= 2)
+						{
+							logfile("UI debug: header [$field] [$value]")
+						}
+	
 						$linecnt++;
-						if ($linecnt > $maxheader) {
+						if ($linecnt > $maxheader)
+						{
 							&ui_413;
 							close ($client);
 							alarm(0);
 							exit;
 						}
 					}
-					if ($header{'content-length'} > 0) {
+
+					if ($header{'content-length'} > 0)
+					{
 						if ($header{'content-length'} > $maxbody) {
 							&ui_413;
 							close ($client);
@@ -10022,6 +10082,7 @@ sub ui {
 							}
 						}
 					}
+
 					if ($request =~ /^GET\s(\S+)\sHTTP/) {if ($1 =~ /\?([^\?]*)$/) {$buffer = $1}}
 					if ($config{DEBUG} >= 2) {logfile("UI debug: request [$request] buffer [$buffer]")}
 					my @pairs = split(/&/,$buffer);
