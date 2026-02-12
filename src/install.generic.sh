@@ -150,13 +150,18 @@ run copi "install.txt" "${CSF_ETC}"
 
 # #
 #	Check › Perl Modules Installed
+#	
+#	Some users will place the CSF temp files in /tmp, which typically has noexec. Resulting
+#	in a "permission denied". Force os.pl to run under perl.
+#		mount | grep ' /tmp '
+#		findmnt /tmp
 # #
 
 info "    Checking ${bluel}Perl${greym} modules"
 run chmod 700 os.pl
 if [ "$dr" = "false" ]; then
-	RETURN=`./os.pl`
-	if [ "$RETURN" = 1 ]; then
+	RETURN=$(perl ./os.pl)
+	if [ "$RETURN" = "1" ]; then
 		print
 		error "    FAILURE: You MUST install the missing perl modules above before you can install csf. ${redl}root${greym} account (UID:0) to install CSF"
 		label "     See ${redl}/etc/csf/install.txt${greyd} for installation details."
