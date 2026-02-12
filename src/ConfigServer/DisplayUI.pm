@@ -2060,7 +2060,7 @@ EOF
 
 		if ( $header_found )
 		{
-			print "<div class='header-block'>\n";
+			print "<div class='header-block' style='padding-top: 1.6rem'>\n";
 			print "<div class='section'>$header_title</div>\n";
 			print "<div class='section-body comment' style='padding-top:0px !important;white-space: pre-wrap;font-family:monospace;line-height:1.2em;'>\n";
 
@@ -3353,7 +3353,7 @@ EOF
 		print "<table class='table table-bordered table-striped'>\n";
 		print "<thead><tr><th colspan='2'>Server Information</th></tr></thead>";
 
-		print "<tr><td><button name='action' value='servercheck' type='submit' class='btn btn-default'>Check Server Security</button></td><td style='width:100%'>Perform a basic security, stability and settings check on the server</td></tr>\n";
+		print "<tr><td><button name='action' value='servercheck' type='submit' class='btn btn-default' style='width: 200px;'>Check Server Security</button></td><td style='width:100%'>Perform a basic security, stability and settings check on the server</td></tr>\n";
 		print "<tr><td><button name='action' value='readme' type='submit' class='btn btn-default' style='width: 200px;'>Firewall Information</button></td><td style='width:100%'>View the csf+lfd readme.txt file</td></tr>\n";
 		print "<tr><td><button name='action' value='logtail' type='submit' class='btn btn-default' style='width: 200px;'>Watch System Logs</button></td><td style='width:100%'>Watch (tail) various system log files (listed in csf.syslogs)</td></tr>\n";
 		print "<tr><td><button name='action' value='loggrep' type='submit' class='btn btn-default' style='width: 200px;'>Search System Logs</button></td><td style='width:100%'>Search (grep) various system log files (listed in csf.syslogs)</td></tr>\n";
@@ -3429,7 +3429,30 @@ EOF
 
 		__ "<table class='table table-bordered table-striped'>\n";
 		__ "<thead><tr><th colspan='2'>csf - ConfigServer Firewall</th></tr></thead>";
-		__ "<tr><td><form action='$script' method='post'><button name='action' value='" . ( $codename eq 'webmin' ? 'settings' : 'conf' ) . "' type='submit' class='btn btn-default' style='width: 200px;'>Firewall Configuration</button></form></td><td style='width:100%'>Edit the configuration file for the csf firewall and lfd</td></tr>\n";
+
+		# #
+		#	Webmin
+		#	
+		#	Numerous users have wanted the return of the "Firewall Configuration" button.
+		#	
+		#	Webmin authentik-dark js looks for element "conf", takes the url from it, and adds a settings button at the top, and
+		#	then hides the original button.
+		#	
+		#	This allows that process to take place, without modifying Webmin's theme by adding a second button since we have
+		#	zero control over the theme.
+		# #
+
+		if ( $codename eq 'webmin' && $config{UI_WEBMIN_SHOW_BUTTON_CONFIG} == 1 )
+		{
+			__ "<tr><td><form action='$script' method='post'><button name='action' value='settings' type='submit' class='btn btn-default' style='width: 200px;'>Firewall Configuration</button></form></td><td style='width:100%'>Edit the configuration file for the csf firewall and lfd</td></tr>\n";
+			__ "<tr style='display:none;'><td><form action='$script' method='post'><button name='action' value='conf' type='submit' class='btn btn-default' style='width: 200px;'>Firewall Configuration</button></form></td><td style='width:100%'>Edit the configuration file for the csf firewall and lfd</td></tr>\n";
+		}
+		else
+		{
+			__ "<tr><td><form action='$script' method='post'><button name='action' value='conf' type='submit' class='btn btn-default' style='width: 200px;'>Firewall Configuration</button></form></td><td style='width:100%'>Edit the configuration file for the csf firewall and lfd</td></tr>\n";
+		}
+
+	  # __ "<tr><td><form action='$script' method='post'><button name='action' value='" . ( $codename eq 'webmin' ? 'settings' : 'conf' ) . "' type='submit' class='btn btn-default' style='width: 200px;'>Firewall Configuration</button></form></td><td style='width:100%'>Edit the configuration file for the csf firewall and lfd</td></tr>\n";
 		__ "<tr><td><form action='$script' method='post'><button name='action' value='profiles' type='submit' class='btn btn-default' style='width: 200px;'>Firewall Profiles</button></form></td><td style='width:100%'>Apply pre-configured csf.conf profiles and backup/restore csf.conf</td></tr>\n";
 		__ "<tr><td><form action='$script' method='post'><button name='action' value='status' type='submit' class='btn btn-default' style='width: 200px;'>View iptables Rules</button></form></td><td style='width:100%'>Display the active iptables rules</td></tr>\n";
 		__ "<tr><td><button onClick='\$(\"#grep\").submit();' class='btn btn-default' style='width: 200px;'>Search for IP</button></td><td style='width:100%'><form action='$script' method='post' id='grep'><input type='submit' class='hide'><input type='hidden' name='action' value='grep'>Search iptables for IP address <input type='text' name='ip' value='' size='18'></form></td></tr>\n";
@@ -3608,7 +3631,7 @@ EOF
 		__ 		"<div id='insiders' class='tab-pane active'>\n";
 		__ 			"<div id='sponsor' class='tab-pane'>\n";
 		__ 				"<div class='panel panel-default'>\n";
-		__ 					"<div class='panel-heading text-center'><h4>Insiders Program & Sponsorship</h4></div>\n";
+		__ 					"<div class='panel-heading text-center'><h4>Sponsorship & Insiders Program</h4></div>\n";
 							if ( !$config{SPONSOR_LICENSE} )
 							{
 		__						"<div class='panel-body'>\n";
@@ -3617,10 +3640,10 @@ EOF
 		__							"<br><br><strong>By sponsoring our project, you will receive the following:</strong>\n";
 		__							"<ul style='text-align:left;'>\n";
 		__								"<li><a href='https://docs.configserver.dev/insiders'>Insiders</a> access to ConfigServer Security and Firewall release channel</b></li>\n";
+		__								"<li>Increased <a href='https://blocklist.configserver.dev/help'>Blocklist</a> Limits & Features</li>\n";
 		__								"<li><a href='https://discord.configserver.dev'>Discord</a> <b>Sponsor</b> role</li>\n";
 		__								"<li>Listed on our project <a href='https://docs.configserver.dev/insiders/sponsors/'>Sponsor</a> page</li>\n";
 		__								"<li>Tell us additional perks you'd like to see as a Sponsor</li>\n";
-		__								"<li>A huge thank you</li>\n";
 		__							"</ul>\n";
 		__						"</div>\n";
 							}
