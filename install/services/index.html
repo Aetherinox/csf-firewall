@@ -326,7 +326,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../dependencies/" class="md-tabs__link">
+        <a href="../quickstart/install/" class="md-tabs__link">
           
   
   
@@ -936,6 +936,8 @@
       
         
       
+        
+      
     
     
     
@@ -983,6 +985,34 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -1215,23 +1245,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Troubleshooting">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#lfdservice-will-not-start-inactive-dead" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        lfd.service will not start (inactive (dead))
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -1343,7 +1356,7 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_9">
         
           
           <div class="md-nav__link md-nav__container">
@@ -1365,14 +1378,14 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_3_8" id="__nav_3_8_label" tabindex="">
+              <label class="md-nav__link " for="__nav_3_9" id="__nav_3_9_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_8">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_9">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1458,6 +1471,10 @@
     
       
         
+          
+        
+      
+        
       
         
       
@@ -1481,11 +1498,12 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_9">
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_10">
         
           
-          <label class="md-nav__link" for="__nav_3_9" id="__nav_3_9_label" tabindex="">
-            
+          <div class="md-nav__link md-nav__container">
+            <a href="../integrations/" class="md-nav__link ">
+              
   
   
   <span class="md-ellipsis">
@@ -1499,11 +1517,17 @@
   
   
 
-            <span class="md-nav__icon md-icon"></span>
-          </label>
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3_10" id="__nav_3_10_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_9_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_9">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_10">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1512,6 +1536,8 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
             
               
                 
@@ -3782,23 +3808,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Troubleshooting">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#lfdservice-will-not-start-inactive-dead" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        lfd.service will not start (inactive (dead))
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -4211,99 +4220,147 @@ Disable <abbr title="ConfigServer Security &amp; Firewall">csf</abbr> and <abbr 
 <h2 id="troubleshooting">Troubleshooting<a class="headerlink" data-preview="" href="#troubleshooting" title="Permanent link">¶</a></h2>
 <p>Refer to the following troubleshooting tips if you have issues with installing and starting <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> or the <abbr title="Login Failure Daemon">LFD</abbr> daemon.</p>
 <p><br></p>
-<h3 id="lfdservice-will-not-start-inactive-dead"><abbr title="Login Failure Daemon">lfd</abbr>.service will not start (inactive (dead))<a class="headerlink" data-preview="" href="#lfdservice-will-not-start-inactive-dead" title="Permanent link">¶</a></h3>
-<p>First, let's ensure <code>TESTING</code> mode is <strong>disabled</strong>. Run the following <code>tail</code> command to look at the <abbr title="Login Failure Daemon">lfd</abbr> logs located in <code>/var/log/lfd.log</code>:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="16:2"><input checked="checked" id="lfdservice-will-not-start-inactive-dead-command" name="__tabbed_16" type="radio"><input id="lfdservice-will-not-start-inactive-dead-output" name="__tabbed_16" type="radio"><div class="tabbed-labels"><label for="lfdservice-will-not-start-inactive-dead-command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> Command</label><label for="lfdservice-will-not-start-inactive-dead-output"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Output</label></div>
+<details class="faq">
+<summary><abbr title="Login Failure Daemon">LFD</abbr>: Cannot Start Service</summary>
+<div class="details-content">
+<p>Confirm if <abbr title="Login Failure Daemon">LFD</abbr> service is running:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="16:1"><input checked="checked" id="troubleshooting-command" name="__tabbed_16" type="radio"><div class="tabbed-labels"><label for="troubleshooting-command"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> Command</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>sudo<span class="w"> </span>tail<span class="w"> </span>-n<span class="w"> </span><span class="m">50</span><span class="w"> </span>/var/log/lfd.log
-</code></pre></div>
-</div>
-<div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>Sep<span class="w"> </span><span class="m">21</span><span class="w"> </span><span class="m">01</span>:44:34<span class="w"> </span>server<span class="w"> </span>lfd<span class="o">[</span><span class="m">99819</span><span class="o">]</span>:<span class="w"> </span>*Error*<span class="w"> </span>lfd<span class="w"> </span>will<span class="w"> </span>not<span class="w"> </span>run<span class="w"> </span>with<span class="w"> </span>TESTING<span class="w"> </span>enabled<span class="w"> </span><span class="k">in</span><span class="w"> </span>/etc/csf/csf.conf,<span class="w"> </span>at<span class="w"> </span>line<span class="w"> </span><span class="m">98</span>
-<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>Sep<span class="w"> </span><span class="m">21</span><span class="w"> </span><span class="m">01</span>:44:34<span class="w"> </span>server<span class="w"> </span>lfd<span class="o">[</span><span class="m">99819</span><span class="o">]</span>:<span class="w"> </span>daemon<span class="w"> </span>stopped
-<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>Sep<span class="w"> </span><span class="m">21</span><span class="w"> </span><span class="m">01</span>:47:24<span class="w"> </span>server<span class="w"> </span>lfd<span class="o">[</span><span class="m">105308</span><span class="o">]</span>:<span class="w"> </span>*Error*<span class="w"> </span>lfd<span class="w"> </span>will<span class="w"> </span>not<span class="w"> </span>run<span class="w"> </span>with<span class="w"> </span>TESTING<span class="w"> </span>enabled<span class="w"> </span><span class="k">in</span><span class="w"> </span>/etc/csf/csf.conf,<span class="w"> </span>at<span class="w"> </span>line<span class="w"> </span><span class="m">98</span>
-<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>Sep<span class="w"> </span><span class="m">21</span><span class="w"> </span><span class="m">01</span>:47:24<span class="w"> </span>server<span class="w"> </span>lfd<span class="o">[</span><span class="m">105308</span><span class="o">]</span>:<span class="w"> </span>daemon<span class="w"> </span>stopped
-<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>Sep<span class="w"> </span><span class="m">21</span><span class="w"> </span><span class="m">01</span>:47:56<span class="w"> </span>server<span class="w"> </span>lfd<span class="o">[</span><span class="m">101396</span><span class="o">]</span>:<span class="w"> </span>*Error*<span class="w"> </span>lfd<span class="w"> </span>will<span class="w"> </span>not<span class="w"> </span>run<span class="w"> </span>with<span class="w"> </span>TESTING<span class="w"> </span>enabled<span class="w"> </span><span class="k">in</span><span class="w"> </span>/etc/csf/csf.conf,<span class="w"> </span>at<span class="w"> </span>line<span class="w"> </span><span class="m">98</span>
-<a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a>Sep<span class="w"> </span><span class="m">21</span><span class="w"> </span><span class="m">01</span>:47:56<span class="w"> </span>server<span class="w"> </span>lfd<span class="o">[</span><span class="m">101396</span><span class="o">]</span>:<span class="w"> </span>daemon<span class="w"> </span>stopped
-<a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a>Sep<span class="w"> </span><span class="m">21</span><span class="w"> </span><span class="m">01</span>:50:39<span class="w"> </span>server<span class="w"> </span>lfd<span class="o">[</span><span class="m">111685</span><span class="o">]</span>:<span class="w"> </span>*Error*<span class="w"> </span>lfd<span class="w"> </span>will<span class="w"> </span>not<span class="w"> </span>run<span class="w"> </span>with<span class="w"> </span>TESTING<span class="w"> </span>enabled<span class="w"> </span><span class="k">in</span><span class="w"> </span>/etc/csf/csf.conf,<span class="w"> </span>at<span class="w"> </span>line<span class="w"> </span><span class="m">98</span>
-<a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a>Sep<span class="w"> </span><span class="m">21</span><span class="w"> </span><span class="m">01</span>:50:39<span class="w"> </span>server<span class="w"> </span>lfd<span class="o">[</span><span class="m">111685</span><span class="o">]</span>:<span class="w"> </span>daemon<span class="w"> </span>stopped
-<a id="__codelineno-27-9" name="__codelineno-27-9" href="#__codelineno-27-9"></a>Sep<span class="w"> </span><span class="m">21</span><span class="w"> </span><span class="m">01</span>:52:07<span class="w"> </span>server<span class="w"> </span>lfd<span class="o">[</span><span class="m">114496</span><span class="o">]</span>:<span class="w"> </span>*Error*<span class="w"> </span>lfd<span class="w"> </span>will<span class="w"> </span>not<span class="w"> </span>run<span class="w"> </span>with<span class="w"> </span>TESTING<span class="w"> </span>enabled<span class="w"> </span><span class="k">in</span><span class="w"> </span>/etc/csf/csf.conf,<span class="w"> </span>at<span class="w"> </span>line<span class="w"> </span><span class="m">98</span>
-<a id="__codelineno-27-10" name="__codelineno-27-10" href="#__codelineno-27-10"></a>Sep<span class="w"> </span><span class="m">21</span><span class="w"> </span><span class="m">01</span>:52:07<span class="w"> </span>server<span class="w"> </span>lfd<span class="o">[</span><span class="m">114496</span><span class="o">]</span>:<span class="w"> </span>daemon<span class="w"> </span>stopped
-<a id="__codelineno-27-11" name="__codelineno-27-11" href="#__codelineno-27-11"></a>Sep<span class="w"> </span><span class="m">21</span><span class="w"> </span><span class="m">01</span>:52:34<span class="w"> </span>server<span class="w"> </span>lfd<span class="o">[</span><span class="m">115504</span><span class="o">]</span>:<span class="w"> </span>*Error*<span class="w"> </span>lfd<span class="w"> </span>will<span class="w"> </span>not<span class="w"> </span>run<span class="w"> </span>with<span class="w"> </span>TESTING<span class="w"> </span>enabled<span class="w"> </span><span class="k">in</span><span class="w"> </span>/etc/csf/csf.conf,<span class="w"> </span>at<span class="w"> </span>line<span class="w"> </span><span class="m">98</span>
-<a id="__codelineno-27-12" name="__codelineno-27-12" href="#__codelineno-27-12"></a>Sep<span class="w"> </span><span class="m">21</span><span class="w"> </span><span class="m">01</span>:52:34<span class="w"> </span>server<span class="w"> </span>lfd<span class="o">[</span><span class="m">115504</span><span class="o">]</span>:<span class="w"> </span>daemon<span class="w"> </span>stopped
-<a id="__codelineno-27-13" name="__codelineno-27-13" href="#__codelineno-27-13"></a>Sep<span class="w"> </span><span class="m">21</span><span class="w"> </span><span class="m">01</span>:55:17<span class="w"> </span>server<span class="w"> </span>lfd<span class="o">[</span><span class="m">120584</span><span class="o">]</span>:<span class="w"> </span>*Error*<span class="w"> </span>lfd<span class="w"> </span>will<span class="w"> </span>not<span class="w"> </span>run<span class="w"> </span>with<span class="w"> </span>TESTING<span class="w"> </span>enabled<span class="w"> </span><span class="k">in</span><span class="w"> </span>/etc/csf/csf.conf,<span class="w"> </span>at<span class="w"> </span>line<span class="w"> </span><span class="m">98</span>
-<a id="__codelineno-27-14" name="__codelineno-27-14" href="#__codelineno-27-14"></a>Sep<span class="w"> </span><span class="m">21</span><span class="w"> </span><span class="m">01</span>:55:17<span class="w"> </span>server<span class="w"> </span>lfd<span class="o">[</span><span class="m">120584</span><span class="o">]</span>:<span class="w"> </span>daemon<span class="w"> </span>stopped
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>lfd
 </code></pre></div>
 </div>
 </div>
 </div>
 <p><br></p>
-<p>If you see the above logs, this means that <code>TESTING</code> mode is enabled. In order for the <abbr title="Login Failure Daemon">LFD</abbr> daemon to start, you must disable testing mode. Open <code>/etc/csf/csf.conf</code> and change the following:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="17:2"><input checked="checked" id="lfdservice-will-not-start-inactive-dead-find" name="__tabbed_17" type="radio"><input id="lfdservice-will-not-start-inactive-dead-change-to" name="__tabbed_17" type="radio"><div class="tabbed-labels"><label for="lfdservice-will-not-start-inactive-dead-find"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M0 64C0 28.7 28.7 0 64 0L213.5 0c17 0 33.3 6.7 45.3 18.7L365.3 125.3c12 12 18.7 28.3 18.7 45.3L384 448c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 64zm208-5.5l0 93.5c0 13.3 10.7 24 24 24L325.5 176 208 58.5zM272 320c0-53-43-96-96-96s-96 43-96 96 43 96 96 96c17.8 0 34.4-4.8 48.7-13.2L263 441.1c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-38.3-38.3c8.5-14.3 13.3-31 13.3-48.9zm-96-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg></span> Find</label><label for="lfdservice-will-not-start-inactive-dead-change-to"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M128.1 0c-35.3 0-64 28.7-64 64l0 384c0 35.3 28.7 64 64 64l146.2 0 10.9-54.5c4.3-21.7 15-41.6 30.6-57.2l132.2-132.2 0-97.5c0-17-6.7-33.3-18.7-45.3L322.8 18.7C310.8 6.7 294.5 0 277.6 0L128.1 0zM389.6 176l-93.5 0c-13.3 0-24-10.7-24-24l0-93.5 117.5 117.5zM332.3 466.9l-11.9 59.6c-.2 .9-.3 1.9-.3 2.9 0 8 6.5 14.6 14.6 14.6 1 0 1.9-.1 2.9-.3l59.6-11.9c12.4-2.5 23.8-8.6 32.7-17.5l118.9-118.9-80-80-118.9 118.9c-8.9 8.9-15 20.3-17.5 32.7zm267.8-123c22.1-22.1 22.1-57.9 0-80s-57.9-22.1-80 0l-28.8 28.8 80 80 28.8-28.8z"></path></svg></span> Change To</label></div>
+<p>If the service says <strong>Stopped</strong> or <strong>Failed</strong>, run the following <code>tail</code> command to look at the <abbr title="Login Failure Daemon">LFD</abbr> logs located in <code>/var/log/lfd.log</code>:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="17:2"><input checked="checked" id="troubleshooting-command_1" name="__tabbed_17" type="radio"><input id="troubleshooting-output" name="__tabbed_17" type="radio"><div class="tabbed-labels"><label for="troubleshooting-command_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> Command</label><label for="troubleshooting-output"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Output</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-bash highlight"><span class="filename">/etc/csf/csf.conf</span><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="nv">TESTING</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"1"</span>
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>sudo<span class="w"> </span>tail<span class="w"> </span>-n<span class="w"> </span><span class="m">50</span><span class="w"> </span>/var/log/lfd.log
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="language-bash highlight"><span class="filename">/etc/csf/csf.conf</span><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="nv">TESTING</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"0"</span>
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>lfd<span class="o">[</span><span class="m">99819</span><span class="o">]</span>:<span class="w"> </span>*Error*<span class="w"> </span>lfd<span class="w"> </span>will<span class="w"> </span>not<span class="w"> </span>run<span class="w"> </span>with<span class="w"> </span>TESTING<span class="w"> </span>enabled<span class="w"> </span><span class="k">in</span><span class="w"> </span>/etc/csf/csf.conf,<span class="w"> </span>at<span class="w"> </span>line<span class="w"> </span><span class="m">98</span>
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>lfd<span class="o">[</span><span class="m">99819</span><span class="o">]</span>:<span class="w"> </span>daemon<span class="w"> </span>stopped
 </code></pre></div>
 </div>
 </div>
 </div>
 <p><br></p>
-<p>You can also try to run <abbr title="Login Failure Daemon">LFD</abbr> with <code>strace</code>:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="18:2"><input checked="checked" id="lfdservice-will-not-start-inactive-dead-command_1" name="__tabbed_18" type="radio"><input id="lfdservice-will-not-start-inactive-dead-output_1" name="__tabbed_18" type="radio"><div class="tabbed-labels"><label for="lfdservice-will-not-start-inactive-dead-command_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> Command</label><label for="lfdservice-will-not-start-inactive-dead-output_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Output</label></div>
+<p>If you see the output above, you must disable <code>TESTING</code>. Open the file <code>/etc/csf/csf.config</code>:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="18:2"><input checked="checked" id="troubleshooting-find" name="__tabbed_18" type="radio"><input id="troubleshooting-change-to" name="__tabbed_18" type="radio"><div class="tabbed-labels"><label for="troubleshooting-find"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M0 64C0 28.7 28.7 0 64 0L213.5 0c17 0 33.3 6.7 45.3 18.7L365.3 125.3c12 12 18.7 28.3 18.7 45.3L384 448c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 64zm208-5.5l0 93.5c0 13.3 10.7 24 24 24L325.5 176 208 58.5zM272 320c0-53-43-96-96-96s-96 43-96 96 43 96 96 96c17.8 0 34.4-4.8 48.7-13.2L263 441.1c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-38.3-38.3c8.5-14.3 13.3-31 13.3-48.9zm-96-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z"></path></svg></span> Find</label><label for="troubleshooting-change-to"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M128.1 0c-35.3 0-64 28.7-64 64l0 384c0 35.3 28.7 64 64 64l146.2 0 10.9-54.5c4.3-21.7 15-41.6 30.6-57.2l132.2-132.2 0-97.5c0-17-6.7-33.3-18.7-45.3L322.8 18.7C310.8 6.7 294.5 0 277.6 0L128.1 0zM389.6 176l-93.5 0c-13.3 0-24-10.7-24-24l0-93.5 117.5 117.5zM332.3 466.9l-11.9 59.6c-.2 .9-.3 1.9-.3 2.9 0 8 6.5 14.6 14.6 14.6 1 0 1.9-.1 2.9-.3l59.6-11.9c12.4-2.5 23.8-8.6 32.7-17.5l118.9-118.9-80-80-118.9 118.9c-8.9 8.9-15 20.3-17.5 32.7zm267.8-123c22.1-22.1 22.1-57.9 0-80s-57.9-22.1-80 0l-28.8 28.8 80 80 28.8-28.8z"></path></svg></span> Change To</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>sudo<span class="w"> </span>strace<span class="w"> </span>-f<span class="w"> </span>/usr/sbin/lfd<span class="w"> </span>--check
+<div class="language-bash highlight"><span class="filename">/etc/csf/csf.conf</span><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="nv">TESTING</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"1"</span>
 </code></pre></div>
 </div>
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>rt_sigaction<span class="o">(</span>SIGRT_25,<span class="w"> </span>NULL,<span class="w"> </span><span class="o">{</span><span class="nv">sa_handler</span><span class="o">=</span>SIG_DFL,<span class="w"> </span><span class="nv">sa_mask</span><span class="o">=[]</span>,<span class="w"> </span><span class="nv">sa_flags</span><span class="o">=</span><span class="m">0</span><span class="o">}</span>,<span class="w"> </span><span class="m">8</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>
-<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>rt_sigaction<span class="o">(</span>SIGRT_26,<span class="w"> </span>NULL,<span class="w"> </span><span class="o">{</span><span class="nv">sa_handler</span><span class="o">=</span>SIG_DFL,<span class="w"> </span><span class="nv">sa_mask</span><span class="o">=[]</span>,<span class="w"> </span><span class="nv">sa_flags</span><span class="o">=</span><span class="m">0</span><span class="o">}</span>,<span class="w"> </span><span class="m">8</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>
-<a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>rt_sigaction<span class="o">(</span>SIGRT_27,<span class="w"> </span>NULL,<span class="w"> </span><span class="o">{</span><span class="nv">sa_handler</span><span class="o">=</span>SIG_DFL,<span class="w"> </span><span class="nv">sa_mask</span><span class="o">=[]</span>,<span class="w"> </span><span class="nv">sa_flags</span><span class="o">=</span><span class="m">0</span><span class="o">}</span>,<span class="w"> </span><span class="m">8</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>
-<a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>rt_sigaction<span class="o">(</span>SIGRT_28,<span class="w"> </span>NULL,<span class="w"> </span><span class="o">{</span><span class="nv">sa_handler</span><span class="o">=</span>SIG_DFL,<span class="w"> </span><span class="nv">sa_mask</span><span class="o">=[]</span>,<span class="w"> </span><span class="nv">sa_flags</span><span class="o">=</span><span class="m">0</span><span class="o">}</span>,<span class="w"> </span><span class="m">8</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>
-<a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>rt_sigaction<span class="o">(</span>SIGRT_29,<span class="w"> </span>NULL,<span class="w"> </span><span class="o">{</span><span class="nv">sa_handler</span><span class="o">=</span>SIG_DFL,<span class="w"> </span><span class="nv">sa_mask</span><span class="o">=[]</span>,<span class="w"> </span><span class="nv">sa_flags</span><span class="o">=</span><span class="m">0</span><span class="o">}</span>,<span class="w"> </span><span class="m">8</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>
-<a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>rt_sigaction<span class="o">(</span>SIGRT_30,<span class="w"> </span>NULL,<span class="w"> </span><span class="o">{</span><span class="nv">sa_handler</span><span class="o">=</span>SIG_DFL,<span class="w"> </span><span class="nv">sa_mask</span><span class="o">=[]</span>,<span class="w"> </span><span class="nv">sa_flags</span><span class="o">=</span><span class="m">0</span><span class="o">}</span>,<span class="w"> </span><span class="m">8</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>
-<a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a>rt_sigaction<span class="o">(</span>SIGRT_31,<span class="w"> </span>NULL,<span class="w"> </span><span class="o">{</span><span class="nv">sa_handler</span><span class="o">=</span>SIG_DFL,<span class="w"> </span><span class="nv">sa_mask</span><span class="o">=[]</span>,<span class="w"> </span><span class="nv">sa_flags</span><span class="o">=</span><span class="m">0</span><span class="o">}</span>,<span class="w"> </span><span class="m">8</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>
-<a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a>rt_sigaction<span class="o">(</span>SIGRT_32,<span class="w"> </span>NULL,<span class="w"> </span><span class="o">{</span><span class="nv">sa_handler</span><span class="o">=</span>SIG_DFL,<span class="w"> </span><span class="nv">sa_mask</span><span class="o">=[]</span>,<span class="w"> </span><span class="nv">sa_flags</span><span class="o">=</span><span class="m">0</span><span class="o">}</span>,<span class="w"> </span><span class="m">8</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>
-<a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a>rt_sigaction<span class="o">(</span>SIGABRT,<span class="w"> </span>NULL,<span class="w"> </span><span class="o">{</span><span class="nv">sa_handler</span><span class="o">=</span>SIG_DFL,<span class="w"> </span><span class="nv">sa_mask</span><span class="o">=[]</span>,<span class="w"> </span><span class="nv">sa_flags</span><span class="o">=</span><span class="m">0</span><span class="o">}</span>,<span class="w"> </span><span class="m">8</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>
-<a id="__codelineno-31-10" name="__codelineno-31-10" href="#__codelineno-31-10"></a>rt_sigaction<span class="o">(</span>SIGCHLD,<span class="w"> </span>NULL,<span class="w"> </span><span class="o">{</span><span class="nv">sa_handler</span><span class="o">=</span>SIG_DFL,<span class="w"> </span><span class="nv">sa_mask</span><span class="o">=[]</span>,<span class="w"> </span><span class="nv">sa_flags</span><span class="o">=</span><span class="m">0</span><span class="o">}</span>,<span class="w"> </span><span class="m">8</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>
-<a id="__codelineno-31-11" name="__codelineno-31-11" href="#__codelineno-31-11"></a>rt_sigaction<span class="o">(</span>SIGIO,<span class="w"> </span>NULL,<span class="w"> </span><span class="o">{</span><span class="nv">sa_handler</span><span class="o">=</span>SIG_DFL,<span class="w"> </span><span class="nv">sa_mask</span><span class="o">=[]</span>,<span class="w"> </span><span class="nv">sa_flags</span><span class="o">=</span><span class="m">0</span><span class="o">}</span>,<span class="w"> </span><span class="m">8</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>
-<a id="__codelineno-31-12" name="__codelineno-31-12" href="#__codelineno-31-12"></a>exit_group<span class="o">(</span><span class="m">0</span><span class="o">)</span><span class="w">                           </span><span class="o">=</span><span class="w"> </span>?
-<a id="__codelineno-31-13" name="__codelineno-31-13" href="#__codelineno-31-13"></a>+++<span class="w"> </span>exited<span class="w"> </span>with<span class="w"> </span><span class="m">0</span><span class="w"> </span>+++
+<div class="language-bash highlight"><span class="filename">/etc/csf/csf.conf</span><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="nv">TESTING</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"0"</span>
 </code></pre></div>
 </div>
 </div>
 </div>
 <p><br></p>
-<p>Sometimes <code>strace</code> will give you hints as to what went wrong. In the example above, <abbr title="Login Failure Daemon">lfd</abbr> is exiting with <code>error code 0</code>, which means “success / no error”. The program is choosing to shut itself down and telling the OS “I finished cleanly.”. This tells us that it's not due to something failing. </p>
-<p>When a daemon exits cleanly (exit code 0), you usually have to look inside <abbr title="Login Failure Daemon">lfd</abbr>'s own logs, not just systemd’s.</p>
-<p>In our example above, we clearly see in the <code>/var/log/lfd.log</code> file that it was due to us having <code>TESTING</code> enabled.</p>
-<p><br></p>
-<p>Another option for checking failure reasons is to run the following command:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="19:1"><input checked="checked" id="lfdservice-will-not-start-inactive-dead-command_2" name="__tabbed_19" type="radio"><div class="tabbed-labels"><label for="lfdservice-will-not-start-inactive-dead-command_2"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> Command</label></div>
+<p>Also ensure that you have changed the default <strong>username</strong> and <strong>password</strong> in your <code>/etc/csf/csf.conf</code>. You cannot use the
+default values.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="19:1"><input checked="checked" id="troubleshooting-etccsfcsfconf" name="__tabbed_19" type="radio"><div class="tabbed-labels"><label for="troubleshooting-etccsfcsfconf"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-277.5c0-17-6.7-33.3-18.7-45.3L258.7 18.7C246.7 6.7 230.5 0 213.5 0L64 0zM325.5 176L232 176c-13.3 0-24-10.7-24-24L208 58.5 325.5 176z"></path></svg></span> /etc/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>/<abbr title="The default csf config file, usually in &lt;pre&gt;/etc/csf/csf.conf&lt;/pre&gt;">csf.conf</abbr></label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>sudo<span class="w"> </span>dmesg<span class="w"> </span>-T<span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-n<span class="w"> </span><span class="m">20</span>
+<div class="language-bash highlight"><span class="filename">Set Admin Username &amp; Password</span><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="nv">UI_USER</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"admin"</span>
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="nv">UI_PASS</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"password"</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>Finally, make sure you have <strong>whitelisted</strong> the IP address you will use to access the <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> web interface. Open <code>/etc/csf/ui/csf.allow</code> and add your
+IP to the file, one IP-per-line:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="20:1"><input checked="checked" id="troubleshooting-etccsfuicsfallow" name="__tabbed_20" type="radio"><div class="tabbed-labels"><label for="troubleshooting-etccsfuicsfallow"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M64 0C28.7 0 0 28.7 0 64L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-277.5c0-17-6.7-33.3-18.7-45.3L258.7 18.7C246.7 6.7 230.5 0 213.5 0L64 0zM325.5 176L232 176c-13.3 0-24-10.7-24-24L208 58.5 325.5 176z"></path></svg></span> /etc/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>/ui/<abbr title="ConfigServer Security &amp; Firewall">csf</abbr>.allow</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-bash highlight"><span class="filename">Whitelist IP in Web Interface</span><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="m">127</span>.0.0.1<span class="w">       </span><span class="c1"># localhost / loopback</span>
+<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="m">172</span>.17.0.1<span class="w">      </span><span class="c1"># For Docker users behind a bridge</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>Restart <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> and <abbr title="Login Failure Daemon">LFD</abbr> <abbr title="In Traefik, services represent the backend applications or containers that ultimately handle requests. A service defines how Traefik connects to your app (load balancing, health checks, servers list, etc.).">services</abbr>:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="21:1"><input checked="checked" id="troubleshooting-command_2" name="__tabbed_21" type="radio"><div class="tabbed-labels"><label for="troubleshooting-command_2"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> Command</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>sudo<span class="w"> </span>csf<span class="w"> </span>-ra
+<a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>lfd
+</code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>Confirm the status of <abbr title="Login Failure Daemon">LFD</abbr> again:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="22:1"><input checked="checked" id="troubleshooting-command_3" name="__tabbed_22" type="radio"><div class="tabbed-labels"><label for="troubleshooting-command_3"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> Command</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>lfd
+</code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>If none of the above helps you solve it, you can also try to run <abbr title="Login Failure Daemon">LFD</abbr> with <code>strace</code>:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="23:2"><input checked="checked" id="troubleshooting-command_4" name="__tabbed_23" type="radio"><input id="troubleshooting-output_1" name="__tabbed_23" type="radio"><div class="tabbed-labels"><label for="troubleshooting-command_4"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> Command</label><label for="troubleshooting-output_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zm71 63c-9.4 9.4-9.4 24.6 0 33.9l63 63-63 63c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l80-80c9.4-9.4 9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0zM216 336c-13.3 0-24 10.7-24 24s10.7 24 24 24l144 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-144 0z"></path></svg></span> Output</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>sudo<span class="w"> </span>strace<span class="w"> </span>-f<span class="w"> </span>/usr/sbin/lfd<span class="w"> </span>--check
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>rt_sigaction<span class="o">(</span>SIGRT_25,<span class="w"> </span>NULL,<span class="w"> </span><span class="o">{</span><span class="nv">sa_handler</span><span class="o">=</span>SIG_DFL,<span class="w"> </span><span class="nv">sa_mask</span><span class="o">=[]</span>,<span class="w"> </span><span class="nv">sa_flags</span><span class="o">=</span><span class="m">0</span><span class="o">}</span>,<span class="w"> </span><span class="m">8</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>
+<a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>rt_sigaction<span class="o">(</span>SIGRT_26,<span class="w"> </span>NULL,<span class="w"> </span><span class="o">{</span><span class="nv">sa_handler</span><span class="o">=</span>SIG_DFL,<span class="w"> </span><span class="nv">sa_mask</span><span class="o">=[]</span>,<span class="w"> </span><span class="nv">sa_flags</span><span class="o">=</span><span class="m">0</span><span class="o">}</span>,<span class="w"> </span><span class="m">8</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>
+<a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>rt_sigaction<span class="o">(</span>SIGRT_27,<span class="w"> </span>NULL,<span class="w"> </span><span class="o">{</span><span class="nv">sa_handler</span><span class="o">=</span>SIG_DFL,<span class="w"> </span><span class="nv">sa_mask</span><span class="o">=[]</span>,<span class="w"> </span><span class="nv">sa_flags</span><span class="o">=</span><span class="m">0</span><span class="o">}</span>,<span class="w"> </span><span class="m">8</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>
+<a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a>rt_sigaction<span class="o">(</span>SIGRT_28,<span class="w"> </span>NULL,<span class="w"> </span><span class="o">{</span><span class="nv">sa_handler</span><span class="o">=</span>SIG_DFL,<span class="w"> </span><span class="nv">sa_mask</span><span class="o">=[]</span>,<span class="w"> </span><span class="nv">sa_flags</span><span class="o">=</span><span class="m">0</span><span class="o">}</span>,<span class="w"> </span><span class="m">8</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>
+<a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a>rt_sigaction<span class="o">(</span>SIGRT_29,<span class="w"> </span>NULL,<span class="w"> </span><span class="o">{</span><span class="nv">sa_handler</span><span class="o">=</span>SIG_DFL,<span class="w"> </span><span class="nv">sa_mask</span><span class="o">=[]</span>,<span class="w"> </span><span class="nv">sa_flags</span><span class="o">=</span><span class="m">0</span><span class="o">}</span>,<span class="w"> </span><span class="m">8</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>
+<a id="__codelineno-36-6" name="__codelineno-36-6" href="#__codelineno-36-6"></a>rt_sigaction<span class="o">(</span>SIGRT_30,<span class="w"> </span>NULL,<span class="w"> </span><span class="o">{</span><span class="nv">sa_handler</span><span class="o">=</span>SIG_DFL,<span class="w"> </span><span class="nv">sa_mask</span><span class="o">=[]</span>,<span class="w"> </span><span class="nv">sa_flags</span><span class="o">=</span><span class="m">0</span><span class="o">}</span>,<span class="w"> </span><span class="m">8</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>
+<a id="__codelineno-36-7" name="__codelineno-36-7" href="#__codelineno-36-7"></a>rt_sigaction<span class="o">(</span>SIGRT_31,<span class="w"> </span>NULL,<span class="w"> </span><span class="o">{</span><span class="nv">sa_handler</span><span class="o">=</span>SIG_DFL,<span class="w"> </span><span class="nv">sa_mask</span><span class="o">=[]</span>,<span class="w"> </span><span class="nv">sa_flags</span><span class="o">=</span><span class="m">0</span><span class="o">}</span>,<span class="w"> </span><span class="m">8</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>
+<a id="__codelineno-36-8" name="__codelineno-36-8" href="#__codelineno-36-8"></a>rt_sigaction<span class="o">(</span>SIGRT_32,<span class="w"> </span>NULL,<span class="w"> </span><span class="o">{</span><span class="nv">sa_handler</span><span class="o">=</span>SIG_DFL,<span class="w"> </span><span class="nv">sa_mask</span><span class="o">=[]</span>,<span class="w"> </span><span class="nv">sa_flags</span><span class="o">=</span><span class="m">0</span><span class="o">}</span>,<span class="w"> </span><span class="m">8</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>
+<a id="__codelineno-36-9" name="__codelineno-36-9" href="#__codelineno-36-9"></a>rt_sigaction<span class="o">(</span>SIGABRT,<span class="w"> </span>NULL,<span class="w"> </span><span class="o">{</span><span class="nv">sa_handler</span><span class="o">=</span>SIG_DFL,<span class="w"> </span><span class="nv">sa_mask</span><span class="o">=[]</span>,<span class="w"> </span><span class="nv">sa_flags</span><span class="o">=</span><span class="m">0</span><span class="o">}</span>,<span class="w"> </span><span class="m">8</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>
+<a id="__codelineno-36-10" name="__codelineno-36-10" href="#__codelineno-36-10"></a>rt_sigaction<span class="o">(</span>SIGCHLD,<span class="w"> </span>NULL,<span class="w"> </span><span class="o">{</span><span class="nv">sa_handler</span><span class="o">=</span>SIG_DFL,<span class="w"> </span><span class="nv">sa_mask</span><span class="o">=[]</span>,<span class="w"> </span><span class="nv">sa_flags</span><span class="o">=</span><span class="m">0</span><span class="o">}</span>,<span class="w"> </span><span class="m">8</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>
+<a id="__codelineno-36-11" name="__codelineno-36-11" href="#__codelineno-36-11"></a>rt_sigaction<span class="o">(</span>SIGIO,<span class="w"> </span>NULL,<span class="w"> </span><span class="o">{</span><span class="nv">sa_handler</span><span class="o">=</span>SIG_DFL,<span class="w"> </span><span class="nv">sa_mask</span><span class="o">=[]</span>,<span class="w"> </span><span class="nv">sa_flags</span><span class="o">=</span><span class="m">0</span><span class="o">}</span>,<span class="w"> </span><span class="m">8</span><span class="o">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span>
+<a id="__codelineno-36-12" name="__codelineno-36-12" href="#__codelineno-36-12"></a>exit_group<span class="o">(</span><span class="m">0</span><span class="o">)</span><span class="w">                           </span><span class="o">=</span><span class="w"> </span>?
+<a id="__codelineno-36-13" name="__codelineno-36-13" href="#__codelineno-36-13"></a>+++<span class="w"> </span>exited<span class="w"> </span>with<span class="w"> </span><span class="m">0</span><span class="w"> </span>+++
+</code></pre></div>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>Using <code>strace</code> will give you hints of any issues or errors. In the example above, <abbr title="Login Failure Daemon">lfd</abbr> exits with <code>error code 0</code>, 
+which means “success / no error”. The program is choosing to shut itself down and telling the OS “I finished cleanly”.</p>
+<p>This tells us that it's not due to something failing. When a daemon exits cleanly (exit code 0), you usually have to 
+look inside <abbr title="Login Failure Daemon">lfd</abbr>'s own logs, not just systemd’s.</p>
+<p>In the examples above, we see in <code>/var/log/lfd.log</code> that it was due to us having <code>TESTING</code> enabled.</p>
+<p>Another option for checking failure reasons is to run:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="24:1"><input checked="checked" id="troubleshooting-command_5" name="__tabbed_24" type="radio"><div class="tabbed-labels"><label for="troubleshooting-command_5"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> Command</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>sudo<span class="w"> </span>dmesg<span class="w"> </span>-T<span class="w"> </span><span class="p">|</span><span class="w"> </span>tail<span class="w"> </span>-n<span class="w"> </span><span class="m">20</span>
 </code></pre></div>
 </div>
 </div>
 </div>
 <p><br></p>
 <p>You can also check <code>journalctl</code> for any errors:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="20:1"><input checked="checked" id="lfdservice-will-not-start-inactive-dead-command_3" name="__tabbed_20" type="radio"><div class="tabbed-labels"><label for="lfdservice-will-not-start-inactive-dead-command_3"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> Command</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="25:1"><input checked="checked" id="troubleshooting-command_6" name="__tabbed_25" type="radio"><div class="tabbed-labels"><label for="troubleshooting-command_6"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path style="fill:var(--fa-secondary-color,currentColor);opacity:var(--fa-secondary-opacity,.4)" d="M0 408c0-57.4 46.6-104 104-104l40 0 0-96 64 0 0 200c0 57.4-46.6 104-104 104S0 465.4 0 408zm64 0c0 22.1 17.9 40 40 40s40-17.9 40-40l0-40-40 0c-22.1 0-40 17.9-40 40zM304 104C304 46.6 350.6 0 408 0s104 46.6 104 104-46.6 104-104 104l-40 0 0 96-64 0 0-200zm64 0l0 40 40 0c22.1 0 40-17.9 40-40s-17.9-40-40-40-40 17.9-40 40z"></path><path style="fill:var(--fa-primary-color,currentColor);opacity:var(--fa-primary-opacity,1)" d="M408 304l-200 0 0 64 96 0 0 40c0 57.4 46.6 104 104 104s104-46.6 104-104-46.6-104-104-104zm-40 64l40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40l0-40zM104 208l200 0 0-64-96 0 0-40C208 46.6 161.4 0 104 0S0 46.6 0 104 46.6 208 104 208zm40-64l-40 0c-22.1 0-40-17.9-40-40s17.9-40 40-40 40 17.9 40 40l0 40z"></path></svg></span> Command</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>sudo<span class="w"> </span>journalctl<span class="w"> </span>-xeu<span class="w"> </span>lfd.service
+<div class="language-shell highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>sudo<span class="w"> </span>journalctl<span class="w"> </span>-xeu<span class="w"> </span>lfd.service
 </code></pre></div>
 </div>
 </div>
 </div>
 <p><br></p>
-<p>All of the listed methods above will help you narrow down exactly why <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> or <abbr title="Login Failure Daemon">LFD</abbr> are not starting properly.</p>
+<p>All of the listed methods above will help you narrow down exactly why <abbr title="Login Failure Daemon">LFD</abbr> or <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> are not starting properly.</p>
+</div>
+</details>
 <p><br></p>
 <hr>
 <p><br></p>
@@ -4357,7 +4414,7 @@ what options you have for securing your server.</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="December 26, 2025 23:46:24 UTC"><span class="timeago" datetime="2025-12-26T23:46:24+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="December 26, 2025 23:46:24 UTC">2025-12-26</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="February 12, 2026 12:25:34 UTC"><span class="timeago" datetime="2026-02-12T12:25:34+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="February 12, 2026 12:25:34 UTC">2026-02-12</span>
   </span>
 
     
