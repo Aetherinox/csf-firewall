@@ -1,5 +1,5 @@
 # #
-#   @app                ConfigServer Firewall & Security (CSF)
+#   @app                ConfigServer Security & Firewall (CSF)
 #                       Login Failure Daemon (LFD)
 #   @website            https://configserver.dev
 #   @docs               https://docs.configserver.dev
@@ -9,7 +9,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            12.20.2025
+#   @updated            02.12.2026
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by

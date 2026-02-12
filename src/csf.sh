@@ -1,6 +1,6 @@
 #!/bin/sh
 # #
-#   @app                ConfigServer Firewall & Security (CSF)
+#   @app                ConfigServer Security & Firewall (CSF)
 #                       Login Failure Daemon (LFD)
 #   @website            https://configserver.dev
 #   @docs               https://docs.configserver.dev
