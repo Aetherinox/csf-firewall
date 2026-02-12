@@ -1305,6 +1305,22 @@
         font-weight: 700;
     }
 
+    /*
+        Left following navigation category block
+    */
+
+    .md-nav--secondary .md-nav__title
+    {
+        background: #FFFFFF;
+        box-shadow: none;
+    }
+
+    .md-nav--lifted > .md-nav__list > .md-nav__item--active > .md-nav__link
+    {
+        background: #FFFFFF;
+        box-shadow: none;
+    }
+
 }
 
 /*
@@ -1868,15 +1884,31 @@
         background-color: #222;
     }
 
+    .md-typeset .admonition, .md-typeset details
+    {
+
+    }
+
     .md-typeset .admonition-title, .md-typeset summary
     {
 
     }
 
+    /*
+        Dropdown Summary
+
+        All dropdown / FAQ should be wrapped in this div class.
+    */
+
+    .details-content
+    {
+        padding: 1rem;
+    }
+
     .md-typeset .faq > .admonition-title,
     .md-typeset .faq > summary
     {
-        background-color: #222;
+        background-color: #2b2b2b;
     }
 
     .md-typeset .faq > .admonition-title::before,
@@ -2554,6 +2586,22 @@
         color: #ff2682;
         font-weight: 700;
     }
+
+    /*
+        Left following navigation category block
+    */
+
+    .md-nav--secondary .md-nav__title
+    {
+        background: #390c1b;
+        box-shadow: none;
+    }
+    
+    .md-nav--lifted > .md-nav__list > .md-nav__item--active > .md-nav__link
+    {
+        background: #390c1b;
+        box-shadow: none;
+    }
 }
 
 /*
@@ -2841,6 +2889,18 @@ p > a.btn-aln-center-inline
     height: 48pt;
 }
 
+.png-size-64
+{
+    width: 64pt;
+    height: 64pt;
+}
+
+.png-size-84
+{
+    width: 84pt;
+    height: 84pt;
+}
+
 .icon-dim:hover
 {
     transform: scale(1.2);
@@ -3034,7 +3094,7 @@ p > a.btn-aln-center-inline
 
 & li.md-nav__item--nested > nav.md-nav[aria-expanded="true"]
 {
-    padding-bottom: 10px;
+
 }
 
 .md-nav__toggle ~ .md-nav
@@ -3281,18 +3341,6 @@ nav.md-nav > ul.md-nav__list > li.md-nav__item > a.md-nav__link > span.md-ellips
 nav.md-nav--secondary li
 {
     font-size: 0.55rem !important;
-}
-
-.md-nav--secondary .md-nav__title
-{
-    background: none;
-    box-shadow: none;
-}
-
-.md-nav--lifted > .md-nav__list > .md-nav__item--active > .md-nav__link
-{
-    background: none;
-    box-shadow: none;
 }
 
 /*

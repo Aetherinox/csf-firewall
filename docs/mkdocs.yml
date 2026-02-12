@@ -278,6 +278,7 @@ nav:
                 - Conventions: 'about/conventions.md'
                 - Tags: 'about/tags.md'
     - Install:
+          - Quickstart: 'install/quickstart/install.md'
           - Dependencies: 'install/dependencies.md'
           - Download: 'install/download.md'
           - Diagnostic Tests: 'install/tests.md'
@@ -290,6 +291,7 @@ nav:
                 - v15.00 to Newer: 'install/update/v1500-to-newer.md'
                 - v15.01 to Newer: 'install/update/v1501-to-newer.md'
           - Integrations:
+                - install/integrations/index.md
                 - AbuseIPDB: 'install/integrations/abuseipdb.md'
                 - Authentik: 'install/integrations/authentik.md'
                 - Docker: 'install/integrations/docker.md'

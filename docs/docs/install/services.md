@@ -371,110 +371,157 @@ Refer to the following troubleshooting tips if you have issues with installing a
 
 <br />
 
-### lfd.service will not start (inactive (dead))
+??? faq "LFD: Cannot Start Service"
 
-First, let's ensure `TESTING` mode is **disabled**. Run the following `tail` command to look at the lfd logs located in `/var/log/lfd.log`:
+    <div class="details-content">
 
-=== ":aetherx-axd-command: Command"
+    Confirm if LFD service is running:
 
-      ```shell
-      sudo tail -n 50 /var/log/lfd.log
-      ```
+    === ":aetherx-axd-command: Command"
 
-=== ":aetherx-axs-square-terminal: Output"
+        ```shell
+        sudo systemctl status lfd
+        ```
 
-      ```shell
-      Sep 21 01:44:34 server lfd[99819]: *Error* lfd will not run with TESTING enabled in /etc/csf/csf.conf, at line 98
-      Sep 21 01:44:34 server lfd[99819]: daemon stopped
-      Sep 21 01:47:24 server lfd[105308]: *Error* lfd will not run with TESTING enabled in /etc/csf/csf.conf, at line 98
-      Sep 21 01:47:24 server lfd[105308]: daemon stopped
-      Sep 21 01:47:56 server lfd[101396]: *Error* lfd will not run with TESTING enabled in /etc/csf/csf.conf, at line 98
-      Sep 21 01:47:56 server lfd[101396]: daemon stopped
-      Sep 21 01:50:39 server lfd[111685]: *Error* lfd will not run with TESTING enabled in /etc/csf/csf.conf, at line 98
-      Sep 21 01:50:39 server lfd[111685]: daemon stopped
-      Sep 21 01:52:07 server lfd[114496]: *Error* lfd will not run with TESTING enabled in /etc/csf/csf.conf, at line 98
-      Sep 21 01:52:07 server lfd[114496]: daemon stopped
-      Sep 21 01:52:34 server lfd[115504]: *Error* lfd will not run with TESTING enabled in /etc/csf/csf.conf, at line 98
-      Sep 21 01:52:34 server lfd[115504]: daemon stopped
-      Sep 21 01:55:17 server lfd[120584]: *Error* lfd will not run with TESTING enabled in /etc/csf/csf.conf, at line 98
-      Sep 21 01:55:17 server lfd[120584]: daemon stopped
-      ```
+    <br />
 
-<br />
+    If the service says **Stopped** or **Failed**, run the following `tail` command to look at the LFD logs located in `/var/log/lfd.log`:
 
-If you see the above logs, this means that `TESTING` mode is enabled. In order for the LFD daemon to start, you must disable testing mode. Open `/etc/csf/csf.conf` and change the following:
+    === ":aetherx-axd-command: Command"
 
-=== ":aetherx-axs-file-magnifying-glass: Find"
+        ```shell
+        sudo tail -n 50 /var/log/lfd.log
+        ```
 
-    ``` bash title="/etc/csf/csf.conf"
-    TESTING = "1"
-    ```
+    === ":aetherx-axs-square-terminal: Output"
 
-=== ":aetherx-axs-file-pen: Change To"
+        ```shell
+        lfd[99819]: *Error* lfd will not run with TESTING enabled in /etc/csf/csf.conf, at line 98
+        lfd[99819]: daemon stopped
+        ```
 
-    ``` bash title="/etc/csf/csf.conf"
-    TESTING = "0"
-    ```
+    <br />
 
-<br />
+    If you see the output above, you must disable `TESTING`. Open the file `/etc/csf/csf.config`:
 
-You can also try to run LFD with `strace`:
+    === ":aetherx-axs-file-magnifying-glass: Find"
 
-=== ":aetherx-axd-command: Command"
+        ``` bash title="/etc/csf/csf.conf"
+        TESTING = "1"
+        ```
 
-      ```shell
-      sudo strace -f /usr/sbin/lfd --check
-      ```
+    === ":aetherx-axs-file-pen: Change To"
 
-=== ":aetherx-axs-square-terminal: Output"
+        ``` bash title="/etc/csf/csf.conf"
+        TESTING = "0"
+        ```
 
-      ```shell
-      rt_sigaction(SIGRT_25, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
-      rt_sigaction(SIGRT_26, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
-      rt_sigaction(SIGRT_27, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
-      rt_sigaction(SIGRT_28, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
-      rt_sigaction(SIGRT_29, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
-      rt_sigaction(SIGRT_30, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
-      rt_sigaction(SIGRT_31, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
-      rt_sigaction(SIGRT_32, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
-      rt_sigaction(SIGABRT, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
-      rt_sigaction(SIGCHLD, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
-      rt_sigaction(SIGIO, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
-      exit_group(0)                           = ?
-      +++ exited with 0 +++
-      ```
+    <br />
 
-<br />
+    Also ensure that you have changed the default **username** and **password** in your `/etc/csf/csf.conf`. You cannot use the
+    default values.
 
-Sometimes `strace` will give you hints as to what went wrong. In the example above, lfd is exiting with `error code 0`, which means “success / no error”. The program is choosing to shut itself down and telling the OS “I finished cleanly.”. This tells us that it's not due to something failing. 
+    === ":aetherx-axs-file: /etc/csf/csf.conf"
 
-When a daemon exits cleanly (exit code 0), you usually have to look inside lfd's own logs, not just systemd’s.
+        ``` bash title="Set Admin Username & Password"
+        UI_USER = "admin"
+        UI_PASS = "password"
+        ```
 
-In our example above, we clearly see in the `/var/log/lfd.log` file that it was due to us having `TESTING` enabled.
+    <br />
 
-<br />
+    Finally, make sure you have **whitelisted** the IP address you will use to access the CSF web interface. Open `/etc/csf/ui/csf.allow` and add your
+    IP to the file, one IP-per-line:
 
-Another option for checking failure reasons is to run the following command:
+    === ":aetherx-axs-file: /etc/csf/ui/csf.allow"
 
-=== ":aetherx-axd-command: Command"
+        ``` bash title="Whitelist IP in Web Interface"
+        127.0.0.1       # localhost / loopback
+        172.17.0.1      # For Docker users behind a bridge
+        ```
 
-      ```shell
-      sudo dmesg -T | tail -n 20
-      ```
+    <br />
 
-<br />
+    Restart CSF and LFD services:
 
-You can also check `journalctl` for any errors:
+    === ":aetherx-axd-command: Command"
 
-=== ":aetherx-axd-command: Command"
+        ```shell
+        sudo csf -ra
+        sudo systemctl start lfd
+        ```
 
-      ```shell
-      sudo journalctl -xeu lfd.service
-      ```
+    <br />
 
-<br />
+    Confirm the status of LFD again:
 
-All of the listed methods above will help you narrow down exactly why CSF or LFD are not starting properly.
+    === ":aetherx-axd-command: Command"
+
+        ```shell
+        sudo systemctl status lfd
+        ```
+
+    <br />
+
+    If none of the above helps you solve it, you can also try to run LFD with `strace`:
+
+    === ":aetherx-axd-command: Command"
+
+        ```shell
+        sudo strace -f /usr/sbin/lfd --check
+        ```
+
+    === ":aetherx-axs-square-terminal: Output"
+
+        ```shell
+        rt_sigaction(SIGRT_25, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+        rt_sigaction(SIGRT_26, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+        rt_sigaction(SIGRT_27, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+        rt_sigaction(SIGRT_28, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+        rt_sigaction(SIGRT_29, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+        rt_sigaction(SIGRT_30, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+        rt_sigaction(SIGRT_31, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+        rt_sigaction(SIGRT_32, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+        rt_sigaction(SIGABRT, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+        rt_sigaction(SIGCHLD, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+        rt_sigaction(SIGIO, NULL, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=0}, 8) = 0
+        exit_group(0)                           = ?
+        +++ exited with 0 +++
+        ```
+
+    <br />
+
+    Using `strace` will give you hints of any issues or errors. In the example above, lfd exits with `error code 0`, 
+    which means “success / no error”. The program is choosing to shut itself down and telling the OS “I finished cleanly”.
+
+    This tells us that it's not due to something failing. When a daemon exits cleanly (exit code 0), you usually have to 
+    look inside lfd's own logs, not just systemd’s.
+
+    In the examples above, we see in `/var/log/lfd.log` that it was due to us having `TESTING` enabled.
+
+    Another option for checking failure reasons is to run:
+
+    === ":aetherx-axd-command: Command"
+
+        ```shell
+        sudo dmesg -T | tail -n 20
+        ```
+
+    <br />
+
+    You can also check `journalctl` for any errors:
+
+    === ":aetherx-axd-command: Command"
+
+        ```shell
+        sudo journalctl -xeu lfd.service
+        ```
+
+    <br />
+
+    All of the listed methods above will help you narrow down exactly why LFD or CSF are not starting properly.
+
+    </div>
 
 <br />
 
