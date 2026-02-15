@@ -17,18 +17,19 @@ This section explains the purpose of IPSETs, and how they benefit you as a serve
 
 The following is a summary of what this page explains:
 
-- CSF includes support for a feature known as **Blocklists**.
-- A blocklist is a file that contains thousands (or even millions) of IP addresses that CSF can import to automatically deny access to your server.
-- These IP addresses are gathered and maintained by third-party services that monitor IP reputation, tracking malicious behavior such as port scans, brute-force login attempts, and other abusive activity.
-- When an IP is repeatedly reported for malicious actions, it is added to a blocklist. You can then find these generated blocklists online, and import the IPs from those lists into your firewall.
-- Taffic from the IPs within these blocklists are blocked from accessing your server if they ever attempt to target you.
-- While blocklists are effective, very large blocklists come with a drawback: each IP address must be added as its own firewall rule.
+- CSF includes support for [**Blocklists**](https://blocklist.configserver.dev/help).
+- Blocklists are files that contains thousands (or even millions) of IP addresses associated with bad actors / dangerous servers.
+- These lists are gathered and maintained by third-party services that monitor IP reputation, tracking malicious behavior such as port scans, brute-force login attempts, and other abusive activity.
+- When an IP is reported for malicious actions multiple times, it is added to a blocklist.
+- Adding these blocklists to CSF will automatically deny them access to your server if they ever attempt to target you.
+- Blocklists are effective, but very large blocklists come with a drawback: each IP in the list must be added as its own firewall rule.
 - Creating thousands of individual firewall rules can significantly impact server performance and increase memory usage.
 - To solve this problem, CSF also supports **IPSETs**.
-- IPSETs serve the same purpose as blocklists, but are handled much more efficiently by the firewall. Instead of creating one rule per IP address, IPSETs store large collections of IPs in optimized sets that the firewall can check instantly.
-- This allows you to block vastly larger numbers of IP addresses without degrading performance or exhausting system memory.
+- IPSETs are the same as blocklists, but are handled much more efficiently by CSF. Instead of creating one rule per IP address, IPSETs store large collections of IPs in optimized sets that the firewall can check instantly.
+- This allows you to block vastly larger numbers of IP addresses without risking server performance or memory.
 - Many GitHub repositories and third-party services provide blocklists that can be used with CSF.
-- CSF also offers its own official blocklist, which is automatically maintained and can be easily imported directly into CSF.
+- CSF offers its own official IPSETs / blocklists; automatically maintained by us, which can be used with CSF. ([View here](https://blocklist.configserver.dev))
+- This page covers **IPSETs**. For a complete guide on how to set up blocklists, [read the Blocklist guide here](../usage/blocklists.md).
 
 <br />
 

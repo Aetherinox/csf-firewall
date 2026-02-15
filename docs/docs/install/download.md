@@ -14,11 +14,12 @@ In the previous section, we explained how to install all the required dependenci
 
 ## :aetherx-axj-bell:{ .icon-tldr } Summary
 
-This page covers the following:
+The following is a summary of what this page explains:
 
-- Step-by-step instructions for installing CSF on a bare-metal or generic server without a control panel.
-- Guidance for downloading and extracting CSF for cPanel & WHM environments.
-- Instructions on this page cover both the `tgz` and `zip` archive, see the note below:
+- [x] How to Download CSF from the official webserver to your workstation.
+- [x] Breakdown of available optional CSF features
+- [x] Troubleshooting help
+- [x] Instructions cover both `tgz` and `zip` archive, see the note below:
 
 ??? note "`.zip` vs `.tgz` format"
 

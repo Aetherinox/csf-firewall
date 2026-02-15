@@ -9,10 +9,11 @@ tags:
 
 This section outlines all of the commands that can be run in your server’s terminal for **ConfigServer Security & Firewall (CSF)** which will allow you to:
 
-- Manage your firewall  
+- Open / Close ports
 - Add whitelisted IPs  
-- Start or stop services  
-- List your current rules  
+- Start, stop, restart services
+- Update CSF
+- Create rules or manage existing 
 
 <br />
 

@@ -21,11 +21,11 @@ optional features.
 
 ## :aetherx-axj-bell:{ .icon-tldr } Summary
 
-This page provides an overview of the following topics:
+The following is a summary of what this page explains:
 
-- The minimum system requirements needed to install and run CSF successfully.
-- A breakdown of optional CSF features, along with the dependencies required to enable them.
-- Common issues you may encounter, with [troubleshooting](#troubleshooting) guidance provided at the end of the page to help resolve them.
+- [x] Install minimum OR recommended requirements to run CSF
+- [x] Breakdown of available optional CSF features
+- [x] Troubleshooting help
 
 <br />
 

@@ -393,8 +393,6 @@ Decompress / unzip the downloaded archive file:
 
     You can also extract to `/tmp`
 
-<br />
-
 === ":aetherx-axs-file-zipper: .tgz"
 
     ```bash
@@ -739,8 +737,20 @@ Run the CSF installation script:
 Follow any instructions on-screen. If prompted for any additional information, enter it.
 
 <br />
+<br />
 
-Log back into Webmin. Once in, navigate to **Webmin Configuration** › **Webmin Modules** from the left-hand menu.
+### Install Module
+
+??? note "Users on CSF v15.09 or newer"
+
+    CSF version [15.09]( ) introduced **automatic webmin** installation. 
+
+    This means that you should no longer be required to perform the steps below, everything should be done
+    simply by running the `install.sh` script.
+
+    Follow the instructions below if you are using CSF 15.08 or older, or need to troubleshoot
+
+Log back into Webmin. Navigate to **Webmin Configuration** › **Webmin Modules** from the left-hand menu.
 
 <figure markdown="span">
     ![Webmin Configuration](../assets/images/install/webmin/2.png){ width="700" }
@@ -826,7 +836,9 @@ You can now proceed to the [Next Steps](#next-steps) or skip the rest of this se
 
 ??? warning "Testing Mode Disables LFD"
 
-    If you have not yet disabled testing mode in the `csf.conf`, lfd will be unable to start. Performing this step is covered in the next [Configuration](../usage/configuration.md) chapter.
+    If you have not yet disabled testing mode in the `/etc/csf/csf.conf`, lfd will not start. 
+    
+    Performing this step is covered in the next [Configuration](../usage/configuration.md) chapter.
 
 <br />
 <br />
