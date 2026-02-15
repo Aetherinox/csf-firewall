@@ -3327,13 +3327,13 @@ EOF
 		print "<ul class='nav nav-tabs' id='myTabs' style='font-weight:bold'>\n";
 		print "<li class='active'><a data-toggle='tab' href='#' id='tabAll'>All</a></li>\n";
 		print "<li><a data-toggle='tab' href='#home'>Info</a></li>\n";
-		print "<li><a data-toggle='tab' href='#csf'>csf</a></li>\n";
-		print "<li><a data-toggle='tab' href='#lfd'>lfd</a></li>\n";
+		print "<li><a data-toggle='tab' href='#csf'>CSF Service</a></li>\n";
+		print "<li><a data-toggle='tab' href='#lfd'>LFD Service</a></li>\n";
 		if ( $config{CLUSTER_SENDTO} )
 		{
 			print "<li><a data-toggle='tab' href='#cluster'>Cluster</a></li>\n";
 		}
-		print "<li><a data-toggle='tab' href='#other'>Other</a></li>\n";
+		print "<li><a data-toggle='tab' href='#other'>Tools</a></li>\n";
 		print "<li><a data-toggle='tab' href='#resources'>Resources</a></li>\n";
 		print "<li><a data-toggle='tab' href='#insiders'>Insiders</a></li>\n";
 		print "</ul><br>\n";
@@ -3601,7 +3601,7 @@ EOF
 		}
 
 		__ 			"<table class='table table-bordered table-striped'>\n";
-		__ 				"<thead><tr><th colspan='2'>Extra</th></tr></thead>";
+		__ 				"<thead><tr><th colspan='2'>Tools</th></tr></thead>";
 		__ 				"<tr><td><form action='$script' method='post'><button name='action' value='csftest' type='submit' class='btn btn-default' style='width: 200px;'>Test iptables</button></form></td><td style='width:100%'>Check that iptables has the required modules to run csf</td></tr>\n";
 		__ 			"</table>\n";
 		__ 		"</div> <!-- end id='other' -->\n"; # end TAB id='other'
@@ -3617,7 +3617,7 @@ EOF
 		__					"<tr><td><a href='https://github.com/aetherinox/csf-firewall' target='_blank' class='btn btn-default' style='width: 200px;'>Repository</a></td><td style='width:100%'>View our source code; submit issues to the developers</td></tr>\n";
 		__					"<tr><td><a href='https://docs.configserver.dev' target='_blank' class='btn btn-default' style='width: 200px;'>Documentation</a></td><td style='width:100%'>View the CSF documentation</td></tr>\n";
 		__					"<tr><td><a href='https://download.configserver.dev' target='_blank' class='btn btn-default' style='width: 200px;'>Download</a></td><td style='width:100%'>Manually download the latest version of CSF</td></tr>\n";
-		__					"<tr><td><a href='https://blocklist.configserver.dev/master.ipset' target='_blank' class='btn btn-default' style='width: 200px;'>Blocklist</a></td><td style='width:100%'>Utilize our blocklist service with <code>csf.blocklists</code> to restrict malicious traffic and bad actors</td></tr>\n";
+		__					"<tr><td><a href='https://blocklist.configserver.dev/help' target='_blank' class='btn btn-default' style='width: 200px;'>Blocklist API</a></td><td style='width:100%'>Utilize our blocklist service with <code>csf.blocklists</code> to restrict malicious traffic and bad actors</td></tr>\n";
 		__					"<tr><td><a href='https://discord.configserver.dev' target='_blank' class='btn btn-default' style='width: 200px;'>Discord</a></td><td style='width:100%'>Speak to others in the community, ask questions, share setups</td></tr>\n";
 		__					"<tr><td><a href='https://docs.configserver.dev/insiders' target='_blank' class='btn btn-default' style='width: 200px;'>Insiders</a></td><td style='width:100%'>Learn more about our insiders program</td></tr>\n";
 		__				"</table>\n";
@@ -3635,22 +3635,29 @@ EOF
 							if ( !$config{SPONSOR_LICENSE} )
 							{
 		__						"<div class='panel-body'>\n";
-		__							"The ConfigServer Security & Firewall <b>Insiders Program</b> is for users who want to help support and shape the future of ConfigServer Security & Firewall. As an Insider, you’ll gain early access to upcoming features and experimental functionality before it is released to the public.<br><br />\n";
-		__							"We don’t believe in putting security behind a paywall because your safety shouldn’t depend on your wallet. The Insiders Program simply gives people a way to contribute to CSF by testing upcoming versions, keeping our lights on, and helping us catch bugs before a release rolls out to the public channel.\n";
-		__							"<br><br><strong>By sponsoring our project, you will receive the following:</strong>\n";
+		__							"CSF will always be <b>free</b>. If you wish to donate / contribute to CSF, you will receive the following benefits:\n";
 		__							"<ul style='text-align:left;'>\n";
-		__								"<li><a href='https://docs.configserver.dev/insiders'>Insiders</a> access to ConfigServer Security and Firewall release channel</b></li>\n";
-		__								"<li>Increased <a href='https://blocklist.configserver.dev/help'>Blocklist</a> Limits & Features</li>\n";
-		__								"<li><a href='https://discord.configserver.dev'>Discord</a> <b>Sponsor</b> role</li>\n";
-		__								"<li>Listed on our project <a href='https://docs.configserver.dev/insiders/sponsors/'>Sponsor</a> page</li>\n";
-		__								"<li>Tell us additional perks you'd like to see as a Sponsor</li>\n";
+		__								"<li style='font-size:9pt;'><a target='_blank' href='https://docs.configserver.dev/insiders'>License key for <a target='_blank' href='https://docs.configserver.dev/insiders'>Insiders access</a></b> and our <a target='_blank' href='https://blocklist.configserver.dev/help'>Blocklist Service</a> API</li>\n";
+		__								"<li style='font-size:9pt;'><a target='_blank' href='https://docs.configserver.dev/insiders'>Insiders access</a> to early releases of CSF before the public.</b></li>\n";
+		__								"<li style='font-size:9pt;'>Access to our <a target='_blank' href='https://blocklist.configserver.dev/help'>Blocklist Service</a> API with features such as <code>?include</code>, <code>?excldue</code>, <code>?limit</code>. (Over 1 million blocked bad-actor IPs)</li>\n";
+		__								"<li style='font-size:9pt;'><a target='_blank' href='https://discord.configserver.dev'>Discord</a> Sponsor role.</li>\n";
+		__								"<li style='font-size:9pt;'>This message and sponsor icon will disappear in CSF Interface.</li>\n";
+		__								"<li style='font-size:9pt;'>Added to our <a target='_blank' href='https://docs.configserver.dev/insiders/sponsors/'>Sponsor</a> membership page.</li>\n";
+		__								"<li style='font-size:9pt;'>Recommend perks to us (they can't block access to any CSF features).</li>\n";
 		__							"</ul>\n";
 		__						"</div>\n";
 							}
 		__					"<form action='$script' method='post'>\n";
 		__ 						"<table class='table table-bordered table-striped' style='margin-bottom:0px;'>\n";
-		__ 							"<tr><td><a href='https://docs.configserver.dev/insiders/sponsors/' target='_blank' class='btn btn-default' style='width: 200px;'>Sponsor Status</a></td><td style='width:100%'><div id='license-status' class='panel-body'>Checking license ... </div></td></tr>\n";
-		__ 							"<tr><td><a href='https://docs.configserver.dev/insiders/about' target='_blank' class='btn btn-default' style='width: 200px;'>Insiders Channel</a></td><td style='width:100%'><div id='insiders-status' class='panel-body'>Checking status ... </div></td></tr>\n";
+									if ( !$config{SPONSOR_LICENSE} )
+									{
+		__ 								"<tr><td><a target='_blank' href='https://buymeacoffee.com/aetherinox' class='btn btn-default' style='width: 200px;'>Contribute</a></td><td style='width:100%'><div id='license-status' class='panel-body'>Checking license ... </div></td></tr>\n";
+									}
+									else
+									{
+		__ 								"<tr><td><a target='_blank' href='https://docs.configserver.dev/insiders/sponsors/' class='btn btn-default' style='width: 200px;'>Sponsor Status</a></td><td style='width:100%'><div id='license-status' class='panel-body'>Checking license ... </div></td></tr>\n";
+									}
+		__ 							"<tr><td><a target='_blank' href='https://docs.configserver.dev/insiders/about' class='btn btn-default' style='width: 200px;'>Insiders Channel</a></td><td style='width:100%'><div id='insiders-status' class='panel-body'>Checking status ... </div></td></tr>\n";
 		__						"</table>\n";
 		__ 					"</form>\n";
 		__				"</div>\n";
@@ -3789,18 +3796,23 @@ END_JS
 		{
 			print "<div class='footer'>";
 				print "<div class='footer-left'>";
+				my $has_license = length( $config{SPONSOR_LICENSE} // '' );
+				my $hide_icon   = $config{SPONSOR_ICON_HIDE} // '0';
+
 				print "<button id='btn-sponsor' class='btn-footer btn-sponsor'><i class='axs ax-heart"
 					. ( ( $config{SPONSOR_ICON_ANIM} // '' ) eq '1' ? " heart" : "" )
 					. "'></i></button>"
-					if !length( $config{SPONSOR_LICENSE} // '' )
-					&& ( ( $config{SPONSOR_ICON_HIDE} // '' ) ne '1' );
+					if !$has_license || $hide_icon ne '1';
+
+					print "<button id='btn-blocklist' class='btn-footer btn-blocklist'><i class='axs ax-block-brick-fire'></i></button>";
+					print "<button id='btn-status' class='btn-footer btn-status'><i class='axs ax-wave-pulse'></i></button>";
+					print "<button id='btn-repo' class='btn-footer btn-repo'><i class='axb ax-github'></i></button>";
 
 					print "<span class='copyright'>&copy; $year ConfigServer Firewall - <code>v$myv ($codename)</code></span>";
 				print "</div>";
 
 				print "<div class='footer-right'>";
 					print "<button id='btn-theme' class='btn-footer btn-theme'>Switch Theme</button>";
-					print "<button id='btn-github' class='btn-footer btn-github'><i class='axb ax-github'></i></button>";
 
 					# #
 					#	Only show logout button for generic installs; otherwise let the control panel handle it.
@@ -4177,6 +4189,7 @@ sub systemstats
 sub editfile
 {
 	my $file = shift;
+	my $filename = basename($file);   # $filename = "my.blocklist"
 	my $save = shift;
 	my $extra = shift;
 	my $ace = 0;
@@ -4273,6 +4286,33 @@ EOF
 	}
 	else
 	{
+
+		# #
+		#	File Blocklists
+		# #
+
+		if ( $filename == 'csf.blocklists' )
+		{
+			print 		"<div id='insiders' class='tab-pane active'>\n";
+			print 			"<div id='sponsor' class='tab-pane'>\n";
+			print 				"<div class='panel panel-default'>\n";
+			print 					"<div class='panel-heading' style='line-height: 2.5em;height: 2.5em;font-weight:bold;'>CSF Blocklist Service</div>\n";
+			print						"<div class='panel-body'>\n";
+			print							"We provide a full <a target='_blank' href='https://blocklist.configserver.dev/help'>Blocklist API Service</a> which can be enabled via the file below. You can also use any 3rd-party blocklists available on the internet.";
+			print							"<ul style='text-align:left;'>\n";
+			print								"<li style='font-size:9pt;'>Includes popular <a target='_blank' href='https://blocklist.configserver.dev/master.ipset'>master.ipset</a> and <a target='_blank' href='https://blocklist.configserver.dev/highrisk.ipset'>highrisk.ipset</a> blocklists.</li>\n";
+			print								"<li style='font-size:9pt;'>Millions of bad-actor IPs reported for brute-force, IoT, port-scanning, SSH abuse, and more.</li>\n";
+			print								"<li style='font-size:9pt;'>Includes ASN and full country-level blocklists.</li>\n";
+			print								"<li style='font-size:9pt;'>Updated automatically multiple times per day.</li>\n";
+			print								"<li style='font-size:9pt;'><a target='_blank' href='https://blocklist.configserver.dev/help'>Blocklist API</a> offers customization parameters such as <code>?include</code>, <code>?exclude</code>, <code>?limit</code>, <code>?ipVersion</code>, <code>?note</code> </li>\n";
+			print								"<li style='font-size:9pt;'>View full feature list and documentation <a target='_blank' href='https://blocklist.configserver.dev/help'>here</a></li>\n";
+			print							"</ul>\n";
+			print						"</div>\n";
+			print 				"</div>\n";
+			print			"</div>\n";
+			print 		"</div> <!-- end id='insiders' -->\n"; # end TAB id='insiders'
+		}
+
 		if ($config{DIRECTADMIN})
 		{
 			print "<form action='$script?pipe_post=yes' method='post'>\n<div class='panel panel-default'>\n";
@@ -4281,11 +4321,22 @@ EOF
 		{
 			print "<form action='$script' method='post'>\n<div class='panel panel-default'>\n";
 		}
-		print "<div class='panel-heading panel-heading-cxs'>Edit <code>$file</code></div>\n";
+
+		print "<div class='panel-heading panel-heading-cxs'>Modify <code>$file</code></div>\n";
+
+		# #
+		#	Edit File Body
+		# #
+
 		print "<div class='panel-body'>\n";
 		print "<input type='hidden' name='action' value='$save'>\n";
-		if ( $extra ) {print "<input type='hidden' name='$extra' value='$FORM{$extra}'>\n";}
-		print "<textarea class='textarea' name='formdata' style='width:100%;height:500px;border: 1px solid #000;' wrap='off'>";
+	
+		if ( $extra )
+		{
+			print "<input type='hidden' name='$extra' value='$FORM{$extra}'>\n";
+		}
+
+		print "<textarea class='textarea' name='formdata' style='width:100%;height:600px;border: 1px solid #000;' wrap='off'>";
 	
 		foreach my $line ( @confdata )
 		{
