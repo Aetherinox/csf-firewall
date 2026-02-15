@@ -39,7 +39,7 @@ The following list of ports can be referenced when setting up CSF firewall with 
 | `139`    | ✅  |     | NetBIOS Session Service (Samba file/printer sharing) (SMB over NetBIOS) |
 | `143`    | ✅  |     | IMAP (non-secure email retrieval) |
 | `443`    | ✅  | ✅  | HTTPS / QUIC / DoH (DNS over HTTPS, HTTP/3) |
-| `445`    | ✅  | ✅  | Microsoft-DS / SMB over TCP/IP (Samba) (Modern Windows SMB) |
+| `445`    | ✅  |     | Microsoft-DS / SMB over TCP/IP (Samba) (Modern Windows SMB) |
 | `458`    |     |      | Apple QuickTime / Real-Time Streaming Protocol (RTSP) |
 | `465`    | ✅  |     | SMTPS (secure SMTP) |
 | `546`    |     | ✅  | DHCPv6 Client | 
@@ -145,6 +145,8 @@ The following is a list of questions a user may have regarding updates to CSF, a
 
 ??? faq "How do I allow Samba services through CSF?"
 
+    <div class="details-content">
+
     Samba utilizes the following ports to send and receive information:
 
     | Port | Protocol | Purpose                                    |
@@ -177,6 +179,8 @@ The following is a list of questions a user may have regarding updates to CSF, a
         ``` shell
         sudo csf -ra
         ```
+
+    </div>
 
 [^1]: Some sources list UDP for port 22, but officially SSH only uses TCP. UDP is not standard for this service.
 

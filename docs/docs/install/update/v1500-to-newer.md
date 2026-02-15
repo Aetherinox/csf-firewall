@@ -252,6 +252,8 @@ issues that may arise:
 
 ??? faq "Why do I need to perform a manual update from "Way to the Web" v15.00, to version 15.01+?"
 
+    <div class="details-content">
+
     The last release of CSF from the original developer, Way to the Web, was **v15.00**. In this version, 
     all connectivity to their hosted update servers was completely removed.
 
@@ -264,16 +266,22 @@ issues that may arise:
     After completing the manual upgrade, CSF can resume using its built-in update functionality to 
     automatically detect and install future releases.
 
+    </div>
 
 ??? faq "Will the update process remain the same?"
+
+    <div class="details-content">
 
     Yes. This version of CSF was designed to maintain familiarity for existing users.
 
     All update procedures, including first-time installations and subsequent updates, follow the same steps 
     used in CSF **v15.00**, the final release developed by Way to the Web Ltd.
 
+    </div>
 
 ??? faq "Browser says **access restricted** when I access the CSF web interface using port `6666`"
+
+    <div class="details-content">
 
     Out-of-box, Firefox and Chromium-based browsers block access to port `6666`.
 
@@ -285,6 +293,8 @@ issues that may arise:
 
     To change the port used for the CSF web interface, follow the instructions outlined on the page
     [Install › Web Interface › Setup](../../install/webui.md#step-2-enable-web-ui).
+
+    </div>
 
 <br />
 <br />

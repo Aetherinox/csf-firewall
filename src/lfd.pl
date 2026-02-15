@@ -10381,9 +10381,9 @@ sub ui
 :root,
 [data-theme="light"]
 {
-    --main-bg: 						#E2E2E2;
+    --main-bg: 						#dedede;
 	--main-text:					#242424;
-	--login-container-bg: 			#E2E2E2;
+	--login-container-bg: 			#dedede;
 	--login-container-border:		#e3e3e31a;
 	--login-footer-text-n: 			#868686;
 	--login-footer-text-l:			#dd761c;
@@ -10416,8 +10416,9 @@ sub ui
 	.global-container-main
 	{
 		height:						100%;
-		background:					url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1123 258'><path d='M327 115c95-9 218 57 337 39C778 136 803 90 912 41c51-19 141-38 195-38C1122 2 1137 2 1152 2c253-1 326 236 0 256l-1125 0L-31 257l-36-74c-34-60 43 23 104 24 116 0 198-83 290-92' style='fill: rgb(220, 220, 220, 0.8)' /></svg>") no-repeat bottom,linear-gradient(to bottom,#fff,#fff 100%,#202020 100%);
-		background-size: 			contain;
+		background:					url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1123 258'><path d='M327 115c95-9 218 57 337 39C778 136 803 90 912 41c51-19 141-38 195-38C1122 2 1137 2 1152 2c253-1 326 236 0 256l-1125 0L-31 257l-36-74c-34-60 43 23 104 24 116 0 198-83 290-92' fill='%23e4e4e4'/></svg>") no-repeat bottom center, linear-gradient(to bottom, #FFF 0%, #FFF 100%);
+		background-size: 			cover;
+		background-attachment: 		fixed;
 	}
 }
 
@@ -10458,8 +10459,9 @@ sub ui
 	.global-container-main
 	{
 		height: 					100%;
-		background: 				url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1123 258'><path d='M327 115c95-9 218 57 337 39C778 136 803 90 912 41c51-19 141-38 195-38C1122 2 1137 2 1152 2c253-1 326 236 0 256l-1125 0L-31 257l-36-74c-34-60 43 23 104 24 116 0 198-83 290-92' style='fill: rgb(5, 5, 5, 0.6)' /></svg>") no-repeat bottom,linear-gradient(to bottom,#151515,#202020 100%,#202020 100%);
-		background-size: 			contain;
+		background: 				url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1123 258'><path d='M327 115c95-9 218 57 337 39C778 136 803 90 912 41c51-19 141-38 195-38C1122 2 1137 2 1152 2c253-1 326 236 0 256l-1125 0L-31 257l-36-74c-34-60 43 23 104 24 116 0 198-83 290-92' fill='%230f0f0f'/></svg>") no-repeat bottom center, linear-gradient(to bottom, #151515 0%, #2f2f2f 100%);
+		background-size: 			cover;
+		background-attachment: 		fixed;
 	}
 }
 

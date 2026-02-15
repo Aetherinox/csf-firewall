@@ -271,7 +271,6 @@ issues that may arise:
 
 <br />
 
-
 ??? faq "LFD: Cannot Start Service"
 
     <div class="details-content">

@@ -595,6 +595,8 @@ The following is a list of questions a user may have regarding CSf dependencies,
 
 ??? faq "Perl: Can't locate XXXX/XXXX.pm in @INC"
 
+    <div class="details-content">
+
     By installing all dependencies listed on this page, you should have everything required
     to run ConfigServer Firewall (CSF) correctly.
 
@@ -620,7 +622,11 @@ The following is a list of questions a user may have regarding CSf dependencies,
     Perl installations can prevent CSF from functioning until the missing components are
     manually installed.
 
+    </div>
+
 ??? faq "Perl: Using Minimal Distro Releases"
+
+    <div class="details-content">
 
     If you are running a light-weight distro such as :aetherx-axb-alma-linux-2: [AlmaLinux (Minimal)](https://almalinux.org/get-almalinux/),
     your distro may include a copy of Perl, but may not have many of the core modules required
@@ -658,6 +664,8 @@ The following is a list of questions a user may have regarding CSf dependencies,
         sudo apt update
         sudo apt install perl perl-modules perl-base libwww-perl liblwp-protocol-https
         ```
+
+    </div>
 
 <br />
 
