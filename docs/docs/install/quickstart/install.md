@@ -16,17 +16,21 @@ This page explains how to download and install ConfigServer Security & Firewall 
 
 <br />
 
-Instructions on this page will cover:
-
-- Download
-- Install 
-- Basic Configuration
-- Whitelist User IPs
-- Access Web Interface
+If you need detailed instructions, please view the [full installation guide](download.md).
 
 <br />
 
-If you need detailed instructions, please view the [full installation guide](download.md).
+## :aetherx-axj-bell:{ .icon-tldr } Summary
+
+The following is a summary of what this page explains:
+
+- [x] How to download CSF
+- [x] How to install CSF
+- [x] Basic Configuration
+- [x] Enabling the Web Interface
+- [x] Whitelisting your user IP
+- [x] Accessing the CSF Web interface
+- [x] Troubleshooting help
 
 <br />
 
