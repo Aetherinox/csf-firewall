@@ -129,6 +129,19 @@ sub getCodename
 #	Returns both the license status of a user, as well as any errors that
 #	may return from the validation process.
 #	
+#	License fetching utilizes URLGET, which can be changed in csf.conf.
+#	Three options available:
+#   	1. Perl module HTTP::Tiny
+#   	2. Perl module LWP::UserAgent
+#   	3. CURL/WGET (set location at the bottom of csf.conf if installed)
+#	
+#	If using URLGET = "2"; requires LWP
+#		yum install perl-libwww-perl.noarch perl-LWP-Protocol-https.noarch
+#		apt-get install libwww-perl liblwp-protocol-https-perl
+#	
+#	Without these packages, license response only understands 200 and non-200 codes.
+#	Will not return message.response from json.
+#	
 #	@return			int			isValid		0,1
 #					str			errorMsg
 # #
@@ -138,10 +151,12 @@ sub getLicenseStatus
     my $license = getSponsorship(\%config) // '';
     return ( 0, 'No license configured' ) unless $license;
 
-    my ( $statusCode, $resp ) =
-        $urlget->urlget( "https://license.configserver.dev/?license=$license" );
+	my $licenseEnc = uri_escape($license);
 
-    return ( 0, 'License server unreachable' ) if $statusCode;
+    my ( $statusCode, $resp ) =
+        $urlget->urlget( "https://license.configserver.dev/?license=$licenseEnc" );
+
+    return ( 0, 'Invalid license key' ) if $statusCode;
 
     my $data;
     eval { $data = decode_json( $resp ) };
