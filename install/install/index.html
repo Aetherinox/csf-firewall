@@ -1206,6 +1206,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Install: Webmin">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install Module
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -3963,6 +3980,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Install: Webmin">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#install-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install Module
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -4608,7 +4642,6 @@
 </ul>
 <p>You can also extract to <code>/tmp</code></p>
 </details>
-<p><br></p>
 <div class="tabbed-set tabbed-alternate" data-tabs="14:2"><input checked="checked" id="install-cpanel-and-whm-tgz_1" name="__tabbed_14" type="radio"><input id="install-cpanel-and-whm-zip_1" name="__tabbed_14" type="radio"><div class="tabbed-labels"><label for="install-cpanel-and-whm-tgz_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M0 64C0 28.7 28.7 0 64 0L213.5 0c17 0 33.3 6.7 45.3 18.7L365.3 125.3c12 12 18.7 28.3 18.7 45.3L384 448c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 64zm208-5.5l0 93.5c0 13.3 10.7 24 24 24L325.5 176 208 58.5zM64 72c0 13.3 10.7 24 24 24l48 0c13.3 0 24-10.7 24-24s-10.7-24-24-24L88 48C74.7 48 64 58.7 64 72zm0 96c0 13.3 10.7 24 24 24l48 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-48 0c-13.3 0-24 10.7-24 24zm64 72l-32 0c-17.7 0-32 14.3-32 32l0 48c0 26.5 21.5 48 48 48s48-21.5 48-48l0-48c0-17.7-14.3-32-32-32zm-16 64a16 16 0 1 1 0 32 16 16 0 1 1 0-32z"></path></svg></span> .tgz</label><label for="install-cpanel-and-whm-zip_1"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path fill="currentColor" d="M128 0C92.7 0 64 28.7 64 64l0 384c0 35.3 28.7 64 64 64l144 0 0-112c0-35.3 28.7-64 64-64l112 0 0-165.5c0-17-6.7-33.3-18.7-45.3L322.7 18.7C310.7 6.7 294.5 0 277.5 0L128 0zM389.5 176L296 176c-13.3 0-24-10.7-24-24L272 58.5 389.5 176zM336 380c-11 0-20 9-20 20s9 20 20 20l31.6 0-49.5 99.1c-3.1 6.2-2.8 13.6 .9 19.5s10.1 9.5 17 9.5l64 0c11 0 20-9 20-20s-9-20-20-20l-31.6 0 49.5-99.1c3.1-6.2 2.8-13.6-.9-19.5s-10.1-9.5-17-9.5l-64 0zm148 20c0-11-9-20-20-20s-20 9-20 20l0 128c0 11 9 20 20 20s20-9 20-20l0-128zm24 0l0 128c0 11 9 20 20 20s20-9 20-20l0-28 12 0c33.1 0 60-26.9 60-60s-26.9-60-60-60l-32 0c-11 0-20 9-20 20zm40 60l0-40 12 0c11 0 20 9 20 20s-9 20-20 20l-12 0z"></path></svg></span> .zip</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -4899,8 +4932,17 @@ will be downloaded to your system.</p>
 </div>
 <p><br></p>
 <p>Follow any instructions on-screen. If prompted for any additional information, enter it.</p>
-<p><br></p>
-<p>Log back into Webmin. Once in, navigate to <strong>Webmin Configuration</strong> › <strong>Webmin Modules</strong> from the left-hand menu.</p>
+<p><br>
+<br></p>
+<h3 id="install-module">Install Module<a class="headerlink" data-preview="" href="#install-module" title="Permanent link">¶</a></h3>
+<details class="note">
+<summary>Users on <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> v15.09 or newer</summary>
+<p><abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> version <a href="">15.09</a> introduced <strong>automatic webmin</strong> installation. </p>
+<p>This means that you should no longer be required to perform the steps below, everything should be done
+simply by running the <code>install.sh</code> script.</p>
+<p>Follow the instructions below if you are using <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> 15.08 or older, or need to troubleshoot</p>
+</details>
+<p>Log back into Webmin. Navigate to <strong>Webmin Configuration</strong> › <strong>Webmin Modules</strong> from the left-hand menu.</p>
 <figure>
     <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="../../assets/images/install/webmin/2.png" data-desc-position="bottom"><img alt="Webmin Configuration" src="../../assets/images/install/webmin/2.png" width="700"></a>
     <figcaption>Webmin Configuration › Webmin Modules</figcaption>
@@ -4962,7 +5004,8 @@ To access it, go to the left-hand Webmin menu and navigate to:</p>
 <p><br></p>
 <details class="warning">
 <summary>Testing Mode Disables <abbr title="Login Failure Daemon">LFD</abbr></summary>
-<p>If you have not yet disabled testing mode in the <code>csf.conf</code>, <abbr title="Login Failure Daemon">lfd</abbr> will be unable to start. Performing this step is covered in the next <a data-preview="" href="../../usage/configuration/">Configuration</a> chapter.</p>
+<p>If you have not yet disabled testing mode in the <code>/etc/csf/csf.conf</code>, <abbr title="Login Failure Daemon">lfd</abbr> will not start. </p>
+<p>Performing this step is covered in the next <a data-preview="" href="../../usage/configuration/">Configuration</a> chapter.</p>
 </details>
 <p><br>
 <br></p>
@@ -7281,7 +7324,7 @@ and whitelisting your IP for security.  </p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="January 18, 2026 00:06:21 UTC"><span class="timeago" datetime="2026-01-18T00:06:21+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="January 18, 2026 00:06:21 UTC">2026-01-18</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="February 15, 2026 16:42:48 UTC"><span class="timeago" datetime="2026-02-15T16:42:48+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="February 15, 2026 16:42:48 UTC">2026-02-15</span>
   </span>
 
     
