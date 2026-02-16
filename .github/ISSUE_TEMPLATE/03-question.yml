@@ -1,0 +1,44 @@
+name: "\U00002753 Question"
+description: Ask a question
+title: "\U00002753 Question: <title>"
+labels:
+    - ❔ Question
+body:
+    -
+        type: markdown
+        attributes:
+            value: |
+                1.  Please speak `English`.
+                2.  Take a moment to check that your question hasn't already been asked.
+                3.  Be detailed, but to the point.
+
+                  <br />
+
+    -
+        type: textarea
+        id: question
+        attributes:
+            label: "Question"
+            description: |
+                Explain your question in detail.
+            placeholder: |
+                My question is ...
+        validations:
+            required: true
+
+    -
+        type: markdown
+        attributes:
+            value: |
+                  <br />
+
+    -
+        type: textarea
+        id: screenshots
+        attributes:
+            label: "Screenshots"
+            description: |
+                This is here if you need to upload any screenshots in regards to your question. <br />
+                Not required, but appreciated.
+        validations:
+            required: false
