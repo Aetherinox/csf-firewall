@@ -1,5 +1,8 @@
 blank_issues_enabled: true
 contact_links:
-  - name: "Upgrade from Legacy CSF"
+  - name: "📕 Docs: Upgrade from Legacy CSF"
     url: "https://docs.configserver.dev/install/update/v1500-to-newer/"
     about: "For users who want to update from discontinued version of CSF to our repo."
+  - name: "📙 Docs: Installation Guide"
+    url: "https://aetherinox.github.io/csf-firewall/install/install/"
+    about: "Full documentation for installing CSF."
