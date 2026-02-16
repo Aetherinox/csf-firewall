@@ -85,11 +85,10 @@ sub __
 
 sub getSponsorship
 {
-	my ($config_ref) = @_;
-	my %config = %{$config_ref};
-	my $license = $config{SPONSOR_LICENSE};
+    my ($config_ref) = @_;
+    my %config = %{$config_ref};
 
-	return $license;
+    return $config{SPONSOR_LICENSE};
 }
 
 # #
@@ -154,7 +153,7 @@ sub getLicenseStatus
 	my $licenseEnc = uri_escape($license);
 
     my ( $statusCode, $resp ) =
-        $urlget->urlget( "https://license.configserver.dev/?license=$licenseEnc" );
+        $urlget->urlget( "https://license.configserver.dev/?license=$license" );
 
     return ( 0, 'Invalid license key' ) if $statusCode;
 
@@ -3342,8 +3341,8 @@ EOF
 		print "<ul class='nav nav-tabs' id='myTabs' style='font-weight:bold'>\n";
 		print "<li class='active'><a data-toggle='tab' href='#' id='tabAll'>All</a></li>\n";
 		print "<li><a data-toggle='tab' href='#home'>Info</a></li>\n";
-		print "<li><a data-toggle='tab' href='#csf'>CSF Service</a></li>\n";
-		print "<li><a data-toggle='tab' href='#lfd'>LFD Service</a></li>\n";
+		print "<li><a data-toggle='tab' href='#csf'>CSF</a></li>\n";
+		print "<li><a data-toggle='tab' href='#lfd'>LFD</a></li>\n";
 		if ( $config{CLUSTER_SENDTO} )
 		{
 			print "<li><a data-toggle='tab' href='#cluster'>Cluster</a></li>\n";
@@ -3745,9 +3744,12 @@ END_JS
 					__ "<a id='cpframetr2' href='$ENV{cp_security_token}' class='btn btn-success' data-spy='affix' data-offset-bottom='0' style='bottom: 0; left:45%'><span class='glyphicon glyphicon-home'></span> cPanel Main Page</a>\n";
 				}
 			}
-			if  (defined $ENV{WEBMIN_VAR} and defined $ENV{WEBMIN_CONFIG} and !$config{THIS_UI}) {
+
+			if  (defined $ENV{WEBMIN_VAR} and defined $ENV{WEBMIN_CONFIG} and !$config{THIS_UI})
+			{
 				print "<a id='webmintr2' href='/' class='btn btn-success' data-spy='affix' data-offset-bottom='0' style='bottom: 0; left:45%'><span class='glyphicon glyphicon-home'></span> Webmin Main Page</a>\n";
 			}
+
 			print "<div class='panel panel-default'><div class='panel-heading panel-heading-cxs'>Shows a subset of functions suitable for viewing on mobile devices</div>\n";
 			print "<div class='panel-body text-center'><a class='btn btn-primary btn-block' style='margin:10px;padding: 18px 28px;font-size: 22px; line-height: normal;border-radius: 8px;' id='MobileView'>Mobile View</a></div></div>\n";
 
@@ -4306,7 +4308,7 @@ EOF
 		#	File Blocklists
 		# #
 
-		if ( $filename == 'csf.blocklists' )
+		if ( $filename eq 'csf.blocklists' )
 		{
 			print 		"<div id='insiders' class='tab-pane active'>\n";
 			print 			"<div id='sponsor' class='tab-pane'>\n";
