@@ -44,10 +44,10 @@ body:
             label: "CSF › Release"
             description: |
                 Most users will select **Stable**. <br />
-                Alpha releases are available by adding `RELEASE_ALPHA = "1"` to your `/etc/csf/csf.conf`
+                Insider releases are available by adding `SPONSOR_RELEASE_INSIDERS = "1"` to your `/etc/csf/csf.conf`
             options:
                 - "Stable"
-                - "Alpha"
+                - "Insiders"
         validations:
             required: true
 
