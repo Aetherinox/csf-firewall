@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: "Upgrade from Legacy CSF"
+    url: "https://docs.configserver.dev/install/update/v1500-to-newer/"
+    about: "For users who want to update from discontinued version of CSF to our repo."
