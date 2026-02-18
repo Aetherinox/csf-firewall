@@ -253,7 +253,7 @@ unless ( $FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} e
 	$bootstrapcss
 
 	<link rel="preload" href="$images/configserver.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-	<noscript><link rel="stylesheet" href="$images/configserver.css"></noscript>
+	<link rel="stylesheet" href="$images/configserver.css">
 	<link rel="icon" type="image/x-icon" href="$images/csf.png">
 	<title>ConfigServer Security &amp; Firewall</title>
 	<meta charset='utf-8'>
