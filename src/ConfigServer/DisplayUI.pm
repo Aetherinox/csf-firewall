@@ -3839,7 +3839,8 @@ END_JS
 		# #
 		#	@notes			generic loads theme / footer correctly
 		#					webmin does not load configserver.css; uses its own built-in theme and bootstramp
-		#					cpanel loads theme / footer correctly
+		#					directadmin loads theme / css. (unless noscript used)
+		#					cpanel loads theme / css. footer correctly
 		#	
 		# #
 
@@ -4607,7 +4608,7 @@ EOF
 
 sub renderBtnReturn
 {
-	print "<hr><div style='padding: 1em;'><form action='$script' method='post'><input type='hidden' name='mobi' value='$mobile'><input id='csfreturn' type='submit' class='btn btn-default' style='margin-bottom:3em;' value='Return'></form></div>\n";
+	print "<hr><div><form action='$script' method='post'><input type='hidden' name='mobi' value='$mobile'><input id='csfreturn' type='submit' class='btn btn-default' style='margin-bottom:3em;' value='Return'></form></div>\n";
 
 	return;
 }
