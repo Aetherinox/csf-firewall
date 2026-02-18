@@ -1170,7 +1170,7 @@ if [ -f "$CSF_CONF" ]; then
 
 	print "    "
 	print "    Before starting ${APP_NAME_SHORT:-CSF}; the setting ${yellowd}TESTING${greym} must be ${redl}disabled${greym}."
-	if [ "$TESTING_VALUE" = "0" ]; then
+	if [ "$TESTING_VALUE" = "1" ]; then
 	print "        ${redl}${icoXmark}${greym} ${redl}You currently have this setting ${greenl}enabled${greym}."
 	print "        ${redl}Disable${greym} this in the file ${bluel}${CSF_CONF}${greym}:"
 	print "            ${fuchsial}TESTING = ${white}\"${bluel}0${white}\"${greym}"
