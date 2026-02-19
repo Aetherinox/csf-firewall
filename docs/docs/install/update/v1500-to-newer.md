@@ -291,7 +291,7 @@ issues that may arise:
     To allow port `6666` in your browser, follow the instructions on the page 
     [Troubleshooting › Address Restricted](../../usage/troubleshooting/webui.md#browser-this-address-is-restricted)
 
-    To change the port used for the CSF web interface, follow the instructions outlined on the page
+    To change the port used for the CSF web interface, follow the instructions on the page 
     [Install › Web Interface › Setup](../../install/webui.md#step-2-enable-web-ui).
 
     </div>

@@ -9,7 +9,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            02.12.2026
+#   @updated            02.19.2026
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -34,12 +34,12 @@ use File::Basename;
 use File::Copy;
 use Net::CIDR::Lite;
 use IPC::Open3;
-use JSON;
 use URI::Escape;
 
 use ConfigServer::Config;
 use ConfigServer::CheckIP qw(checkip);
 use ConfigServer::Ports;
+use ConfigServer::JSON qw(encode_json decode_json);
 use ConfigServer::URLGet;
 use ConfigServer::Sanity qw(sanity);;
 use ConfigServer::ServerCheck;
@@ -63,12 +63,12 @@ my $slurpreg = ConfigServer::Slurp->slurpreg;
 my $cleanreg = ConfigServer::Slurp->cleanreg;
 
 # #
-#	Alias > Output
+#	Alias › Output
 # #
 
 sub __
 {
-    if (ref $_[0] eq 'GLOB')
+    if ( ref $_[0] eq 'GLOB' )
 	{
         my $fh = shift;
         print $fh @_;
@@ -77,99 +77,6 @@ sub __
 	{
         print @_;
     }
-}
-
-# #
-#	Sponsorship License
-# #
-
-sub getSponsorship
-{
-    my ($config_ref) = @_;
-    my %config = %{$config_ref};
-
-    return $config{SPONSOR_LICENSE};
-}
-
-# #
-#	Get Codename
-#	
-#	returns the codename depending on which control panel a user is running.
-#	
-#	@args			$config
-#	@usage			my $codename = getCodename(\%config);
-#	@return			str
-# #
-
-sub getCodename
-{
-	my ($config_ref) = @_;
-	my %config = %{$config_ref};
-	my $cname = "cpanel";
-
-	if ($config{GENERIC})      { $cname = "generic" }
-	if ($config{DIRECTADMIN})  { $cname = "directadmin" }
-	if ($config{INTERWORX})    { $cname = "interworx" }
-	if ($config{CYBERPANEL})   { $cname = "cyberpanel" }
-	if ($config{CWP})          { $cname = "cwp" }
-	if ($config{VESTA})        { $cname = "vestacp" }
-
-	if ( -e "/usr/share/webmin/miniserv.pl" || -e "/usr/libexec/webmin/bin/webmin" || -e "/usr/bin/webmin" )
-	{
-		$cname = "webmin";
-	}
-
-	return $cname;
-}
-
-# #
-#	License › Status
-#	
-#	Returns both the license status of a user, as well as any errors that
-#	may return from the validation process.
-#	
-#	License fetching utilizes URLGET, which can be changed in csf.conf.
-#	Three options available:
-#   	1. Perl module HTTP::Tiny
-#   	2. Perl module LWP::UserAgent
-#   	3. CURL/WGET (set location at the bottom of csf.conf if installed)
-#	
-#	If using URLGET = "2"; requires LWP
-#		yum install perl-libwww-perl.noarch perl-LWP-Protocol-https.noarch
-#		apt-get install libwww-perl liblwp-protocol-https-perl
-#	
-#	Without these packages, license response only understands 200 and non-200 codes.
-#	Will not return message.response from json.
-#	
-#	@return			int			isValid		0,1
-#					str			errorMsg
-# #
-
-sub getLicenseStatus
-{
-    my $license = getSponsorship(\%config) // '';
-    return ( 0, 'No license configured' ) unless $license;
-
-	my $licenseEnc = uri_escape($license);
-
-    my ( $statusCode, $resp ) =
-        $urlget->urlget( "https://license.configserver.dev/?license=$license" );
-
-    return ( 0, 'Invalid license key' ) if $statusCode;
-
-    my $data;
-    eval { $data = decode_json( $resp ) };
-    return ( 0, 'Invalid response from license server' ) if $@;
-
-    my $valid = $data->{message}{valid} ? 1 : 0;
-    my $msg = $data->{message}{response} // 'Unknown error';
-
-    $msg = "$msg";
-    $msg =~ s/[\x00-\x1F\x7F]//g;
-    $msg =~ s/\s+/ /g;
-    $msg = substr( $msg, 0, 200 );
-
-    return ( $valid, $msg );
 }
 
 # #
@@ -271,7 +178,7 @@ sub main
 	#	Get codename
 	# #
 
-	my $codename = getCodename(\%config);
+	my $codename = ConfigServer::Config->getCodename();
 
 	# #
 	#	Get IPs
@@ -894,6 +801,7 @@ EOF
 					$cnt++;
 				}
 			}
+
 			if ( $hit )
 			{
 				last
@@ -912,7 +820,7 @@ EOF
 				eval
 				{
 					local $SIG{__DIE__} = undef;
-					local $SIG{'ALRM'} = sub
+					local $SIG{'ALRM'} 	= sub
 					{
 						die
 					};
@@ -2092,9 +2000,9 @@ EOF
 				#	Convert to &nbsp; if more than 4 spaces
 				# #
 
-				if ($spaces && length($spaces) > 4)
+				if ( $spaces && length( $spaces ) > 4 )
 				{
-					my $nbsp = '&nbsp;' x length($spaces);
+					my $nbsp = '&nbsp;' x length( $spaces );
 					$hl =~ s/^[ \t]+/$nbsp/;
 				}
 
@@ -2877,7 +2785,7 @@ EOD
 		print "<table class='table table-bordered table-striped'>\n";
 		print "<thead><tr><th colspan='2'>Fix Common Problems</th></tr></thead>";
 
-		if ( $config{LF_SPI} == 0)
+		if ( $config{LF_SPI} == 0 )
 		{
 			print "<tr><td><button class='btn btn-default' disabled>Disable SPI</button>\n";
 		}
@@ -2887,7 +2795,7 @@ EOD
 		}
 		print "</td><td style='width:100%'>If you find that ports listed in TCP_IN/UDP_IN are being blocked by iptables (e.g. port 80) as seen in /var/log/messages and users can only connect to the server if entered in csf.allow, then it could be that the kernel (usually on virtual servers) is broken and cannot perform connection tracking. In this case, disabling the Stateful Packet Inspection functionality of csf (LF_SPI) may help\n";
 
-		if ( $config{LF_SPI} == 0)
+		if ( $config{LF_SPI} == 0 )
 		{
 			print "<br><strong>Note: LF_SPI is already disabled</strong>";
 		}
@@ -2909,7 +2817,7 @@ EOD
 		}
 		print "</td></tr>\n";
 
-		if ( $config{PT_USERKILL} == 0)
+		if ( $config{PT_USERKILL} == 0 )
 		{
 			print "<tr><td><button class='btn btn-default' disabled>Disable PT_USERKILL</button>\n";
 		}
@@ -2919,13 +2827,13 @@ EOD
 		}
 		print "</td><td style='width:100%'>If lfd is killing running processes and you have PT_USERKILL enabled, then we recommend that you disable this feature\n";
 
-		if ( $config{PT_USERKILL} == 0)
+		if ( $config{PT_USERKILL} == 0 )
 		{
 			print "<br><strong>Note: PT_USERKILL is already disabled</strong>";
 		}
 		print "</td></tr>\n";
 
-		if ( $config{SMTP_BLOCK} == 0)
+		if ( $config{SMTP_BLOCK} == 0 )
 		{
 			print "<tr><td><button class='btn btn-default' disabled>Disable SMTP_BLOCK</button>\n";
 		}
@@ -2935,7 +2843,7 @@ EOD
 		}
 		print "</td><td style='width:100%'>If scripts on the server are unable to send out email via external SMTP connections and you have SMTP_BLOCK enabled then those scripts should be configured to send email either through /usr/sbin/sendmail or localhost on the server. If this is not possible then disabling SMTP_BLOCK can fix this\n";
 
-		if ( $config{SMTP_BLOCK} == 0)
+		if ( $config{SMTP_BLOCK} == 0 )
 		{
 			print "<br><strong>Note: SMTP_BLOCK is already disabled</strong>";
 		}
@@ -3249,7 +3157,7 @@ EOF
 		{
 			shift @iptstatus
 		}
-	
+
 		my $status = "<div class='bs-callout bs-callout-success text-center'><h4>Firewall Status: Enabled and Running</h4></div>";
 
 		if ( -e "/etc/csf/csf.disable" )
@@ -3717,7 +3625,7 @@ EOF
 #	@note		removes all sponsorship text from interface once a key is provided.
 # #
 
-my ( $licenseValid, $licenseMsg ) = getLicenseStatus( );
+my ( $licenseValid, $licenseMsg ) = ConfigServer::Config->getLicenseStatus();
 my $licenseObj =
 {
     licenseValid 	=> $licenseValid ? \1 : \0,
@@ -4096,7 +4004,8 @@ sub chart
 sub systemstats
 {
 	my $type = shift;
-	if ($type eq "") {$type = "load"}
+	if ( $type eq "" ) { $type = "load" }
+
 	my $img;
 	my $imgdir = "";
 	my $imghddir = "";
@@ -4240,21 +4149,25 @@ sub systemstats
 
 sub editfile
 {
-	my $file = shift;
-	my $filename = basename($file);   # $filename = "my.blocklist"
-	my $save = shift;
-	my $extra = shift;
-	my $ace = 0;
+	my $file 		= shift;
+	my $filename 	= basename($file);   # $filename = "my.blocklist"
+	my $save 		= shift;
+	my $extra 		= shift;
+	my $ace 		= 0;
 
-	sysopen (my $IN, $file, O_RDWR | O_CREAT) or die "Unable to open file: $!";
-	flock ($IN, LOCK_SH);
+	sysopen ( my $IN, $file, O_RDWR | O_CREAT ) or die "Unable to open file: $!";
+	flock ( $IN, LOCK_SH );
 	my @confdata = <$IN>;
-	close ($IN);
+	close ( $IN );
 	chomp @confdata;
 
-	if (-e "/usr/local/cpanel/3rdparty/share/ace-editor/optimized/src-min-noconflict/ace.js") {$ace = 1}
+	if (-e "/usr/local/cpanel/3rdparty/share/ace-editor/optimized/src-min-noconflict/ace.js")
+	{
+		$ace = 1
+	}
 
-	if (-e "/usr/local/cpanel/version" and $ace and !$config{THIS_UI}) {
+	if ( -e "/usr/local/cpanel/version" and $ace and !$config{THIS_UI} )
+	{
 		print "<script src='/libraries/ace-editor/optimized/src-min-noconflict/ace.js'></script>\n";
 		print "<h4>Edit <code>$file</code></h4>\n";
 		print "<button class='btn btn-default' id='toggletextarea-btn'>Toggle Editor/Textarea</button>\n";
@@ -4411,17 +4324,18 @@ EOF
 
 sub savefile
 {
-	my $file = shift;
-	my $restart = shift;
+	my $file 		= shift;
+	my $restart 	= shift;
 
 	$FORM{formdata} =~ s/\r//g;
-	if ($FORM{ace} == "1")
+	if ( $FORM{ace} == "1" )
 	{
-		if ($FORM{formdata} !~ /^# Do not remove or change this line as it is a safeguard for the UI editor\n/)
+		if ( $FORM{formdata} !~ /^# Do not remove or change this line as it is a safeguard for the UI editor\n/ )
 		{
 			print "<div>UI editor safeguard missing, changes have not been saved.</div>\n";
 			return;
 		}
+
 		$FORM{formdata} =~ s/^# Do not remove or change this line as it is a safeguard for the UI editor\n//g;
 	}
 

@@ -1902,7 +1902,9 @@
 
     .details-content
     {
-        padding: 1rem;
+        padding: 1em;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
     }
 
     .md-typeset .faq > .admonition-title,
@@ -1917,6 +1919,11 @@
         background-color: rgba(153, 153, 153);
         -webkit-mask-image: var(--md-admonition-icon--faq);
         mask-image: var(--md-admonition-icon--faq);
+    }
+
+    .faq .details-content
+    {
+        background-color: #171c24;
     }
 
     .md-typeset figcaption
@@ -2580,6 +2587,11 @@
     /*
         Summary / FAQ Dropdown > Strong
     */
+
+    .faq .details-content
+    {
+        background-color: #171717;
+    }
 
     summary strong
     {
@@ -4485,6 +4497,50 @@ table .csf-logo, .grid.cards .csf-logo
 .md-typeset table th[role="columnheader"]
 {
     white-space: nowrap;
+}
+
+/*
+    Summary / FAQ Dropdown > Strong
+*/
+
+& .details-content
+{
+    padding: 1.3rem;
+}
+
+details > :last-child
+{
+    margin-bottom: 0 !important;
+}
+
+summary, .admonition-title
+{
+    margin-left: 1px !important;
+    margin-right: 1px !important;
+}
+
+details > summary ~ p
+{
+    padding-left: 1.3em;
+    padding-right: 1.3em;
+}
+
+
+details > summary ~ p:last-of-type
+{
+    padding-bottom: 1.3em;
+}
+
+.md-typeset .admonition, .md-typeset details
+{
+    padding: 0 !important;
+}
+
+.admonition > p.admonition-title ~ p
+{
+    padding: 0.5em;
+    padding-left: 2.0em;
+    padding-right: 2.0em;
 }
 
 /*

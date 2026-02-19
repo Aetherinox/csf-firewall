@@ -435,7 +435,7 @@ issues that may arise:
     <div class="details-content">
 
     Out-of-box, Firefox and Chromium-based browsers block access to port `6666`. To access the CSF web 
-    interface, must do ONE of the following:
+    interface, you must do ONE of the following:
     
     - Cconfigure your browser to allow access to port `6666`; OR
     - Change the default port assigned to the CSF web interface within `/etc/csf/csf.conf`
@@ -443,7 +443,7 @@ issues that may arise:
     To allow port `6666` in your browser, follow the instructions on the page 
     [Troubleshooting › Address Restricted](../../usage/troubleshooting/webui.md#browser-this-address-is-restricted)
 
-    To change the port used for the CSF web interface, follow the instructions outlined on the page
+    To change the port used for the CSF web interface, follow the instructions on the page 
     [Install › Web Interface › Setup](../../install/webui.md#step-2-enable-web-ui).
 
     </div>
