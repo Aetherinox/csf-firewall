@@ -206,7 +206,7 @@ sub _decodeValue
 #   JSON › _skipWs
 #	
 #   Advance parser pos past json whitespace chars.
-#   Whitespace      space ( ) (0x20), tab (\t) (0x09), newline (\n) (0x0A), carriage return (\r) (0x0D)
+#   Whitespace  space ( ) (0x20), tab (\t) (0x09), newline (\n) (0x0A), carriage return (\r) (0x0D)
 #   
 #   @scope      local
 #   @param      json        scalarref               ref to json str
@@ -227,11 +227,11 @@ sub _skipWs
 #   JSON › _decodeStr
 #	
 #   Parse json str, handle escape sequences.
-#   Escape          \", \\, \/, \b, \f, \n, \r, \t, \uXXXX
+#   Escape      \", \\, \/, \b, \f, \n, \r, \t, \uXXXX
 #   
-#   @scope          local
-#   @param          json        scalarref               ref to json str
-#                   pos         scalarref               ref to current parse pos
+#   @scope      local
+#   @param      json        scalarref               ref to json str
+#               pos         scalarref               ref to current parse pos
 #   @return                     str                     decoded str
 # #
 
@@ -331,10 +331,10 @@ sub _decodeStr
 #	
 #   Parse json num values.
 #   
-#   @scope          local
-#   @param          json        scalarref               ref to json str
-#                   pos         scalarref               ref to current parse pos
-#   @return                     num                     decoded num
+#   @scope      local
+#   @param      json        scalarref               ref to json str
+#               pos         scalarref               ref to current parse pos
+#   @return                 num                     decoded num
 # #
 
 sub _decodeNum
@@ -607,7 +607,7 @@ sub _decodeArr
 #       number          :   json num
 #       string          :   json str
 #   
-#   @usage          my $csfJson = encode_json( { name => "ConfigServer", valid => \1 } );
+#   @usage      my $csfJson = encode_json( { name => "ConfigServer", valid => \1 } );
 #                   { "name":"ConfigServer","valid":true }
 #   
 #   @scope      public

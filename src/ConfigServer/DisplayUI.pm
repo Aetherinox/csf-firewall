@@ -48,6 +48,7 @@ use ConfigServer::Service;
 use ConfigServer::RBLCheck;
 use ConfigServer::GetEthDev;
 use ConfigServer::Slurp qw(slurp);
+use ConfigServer::Sanitize qw(html_safe html_escape);
 
 use Exporter qw(import);
 our $VERSION     = 1.01;
@@ -77,70 +78,6 @@ sub __
 	{
         print @_;
     }
-}
-
-# #
-#   Whitelisted HTML tags for comments
-# #
-
-my %allowed_tags = map { $_ => 1 } qw(b u span);
-
-# #
-#   Line › Sanitize
-#	
-#	Allow only certain whitelisted HTML tags to display a setting.
-#     - Escapes all HTML-sensitive characters ( &, <, > )
-#     - Restores a whitelist of safe HTML tags ( <b>, <i>, <a> )
-#	
-#	Primarily used for the csf.conf HEADER: feature.
-# #
-
-sub line_sanitize
-{
-    my ($line) = @_;
-
-	# #
-    #	Escape everything
-	# #
-
-    $line =~ s/&/&amp;/g;
-    $line =~ s/</&lt;/g;
-    $line =~ s/>/&gt;/g;
-
-	# #
-    #	Restore allowed tags
-	# #
-
-    foreach my $tag (keys %allowed_tags)
-	{
-        $line =~ s/&lt;($tag)(\s*[^&]*?)&gt;/<$1$2>/gi;			# opening tag with optional attributes
-        $line =~ s/&lt;\/($tag)&gt;/<\/$1>/gi;					# closing tag
-    }
-
-    return $line;
-}
-
-# #
-#   Line › Escape HTML
-#	
-#   Fully escape text for safe use in HTML attributes
-#		(e.g., <input value="...">).
-#	
-#   Escapes all HTML-sensitive characters (&, <, >, ", ')
-#	
-#	Utilized in conjunction with settings such as CSP (Content Security Policy).
-# #
-
-sub line_escape_html
-{
-    my ($text) = @_;
-    return '' unless defined $text;
-    $text =~ s/&/&amp;/g;
-    $text =~ s/</&lt;/g;
-    $text =~ s/>/&gt;/g;
-    $text =~ s/"/&quot;/g;
-    $text =~ s/'/&#39;/g;
-    return $text;
 }
 
 # #
@@ -1895,7 +1832,7 @@ EOF
 				$header_title =~ s/^\s+|\s+$//g;
 
 				# #
-				#	Find start index including decorative-only lines
+				#	Find start index including decorative lines
 				# #
 	
 				my $start = $i;
@@ -1916,7 +1853,7 @@ EOF
 					chomp $raw;
 
 					# #
-					#	Blank comment line (just "#" or "#   ") -> push empty string
+					#	Blank comment line (just "#" or "#   ") => push empty string
 					# #
 	
 					if ( $raw =~ /^\s*#\s*$/ )
@@ -2013,40 +1950,45 @@ EOF
 				print "${hl}\n";
 			}
 
-			print "</div>\n";  # close section-body
-			print "</div>\n";  # close header-block
+			print "</div> <!-- end section-body -->\n";  # close section-body
+			print "</div> <!-- end header-block -->\n";  # close header-block
 		}
 
 		# #
 		#   Main configuration parsing loop
+		#	
+		#	Loop all setting descriptions
 		# #
 
 		my $first_line_comment = 1;
 		foreach my $line ( @confdata )
 		{
+			# SECTION:Initial Settings
 			if ( ( $line !~ /^\#/ ) and ( $line =~ /=/ ) )
 			{
+				# TESTING = "0" 
+
 				if ( $comment )
 				{
-					print "</div>\n";
+					print "</div> <!-- end setting -->\n";
 				}
 
 				$comment 			= 0;
-				my ($start,$end) 	= split (/=/,$line,2);
-				my $name 			= $start;
-				my $cleanname 		= $start;
+				my ($start,$end) 	= split (/=/,$line,2);						# Split at equal, TESTING = "0"  => TESTING,"0"
+				my $name 			= $start;									# TESTING_
+				my $cleanname 		= $start;									# TESTING
 				$cleanname 			=~ s/\s//g;
-				$name 				=~ s/\s/\_/g;
-	
+				$name 				=~ s/\s/\_/g;								# TESTING_
+
 				if ( $end =~ /\"(.*)\"/ )
 				{
 					$end = $1;
 				}
 	
-				my $escaped_end 				= line_escape_html( $end );
-				my $size 						= length($end) + 4;
+				my $escaped_end 				= html_escape( $end );
+				my $size 						= length( $end ) + 4;
 				my $class 						= "value-default";
-				my ($status,$range,$default) 	= sanity($start,$end);
+				my ($status,$range,$default) 	= sanity( $start, $end );
 				my $showrange 					= "";
 				my $showfrom;
 				my $showto;
@@ -2069,7 +2011,7 @@ EOF
 				if ( $status )
 				{
 					$class 		= "value-warning";
-					$showrange 	= " Recommended range: $range (Default: $default)";
+					$showrange	= " Recommended range: $range (Default: $default)";
 				}
 	
 				if ( $config{RESTRICT_UI} and ( $cleanname eq "CLUSTER_KEY" or $cleanname eq "UI_PASS" or $cleanname eq "UI_USER" ) )
@@ -2078,7 +2020,7 @@ EOF
 				}
 				elsif ( $restricted{$cleanname} )
 				{
-					print "<div class='value-disabled' style='padding-left:5px !important;margin-block-end:3em !important;'><b>$start</b> = <input type='text' onFocus='CSFexpand(this);' onkeyup='CSFexpand(this);' value='$end' size='$size' disabled> (restricted UI item)</div>\n";
+					print "<div class='value-disabled' style='padding-left:5px !important;margin-block-end:3em !important;'><b>$start</b> = <input type='text' onFocus='CSFexpand(this);' onkeyup='CSFexpand(this);' value='$escaped_end' size='$size' disabled> (restricted UI item)</div>\n";
 				}
 				else
 				{
@@ -2127,6 +2069,7 @@ EOF
 			else
 			{
 				# #
+				#	Handles SECTION: parsing
 				#   Skip decorative comments and blank lines
 				# #
 		
@@ -2135,7 +2078,7 @@ EOF
 				if ( $line =~ /^\s*$/ ) { next }
 
 				# #
-				#   Handle SECTION markers
+				#   Stylize SECTION markers
 				# #
 		
 				if ( $line =~ /^\#\s*SECTION:(.*)/ )
@@ -2187,7 +2130,7 @@ EOF
 				#   Sanitize line but allow only whitelisted tags
 				# #
 
-				$line = line_sanitize( $line );
+				$line = html_safe( $line );
 
 				# #
 				#	Convert URLs to clickable links
