@@ -64,11 +64,14 @@
 	--btn-1-bg-n: #3566c0;
 	--btn-1-bg-h: #3566c0;
 	--btn-1-bg-d: #5e5e5e;
+	--btn-1-bg-a: #5e5e5e;
 	--btn-1-border-n: #3566c0;
 	--btn-1-border-h: #3566c0;
 	--btn-1-border-d: #606060;
+	--btn-1-border-a: #606060;
 	--btn-1-text-d: #FFFFFF;
 	--btn-1-text-n: #FFFFFF;
+	--btn-1-text-a: #FFFFFF;
 
 	--codeblock-text: #ea8c28;
 	--codeblock-background: #f9f2f4;
@@ -83,67 +86,33 @@
 	--icons-n: #d2195ef0;
 	--icons-h: #e69e19f0;
 
+	--btn-def-enabled-bg-n: #5a732f;											/* Cfg toggle button enabled bg color (normal) */
+	--btn-def-enabled-text-n: #FFF;											/* Cfg toggle button enabled text color (normal) */
+	--btn-def-disabled-bg-n: #A81B43;											/* Cfg toggle button disabled bg color (normal) */
+	--btn-def-disabled-text-n: #FFFFFF;										/* Cfg toggle button enabled text color (normal) */
+
 	--settings-panel-block-border: #0f0f0f1a;
 	--settings-panel-default-background: #d7d7d7;
 	--settings-panel-default-text: #626262;
-	--settings-panel-modified-background: #d7d7d7;
-	--settings-panel-modified-text: #626262;
-	--settings-panel-disabled-background: #d94747;
-	--settings-panel-disabled-text: #FFF;
-	--settings-panel-restricted-background: #d94747;
-	--settings-panel-restricted-text: #FFF;
-	--settings-panel-warning-background: #db9e0d;
-	--settings-panel-warning-text: #FFF;
 
-	--settings-button-ok-background-n: #FFF;
-	--settings-button-ok-background-h: #bebebe;
-	--settings-button-ok-border-n: #DBDBDB;
-	--settings-button-ok-border-h: #FFF;
-	--settings-button-ok-text-n: #424242;
-	--settings-button-ok-text-h: #3f3f3f;
+	--cfgfw-modified-trigger-bg: #448e65;
+	--cfgfw-modified-trigger-text: #FFFFFF;
+	--cfgfw-modified-comment-text: #111111;
+	
+	--cfgfw-disabled-trigger-bg: #d5d5d5;
+	--cfgfw-disabled-trigger-text: #b0b0b0;
+	--cfgfw-disabled-comment-text: #B1B1B1;
 
-	--settings-button-allow-background-n: #4ca47b;
-	--settings-button-allow-background-h: #4ca47b;
-	--settings-button-allow-border-n: #4ca47b;
-	--settings-button-allow-border-h: #4ca47b;
-	--settings-button-allow-text-n: #FFFFFF;
-	--settings-button-allow-text-h: #FFFFFF;
+	--cfgfw-restricted-trigger-bg: #bd4545;
+	--cfgfw-restricted-trigger-text: #FFF;
+	--cfgfw-restricted-comment-text: #626262;
 
-	--settings-button-deny-background-n: #ce5b66;
-	--settings-button-deny-background-h: #ce5b66;
-	--settings-button-deny-border-n: #ce5b66;
-	--settings-button-deny-border-h: #ce5b66;
-	--settings-button-deny-text-n: #FFFFFF;
-	--settings-button-deny-text-h: #FFFFFF;
-
-	--settings-button-edit-background-n: #bf8a46;
-	--settings-button-edit-background-h: #bf8a46;
-	--settings-button-edit-border-n: #bf8a46;
-	--settings-button-edit-border-h: #bf8a46;
-	--settings-button-edit-text-n: #FFFFFF;
-	--settings-button-edit-text-h: #FFFFFF;
+	--cfgfw-warning-trigger-bg: #db9e0d;
+	--cfgfw-warning-trigger-text: #626262;
 
 	--section-background-n: #ccc;
 	--section-border-n: #e3e3e31a;
 	--section-text-n: #363636;
-
-	--settings-button-disabled-a-background-n: #A81B43;
-	--settings-button-disabled-a-text-n: #FFFFFF;
-	--settings-button-enabled-a-background-n: #5a732f;
-	--settings-button-enabled-a-text-n: #FFF;
-
-	--status-check-score-background-n: #e6e6e6;
-	--status-check-score-label-text-n: #646464;
-	--status-check-score-total-text-n: #646464;
-	--status-check-score-total-bar-n: #4e4e4e;
-
-	--grading-general-background: #FFF;
-	--grading-general-border-n: #e3e3e31a;
-	--grading-general-test-name-background-n: #e6e6e6;
-
-	--input-background: #393939;
-	--input-border: #e3e3e31a;
-	--input-color: #FFFFFF;
 
 	--input-textfield-main-n-text: #111;
 	--input-textfield-main-n-background: #FFFFFF;
@@ -211,17 +180,17 @@
 
 [data-theme="dark"]
 {
-	--scrollbar-background-n: #F30C5998;									/* Scrollbar background color (normal) */
-	--scrollbar-background-a: #900834;										/* Scrollbar background color (active) */
-	--scrollbar-background-h: #c00a47;										/* Scrollbar background color (hover) */
+	--scrollbar-background-n: #F30C5998;										/* Scrollbar background color (normal) */
+	--scrollbar-background-a: #900834;											/* Scrollbar background color (active) */
+	--scrollbar-background-h: #c00a47;											/* Scrollbar background color (hover) */
 
-	--general-page-background: #1e1d1d;									/* Main page background color */
-	--general-page-text-n: #ffffff;										/* Generic page text color (normal) */
-	--general-page-text-h: #0077cc;										/* Generic page text color (hover) */
-	--general-app-name-text-n: #ce2d5a;									/* App name in header (normal) */
-	--general-app-name-text-h: #FFFFFF;									/* App name in header (hover) */
+	--general-page-background: #1e1d1d;										/* Main page background color */
+	--general-page-text-n: #ffffff;											/* Generic page text color (normal) */
+	--general-page-text-h: #0077cc;											/* Generic page text color (hover) */
+	--general-app-name-text-n: #ce2d5a;										/* App name in header (normal) */
+	--general-app-name-text-h: #FFFFFF;										/* App name in header (hover) */
 
-	--header-background-n: #2b2b2b;										/* Header background color */
+	--header-background-n: #2b2b2b;											/* Header background color */
 
 	--panel-table-row-odd: #2b2b2b;
 	--panel-table-row-even: #333;
@@ -243,11 +212,14 @@
 	--btn-1-bg-n: #3566c0;
 	--btn-1-bg-h: #3566c0;
 	--btn-1-bg-d: #5e5e5e;
+	--btn-1-bg-a: #5e5e5e;
 	--btn-1-border-n: #3566c0;
 	--btn-1-border-h: #3566c0;
 	--btn-1-border-d: #606060;
+	--btn-1-border-a: #606060;
 	--btn-1-text-d: #FFFFFF;
 	--btn-1-text-n: #FFFFFF;
+	--btn-1-text-a: #FFFFFF;
 
 	--codeblock-text: #ff6c00;
 	--codeblock-background: #1e1e1e;
@@ -262,59 +234,33 @@
 	--icons-n: #d2195ef0;
 	--icons-h: #FFF;
 
+	--btn-def-enabled-bg-n: #5a732f;											/* Cfg toggle button enabled bg color (normal) */
+	--btn-def-enabled-text-n: #FFF;											/* Cfg toggle button enabled text color (normal) */
+	--btn-def-disabled-bg-n: #A81B43;											/* Cfg toggle button disabled bg color (normal) */
+	--btn-def-disabled-text-n: #FFFFFF;										/* Cfg toggle button enabled text color (normal) */
+
 	--settings-panel-block-border: #e3e3e31a;
 	--settings-panel-default-background: #333;
 	--settings-panel-default-text: #FFF;
-	--settings-panel-modified-background: #2A3F57;
-	--settings-panel-modified-text: #FFF;
-	--settings-panel-disabled-background: #6c2626;
-	--settings-panel-disabled-text: #FFF;
-	--settings-panel-restricted-background: #6c2626;
-	--settings-panel-restricted-text: #FFF;
-	--settings-panel-warning-background: #db9e0d;
-	--settings-panel-warning-text: #FFF;
 
-	--settings-button-ok-background-n: #3f4fa4;
-	--settings-button-ok-background-h: #3f4fa4;
-	--settings-button-ok-border-n: #3f4fa4;
-	--settings-button-ok-border-h: #3f4fa4;
-	--settings-button-ok-text-n: #FFFFFF;
-	--settings-button-ok-text-h: #FFFFFF;
+	--cfgfw-modified-trigger-bg: #50804f;
+	--cfgfw-modified-trigger-text: #FFFFFF;
+	--cfgfw-modified-comment-text: #FFFFFF;
 
-	--settings-button-allow-background-n: #219961;
-	--settings-button-allow-background-h: #219961;
-	--settings-button-allow-border-n: #219961;
-	--settings-button-allow-border-h: #219961;
-	--settings-button-allow-text-n: #FFFFFF;
-	--settings-button-allow-text-h: #FFFFFF;
+	--cfgfw-disabled-trigger-bg: #313131;
+	--cfgfw-disabled-trigger-text: #757575;
+	--cfgfw-disabled-comment-text: #5d5d5d;
 
-	--settings-button-deny-background-n: #ce5b66;
-	--settings-button-deny-background-h: #ce5b66;
-	--settings-button-deny-border-n: #ce5b66;
-	--settings-button-deny-border-h: #ce5b66;
-	--settings-button-deny-text-n: #FFFFFF;
-	--settings-button-deny-text-h: #FFFFFF;
+	--cfgfw-restricted-trigger-bg: #8c3333;
+	--cfgfw-restricted-trigger-text: #FFF;
+	--cfgfw-restricted-comment-text: #FFF;
 
-	--settings-button-edit-background-n: #bf8a46;
-	--settings-button-edit-background-h: #bf8a46;
-	--settings-button-edit-border-n: #bf8a46;
-	--settings-button-edit-border-h: #bf8a46;
-	--settings-button-edit-text-n: #FFFFFF;
-	--settings-button-edit-text-h: #FFFFFF;
+	--cfgfw-warning-trigger-bg: #bd8604;
+	--cfgfw-warning-trigger-text: #FFF;
 
 	--section-background-n: #396852;
 	--section-border-n: #e3e3e31a;
 	--section-text-n: #FFFFFF;
-
-	--settings-button-disabled-a-background-n: #A81B43;
-	--settings-button-disabled-a-text-n: #FFFFFF;
-	--settings-button-enabled-a-background-n: #5a732f;
-	--settings-button-enabled-a-text-n: #FFF;
-
-	--status-check-score-background-n: #282828;
-	--status-check-score-label-text-n: #e6e6e6;
-	--status-check-score-total-text-n: #e6e6e6;
-	--status-check-score-total-bar-n: #FFFFFF;
 
 	--grading-general-border-n: #e3e3e31a;
 	--grading-general-background: #282828;
@@ -792,6 +738,7 @@ a.app-name:not(:hover)
 
 	These are the default style properties from the original configserver.css
 */
+
 .btn-default
 {
 	height: 32px;
@@ -817,10 +764,78 @@ a.app-name:not(:hover)
 
 .btn-default.disabled.focus, .btn-default.disabled:focus, .btn-default.disabled:hover, .btn-default[disabled].focus, .btn-default[disabled]:focus, .btn-default[disabled]:hover, fieldset[disabled] .btn-default.focus, fieldset[disabled] .btn-default:focus, fieldset[disabled] .btn-default:hover
 {
-	background-color: var( --btn-1-bg-d );
-	border-color: var( --btn-1-border-d );
-	color: var( --btn-1-text-d );
+	background-color: 	var( --btn-1-bg-d ) !important;
+	border-color: 		var( --btn-1-border-d ) !important;
+	color: 				var( --btn-1-text-d ) !important;
 }
+
+/*
+	Toggle > Enabled > Normal
+*/
+
+.btn.btn-default.option-enabled
+{
+	background-color: var( --btn-1-bg-n );
+	color: var( --btn-1-text-n );
+	border-color: var( --btn-1-border-n );
+}
+
+/*
+	Toggle > Enabled > Active
+*/
+
+.btn.btn-default.option-enabled.active
+{
+	background-color: var( --btn-def-enabled-bg-n ) !important;
+	color: var( --btn-def-enabled-text-n );
+}
+
+/*
+	Toggle > Disabled > Normal
+*/
+
+.btn.btn-default.option-disabled
+{
+	background-color: var( --btn-1-bg-d );
+	color: var( --btn-1-text-d );
+	border-color: var( --btn-1-border-d );
+}
+
+/*
+	Toggle > Disabled > Active
+*/
+
+.btn.btn-default.option-disabled.active
+{
+	background-color: var( --btn-def-disabled-bg-n ) !important;
+	color: var( --btn-def-disabled-text-n );
+}
+
+/*
+	Button > Default > Active 
+
+	Not used for buttons on home page.
+*/
+
+.btn.btn-default.active
+{
+	background-color: var( --btn-def-enabled-bg-n ) !important;
+	color: var( --btn-def-enabled-text-n );
+}
+
+/*
+	Button > Default > Normal
+	
+	On the home page, all buttons will be given this style.
+*/
+
+.btn.btn-default:not(.active)
+{
+	background-color: var( --btn-1-bg-n );
+	color: var( --btn-1-text-n );
+	border-color: var( --btn-1-border-n );
+}
+
 
 button,
 input,
@@ -1554,6 +1569,7 @@ textarea
 	font-size: 14px;
   	min-width: 100%;
 	max-width: 100%;
+	border: 2px solid var( --settings-panel-default-background );
 }
 
 .comment-default
@@ -1565,9 +1581,9 @@ textarea
 
 .comment-disabled
 {
-	border-left: 2px solid var( --settings-panel-disabled-background );
-	border-top: 2px solid var( --settings-panel-disabled-background );
-	border-right: 2px solid var( --settings-panel-disabled-background );
+	border-left: 2px solid var( --cfgfw-disabled-trigger-bg );
+	border-top: 2px solid var( --cfgfw-disabled-trigger-bg );
+	border-right: 2px solid var( --cfgfw-disabled-trigger-bg );
 }
 
 .console
@@ -1599,7 +1615,7 @@ pre
 	border-radius: 4px;
 }
 
-.value-default
+.value-default, .value-modified, .value-disabled, .value-restricted, .value-warning, .value-other
 {
 	background: var( --settings-panel-default-background );
 	color: var( --settings-panel-default-text );
@@ -1609,66 +1625,83 @@ pre
 	padding-right: 10px;
 	padding-top: 5px;
 	padding-bottom: 5px;
+	display: flex;
+	align-items: center;
+	gap: 0.5em;
 }
 
-.value-modified
+.value-default input, .value-modified input, .value-disabled input, .value-restricted input, .value-warning input, .value-other input
 {
-	background: var( --settings-panel-modified-background );
-	color: var( --settings-panel-modified-text );
-	border-bottom-left-radius: 4px;
-	border-bottom-right-radius: 4px;
-	padding-left: 15px;
-	padding-right: 10px;
-	padding-top: 5px;
-	padding-bottom: 5px;
+	min-width: 0;
+}
+
+.value-modified, .value-other
+{
+	background: var( --cfgfw-modified-trigger-bg );
+	color: var( --cfgfw-modified-trigger-text );
+}
+
+.comment:has( + .value-other )
+{
+	color: var( --cfgfw-modified-comment-text ) !important;
+	border: 3px solid var( --cfgfw-modified-trigger-bg );
 }
 
 .value-disabled
 {
-	background: var( --settings-panel-disabled-background );
-	color: var( --settings-panel-disabled-text );
-	border-bottom-left-radius: 4px;
-	border-bottom-right-radius: 4px;
-	padding-left: 15px;
-	padding-right: 10px;
-	padding-top: 5px;
-	padding-bottom: 5px;
+	background: var( --cfgfw-disabled-trigger-bg );
+	color: var( --cfgfw-disabled-trigger-text );
+}
+
+.value-disabled input:hover
+{
+	cursor: not-allowed;
+}
+
+.comment:has( + .value-disabled )
+{
+	color: var( --cfgfw-disabled-comment-text ) !important;
+	border: 3px solid var( --cfgfw-disabled-trigger-bg );
 }
 
 .value-restricted
 {
-	background: var( --settings-panel-restricted-background );
-	color: var( --settings-panel-disabled-text );
-	border-bottom-left-radius: 4px;
-	border-bottom-right-radius: 4px;
-	padding-left: 15px;
-	padding-right: 10px;
-	padding-top: 5px;
-	padding-bottom: 5px;
+	background: var( --cfgfw-restricted-trigger-bg );
+	color: var( --cfgfw-restricted-trigger-text );
+}
+
+.comment:has(+ .value-restricted)
+{
+  color: var( --cfgfw-restricted-comment-text ) !important;
+  border: 3px solid var( --cfgfw-restricted-trigger-bg );
 }
 
 .value-warning
 {
-	background: var( --settings-panel-warning-background );
-	color: var( --settings-panel-warning-text );
-	border-bottom-left-radius: 4px;
-	border-bottom-right-radius: 4px;
-	padding-left: 15px;
-	padding-right: 10px;
-	padding-top: 5px;
-	padding-bottom: 5px;
+	background: var( --cfgfw-warning-trigger-bg );
+	color: var( --cfgfw-warning-trigger-text );
+}
+
+.comment:has(+ .value-warning)
+{
+  color: var( --cfgfw-warning-comment-text ) !important;
+  border: 3px solid var( --cfgfw-warning-trigger-bg );
 }
 
 .section
 {
 	background-color: var( --section-background-n );
-	padding: 8px;
 	margin-top: 30px;
-	line-height: 1.42857143;
 	border-bottom: 1px solid var( --section-border-n ) !important;
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px;
 	color: var( --section-text-n );
+	font-weight: 600;
+	font-size: 1.5rem;
+	line-height: 1;
+	padding-top: 0.8em;
+	padding-bottom: 0.4em;
+	padding-left: 0.7em;
 }
 
 .toplink
@@ -1728,8 +1761,8 @@ pre
 
 .btn.btn-default.btn-csf-config.option-disabled.active
 {
-	background-color: var( --settings-button-disabled-a-background-n );
-	color: var( --settings-button-disabled-a-text-n );
+	background-color: var( --btn-def-disabled-bg-n );
+	color: var( --btn-def-disabled-text-n );
 }
 
 /*
@@ -1749,8 +1782,8 @@ pre
 
 .btn.btn-default.btn-csf-config.option-enabled.active
 {
-	background-color: var( --settings-button-enabled-a-background-n );
-	color: var( --settings-button-enabled-a-text-n );
+	background-color: var( --btn-def-enabled-bg-n );
+	color: var( --btn-def-enabled-text-n );
 }
 
 /*
@@ -1792,8 +1825,8 @@ pre
 
 	.btn-settings-base.btn-toggle.btn-csf-config.option-disabled.active
 	{
-		background-color: var( --settings-button-disabled-a-background-n );
-		color: var( --settings-button-disabled-a-text-n );
+		background-color: var( --btn-def-disabled-bg-n );
+		color: var( --btn-def-disabled-text-n );
 	}
 
 	/*
@@ -1813,8 +1846,8 @@ pre
 
 	.btn-settings-base.btn-toggle.btn-csf-config.option-enabled.active
 	{
-		background-color: var( --settings-button-enabled-a-background-n );
-		color: var( --settings-button-enabled-a-text-n );
+		background-color: var( --btn-def-enabled-bg-n );
+		color: var( --btn-def-enabled-text-n );
 	}
 
 	/*

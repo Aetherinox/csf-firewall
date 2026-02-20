@@ -3688,11 +3688,13 @@ END_JS
 	{
 
 		# #
-		#	@notes			generic loads theme / footer correctly
+		#	@notes			generic loads theme switch, css, footer
 		#					webmin does not load configserver.css; uses its own built-in theme and bootstramp
-		#					directadmin loads theme / css. (unless noscript used)
-		#					cpanel loads theme / css. footer correctly
-		#	
+		#					cwp loads theme switch, css, footer
+		#					directadmin loads theme switch, css, footer. (unless noscript used)
+		#					cpanel loads theme switch, css, footer
+		#					VestaCP loads theme switch, css, footer
+		#					cyberpanel loads theme switch, css, footer
 		# #
 
 		if ( $codename eq "generic" || $codename eq "cyberpanel" || $codename eq "cwp" || $codename eq "directadmin" || $codename eq "cpanel" || $codename eq "interworx" || $codename eq "vestacp" )
