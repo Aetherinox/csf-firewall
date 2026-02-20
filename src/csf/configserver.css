@@ -770,7 +770,7 @@ a.app-name:not(:hover)
 }
 
 /*
-	Toggle > Enabled > Normal
+	Toggle › Enabled › Normal
 */
 
 .btn.btn-default.option-enabled
@@ -781,7 +781,7 @@ a.app-name:not(:hover)
 }
 
 /*
-	Toggle > Enabled > Active
+	Toggle › Enabled › Active
 */
 
 .btn.btn-default.option-enabled.active
@@ -791,7 +791,7 @@ a.app-name:not(:hover)
 }
 
 /*
-	Toggle > Disabled > Normal
+	Toggle › Disabled › Normal
 */
 
 .btn.btn-default.option-disabled
@@ -802,7 +802,7 @@ a.app-name:not(:hover)
 }
 
 /*
-	Toggle > Disabled > Active
+	Toggle › Disabled › Active
 */
 
 .btn.btn-default.option-disabled.active
@@ -812,7 +812,7 @@ a.app-name:not(:hover)
 }
 
 /*
-	Button > Default > Active 
+	Button › Default › Active 
 
 	Not used for buttons on home page.
 */
@@ -824,7 +824,7 @@ a.app-name:not(:hover)
 }
 
 /*
-	Button > Default > Normal
+	Button › Default › Normal
 	
 	On the home page, all buttons will be given this style.
 */
@@ -918,7 +918,7 @@ select + .btn-default,
 }
 
 /*
-	Input > Default
+	Input › Default
 */
 
 input:not(.btn-no-anim)
@@ -956,7 +956,7 @@ input:focus
 }
 
 /*
-	Quick > Allow
+	Quick › Allow
 */
 
 input.input-allow,
@@ -995,7 +995,7 @@ textarea.input-allow
 }
 
 /*
-	Quick > Deny
+	Quick › Deny
 */
 
 input.input-deny,
@@ -1270,7 +1270,7 @@ th
 }
 
 /*
-	Panel > Footer
+	Panel › Footer
 */
 
 .panel-footer
@@ -1289,7 +1289,7 @@ th
 }
 
 /*
-	Tables > Rows > Odd
+	Tables › Rows › Odd
 */
 
 .table-striped > tbody > tr:nth-of-type(2n+1)
@@ -1299,7 +1299,7 @@ th
 }
 
 /*
-	Tables > Rows > Even
+	Tables › Rows › Even
 */
 
 .table-striped > tbody > tr:nth-of-type(2n)
@@ -1309,7 +1309,7 @@ th
 }
 
 /*
-	Tables > Rows > All
+	Tables › Rows › All
 */
 
 .table-solid > tbody > tr
@@ -1319,7 +1319,7 @@ th
 }
 
 /*
-	Tables > Borders
+	Tables › Borders
 
 	Outside table border
 */
@@ -1330,7 +1330,7 @@ th
 }
 
 /*
-	Tables > Borders
+	Tables › Borders
 
 	The border lines inside each settings table
 */
@@ -1379,7 +1379,7 @@ th
 }
 
 /*
-	Main Container > Right (Log out)
+	Main Container › Right (Log out)
 */
 
 .pull-right
@@ -1388,7 +1388,7 @@ th
 }
 
 /*
-	Tabs > Container
+	Tabs › Container
 */
 
 .nav-tabs
@@ -1399,7 +1399,7 @@ th
 }
 
 /*
-	Tabs > Hover
+	Tabs › Hover
 */
 
 .nav > li > a:focus, .nav > li > a:hover
@@ -1470,7 +1470,7 @@ th
 }
 
 /*
-	Callout > Success
+	Callout › Success
 */
 
 .bs-callout-success
@@ -1488,7 +1488,7 @@ th
 }
 
 /*
-	Callout > Info
+	Callout › Info
 */
 
 .bs-callout-info
@@ -1506,7 +1506,7 @@ th
 }
 
 /*
-	Callout > Warning
+	Callout › Warning
 */
 
 .bs-callout-warning
@@ -1524,7 +1524,7 @@ th
 }
 
 /*
-	Callout > Danger
+	Callout › Danger
 */
 
 .bs-callout-danger
@@ -1623,7 +1623,7 @@ pre
 	border-bottom-right-radius: 4px;
 	padding-left: 15px;
 	padding-right: 10px;
-	padding-top: 5px;
+	padding-top: 3px;
 	padding-bottom: 5px;
 	display: flex;
 	align-items: center;
@@ -1634,6 +1634,10 @@ pre
 {
 	min-width: 0;
 }
+
+/*
+	Settings › Modified / Other
+*/
 
 .value-modified, .value-other
 {
@@ -1646,6 +1650,20 @@ pre
 	color: var( --cfgfw-modified-comment-text ) !important;
 	border: 3px solid var( --cfgfw-modified-trigger-bg );
 }
+
+.value-modified .glyphicon-cog::before
+{
+	vertical-align: text-top;
+}
+
+.value-modified .glyphicon
+{
+	display: inline-block;
+}
+
+/*
+	Settings › Disabled
+*/
 
 .value-disabled
 {
@@ -1664,6 +1682,20 @@ pre
 	border: 3px solid var( --cfgfw-disabled-trigger-bg );
 }
 
+.value-disabled .glyphicon-cog::before
+{
+	vertical-align: text-top;
+}
+
+.value-disabled .glyphicon
+{
+	display: inline-block;
+}
+
+/*
+	Settings › Restricted
+*/
+
 .value-restricted
 {
 	background: var( --cfgfw-restricted-trigger-bg );
@@ -1676,6 +1708,20 @@ pre
   border: 3px solid var( --cfgfw-restricted-trigger-bg );
 }
 
+.value-restricted .glyphicon-cog::before
+{
+	vertical-align: text-top;
+}
+
+.value-restricted .glyphicon
+{
+	display: inline-block;
+}
+
+/*
+	Settings › Warning
+*/
+
 .value-warning
 {
 	background: var( --cfgfw-warning-trigger-bg );
@@ -1686,6 +1732,16 @@ pre
 {
   color: var( --cfgfw-warning-comment-text ) !important;
   border: 3px solid var( --cfgfw-warning-trigger-bg );
+}
+
+.value-warning .glyphicon-cog::before
+{
+	vertical-align: text-top;
+}
+
+.value-warning .glyphicon
+{
+	display: inline-block;
 }
 
 .section
@@ -1733,7 +1789,7 @@ pre
 */
 
 /*
-	Toggle > Parent
+	Toggle › Parent
 */
 
 .btn-csf-config
@@ -1745,7 +1801,7 @@ pre
 }
 
 /*
-	Toggle > Disabled > Normal
+	Toggle › Disabled › Normal
 */
 
 .btn.btn-default.btn-csf-config.option-disabled
@@ -1756,7 +1812,7 @@ pre
 }
 
 /*
-	Toggle > Disabled > Active
+	Toggle › Disabled › Active
 */
 
 .btn.btn-default.btn-csf-config.option-disabled.active
@@ -1766,7 +1822,7 @@ pre
 }
 
 /*
-	Toggle > Enabled > Normal
+	Toggle › Enabled › Normal
 */
 
 .btn.btn-default.btn-csf-config.option-enabled
@@ -1777,7 +1833,7 @@ pre
 }
 
 /*
-	Toggle > Enabled > Active
+	Toggle › Enabled › Active
 */
 
 .btn.btn-default.btn-csf-config.option-enabled.active
@@ -1787,7 +1843,7 @@ pre
 }
 
 /*
-	Button > Toggle
+	Button › Toggle
 */
 
 	/*
@@ -1809,7 +1865,7 @@ pre
 	}
 
 	/*
-		Toggle > Disabled > Normal
+		Toggle › Disabled › Normal
 	*/
 
 	.btn-settings-base.btn-toggle.btn-csf-config.option-disabled
@@ -1820,7 +1876,7 @@ pre
 	}
 
 	/*
-		Toggle > Disabled > Active
+		Toggle › Disabled › Active
 	*/
 
 	.btn-settings-base.btn-toggle.btn-csf-config.option-disabled.active
@@ -1830,7 +1886,7 @@ pre
 	}
 
 	/*
-		Toggle > Enabled > Normal
+		Toggle › Enabled › Normal
 	*/
 
 	.btn-settings-base.btn-toggle.btn-csf-config.option-enabled
@@ -1841,7 +1897,7 @@ pre
 	}
 
 	/*
-		Toggle > Enabled > Active
+		Toggle › Enabled › Active
 	*/
 
 	.btn-settings-base.btn-toggle.btn-csf-config.option-enabled.active

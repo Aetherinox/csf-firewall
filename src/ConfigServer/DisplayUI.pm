@@ -1988,6 +1988,7 @@ EOF
 				my $escaped_end 				= html_escape( $end );
 				my $size 						= length( $end ) + 4;
 				my $class 						= "value-default";
+				my $tip							= "";
 				my ($status,$range,$default) 	= sanity( $start, $end );
 				my $showrange 					= "";
 				my $showfrom;
@@ -1999,53 +2000,98 @@ EOF
 					$showto 	= $2;
 				}
 
+				# #
+				#	Find modified settings with defined range
+				# #
+
 				if ( $default ne "" )
 				{
 					$showrange = " Default: $default [$range]";
 					if ( $end ne $default )
 					{
-						$class = "value-other"
+						$class = "value-other";
+						$tip = "Modified";
 					}
 				}
 	
 				if ( $status )
 				{
 					$class 		= "value-warning";
+					$tip 		= "Warning";
 					$showrange	= " Recommended range: $range (Default: $default)";
 				}
 	
+				# #
+				#	Value › Restricted
+				#	
+				#	Setting cannot be changed using web interface; only csf.conf file.
+				# #
+
 				if ( $config{RESTRICT_UI} and ( $cleanname eq "CLUSTER_KEY" or $cleanname eq "UI_PASS" or $cleanname eq "UI_USER" ) )
 				{
-					print "<div class='value-restricted' style='padding-left:5px !important;margin-block-end:3em !important;'><b>$start</b> = <input type='text' value='********' size='14' disabled> (hidden restricted UI item)</div>\n";
+					print "<div class='value-restricted' style='margin-block-end:3em !important;'><b style='padding-top: 4px;'>$start</b> = <input type='text' value='********' size='14' disabled> (hidden restricted UI item)</div>\n";
 				}
+
+				# #
+				#	Value › Disabled
+				#	
+				#	Setting disabled; cannot change.
+				# #
+
 				elsif ( $restricted{$cleanname} )
 				{
-					print "<div class='value-disabled' style='padding-left:5px !important;margin-block-end:3em !important;'><b>$start</b> = <input type='text' onFocus='CSFexpand(this);' onkeyup='CSFexpand(this);' value='$escaped_end' size='$size' disabled> (restricted UI item)</div>\n";
+					print "<div class='value-disabled' style='margin-block-end:3em !important;'><span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='Disabled'></span> <b style='padding-top: 4px;'>$start</b> = <input type='text' onFocus='CSFexpand(this);' onkeyup='CSFexpand(this);' value='$escaped_end' size='$size' disabled> (restricted UI item)</div>\n";
 				}
 				else
 				{
 					if ( $range eq "0-1" )
 					{
+						# #
+						#	Value › Togglable (On/Off)
+						#	
+						#	Setting is toggable on/off with value of ether 0 or 1.
+						#		AUTO_UPDATES
+						#		LF_SPI
+						#		IPV6
+						# #
+
 						my $switch_checked_0 = "";
 						my $switch_checked_1 = "";
 						my $switch_active_0 = "";
 						my $switch_active_1 = "";
 						if ($end == 0) {$switch_checked_0 = "checked"; $switch_active_0 = "active"}
 						if ($end == 1) {$switch_checked_1 = "checked"; $switch_active_1 = "active"}
-						print "<div class='$class' style='padding-left:5px !important;margin-block-end:3em !important;'><b>$start</b> = ";
+
+						print "<div class='$class' style='margin-block-end:3em !important;'>"
+							. ($tip ? "<span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='$tip'></span> " : "")
+							. "<b style='padding-top: 4px;'>$start</b> = ";
+
 						print "<div class='btn-group' data-toggle='buttons'>\n";
-						print "<label class='btn btn-default btn-csf-config $switch_active_0'>\n";
+						print "<label class='btn btn-default btn-csf-config option-disabled $switch_active_0'>\n";
 						print "<input type='radio' name='${name}' value='0' $switch_checked_0> Off\n";
 						print "</label>\n";
-						print "<label class='btn btn-default btn-csf-config $switch_active_1'>\n";
+						print "<label class='btn btn-default btn-csf-config option-enabled $switch_active_1'>\n";
 						print "<input type='radio' name='${name}' value='1' $switch_checked_1> On\n";
 						print "</label>\n";
 						print "</div></div>\n";
 					}
 					elsif ( $range =~ /^(\d+)-(\d+)$/ and !( -e "/etc/csuibuttondisable" ) and ( $showto - $showfrom <= 20 ) and $end >= $showfrom and $end <= $showto )
 					{
+						# #
+						#	Value › Custom Input Without Range
+						#	
+						#	Setting accepts custom input, but with no defaults.
+						#		CC_LOOKUPS
+						#		URLGET 
+						#		LF_CXS
+						# #
+
 						my $selected = "";
-						print "<div class='$class' style='padding-left:5px !important;margin-block-end:3em !important;'><b>$start</b> = <select name='$name'>\n";
+
+						print "<div class='$class' style='margin-block-end:3em !important;'>"
+							. ($tip ? "<span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='$tip'></span> " : "")
+							. "<b style='padding-top: 4px;'>$start</b> = <select name='$name'>\n";
+
 						for ( $showfrom..$showto )
 						{
 							if ( $_ == $end )
@@ -2062,7 +2108,20 @@ EOF
 					}
 					else
 					{
-						print "<div class='$class' style='padding-left:5px !important;margin-block-end:3em !important;'><b>$start</b> = <input type='text' onFocus='CSFexpand(this);' onkeyup='CSFexpand(this);' name='$name' value='$escaped_end' size='$size'>$showrange</div>\n";
+						# #
+						#	Value › Custom Input With Range
+						#	
+						#	Setting with defined range [0-50], [1-2]
+						#	Does NOT include toggable on/off settings [0-1]
+						#		LF_CXS_PERM
+						#		CC_SRC
+						#		CC_DENY
+						#		CC_ALLOW
+						# #
+
+						print "<div class='$class' style='margin-block-end:3em !important;'>"
+							. ($tip ? "<span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='$tip'></span> " : "")
+							. "<b style='padding-top: 4px;'>$start</b> = <input type='text' onFocus='CSFexpand(this);' onkeyup='CSFexpand(this);' name='$name' value='$escaped_end' size='$size'>$showrange</div>\n";
 					}
 				}
 			}
