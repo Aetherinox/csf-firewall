@@ -83,9 +83,6 @@
 	--mark-background-n: #f2e523;
 	--mark-text-n: #1d1d1d;
 
-	--icons-n: #d2195ef0;
-	--icons-h: #e69e19f0;
-
 	--btn-def-enabled-bg-n: #5a732f;											/* Cfg toggle button enabled bg color (normal) */
 	--btn-def-enabled-text-n: #FFF;											/* Cfg toggle button enabled text color (normal) */
 	--btn-def-disabled-bg-n: #A81B43;											/* Cfg toggle button disabled bg color (normal) */
@@ -103,16 +100,24 @@
 	--cfgfw-disabled-trigger-text: #b0b0b0;
 	--cfgfw-disabled-comment-text: #B1B1B1;
 
-	--cfgfw-restricted-trigger-bg: #bd4545;
+	--cfgfw-restricted-trigger-bg: #ca7070;
 	--cfgfw-restricted-trigger-text: #FFF;
 	--cfgfw-restricted-comment-text: #626262;
 
-	--cfgfw-warning-trigger-bg: #db9e0d;
-	--cfgfw-warning-trigger-text: #626262;
+	--cfgfw-warning-trigger-bg: #cc9b09;
+	--cfgfw-warning-trigger-text: #FFF;
 
-	--section-background-n: #ccc;
-	--section-border-n: #e3e3e31a;
-	--section-text-n: #363636;
+	--cfgfw-header-tab-bg: #606060;											/* settings › header › Tab › background color */
+	--cfgfw-header-tab-text: #FFFFFF;											/* settings › header › Tab › text color */
+	--cfgfw-header-body-bg: #FFFFFF;											/* settings › header › Body › background color */
+	--cfgfw-header-body-text: #111111;											/* settings › header › Body › text color */
+	--cfgfw-header-body-border: #d7d7d7;										/* settings › header › Body › border color */
+
+	--cfgfw-section-tab-bg: #606060;											/* settings › section › Tab › background color */
+	--cfgfw-section-tab-text: #FFFFFF;											/* settings › section › Tab › text color */
+	--cfgfw-section-body-bg: #FFFFFF;											/* settings › section › Body › background color */
+	--cfgfw-section-body-text: #111111;										/* settings › section › Body › text color */
+	--cfgfw-section-body-border: #d7d7d7;										/* settings › section › Body › border color */
 
 	--input-textfield-main-n-text: #111;
 	--input-textfield-main-n-background: #FFFFFF;
@@ -231,9 +236,6 @@
 	--mark-background-n: #8a6610;
 	--mark-text-n: #fff;
 
-	--icons-n: #d2195ef0;
-	--icons-h: #FFF;
-
 	--btn-def-enabled-bg-n: #5a732f;											/* Cfg toggle button enabled bg color (normal) */
 	--btn-def-enabled-text-n: #FFF;											/* Cfg toggle button enabled text color (normal) */
 	--btn-def-disabled-bg-n: #A81B43;											/* Cfg toggle button disabled bg color (normal) */
@@ -258,19 +260,23 @@
 	--cfgfw-warning-trigger-bg: #bd8604;
 	--cfgfw-warning-trigger-text: #FFF;
 
-	--section-background-n: #396852;
-	--section-border-n: #e3e3e31a;
-	--section-text-n: #FFFFFF;
+	--cfgfw-header-tab-bg: #606060;											/* settings › header › Tab › background color */
+	--cfgfw-header-tab-text: #FFFFFF;											/* settings › header › Tab › text color */
+	--cfgfw-header-body-bg: #FFFFFF;											/* settings › header › Body › background color */
+	--cfgfw-header-body-text: #111111;											/* settings › header › Body › text color */
+	--cfgfw-header-body-border: #d7d7d7;										/* settings › header › Body › border color */
 
-	--grading-general-border-n: #e3e3e31a;
-	--grading-general-background: #282828;
-	--grading-general-test-name-background-n: #262626;
+	--cfgfw-section-tab-bg: #606060;											/* settings › section › Tab › background color */
+	--cfgfw-section-tab-text: #FFFFFF;											/* settings › section › Tab › text color */
+	--cfgfw-section-body-bg: #FFFFFF;											/* settings › section › Body › background color */
+	--cfgfw-section-body-text: #111111;										/* settings › section › Body › text color */
+	--cfgfw-section-body-border: #d7d7d7;										/* settings › section › Body › border color */
 
 	--input-textfield-main-n-text: #adadad;
 	--input-textfield-main-n-background: #1f2324;
 	--input-textfield-main-n-border: #484848;
-	--input-textfield-main-f-background: #2b2b2b;
 	--input-textfield-main-f-line: #FFFFFF;
+	--input-textfield-main-f-background: #2b2b2b;
 	--input-textfield-main-f-border: #d8a91e;
 	--input-textfield-main-f-text: #FFF;
 	--input-textfield-main-h-line: #d8a91e;
@@ -278,8 +284,8 @@
 	--input-textfield-allow-n-text: #75e6b2;
 	--input-textfield-allow-n-background: #1f2324;
 	--input-textfield-allow-n-border: #2d6a4e;
-	--input-textfield-allow-f-background: #224233;
 	--input-textfield-allow-f-line: #FFF;
+	--input-textfield-allow-f-background: #224233;
 	--input-textfield-allow-f-border: #20af6d;
 	--input-textfield-allow-f-text: #FFF;
 	--input-textfield-allow-h-line: #2bcf83;
@@ -1058,7 +1064,7 @@ input.btn-default[type="submit"]:hover
 }
 
 /*
-	Header
+	CSF Header
 */
 
 .section-header
@@ -1651,6 +1657,11 @@ pre
 	border: 3px solid var( --cfgfw-modified-trigger-bg );
 }
 
+.value-other .glyphicon
+{
+	color: #FFF !important;
+}
+
 .value-modified .glyphicon-cog::before
 {
 	vertical-align: text-top;
@@ -1708,6 +1719,11 @@ pre
   border: 3px solid var( --cfgfw-restricted-trigger-bg );
 }
 
+.value-restricted .glyphicon
+{
+	color: #FFF !important;
+}
+
 .value-restricted .glyphicon-cog::before
 {
 	vertical-align: text-top;
@@ -1734,6 +1750,11 @@ pre
   border: 3px solid var( --cfgfw-warning-trigger-bg );
 }
 
+.value-warning .glyphicon
+{
+	color: #FFF !important;
+}
+
 .value-warning .glyphicon-cog::before
 {
 	vertical-align: text-top;
@@ -1744,20 +1765,72 @@ pre
 	display: inline-block;
 }
 
-.section
+/*
+	Firewall Configuration Header
+*/
+
+.header
 {
-	background-color: var( --section-background-n );
 	margin-top: 30px;
-	border-bottom: 1px solid var( --section-border-n ) !important;
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px;
-	color: var( --section-text-n );
+    background-color: var( --cfgfw-header-tab-bg );
+    color: var( --cfgfw-header-tab-text );
 	font-weight: 600;
 	font-size: 1.5rem;
 	line-height: 1;
-	padding-top: 0.8em;
+	padding-top: 0.7em;
 	padding-bottom: 0.4em;
 	padding-left: 0.7em;
+}
+
+.header-body
+{
+	background-color: var( --cfgfw-header-body-bg );
+	padding: 10px;
+	padding-top: 0px;
+	font-family: Courier New, Courier;
+	font-size: 14px;
+	min-width: 100%;
+	max-width: 100%;
+	color: var( --cfgfw-header-body-text );
+	border-left: 2px solid var( --cfgfw-header-body-border );
+	border-right: 2px solid var( --cfgfw-header-body-border );
+	border-bottom: 2px solid var( --cfgfw-header-body-border );
+}
+
+/*
+	Firewall Configuration Section
+*/
+
+.section
+{
+	margin-top: 30px;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+    background-color: var( --cfgfw-section-tab-bg );
+    color: var( --cfgfw-section-tab-text );
+	font-weight: 600;
+	font-size: 1.5rem;
+	line-height: 1;
+	padding-top: 0.7em;
+	padding-bottom: 0.4em;
+	padding-left: 0.7em;
+}
+
+.section-body
+{
+	background-color: var( --cfgfw-section-body-bg );
+	padding: 10px;
+	padding-top: 0px;
+	font-family: Courier New, Courier;
+	font-size: 14px;
+	min-width: 100%;
+	max-width: 100%;
+	color: var( --cfgfw-section-body-text );
+	border-left: 2px solid var( --cfgfw-section-body-border );
+	border-right: 2px solid var( --cfgfw-section-body-border );
+	border-bottom: 2px solid var( --cfgfw-section-body-border );
 }
 
 .toplink

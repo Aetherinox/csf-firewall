@@ -1920,8 +1920,8 @@ EOF
 		if ( $header_found )
 		{
 			print "<div class='header-block' style='padding-top: 1.6rem'>\n";
-			print "<div class='section'>$header_title</div>\n";
-			print "<div class='section-body comment' style='padding-top:0px !important;white-space: pre-wrap;font-family:monospace;line-height:1.2em;'>\n";
+			print "<div class='header'>$header_title</div>\n";
+			print "<div class='header-body' style='padding-top:0px !important;margin-block-end: 3em !important;white-space: pre-wrap;font-family:monospace;line-height:1.2em;'>\n";
 
 			my $first_line = 1;
 			foreach my $hl ( @header_lines )
@@ -1961,8 +1961,10 @@ EOF
 		# #
 
 		my $first_line_comment = 1;
-		foreach my $line ( @confdata )
+		for ( my $i = 0; $i <= $#confdata; $i++ )
 		{
+			my $line = $confdata[$i];
+
 			# SECTION:Initial Settings
 			if ( ( $line !~ /^\#/ ) and ( $line =~ /=/ ) )
 			{
@@ -2014,10 +2016,17 @@ EOF
 					}
 				}
 	
+				# #
+				#	Value › Bad Value
+				#	
+				#		$status = 0		Valid
+				#		$status = 1		Invalid
+				# #
+
 				if ( $status )
 				{
 					$class 		= "value-warning";
-					$tip 		= "Warning";
+					$tip 		= "Warning. Invalid value specified.";
 					$showrange	= " Recommended range: $range (Default: $default)";
 				}
 	
@@ -2040,7 +2049,7 @@ EOF
 
 				elsif ( $restricted{$cleanname} )
 				{
-					print "<div class='value-disabled' style='margin-block-end:3em !important;'><span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='Disabled'></span> <b style='padding-top: 4px;'>$start</b> = <input type='text' onFocus='CSFexpand(this);' onkeyup='CSFexpand(this);' value='$escaped_end' size='$size' disabled> (restricted UI item)</div>\n";
+					print "<div class='value-restricted' style='margin-block-end:3em !important;'><span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='Disabled. Protected by RESTRICT_UI'></span> <b style='padding-top: 4px;'>$start</b> = <input type='text' onFocus='CSFexpand(this);' onkeyup='CSFexpand(this);' value='$escaped_end' size='$size' disabled> (restricted UI item)</div>\n";
 				}
 				else
 				{
@@ -2129,7 +2138,7 @@ EOF
 			{
 				# #
 				#	Handles SECTION: parsing
-				#   Skip decorative comments and blank lines
+				#   Skip decorative comments with "# #" and blank lines
 				# #
 		
 				if ( $line =~ /^\#\s*\#/ ) { next }
@@ -2137,17 +2146,98 @@ EOF
 				if ( $line =~ /^\s*$/ ) { next }
 
 				# #
-				#   Stylize SECTION markers
+				#   Stylize SECTION tags
 				# #
 		
 				if ( $line =~ /^\#\s*SECTION:(.*)/ )
 				{
-					push @divnames, $1;
+					my $section_name = $1;
+					push @divnames, $section_name;
 					unless ( $first )
 					{
 						print "</div>\n"
 					}
-					print "<div class='virtualpage hidepiece'>\n<div class='section'>$1</div>\n";
+
+					print "<div class='virtualpage hidepiece'>\n";
+
+					# #
+					#	Perform look-ahead for optional section description.
+					#	
+					#	If a comment block immediately follows after SECTION:
+					#	by another comment block, treat as a description.
+					#	
+					#	Ensures users running CSF v10.08 or OLDER have backward
+					#	compatibility.
+					# #
+
+					my @section_desc;
+					my $j = $i + 1;
+
+					# #
+					#	Skip all the decorative "# #" lines after SECTION:
+					# #
+
+					while ( $j <= $#confdata && $confdata[$j] =~ /^\s*#\s*#\s*$/ )
+					{
+						$j++;
+					}
+
+					# #
+					#	Collect description lines
+					# #
+
+					while ( $j <= $#confdata )
+					{
+						last if $confdata[$j] =~ /^\s*#\s*#\s*$/;
+						last if $confdata[$j] =~ /^\s*$/;
+						last unless $confdata[$j] =~ /^\#/;
+
+						push @section_desc, $confdata[$j];
+						$j++;
+					}
+
+					# #
+					#	See what follows: skip all "# #" and blank lines, then see if
+					#	the next meaningful line is a comment.
+					# #
+
+					my $k = $j;
+					while ( $k <= $#confdata && ( $confdata[$k] =~ /^\s*#\s*#\s*$/ || $confdata[$k] =~ /^\s*$/ ) )
+					{
+						$k++;
+					}
+
+					if ( @section_desc && $k <= $#confdata && $confdata[$k] =~ /^\#\s/ )
+					{
+						# #
+						#	SECTION: has description
+						# #
+
+						print "<div class='section'>$section_name</div>\n";
+						print "<div class='section-body' style='padding-top: 10px !important;white-space: pre-wrap;font-family:monospace;line-height:1.2em;margin-block-end:3em !important;'>";
+
+						my @desc_lines;
+						foreach my $dl ( @section_desc )
+						{
+							$dl =~ s/^\s*#+\s*//;
+							$dl = html_safe( $dl );
+							push @desc_lines, $dl;
+						}
+
+						print join("\n", @desc_lines);
+						print "</div>\n";
+						$i = $j - 1;
+					}
+
+					# #
+					#	SECTION: has no description; just show section name and move on
+					# #
+
+					else
+					{
+						print "<div class='section'>$section_name</div>\n";
+					}
+
 					$first = 0;
 					next;
 				}
