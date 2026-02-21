@@ -1864,7 +1864,7 @@ EOF
 					}
 
 					# #
-					#	Skip decorative lines like "# #", "###   "
+					#	Skip decorative lines like "# #", "###   " after HEADER: tag
 					# #
 	
 					if ( $raw =~ /^\s*#\s*#\s*$/ )
@@ -1874,13 +1874,16 @@ EOF
 					}
 
 					# #
-					#	Strip leading hashes and whitespace
+					#	HEADER: text is handled a bit differently than SECTION: tag.
+					#	Strip leading # and space.
+					#	
+					#	@todo		investigate later post v15.09
 					# #
 
-					$raw =~ s/^# ?//;
-				#  $raw =~ s/&/&amp;/g;
-				#  $raw =~ s/</&lt;/g;
-				#  $raw =~ s/>/&gt;/g;
+					$raw =~ s/^\s*#([ \t]*)//;
+					my $indent = $1 // '';
+					$indent =~ s/^[ \t]{0,3}//;
+					$raw = $indent . $raw;
 
 					# #
 					#	Push
@@ -2298,7 +2301,7 @@ EOF
 				#	Prepend indentation (only if > 4 spaces)
 				# #
 	
-				$line = $nbsp . $line;
+				# $line = $nbsp . $line;
 
 				# #
 				#	Replace newlines with <br>
