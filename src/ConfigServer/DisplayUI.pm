@@ -1923,8 +1923,8 @@ EOF
 		if ( $header_found )
 		{
 			print "<div class='header-block' style='padding-top: 1.6rem'>\n";
-			print "<div class='header'>$header_title</div>\n";
-			print "<div class='header-body' style='padding-top:0px !important;margin-block-end: 3em !important;white-space: pre-wrap;font-family:monospace;line-height:1.2em;'>\n";
+			print "<div class='" . ( $codename eq 'webmin' ? 'section' : 'header' ) . "'>$header_title</div>\n";
+			print "<div class='" . ( $codename eq 'webmin' ? 'comment' : 'header-body' ) . "' style='padding-top:0px !important;margin-block-end: 3em !important;white-space: pre-wrap;font-family:monospace;line-height:1.2em;'>\n";
 
 			my $first_line = 1;
 			foreach my $hl ( @header_lines )
@@ -2041,7 +2041,7 @@ EOF
 
 				if ( $config{RESTRICT_UI} and ( $cleanname eq "CLUSTER_KEY" or $cleanname eq "UI_PASS" or $cleanname eq "UI_USER" ) )
 				{
-					print "<div class='value-restricted' style='margin-block-end:1em !important;'><b style='padding-top: 4px;'>$start</b> = <input type='text' value='********' size='14' disabled> (hidden restricted UI item)</div>\n";
+					print "<div class='" . ( $codename eq 'webmin' ? 'value-other' : 'value-restricted' ) . "' style='margin-block-end:1em !important;padding-left:10px !important'><b style='padding-top: 4px;'>$start</b> = <input type='text' value='********' size='14' disabled> (hidden restricted UI item)</div>\n";
 				}
 
 				# #
@@ -2052,7 +2052,7 @@ EOF
 
 				elsif ( $restricted{$cleanname} )
 				{
-					print "<div class='value-restricted' style='margin-block-end:1em !important;'><span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='Disabled. Protected by RESTRICT_UI'></span> <b style='padding-top: 4px;'>$start</b> = <input type='text' onFocus='CSFexpand(this);' onkeyup='CSFexpand(this);' value='$escaped_end' size='$size' disabled> (restricted UI item)</div>\n";
+					print "<div class='" . ( $codename eq 'webmin' ? 'value-other' : 'value-restricted' ) . "' style='margin-block-end:1em !important;padding-left:10px !important'><span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='Disabled. Protected by RESTRICT_UI'></span> <b style='padding-top: 4px;'>$start</b> = <input type='text' onFocus='CSFexpand(this);' onkeyup='CSFexpand(this);' value='$escaped_end' size='$size' disabled> (restricted UI item)</div>\n";
 				}
 				else
 				{
@@ -2074,7 +2074,7 @@ EOF
 						if ($end == 0) {$switch_checked_0 = "checked"; $switch_active_0 = "active"}
 						if ($end == 1) {$switch_checked_1 = "checked"; $switch_active_1 = "active"}
 
-						print "<div class='$class' style='margin-block-end:1em !important;'>"
+						print "<div class='$class' style='margin-block-end:1em !important;padding-left:10px !important'>"
 							. ($tip ? "<span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='$tip'></span> " : "")
 							. "<b style='padding-top: 4px;'>$start</b> = ";
 
@@ -2100,7 +2100,7 @@ EOF
 
 						my $selected = "";
 
-						print "<div class='$class' style='margin-block-end:1em !important;'>"
+						print "<div class='$class' style='margin-block-end:1em !important;padding-left:10px !important'>"
 							. ($tip ? "<span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='$tip'></span> " : "")
 							. "<b style='padding-top: 4px;'>$start</b> = <select name='$name'>\n";
 
@@ -2131,7 +2131,7 @@ EOF
 						#		CC_ALLOW
 						# #
 
-						print "<div class='$class' style='margin-block-end:1em !important;'>"
+						print "<div class='$class' style='margin-block-end:1em !important;padding-left:10px !important'>"
 							. ($tip ? "<span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='$tip'></span> " : "")
 							. "<b style='padding-top: 4px;'>$start</b> = <input type='text' onFocus='CSFexpand(this);' onkeyup='CSFexpand(this);' name='$name' value='$escaped_end' size='$size'>$showrange</div>\n";
 					}
@@ -2224,9 +2224,9 @@ EOF
 						#	SECTION: has description
 						# #
 
-						print "<div id='$section_id' class='section-block'>\n";
+						print "<div id='$section_id' class='section-block' style='margin-block-start: 3em !important;'>\n";
 						print "<div class='section'>$section_name</div>\n";
-						print "<div class='section-body' style='padding-top: 10px !important;white-space: pre-wrap;font-family:monospace;line-height:1.2em;margin-block-end:1em !important;'>";
+						print "<div class='" . ( $codename eq 'webmin' ? 'value-other' : 'section-body' ) . "' style='padding: 10px !important;white-space: pre-wrap;font-family:monospace;line-height:1.2em;margin-block-end:1em !important;'>";
 
 						my @desc_lines;
 						foreach my $dl ( @section_desc )

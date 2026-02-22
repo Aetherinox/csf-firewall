@@ -1804,7 +1804,6 @@ pre
 
 .section
 {
-	margin-block-start: 3em !important;
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px;
     background-color: var( --cfgfw-section-tab-bg );
