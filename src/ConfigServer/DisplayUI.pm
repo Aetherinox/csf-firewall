@@ -2041,7 +2041,7 @@ EOF
 
 				if ( $config{RESTRICT_UI} and ( $cleanname eq "CLUSTER_KEY" or $cleanname eq "UI_PASS" or $cleanname eq "UI_USER" ) )
 				{
-					print "<div class='value-restricted' style='margin-block-end:3em !important;'><b style='padding-top: 4px;'>$start</b> = <input type='text' value='********' size='14' disabled> (hidden restricted UI item)</div>\n";
+					print "<div class='value-restricted' style='margin-block-end:1em !important;'><b style='padding-top: 4px;'>$start</b> = <input type='text' value='********' size='14' disabled> (hidden restricted UI item)</div>\n";
 				}
 
 				# #
@@ -2052,7 +2052,7 @@ EOF
 
 				elsif ( $restricted{$cleanname} )
 				{
-					print "<div class='value-restricted' style='margin-block-end:3em !important;'><span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='Disabled. Protected by RESTRICT_UI'></span> <b style='padding-top: 4px;'>$start</b> = <input type='text' onFocus='CSFexpand(this);' onkeyup='CSFexpand(this);' value='$escaped_end' size='$size' disabled> (restricted UI item)</div>\n";
+					print "<div class='value-restricted' style='margin-block-end:1em !important;'><span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='Disabled. Protected by RESTRICT_UI'></span> <b style='padding-top: 4px;'>$start</b> = <input type='text' onFocus='CSFexpand(this);' onkeyup='CSFexpand(this);' value='$escaped_end' size='$size' disabled> (restricted UI item)</div>\n";
 				}
 				else
 				{
@@ -2074,7 +2074,7 @@ EOF
 						if ($end == 0) {$switch_checked_0 = "checked"; $switch_active_0 = "active"}
 						if ($end == 1) {$switch_checked_1 = "checked"; $switch_active_1 = "active"}
 
-						print "<div class='$class' style='margin-block-end:3em !important;'>"
+						print "<div class='$class' style='margin-block-end:1em !important;'>"
 							. ($tip ? "<span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='$tip'></span> " : "")
 							. "<b style='padding-top: 4px;'>$start</b> = ";
 
@@ -2100,7 +2100,7 @@ EOF
 
 						my $selected = "";
 
-						print "<div class='$class' style='margin-block-end:3em !important;'>"
+						print "<div class='$class' style='margin-block-end:1em !important;'>"
 							. ($tip ? "<span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='$tip'></span> " : "")
 							. "<b style='padding-top: 4px;'>$start</b> = <select name='$name'>\n";
 
@@ -2131,7 +2131,7 @@ EOF
 						#		CC_ALLOW
 						# #
 
-						print "<div class='$class' style='margin-block-end:3em !important;'>"
+						print "<div class='$class' style='margin-block-end:1em !important;'>"
 							. ($tip ? "<span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='$tip'></span> " : "")
 							. "<b style='padding-top: 4px;'>$start</b> = <input type='text' onFocus='CSFexpand(this);' onkeyup='CSFexpand(this);' name='$name' value='$escaped_end' size='$size'>$showrange</div>\n";
 					}
@@ -2155,6 +2155,14 @@ EOF
 				if ( $line =~ /^\#\s*SECTION:(.*)/ )
 				{
 					my $section_name = $1;
+
+					# section anchors
+					my $section_id = lc $section_name;
+					$section_id =~ s/^\s+|\s+$//g;			# trim
+					$section_id =~ s/[^a-z0-9]+/-/g;		# replace crap with hyphen
+					$section_id =~ s/-{2,}/-/g;				# collapse hyphens
+					$section_id =~ s/^-|-$//g;				# trim hyphens
+
 					push @divnames, $section_name;
 					unless ( $first )
 					{
@@ -2216,8 +2224,9 @@ EOF
 						#	SECTION: has description
 						# #
 
+						print "<div id='$section_id' class='section-block'>\n";
 						print "<div class='section'>$section_name</div>\n";
-						print "<div class='section-body' style='padding-top: 10px !important;white-space: pre-wrap;font-family:monospace;line-height:1.2em;margin-block-end:3em !important;'>";
+						print "<div class='section-body' style='padding-top: 10px !important;white-space: pre-wrap;font-family:monospace;line-height:1.2em;margin-block-end:1em !important;'>";
 
 						my @desc_lines;
 						foreach my $dl ( @section_desc )
@@ -2229,6 +2238,7 @@ EOF
 
 						print join("\n", @desc_lines);
 						print "</div>\n";
+						print "</div>\n";	
 						$i = $j - 1;
 					}
 
@@ -2238,7 +2248,9 @@ EOF
 
 					else
 					{
+						print "<div id='$section_id' class='section-block'>\n";
 						print "<div class='section'>$section_name</div>\n";
+						print "</div>\n";
 					}
 
 					$first = 0;
