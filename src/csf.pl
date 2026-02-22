@@ -10,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            02.12.2026
+#   @updated            02.22.2026
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -6926,18 +6926,25 @@ sub loadmodule
 
 # #
 #	System Command
+#	
+#	noAscii:		1		:	no ASCII color codes
+#									&syscommand( __LINE__, 1, "$config{IPTABLES} -v -L -n --line-numbers" );
+#					0		:	apply ASCII color codes
+#									&syscommand( __LINE__, 0, "$config{IPTABLES} -v -L -n --line-numbers" );
+#					empty	:	apply ASCII color codes
+#									&syscommand( __LINE__, "$config{IPTABLES} -v -L -n --line-numbers" );
 # #
 
 sub syscommand
 {
 	my $line			= shift;
-	my $bRawText		= 0;
+	my $noAscii			= 0;
 	my $command;
 	my $force;
 
 	if ( defined $_[0] && $_[0] =~ /^(?:0|1)$/ )
 	{
-		$bRawText 		= shift;
+		$noAscii 		= shift;
 		$command  		= shift;
 		$force    		= shift;
 	}
@@ -7058,7 +7065,7 @@ sub syscommand
 		{
 			if ($line =~ /^Using intrapositioned negation/) { next }
 
-			if ($bRawText)
+			if ($noAscii)
 			{
 				print "$line\n";
 			}

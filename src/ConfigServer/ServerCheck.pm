@@ -299,7 +299,7 @@ sub endoutput
 	my $width = int ( ( 500 / $total ) * $score ) - 4;
 
 	$output 	.= "<br>\n<table align='center'>\n<tr><td><div class='panel-body' style='border: 1px solid color-mix(in srgb, currentColor 10%, transparent);'>\n";
-	$output 	.= "<h4 style='text-align:center;color: #646464;-weight: lighter;'>Server Score: <span style='color: #FFF;'>$score/$total</span></h4>\n";
+	$output 	.= "<h4 style='color: #646464;-weight: lighter;'>Server Score: <span>$score/$total</span></h4>\n";
 	$output 	.= "<div style='text-align: center;border-bottom: 1px solid #e3e3e31a;width: 100%;margin: auto;'>\n";
 	$output 	.= "<table>\n";
 	$output 	.= "<tr>\n";

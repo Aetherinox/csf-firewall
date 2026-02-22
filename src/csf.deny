@@ -9,7 +9,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            02.12.2026
+#   @updated            02.22.2026
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@
 #    
 #   To prevent DENY_IP_LIMIT from removing an entry, add this text to
 #   its comment:  
-#       do not delete  
+#       # do not delete  
 #    
 #   Advanced filtering is supported in this format:  
 #       tcp/udp|in/out|s/d=port,port,...|s/d=ip  
