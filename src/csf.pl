@@ -254,7 +254,7 @@ unless (defined $urlget)
 if ( ( -e "/etc/csf/csf.disable" ) and ( $input{command} ne "--enable" ) and ( $input{command} ne "-e" ) )
 {
 
-	log_warn( "CSF and LFD have been ${redl}disabled${greym}! Use ${yellowl}'csf -e'${greym} to re-enable" );
+	log_warn( "CSF and LFD have been ${redl}disabled${greym}! Use ${yellowl}'csf -e'${greym} to re-enable${end}" );
 
 	# #
 	#   Bypass warning for certain commands
@@ -452,14 +452,14 @@ if (($input{command} eq "--start") or ($input{command} eq "-s") or ($input{comma
 		my ( $insane,$range,$default ) = sanity( $key,$config{$key} );
 		if ( $insane )
 		{
-			log_warn( "${yellowl}$key${greym} sanity check. ${yellowl}$key = $config{$key}${greym}" );
-			log_label( "Recommended range: $range (Default: $default)${greym}" )
+			log_warn( "${yellowl}$key${greym} sanity check. ${yellowl}$key = $config{$key}${end}" );
+			log_label( "Recommended range: $range (Default: $default)${end}" )
 		}
 	}
 
 	unless ( $config{RESTRICT_SYSLOG} )
 	{
-		log_warn( "${yellowl}RESTRICT_SYSLOG${greym} is disabled. See SECURITY WARNING in ${yellowl}/etc/csf/csf.conf${greym}" );
+		log_warn( "${yellowl}RESTRICT_SYSLOG${greym} is disabled. See SECURITY WARNING in ${yellowl}/etc/csf/csf.conf${end}" );
 	}
 
 	# #
@@ -661,14 +661,17 @@ sub load_config
 	if ($config{IPV6}) {push @binaries, ("IP6TABLES","IP6TABLES_SAVE","IP6TABLES_RESTORE")}
 	if ($config{LF_IPSET}) {push @binaries, ("IPSET")}
 	if (ConfigServer::Service::type() eq "systemd") {push @binaries, ("SYSTEMCTL")}
+
 	my $hit = 0;
-	foreach my $bin (@binaries) {
+	foreach my $bin (@binaries)
+	{
 		if ($bin eq "SENDMAIL" and $config{LF_ALERT_SMTP}) {next}
 		unless (-e $config{$bin} and -x $config{$bin}) {
 			$warning .= "*WARNING* Binary location for [$bin] [$config{$bin}] in /etc/csf/csf.conf is either incorrect, is not installed or is not executable\n";
 			$hit = 1;
 		}
 	}
+
 	my $iphit = 0;
 	if (-e $config{IP} or -e $config{IFCONFIG}) {$iphit = 1}
 	unless ($iphit) {
@@ -678,73 +681,100 @@ sub load_config
 	if ($hit) {$warning .= "*WARNING* Missing or incorrect binary locations will break csf and lfd functionality\n"}
 	return;
 }
+
 # end load_config
 ###############################################################################
 # start process_input
-sub process_input {
+
+sub process_input
+{
 	$input{command} = lc $ARGV[0];
-	for (my $x = 1;$x < @ARGV ;$x++) {
+	for (my $x = 1;$x < @ARGV ;$x++)
+	{
 		$input{argument} .= $ARGV[$x] . " ";
 	}
+
 	$input{argument} =~ s/\s$//;
 	return;
 }
-# end process_input
-###############################################################################
-# start dostatus
-sub dostatus {
+
+# #
+#	Status › IPv4
+# #
+
+sub dostatus
+{
 	print "iptables filter table\n";
 	print "=====================\n";
-	&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} -v -L -n --line-numbers");
-	if ($config{MANGLE}) {
+	&syscommand(__LINE__, 1, "$config{IPTABLES} $config{IPTABLESWAIT} -v -L -n --line-numbers");
+
+	if ($config{MANGLE})
+	{
 		print "\n\n";
 		print "iptables mangle table\n";
 		print "=====================\n";
-		&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} -v -t mangle -L -n --line-numbers");
+		&syscommand(__LINE__, 1, "$config{IPTABLES} $config{IPTABLESWAIT} -v -t mangle -L -n --line-numbers");
 	}
-	if ($config{RAW}) {
+
+	if ($config{RAW})
+	{
 		print "\n\n";
 		print "iptables raw table\n";
 		print "==================\n";
-		&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} -v -t raw -L -n --line-numbers");
+		&syscommand(__LINE__, 1, "$config{IPTABLES} $config{IPTABLESWAIT} -v -t raw -L -n --line-numbers");
 	}
-	if ($config{NAT}) {
+
+	if ($config{NAT})
+	{
 		print "\n\n";
 		print "iptables nat table\n";
 		print "==================\n";
-		&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} -v -t nat -L -n --line-numbers");
+		&syscommand(__LINE__, 1, "$config{IPTABLES} $config{IPTABLESWAIT} -v -t nat -L -n --line-numbers");
 	}
+	
 	return;
 }
-# end dostatus
-###############################################################################
-# start dostatus6
-sub dostatus6 {
-	if ($config{IPV6}) {
+
+# #
+#	Status › IPv6
+# #
+
+sub dostatus6
+{
+	if ($config{IPV6})
+	{
 		print "ip6tables filter table\n";
 		print "======================\n";
-		&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} -v -L -n --line-numbers");
-		if ($config{MANGLE6}) {
+		&syscommand(__LINE__, 1, "$config{IP6TABLES} $config{IPTABLESWAIT} -v -L -n --line-numbers");
+		if ($config{MANGLE6})
+		{
 			print "\n\n";
 			print "ip6tables mangle table\n";
 			print "======================\n";
-			&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} -v -t mangle -L -n --line-numbers");
+			&syscommand(__LINE__, 1, "$config{IP6TABLES} $config{IPTABLESWAIT} -v -t mangle -L -n --line-numbers");
 		}
-		if ($config{RAW6}) {
+
+		if ($config{RAW6})
+		{
 			print "\n\n";
 			print "ip6tables raw table\n";
 			print "===================\n";
-			&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} -v -t raw -L -n --line-numbers");
+			&syscommand(__LINE__, 1, "$config{IP6TABLES} $config{IPTABLESWAIT} -v -t raw -L -n --line-numbers");
 		}
-		if ($config{NAT6}) {
+
+		if ($config{NAT6})
+		{
 			print "\n\n";
 			print "ip6tables nat table\n";
 			print "===================\n";
-			&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} -v -t nat -L -n --line-numbers");
+			&syscommand(__LINE__, 1, "$config{IP6TABLES} $config{IPTABLESWAIT} -v -t nat -L -n --line-numbers");
 		}
-	} else {
+	}
+	else
+	{
 		print "csf: IPV6 firewall not enabled\n";
 	}
+
 	return;
 }
 
@@ -767,11 +797,11 @@ sub doversion
 	if ( $config{VESTA} )		{ $generic = " (VestaCP)" }
 
 	my $licenseValid 			= userLicenseStatus();
-	my $licenseStatus 			= $licenseValid ? "${greenl}Valid${greym}" : "${yellowl}None${greym}";
+	my $licenseStatus 			= $licenseValid ? "${greenl}Valid${end}" : "${yellowl}None${end}";
 	my $releaseChannelSingle	= userIsInsider( $licenseValid ) ? "Insiders Channel" : "Stable Channel";
 	my $releaseChannel 			= userIsInsider( $licenseValid )
-									? "${greyd}Stable Channel${greyd} | ${fuchsial}${releaseChannelSingle}${greym}"
-									: "${fuchsial}${releaseChannelSingle}${greyd} | ${greyd}Insiders Channel${greym}";
+									? "${greyd}Stable Channel${greyd} | ${fuchsial}${releaseChannelSingle}${end}"
+									: "${fuchsial}${releaseChannelSingle}${greyd} | ${greyd}Insiders Channel${end}";
 
 	# #
 	#	Output
@@ -796,7 +826,7 @@ sub doversion
 
 	log_label	( "" );
 	log_info	( "${yellowd}ConfigServer Security & Firewall" );
-	log_label	( "${greenl}v${version}${bluel}$generic${greym}" );
+	log_label	( "${greenl}v${version}${bluel}$generic${end}" );
 	log_label	( "${greyd}License: ${licenseStatus}" );
 	log_label	( "${releaseChannel}" );
 	log_label	( "" );
@@ -1281,7 +1311,7 @@ sub lfdstart
 # start dostop
 sub dostop
 {
-	log_info( "Flushing firewall rules${greym}" );
+	log_info( "Flushing firewall rules${end}" );
 
 	my $restart = shift;
 
@@ -1411,7 +1441,7 @@ sub dostart {
 	#	CSFpre › Sanitize and Execute
 	#	
 	#	csfpre		Initialize rules BEFORE csf adds its own rulesets
-	#	csfpost		Initialize rules BEFORE csf adds its own rulesets
+	#	csfpost		Initialize rules AFTER csf adds its own rulesets
 	#	
     #   For each csfpre script found in @csfpre:
     #       › Ensure executable (chmod 0700)
@@ -1449,7 +1479,7 @@ sub dostart {
 			close( $CONF );
 		}
 
-		log_info( "Initializing ${bluel}csfpre${greym} script ${bluel}${pre}${greym}" );
+		log_info( "Initializing ${bluel}csfpre${greym} script ${bluel}${pre}${end}" );
 		&syscommand( __LINE__, "$path ; $pre" );
 	}
 
@@ -1822,7 +1852,7 @@ sub dostart {
 
 	if ( $config{DOCKER} )
 	{
-		log_info( "Docker integration enabled${greym}" );
+		log_info( "Docker integration enabled${end}" );
 
 		&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -N DOCKER");
 		if ($config{NAT})
@@ -1844,7 +1874,7 @@ sub dostart {
 	}
 	else
 	{
-		log_info( "Docker integration disabled; skipping.${greym}" );
+		log_info( "Docker integration disabled; skipping.${end}" );
 	}
 
 	&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -I OUTPUT $skipout $ethdevout -j LOCALOUTPUT");
@@ -1891,7 +1921,7 @@ sub dostart {
 	#	CSFpost › Sanitize and Execute
 	#	
 	#	csfpre		Initialize rules BEFORE csf adds its own rulesets
-	#	csfpost		Initialize rules BEFORE csf adds its own rulesets
+	#	csfpost		Initialize rules AFTER csf adds its own rulesets
 	#	
     #   For each csfpost script found in @csfpost:
     #       › Ensure executable (chmod 0700)
@@ -1929,7 +1959,7 @@ sub dostart {
 			close( $CONF );
 		}
 
-		log_info( "Initializing ${bluel}csfpost${greym} script ${bluel}${post}${greym}" );
+		log_info( "Initializing ${bluel}csfpost${greym} script ${bluel}${post}${end}" );
 		&syscommand( __LINE__, "$path ; $post" );
 	}
 
@@ -1939,28 +1969,28 @@ sub dostart {
 
 	if ( $config{UI} )
 	{
-		log_info( "Checking config file for valid username and password${greym}" );
+		log_info( "Checking config file for valid username and password${end}" );
 		
 		if ( $config{UI_USER} eq "" or $config{UI_USER} eq "username" )
 		{
-			log_fail( "Cannot enable CSF web interface. Setting ${redl}UI_USER${greym} has default value ${redl}'username'${greym}" );
+			log_fail( "Cannot enable CSF web interface. Setting ${redl}UI_USER${greym} has default value ${redl}'username'${end}" );
 			log_label( "You MUST change the default value." );
 			$config{UI} = 0;
 		}
 		elsif ( $config{UI_PASS} eq "" or $config{UI_PASS} eq "password" )
 		{
-			log_fail( "Cannot enable CSF web interface. Setting ${redl}UI_PASS${greym} has default value ${redl}'password'${greym}" );
+			log_fail( "Cannot enable CSF web interface. Setting ${redl}UI_PASS${greym} has default value ${redl}'password'${end}" );
 			log_label( "You MUST change the default value." );
 			$config{UI} = 0;
 		}
 		else
 		{
-    		log_pass( "${greend}CSF web interface running on port${greym} ${greenl}$config{UI_PORT}${greym}" );
+    		log_pass( "${greend}CSF web interface running on port${greym} ${greenl}$config{UI_PORT}${end}" );
 		}
 	}
 	else
 	{
-		log_info( "CSF web interface disabled; skipping.${greym}" );
+		log_info( "CSF web interface disabled; skipping.${end}" );
 	}
 
 	if ( $config{VPS} )
@@ -2438,7 +2468,7 @@ sub dohelp
 
 	log_label	( "" );
 	log_info	( "${yellowd}ConfigServer Security & Firewall" );
-	log_label	( "${greenl}v${version}${bluel}$generic${greym}" );
+	log_label	( "${greenl}v${version}${bluel}$generic${end}" );
 	log_label	( "" );
 
 	open (my $IN, "<", "/usr/local/csf/lib/csf.help");
@@ -3924,7 +3954,7 @@ sub dodisable {
 	ConfigServer::Service::stoplfd();
 	&dostop(0);
 
-	log_pass( "CSF and LFD have been ${redl}disabled${greym}! Use ${greend}'csf -e'${greym} to re-enable" );
+	log_pass( "CSF and LFD have been ${redl}disabled${greym}! Use ${greend}'csf -e'${greym} to re-enable${end}" );
 
 	return;
 }
@@ -3935,7 +3965,7 @@ sub doenable
 {
 	unless (-e "/etc/csf/csf.disable")
 	{
-		log_fail( "CSF and LFD are not ${redl}disabled${greym}!" );
+		log_fail( "CSF and LFD are not ${redl}disabled${greym}!${end}" );
 		exit 0;
 	}
 
@@ -3976,7 +4006,7 @@ sub doenable
 		close ($CONF) or &error(__LINE__,"Could not close /usr/local/directadmin/data/admin/services.status: $!");
 	}
 
-	log_pass( "CSF and LFD have been ${greenl}enabled${greym}! Use ${greenl}'csf -x'${greym} to disable" );
+	log_pass( "CSF and LFD have been ${greenl}enabled${greym}! Use ${greenl}'csf -x'${greym} to disable${end}" );
 
 	return;
 }
@@ -4569,7 +4599,7 @@ sub doupdate
         my ($status, $text) = $urlget->urlget($url);
         if ( $status )
         {
-			log_fail( "An error occurred performing the CSF update: ${redl}${text}${greym}" );
+			log_fail( "An error occurred performing the CSF update: ${redl}${text}${greym}${end}" );
             exit 1;
         }
 
@@ -4609,7 +4639,7 @@ sub doupdate
 
             unless ( $force )
             {
-				log_info( "Updating CSF from ${bluel}${version}${greym} to ${bluel}${actv}${greym}" );
+				log_info( "Updating CSF from ${bluel}${version}${greym} to ${bluel}${actv}${end}" );
             }
 
             if ( -e "/usr/src/csf.tgz" )
@@ -4617,7 +4647,7 @@ sub doupdate
                 unlink( "/usr/src/csf.tgz" ) or die $!;
             }
 
-			log_info( "Preparing to get newest CSF package${greym}" );
+			log_info( "Preparing to get newest CSF package${end}" );
 
             my $url = "https://$config{DOWNLOADSERVER}/csf.tgz";
             if ( $config{URLGET} == 1 )
@@ -4628,43 +4658,43 @@ sub doupdate
             if ( ( $config{SPONSOR_RELEASE_INSIDERS} // 0 ) == 1 && ( $config{SPONSOR_LICENSE} // '' ) ne '' )
             {
                 $url .= "?channel=insiders&license=$config{SPONSOR_LICENSE}";
-				log_info( "Using ${bluel}Insiders Channel${greym} to download update" );
+				log_info( "Using ${bluel}Insiders Channel${greym} to download update${end}" );
 			}
 			else
 			{
-				log_info( "Using ${bluel}Stable Channel${greym} to download update" );
+				log_info( "Using ${bluel}Stable Channel${greym} to download update${end}" );
             }
 
             my ($status, $text) = $urlget->urlget( $url, "/usr/src/csf.tgz" );
 
-			log_info( "Downloading CSF update from ${bluel}${url}${greym}" );
+			log_info( "Downloading CSF update from ${bluel}${url}${end}" );
 
             if (! -z "/usr/src/csf/csf.tgz")
             {
-				log_info( "Unpacking new CSF package ${bluel}/usr/src/csf/csf.tgz${greym}" );
+				log_info( "Unpacking new CSF package ${bluel}/usr/src/csf/csf.tgz${end}" );
                 system("cd /usr/src ; tar -xzf csf.tgz ; cd csf ; sh install.sh");
 
-				log_info( "Performing housekeeping on temp files${greym}" );
+				log_info( "Performing housekeeping on temp files${end}" );
                 system("rm -Rfv /usr/src/csf*");
 
-				log_info( "Please wait, restarting CSF and LFD services${greym}" );
+				log_info( "Please wait, restarting CSF and LFD services${end}" );
                 system("/usr/sbin/csf -r");
                 ConfigServer::Service::restartlfd();
 
-				log_pass( "Update complete! View changelog at ${bluel}https://$config{DOWNLOADSERVER}/csf/changelog.txt${greym}" );
+				log_pass( "Update complete! View changelog at ${bluel}https://$config{DOWNLOADSERVER}/csf/changelog.txt${end}" );
             }
         }
         else
         {
             if (-t STDOUT)
 			{
-				log_warn( "You are already running the latest CSF version: ${yellowl}${version}${greym}" );
+				log_warn( "You are already running the latest CSF version: ${yellowl}${version}${end}" );
 			} ##no critic
         }
     }
     else
     {
-		log_fail( "Unable to verify the latest version of CSF at this time.${greym}" );
+		log_fail( "Unable to verify the latest version of CSF at this time.${end}" );
 		log_label( "Reach out to the development team if this error continues" );
     }
 
@@ -6327,11 +6357,11 @@ sub portAdd
     unless ( $arg =~ /^(\w+)[:=](\d+)$/ )
     {
 		log_label( "" );
-		log_fail( "Invalid format provided. Command requires format ${yellowl}<protocol>:<port>${greym}" );
+		log_fail( "Invalid format provided. Command requires format ${yellowl}<protocol>:<port>${end}" );
 		log_info( "Usage: csf --addport <protocol>:<port>" );
-		log_label( "       ${fuchsial}csf ${bluel}--addport ${navy}[ ${yellowl}TCP_IN ${navy}|${yellowl} TCP_OUT ${navy}|${yellowl} UDP_IN ${navy}|${yellowl} UDP_OUT${navy} ]${greym}:${greenl}PORT" );
-		log_label( "       ${fuchsial}csf ${bluel}--addport ${yellowl}TCP_IN${greym}:${greenl}8080" );
-		log_label( "       ${fuchsial}csf ${bluel}--addport ${yellowl}UDP_IN${greym}:${greenl}5353" );
+		log_label( "       ${fuchsial}csf ${bluel}--addport ${navy}[ ${yellowl}TCP_IN ${navy}|${yellowl} TCP_OUT ${navy}|${yellowl} UDP_IN ${navy}|${yellowl} UDP_OUT${navy} ]${greym}:${greenl}PORT${end}" );
+		log_label( "       ${fuchsial}csf ${bluel}--addport ${yellowl}TCP_IN${greym}:${greenl}8080${end}" );
+		log_label( "       ${fuchsial}csf ${bluel}--addport ${yellowl}UDP_IN${greym}:${greenl}5353${end}" );
 		log_label( "" );
 		
         return;
@@ -6346,7 +6376,7 @@ sub portAdd
 
 	open my $fh, '<', $conf_file or do
 	{
-		log_error( "Cannot open ${redl}$conf_file${greym} - returned error: ${redl}$${greym}!" );
+		log_error( "Cannot open ${redl}$conf_file${greym} - returned error: ${redl} $ ${greym}!${end}" );
 		return;
 	};
 	my @lines = <$fh>;
@@ -6369,13 +6399,13 @@ sub portAdd
                 $line = "$protocol = \"$ports\"\n";
 
 				log_label( "" );
-				log_pass( "Successfully added port ${greenl}${protocol}:${port}${greym} in ${greenl}${conf_file}${greym}" );
+				log_pass( "Successfully added port ${greenl}${protocol}:${port}${greym} in ${greenl}${conf_file}${end}" );
 				log_label( "" );
             }
             else
             {
 				log_label( "" );
-				log_warn( "Port ${yellowl}${protocol}:${port}${greym} already ${greenl}allowed${greym} in ${yellowl}${conf_file}${greym}" );
+				log_warn( "Port ${yellowl}${protocol}:${port}${greym} already ${greenl}allowed${greym} in ${yellowl}${conf_file}${end}" );
 				log_label( "" );
             }
 
@@ -6395,13 +6425,13 @@ sub portAdd
     unless ( $found )
     {
 		log_label ( "" );
-		log_fail( "Protocol ${redl}${protocol}${greym} not found in ${redl}${conf_file}" );
-		log_label( "       ${bluel}Options: ${yellowl}TCP_IN${navy},${yellowl} TCP_OUT${navy},${yellowl} UDP_IN${navy},${yellowl} UDP_OUT${greym}" );
+		log_fail( "Protocol ${redl}${protocol}${greym} not found in ${redl}${conf_file}${end}" );
+		log_label( "       ${bluel}Options: ${yellowl}TCP_IN${navy},${yellowl} TCP_OUT${navy},${yellowl} UDP_IN${navy},${yellowl} UDP_OUT${end}" );
 		log_label ( "" );
 		log_info( "Usage: csf --addport <protocol>:<port>" );
-		log_label( "       ${fuchsial}csf ${bluel}--addport ${navy}[ ${yellowl}TCP_IN ${navy}|${yellowl} TCP_OUT ${navy}|${yellowl} UDP_IN ${navy}|${yellowl} UDP_OUT${navy} ]${greym}:${greenl}PORT" );
-		log_label( "       ${fuchsial}csf ${bluel}--addport ${yellowl}TCP_IN${greym}:${greenl}8080" );
-		log_label( "       ${fuchsial}csf ${bluel}--addport ${yellowl}UDP_IN${greym}:${greenl}5353" );
+		log_label( "       ${fuchsial}csf ${bluel}--addport ${navy}[ ${yellowl}TCP_IN ${navy}|${yellowl} TCP_OUT ${navy}|${yellowl} UDP_IN ${navy}|${yellowl} UDP_OUT${navy} ]${greym}:${greenl}PORT${end}" );
+		log_label( "       ${fuchsial}csf ${bluel}--addport ${yellowl}TCP_IN${greym}:${greenl}8080${end}" );
+		log_label( "       ${fuchsial}csf ${bluel}--addport ${yellowl}UDP_IN${greym}:${greenl}5353${end}" );
 		log_label ( "" );
 
         return;
@@ -6444,11 +6474,11 @@ sub portRemove
     unless ( $arg =~ /^(\w+)[:=](\d+)$/ )
     {
         log_label( "" );
-		log_fail( "Invalid format provided. Command requires format ${yellowl}<protocol>:<port>${greym}" );
+		log_fail( "Invalid format provided. Command requires format ${yellowl}<protocol>:<port>${end}" );
         log_info( "Usage: csf --removeport <protocol>:<port>" );
-        log_label( "       ${fuchsial}csf ${bluel}--removeport ${navy}[ ${yellowl}TCP_IN ${navy}|${yellowl} TCP_OUT ${navy}|${yellowl} UDP_IN ${navy}|${yellowl} UDP_OUT${navy} ]${greym}:${greenl}PORT" );
-        log_label( "       ${fuchsial}csf ${bluel}--removeport ${yellowl}TCP_IN${greym}:${greenl}8080" );
-        log_label( "       ${fuchsial}csf ${bluel}--removeport ${yellowl}UDP_IN${greym}:${greenl}5353" );
+        log_label( "       ${fuchsial}csf ${bluel}--removeport ${navy}[ ${yellowl}TCP_IN ${navy}|${yellowl} TCP_OUT ${navy}|${yellowl} UDP_IN ${navy}|${yellowl} UDP_OUT${navy} ]${greym}:${greenl}PORT${end}" );
+        log_label( "       ${fuchsial}csf ${bluel}--removeport ${yellowl}TCP_IN${greym}:${greenl}8080${end}" );
+        log_label( "       ${fuchsial}csf ${bluel}--removeport ${yellowl}UDP_IN${greym}:${greenl}5353${end}" );
         log_label( "" );
 
         return;
@@ -6463,7 +6493,7 @@ sub portRemove
 
 	open my $fh, '<', $conf_file or do
 	{
-		log_error( "Cannot open ${redl}$conf_file${greym} - returned error: ${redl}$${greym}!" );
+		log_error( "Cannot open ${redl}$conf_file${greym} - returned error: ${redl}$ ${greym}!${end}" );
 		return;
 	};
 	my @lines = <$fh>;
@@ -6485,7 +6515,7 @@ sub portRemove
             # Check if port exists
             unless ( grep { $_ eq $port } @plist )
             {
-                log_warn( "Port ${yellowl}${protocol}:${port}${greym} is already ${redl}BLOCKED${greym} and not added in ${yellowl}${conf_file}${greym}" );
+                log_warn( "Port ${yellowl}${protocol}:${port}${greym} is already ${redl}BLOCKED${greym} and not added in ${yellowl}${conf_file}${end}" );
                 last;
             }
 
@@ -6498,7 +6528,7 @@ sub portRemove
             $found_port 	= 1;
 
 			log_label( "" );
-            log_pass( "Successfully removed port ${greenl}${protocol}:${port}${greym} from ${greenl}${conf_file}${greym}" );
+            log_pass( "Successfully removed port ${greenl}${protocol}:${port}${greym} from ${greenl}${conf_file}${end}" );
 			log_label( "" );
 
             last;
@@ -6516,8 +6546,8 @@ sub portRemove
     unless ( $found_protocol )
     {
         log_label( "" );
-        log_fail( "Protocol ${redl}${protocol}${greym} not found in ${redl}${conf_file}" );
-        log_label( "       ${bluel}Options: ${yellowl}TCP_IN${navy},${yellowl} TCP_OUT${navy},${yellowl} UDP_IN${navy},${yellowl} UDP_OUT${greym}" );
+        log_fail( "Protocol ${redl}${protocol}${greym} not found in ${redl}${conf_file}${end}" );
+        log_label( "       ${bluel}Options: ${yellowl}TCP_IN${navy},${yellowl} TCP_OUT${navy},${yellowl} UDP_IN${navy},${yellowl} UDP_OUT${end}" );
         log_label( "" );
 
         return;
@@ -6551,7 +6581,7 @@ sub portsList
 
 	open my $fh, '<', $conf_file or do
 	{
-		log_error( "Cannot open ${redl}$conf_file${greym} - returned error: ${redl}$${greym}!" );
+		log_error( "Cannot open ${redl}$conf_file${greym} - returned error: ${redl}$ ${greym}!${end}" );
 		return;
 	};
 	my @lines = <$fh>;
@@ -6559,7 +6589,7 @@ sub portsList
 
     log_label( "" );
     log_info( "Configured CSF Ports:" );
-	log_label( "The following are a list of the whitelisted ports configured in your ${yellowd}${conf_file}${greym}" );
+	log_label( "The following are a list of the whitelisted ports configured in your ${yellowd}${conf_file}${end}" );
     log_label( "" );
 
 	# #
@@ -6579,11 +6609,11 @@ sub portsList
             # Clean whitespace and display
             $ports =~ s/\s+//g;
 
-            log_label( "${bluel}$protocol${greym}: ${yellowl}$ports${greym}" );
+            log_label( "${bluel}$protocol${greym}: ${yellowl}$ports${end}" );
         }
         else
         {
-            log_label( "${bluel}$protocol${greym}: ${redl}Not found${greym}" );
+            log_label( "${bluel}$protocol${greym}: ${redl}Not found${end}" );
         }
     }
 
@@ -6873,7 +6903,9 @@ sub dographs {
 # end dographs
 ###############################################################################
 # start loadmodule
-sub loadmodule {
+
+sub loadmodule
+{
 	my $module = shift;
 	my @output;
 
@@ -6891,18 +6923,34 @@ sub loadmodule {
 
 	return @output;
 }
-# end loadmodule
-###############################################################################
-# start syscommand
+
+# #
+#	System Command
+# #
+
 sub syscommand
 {
-	my $line 			= shift;
-	my $command 		= shift;
-	my $force 			= shift;
-	my $status 			= 0;
-	my $iptableslock 	= 0;
+	my $line			= shift;
+	my $bRawText		= 0;
+	my $command;
+	my $force;
 
-	if ($command =~ /^($config{IPTABLES}|$config{IP6TABLES})/)
+	if ( defined $_[0] && $_[0] =~ /^(?:0|1)$/ )
+	{
+		$bRawText 		= shift;
+		$command  		= shift;
+		$force    		= shift;
+	}
+	else
+	{
+		$command  		= shift;
+		$force    		= shift;
+	}
+
+	my $status			= 0;
+	my $iptableslock	= 0;
+
+	if ( $command =~ /^($config{IPTABLES}|$config{IP6TABLES})/ )
 	{
 		$iptableslock = 1
 	}
@@ -7002,10 +7050,22 @@ sub syscommand
 			shift @output
 		}
 	
+		# #
+		#	Output
+		# #
+		
 		foreach my $line (@output)
 		{
-			if ($line =~ /^Using intrapositioned negation/) {next}
-			log_label( "$line" );
+			if ($line =~ /^Using intrapositioned negation/) { next }
+
+			if ($bRawText)
+			{
+				print "$line\n";
+			}
+			else
+			{
+				log_label($line);
+			}
 		}
 
 		if ($output[0] =~ /(^iptables: Unknown error 4294967295)|(xtables lock)/ and !$config{WAITLOCK})
@@ -7145,7 +7205,7 @@ sub faststart
 	{
 		if ( $verbose )
 		{
-			log_info( "FASTSTART loading (IPv4) ${bluel}${text}${greym}" );
+			log_info( "FASTSTART loading (IPv4) ${bluel}${text}${end}" );
 		}
 
 		my $status;
@@ -7177,7 +7237,7 @@ sub faststart
 	{
 		if ($verbose)
 		{
-			log_info( "FASTSTART loading (IPv4-NAT) ${bluel}${text}${greym}" );
+			log_info( "FASTSTART loading (IPv4-NAT) ${bluel}${text}${end}" );
 		}
 
 		my $status;
@@ -7209,7 +7269,7 @@ sub faststart
 	{
 		if ($verbose)
 		{
-			log_info( "FASTSTART loading (IPv6) ${bluel}${text}${greym}" );
+			log_info( "FASTSTART loading (IPv6) ${bluel}${text}${end}" );
 		}
 	
 		my $status;
@@ -7241,7 +7301,7 @@ sub faststart
 	{
 		if ($verbose)
 		{
-			log_info( "FASTSTART loading (IPv6-NAT) ${bluel}${text}${greym}" );
+			log_info( "FASTSTART loading (IPv6-NAT) ${bluel}${text}${end}" );
 		}
 	
 		my $status;
@@ -7273,7 +7333,7 @@ sub faststart
 	{
 		if ($verbose)
 		{
-			log_info( "FASTSTART loading (IPSET) ${bluel}${text}${greym}" );
+			log_info( "FASTSTART loading (IPSET) ${bluel}${text}${end}" );
 		}
 	
 		my ($childin, $childout);
