@@ -4410,7 +4410,7 @@ EOF
 			print "<input type='hidden' name='$extra' value='$FORM{$extra}'>\n";
 		}
 
-		print "<textarea class='textarea' name='formdata' style='width:100%;height:600px;border: 1px solid #000;' wrap='off'>";
+		print "<textarea class='textarea' name='formdata' style='width:100%;height:600px;border: 1px solid #000;font-family: Monospace;' wrap='off'>";
 	
 		foreach my $line ( @confdata )
 		{
