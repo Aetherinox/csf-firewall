@@ -4525,10 +4525,15 @@ details > summary ~ p
     padding-right: 1.3em;
 }
 
-
 details > summary ~ p:last-of-type
 {
     padding-bottom: 1.3em;
+}
+
+details > summary ~ .tabbed-set
+{
+    padding-left: 1.3em;
+    padding-right: 1.3em;
 }
 
 .md-typeset .admonition, .md-typeset details
