@@ -3720,13 +3720,13 @@ EOF
 		__ 						"<table class='table table-bordered table-striped' style='margin-bottom:0px;'>\n";
 									if ( !$config{SPONSOR_LICENSE} )
 									{
-		__ 								"<tr><td><a target='_blank' href='https://buymeacoffee.com/aetherinox' class='btn btn-default' style='width: 200px;'>Contribute</a></td><td style='width:100%'><div id='license-status' class='panel-body'>Checking license ... </div></td></tr>\n";
+		__ 								"<tr><td><a target='_blank' href='https://buymeacoffee.com/aetherinox' class='btn btn-default' style='width: 200px;'>Contribute</a></td><td style='width:100%'><div id='license-status'>Checking license ... </div></td></tr>\n";
 									}
 									else
 									{
-		__ 								"<tr><td><a target='_blank' href='https://docs.configserver.dev/insiders/sponsors/' class='btn btn-default' style='width: 200px;'>Sponsor Status</a></td><td style='width:100%'><div id='license-status' class='panel-body'>Checking license ... </div></td></tr>\n";
+		__ 								"<tr><td><a target='_blank' href='https://docs.configserver.dev/insiders/sponsors/' class='btn btn-default' style='width: 200px;'>Sponsor Status</a></td><td style='width:100%'><div id='license-status'>Checking license ... </div></td></tr>\n";
 									}
-		__ 							"<tr><td><a target='_blank' href='https://docs.configserver.dev/insiders/about' class='btn btn-default' style='width: 200px;'>Insiders Channel</a></td><td style='width:100%'><div id='insiders-status' class='panel-body'>Checking status ... </div></td></tr>\n";
+		__ 							"<tr><td><a target='_blank' href='https://docs.configserver.dev/insiders/about' class='btn btn-default' style='width: 200px;'>Insiders Channel</a></td><td style='width:100%'><div id='insiders-status'>Checking status ... </div></td></tr>\n";
 		__						"</table>\n";
 		__ 					"</form>\n";
 		__				"</div>\n";

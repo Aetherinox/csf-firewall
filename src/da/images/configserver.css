@@ -1284,6 +1284,16 @@ th
 }
 
 /*
+	Tables › Rows › Odd (cPanel)
+*/
+
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th
+{
+	background-color: var( --panel-table-row-odd );
+	color: var( --panel-table-text );
+}
+
+/*
 	Tables > Rows > Even
 */
 
