@@ -1431,8 +1431,7 @@ th
 
 .bs-callout
 {
-	padding-top: 5px;
-	padding-bottom: 5px;
+	padding: 0.7em;
     border: 1px solid #3c3c3c;
     border-radius: 3px;
 	min-width: 10vw;

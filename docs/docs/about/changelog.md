@@ -19,7 +19,10 @@ tags:
 
 ### <!-- md:version stable- --> 15.10 <small>Feb 23 2026</small> { id="15.10" }
 
-- `fix(webui)`: fix bug with **Cloudflare Integration** button showing on all control panels when `CF_ENABLE = "0"`
+- `fix(webui)`: **Cloudflare Integration** button showing on all control panels when `CF_ENABLE = "0"`
+- `fix(webui)`: **Statistics** buttons showing on all control panels, even with requirements such as `GD:GRAPH` were not being met.
+- `fix(webui)`: **Sponsor** div element had incorrect class name, causing too much padding between the outter and inner containers
+- `fix(webui)`: Main navigation buttons had incorrect text positioning and were not properly centered in Chromium / Edge browsers.
 
 <br />
 
