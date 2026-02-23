@@ -1,4 +1,5 @@
 ChangeLog:
+15.10 - Fix bug showing Cloudflare Integration when CF_ENABLE = 0.
 
 15.09 - URLs in /etc/csf/csf.conf are now clickable in the Firewall
         Configuration web interface.
