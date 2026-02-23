@@ -17,6 +17,12 @@ tags:
 
 </p>
 
+### <!-- md:version stable- --> 15.10 <small>Feb 23 2026</small> { id="15.10" }
+
+- `fix(webui)`: fix bug with **Cloudflare Integration** button showing on all control panels when `CF_ENABLE = "0"`
+
+<br />
+
 ### <!-- md:version stable- --> 15.09 <small>Feb 23 2026</small> { id="15.09" }
 
 - `feat(webui)`: added **dark theme**
