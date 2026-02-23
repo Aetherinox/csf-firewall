@@ -1,5 +1,5 @@
 ---
-date: 2025-12-16
+date: 2026-02-23
 authors:
     - aetherinox
 categories:
@@ -7,6 +7,9 @@ categories:
     - changelog
     - v15.x
     - cyberpanel
+    - directadmin
+    - webmin
+    - vestacp
 description: >
     Details regarding CSF release v15.09
 title: >
