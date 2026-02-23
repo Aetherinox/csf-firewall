@@ -2263,7 +2263,7 @@ code
 	Footer › Button › Github
 */
 
-.footer .footer-right button.btn-github
+.footer .footer-right button.btn-repo
 {
     background-color: var( --btn-1-bg-n );
     border-color: var( --btn-1-bg-n );
