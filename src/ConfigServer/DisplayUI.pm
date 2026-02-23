@@ -3392,28 +3392,38 @@ EOF
 		print "<tr><td><button name='action' value='viewports' type='submit' class='btn btn-default' style='width: 200px;'>View Listening Ports</button></td><td style='width:100%'>View ports on the server that have a running process behind them listening for external connections</td></tr>\n";
 		print "<tr><td><button name='action' value='rblcheck' type='submit' class='btn btn-default' style='width: 200px;'>Check for IPs in RBLs</button></td><td style='width:100%'>Check whether any of the servers IP addresses are listed in RBLs</td></tr>\n";
 
-		# Button › Statistics › Iptable Logs
-		print "<tr><td><button name='action' value='viewlogs' type='submit' class='btn btn-default' style='width: 200px;'"
-			. ($config{ST_ENABLE} ? '' : ' disabled="disabled"') 
-			. ">View iptables Log</button></td><td style='width:100%'>"
-			. ($config{ST_ENABLE} ? '' : "<span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='Requires ST_ENABLE=\"1\"'></span> ") 
-			. "<span style='vertical-align: sub;'>View the last <code>$config{ST_IPTABLES}</code> iptables log lines</span></td></tr>\n";
+		if ( $config{ST_ENABLE} )
+		{
+			# Button › Statistics › Iptable Logs
+			print "<tr><td><button name='action' value='viewlogs' type='submit' class='btn btn-default' style='width: 200px;'"
+				. ($config{ST_ENABLE} ? '' : ' disabled="disabled"') 
+				. ">View iptables Log</button></td><td style='width:100%'>"
+				. ($config{ST_ENABLE} ? '' : "<span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='Requires ST_ENABLE=\"1\"'></span> ") 
+				. "<span style='vertical-align: sub;'>View the last <code>$config{ST_IPTABLES}</code> iptables log lines</span></td></tr>\n";
 
-		# Button › View lfd Statistics
-		print "<tr><td><button name='action' value='chart' type='submit' class='btn btn-default' style='width: 200px;'"
-			. ($config{ST_ENABLE} && $chart ? '' : ' disabled="disabled"') 
-			. ">View lfd Statistics</button></td><td style='width:100%'>"
-			. ($config{ST_ENABLE} && $chart ? '' : "<span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='Requires Package GD:Graph\nRequires ST_ENABLE=\"1\"'></span> ") 
-			. "<span style='vertical-align: sub;'>View lfd blocking statistics</span></td></tr>\n";
+			if ( $chart )
+			{
+				# Button › View lfd Statistics
+				print "<tr><td><button name='action' value='chart' type='submit' class='btn btn-default' style='width: 200px;'"
+					. ($config{ST_ENABLE} && $chart ? '' : ' disabled="disabled"') 
+					. ">View lfd Statistics</button></td><td style='width:100%'>"
+					. ($config{ST_ENABLE} && $chart ? '' : "<span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='Requires Package GD:Graph\nRequires ST_ENABLE=\"1\"'></span> ") 
+					. "<span style='vertical-align: sub;'>View lfd blocking statistics</span></td></tr>\n";
 
-		# Button › View basic system statistics
-		print "<tr><td><button name='action' value='systemstats' type='submit' class='btn btn-default' style='width: 200px;'"
-			. ($config{ST_ENABLE} && $chart && $config{ST_SYSTEM} ? '' : ' disabled="disabled"') 
-			. ">View System Statistics</button></td><td style='width:100%'>"
-			. (($config{ST_ENABLE} && $chart && $config{ST_SYSTEM}) 
-				? '' 
-				: "<span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='Requires Package GD:Graph\nRequires ST_ENABLE=\"1\"\nRequires ST_SYSTEM=\"1\"'></span> ") 
-			. "<span style='vertical-align: sub;'>View basic system statistics</span></td></tr>\n";
+				if ($config{ST_SYSTEM})
+				{
+
+					# Button › View basic system statistics
+					print "<tr><td><button name='action' value='systemstats' type='submit' class='btn btn-default' style='width: 200px;'"
+						. ($config{ST_ENABLE} && $chart && $config{ST_SYSTEM} ? '' : ' disabled="disabled"') 
+						. ">View System Statistics</button></td><td style='width:100%'>"
+						. (($config{ST_ENABLE} && $chart && $config{ST_SYSTEM}) 
+							? '' 
+							: "<span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='Requires Package GD:Graph\nRequires ST_ENABLE=\"1\"\nRequires ST_SYSTEM=\"1\"'></span> ") 
+						. "<span style='vertical-align: sub;'>View basic system statistics</span></td></tr>\n";
+				}
+			}
+		}
 
 		print "</table>\n";
 		print "</form>\n";
@@ -3613,24 +3623,25 @@ EOF
 
 		__ "<div id='other' class='tab-pane active'>\n";
 
-		__ 		"<table class='table table-bordered table-striped'>\n";
-		__ 			"<thead><tr><th colspan='2'><span style='vertical-align: sub;'>Cloudflare Integration</span></th></tr></thead>";
+		if ( $config{CF_ENABLE} )
+		{
+			__		"<table class='table table-bordered table-striped'>\n";
+			__			"<thead><tr><th colspan='2'><span style='vertical-align: sub;'>Cloudflare Integration</span></th></tr></thead>";
+						# Button › Cloudflare › Configure
+			__			"<tr><td><form action='$script' method='post'><button name='action' value='cloudflareedit' type='submit' class='btn btn-default' style='width: 200px;'"
+							. ($config{CF_ENABLE} ? '' : ' disabled="disabled"') 
+							. ">Configure</button></td><td style='width:100%'>"
+							. ($config{CF_ENABLE} ? '' : "<span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='Requires CF_ENABLE=\"1\"'></span> ") 
+							. "<span style='vertical-align: sub;'>Modify the CSF Cloudflare config file <code>csf.cloudflare</code>. Must configure this to populate user list.</span></td></tr>\n";
 
-					# Button › Cloudflare › Configure
-		__ 			"<tr><td><form action='$script' method='post'><button name='action' value='cloudflareedit' type='submit' class='btn btn-default' style='width: 200px;'"
-						. ($config{CF_ENABLE} ? '' : ' disabled="disabled"') 
-						. ">Configure</button></td><td style='width:100%'>"
-						. ($config{CF_ENABLE} ? '' : "<span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='Requires CF_ENABLE=\"1\"'></span> ") 
-						. "<span style='vertical-align: sub;'>Modify the CSF Cloudflare config file <code>csf.cloudflare</code>. Must configure this to populate user list.</span></td></tr>\n";
-
-					# Button › Cloudflare › Rules
-		__ 			"<tr><td><form action='$script' method='post'><button name='action' value='cloudflare' type='submit' class='btn btn-default' style='width: 200px;'"
-						. ($config{CF_ENABLE} ? '' : ' disabled="disabled"') 
-						. ">User IP Rules</button></td><td style='width:100%'>"
-						. ($config{CF_ENABLE} ? '' : "<span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='Requires CF_ENABLE=\"1\"'></span> ") 
-						. "<span style='vertical-align: sub;'>Setup associated users and IP rules</span></td></tr>\n";
-
-		__ 		"</table>\n";
+						# Button › Cloudflare › Rules
+			__			"<tr><td><form action='$script' method='post'><button name='action' value='cloudflare' type='submit' class='btn btn-default' style='width: 200px;'"
+							. ($config{CF_ENABLE} ? '' : ' disabled="disabled"') 
+							. ">User IP Rules</button></td><td style='width:100%'>"
+							. ($config{CF_ENABLE} ? '' : "<span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='Requires CF_ENABLE=\"1\"'></span> ") 
+							. "<span style='vertical-align: sub;'>Setup associated users and IP rules</span></td></tr>\n";
+			__		"</table>\n";
+		}
 
 		if ( $config{SMTPAUTH_RESTRICT} )
 		{
