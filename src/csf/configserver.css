@@ -745,12 +745,6 @@ a.app-name:not(:hover)
 	These are the default style properties from the original configserver.css
 */
 
-.btn-default
-{
-	height: 32px;
-	line-height: 22px;
-}
-
 .btn-default:active,
 .btn-default:visited,
 .btn-default:focus,
