@@ -2853,7 +2853,7 @@
   <a href="#15.09" class="md-nav__link">
     <span class="md-ellipsis">
       
-        15.09 TBA
+        15.09 Feb 23 2026
       
     </span>
   </a>
@@ -3858,7 +3858,7 @@
   <a href="#15.09" class="md-nav__link">
     <span class="md-ellipsis">
       
-        15.09 TBA
+        15.09 Feb 23 2026
       
     </span>
   </a>
@@ -4112,57 +4112,64 @@
 <a class="glightbox" data-type="image" data-width="100%" data-height="auto" href="https://img.shields.io/github/last-commit/Aetherinox/csf-firewall?color=b43bcc" data-desc-position="bottom"><img alt="Last Commit)" src="https://img.shields.io/github/last-commit/Aetherinox/csf-firewall?color=b43bcc"></a>
 
 </p>
-<h3 id="15.09"><span class="mdx-badge mdx-badge--version"><span class="mdx-badge__icon"><a href="../conventions/#release-types" title="Stable Release"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M0 80V229.5c0 17 6.7 33.3 18.7 45.3l176 176c25 25 65.5 25 90.5 0L418.7 317.3c25-25 25-65.5 0-90.5l-176-176c-12-12-28.3-18.7-45.3-18.7H48C21.5 32 0 53.5 0 80zm112 32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"></path></svg></span></a></span></span> 15.09 <small>TBA</small><a class="headerlink" data-preview="" href="#15.09" title="Permanent link">¶</a></h3>
+<h3 id="15.09"><span class="mdx-badge mdx-badge--version"><span class="mdx-badge__icon"><a href="../conventions/#release-types" title="Stable Release"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M0 80V229.5c0 17 6.7 33.3 18.7 45.3l176 176c25 25 65.5 25 90.5 0L418.7 317.3c25-25 25-65.5 0-90.5l-176-176c-12-12-28.3-18.7-45.3-18.7H48C21.5 32 0 53.5 0 80zm112 32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"></path></svg></span></a></span></span> 15.09 <small>Feb 23 2026</small><a class="headerlink" data-preview="" href="#15.09" title="Permanent link">¶</a></h3>
 <ul>
-<li><code>feat(csf)</code>: urls in <code>/etc/csf/csf.conf</code> are now clickable in the <strong>Firewall Configuration</strong> web interface.</li>
+<li><code>feat(webui)</code>: added <strong>dark theme</strong></li>
+<li><code>feat(webui)</code>: urls in <code>/etc/csf/csf.conf</code> are now clickable in the <strong>Firewall Configuration</strong> web interface.</li>
+<li><code>feat(webui)</code>: page <strong>Firewall Configuration</strong> now supports <code>SECTION:</code> tags as independent element.</li>
 <li><code>feat(csf)</code>: correctly detect interactive <code>--version</code> input in the CLI.</li>
 <li><code>feat(sponsor)</code>: sponsor icon updates:<ul>
-<li>added a new setting in <code>/etc/csf/csf.conf</code> called <code>SPONSOR_HIDE_ICON</code> to hide icons in web interface footer.</li>
+<li>added new setting <code>SPONSOR_ICON_HIDE</code> in <code>/etc/csf/csf.conf</code> to hide sponsor icon in web interface footer.</li>
+<li>added new setting <code>SPONSOR_ICON_ANIM</code> in <code>/etc/csf/csf.conf</code> to enable/disable beating heart icon. Disabled by default.</li>
 <li>sponsor icon will automatically hide if the user enters a sponsor license.</li>
 <li>removed the beating animation for the sponsor icon.</li>
 </ul>
 </li>
-<li><code>feat(webmin)</code>: add setting <code>UI_WEBMIN_SHOW_BUTTON_CONFIG</code> to restore <strong>Firewall Configuration</strong> button in Webmin.</li>
 <li><code>feat(csf)</code>: added <strong>AbuseIPDB</strong> service template to the blocklist file <code>/etc/csf/csf.blocklists</code>.</li>
+<li><code>feat(sponsor)</code>: added timeout functionality to ensure <abbr title="ConfigServer Security &amp; Firewall">csf</abbr> does not wait on sponsor confirmation.</li>
+<li><code>feat(webmin)</code>: added setting <code>UI_WEBMIN_SHOW_BUTTON_CONFIG</code> to restore <strong>Firewall Configuration</strong> button in Webmin.</li>
 <li><code>chore(directadmin)</code>: updated <code>plugin.conf</code> for <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>:<ul>
 <li>added <code>update_url</code> and <code>version_url</code> so DirectAdmin can fetch the latest version.</li>
 </ul>
 </li>
-<li><code>chore(cwp)</code>: re-branded <code>CentOS Web Panel</code> to <code>Control Web Panel</code> to reflect correct app name after re-name.</li>
+<li><code>chore(cwp)</code>: re-brand <code>CentOS Web Panel</code> to <code>Control Web Panel</code> to reflect correct app name.</li>
 <li><code>docs(install)</code>: added DirectAdmin instructions to the <a href="https://docs.configserver.dev/install/install/#install-directadmin">Install</a> chapter in the documentation.</li>
 <li><code>docs(integration)</code>: added AbuseIPDB integration to the documentation.</li>
-<li><code>refactor(blocklists)</code>: <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> blocklist service files migrated to repository:<ul>
+<li><code>refactor(sponsor)</code>: re-wrote and migrated sponsorship functionality.</li>
+<li><code>refactor(blocklists)</code>: <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> blocklist service files migrated to new Github repository:<ul>
 <li><a href="https://github.com/ConfigServerApps/service-blocklists">https://github.com/ConfigServerApps/service-blocklists</a></li>
 </ul>
 </li>
-<li><code>refactor(repo)</code>: github repo cleaned up to reduze size after blocklist migration</li>
-<li><code>refactor(csf)</code>: added AbuseIPDB template to <code>/etc/csf/csf.blocklists</code> for improved integration.</li>
-<li><code>refactor(docker)</code>: re-wrote <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">docker</abbr> integration script in <code>extras/docker.sh</code><ul>
-<li>added caching for <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">docker</abbr> container list generation</li>
-<li>POSIX compliant</li>
+<li><code>refactor(repo)</code>: <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> repo size compressed after migrating blocklist service to seperate github repository.</li>
+<li><code>refactor(docker)</code>: re-wrote POSIX compliant <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">docker</abbr> integration script in <code>extras/docker.sh</code><ul>
+<li>added caching for <abbr title="An open-source platform that automates deploying, scaling, and managing applications inside lightweight, portable containers.">docker</abbr> container list generation.</li>
 <li>added optional <code>--flags</code> such as <code>--help</code>, <code>--dryrun</code>, etc.</li>
 </ul>
 </li>
-<li><code>refactor(openvpn)</code>: re-wrote openvpn integration script in <code>extras/openvpn.sh</code><ul>
-<li>POSIX compliant</li>
-</ul>
-</li>
-<li><code>security(csf)</code>: re-write backend after initial transition from <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> old developer to new<ul>
-<li>added optional <code>--flags</code> such as <code>--help</code>, <code>--dryrun</code>, etc.</li>
-</ul>
-</li>
+<li><code>refactor(openvpn)</code>: re-wrote POSIX compliant openvpn integration script in <code>extras/openvpn.sh</code>.</li>
+<li><code>refactor(install)</code>: added optional <code>--flags</code> such as <code>--help</code>, <code>--dryrun</code>, etc.</li>
+<li><code>refactor(integration)</code>: added AbuseIPDB template to <code>/etc/csf/csf.blocklists</code> for improved integration.</li>
+<li><code>security(csf)</code>: re-wrote backend after initial transition from <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> old developer to new</li>
 <li><code>fix(directadmin)</code>: corrected an install script error:<ul>
 <li>fixed an improperly closed <code>if</code> condition in the <code>install.directadmin</code> script.</li>
 </ul>
 </li>
-<li><code>fix(webmin)</code>: descriptions for settings in interface now render correctly on the page with proper structure.</li>
-<li><code>fix(cwp)</code>: segregated formatted <code>--version</code> output with no ANSI colors.</li>
-<li><code>fix(cwp)</code>: ensured proper sanitization when sending version information to <abbr title="Control Web Panel (CWP)">CWP</abbr>.</li>
-<li><code>fix(webmin)</code>: support for almalinux, redhat, rocky10 based distros<ul>
+<li><code>fix(cwp)</code>: segregate formatted <code>--version</code> output with no ANSI colors.</li>
+<li><code>fix(cwp)</code>: properly sanitize version information sent between <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> and <strong>Control Web Panel</strong>.<ul>
+<li>XSS injection exists in Control Web Panel which could potentially allow for commands to be ran.</li>
+<li>Ensure <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> itself cannot be part of the potential risk.</li>
+</ul>
+</li>
+<li><code>fix(webmin)</code>: support for almalinux, redhat, rocky10 based distros.<ul>
 <li>Debian, Ubuntu, ZorinOS: <code>/usr/share/webmin</code></li>
 <li>Redhat, AlmaLinux, Rocky 10: <code>/usr/libexec/webmin</code></li>
 </ul>
 </li>
+<li><code>fix(webmin)</code>: descriptions for settings in interface now render correctly on the page with proper structure.</li>
+<li><code>fix(webmin)</code>: correct numerous interface issues related to the <strong>authentic</strong> theme.</li>
+<li><code>fix(regex)</code>: update ssh regex patterns to match changes in openssh &gt;= 9.8 <a class="magiclink magiclink-github magiclink-mention" href="https://github.com/Wolfgangasdf" title="GitHub User: Wolfgangasdf">@Wolfgangasdf</a></li>
+<li><code>fix(webui)</code>: bare-metal wallpaper positioning.</li>
+<li><code>fix(webui)</code>: footer positioning issue.</li>
 </ul>
 <p><br></p>
 <h3 id="15.08"><span class="mdx-badge mdx-badge--version"><span class="mdx-badge__icon"><a href="../conventions/#release-types" title="Stable Release"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M0 80V229.5c0 17 6.7 33.3 18.7 45.3l176 176c25 25 65.5 25 90.5 0L418.7 317.3c25-25 25-65.5 0-90.5l-176-176c-12-12-28.3-18.7-45.3-18.7H48C21.5 32 0 53.5 0 80zm112 32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"></path></svg></span></a></span></span> 15.08 <small>Dec 12 2025</small><a class="headerlink" data-preview="" href="#15.08" title="Permanent link">¶</a></h3>
@@ -4475,7 +4482,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="February 6, 2026 17:53:51 UTC"><span class="timeago" datetime="2026-02-06T17:53:51+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="February 6, 2026 17:53:51 UTC">2026-02-06</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-timeago" title="February 23, 2026 02:23:39 UTC"><span class="timeago" datetime="2026-02-23T02:23:39+00:00" locale="en"></span></span><span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="February 23, 2026 02:23:39 UTC">2026-02-23</span>
   </span>
 
     
