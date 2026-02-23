@@ -89,7 +89,7 @@
          <lastmod>2026-02-23</lastmod>
     </url>
     <url>
-         <loc>https://aetherinox.github.io/csf-firewall/blog/2025/release-v1509/</loc>
+         <loc>https://aetherinox.github.io/csf-firewall/blog/2026/release-v1509/</loc>
          <lastmod>2026-02-23</lastmod>
     </url>
     <url>
@@ -277,6 +277,10 @@
          <lastmod>2026-02-23</lastmod>
     </url>
     <url>
+         <loc>https://aetherinox.github.io/csf-firewall/blog/2026/</loc>
+         <lastmod>2026-02-23</lastmod>
+    </url>
+    <url>
          <loc>https://aetherinox.github.io/csf-firewall/blog/2025/</loc>
          <lastmod>2026-02-23</lastmod>
     </url>
@@ -297,7 +301,15 @@
          <lastmod>2026-02-23</lastmod>
     </url>
     <url>
+         <loc>https://aetherinox.github.io/csf-firewall/blog/directadmin/</loc>
+         <lastmod>2026-02-23</lastmod>
+    </url>
+    <url>
          <loc>https://aetherinox.github.io/csf-firewall/blog/webmin/</loc>
+         <lastmod>2026-02-23</lastmod>
+    </url>
+    <url>
+         <loc>https://aetherinox.github.io/csf-firewall/blog/vestacp/</loc>
          <lastmod>2026-02-23</lastmod>
     </url>
     <url>
@@ -330,10 +342,6 @@
     </url>
     <url>
          <loc>https://aetherinox.github.io/csf-firewall/blog/release-alpha/</loc>
-         <lastmod>2026-02-23</lastmod>
-    </url>
-    <url>
-         <loc>https://aetherinox.github.io/csf-firewall/blog/vestacp/</loc>
          <lastmod>2026-02-23</lastmod>
     </url>
     <url>
