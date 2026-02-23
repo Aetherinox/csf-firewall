@@ -17,41 +17,50 @@ tags:
 
 </p>
 
-### <!-- md:version stable- --> 15.09 <small>TBA</small> { id="15.09" }
+### <!-- md:version stable- --> 15.09 <small>Feb 23 2026</small> { id="15.09" }
 
-- `feat(csf)`: urls in `/etc/csf/csf.conf` are now clickable in the **Firewall Configuration** web interface.
+- `feat(webui)`: added **dark theme**
+- `feat(webui)`: urls in `/etc/csf/csf.conf` are now clickable in the **Firewall Configuration** web interface.
+- `feat(webui)`: page **Firewall Configuration** now supports `SECTION:` tags as independent element.
 - `feat(csf)`: correctly detect interactive `--version` input in the CLI.
 - `feat(sponsor)`: sponsor icon updates:
-    - added a new setting in `/etc/csf/csf.conf` called `SPONSOR_HIDE_ICON` to hide icons in web interface footer.
+    - added new setting `SPONSOR_ICON_HIDE` in `/etc/csf/csf.conf` to hide sponsor icon in web interface footer.
+    - added new setting `SPONSOR_ICON_ANIM` in `/etc/csf/csf.conf` to enable/disable beating heart icon. Disabled by default.
     - sponsor icon will automatically hide if the user enters a sponsor license.
     - removed the beating animation for the sponsor icon.
-- `feat(webmin)`: add setting `UI_WEBMIN_SHOW_BUTTON_CONFIG` to restore **Firewall Configuration** button in Webmin.
 - `feat(csf)`: added **AbuseIPDB** service template to the blocklist file `/etc/csf/csf.blocklists`.
+- `feat(sponsor)`: added timeout functionality to ensure csf does not wait on sponsor confirmation.
+- `feat(webmin)`: added setting `UI_WEBMIN_SHOW_BUTTON_CONFIG` to restore **Firewall Configuration** button in Webmin.
 - `chore(directadmin)`: updated `plugin.conf` for CSF:
     - added `update_url` and `version_url` so DirectAdmin can fetch the latest version.
-- `chore(cwp)`: re-branded `CentOS Web Panel` to `Control Web Panel` to reflect correct app name after re-name.
+- `chore(cwp)`: re-brand `CentOS Web Panel` to `Control Web Panel` to reflect correct app name.
 - `docs(install)`: added DirectAdmin instructions to the [Install](https://docs.configserver.dev/install/install/#install-directadmin) chapter in the documentation.
 - `docs(integration)`: added AbuseIPDB integration to the documentation.
-- `refactor(blocklists)`: CSF blocklist service files migrated to repository:
+- `refactor(sponsor)`: re-wrote and migrated sponsorship functionality.
+- `refactor(blocklists)`: CSF blocklist service files migrated to new Github repository:
     - https://github.com/ConfigServerApps/service-blocklists
-- `refactor(repo)`: github repo cleaned up to reduze size after blocklist migration
-- `refactor(csf)`: added AbuseIPDB template to `/etc/csf/csf.blocklists` for improved integration.
-- `refactor(docker)`: re-wrote docker integration script in `extras/docker.sh`
-    - added caching for docker container list generation
-    - POSIX compliant
+- `refactor(repo)`: CSF repo size compressed after migrating blocklist service to seperate github repository.
+- `refactor(docker)`: re-wrote POSIX compliant docker integration script in `extras/docker.sh`
+    - added caching for docker container list generation.
     - added optional `--flags` such as `--help`, `--dryrun`, etc.
-- `refactor(openvpn)`: re-wrote openvpn integration script in `extras/openvpn.sh`
-    - POSIX compliant
-- `security(csf)`: re-write backend after initial transition from CSF old developer to new
-    - added optional `--flags` such as `--help`, `--dryrun`, etc.
+- `refactor(openvpn)`: re-wrote POSIX compliant openvpn integration script in `extras/openvpn.sh`.
+- `refactor(install)`: added optional `--flags` such as `--help`, `--dryrun`, etc.
+- `refactor(integration)`: added AbuseIPDB template to `/etc/csf/csf.blocklists` for improved integration.
+- `security(csf)`: re-wrote backend after initial transition from CSF old developer to new
 - `fix(directadmin)`: corrected an install script error:
     - fixed an improperly closed `if` condition in the `install.directadmin` script.
-- `fix(webmin)`: descriptions for settings in interface now render correctly on the page with proper structure.
-- `fix(cwp)`: segregated formatted `--version` output with no ANSI colors.
-- `fix(cwp)`: ensured proper sanitization when sending version information to CWP.
-- `fix(webmin)`: support for almalinux, redhat, rocky10 based distros
+- `fix(cwp)`: segregate formatted `--version` output with no ANSI colors.
+- `fix(cwp)`: properly sanitize version information sent between CSF and **Control Web Panel**.
+    - XSS injection exists in Control Web Panel which could potentially allow for commands to be ran.
+    - Ensure CSF itself cannot be part of the potential risk.
+- `fix(webmin)`: support for almalinux, redhat, rocky10 based distros.
     - Debian, Ubuntu, ZorinOS: `/usr/share/webmin`
     - Redhat, AlmaLinux, Rocky 10: `/usr/libexec/webmin`
+- `fix(webmin)`: descriptions for settings in interface now render correctly on the page with proper structure.
+- `fix(webmin)`: correct numerous interface issues related to the **authentic** theme.
+- `fix(regex)`: update ssh regex patterns to match changes in openssh >= 9.8 @Wolfgangasdf
+- `fix(webui)`: bare-metal wallpaper positioning.
+- `fix(webui)`: footer positioning issue.
 
 <br />
 

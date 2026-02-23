@@ -16,9 +16,19 @@ comments: true
 
 # Release: v15.09
 
-Release **v15.09** enhances support for [DirectAdmin](https://directadmin.com), including a major bug fix, an updated module interface, enables automatic updates for the CSF DirectAdmin web interface,, and a newly added [DirectAdmin Installation Guide](https://docs.configserver.dev/install/install/#install-directadmin).
+Release **v15.09** is our biggest release to date, as it focuses on CSF stability, as well as bringing back some of the features that were available within our deprecated CSF mod, which is what the repository was originally dedicated to (this includes the **dark theme**).
+
+We have revised almost every control panel across the board, including fixes to [DirectAdmin](https://directadmin.com), [VestaCP](https://vestacp.com/), [Webmin](https://webmin.com/), and various others. 
+
+This release includes a major bug fix for [DirectAdmin](https://directadmin.com), as well as an updated module interface, and we have enabled automatic updates through the CSF DirectAdmin web interface. We also added a new [DirectAdmin Installation Guide](https://docs.configserver.dev/install/install/#install-directadmin).
 
 This release also resolves a few issues regarding the installation process, and includes multiple performance improvements that significantly increase file read efficiency.
+
+We have re-added the original **Dark Theme** that was introduced back when our repository was a mod for CSF. There are still some adjustments to make, but you can now switch between the light and dark theme by pressing the theme button in the footer.
+
+This release took significantly longer than expected. When development of CSF first started within our repository, our priority was to restore momentum and aim toward progress, which meant putting core systems in place quickly. While that approach allowed this project to move forward, it also meant that some foundations were assembled under time pressure.
+
+Over the past two months, we’ve focused on revisiting and refining those systems, to ensure they’re built and integrated to the standard you’d expect from a developer who is delivering services to the public. This work spans both the backend infrastructure and CSF itself, resulting in a more stable, reliable, and maintainable platform moving forward.
 
 <!-- more -->
 
