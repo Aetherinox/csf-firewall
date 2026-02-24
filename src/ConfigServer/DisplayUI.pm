@@ -3383,7 +3383,7 @@ EOF
 		print "<div id='home' class='tab-pane active'>\n";
 		print "<form action='$script' method='post'>\n";
 		print "<table class='table table-bordered table-striped'>\n";
-		print "<thead><tr><th colspan='2'><span style='vertical-align: sub;'>Server Information</span></th></tr></thead>";
+		print "<thead><tr><th colspan='2'><span>Server Information</span></th></tr></thead>";
 
 		print "<tr><td><button name='action' value='servercheck' type='submit' class='btn btn-default' style='width: 200px;'>Check Server Security</button></td><td style='width:100%'>Perform a basic security, stability and settings check on the server</td></tr>\n";
 		print "<tr><td><button name='action' value='readme' type='submit' class='btn btn-default' style='width: 200px;'>Firewall Information</button></td><td style='width:100%'>View the csf+lfd readme.txt file</td></tr>\n";
@@ -3399,7 +3399,7 @@ EOF
 				. ($config{ST_ENABLE} ? '' : ' disabled="disabled"') 
 				. ">View iptables Log</button></td><td style='width:100%'>"
 				. ($config{ST_ENABLE} ? '' : "<span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='Requires ST_ENABLE=\"1\"'></span> ") 
-				. "<span style='vertical-align: sub;'>View the last <code>$config{ST_IPTABLES}</code> iptables log lines</span></td></tr>\n";
+				. "<span>View the last <code>$config{ST_IPTABLES}</code> iptables log lines</span></td></tr>\n";
 
 			if ( $chart )
 			{
@@ -3408,7 +3408,7 @@ EOF
 					. ($config{ST_ENABLE} && $chart ? '' : ' disabled="disabled"') 
 					. ">View lfd Statistics</button></td><td style='width:100%'>"
 					. ($config{ST_ENABLE} && $chart ? '' : "<span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='Requires Package GD:Graph\nRequires ST_ENABLE=\"1\"'></span> ") 
-					. "<span style='vertical-align: sub;'>View lfd blocking statistics</span></td></tr>\n";
+					. "<span>View lfd blocking statistics</span></td></tr>\n";
 
 				if ($config{ST_SYSTEM})
 				{
@@ -3420,7 +3420,7 @@ EOF
 						. (($config{ST_ENABLE} && $chart && $config{ST_SYSTEM}) 
 							? '' 
 							: "<span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='Requires Package GD:Graph\nRequires ST_ENABLE=\"1\"\nRequires ST_SYSTEM=\"1\"'></span> ") 
-						. "<span style='vertical-align: sub;'>View basic system statistics</span></td></tr>\n";
+						. "<span>View basic system statistics</span></td></tr>\n";
 				}
 			}
 		}
@@ -3430,7 +3430,7 @@ EOF
 
 		print "<form action='$script' method='post'>\n";
 		print "<table class='table table-bordered table-striped' id='upgradetable'>\n";
-		print "<thead><tr><th colspan='2'><span style='vertical-align: sub;'>Upgrade</span></th></tr></thead>";
+		print "<thead><tr><th colspan='2'><span>Upgrade</span></th></tr></thead>";
 
 		# #
 		#	upgrade (int)		0, 1
@@ -3474,7 +3474,7 @@ EOF
 
 		__ "<div id='csf' class='tab-pane active'>\n";
 		__ "<table class='table table-bordered table-striped'>\n";
-		__ "<thead><tr><th colspan='2'><span style='vertical-align: sub;'>CSF - Quick Actions</span></th></tr></thead>";
+		__ "<thead><tr><th colspan='2'><span>CSF - Quick Actions</span></th></tr></thead>";
 		__ "<tr><td><button onClick='\$(\"#qallow\").submit();' class='btn btn-default' style='width: 200px;'>Quick Allow</button></td><td style='width:100%'><form action='$script' method='post' id='qallow'><input type='submit' class='hide'><input type='hidden' name='action' value='qallow'>Allow IP address <a href='javascript:fillfield(\"allowip\",\"$ENV{REMOTE_ADDR}\")'><span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='$ENV{REMOTE_ADDR}'></span></a> <input class='input-allow' type='text' name='ip' id='allowip' value='' size='18'> through the firewall and add to the allow file (csf.allow).<br>Comment for Allow: <input type='text' name='comment' value='' size='30'></form></td></tr>\n";
 		__ "<tr><td><button onClick='\$(\"#qdeny\").submit();' class='btn btn-default' style='width: 200px;'>Quick Deny</button></td><td style='width:100%'><form action='$script' method='post' id='qdeny'><input type='submit' class='hide'><input type='hidden' name='action' value='qdeny'>Block IP address <input class='input-deny' type='text' name='ip' value='' size='18'> in the firewall and add to the deny file (csf.deny).<br>Comment for Block: <input type='text' name='comment' value='' size='30'></form></td></tr>\n";
 		__ "<tr><td><button onClick='\$(\"#qignore\").submit();' class='btn btn-default' style='width: 200px;'>Quick Ignore</button></td><td style='width:100%'><form action='$script' method='post' id='qignore'><input type='submit' class='hide'><input type='hidden' name='action' value='qignore'>Ignore IP address <a href='javascript:fillfield(\"ignoreip\",\"$ENV{REMOTE_ADDR}\")'><span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='$ENV{REMOTE_ADDR}'></span></a> <input type='text' name='ip' id='ignoreip' value='' size='18'> in lfd, add to the ignore file (csf.ignore) and restart lfd</form></td></tr>\n";
@@ -3482,7 +3482,7 @@ EOF
 		__ "</table>\n";
 
 		__ "<table class='table table-bordered table-striped'>\n";
-		__ "<thead><tr><th colspan='2'><span style='vertical-align: sub;'>CSF - ConfigServer Firewall</span></th></tr></thead>";
+		__ "<thead><tr><th colspan='2'><span>CSF - ConfigServer Firewall</span></th></tr></thead>";
 
 		# #
 		#	Webmin
@@ -3532,7 +3532,7 @@ EOF
 
 		__ 	"<div id='lfd' class='tab-pane active'>\n";
 		__ 		"<table class='table table-bordered table-striped'>\n";
-		__ 		"<thead><tr><th colspan='2'><span style='vertical-align: sub;'>LFD - Login Failure Daemon</span></th></tr></thead>";
+		__ 		"<thead><tr><th colspan='2'><span>LFD - Login Failure Daemon</span></th></tr></thead>";
 		__ 		"<tr><td><form action='$script' method='post'><input type='hidden' name='action' value='lfdstatus'><input type='submit' class='btn btn-default' style='width: 200px;' value='lfd Status'></form></td><td style='width:100%'>Display lfd status</td></tr>\n";
 		__ 		"<tr><td><form action='$script' method='post'><input type='hidden' name='action' value='lfdrestart'><input type='submit' class='btn btn-default' style='width: 200px;' value='lfd Restart'></form></td><td style='width:100%'>Restart lfd</td></tr>\n";
 		__ 		"<tr><td style='white-space: nowrap;'><form action='$script' method='post'><input type='hidden' name='action' value='ignorefiles'><select name='ignorefile'>\n";
@@ -3567,7 +3567,7 @@ EOF
 		{
 			__ "<div id='cluster' class='tab-pane active'>\n";
 			__ 		"<table class='table table-bordered table-striped'>\n";
-			__ 			"<thead><tr><th colspan='2'><span style='vertical-align: sub;'>CSF - LFD Cluster</span></th></tr></thead>";
+			__ 			"<thead><tr><th colspan='2'><span>CSF - LFD Cluster</span></th></tr></thead>";
 
 			__ 			"<tr><td><form action='$script' method='post'><button name='action' value='cping' type='submit' class='btn btn-default' style='width: 200px;'>Cluster PING</button></form></td><td style='width:100%'>Ping each member of the cluster (logged in lfd.log)</td></tr>\n";
 			__ 			"<tr><td><button onClick='\$(\"#callow\").submit();' class='btn btn-default' style='width: 200px;'>Cluster Allow</button></td><td style='width:100%'><form action='$script' method='post' id='callow'><input type='submit' class='hide'><input type='hidden' name='action' value='callow'>Allow IP address <input type='text' name='ip' value='' size='18' class='input-allow'> through the Cluster and add to the allow file (csf.allow)<br>Comment: <input type='text' name='comment' value='' size='30'></form></td></tr>\n";
@@ -3626,27 +3626,27 @@ EOF
 		if ( $config{CF_ENABLE} )
 		{
 			__		"<table class='table table-bordered table-striped'>\n";
-			__			"<thead><tr><th colspan='2'><span style='vertical-align: sub;'>Cloudflare Integration</span></th></tr></thead>";
+			__			"<thead><tr><th colspan='2'><span>Cloudflare Integration</span></th></tr></thead>";
 						# Button › Cloudflare › Configure
 			__			"<tr><td><form action='$script' method='post'><button name='action' value='cloudflareedit' type='submit' class='btn btn-default' style='width: 200px;'"
 							. ($config{CF_ENABLE} ? '' : ' disabled="disabled"') 
 							. ">Configure</button></td><td style='width:100%'>"
 							. ($config{CF_ENABLE} ? '' : "<span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='Requires CF_ENABLE=\"1\"'></span> ") 
-							. "<span style='vertical-align: sub;'>Modify the CSF Cloudflare config file <code>csf.cloudflare</code>. Must configure this to populate user list.</span></td></tr>\n";
+							. "<span>Modify the CSF Cloudflare config file <code>csf.cloudflare</code>. Must configure this to populate user list.</span></td></tr>\n";
 
 						# Button › Cloudflare › Rules
 			__			"<tr><td><form action='$script' method='post'><button name='action' value='cloudflare' type='submit' class='btn btn-default' style='width: 200px;'"
 							. ($config{CF_ENABLE} ? '' : ' disabled="disabled"') 
 							. ">User IP Rules</button></td><td style='width:100%'>"
 							. ($config{CF_ENABLE} ? '' : "<span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='Requires CF_ENABLE=\"1\"'></span> ") 
-							. "<span style='vertical-align: sub;'>Setup associated users and IP rules</span></td></tr>\n";
+							. "<span>Setup associated users and IP rules</span></td></tr>\n";
 			__		"</table>\n";
 		}
 
 		if ( $config{SMTPAUTH_RESTRICT} )
 		{
 			__ 		"<table class='table table-bordered table-striped'>\n";
-			__ 			"<thead><tr><th colspan='2'><span style='vertical-align: sub;'>cPanel SMTP AUTH Restrictions</span></th></tr></thead>";
+			__ 			"<thead><tr><th colspan='2'><span>cPanel SMTP AUTH Restrictions</span></th></tr></thead>";
 			__ 			"<tr><td><form action='$script' method='post'><button name='action' value='smtpauth' type='submit' class='btn btn-default' style='width: 200px;'>Edit SMTP AUTH</button></form></td><td style='width:100%'>Edit the file that allows SMTP AUTH to be advertised to listed IP addresses (csf.smtpauth)</td></tr>\n";
 			__ 		"</table>\n";
 		}
@@ -3664,13 +3664,13 @@ EOF
 			}
 
 			__ 		"<table class='table table-bordered table-striped'>\n";
-			__ 			"<thead><tr><th colspan='2'><span style='vertical-align: sub;'>$resellers</span></th></tr></thead>";
+			__ 			"<thead><tr><th colspan='2'><span>$resellers</span></th></tr></thead>";
 			__ 			"<tr><td><form action='$script' method='post'><button name='action' value='reseller' type='submit' class='btn btn-default' style='width: 200px;'>Edit Reseller Privs</button></form></td><td style='width:100%'>Privileges can be assigned to $resellers accounts by editing this file (csf.resellers)</td></tr>\n";
 			__ 		"</table>\n";
 		}
 
 		__ 			"<table class='table table-bordered table-striped'>\n";
-		__ 				"<thead><tr><th colspan='2'><span style='vertical-align: sub;'>Tools</span></th></tr></thead>";
+		__ 				"<thead><tr><th colspan='2'><span>Tools</span></th></tr></thead>";
 		__ 				"<tr><td><form action='$script' method='post'><button name='action' value='csftest' type='submit' class='btn btn-default' style='width: 200px;'>Test iptables</button></form></td><td style='width:100%'>Check that iptables has the required modules to run csf</td></tr>\n";
 		__ 			"</table>\n";
 		__ 		"</div> <!-- end id='other' -->\n"; # end TAB id='other'
@@ -3700,7 +3700,7 @@ EOF
 		__ 		"<div id='insiders' class='tab-pane active'>\n";
 		__ 			"<div id='sponsor' class='tab-pane'>\n";
 		__ 				"<div class='panel panel-default'>\n";
-		__ 					"<div class='panel-heading text-center'><h4 style='height: 12px;line-height: 12px;'><span style='vertical-align: sub;'>Sponsorship & Insiders Program</span></h4></div>\n";
+		__ 					"<div class='panel-heading text-center'><h4 style='height: 12px;line-height: 12px;'><span>Sponsorship & Insiders Program</span></h4></div>\n";
 							if ( !$config{SPONSOR_LICENSE} )
 							{
 		__						"<div class='panel-body'>\n";
