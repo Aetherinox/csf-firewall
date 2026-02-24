@@ -176,6 +176,8 @@
     --highlight-yellow: #dfd882;
     --highlight-fuchsia: #ffcede;
 
+	--glyphicon-ico: #FFFFFF;
+
     --chosen-sprite: url("chosen-sprite.png");
 }
 
@@ -328,6 +330,8 @@
 
     --highlight-yellow: #7d7404;
     --highlight-fuchsia: #c14870;
+
+	--glyphicon-ico: #FFFFFF;
 
     --chosen-sprite: url("chosen-sprite-w.png");
 }
@@ -2065,7 +2069,7 @@ code
 
 .glyphicon, a .glyphicon
 {
-	color: #7B7B7B;
+	color: var( --glyphicon-ico );
 }
 
 /*
