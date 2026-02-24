@@ -2041,7 +2041,7 @@ EOF
 
 				if ( $config{RESTRICT_UI} and ( $cleanname eq "CLUSTER_KEY" or $cleanname eq "UI_PASS" or $cleanname eq "UI_USER" ) )
 				{
-					print "<div class='" . ( $codename eq 'webmin' ? 'value-other' : 'value-restricted' ) . "' style='margin-block-end:1em !important;padding-left:10px !important'><b style='padding-top: 4px;'>$start</b> = <input type='text' value='********' size='14' disabled> (hidden restricted UI item)</div>\n";
+					print "<div class='" . ( $codename eq 'webmin' ? 'value-other' : 'value-restricted' ) . "' style='margin-block-end:1em !important;padding-left:10px !important'><b>$start</b> = <input type='text' value='********' size='14' disabled> (hidden restricted UI item)</div>\n";
 				}
 
 				# #
@@ -2052,7 +2052,7 @@ EOF
 
 				elsif ( $restricted{$cleanname} )
 				{
-					print "<div class='" . ( $codename eq 'webmin' ? 'value-other' : 'value-restricted' ) . "' style='margin-block-end:1em !important;padding-left:10px !important'><span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='Disabled. Protected by RESTRICT_UI'></span> <b style='padding-top: 4px;'>$start</b> = <input type='text' onFocus='CSFexpand(this);' onkeyup='CSFexpand(this);' value='$escaped_end' size='$size' disabled> (restricted UI item)</div>\n";
+					print "<div class='" . ( $codename eq 'webmin' ? 'value-other' : 'value-restricted' ) . "' style='margin-block-end:1em !important;padding-left:10px !important'><span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='Disabled. Protected by RESTRICT_UI'></span> <b>$start</b> = <input type='text' onFocus='CSFexpand(this);' onkeyup='CSFexpand(this);' value='$escaped_end' size='$size' disabled> (restricted UI item)</div>\n";
 				}
 				else
 				{
@@ -2076,7 +2076,7 @@ EOF
 
 						print "<div class='$class' style='margin-block-end:1em !important;padding-left:10px !important'>"
 							. ($tip ? "<span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='$tip'></span> " : "")
-							. "<b style='padding-top: 4px;'>$start</b> = ";
+							. "<b>$start</b> = ";
 
 						print "<div class='btn-group' data-toggle='buttons'>\n";
 						print "<label class='btn btn-default btn-csf-config option-disabled $switch_active_0'>\n";
@@ -2102,7 +2102,7 @@ EOF
 
 						print "<div class='$class' style='margin-block-end:1em !important;padding-left:10px !important'>"
 							. ($tip ? "<span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='$tip'></span> " : "")
-							. "<b style='padding-top: 4px;'>$start</b> = <select name='$name'>\n";
+							. "<b'>$start</b> = <select name='$name'>\n";
 
 						for ( $showfrom..$showto )
 						{
@@ -2133,7 +2133,7 @@ EOF
 
 						print "<div class='$class' style='margin-block-end:1em !important;padding-left:10px !important'>"
 							. ($tip ? "<span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='$tip'></span> " : "")
-							. "<b style='padding-top: 4px;'>$start</b> = <input type='text' onFocus='CSFexpand(this);' onkeyup='CSFexpand(this);' name='$name' value='$escaped_end' size='$size'>$showrange</div>\n";
+							. "<b>$start</b> = <input type='text' onFocus='CSFexpand(this);' onkeyup='CSFexpand(this);' name='$name' value='$escaped_end' size='$size'>$showrange</div>\n";
 					}
 				}
 			}
