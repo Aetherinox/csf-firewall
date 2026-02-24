@@ -10,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            02.12.2026
+#   @updated            02.23.2026
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -31,62 +31,234 @@ use lib '/usr/local/csf/lib';
 use Fcntl qw(:DEFAULT :flock);
 use IPC::Open3;
 
-umask(0177);
+umask( 0177 );
 
 our (%config, %configsetting, $vps, $oldversion);
 
 $oldversion = $ARGV[0];
 
-open (VERSION, "<","/etc/csf/version.txt");
-flock (VERSION, LOCK_SH);
+open ( VERSION, "<","/etc/csf/version.txt" );
+flock ( VERSION, LOCK_SH );
 my $version = <VERSION>;
-close (VERSION);
+close ( VERSION );
 chomp $version;
 $version =~ s/\W/_/g;
-system("/bin/cp","-avf","/etc/csf/csf.conf","/var/lib/csf/backup/".time."_pre_v${version}_upgrade");
+system( "/bin/cp", "-avf", "/etc/csf/csf.conf", "/var/lib/csf/backup/" . time . "_pre_v${version}_upgrade" );
 
 &loadcsfconfig;
 
-if (-e "/proc/vz/veinfo") {
+# #
+#	Figure out which comments and blank lines come from the source config.
+#	We can then identify custom user comments which will be restored.
+# #
+
+my %source_lines;
+open ( my $SRCIN, "<", "csf.conf" ) or die $!;
+flock ( $SRCIN, LOCK_SH ) or die $!;
+while ( my $srcline = <$SRCIN> )
+{
+	chomp $srcline;
+	if ( $srcline =~ /^\#/ or $srcline =~ /^\s*$/ )
+	{
+		$source_lines{$srcline} = 1;
+	}
+}
+close ( $SRCIN );
+
+# #
+#	@since		v15.10
+#				Extract any custom user comments from existing config in /etc/csf/csf.conf.
+#	
+#				Two types of comments are possible:
+#					1. Regular comment (#)			appear above the next setting they precede
+#					2. Sticky comment (##)			preserve comment in exact position
+# #
+
+my ( %comment_user, %sticky_after, %sticky_before, @custom_trailing );
+{
+	open ( my $USRIN, "<", "/etc/csf/csf.conf" ) or die $!;
+	flock ( $USRIN, LOCK_SH ) or die $!;
+	my @user_lines = <$USRIN>;
+	close ( $USRIN );
+	chomp @user_lines;
+
+	my @cbuf;
+	my @sbuf_after;
+	my @sbuf_before;
+	my $last_setting = "";
+	my $seen_source_comment = 0;
+
+	foreach my $uline ( @user_lines )
+	{
+		# #
+		#	Sticky Comments
+		#	
+		#	Find user sticky comments and add to buffer. Sticky starts with ##
+		#		## CSF Sticky Comment
+		# #
+
+		if ( $uline =~ /^\#\#\s/ )
+		{
+			unless ( $source_lines{$uline} )
+			{
+				if ( $seen_source_comment )
+				{
+					push @sbuf_before, $uline;
+				}
+				else
+				{
+					push @sbuf_after, $uline;
+				}
+			}
+		}
+
+		# #
+		#	Generic Comments
+		#	
+		#	Find normal user comments and add to buffer. Normal starts with #
+		#		# CSF generic comment
+		# #
+		
+		elsif ( $uline =~ /^\#/ )
+		{
+			if ( $source_lines{$uline} )
+			{
+				$seen_source_comment = 1;
+			}
+			else
+			{
+				push @cbuf, $uline;
+			}
+		}
+
+		# #
+		#	Whitespace
+		# #
+		
+		elsif ( $uline =~ /^\s*$/ )
+		{
+			unless ($source_lines{$uline})
+			{
+				push @cbuf, $uline;
+			}
+		}
+
+		# #
+		#	Setting Line
+		# #
+
+		elsif ( $uline =~ /=/ )
+		{
+			my ($uname) = split(/=/, $uline, 2);
+			$uname =~ s/\s//g;
+			if ( @sbuf_after )
+			{
+				if ($last_setting ne "")
+				{
+					push @{$sticky_after{$last_setting}}, @sbuf_after;
+				}
+				else
+				{
+					push @cbuf, @sbuf_after;
+				}
+				@sbuf_after = ();
+			}
+
+			if ( @sbuf_before )
+			{
+				push @{$sticky_before{$uname}}, @sbuf_before;
+				@sbuf_before = ();
+			}
+
+			if ( @cbuf )
+			{
+				push @{$comment_user{$uname}}, @cbuf;
+				@cbuf = ();
+			}
+
+			$last_setting = $uname;
+			$seen_source_comment = 0;
+		}
+		else
+		{
+			unless ( $source_lines{$uline} )
+			{
+				push @cbuf, $uline;
+			}
+		}
+	}
+
+	if ( @sbuf_after and $last_setting ne "" )
+	{
+		push @{$sticky_after{$last_setting}}, @sbuf_after;
+	}
+	elsif ( @sbuf_after )
+	{
+		push @custom_trailing, @sbuf_after;
+	}
+
+	push @custom_trailing, @sbuf_before if @sbuf_before;
+	push @custom_trailing, @cbuf if @cbuf;
+}
+
+if ( -e "/proc/vz/veinfo" )
+{
 	$vps = 1;
-} else {
-	open (IN, "<","/proc/self/status"); 
-	flock (IN, LOCK_SH);
-	while (my $line = <IN>) {
+}
+else
+{
+	open ( IN, "<","/proc/self/status" ); 
+	flock ( IN, LOCK_SH );
+	while ( my $line = <IN> )
+	{
 		chomp $line;
-		if ($line =~ /^envID:\s*(\d+)\s*$/) {
-			if ($1 > 0) {
+		if ($line =~ /^envID:\s*(\d+)\s*$/)
+		{
+			if ($1 > 0)
+			{
 				$vps = 1;
 				last;
 			}
 		}
 	}
-	close (IN);
+	close ( IN );
 }
 
-if ($config{GENERIC}) {
+if ( $config{GENERIC} )
+{
 	exec "./auto.generic.pl";
 	exit;
 }
 
-foreach my $alertfile ("sshalert.txt","sualert.txt","sudoalert.txt","webminalert.txt","cpanelalert.txt") {
-	if (-e "/usr/local/csf/tpl/".$alertfile) {
-		sysopen (my $IN, "/usr/local/csf/tpl/".$alertfile, O_RDWR | O_CREAT);
-		flock ($IN, LOCK_EX);
+foreach my $alertfile ( "sshalert.txt","sualert.txt","sudoalert.txt","webminalert.txt","cpanelalert.txt" )
+{
+	if ( -e "/usr/local/csf/tpl/".$alertfile )
+	{
+		sysopen ( my $IN, "/usr/local/csf/tpl/".$alertfile, O_RDWR | O_CREAT );
+		flock ( $IN, LOCK_EX );
 		my @data = <$IN>;
 		chomp @data;
 		my $hit = 0;
-		foreach my $line (@data) {
-			if ($line =~ /\[text\]/) {$hit = 1}
+
+		foreach my $line ( @data )
+		{
+			if ( $line =~ /\[text\]/ )
+			{
+				$hit = 1
+			}
 		}
-		unless ($hit) {
+
+		unless ( $hit )
+		{
 			print $IN "\nLog line:\n\n[text]\n";
 		}
-		close ($IN);
+
+		close ( $IN );
 	}
 }
 
-if (&checkversion("7.72") and -e "/etc/csf/csf.pignore" and !-e "/var/lib/csf/auto772") {
+if ( &checkversion("7.72") and -e "/etc/csf/csf.pignore" and !-e "/var/lib/csf/auto772" )
+{
 	my %pignore = (
 		'exe:/usr/libexec/dovecot/dict' => 1,
 		'exe:/usr/libexec/mysqld' => 1,
@@ -96,392 +268,573 @@ if (&checkversion("7.72") and -e "/etc/csf/csf.pignore" and !-e "/var/lib/csf/au
 		'exe:/usr/lib/polkit-1/polkitd' => 1,
 		'#cmd:/bin/sh /usr/bin/mysqld_safe' => 1,
 		'exe:/usr/sbin/exim' => 1);
-	sysopen (IN,"/etc/csf/csf.pignore", O_RDWR | O_CREAT);
-	flock (IN, LOCK_EX);
+
+	sysopen ( IN,"/etc/csf/csf.pignore", O_RDWR | O_CREAT );
+	flock ( IN, LOCK_EX );
 	my @data = <IN>;
 	chomp @data;
-	seek (IN, 0, 0);
-	truncate (IN, 0);
-	foreach my $line (@data) {
-		if ($pignore{lc $line}) {delete $pignore{$line}}
+	seek ( IN, 0, 0 );
+	truncate ( IN, 0 );
+
+	foreach my $line ( @data )
+	{
+		if ( $pignore{lc $line} )
+		{
+			delete $pignore{$line}
+		}
 		print IN "$line\n";
 	}
-	foreach my $line (keys %pignore) {
+
+	foreach my $line ( keys %pignore )
+	{
 		print IN "$line\n";
 	}
-	close (IN);
-	open (OUT, ">", "/var/lib/csf/auto772");
-	flock (OUT, LOCK_EX);
+
+	close ( IN );
+	open ( OUT, ">", "/var/lib/csf/auto772" );
+	flock ( OUT, LOCK_EX );
 	print OUT time;
-	close (OUT);
+	close ( OUT );
 }
-if (&checkversion("8.04") and -e "/etc/csf/csf.pignore" and !-e "/var/lib/csf/auto804") {
+
+if ( &checkversion( "8.04" ) and -e "/etc/csf/csf.pignore" and !-e "/var/lib/csf/auto804" )
+{
 	my %pignore = (
 		'exe:/usr/local/cpanel/bin/pkgacct' => 1,
 		'exe:/usr/libexec/dovecot/anvil' => 1,
 		'exe:/usr/libexec/dovecot/auth' => 1,
 		'exe:/usr/sbin/nscd' => 1);
-	sysopen (IN,"/etc/csf/csf.pignore", O_RDWR | O_CREAT);
-	flock (IN, LOCK_EX);
+
+	sysopen ( IN,"/etc/csf/csf.pignore", O_RDWR | O_CREAT );
+	flock ( IN, LOCK_EX );
 	my @data = <IN>;
 	chomp @data;
-	seek (IN, 0, 0);
-	truncate (IN, 0);
-	foreach my $line (@data) {
-		if ($pignore{lc $line}) {delete $pignore{$line}}
+	seek ( IN, 0, 0 );
+	truncate ( IN, 0 );
+
+	foreach my $line ( @data )
+	{
+		if ( $pignore{ lc $line } )
+		{
+			delete $pignore{$line}
+		}
+
 		print IN "$line\n";
 	}
-	foreach my $line (keys %pignore) {
+
+	foreach my $line ( keys %pignore )
+	{
 		print IN "$line\n";
 	}
-	close (IN);
-	open (OUT, ">", "/var/lib/csf/auto804");
-	flock (OUT, LOCK_EX);
+
+	close ( IN );
+	open ( OUT, ">", "/var/lib/csf/auto804" );
+	flock ( OUT, LOCK_EX );
 	print OUT time;
-	close (OUT);
+	close ( OUT );
 }
-if (&checkversion("8.06") and -e "/etc/csf/csf.pignore" and !-e "/var/lib/csf/auto806") {
+
+if ( &checkversion( "8.06" ) and -e "/etc/csf/csf.pignore" and !-e "/var/lib/csf/auto806" )
+{
 	my %pignore = (
 		'exe:/usr/bin/dbus-daemon' => 1,
 		'exe:/usr/sbin/httpd' => 1);
-	sysopen (IN,"/etc/csf/csf.pignore", O_RDWR | O_CREAT);
-	flock (IN, LOCK_EX);
+
+	sysopen ( IN,"/etc/csf/csf.pignore", O_RDWR | O_CREAT );
+	flock ( IN, LOCK_EX );
 	my @data = <IN>;
 	chomp @data;
-	seek (IN, 0, 0);
-	truncate (IN, 0);
-	foreach my $line (@data) {
-		if ($pignore{lc $line}) {delete $pignore{$line}}
+	seek ( IN, 0, 0 );
+	truncate ( IN, 0 );
+
+	foreach my $line ( @data )
+	{
+		if ( $pignore{lc $line} )
+		{
+			delete $pignore{$line}
+		}
 		print IN "$line\n";
 	}
-	foreach my $line (keys %pignore) {
+
+	foreach my $line ( keys %pignore )
+	{
 		print IN "$line\n";
 	}
-	close (IN);
-	open (OUT, ">", "/var/lib/csf/auto806");
-	flock (OUT, LOCK_EX);
+
+	close ( IN );
+	open ( OUT, ">", "/var/lib/csf/auto806" );
+	flock ( OUT, LOCK_EX );
 	print OUT time;
-	close (OUT);
+	close ( OUT );
 }
-if (&checkversion("8.13") and -e "/etc/csf/csf.pignore" and !-e "/var/lib/csf/auto813") {
+
+if ( &checkversion( "8.13" ) and -e "/etc/csf/csf.pignore" and !-e "/var/lib/csf/auto813" )
+{
 	my %pignore = (
 		'exe:/usr/local/cpanel/3rdparty/php/54/sbin/php-fpm' => 1);
-	sysopen (IN,"/etc/csf/csf.pignore", O_RDWR | O_CREAT);
-	flock (IN, LOCK_EX);
+
+	sysopen ( IN,"/etc/csf/csf.pignore", O_RDWR | O_CREAT );
+	flock ( IN, LOCK_EX );
 	my @data = <IN>;
 	chomp @data;
-	seek (IN, 0, 0);
-	truncate (IN, 0);
-	foreach my $line (@data) {
-		if ($pignore{lc $line}) {delete $pignore{$line}}
+	seek ( IN, 0, 0 );
+	truncate ( IN, 0 );
+
+	foreach my $line ( @data )
+	{
+		if ( $pignore{lc $line} )
+		{
+			delete $pignore{$line}
+		}
 		print IN "$line\n";
 	}
-	foreach my $line (keys %pignore) {
+
+	foreach my $line ( keys %pignore )
+	{
 		print IN "$line\n";
 	}
-	close (IN);
-	open (OUT, ">", "/var/lib/csf/auto813");
-	flock (OUT, LOCK_EX);
+
+	close ( IN );
+	open ( OUT, ">", "/var/lib/csf/auto813" );
+	flock ( OUT, LOCK_EX );
 	print OUT time;
-	close (OUT);
+	close ( OUT );
 }
-if (&checkversion("8.26") and -e "/etc/csf/csf.pignore" and !-e "/var/lib/csf/auto826") {
+
+if ( &checkversion("8.26") and -e "/etc/csf/csf.pignore" and !-e "/var/lib/csf/auto826" )
+{
 	my %pignore = (
 		'exe:/usr/libexec/dovecot/quota-status' => 1,
 		'exe:/usr/libexec/dovecot/stats' => 1);
-	sysopen (IN,"/etc/csf/csf.pignore", O_RDWR | O_CREAT);
-	flock (IN, LOCK_EX);
+
+	sysopen ( IN,"/etc/csf/csf.pignore", O_RDWR | O_CREAT );
+	flock ( IN, LOCK_EX );
 	my @data = <IN>;
 	chomp @data;
-	seek (IN, 0, 0);
-	truncate (IN, 0);
-	foreach my $line (@data) {
-		if ($pignore{lc $line}) {delete $pignore{$line}}
+	seek ( IN, 0, 0 );
+	truncate ( IN, 0 );
+
+	foreach my $line ( @data )
+	{
+		if ( $pignore{lc $line} )
+		{
+			delete $pignore{$line}
+		}
 		print IN "$line\n";
 	}
-	foreach my $line (keys %pignore) {
+
+	foreach my $line ( keys %pignore )
+	{
 		print IN "$line\n";
 	}
-	close (IN);
-	open (OUT, ">", "/var/lib/csf/auto826");
-	flock (OUT, LOCK_EX);
-	print OUT time;
-	close (OUT);
+
+	close ( IN );
+	open ( OUT, ">", "/var/lib/csf/auto826" );
+	flock ( OUT, LOCK_EX );
+	print  OUT time;
+	close ( OUT );
 }
-if (&checkversion("8.27") and -e "/etc/csf/csf.pignore" and !-e "/var/lib/csf/auto827") {
+
+if ( &checkversion("8.27") and -e "/etc/csf/csf.pignore" and !-e "/var/lib/csf/auto827" )
+{
 	my %pignore = (
-		'exe:/usr/libexec/dovecot/lmtp' => 1);
-	sysopen (IN,"/etc/csf/csf.pignore", O_RDWR | O_CREAT);
-	flock (IN, LOCK_EX);
+		'exe:/usr/libexec/dovecot/lmtp' => 1 );
+
+	sysopen ( IN,"/etc/csf/csf.pignore", O_RDWR | O_CREAT );
+	flock ( IN, LOCK_EX );
 	my @data = <IN>;
 	chomp @data;
-	seek (IN, 0, 0);
-	truncate (IN, 0);
-	foreach my $line (@data) {
-		if ($pignore{lc $line}) {delete $pignore{$line}}
+	seek ( IN, 0, 0 );
+	truncate ( IN, 0 );
+
+	foreach my $line ( @data )
+	{
+		if ( $pignore{lc $line} )
+		{
+			delete $pignore{$line}
+		}
 		print IN "$line\n";
 	}
-	foreach my $line (keys %pignore) {
+
+	foreach my $line ( keys %pignore )
+	{
 		print IN "$line\n";
 	}
-	close (IN);
+
+	close ( IN );
 	open (OUT, ">", "/var/lib/csf/auto827");
-	flock (OUT, LOCK_EX);
+	flock ( OUT, LOCK_EX );
 	print OUT time;
-	close (OUT);
+	close ( OUT );
 }
-if (&checkversion("9.00") and !-e "/var/lib/csf/auto900") {
+
+if ( &checkversion( "9.00" ) and !-e "/var/lib/csf/auto900" )
+{
 	my %pignore = (
 		'exe:/usr/local/cpanel/3rdparty/php/54/bin/php-cgi' => 1,
 		'exe:/usr/local/cpanel/3rdparty/php/56/bin/php-cgi' => 1,
 		'exe:/usr/local/cpanel/3rdparty/php/56/sbin/php-fpm' => 1);
-	sysopen (IN,"/etc/csf/csf.pignore", O_RDWR | O_CREAT);
-	flock (IN, LOCK_EX);
+
+	sysopen ( IN,"/etc/csf/csf.pignore", O_RDWR | O_CREAT );
+	flock ( IN, LOCK_EX );
 	my @data = <IN>;
 	chomp @data;
-	seek (IN, 0, 0);
-	truncate (IN, 0);
-	foreach my $line (@data) {
-		if ($pignore{lc $line}) {delete $pignore{$line}}
+	seek ( IN, 0, 0 );
+	truncate ( IN, 0 );
+
+	foreach my $line ( @data )
+	{
+		if ( $pignore{lc $line} )
+		{
+			delete $pignore{$line}
+		}
+
 		print IN "$line\n";
 	}
-	foreach my $line (keys %pignore) {
+
+	foreach my $line ( keys %pignore )
+	{
 		print IN "$line\n";
 	}
-	close (IN);
+	close ( IN );
 
 	my %allow = (
-		'Include /etc/csf/cpanel.comodo.allow' => 1);
-	sysopen (IN,"/etc/csf/csf.allow", O_RDWR | O_CREAT);
-	flock (IN, LOCK_EX);
+		'Include /etc/csf/cpanel.comodo.allow' => 1 );
+
+	sysopen ( IN,"/etc/csf/csf.allow", O_RDWR | O_CREAT );
+	flock ( IN, LOCK_EX );
 	@data = <IN>;
 	chomp @data;
-	seek (IN, 0, 0);
-	truncate (IN, 0);
-	foreach my $line (@data) {
-		if ($allow{$line}) {delete $allow{$line}}
+	seek ( IN, 0, 0 );
+	truncate ( IN, 0 );
+
+	foreach my $line ( @data )
+	{
+		if ( $allow{$line} )
+		{
+			delete $allow{$line}
+		}
 		print IN "$line\n";
 	}
-	foreach my $line (keys %allow) {
+
+	foreach my $line ( keys %allow )
+	{
 		print IN "$line\n";
 	}
-	close (IN);
+	close ( IN );
 
 	my %ignore = (
-		'Include /etc/csf/cpanel.comodo.ignore' => 1);
-	sysopen (IN,"/etc/csf/csf.ignore", O_RDWR | O_CREAT);
-	flock (IN, LOCK_EX);
+		'Include /etc/csf/cpanel.comodo.ignore' => 1 );
+
+	sysopen ( IN,"/etc/csf/csf.ignore", O_RDWR | O_CREAT );
+	flock ( IN, LOCK_EX );
 	@data = <IN>;
 	chomp @data;
-	seek (IN, 0, 0);
-	truncate (IN, 0);
-	foreach my $line (@data) {
-		if ($ignore{$line}) {delete $ignore{$line}}
-		print IN "$line\n";
-	}
-	foreach my $line (keys %ignore) {
-		print IN "$line\n";
-	}
-	close (IN);
+	seek ( IN, 0, 0 );
+	truncate ( IN, 0 );
 
-	open (OUT, ">", "/var/lib/csf/auto900");
-	flock (OUT, LOCK_EX);
+	foreach my $line ( @data )
+	{
+		if ( $ignore{$line} )
+		{
+			delete $ignore{$line}
+		}
+		print IN "$line\n";
+	}
+
+	foreach my $line ( keys %ignore )
+	{
+		print IN "$line\n";
+	}
+
+	close ( IN );
+
+	open ( OUT, ">", "/var/lib/csf/auto900" );
+	flock ( OUT, LOCK_EX );
 	print OUT time;
-	close (OUT);
+	close ( OUT );
 }
-if (&checkversion("9.12") and -e "/etc/csf/csf.pignore" and !-e "/var/lib/csf/auto912") {
+
+if ( &checkversion( "9.12" ) and -e "/etc/csf/csf.pignore" and !-e "/var/lib/csf/auto912" )
+{
 	my %pignore = (
 		'exe:/usr/local/cpanel/bin/whm_xfer_download-ssl' => 1,
 		'exe:/usr/local/cpanel/bin/autossl_check' => 1,
-		'exe:/usr/sbin/pdns_server' => 1);
-	sysopen (IN,"/etc/csf/csf.pignore", O_RDWR | O_CREAT);
-	flock (IN, LOCK_EX);
+		'exe:/usr/sbin/pdns_server' => 1 );
+
+	sysopen ( IN,"/etc/csf/csf.pignore", O_RDWR | O_CREAT );
+	flock ( IN, LOCK_EX );
 	my @data = <IN>;
 	chomp @data;
-	seek (IN, 0, 0);
-	truncate (IN, 0);
-	foreach my $line (@data) {
-		if ($pignore{lc $line}) {delete $pignore{$line}}
+	seek ( IN, 0, 0 );
+	truncate ( IN, 0 );
+
+	foreach my $line (@data)
+	{
+		if ( $pignore{lc $line} )
+		{
+			delete $pignore{$line}
+		}
 		print IN "$line\n";
 	}
-	foreach my $line (keys %pignore) {
+
+	foreach my $line ( keys %pignore )
+	{
 		print IN "$line\n";
 	}
-	close (IN);
-	open (OUT, ">", "/var/lib/csf/auto912");
-	flock (OUT, LOCK_EX);
+
+	close ( IN );
+	open ( OUT, ">", "/var/lib/csf/auto912" );
+	flock ( OUT, LOCK_EX );
 	print OUT time;
-	close (OUT);
+	close ( OUT );
 }
-if (&checkversion("10.02") and -e "/etc/csf/csf.pignore" and !-e "/var/lib/csf/auto1002") {
+
+if ( &checkversion( "10.02" ) and -e "/etc/csf/csf.pignore" and !-e "/var/lib/csf/auto1002" )
+{
 	my %pignore = (
-		'pexe:^/usr/lib/jvm/java-.*/jre/bin/java$' => 1);
-	sysopen (IN,"/etc/csf/csf.pignore", O_RDWR | O_CREAT);
-	flock (IN, LOCK_EX);
+		'pexe:^/usr/lib/jvm/java-.*/jre/bin/java$' => 1 );
+
+	sysopen ( IN,"/etc/csf/csf.pignore", O_RDWR | O_CREAT );
+	flock ( IN, LOCK_EX );
 	my @data = <IN>;
 	chomp @data;
-	seek (IN, 0, 0);
-	truncate (IN, 0);
-	foreach my $line (@data) {
-		if ($pignore{lc $line}) {delete $pignore{$line}}
+	seek ( IN, 0, 0 );
+	truncate ( IN, 0 );
+
+	foreach my $line ( @data )
+	{
+		if ( $pignore{lc $line} )
+		{
+			delete $pignore{$line}
+		}
 		print IN "$line\n";
 	}
-	foreach my $line (keys %pignore) {
+
+	foreach my $line ( keys %pignore )
+	{
 		print IN "$line\n";
 	}
-	close (IN);
+
+	close ( IN );
 	open (OUT, ">", "/var/lib/csf/auto1002");
-	flock (OUT, LOCK_EX);
+	flock ( OUT, LOCK_EX );
 	print OUT time;
-	close (OUT);
+	close ( OUT );
 }
-if (&checkversion("10.06") and -e "/etc/csf/csf.pignore" and !-e "/var/lib/csf/auto1006") {
+
+if ( &checkversion( "10.06" ) and -e "/etc/csf/csf.pignore" and !-e "/var/lib/csf/auto1006" )
+{
 	my %pignore = (
 		'exe:/usr/libexec/dovecot/indexer' => 1,
-		'exe:/usr/libexec/dovecot/indexer-worker' => 1);
-	sysopen (IN,"/etc/csf/csf.pignore", O_RDWR | O_CREAT);
-	flock (IN, LOCK_EX);
+		'exe:/usr/libexec/dovecot/indexer-worker' => 1 );
+
+	sysopen ( IN,"/etc/csf/csf.pignore", O_RDWR | O_CREAT );
+	flock ( IN, LOCK_EX );
 	my @data = <IN>;
 	chomp @data;
-	seek (IN, 0, 0);
-	truncate (IN, 0);
-	foreach my $line (@data) {
-		if ($pignore{lc $line}) {delete $pignore{$line}}
+	seek ( IN, 0, 0 );
+	truncate ( IN, 0 );
+
+	foreach my $line ( @data )
+	{
+		if ( $pignore{lc $line} )
+		{
+			delete $pignore{$line}
+		}
 		print IN "$line\n";
 	}
-	foreach my $line (keys %pignore) {
+
+	foreach my $line (keys %pignore)
+	{
 		print IN "$line\n";
 	}
-	close (IN);
-	open (OUT, ">", "/var/lib/csf/auto1006");
-	flock (OUT, LOCK_EX);
+
+	close ( IN );
+	open ( OUT, ">", "/var/lib/csf/auto1006" );
+	flock ( OUT, LOCK_EX );
 	print OUT time;
-	close (OUT);
+	close ( OUT );
 }
-if (&checkversion("10.08") and !-e "/var/lib/csf/auto1008") {
+
+if ( &checkversion( "10.08" ) and !-e "/var/lib/csf/auto1008" )
+{
 	my %allow = (
-		'Include /etc/csf/cpanel.allow' => 1);
+		'Include /etc/csf/cpanel.allow' => 1 );
+
 	sysopen (IN,"/etc/csf/csf.allow", O_RDWR | O_CREAT);
 	flock (IN, LOCK_EX);
 	my @data = <IN>;
 	chomp @data;
 	seek (IN, 0, 0);
 	truncate (IN, 0);
-	foreach my $line (@data) {
-		if ($allow{$line}) {delete $allow{$line}}
+
+	foreach my $line (@data)
+	{
+		if ($allow{$line})
+		{
+			delete $allow{$line}
+		}
 		print IN "$line\n";
 	}
-	foreach my $line (keys %allow) {
+
+	foreach my $line (keys %allow)
+	{
 		print IN "$line\n";
 	}
-	close (IN);
+	close ( IN );
 
 	my %ignore = (
 		'Include /etc/csf/cpanel.ignore' => 1);
+
 	sysopen (IN,"/etc/csf/csf.ignore", O_RDWR | O_CREAT);
 	flock (IN, LOCK_EX);
 	@data = <IN>;
 	chomp @data;
 	seek (IN, 0, 0);
 	truncate (IN, 0);
-	foreach my $line (@data) {
-		if ($ignore{$line}) {delete $ignore{$line}}
+
+	foreach my $line (@data)
+	{
+		if ($ignore{$line})
+		{
+			delete $ignore{$line}
+		}
 		print IN "$line\n";
 	}
-	foreach my $line (keys %ignore) {
+
+	foreach my $line (keys %ignore)
+	{
 		print IN "$line\n";
 	}
-	close (IN);
+
+	close ( IN );
 
 	open (OUT, ">", "/var/lib/csf/auto1008");
-	flock (OUT, LOCK_EX);
+	flock ( OUT, LOCK_EX );
 	print OUT time;
-	close (OUT);
+	close ( OUT );
 }
-if (&checkversion("10.11") and !-e "/var/lib/csf/auto1011") {
-	if (-e "/var/lib/csf/stats/lfdstats") {
+
+if (&checkversion("10.11") and !-e "/var/lib/csf/auto1011")
+{
+	if (-e "/var/lib/csf/stats/lfdstats")
+	{
 		sysopen (STATS,"/var/lib/csf/stats/lfdstats", O_RDWR | O_CREAT);
 		flock (STATS, LOCK_EX);
 		my @stats = <STATS>;
 		chomp @stats;
 		my %ccs;
 		my @line = split(/\,/,$stats[69]);
-		for (my $x = 0; $x < @line; $x+=2) {$ccs{$line[$x]} = $line[$x+1]}
+
+		for (my $x = 0; $x < @line; $x+=2)
+		{
+			$ccs{$line[$x]} = $line[$x+1]
+		}
+
 		$stats[69] = "";
-		foreach my $key (keys %ccs) {$stats[69] .= "$key,$ccs{$key},"}
+		foreach my $key (keys %ccs)
+		{
+			$stats[69] .= "$key,$ccs{$key},"
+		}
+
 		seek (STATS, 0, 0);
 		truncate (STATS, 0);
-		foreach my $line (@stats) {
+	
+		foreach my $line (@stats)
+		{
 			print STATS "$line\n";
 		}
+
 		close (STATS);
 	}
 
 	open (OUT, ">", "/var/lib/csf/auto1011");
-	flock (OUT, LOCK_EX);
+	flock ( OUT, LOCK_EX );
 	print OUT time;
-	close (OUT);
+	close ( OUT );
 }
-if (&checkversion("10.23") and !-e "/var/lib/csf/auto1023") {
-	if (-e "/etc/csf/csf.blocklists") {
+
+if (&checkversion("10.23") and !-e "/var/lib/csf/auto1023")
+{
+	if (-e "/etc/csf/csf.blocklists")
+	{
 		sysopen (IN,"/etc/csf/csf.blocklists", O_RDWR | O_CREAT);
 		flock (IN, LOCK_EX);
 		my @data = <IN>;
 		chomp @data;
 		seek (IN, 0, 0);
 		truncate (IN, 0);
+
 		my $SPAMDROPV6 = 0;
 		my $STOPFORUMSPAMV6 = 0;
-		foreach my $line (@data) {
+
+		foreach my $line (@data)
+		{
 			if ($line =~ /^(\#)?SPAMDROPV6/) {$SPAMDROPV6 = 1}
 			if ($line =~ /^(\#)?STOPFORUMSPAMV6/) {$STOPFORUMSPAMV6 = 1}
 			print IN "$line\n";
 		}
-		unless ($SPAMDROPV6) {
+
+		unless ($SPAMDROPV6)
+		{
 			print IN "\n# Spamhaus IPv6 Don't Route Or Peer List (DROPv6)\n";
 			print IN "# Details: http://www.spamhaus.org/drop/\n";
 			print IN "#SPAMDROPV6|86400|0|https://www.spamhaus.org/drop/dropv6.txt\n";
 		}
-		unless ($STOPFORUMSPAMV6) {
+
+		unless ($STOPFORUMSPAMV6)
+		{
 			print IN "\n# Stop Forum Spam IPv6\n";
 			print IN "# Details: http://www.stopforumspam.com/downloads/\n";
 			print IN "# Many of the lists available contain a vast number of IP addresses so special\n";
 			print IN "# care needs to be made when selecting from their lists\n";
 			print IN "#STOPFORUMSPAMV6|86400|0|http://www.stopforumspam.com/downloads/listed_ip_1_ipv6.zip\n";
 		}
-		close (IN);
+		close ( IN );
 	}
 
 	open (OUT, ">", "/var/lib/csf/auto1023");
-	flock (OUT, LOCK_EX);
+	flock ( OUT, LOCK_EX );
 	print OUT time;
-	close (OUT);
+	close ( OUT );
 }
-if (&checkversion("11.07") and -e "/etc/csf/csf.pignore" and !-e "/var/lib/csf/auto1107") {
+
+if (&checkversion("11.07") and -e "/etc/csf/csf.pignore" and !-e "/var/lib/csf/auto1107")
+{
 	my %pignore = (
 		'pexe:/usr/local/cpanel/3rdparty/bin/git.*' => 1,
 		'pexe:/usr/local/cpanel/3rdparty/libexec/git-core/git.*' => 1);
+
 	sysopen (IN,"/etc/csf/csf.pignore", O_RDWR | O_CREAT);
 	flock (IN, LOCK_EX);
 	my @data = <IN>;
 	chomp @data;
 	seek (IN, 0, 0);
 	truncate (IN, 0);
-	foreach my $line (@data) {
+
+	foreach my $line (@data)
+	{
 		if ($pignore{lc $line}) {delete $pignore{$line}}
 		print IN "$line\n";
 	}
-	foreach my $line (keys %pignore) {
+
+	foreach my $line (keys %pignore)
+	{
 		print IN "$line\n";
 	}
-	close (IN);
+
+	close ( IN );
 	open (OUT, ">", "/var/lib/csf/auto1107");
-	flock (OUT, LOCK_EX);
+	flock ( OUT, LOCK_EX );
 	print OUT time;
-	close (OUT);
+	close ( OUT );
 }
-if (&checkversion("12.02") and !-e "/var/lib/csf/auto1202") {
-	if (-e "/etc/csf/csf.blocklists") {
+
+if (&checkversion("12.02") and !-e "/var/lib/csf/auto1202")
+{
+	if (-e "/etc/csf/csf.blocklists")
+	{
 		sysopen (IN,"/etc/csf/csf.blocklists", O_RDWR | O_CREAT);
 		flock (IN, LOCK_EX);
 		my @data = <IN>;
@@ -492,15 +845,17 @@ if (&checkversion("12.02") and !-e "/var/lib/csf/auto1202") {
 			if ($line =~ /greensnow/) {$line =~ s/http:/https:/g}
 			print IN "$line\n";
 		}
-		close (IN);
+		close ( IN );
 	}
 
 	open (OUT, ">", "/var/lib/csf/auto1202");
-	flock (OUT, LOCK_EX);
+	flock ( OUT, LOCK_EX );
 	print OUT time;
-	close (OUT);
+	close ( OUT );
 }
-if (&checkversion("12.05") and !-e "/var/lib/csf/auto1205") {
+
+if (&checkversion("12.05") and !-e "/var/lib/csf/auto1205")
+{
 	if (-e "/etc/csf/csf.blocklists") {
 		sysopen (IN,"/etc/csf/csf.blocklists", O_RDWR | O_CREAT);
 		flock (IN, LOCK_EX);
@@ -512,15 +867,17 @@ if (&checkversion("12.05") and !-e "/var/lib/csf/auto1205") {
 			if ($line =~ /projecthoneypot/) {$line =~ s/http:/https:/g}
 			print IN "$line\n";
 		}
-		close (IN);
+		close ( IN );
 	}
 
 	open (OUT, ">", "/var/lib/csf/auto1205");
-	flock (OUT, LOCK_EX);
+	flock ( OUT, LOCK_EX );
 	print OUT time;
-	close (OUT);
+	close ( OUT );
 }
-if (&checkversion("12.07") and -e "/etc/csf/csf.pignore" and !-e "/var/lib/csf/auto1207") {
+
+if (&checkversion("12.07") and -e "/etc/csf/csf.pignore" and !-e "/var/lib/csf/auto1207")
+{
 	my %pignore = (
 		'#pcmd:ubic-guardian ubic-periodic.*' => 1,
 		'#pcmd:perl /usr/local/cpanel/3rdparty/perl/\d+/bin/ubic-periodic.*' => 1);
@@ -537,13 +894,15 @@ if (&checkversion("12.07") and -e "/etc/csf/csf.pignore" and !-e "/var/lib/csf/a
 	foreach my $line (keys %pignore) {
 		print IN "$line\n";
 	}
-	close (IN);
+	close ( IN );
 	open (OUT, ">", "/var/lib/csf/auto1207");
-	flock (OUT, LOCK_EX);
+	flock ( OUT, LOCK_EX );
 	print OUT time;
-	close (OUT);
+	close ( OUT );
 }
-if (&checkversion("12.10") and -e "/etc/csf/csf.fignore" and !-e "/var/lib/csf/auto1210") {
+
+if (&checkversion("12.10") and -e "/etc/csf/csf.fignore" and !-e "/var/lib/csf/auto1210")
+{
 	my %fignore = ('/tmp/yarn--[\d\-\.]+/(node|yarn)' => 1);
 	sysopen (IN,"/etc/csf/csf.fignore", O_RDWR | O_CREAT);
 	flock (IN, LOCK_EX);
@@ -558,32 +917,39 @@ if (&checkversion("12.10") and -e "/etc/csf/csf.fignore" and !-e "/var/lib/csf/a
 	foreach my $line (keys %fignore) {
 		print IN "$line\n";
 	}
-	close (IN);
+	close ( IN );
 	open (OUT, ">", "/var/lib/csf/auto1210");
-	flock (OUT, LOCK_EX);
+	flock ( OUT, LOCK_EX );
 	print OUT time;
-	close (OUT);
+	close ( OUT );
 }
-if (&checkversion("14.01") and -e "/etc/csf/csf.pignore" and !-e "/var/lib/csf/auto1401") {
+
+if (&checkversion("14.01") and -e "/etc/csf/csf.pignore" and !-e "/var/lib/csf/auto1401")
+{
 	sysopen (IN,"/etc/csf/csf.pignore", O_RDWR | O_CREAT);
 	flock (IN, LOCK_EX);
 	my @data = <IN>;
 	chomp @data;
 	seek (IN, 0, 0);
 	truncate (IN, 0);
-	foreach my $line (@data) {
+
+	foreach my $line (@data)
+	{
 		if ($line =~ /pcmd:\/usr\/bin\/python \/usr\/local\/cpanel\/3rdparty\/mailman\/bin\//) {
 			$line =~ s/pcmd:\/usr\/bin\/python /pcmd:\/usr\/bin\/python\.\? /g;
 		}
 		print IN "$line\n";
 	}
-	close (IN);
+
+	close ( IN );
 	open (OUT, ">", "/var/lib/csf/auto1401");
-	flock (OUT, LOCK_EX);
+	flock ( OUT, LOCK_EX );
 	print OUT time;
-	close (OUT);
+	close ( OUT );
 }
-if (&checkversion("14.02") and -e "/etc/csf/csf.pignore" and !-e "/var/lib/csf/auto1402") {
+
+if (&checkversion("14.02") and -e "/etc/csf/csf.pignore" and !-e "/var/lib/csf/auto1402")
+{
 	my %pignore = (
 		'exe:/usr/libexec/dovecot/imap-hibernate' => 1);
 	sysopen (IN,"/etc/csf/csf.pignore", O_RDWR | O_CREAT);
@@ -599,12 +965,13 @@ if (&checkversion("14.02") and -e "/etc/csf/csf.pignore" and !-e "/var/lib/csf/a
 	foreach my $line (keys %pignore) {
 		print IN "$line\n";
 	}
-	close (IN);
+	close ( IN );
 	open (OUT, ">", "/var/lib/csf/auto1402");
-	flock (OUT, LOCK_EX);
+	flock ( OUT, LOCK_EX );
 	print OUT time;
-	close (OUT);
+	close ( OUT );
 }
+
 if (&checkversion("14.03") and !-e "/var/lib/csf/auto1403") {
 	if (-e "/etc/csf/csf.blocklists") {
 		sysopen (IN,"/etc/csf/csf.blocklists", O_RDWR | O_CREAT);
@@ -617,84 +984,109 @@ if (&checkversion("14.03") and !-e "/var/lib/csf/auto1403") {
 			if ($line =~ /dshield/) {$line =~ s/http:/https:/g}
 			print IN "$line\n";
 		}
-		close (IN);
+		close ( IN );
 	}
 
 	open (OUT, ">", "/var/lib/csf/auto1403");
-	flock (OUT, LOCK_EX);
+	flock ( OUT, LOCK_EX );
 	print OUT time;
-	close (OUT);
+	close ( OUT );
 }
-if (&checkversion("14.05") and -e "/etc/csf/csf.pignore" and !-e "/var/lib/csf/auto1405") {
+
+if (&checkversion("14.05") and -e "/etc/csf/csf.pignore" and !-e "/var/lib/csf/auto1405")
+{
 	my %pignore = (
 		'exe:/usr/sbin/imunify-notifier' => 1);
+
 	sysopen (IN,"/etc/csf/csf.pignore", O_RDWR | O_CREAT);
 	flock (IN, LOCK_EX);
 	my @data = <IN>;
 	chomp @data;
 	seek (IN, 0, 0);
 	truncate (IN, 0);
-	foreach my $line (@data) {
+
+	foreach my $line (@data)
+	{
 		if ($pignore{lc $line}) {delete $pignore{$line}}
 		print IN "$line\n";
 	}
-	foreach my $line (keys %pignore) {
+
+	foreach my $line (keys %pignore)
+	{
 		print IN "$line\n";
 	}
-	close (IN);
+
+	close ( IN );
 	open (OUT, ">", "/var/lib/csf/auto1405");
-	flock (OUT, LOCK_EX);
+	flock ( OUT, LOCK_EX );
 	print OUT time;
-	close (OUT);
+	close ( OUT );
 }
-if (&checkversion("14.06") and -e "/etc/csf/csf.pignore" and !-e "/var/lib/csf/auto1406") {
+
+if (&checkversion("14.06") and -e "/etc/csf/csf.pignore" and !-e "/var/lib/csf/auto1406")
+{
 	my %pignore = (
 		'exe:/usr/bin/sw-engine' => 1,
 		'exe:/usr/sbin/sw-engine-fpm' => 1,
 		'exe:/usr/sbin/sw-cp-serverd' => 1);
+
 	sysopen (IN,"/etc/csf/csf.pignore", O_RDWR | O_CREAT);
 	flock (IN, LOCK_EX);
 	my @data = <IN>;
 	chomp @data;
 	seek (IN, 0, 0);
 	truncate (IN, 0);
-	foreach my $line (@data) {
+
+	foreach my $line (@data)
+	{
 		if ($pignore{lc $line}) {delete $pignore{$line}}
 		print IN "$line\n";
 	}
-	foreach my $line (keys %pignore) {
+
+	foreach my $line (keys %pignore)
+	{
 		print IN "$line\n";
 	}
-	close (IN);
+
+	close ( IN );
 	open (OUT, ">", "/var/lib/csf/auto1406");
-	flock (OUT, LOCK_EX);
+	flock ( OUT, LOCK_EX );
 	print OUT time;
-	close (OUT);
-}
-if (&checkversion("14.18") and -e "/etc/csf/csf.pignore" and !-e "/var/lib/csf/auto1418") {
-	my %pignore = (
-		'exe:/usr/local/cpanel/3rdparty/wp-toolkit/bin/wpt-panopticon' => 1);
-	sysopen (IN,"/etc/csf/csf.pignore", O_RDWR | O_CREAT);
-	flock (IN, LOCK_EX);
-	my @data = <IN>;
-	chomp @data;
-	seek (IN, 0, 0);
-	truncate (IN, 0);
-	foreach my $line (@data) {
-		if ($pignore{lc $line}) {delete $pignore{$line}}
-		print IN "$line\n";
-	}
-	foreach my $line (keys %pignore) {
-		print IN "$line\n";
-	}
-	close (IN);
-	open (OUT, ">", "/var/lib/csf/auto1418");
-	flock (OUT, LOCK_EX);
-	print OUT time;
-	close (OUT);
+	close ( OUT );
 }
 
-if (-e "/usr/local/csf/bin/regex.custom.pm") {
+if (&checkversion("14.18") and -e "/etc/csf/csf.pignore" and !-e "/var/lib/csf/auto1418")
+{
+	my %pignore = (
+		'exe:/usr/local/cpanel/3rdparty/wp-toolkit/bin/wpt-panopticon' => 1);
+
+	sysopen (IN,"/etc/csf/csf.pignore", O_RDWR | O_CREAT);
+	flock (IN, LOCK_EX);
+	my @data = <IN>;
+	chomp @data;
+	seek (IN, 0, 0);
+	truncate (IN, 0);
+
+	foreach my $line (@data)
+	{
+		if ($pignore{lc $line}) {delete $pignore{$line}}
+		print IN "$line\n";
+	}
+
+	foreach my $line (keys %pignore)
+	{
+		print IN "$line\n";
+	}
+
+	close ( IN );
+	open (OUT, ">", "/var/lib/csf/auto1418");
+	flock ( OUT, LOCK_EX );
+	print OUT time;
+	close ( OUT );
+}
+
+if (-e "/usr/local/csf/bin/regex.custom.pm")
+{
 	sysopen (IN,"/usr/local/csf/bin/regex.custom.pm", O_RDWR | O_CREAT);
 	flock (IN, LOCK_EX);
 	my @data = <IN>;
@@ -705,9 +1097,11 @@ if (-e "/usr/local/csf/bin/regex.custom.pm") {
 		if ($line =~ /^use strict;/) {next}
 		print IN "$line\n";
 	}
-	close (IN);
+	close ( IN );
 }
-if (-e "/etc/csf/csf.blocklists") {
+
+if (-e "/etc/csf/csf.blocklists")
+{
 	sysopen (IN,"/etc/csf/csf.blocklists", O_RDWR | O_CREAT);
 	flock (IN, LOCK_EX);
 	my @data = <IN>;
@@ -720,9 +1114,11 @@ if (-e "/etc/csf/csf.blocklists") {
 		if ($line =~ /autoshun/i) {next}
 		print IN "$line\n";
 	}
-	close (IN);
+	close ( IN );
 }
-if (-e "/var/lib/csf/csf.tempban") {
+
+if (-e "/var/lib/csf/csf.tempban")
+{
 	sysopen (IN,"/var/lib/csf/csf.tempban", O_RDWR | O_CREAT);
 	flock (IN, LOCK_EX);
 	my @data = <IN>;
@@ -733,9 +1129,11 @@ if (-e "/var/lib/csf/csf.tempban") {
 		if ($line =~ /^\d+\:/) {$line =~ s/\:/\|/g}
 		print IN "$line\n";
 	}
-	close (IN);
+	close ( IN );
 }
-if (-e "/var/lib/csf/csf.tempallow") {
+
+if (-e "/var/lib/csf/csf.tempallow")
+{
 	sysopen (IN,"/var/lib/csf/csf.tempallow", O_RDWR | O_CREAT);
 	flock (IN, LOCK_EX);
 	my @data = <IN>;
@@ -746,9 +1144,11 @@ if (-e "/var/lib/csf/csf.tempallow") {
 		if ($line =~ /^\d+\:/) {$line =~ s/\:/\|/g}
 		print IN "$line\n";
 	}
-	close (IN);
+	close ( IN );
 }
-if (-e "/usr/local/csf/tpl/reselleralert.txt") {
+
+if (-e "/usr/local/csf/tpl/reselleralert.txt")
+{
 	sysopen (IN,"/usr/local/csf/tpl/reselleralert.txt", O_RDWR | O_CREAT);
 	flock (IN, LOCK_EX);
 	my @data = <IN>;
@@ -761,58 +1161,65 @@ if (-e "/usr/local/csf/tpl/reselleralert.txt") {
 		print IN "$line\n";
 	}
 	unless ($text) {print IN "\n[text]\n"}
-	close (IN);
+	close ( IN );
 }
 
 open (IN,"<", "/etc/chkserv.d/chkservd.conf");
 flock (IN, LOCK_SH);
 my @chkservd = <IN>;
-close (IN);
+close ( IN );
 chomp @chkservd;
 
-if (not grep {$_ =~ /^lfd/} @chkservd) {
+if (not grep {$_ =~ /^lfd/} @chkservd)
+{
 	open (OUT,">", "/etc/chkserv.d/lfd");
-	flock (OUT, LOCK_EX);
+	flock ( OUT, LOCK_EX );
 	print OUT "service[lfd]=x,x,x,service lfd restart,lfd,root\n";
-	close (OUT);
+	close ( OUT );
 
 	sysopen (OUT,"/etc/chkserv.d/chkservd.conf", O_WRONLY | O_CREAT);
-	flock (OUT, LOCK_EX);
+	flock ( OUT, LOCK_EX );
 	foreach my $line (@chkservd) {print OUT "$line\n"}
 	print OUT "lfd:1\n";
 	close OUT;
 }
 
-if ($config{TESTING}) {
+if ($config{TESTING})
+{
 	open (IN, "<", "/etc/ssh/sshd_config") or die $!;
-	flock (IN, LOCK_SH) or die $!;
+	flock ( IN, LOCK_SH ) or die $!;
 	my @sshconfig = <IN>;
-	close (IN);
+	close ( IN );
 	chomp @sshconfig;
 
 	my $sshport = "22";
-	foreach my $line (@sshconfig) {
+	foreach my $line (@sshconfig)
+	{
 		if ($line =~ /^Port (\d+)/) {$sshport = $1}
 	}
 
 	$config{TCP_IN} =~ s/\s//g;
-	if ($config{TCP_IN} ne "") {
+	if ($config{TCP_IN} ne "")
+	{
 		foreach my $port (split(/\,/,$config{TCP_IN})) {
 			if ($port eq $sshport) {$sshport = "22"}
 		}
 	}
 
-	if ($sshport ne "22") {
+	if ($sshport ne "22")
+	{
 		$config{TCP_IN} .= ",$sshport";
 		$config{TCP6_IN} .= ",$sshport";
 		open (IN, "<", "/etc/csf/csf.conf") or die $!;
-		flock (IN, LOCK_SH) or die $!;
+		flock ( IN, LOCK_SH ) or die $!;
 		my @config = <IN>;
-		close (IN);
+		close ( IN );
 		chomp @config;
 		open (OUT, ">", "/etc/csf/csf.conf") or die $!;
-		flock (OUT, LOCK_EX) or die $!;
-		foreach my $line (@config) {
+		flock ( OUT, LOCK_EX ) or die $!;
+	
+		foreach my $line ( @config )
+		{
 			if ($line =~ /^TCP6_IN/) {
 				print OUT "TCP6_IN = \"$config{TCP6_IN}\"\n";
 				print "\n*** SSH port $sshport added to the TCP6_IN port list\n\n";
@@ -834,23 +1241,31 @@ if ($config{TESTING}) {
 	my @data = <FH>;
 	close (FH);
 	chomp @data;
-	if ($data[0] =~ /^(\d+)\.(\d+)\.(\d+)/) {
+
+	if ($data[0] =~ /^(\d+)\.(\d+)\.(\d+)/)
+	{
 		my $maj = $1;
 		my $mid = $2;
 		my $min = $3;
-		if ($maj == 3 and $mid > 6) {
+		if ($maj == 3 and $mid > 6)
+		{
 			open (IN, "<", "/etc/csf/csf.conf") or die $!;
-			flock (IN, LOCK_SH) or die $!;
+			flock ( IN, LOCK_SH ) or die $!;
 			my @config = <IN>;
-			close (IN);
+			close ( IN );
 			chomp @config;
 			open (OUT, ">", "/etc/csf/csf.conf") or die $!;
-			flock (OUT, LOCK_EX) or die $!;
-			foreach my $line (@config) {
-				if ($line =~ /^USE_CONNTRACK =/) {
+			flock ( OUT, LOCK_EX ) or die $!;
+	
+			foreach my $line ( @config )
+			{
+				if ($line =~ /^USE_CONNTRACK =/)
+				{
 					print OUT "USE_CONNTRACK = \"1\"\n";
 					print "\n*** USE_CONNTRACK Enabled\n\n";
-				} else {
+				}
+				else
+				{
 					print OUT $line."\n";
 				}
 			}
@@ -864,16 +1279,21 @@ if ($config{TESTING}) {
 	@data = <FH>;
 	close (FH);
 	chomp @data;
-	foreach my $line (@data) {
-		if ($line =~ /Name\s*=\s*"Ubuntu"/i) {
+
+	foreach my $line (@data)
+	{
+		if ($line =~ /Name\s*=\s*"Ubuntu"/i)
+		{
 			open (IN, "<", "/etc/csf/csf.conf") or die $!;
-			flock (IN, LOCK_SH) or die $!;
+			flock ( IN, LOCK_SH ) or die $!;
 			my @config = <IN>;
-			close (IN);
+			close ( IN );
 			chomp @config;
 			open (OUT, ">", "/etc/csf/csf.conf") or die $!;
-			flock (OUT, LOCK_EX) or die $!;
-			foreach my $line (@config) {
+			flock ( OUT, LOCK_EX ) or die $!;
+	
+			foreach my $line ( @config )
+			{
 				if ($line =~ /^SSHD_LOG/) {$line = 'SSHD_LOG = "/var/log/auth.log"'}
 				if ($line =~ /^WEBMIN_LOG/) {$line = 'WEBMIN_LOG = "/var/log/auth.log"'}
 				if ($line =~ /^SU_LOG/) {$line = 'SU_LOG = "/var/log/auth.log"'}
@@ -886,13 +1306,15 @@ if ($config{TESTING}) {
 				if ($line =~ /^SUHOSIN_LOG/) {$line = 'SUHOSIN_LOG = "/var/log/syslog"'}
 				print OUT $line."\n";
 			}
+	
 			close OUT;
 			&loadcsfconfig;
 		}
 	}
 
 	my @ipdata;
-	eval {
+	eval
+	{
 		local $SIG{__DIE__} = undef;
 		local $SIG{'ALRM'} = sub {die "alarm\n"};
 		alarm(3);
@@ -901,32 +1323,44 @@ if ($config{TESTING}) {
 		@ipdata = <$childout>;
 		waitpid ($cmdpid, 0);
 		chomp @ipdata;
-		if ($ipdata[0] =~ /# Warning: iptables-legacy tables present/) {shift @ipdata}
+
+		if ($ipdata[0] =~ /# Warning: iptables-legacy tables present/)
+		{
+			shift @ipdata
+		}
+	
 		alarm(0);
 	};
+
 	alarm(0);
-	if ($@ ne "alarm\n" and $ipdata[0] =~ /^Chain OUTPUT/) {
+
+	if ($@ ne "alarm\n" and $ipdata[0] =~ /^Chain OUTPUT/)
+	{
 		$config{IPTABLESWAIT} = "--wait";
 		$config{WAITLOCK} = 1;
 		open (IN, "<", "/etc/csf/csf.conf") or die $!;
-		flock (IN, LOCK_SH) or die $!;
+		flock ( IN, LOCK_SH ) or die $!;
 		my @config = <IN>;
-		close (IN);
+		close ( IN );
 		chomp @config;
 		open (OUT, ">", "/etc/csf/csf.conf") or die $!;
-		flock (OUT, LOCK_EX) or die $!;
-		foreach my $line (@config) {
+		flock ( OUT, LOCK_EX ) or die $!;
+
+		foreach my $line ( @config )
+		{
 			if ($line =~ /WAITLOCK =/) {
 				print OUT "WAITLOCK = \"1\"\n";
 			} else {
 				print OUT $line."\n";
 			}
 		}
+
 		close OUT;
 		&loadcsfconfig;
 	}
 
-	if (-e $config{IP6TABLES} and !$vps) {
+	if (-e $config{IP6TABLES} and !$vps)
+	{
 		my ($childin, $childout);
 		my $cmdpid;
 		if (-e $config{IP}) {$cmdpid = open3($childin, $childout, $childout, $config{IP}, "-oneline", "addr")}
@@ -934,14 +1368,18 @@ if ($config{TESTING}) {
 		my @ifconfig = <$childout>;
 		waitpid ($cmdpid, 0);
 		chomp @ifconfig;
-		if (grep {$_ =~ /\s*inet6/} @ifconfig) {
+
+		if (grep {$_ =~ /\s*inet6/} @ifconfig)
+		{
 			$config{IPV6} = 1;
 			open (FH, "<", "/proc/sys/kernel/osrelease");
 			flock (IN, LOCK_SH);
 			my @data = <FH>;
 			close (FH);
 			chomp @data;
-			if ($data[0] =~ /^(\d+)\.(\d+)\.(\d+)/) {
+
+			if ($data[0] =~ /^(\d+)\.(\d+)\.(\d+)/)
+			{
 				my $maj = $1;
 				my $mid = $2;
 				my $min = $3;
@@ -951,14 +1389,16 @@ if ($config{TESTING}) {
 					$config{IPV6_SPI} = 0;
 				}
 			}
+
 			open (IN, "<", "/etc/csf/csf.conf") or die $!;
-			flock (IN, LOCK_SH) or die $!;
+			flock ( IN, LOCK_SH ) or die $!;
 			my @config = <IN>;
-			close (IN);
+			close ( IN );
 			chomp @config;
 			open (OUT, ">", "/etc/csf/csf.conf") or die $!;
-			flock (OUT, LOCK_EX) or die $!;
-			foreach my $line (@config) {
+			flock ( OUT, LOCK_EX ) or die $!;
+
+			foreach my $line ( @config ) {
 				if ($line =~ /^IPV6 =/) {
 					print OUT "IPV6 = \"$config{IPV6}\"\n";
 					print "\n*** IPV6 Enabled\n\n";
@@ -976,63 +1416,94 @@ if ($config{TESTING}) {
 	}
 
 	my $exim = 0;
-	opendir (DIR, "/etc/chkserv.d");
-	while (my $file = readdir (DIR)) {
-		if ($file =~ /exim-(\d+)/) {$exim = $1}
+	opendir ( DIR, "/etc/chkserv.d" );
+	while ( my $file = readdir  (DIR ) )
+	{
+		if ( $file =~ /exim-(\d+)/ )
+		{
+			$exim = $1
+		}
 	}
 	closedir (DIR);
 
-	if ($exim ne "0") {
+	if ($exim ne "0")
+	{
 		$config{TCP_IN} .= ",$exim";
 		$config{SMTP_PORTS} .= ",$exim";
 		open (IN, "<", "/etc/csf/csf.conf") or die $!;
-		flock (IN, LOCK_SH) or die $!;
+		flock ( IN, LOCK_SH ) or die $!;
+	
 		my @config = <IN>;
-		close (IN);
+		close ( IN );
 		chomp @config;
 		open (OUT, ">", "/etc/csf/csf.conf") or die $!;
-		flock (OUT, LOCK_EX) or die $!;
-		foreach my $line (@config) {
-			if ($line =~ /^TCP_IN =/) {
+		flock ( OUT, LOCK_EX ) or die $!;
+
+		foreach my $line ( @config )
+		{
+			if ($line =~ /^TCP_IN =/)
+			{
 				print OUT "TCP_IN = \"$config{TCP_IN}\"\n";
 				print "\n*** Additional Exim port $exim added to the TCP_IN port list\n\n";
 			}
-			elsif ($line =~ /^SMTP_PORTS =/) {
+			elsif ($line =~ /^SMTP_PORTS =/)
+			{
 				print OUT "SMTP_PORTS = \"$config{SMTP_PORTS}\"\n";
 				print "\n*** Additional Exim port $exim added to the SMTP_PORTS port list\n\n";
-			} else {
+			}
+			else
+			{
 				print OUT $line."\n";
 			}
 		}
+
 		close OUT;
 		&loadcsfconfig;
 	}
-	if ($vps) {
+
+	if ($vps)
+	{
 		print "Adding passive port range for VZ servers\n";
-		if (-e "/usr/local/cpanel/version") {
+		if (-e "/usr/local/cpanel/version")
+		{
 			require Cpanel::Config;
 			import Cpanel::Config;
 			my $cpconf = Cpanel::Config::loadcpconf();
 			my $cpftpfile = "";
-			if ($cpconf->{ftpserver} eq "pure-ftpd") {$cpftpfile = "/etc/pure-ftpd.conf"}
-			elsif ($cpconf->{ftpserver} eq "proftpd") {$cpftpfile = "/etc/proftpd.conf"}
+	
+			if ($cpconf->{ftpserver} eq "pure-ftpd")
+			{
+				$cpftpfile = "/etc/pure-ftpd.conf"
+			}
+			elsif ($cpconf->{ftpserver} eq "proftpd")
+			{
+				$cpftpfile = "/etc/proftpd.conf"
+			}
 
-			if ($cpftpfile ne "") {
+			if ($cpftpfile ne "")
+			{
 				my $range;
 				open (my $FTPCONF,"<", $cpftpfile);
 				flock ($FTPCONF, LOCK_EX);
 				my @ftp = <$FTPCONF>;
 				close ($FTPCONF);
-				foreach my $line (@ftp) {
-					if ($line =~ /\s*(PassivePortRange|PassivePorts)\s+(\d+)\s+(\d+)/i) {
+				foreach my $line (@ftp)
+				{
+					if ($line =~ /\s*(PassivePortRange|PassivePorts)\s+(\d+)\s+(\d+)/i)
+					{
 						$range = $2.":".$3;
 						last;
 					}
 				}
-				if ($range ne "") {
-					if ($config{TCP_IN} =~ /$range/) {
+
+				if ($range ne "")
+				{
+					if ($config{TCP_IN} =~ /$range/)
+					{
 						print "PASV port range $range already exists in TCP_IN/TCP6_IN\n";
-					} else {
+					}
+					else
+					{
 						$config{TCP_IN} .= ",$range";
 						$config{TCP6_IN} .= ",$range";
 
@@ -1042,16 +1513,21 @@ if ($config{TESTING}) {
 						chomp @csf;
 						seek ($CSFCONF, 0, 0);
 						truncate ($CSFCONF, 0);
-						foreach my $line (@csf) {
-							if ($line =~ /^TCP6_IN/) {
+
+						foreach my $line ( @csf )
+						{
+							if ($line =~ /^TCP6_IN/)
+							{
 								print $CSFCONF "TCP6_IN = \"$config{TCP6_IN}\"\n";
 								print "*** PASV port range $range added to the TCP6_IN port list\n";
 							}
-							elsif ($line =~ /^TCP_IN/) {
+							elsif ($line =~ /^TCP_IN/)
+							{
 								print $CSFCONF "TCP_IN = \"$config{TCP_IN}\"\n";
 								print "*** PASV port range $range added to the TCP_IN port list\n";
 							}
-							else {
+							else
+							{
 								print $CSFCONF $line."\n";
 							}
 						}
@@ -1064,55 +1540,135 @@ if ($config{TESTING}) {
 	}
 }
 
-open (IN, "<", "csf.conf") or die $!;
-flock (IN, LOCK_SH) or die $!;
+open ( IN, "<", "csf.conf" ) or die $!;
+flock ( IN, LOCK_SH ) or die $!;
 my @config = <IN>;
-close (IN);
+close ( IN );
 chomp @config;
-open (OUT, ">", "/etc/csf/csf.conf") or die $!;
-flock (OUT, LOCK_EX) or die $!;
-foreach my $line (@config) {
-	if ($line =~ /^\#/) {
-		print OUT $line."\n";
+open ( OUT, ">", "/etc/csf/csf.conf" ) or die $!;
+flock ( OUT, LOCK_EX ) or die $!;
+
+my @src_comment_buf;
+my $prev_merge_setting = "";
+foreach my $line ( @config )
+{
+	if ($line =~ /^\#/)
+	{
+		push @src_comment_buf, $line;
 		next;
 	}
-	if ($line !~ /=/) {
-		print OUT $line."\n";
+
+	if ($line !~ /=/)
+	{
+		push @src_comment_buf, $line;
 		next;
 	}
+
 	my ($name,$value) = split (/=/,$line,2);
 	$name =~ s/\s//g;
-	if ($value =~ /\"(.*)\"/) {
+	if ($prev_merge_setting ne "" and $sticky_after{$prev_merge_setting})
+	{
+		foreach my $cmt (@{$sticky_after{$prev_merge_setting}})
+		{
+			print OUT $cmt."\n";
+		}
+	}
+
+	foreach my $srcline (@src_comment_buf)
+	{
+		print OUT $srcline."\n";
+	}
+
+	@src_comment_buf = ();
+	if ($sticky_before{$name})
+	{
+		foreach my $cmt (@{$sticky_before{$name}})
+		{
+			print OUT $cmt."\n";
+		}
+	}
+
+	if ($comment_user{$name})
+	{
+		foreach my $cmt (@{$comment_user{$name}})
+		{
+			print OUT $cmt."\n";
+		}
+	}
+
+	if ( $value =~ /\"(.*)\"/ )
+	{
 		$value = $1;
-	} else {
+	}
+	else
+	{
 		print "Error: Invalid configuration line [$line]";
 	}
-	if (&checkversion("10.15") and !-e "/var/lib/csf/auto1015") {
-		if ($name eq "MESSENGER_RATE" and $config{$name} eq "30/m") {$config{$name} = "100/s"}
-		if ($name eq "MESSENGER_BURST" and $config{$name} eq "5") {$config{$name} = "150"}
+
+	if ( &checkversion( "10.15" ) and !-e "/var/lib/csf/auto1015" )
+	{
+		if ($name eq "MESSENGER_RATE" and $config{$name} eq "30/m")
+		{
+			$config{$name} = "100/s"
+		}
+
+		if ($name eq "MESSENGER_BURST" and $config{$name} eq "5")
+		{
+			$config{$name} = "150"
+		}
+
 		open (my $AUTO, ">", "/var/lib/csf/auto1015");
-		flock ($AUTO, LOCK_EX);
+		flock ( $AUTO, LOCK_EX );
 		print $AUTO time;
-		close ($AUTO);
+		close ( $AUTO );
 	}
-	if ($configsetting{$name}) {
+
+	if ($configsetting{$name})
+	{
 		print OUT "$name = \"$config{$name}\"\n";
-	} else {
-		if (&checkversion("9.29") and !-e "/var/lib/csf/auto929" and $name eq "PT_USERRSS") {
+	}
+	else
+	{
+		if (&checkversion("9.29") and !-e "/var/lib/csf/auto929" and $name eq "PT_USERRSS")
+		{
 			$line = "PT_USERRSS = \"$config{PT_USERMEM}\"";
 			open (my $AUTO, ">", "/var/lib/csf/auto929");
-			flock ($AUTO, LOCK_EX);
+			flock ( $AUTO, LOCK_EX );
 			print $AUTO time;
-			close ($AUTO);
+			close ( $AUTO );
 		}
+	
 		if ($name eq "CC_SRC") {$line = "CC_SRC = \"1\""}
 		print OUT $line."\n";
 		print "New setting: $name\n";
 	}
+
+	$prev_merge_setting = $name;
 }
+
+if ($prev_merge_setting ne "" and $sticky_after{$prev_merge_setting})
+{
+	foreach my $cmt (@{$sticky_after{$prev_merge_setting}}) {
+		print OUT $cmt."\n";
+	}
+}
+
+foreach my $srcline (@src_comment_buf)
+{
+	print OUT $srcline."\n";
+}
+
+if (@custom_trailing) {
+	foreach my $cmt (@custom_trailing)
+	{
+		print OUT $cmt."\n";
+	}
+}
+
 close OUT;
 
-if ($config{TESTING}) {
+if ($config{TESTING})
+{
 	my @netstat = `netstat -lpn`;
 	chomp @netstat;
 	my @tcpports;
@@ -1120,20 +1676,27 @@ if ($config{TESTING}) {
 	my @tcp6ports;
 	my @udp6ports;
 	foreach my $line (@netstat) {
-		if ($line =~ /^(\w+).* (\d+\.\d+\.\d+\.\d+):(\d+)/) {
+		if ($line =~ /^(\w+).* (\d+\.\d+\.\d+\.\d+):(\d+)/)
+		{
 			if ($2 eq '127.0.0.1') {next}
-			if ($1 eq "tcp") {
+			if ($1 eq "tcp")
+			{
 				push @tcpports, $3;
 			}
-			elsif ($1 eq "udp") {
+			elsif ($1 eq "udp")
+			{
 				push @udpports, $3;
 			}
 		}
-		if ($line =~ /^(\w+).* (::):(\d+) /) {
-			if ($1 eq "tcp") {
+
+		if ($line =~ /^(\w+).* (::):(\d+) /)
+		{
+			if ($1 eq "tcp")
+			{
 				push @tcp6ports, $3;
 			}
-			elsif ($1 eq "udp") {
+			elsif ($1 eq "udp")
+			{
 				push @udp6ports, $3;
 			}
 		}
@@ -1146,24 +1709,29 @@ if ($config{TESTING}) {
 
 	print "\nTCP ports currently listening for incoming connections:\n";
 	my $last = "";
-	foreach my $port (@tcpports) {
+	foreach my $port (@tcpports)
+	{
 		if ($port ne $last) {
 			if ($port ne $tcpports[0]) {print ","}
 			print $port;
 			$last = $port;
 		}
 	}
+
 	print "\n\nUDP ports currently listening for incoming connections:\n";
 	$last = "";
-	foreach my $port (@udpports) {
+	foreach my $port (@udpports)
+	{
 		if ($port ne $last) {
 			if ($port ne $udpports[0]) {print ","}
 			print $port;
 			$last = $port;
 		}
 	}
+
 	my $opts = "TCP_*, UDP_*";
-	if (@tcp6ports or @udp6ports) {
+	if (@tcp6ports or @udp6ports)
+	{
 		$opts .= ", IPV6, TCP6_*, UDP6_*";
 		print "\n\nIPv6 TCP ports currently listening for incoming connections:\n";
 		my $last = "";
@@ -1174,6 +1742,7 @@ if ($config{TESTING}) {
 				$last = $port;
 			}
 		}
+	
 		print "\n";
 		print "\nIPv6 UDP ports currently listening for incoming connections:\n";
 		$last = "";
@@ -1185,6 +1754,7 @@ if ($config{TESTING}) {
 			}
 		}
 	}
+
 	print "\n\nNote: The port details above are for information only, csf hasn't been auto-configured.\n\n";
 	print "Don't forget to:\n";
 	print "1. Configure the following options in the csf configuration to suite your server: $opts\n";
@@ -1192,7 +1762,8 @@ if ($config{TESTING}) {
 	print "3. Set TESTING to 0 once you're happy with the firewall, lfd will not run until you do so\n";
 }
 
-if ($ENV{SSH_CLIENT}) {
+if ($ENV{SSH_CLIENT})
+{
 	my $ip = (split(/ /,$ENV{SSH_CLIENT}))[0];
 	if ($ip =~ /(\d+\.\d+\.\d+\.\d+)/) {
 		print "\nAdding current SSH session IP address to the csf whitelist in csf.allow:\n";
@@ -1200,7 +1771,8 @@ if ($ENV{SSH_CLIENT}) {
 	}
 }
 
-if ($config{MESSENGERV2}) {
+if ($config{MESSENGERV2})
+{
 	my $hit;
 	open (my $ALIASES, "<", "/etc/aliases");
 	flock ($ALIASES, LOCK_SH);
@@ -1225,14 +1797,15 @@ if ($config{MESSENGERV2}) {
 
 exit;
 ###############################################################################
-sub loadcsfconfig {
+sub loadcsfconfig
+{
 	open (IN, "<", "/etc/csf/csf.conf") or die $!;
-	flock (IN, LOCK_SH) or die $!;
+	flock ( IN, LOCK_SH ) or die $!;
 	my @config = <IN>;
-	close (IN);
+	close ( IN );
 	chomp @config;
 
-	foreach my $line (@config) {
+	foreach my $line ( @config ) {
 		if ($line =~ /^\#/) {next}
 		if ($line !~ /=/) {next}
 		my ($name,$value) = split (/=/,$line,2);
@@ -1247,8 +1820,9 @@ sub loadcsfconfig {
 	}
 	return;
 }
-###############################################################################
-sub checkversion {
+
+sub checkversion
+{
 	my $version = shift;
 	my ($maj, $min) = split(/\./,$version);
 	my ($oldmaj, $oldmin) = split(/\./,$oldversion);
@@ -1257,4 +1831,3 @@ sub checkversion {
 
 	if (($oldmaj < $maj) or ($oldmaj == $maj and $oldmin < $min)) {return 1} else {return 0}
 }
-###############################################################################
