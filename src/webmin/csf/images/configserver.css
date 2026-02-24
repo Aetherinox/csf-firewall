@@ -633,9 +633,6 @@ html.theme-transition *
 
 body
 {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    line-height: 1.42857143;
     color: var( --general-page-text-n );
     background-color: var( --general-page-background );
 }
@@ -834,17 +831,6 @@ a.app-name:not(:hover)
 	background-color: var( --btn-1-bg-n );
 	color: var( --btn-1-text-n );
 	border-color: var( --btn-1-border-n );
-}
-
-
-button,
-input,
-select,
-textarea
-{
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;   /* resets to browser default */
-    font-size: 14px;
-    line-height: 1.42857143;
 }
 
 input[type="text"]
