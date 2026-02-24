@@ -331,33 +331,41 @@ sub messenger {
 		logfile("lfd $oldtype messenger using $vmsize kB of VIRT memory at startup, adding up to $config{MESSENGER_CHILDREN} children = ".(($config{MESSENGER_CHILDREN} + 1) * $vmsize)." kB");
 	}
 
-	if ($user ne "") {
+	if ($user ne "")
+	{
 		my (undef,undef,$uid,$gid,undef,undef,undef,$homedir) = getpwnam($user);
 		if (($uid > 0) and ($gid > 0)) {
 			local $( = $gid;
 			local $) = "$gid $gid";
 			local $> = local $< = $uid;
-			if (($) != $gid) or ($> != $uid) or ($( != $gid) or ($< != $uid)) {
+			if (($) != $gid) or ($> != $uid) or ($( != $gid) or ($< != $uid))
+			{
 				logfile("MESSENGER_USER unable to drop privileges - stopping $oldtype Messenger");
 				exit;
 			}
+
 			my %children;
-			while (1) {
-				while (my $client = $server->accept()) {
-					while (scalar (keys %children) >= $chldallow) {
+			while (1)
+			{
+				while (my $client = $server->accept())
+				{
+					while (scalar (keys %children) >= $chldallow)
+					{
 						sleep 1;
 						foreach my $pid (keys %children) {
 							unless (kill(0,$pid)) {delete $children{$pid}}
 						}
 						$0 = "lfd $oldtype messenger (busy)";
 					}
+	
 					$0 = "lfd $oldtype messenger";
-
 					$SIG{CHLD} = 'IGNORE';
 					my $pid = fork;
 					$children{$pid} = 1;
-					if ($pid == 0) {
-						eval {
+					if ($pid == 0)
+					{
+						eval
+						{
 							local $SIG{__DIE__} = undef;
 							local $SIG{'ALRM'} = sub {die};
 							alarm(10);
@@ -374,14 +382,34 @@ sub messenger {
 							$peeraddress =~ s/^::ffff://;
 							$hostaddress =~ s/^::ffff://;
 
-							if ($type eq "HTML") {
-								while ($firstline !~ /\n$/) {
+							if ($type eq "HTML")
+							{
+								while ($firstline !~ /\n$/)
+								{
 									my $char;
 									$client->read($char,1);
 									$firstline .= $char;
 									if ($char eq "") {exit}
-									if (length $firstline > 2048) {last}
+
+								# #
+								#	RFC 7230, Sec 3.1.1: recommends supporting at least 8000 octets.
+								#		Prefix: 	GET /unblk?g-recaptcha-response=	= 32 bytes
+								#		Suffix:  	HTTP/1.1\r\n						= 11 bytes			(\r\n = 2 bytes) (carriage return (0x0D)/line feed (0x0A))
+								#		 												32 + 11 = 43 bytes
+								#	
+								#		Remaining for Recaptcha token					4053 bytes
+								#		Acceptable Limit								4096 bytes
+								#	
+								#	@since				v15.10
+								#	@reference			https://datatracker.ietf.org/doc/html/rfc7230#autoid-17
+								#						https://mothereff.in/byte-counter
+								# #
+
+								if ( length $firstline > 4096 )
+								{
+									last
 								}
+
 								chomp $firstline;
 								if ($firstline =~ /\r$/) {chop $firstline}
 							}
