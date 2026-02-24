@@ -1765,7 +1765,7 @@ pre
     background-color: var( --cfgfw-header-tab-bg );
     color: var( --cfgfw-header-tab-text );
 	font-weight: 600;
-	font-size: 1.5rem;
+	font-size: 14px;
 	line-height: 1;
 	padding-top: 0.7em;
 	padding-bottom: 0.4em;
@@ -1798,7 +1798,7 @@ pre
     background-color: var( --cfgfw-section-tab-bg );
     color: var( --cfgfw-section-tab-text );
 	font-weight: 600;
-	font-size: 1.5rem;
+	font-size: 14px;
 	line-height: 1;
 	padding-top: 0.7em;
 	padding-bottom: 0.4em;
