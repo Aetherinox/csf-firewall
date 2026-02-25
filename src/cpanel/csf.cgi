@@ -46,69 +46,27 @@ require Whostmgr::ACLS;
 require Cpanel::Rlimit;
 require Cpanel::Template;
 require Cpanel::Version::Tiny;
-###############################################################################
-# start main
 
-our ($reseller, $script, $images, %rprivs, $myv, %FORM);
+our ( $reseller, $script, $images, %rprivs, $myv, %FORM, $appUrl );
 
 Whostmgr::ACLS::init_acls();
-
-%FORM = Cpanel::Form::parseform();
+%FORM 			= Cpanel::Form::parseform();
+my $appUrl 		= $ENV{SCRIPT_NAME};
 
 # #
 #	Load configs
 # #
 
-my $config = ConfigServer::Config->loadconfig();
-my %config = $config->config;
-my $slurpreg = ConfigServer::Slurp->slurpreg;
-my $cleanreg = ConfigServer::Slurp->cleanreg;
-
-# #
-#	Get Codename
-#	
-#	returns the codename depending on which control panel a user is running.
-#	
-#	@args			$config
-#	@usage			my $codename = getCodename(\%config);
-# #
-
-sub getCodename
-{
-	my ($config_ref) = @_;
-	my %config = %{$config_ref};
-	my $cname = "cpanel";
-
-	if ($config{GENERIC})      { $cname = "generic" }
-	if ($config{DIRECTADMIN})  { $cname = "directadmin" }
-	if ($config{INTERWORX})    { $cname = "interworx" }
-	if ($config{CYBERPANEL})   { $cname = "cyberpanel" }
-	if ($config{CWP})          { $cname = "cwp" }
-	if ($config{VESTA})        { $cname = "vestacp" }
-
-	if ( -e "/usr/share/webmin/miniserv.pl" || -e "/usr/libexec/webmin/bin/webmin" || -e "/usr/bin/webmin" )
-	{
-		$cname = "webmin";
-	}
-
-	# #
-    #	Optional debug output
-	# #
-
-	#	print "$cname\n";
-
-	# #
-    #	Return the value so it can be used in conditionals
-	# #
-
-	return $cname;
-}
-
-my $codename = getCodename(\%config);
+my $config 		= ConfigServer::Config->loadconfig();
+my %config 		= $config->config;
+my $slurpreg 	= ConfigServer::Slurp->slurpreg;
+my $cleanreg 	= ConfigServer::Slurp->cleanreg;
+my $codename 	= ConfigServer::Config->getCodename();
 
 Cpanel::Rlimit::set_rlimit_to_infinity();
 
-if (-e "/usr/local/cpanel/bin/register_appconfig") {
+if (-e "/usr/local/cpanel/bin/register_appconfig")
+{
 	$script = "csf.cgi";
 	$images = "csf";
 } else {
@@ -116,21 +74,27 @@ if (-e "/usr/local/cpanel/bin/register_appconfig") {
 	$images = "csf";
 }
 
-foreach my $line (slurp("/etc/csf/csf.resellers")) {
+foreach my $line (slurp("/etc/csf/csf.resellers"))
+{
 	$line =~ s/$cleanreg//g;
 	my ($user,$alert,$privs) = split(/\:/,$line);
 	$privs =~ s/\s//g;
-	foreach my $priv (split(/\,/,$privs)) {
+	foreach my $priv (split(/\,/,$privs))
+	{
 		$rprivs{$user}{$priv} = 1;
 	}
 	$rprivs{$user}{ALERT} = $alert;
 }
 
 $reseller = 0;
-if (!Whostmgr::ACLS::hasroot()) {
-	if ($rprivs{$ENV{REMOTE_USER}}{USE}) {
+if (!Whostmgr::ACLS::hasroot())
+{
+	if ($rprivs{$ENV{REMOTE_USER}}{USE})
+	{
 		$reseller = 1;
-	} else {
+	}
+	else
+	{
 		print "Content-type: text/html\r\n\r\n";
 		print "You do not have access to this feature\n";
 		exit();
@@ -141,9 +105,9 @@ if (!Whostmgr::ACLS::hasroot()) {
 #	open version.txt
 # #
 
-open (my $IN, "<", "/etc/csf/version.txt") or die $!;
+open ( my $IN, "<", "/etc/csf/version.txt" ) or die $!;
 $myv = <$IN>;
-close ($IN);
+close ( $IN );
 chomp $myv;
 
 my $csfjs = qq{
@@ -152,10 +116,11 @@ my $csfjs = qq{
 	</script>
 	<script src="$images/csf.min.js"></script>
 };
-my $bootstrapcss = "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css'>";
-my $csfnt = "<script src='$images/csfont.min.js'></script>";
-my $jqueryjs = "<script src='$images/jquery.min.js'></script>";
-my $bootstrapjs = "<script src='$images/bootstrap/js/bootstrap.min.js'></script>";
+
+my $bootstrapcss	= "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css'>";
+my $csfnt 			= "<script src='$images/csfont.min.js'></script>";
+my $jqueryjs 		= "<script src='$images/jquery.min.js'></script>";
+my $bootstrapjs 	= "<script src='$images/bootstrap/js/bootstrap.min.js'></script>";
 
 my @header;
 my @footer;
@@ -187,7 +152,7 @@ unless ($config{STYLE_CUSTOM})
 my $thisapp = "csf";
 my $reregister;
 my $modalstyle;
-if ($Cpanel::Version::Tiny::major_version >= 65)
+if ( $Cpanel::Version::Tiny::major_version >= 65 )
 {
 	if (-e "/usr/local/cpanel/whostmgr/docroot/cgi/configserver/${thisapp}/${thisapp}.conf")
 	{
@@ -195,22 +160,25 @@ if ($Cpanel::Version::Tiny::major_version >= 65)
 		flock ($CONF, LOCK_EX);
 		my @confdata = <$CONF>;
 		chomp @confdata;
-		for (0..scalar(@confdata))
+
+		for ( 0..scalar( @confdata ) )
 		{
-			if ($confdata[$_] =~ /^target=mainFrame/)
+			if ( $confdata[$_] =~ /^target=mainFrame/ )
 			{
 				$confdata[$_] = "target=_self";
 				$reregister = 1;
 			}
 		}
 
-		if ($reregister)
+		if ( $reregister )
 		{
 			seek ($CONF, 0, 0);
 			truncate ($CONF, 0);
-			foreach (@confdata) {
+			foreach (@confdata)
+			{
 				print $CONF "$_\n";
 			}
+
 			&printcmd("/usr/local/cpanel/bin/register_appconfig","/usr/local/cpanel/whostmgr/docroot/cgi/configserver/${thisapp}/${thisapp}.conf");
 			$reregister = "<div class='bs-callout bs-callout-info'><h4>Updated application. The next time you login to WHM this will open within the native WHM main window instead of launching a separate window</h4></div>\n";
 		}
@@ -281,7 +249,7 @@ unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq
 <div class='panel panel-default'>
     <div class="section-header">
         <div class="header-left">
-            <a href="/">
+            <a href="$appUrl">
                 <img class="logo" src="$images/csf_small.png" alt="ConfigServer Firewall">
             </a>
             <div class="app-info">
