@@ -187,6 +187,45 @@
 	--glyphicon-ico: #FFFFFF;
 
     --chosen-sprite: url("chosen-sprite.png");
+
+	--ace-bg: #FFFFFF;
+	--ace-text: #4D4D4C;
+	--ace-cursor: #AEAFAD;
+	--ace-scrollbar-shadow: rgba(0,0,0,.5);
+
+	--ace-gutter-bg: #f6f6f6;
+	--ace-gutter-text: #4D4D4C;
+	--ace-gutter-active-line-bg: #dcdcdc;
+
+	--ace-print-margin: #f6f6f6;
+
+	--ace-selection-bg: #D6D6D6;
+	--ace-active-line-bg: #e2e2e2;
+	--ace-bracket-border: #D1D1D1;
+	--ace-selected-word-border: #D6D6D6;
+
+	--ace-invisible: #D1D1D1;
+
+	--ace-keyword: #8959A8;
+	--ace-operator: #3E999F;
+	--ace-number: #F5871F;
+	--ace-constant: #666969;
+	--ace-variable: #C82829;
+	--ace-function: #4271AE;
+	--ace-class: #C99E00;
+	--ace-string: #718C00;
+	--ace-tag: #C82829;
+	--ace-comment: #8E908C;
+
+	--ace-invalid-text: #FFFFFF;
+	--ace-invalid-bg: #C82829;
+	--ace-deprecated-bg: #8959A8;
+
+	--ace-fold-bg: #4271AE;
+	--ace-fold-border: #4D4D4C;
+
+	--ace-indent-guide: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bdu3f/BwAlfgctduB85QAAAABJRU5ErkJggg==);
+	--ace-indent-guide-active: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAAZSURBVHjaYvj///9/hivKyv8BAAAA//8DACLqBhbvk+/eAAAAAElFTkSuQmCC);
 }
 
 /*
@@ -350,6 +389,45 @@
 	--glyphicon-ico: #FFFFFF;
 
     --chosen-sprite: url("chosen-sprite-w.png");
+
+	--ace-bg: #1D1F21;
+	--ace-text: #C5C8C6;
+	--ace-cursor: #AEAFAD;
+	--ace-scrollbar-shadow: rgba(0,0,0,.5);
+
+	--ace-gutter-bg: #25282c;
+	--ace-gutter-text: #C5C8C6;
+	--ace-gutter-active-line-bg: #282A2E;
+
+	--ace-print-margin: #25282c;
+
+	--ace-selection-bg: #373B41;
+	--ace-active-line-bg: #313336;
+	--ace-bracket-border: #4B4E55;
+	--ace-selected-word-border: #373B41;
+
+	--ace-invisible: #4B4E55;
+
+	--ace-keyword: #B294BB;
+	--ace-operator: #8ABEB7;
+	--ace-number: #DE935F;
+	--ace-constant: #CED1CF;
+	--ace-variable: #CC6666;
+	--ace-function: #81A2BE;
+	--ace-class: #F0C674;
+	--ace-string: #B5BD68;
+	--ace-tag: #CC6666;
+	--ace-comment: #969896;
+
+	--ace-invalid-text: #CED2CF;
+	--ace-invalid-bg: #DF5F5F;
+	--ace-deprecated-bg: #B798BF;
+
+	--ace-fold-bg: #81A2BE;
+	--ace-fold-border: #C5C8C6;
+
+	--ace-indent-guide: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAEklEQVQImWNgYGBgYHB3d/8PAAOIAdULw8qMAAAAAElFTkSuQmCC);
+	--ace-indent-guide-active: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAEklEQVQIW2PQ1dX9zzBz5sz/ABCcBFFentLlAAAAAElFTkSuQmCC);
 }
 
 /*
@@ -2577,4 +2655,221 @@ button.btn-update
 {
 	background-color: var( --codeblock-background );
 	color: var( --codeblock-text );
+}
+
+/*
+	ACE Editor  › Primary
+*/
+
+.ace-tomorrow
+{
+	background-color: var(--ace-bg);
+	color: var(--ace-text);
+}
+
+.ace-tomorrow .ace_cursor
+{
+	color: var(--ace-cursor);
+}
+
+.ace-tomorrow .ace_print-margin
+{
+	background: var(--ace-print-margin);
+}
+
+.ace-tomorrow .ace_scroller
+{
+	/* box-shadow: inset 2px 2px 20px var( --ace-scrollbar-shadow ); */
+}
+
+/*
+	ACE Editor  › Gutter
+*/
+
+.ace-tomorrow .ace_gutter
+{
+	background: var(--ace-gutter-bg);
+	color: var(--ace-gutter-text);
+}
+
+.ace-tomorrow .ace_gutter-active-line
+{
+	background: var(--ace-gutter-active-line-bg);
+}
+
+/*
+	ACE Editor  › Selection & Markers
+*/
+
+.ace-tomorrow .ace_marker-layer .ace_selection
+{
+	background: var(--ace-selection-bg);
+}
+
+.ace-tomorrow.ace_multiselect .ace_selection.ace_start
+{
+	box-shadow: 0 0 3px 0px var(--ace-bg);
+}
+
+.ace-tomorrow .ace_marker-layer .ace_active-line
+{
+	background: var(--ace-active-line-bg);
+}
+
+.ace-tomorrow .ace_marker-layer .ace_step
+{
+	background: rgb(102, 82, 0);
+}
+
+.ace-tomorrow .ace_marker-layer .ace_bracket
+{
+	border: 1px solid var(--ace-bracket-border);
+}
+
+.ace-tomorrow .ace_marker-layer .ace_selected-word
+{
+	border: 1px solid var(--ace-selected-word-border);
+}
+
+/*
+	ACE Editor  › Comments
+*/
+
+.ace-tomorrow .ace_comment
+{
+	color: var(--ace-comment);
+}
+
+/*
+	ACE Editor  › Keywords & operators
+*/
+
+.ace-tomorrow .ace_keyword,
+.ace-tomorrow .ace_meta,
+.ace-tomorrow .ace_storage,
+.ace-tomorrow .ace_storage.ace_type,
+.ace-tomorrow .ace_support.ace_type
+{
+	color: var(--ace-keyword);
+}
+
+.ace-tomorrow .ace_keyword.ace_operator
+{
+	color: var(--ace-operator);
+}
+
+/*
+	ACE Editor  › Numbers & constants
+*/
+
+.ace-tomorrow .ace_constant.ace_character,
+.ace-tomorrow .ace_constant.ace_language,
+.ace-tomorrow .ace_constant.ace_numeric,
+.ace-tomorrow .ace_keyword.ace_other.ace_unit,
+.ace-tomorrow .ace_support.ace_constant,
+.ace-tomorrow .ace_variable.ace_parameter
+{
+	color: var(--ace-number);
+}
+
+.ace-tomorrow .ace_constant.ace_other
+{
+	color: var(--ace-constant);
+}
+
+/*
+	ACE Editor  › Variables & functions
+*/
+
+.ace-tomorrow .ace_variable
+{
+	color: var(--ace-variable);
+}
+
+.ace-tomorrow .ace_entity.ace_name.ace_function,
+.ace-tomorrow .ace_support.ace_function,
+.ace-tomorrow .ace_task.ace_actions,
+.ace-tomorrow .ace_task.ace_modules
+{
+	color: var(--ace-function);
+}
+
+.ace_entity.ace_name.ace_function,
+.ace_support.ace_function
+{
+	color: var(--ace-function);
+}
+
+/*
+	ACE Editor  › Classes & types
+*/
+
+.ace-tomorrow .ace_support.ace_class,
+.ace-tomorrow .ace_support.ace_type
+{
+	color: var(--ace-class);
+}
+
+/*
+	ACE Editor  › Strings & markup
+*/
+
+.ace-tomorrow .ace_string,
+.ace-tomorrow .ace_heading,
+.ace-tomorrow .ace_markup.ace_heading
+{
+	color: var(--ace-string);
+}
+
+.ace-tomorrow .ace_entity.ace_name.ace_tag,
+.ace-tomorrow .ace_entity.ace_other.ace_attribute-name,
+.ace-tomorrow .ace_meta.ace_tag,
+.ace-tomorrow .ace_string.ace_regexp
+{
+	color: var(--ace-tag);
+}
+
+/*
+	ACE Editor  › Errors & warnings
+*/
+
+.ace-tomorrow .ace_invalid
+{
+	color: var(--ace-invalid-text);
+	background-color: var(--ace-invalid-bg);
+}
+
+.ace-tomorrow .ace_invalid.ace_deprecated
+{
+	background-color: var(--ace-deprecated-bg);
+}
+
+/*
+	ACE Editor  › Folding & invisibles
+*/
+
+.ace-tomorrow .ace_fold
+{
+	background-color: var(--ace-fold-bg);
+	border-color: var(--ace-fold-border);
+}
+
+.ace-tomorrow .ace_invisible
+{
+	color: var(--ace-invisible);
+}
+
+/*
+	ACE Editor  › Indent guides
+*/
+
+
+.ace-tomorrow .ace_indent-guide
+{
+	background: var(--ace-indent-guide) right repeat-y;
+}
+
+.ace-tomorrow .ace_indent-guide-active
+{
+	background: var(--ace-indent-guide-active) right repeat-y;
 }
