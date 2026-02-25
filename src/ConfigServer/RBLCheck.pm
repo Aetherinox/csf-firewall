@@ -185,7 +185,7 @@ sub report
 
 						if ( $rblhit eq "timeout" )
 						{
-							&addline( 0, $rbl, $rblurl, "TIMEOUT" );
+							&addline( 2, $rbl, $rblurl, "TIMEOUT" );
 						}
 						elsif ( $rblhit eq "" )
 						{
@@ -284,22 +284,45 @@ sub addline
 		$check = "<a href='$rblurl' target='_blank'>$rbl</a>"
 	}
 
-	if ( $status )
+	# #
+	#	@since			v15.10
+	#	@about			Now supports lookup table and various different status
+	#	
+	#					0		success
+	#					1		danger / error
+	#					2		warning
+	#					3		info
+	# #
+
+	my %callouts =
+	(
+		0 => { class => "bs-callout-success",  opacity => "16%" },
+		1 => { class => "bs-callout-danger",   opacity => "26%" },
+		2 => { class => "bs-callout-warning",  opacity => "21%" },
+		3 => { class => "bs-callout-info",     opacity => "16%" },
+	);
+
+	# #
+	#	Always render danger (0) messages;
+	#	All other message types require $verbose
+	# #
+
+	if ( $status == 1 or $verbose )
 	{
+		my $callout 	= $callouts{$status} || $callouts{0};
+		my $class 		= $callout->{class};
+		my $opacity 	= $callout->{opacity};
+
 		$text 	.= "<div class='rblcheck-parent' style='display: flex;width: 100%;clear: both;'>\n";
-		$text 	.= "<div class='rblcheck-status bs-callout-danger' style='width: 250px;box-shadow: inset 0 0 0 9999px color-mix(in srgb, currentColor 26%, transparent);padding: 8px;'>$check</div>\n";
+		$text 	.= "<div class='rblcheck-status $class' style='width: 250px;box-shadow: inset 0 0 0 9999px color-mix(in srgb, currentColor $opacity, transparent);padding: 8px;'>$check</div>\n";
 		$text 	.= "<div class='rblcheck-comment' style='flex: 1;padding: 8px;'>$comment</div>\n";
 		$text 	.= "</div>\n";
 
-		$failures ++;
-		$ipresult .= $text;
-	}
-	elsif ( $verbose )
-	{
-		$text 	.= "<div class='rblcheck-parent' style='display: flex;width: 100%;clear: both;'>\n";
-		$text 	.= "<div class='rblcheck-status bs-callout-success' style='width: 250px;box-shadow: inset 0 0 0 9999px color-mix(in srgb, currentColor 16%, transparent);padding: 8px;'>$check</div>\n";
-		$text 	.= "<div class='rblcheck-comment' style='flex: 1;padding: 8px;'>$comment</div>\n";
-		$text 	.= "</div>\n";
+		if ( $status == 1 )
+		{
+			$failures ++;
+			$ipresult .= $text;
+		}
 	}
 
 	if ( $ui )
