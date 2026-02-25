@@ -276,9 +276,21 @@ EOF
 unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq "logtailcmd" or $FORM{action} eq "loggrepcmd")
 {
 	print <<EOF;
+	
 <div id="loader"></div><br />
 <div class='panel panel-default'>
-<h4><img src='$images/csf_small.png' style='padding-left: 10px'> ConfigServer Security &amp; Firewall - csf v$myv</h4></div>
+    <div class="section-header">
+        <div class="header-left">
+            <a href="/">
+                <img class="logo" src="$images/csf_small.png" alt="ConfigServer Firewall">
+            </a>
+            <div class="app-info">
+                <span class="app-name">ConfigServer Firewall</span>
+                <span class="app-version"><code>v$myv</code></span>
+            </div>
+        </div>
+    </div>
+</div>
 EOF
 	if ($reregister ne "") {print $reregister}
 }

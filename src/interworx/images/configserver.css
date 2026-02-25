@@ -739,7 +739,6 @@ a.app-name:not(:hover)
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	padding-top: 16px;
 	padding-left: 13px;
 }
 
