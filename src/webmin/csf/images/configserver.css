@@ -160,18 +160,26 @@
     --tabs-button-inactive-text: #808080;
 
     --callout-base-border: #EEE;
-    --callout-success-background: #d4edda;
-    --callout-success-text: #155724;
-    --callout-success-border: #c3e6cb;
-    --callout-warning-background: #fff3cd;
-    --callout-warning-text: #856404;
-    --callout-warning-border: #ece3c5;
-    --callout-danger-background: #f8d7da;
-    --callout-danger-text: #721c24;
-    --callout-danger-border: #f5c6cb;
     --callout-info-background: #cce5ff;
-    --callout-info-text: #004085;
+    --callout-info-text-n: #004085;
+	--callout-info-text-a: #000;
     --callout-info-border: #b8daff;
+	--callout-info-accent: #065cff;
+    --callout-success-background: #d4edda;
+    --callout-success-text-n: #155724;
+	--callout-success-text-a: #000;
+    --callout-success-border: #c3e6cb;
+	--callout-success-accent: #43e122;
+    --callout-warning-background: #fff3cd;
+    --callout-warning-text-n: #856404;
+	--callout-warning-text-a: #000;
+    --callout-warning-border: #ece3c5;
+	--callout-warning-accent: #fddd2d;
+    --callout-danger-background: #f8d7da;
+    --callout-danger-text-n: #721c24;
+	--callout-danger-text-a: #000;
+    --callout-danger-border: #f5c6cb;
+	--callout-danger-accent: #fd4b4b;
 
     --highlight-yellow: #dfd882;
     --highlight-fuchsia: #ffcede;
@@ -315,18 +323,26 @@
     --tabs-button-inactive-text: #808080;
 
     --callout-base-border: #3c3c3c;
-    --callout-success-background: #164434;
-    --callout-success-text: #cac5be;
-    --callout-success-border: #2e5845;
-    --callout-warning-background: #554206;
-    --callout-warning-text: #fbde86;
-    --callout-warning-border: #7c5c00;
-    --callout-danger-background: #2c0b0e;
-    --callout-danger-text: #ff818f;
-    --callout-danger-border: #a21d2b;
     --callout-info-background: #0b192f;
-    --callout-info-text: #6ea8fe;
+    --callout-info-text-n: #6ea8fe;
+	--callout-info-text-a: #FFF;
     --callout-info-border: #084298;
+	--callout-info-accent: #065cff;
+    --callout-success-background: #164434;
+    --callout-success-text-n: #cac5be;
+	--callout-success-text-a: #FFF;
+    --callout-success-border: #2e5845;
+	--callout-success-accent: #11c657;
+    --callout-warning-background: #554206;
+    --callout-warning-text-n: #fbde86;
+	--callout-warning-text-a: #FFF;
+    --callout-warning-border: #7c5c00;
+	--callout-warning-accent: #fddd2d;
+    --callout-danger-background: #2c0b0e;
+    --callout-danger-text-n: #ff818f;
+	--callout-danger-text-a: #FFF;
+    --callout-danger-border: #a21d2b;
+	--callout-danger-accent: #fd4b4b;
 
     --highlight-yellow: #7d7404;
     --highlight-fuchsia: #c14870;
@@ -1275,7 +1291,26 @@ th
 .panel-default > .panel-footer-cxs
 {
 	font-weight: bold;
-	background: var(--panel-box-alt);
+	background: var( --panel-box-alt );
+}
+
+/*
+	Blocklist (RBL
+*/
+
+.rblcheck-footer
+{
+	padding-bottom: 3em;
+}
+
+.rblcheck-parent:nth-child(2n)
+{
+  	background-color: var( --panel-table-row-even );
+}
+
+.rblcheck-parent:nth-child(2n+1)
+{
+  	background-color: var( --panel-table-row-odd );
 }
 
 /*
@@ -1472,39 +1507,59 @@ th
 }
 
 /*
-	Callout › Success
-*/
-
-.bs-callout-success
-{
-	color: var(--callout-success-text);
-	background-color: var(--callout-success-background);
-	border-color: var(--callout-success-border);
-}
-
-.bs-callout-success h4
-{
-	color: var(--callout-success-text);
-	font-weight: 100;
-	font-size: 12pt;
-}
-
-/*
 	Callout › Info
 */
 
 .bs-callout-info
 {
-	color: var(--callout-info-text);
+	color: var( --callout-info-text-n );
 	background-color: var(--callout-info-background);
 	border-color: var(--callout-info-border);
 }
 
 .bs-callout-info h4
 {
-	color: var(--callout-info-text);
+	color: var( --callout-info-text-n );
 	font-weight: 100;
 	font-size: 12pt;
+}
+
+.bs-callout-info a
+{
+	color: var( --callout-info-text-a );
+	text-decoration-line: underline;
+	text-decoration-style: dotted;
+	text-decoration-color: var( --callout-info-accent );
+	text-decoration-thickness: 1px;
+	text-underline-offset: 2px;
+}
+
+/*
+	Callout › Success
+*/
+
+.bs-callout-success
+{
+	color: var( --callout-success-text-n );
+	background-color: var( --callout-success-background );
+	border-color: var( --callout-success-border );
+}
+
+.bs-callout-success h4
+{
+	color: var( --callout-success-text-n );
+	font-weight: 100;
+	font-size: 12pt;
+}
+
+.bs-callout-success a
+{
+	color: var( --callout-success-text-a );
+	text-decoration-line: underline;
+	text-decoration-style: dotted;
+	text-decoration-color: var( --callout-success-accent );
+	text-decoration-thickness: 1px;
+	text-underline-offset: 2px;
 }
 
 /*
@@ -1513,16 +1568,26 @@ th
 
 .bs-callout-warning
 {
-	color: var(--callout-warning-text);
+	color: var( --callout-warning-text-n );
 	background-color: var(--callout-warning-background);
 	border-color: var(--callout-warning-border);
 }
 
 .bs-callout-warning h4
 {
-	color: var(--callout-warning-text);
+	color: var( --callout-warning-text-n );
 	font-weight: 100;
 	font-size: 12pt;
+}
+
+.bs-callout-warning a
+{
+	color: var( --callout-warning-text-a );
+	text-decoration-line: underline;
+	text-decoration-style: dotted;
+	text-decoration-color: var( --callout-warning-accent );
+	text-decoration-thickness: 1px;
+	text-underline-offset: 2px;
 }
 
 /*
@@ -1531,16 +1596,26 @@ th
 
 .bs-callout-danger
 {
-	color: var(--callout-danger-text);
+	color: var( --callout-danger-text-n );
 	background-color: var(--callout-danger-background);
 	border-color: var(--callout-danger-border);
 }
 
 .bs-callout-danger h4
 {
-	color: var(--callout-danger-text);
+	color: var( --callout-danger-text-n );
 	font-weight: 100;
 	font-size: 12pt;
+}
+
+.bs-callout-danger a
+{
+	color: var( --callout-danger-text-a );
+	text-decoration-line: underline;
+	text-decoration-style: dotted;
+	text-decoration-color: var( --callout-danger-accent );
+	text-decoration-thickness: 1px;
+	text-underline-offset: 2px;
 }
 
 .label-pill

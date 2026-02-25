@@ -257,7 +257,7 @@ sub addtitle
 
 	if ( defined $current and $current == 0 )
 	{
-		$output .= "<div class='bs-callout-success' style='box-shadow: inset 0 0 0 9999px color-mix(in srgb, currentColor 16%, transparent);padding:10px;border-top: 1px solid var(--general-page-background, #f3f3f3);'>OK</div>\n";
+		$output .= "<div class='bs-callout-success' style='box-shadow: inset 0 0 0 9999px color-mix(in srgb, currentColor 16%, transparent);padding:10px;'>OK</div>\n";
 	}
 
 	# #
