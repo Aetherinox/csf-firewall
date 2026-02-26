@@ -47,7 +47,7 @@ use ConfigServer::Service;
 use ConfigServer::RBLCheck;
 use ConfigServer::GetEthDev;
 use ConfigServer::Slurp qw(slurp);
-use ConfigServer::Sanitize qw(html_safe html_escape);
+use ConfigServer::Sanitize qw(html_safe html_escape strip_ansi);
 
 use Exporter qw(import);
 our $VERSION     = 1.01;
@@ -3938,6 +3938,7 @@ sub printcmd
 
 	while ( <$childout> )
 	{
+		$_ = strip_ansi( $_ );
 		print html_escape( $_ );
 		$text .= $_;
 	}
