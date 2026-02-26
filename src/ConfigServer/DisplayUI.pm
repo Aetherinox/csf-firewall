@@ -34,7 +34,6 @@ use File::Basename;
 use File::Copy;
 use Net::CIDR::Lite;
 use IPC::Open3;
-use URI::Escape;
 
 use ConfigServer::Config;
 use ConfigServer::CheckIP qw(checkip);

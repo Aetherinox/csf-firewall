@@ -33,7 +33,6 @@ use version;
 use Fcntl qw(:DEFAULT :flock);
 use Carp;
 use IPC::Open3;
-use URI::Escape;
 use ConfigServer::Slurp qw(slurp);
 use ConfigServer::JSON qw(decode_json);
 
