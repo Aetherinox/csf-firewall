@@ -245,7 +245,7 @@ unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq
 {
 	print <<EOF;
 	
-<div id="loader"></div><br />
+<div id="loader"></div>
 <div class='panel panel-default'>
     <div class="section-header">
         <div class="header-left">
