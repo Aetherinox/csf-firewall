@@ -39,6 +39,7 @@ use ConfigServer::DisplayUI;
 use ConfigServer::DisplayResellerUI;
 use ConfigServer::Config;
 use ConfigServer::Slurp qw(slurp);
+use ConfigServer::Sanitize qw(html_safe html_escape);
 
 our ($reseller, $script, $script_da, $images, %rprivs, $myv, %FORM, %daconfig);
 
@@ -46,52 +47,11 @@ our ($reseller, $script, $script_da, $images, %rprivs, $myv, %FORM, %daconfig);
 #	Load configs
 # #
 
-my $config = ConfigServer::Config->loadconfig();
-my %config = $config->config;
-my $slurpreg = ConfigServer::Slurp->slurpreg;
-my $cleanreg = ConfigServer::Slurp->cleanreg;
-
-# #
-#	Get Codename
-#	
-#	returns the codename depending on which control panel a user is running.
-#	
-#	@args			$config
-#	@usage			my $codename = getCodename(\%config);
-# #
-
-sub getCodename
-{
-	my ($config_ref) = @_;
-	my %config = %{$config_ref};
-	my $cname = "cpanel";
-
-	if ($config{GENERIC})      { $cname = "generic" }
-	if ($config{DIRECTADMIN})  { $cname = "directadmin" }
-	if ($config{INTERWORX})    { $cname = "interworx" }
-	if ($config{CYBERPANEL})   { $cname = "cyberpanel" }
-	if ($config{CWP})          { $cname = "cwp" }
-	if ($config{VESTA})        { $cname = "vestacp" }
-
-	if ( -e "/usr/share/webmin/miniserv.pl" || -e "/usr/libexec/webmin/bin/webmin" || -e "/usr/bin/webmin" )
-	{
-		$cname = "webmin";
-	}
-
-	# #
-    #	Optional debug output
-	# #
-
-	#	print "$cname\n";
-
-	# #
-    #	Return the value so it can be used in conditionals
-	# #
-
-	return $cname;
-}
-
-my $codename = getCodename(\%config);
+my $config 		= ConfigServer::Config->loadconfig();
+my %config 		= $config->config;
+my $slurpreg 	= ConfigServer::Slurp->slurpreg;
+my $cleanreg 	= ConfigServer::Slurp->cleanreg;
+my $codename 	= ConfigServer::Config->getCodename();
 
 # #
 #	Resellers
@@ -186,7 +146,7 @@ foreach my $pair (@pairs) {
 	my ($name, $value) = split(/=/, $pair);
 	$value =~ tr/+/ /;
 	$value =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C", hex($1))/eg;
-	$FORM{$name} = $value;
+	$FORM{$name} = html_escape($value);
 }
 
 open (my $DIRECTADMIN, "<", "/usr/local/directadmin/conf/directadmin.conf");

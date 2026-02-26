@@ -49,48 +49,7 @@ my $config 		= ConfigServer::Config->loadconfig( );
 my %config 		= $config->config;
 my $slurpreg 	= ConfigServer::Slurp->slurpreg;
 my $cleanreg 	= ConfigServer::Slurp->cleanreg;
-
-# #
-#	Get Codename
-#	
-#	returns the codename depending on which control panel a user is running.
-#	
-#	@args			$config
-#	@usage			my $codename = getCodename(\%config);
-# #
-
-sub getCodename
-{
-	my ($config_ref) = @_;
-	my %config = %{$config_ref};
-	my $cname = "cpanel";
-
-	if ($config{GENERIC})      { $cname = "generic" }
-	if ($config{DIRECTADMIN})  { $cname = "directadmin" }
-	if ($config{INTERWORX})    { $cname = "interworx" }
-	if ($config{CYBERPANEL})   { $cname = "cyberpanel" }
-	if ($config{CWP})          { $cname = "cwp" }
-	if ($config{VESTA})        { $cname = "vestacp" }
-
-	if ( -e "/usr/share/webmin/miniserv.pl" || -e "/usr/libexec/webmin/bin/webmin" || -e "/usr/bin/webmin" )
-	{
-		$cname = "webmin";
-	}
-
-	# #
-    #	Optional debug output
-	# #
-
-	#	print "$cname\n";
-
-	# #
-    #	Return the value so it can be used in conditionals
-	# #
-
-	return $cname;
-}
-
-my $codename = getCodename(\%config);
+my $codename 	= ConfigServer::Config->getCodename();
 
 our %session;
 our @sessiondata;
