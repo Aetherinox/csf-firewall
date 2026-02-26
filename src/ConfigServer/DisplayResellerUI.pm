@@ -39,13 +39,14 @@ use ConfigServer::Config;
 use ConfigServer::CheckIP qw(checkip);
 use ConfigServer::Sendmail;
 use ConfigServer::Logger;
+use ConfigServer::Sanitize qw(html_safe html_escape);
 
-use Exporter qw(import);
-our $VERSION     = 1.01;
-our @ISA         = qw(Exporter);
-our @EXPORT_OK   = qw();
+use Exporter 		qw(import);
+our $VERSION     	= 1.01;
+our @ISA         	= qw(Exporter);
+our @EXPORT_OK   	= qw();
 
-umask(0177);
+umask( 0177 );
 
 our ($chart, $ipscidr6, $ipv6reg, $ipv4reg, %config, %ips, $mobile,
 	 %FORM, $script, $script_da, $images, $myv, %rprivs, $hostname,
@@ -231,19 +232,26 @@ sub main {
 
 	return;
 }
-# end main
-###############################################################################
-# start printcmd
-sub printcmd {
-	my @command = @_;
+
+# #
+#	Print Command
+# #
+
+sub printcmd
+{
+	my @command 	= @_;
 	my $text;
-	my ($childin, $childout);
-	my $pid = open3($childin, $childout, $childout, @command);
-	while (<$childout>) {print $_ ; $text .= $_}
-	waitpid ($pid, 0);
+	my ( $childin, $childout );
+	my $pid 		= open3( $childin, $childout, $childout, @command );
+
+	while ( <$childout> )
+	{
+		print html_escape( $_ );
+		$text .= $_;
+	}
+
+	waitpid ( $pid, 0 );
 	return $text;
 }
-# end printcmd
-###############################################################################
 
 1;

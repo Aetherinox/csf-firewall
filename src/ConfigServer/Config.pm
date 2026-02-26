@@ -35,8 +35,9 @@ use Carp;
 use IPC::Open3;
 use ConfigServer::Slurp qw(slurp);
 use ConfigServer::JSON qw(decode_json);
+use ConfigServer::Perl::URI qw(uri_escape);
 
-use Exporter qw(import);
+use Exporter 	qw(import);
 our $VERSION	= 1.05;
 our @ISA		= qw(Exporter);
 our @EXPORT_OK	= qw();

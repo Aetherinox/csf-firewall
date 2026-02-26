@@ -34,6 +34,7 @@ use IPC::Open3;
 use lib '/usr/local/csf/lib';
 use ConfigServer::DisplayUI;
 use ConfigServer::Config;
+use ConfigServer::Sanitize qw(html_safe html_escape);
 
 our ($script, $images, $myv, %FORM, %in);
 
@@ -62,11 +63,12 @@ if ($buffer eq "") {$buffer = $ENV{POST}}
 if ($buffer eq "") {read(STDIN, $buffer,$ENV{'CONTENT_LENGTH'})}
 if ($buffer eq "") {foreach my $item (@ARGV) {$buffer .= $item."&"}}
 my @pairs = split(/&/, $buffer);
-foreach my $pair (@pairs) {
+foreach my $pair ( @pairs )
+{
 	my ($name, $value) = split(/=/, $pair);
 	$value =~ tr/+/ /;
 	$value =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C", hex($1))/eg;
-	$FORM{$name} = $value;
+	$FORM{$name} = html_escape($value);
 }
 
 print "content-type: text/html\n\n";

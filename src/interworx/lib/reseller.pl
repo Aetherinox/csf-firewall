@@ -36,6 +36,7 @@ use ConfigServer::DisplayUI;
 use ConfigServer::DisplayResellerUI;
 use ConfigServer::Config;
 use ConfigServer::Slurp qw(slurp);
+use ConfigServer::Sanitize qw(html_safe html_escape);
 
 our ($reseller, %rprivs, $script, $images, $myv, %FORM, %in);
 
@@ -101,11 +102,12 @@ $images = "/configserver/csf";
 my $buffer = $ENV{'QUERY_STRING'};
 if ($buffer eq "") {$buffer = $ENV{POST}}
 my @pairs = split(/&/, $buffer);
-foreach my $pair (@pairs) {
+foreach my $pair ( @pairs )
+{
 	my ($name, $value) = split(/=/, $pair);
 	$value =~ tr/+/ /;
 	$value =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C", hex($1))/eg;
-	$FORM{$name} = $value;
+	$FORM{$name} = html_escape($value);
 }
 
 $FORM{action} = $FORM{iworxme};

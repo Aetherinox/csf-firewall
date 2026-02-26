@@ -767,10 +767,7 @@ EOF
 					my $pid = open3($childin, $childout, $childout,$config{TAIL},"-$FORM{lines}",$logfile);
 					while (<$childout>)
 					{
-						my $line = $_;
-						$line =~ s/&/&amp;/g;
-						$line =~ s/</&lt;/g;
-						$line =~ s/>/&gt;/g;
+						my $line = html_escape( $_, '&<>' );
 						print $line;
 					}
 
@@ -1031,10 +1028,7 @@ EOF
 							my $pid = open3($childin, $childout, $childout,$grepbin,@cmd,$file);
 							while (<$childout>)
 							{
-								my $line = $_;
-								$line =~ s/&/&amp;/g;
-								$line =~ s/</&lt;/g;
-								$line =~ s/>/&gt;/g;
+								my $line = html_escape( $_, '&<>' );
 								if ($FORM{grep} ne "")
 								{
 									eval
@@ -1065,10 +1059,7 @@ EOF
 						my $pid = open3($childin, $childout, $childout,$grepbin,@cmd,$logfile);
 						while (<$childout>)
 						{
-							my $line = $_;
-							$line =~ s/&/&amp;/g;
-							$line =~ s/</&lt;/g;
-							$line =~ s/>/&gt;/g;
+							my $line = html_escape( $_, '&<>' );
 							if ($FORM{grep} ne "")
 							{
 								eval
@@ -1116,9 +1107,7 @@ EOF
 
 		foreach my $line (@readme)
 		{
-			$line =~ s/\</\&lt\;/g;
-			$line =~ s/\>/\&gt\;/g;
-			print $line."\n";
+			print html_escape( $line, '<>' )."\n";
 		}
 
 		print "</pre>\n";
@@ -3942,14 +3931,19 @@ END_JS
 
 sub printcmd
 {
-	my @command = @_;
-
+	my @command 	= @_;
+	my $text;
 	my ( $childin, $childout );
-	my $pid = open3( $childin, $childout, $childout, @command );
-	while (<$childout>) { print $_ }
-	waitpid ( $pid, 0 );
+	my $pid 		= open3( $childin, $childout, $childout, @command );
 
-	return;
+	while ( <$childout> )
+	{
+		print html_escape( $_ );
+		$text .= $_;
+	}
+
+	waitpid ( $pid, 0 );
+	return $text;
 }
 
 # #

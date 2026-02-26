@@ -36,9 +36,10 @@ use ConfigServer::CheckIP qw(checkip);
 use ConfigServer::Slurp qw(slurp);
 use ConfigServer::GetIPs qw(getips);
 use ConfigServer::RBLLookup qw(rbllookup);
+use ConfigServer::Sanitize qw(html_safe html_escape);
+use ConfigServer::GetEthDev;
 use IPC::Open3;
 use Net::IP;
-use ConfigServer::GetEthDev;
 
 use Exporter 	qw(import);
 our $VERSION	= 1.01;
@@ -177,8 +178,9 @@ sub report
 
 						foreach my $line ( @tmptxt )
 						{
+							$line 		= html_escape( $line );
 							$line 		=~ s/(http(\S+))/<a target="_blank" href="$1">$1<\/a>/g;
-							$rbltxt 	.= "${line}\n";
+							$rbltxt		.= "${line}\n";
 						}
 
 						$rbltxt =~ s/\n/<br>\n/g;
