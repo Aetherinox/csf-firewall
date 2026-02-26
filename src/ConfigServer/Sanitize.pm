@@ -9,7 +9,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            02.25.2026
+#   @updated            02.26.2026
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -68,7 +68,7 @@ use Carp;
 use Exporter 		qw(import);
 our $VERSION 		= '5.35';
 our @ISA			= qw(Exporter);
-our @EXPORT_OK		= qw(html_safe html_escape uri_escape);
+our @EXPORT_OK		= qw(html_safe html_escape uri_escape strip_ansi);
 
 # #
 #   Sanitize › HTML › Whitelisted Tags / Attribs
@@ -246,6 +246,31 @@ sub html_escape
     }
 
     return $text;
+}
+
+# #
+#   Sanitize › ANSI › Strip
+#	
+#   Remove ANSI escape sequences (SGR) from string.
+#	Strip color, bold, underline, blink, reverse, reset, etc.
+#	Make sure we only target CSI SGR sequences (\e[...m); leave text alone.
+#	
+#	@package	ConfigServer::Sanitize
+#   @usage      my $clean = strip_ansi( "\e[1;31mError\e[0m: colored mess" );
+#					# returns: Error: colored mess
+#   @scope      public
+#   @param      text        str        				str containing ANSI sequences
+#   @return                 str         			str with ANSI sequences removed
+# #
+
+sub strip_ansi
+{
+	my ( $text ) = @_;
+	return '' unless defined $text;
+
+	$text =~ s/\e\[[0-9;]*m//g;
+
+	return $text;
 }
 
 # #
