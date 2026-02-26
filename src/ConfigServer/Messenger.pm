@@ -391,23 +391,24 @@ sub messenger {
 									$firstline .= $char;
 									if ($char eq "") {exit}
 
-								# #
-								#	RFC 7230, Sec 3.1.1: recommends supporting at least 8000 octets.
-								#		Prefix: 	GET /unblk?g-recaptcha-response=	= 32 bytes
-								#		Suffix:  	HTTP/1.1\r\n						= 11 bytes			(\r\n = 2 bytes) (carriage return (0x0D)/line feed (0x0A))
-								#		 												32 + 11 = 43 bytes
-								#	
-								#		Remaining for Recaptcha token					4053 bytes
-								#		Acceptable Limit								4096 bytes
-								#	
-								#	@since				v15.10
-								#	@reference			https://datatracker.ietf.org/doc/html/rfc7230#autoid-17
-								#						https://mothereff.in/byte-counter
-								# #
+									# #
+									#	RFC 7230, Sec 3.1.1: recommends supporting at least 8000 octets.
+									#		Prefix: 	GET /unblk?g-recaptcha-response=	= 32 bytes
+									#		Suffix:  	HTTP/1.1\r\n						= 11 bytes			(\r\n = 2 bytes) (carriage return (0x0D)/line feed (0x0A))
+									#		 												32 + 11 = 43 bytes
+									#	
+									#		Remaining for Recaptcha token					4053 bytes
+									#		Acceptable Limit								4096 bytes
+									#	
+									#	@since				v15.10
+									#	@reference			https://datatracker.ietf.org/doc/html/rfc7230#autoid-17
+									#						https://mothereff.in/byte-counter
+									# #
 
-								if ( length $firstline > 4096 )
-								{
-									last
+									if ( length $firstline > 4096 )
+									{
+										last
+									}
 								}
 
 								chomp $firstline;
