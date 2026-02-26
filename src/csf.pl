@@ -68,14 +68,14 @@ our (@ipset, @faststart4, @faststart6, @faststart4nat, @faststartipset,
 #   Colors
 # #
 
-my $esc                 = "\033";
-my $end                 = "${esc}[0m";
-my $bgEnd               = "${esc}[49m";
-my $fgEnd               = "${esc}[39m";
-my $bold                = "${esc}[1m";
-my $dim                 = "${esc}[2m";
-my $underline           = "${esc}[4m";
-my $blink               = "${esc}[5m";
+my $esc				= "\033";
+my $end				= "${esc}[0m";
+my $bgEnd			= "${esc}[49m";
+my $fgEnd			= "${esc}[39m";
+my $bold			= "${esc}[1m";
+my $dim				= "${esc}[2m";
+my $underline		= "${esc}[4m";
+my $blink			= "${esc}[5m";
 
 # Foreground colors
 my $white           = "${esc}[97m";
@@ -151,7 +151,7 @@ sub log_prepare
 }
 
 # #
-#   Log › 
+#   Log › Types 
 #   
 #   @usage                  log_warn( "This is a warning" );
 #							log_warn( "CSF has thrown a ${yellowl}warning${greym}" );
@@ -222,8 +222,8 @@ $version 	= &version;
 $ipscidr6 	= Net::CIDR::Lite->new;
 $ipscidr 	= Net::CIDR::Lite->new;
 
-eval {local $SIG{__DIE__} = undef; $ipscidr6->add("::1/128")};
-eval {local $SIG{__DIE__} = undef; $ipscidr->add("127.0.0.0/8")};
+eval { local $SIG{__DIE__} = undef; $ipscidr6->add( "::1/128" ) };
+eval { local $SIG{__DIE__} = undef; $ipscidr->add( "127.0.0.0/8" ) };
 
 $slurpreg 	= ConfigServer::Slurp->slurpreg;
 $cleanreg 	= ConfigServer::Slurp->cleanreg;
@@ -358,63 +358,63 @@ unless ($input{command} =~ /^--(stop|initdown|initup)$/)
 #	Command List
 # #
 
-if ( ( $input{command} eq "--status" ) 			or ( $input{command} eq "-l" ) ) 	{ &dostatus }
-elsif ( ( $input{command} eq "--status6" ) 		or ( $input{command} eq "-l6" ) ) 	{ &dostatus6 }
-elsif ( ( $input{command} eq "--version" ) 		or ( $input{command} eq "-v" ) ) 	{ &doversion }
-elsif ( ( $input{command} eq "--stop" )			or ( $input{command} eq "-f" ) ) 	{ &csflock("lock" );&dostop(0);&csflock("unlock" ) }
-elsif ( ( $input{command} eq "--startf" ) 		or ( $input{command} eq "-sf" ) ) 	{ &csflock("lock" );&dostop(1);&dostart;&csflock("unlock" ) }
-elsif ( ( $input{command} eq "--start" ) 		or ( $input{command} eq "-s" ) or ( $input{command} eq "--restart" ) or ( $input{command} eq "-r" ) ) {if ($config{LFDSTART}) {&lfdstart} else {&csflock("lock" );&dostop(1);&dostart;&csflock("unlock" )}}
-elsif ( ( $input{command} eq "--startq" ) 		or ( $input{command} eq "-q" ) ) 	{ &lfdstart }
-elsif ( ( $input{command} eq "--restartall" ) 	or ( $input{command} eq "-ra" ) ) 	{ &dorestartall }
-elsif ( ( $input{command} eq "--add" ) 			or ( $input{command} eq "-a" ) ) 	{ &doadd }
-elsif ( ( $input{command} eq "--deny" )			or ( $input{command} eq "-d" ) ) 	{ &dodeny }
-elsif ( ( $input{command} eq "--denyrm" ) 		or ( $input{command} eq "-dr" ) ) 	{ &dokill }
-elsif ( ( $input{command} eq "--denyf" ) 		or ( $input{command} eq "-df" ) ) 	{ &dokillall }
-elsif ( ( $input{command} eq "--addrm" ) 		or ( $input{command} eq "-ar" ) ) 	{ &doakill }
-elsif ( ( $input{command} eq "--update" ) 		or ( $input{command} eq "-u" ) or ( $input{command} eq "-uf" ) ) { &doupdate }
-elsif ( ( $input{command} eq "--disable" ) 		or ( $input{command} eq "-x" ) ) 	{ &csflock("lock" );&dodisable;&csflock("unlock" ) }
-elsif ( ( $input{command} eq "--enable" ) 		or ( $input{command} eq "-e" ) ) 	{ &csflock("lock" );&doenable;&csflock("unlock" ) }
-elsif ( ( $input{command} eq "--check" ) 		or ( $input{command} eq "-c" ) ) 	{ &docheck }
-elsif ( ( $input{command} eq "--grep" )			or ( $input{command} eq "-g" ) ) 	{ &dogrep }
-elsif ( ( $input{command} eq "--iplookup" )		or ( $input{command} eq "-i" ) ) 	{ &doiplookup }
-elsif ( ( $input{command} eq "--temp" )			or ( $input{command} eq "-t" ) ) 	{ &dotempban }
-elsif ( ( $input{command} eq "--temprm" ) 		or ( $input{command} eq "-tr" ) ) 	{ &dotemprm }
-elsif ( ( $input{command} eq "--temprma" ) 		or ( $input{command} eq "-tra" ) ) 	{ &dotemprma }
-elsif ( ( $input{command} eq "--temprmd" ) 		or ( $input{command} eq "-trd" ) ) 	{ &dotemprmd }
-elsif ( ( $input{command} eq "--tempdeny" )		or ( $input{command} eq "-td" ) ) 	{ &dotempdeny }
-elsif ( ( $input{command} eq "--tempallow" ) 	or ( $input{command} eq "-ta" ) ) 	{ &dotempallow }
-elsif ( ( $input{command} eq "--tempf" ) 		or ( $input{command} eq "-tf" ) ) 	{ &dotempf }
-elsif ( ( $input{command} eq "--mail" )			or ( $input{command} eq "-m" ) ) 	{ &domail }
-elsif ( ( $input{command} eq "--cdeny" ) 		or ( $input{command} eq "-cd" ) ) 	{ &doclusterdeny }
-elsif ( ( $input{command} eq "--ctempdeny" ) 	or ( $input{command} eq "-ctd" ) ) 	{ &doclustertempdeny }
-elsif ( ( $input{command} eq "--callow" ) 		or ( $input{command} eq "-ca" ) ) 	{ &doclusterallow }
-elsif ( ( $input{command} eq "--ctempallow" ) 	or ( $input{command} eq "-cta" ) ) 	{ &doclustertempallow }
-elsif ( ( $input{command} eq "--crm" ) 			or ( $input{command} eq "-cr" ) ) 	{ &doclusterrm }
-elsif ( ( $input{command} eq "--carm" )			or ( $input{command} eq "-car" ) ) 	{ &doclusterarm }
-elsif ( ( $input{command} eq "--cignore" ) 		or ( $input{command} eq "-ci" ) ) 	{ &doclusterignore }
-elsif ( ( $input{command} eq "--cirm" )			or ( $input{command} eq "-cir" ) ) 	{ &doclusterirm }
-elsif ( ( $input{command} eq "--cping" ) 		or ( $input{command} eq "-cp" ) ) 	{ &clustersend( "PING" ) }
-elsif ( ( $input{command} eq "--cgrep" ) 		or ( $input{command} eq "-cg" ) ) 	{ &doclustergrep }
-elsif ( ( $input{command} eq "--cconfig" ) 		or ( $input{command} eq "-cc" ) ) 	{ &docconfig }
-elsif ( ( $input{command} eq "--cfile" ) 		or ( $input{command} eq "-cf" ) ) 	{ &docfile }
-elsif ( ( $input{command} eq "--crestart" )		or ( $input{command} eq "-crs" ) ) 	{ &docrestart }
-elsif ( ( $input{command} eq "--watch" ) 		or ( $input{command} eq "-w" ) ) 	{ &dowatch }
-elsif ( ( $input{command} eq "--logrun" ) 		or ( $input{command} eq "-lr" ) ) 	{ &dologrun }
-elsif ( ( $input{command} eq "--ports" ) 		or ( $input{command} eq "-p" ) ) 	{ &doports }
-elsif ( ( $input{command} eq "--addport" ) 		or ( $input{command} eq "-ap" ) ) 	{ &portAdd }
-elsif ( ( $input{command} eq "--removeport" ) 	or ( $input{command} eq "-rp" ) ) 	{ &portRemove }
-elsif ( ( $input{command} eq "--listports" ) 	or ( $input{command} eq "-lp" ) ) 	{ &portsList }
-elsif ( $input{command} eq "--cloudflare" ) 	{ &docloudflare }
-elsif ( $input{command} eq "--graphs" ) 		{ &dographs }
-elsif ( $input{command} eq "--lfd" ) 			{ &dolfd }
-elsif ( $input{command} eq "--rbl" ) 			{ &dorbls }
-elsif ( $input{command} eq "--initup" ) 		{ &doinitup }
-elsif ( $input{command} eq "--initdown" ) 		{ &doinitdown }
-elsif ( $input{command} eq "--profile" ) 		{ &doprofile }
-elsif ( $input{command} eq "--mregen" ) 		{ &domessengerv2 }
-elsif ( $input{command} eq "--trace" ) 			{ &dotrace }
-elsif ( ( $input{command} eq "--insiders" ) or ( $input{command} eq "-in" ) ) { &doinsiders }
-else { &dohelp }
+if 		( ( $input{command} eq "--status" )			or ( $input{command} eq "-l" ) ) 	{ &dostatus }
+elsif 	( ( $input{command} eq "--status6" ) 		or ( $input{command} eq "-l6" ) ) 	{ &dostatus6 }
+elsif 	( ( $input{command} eq "--version" ) 		or ( $input{command} eq "-v" ) ) 	{ &doversion }
+elsif 	( ( $input{command} eq "--stop" )			or ( $input{command} eq "-f" ) ) 	{ &csflock("lock" );&dostop(0);&csflock("unlock" ) }
+elsif 	( ( $input{command} eq "--startf" ) 		or ( $input{command} eq "-sf" ) ) 	{ &csflock("lock" );&dostop(1);&dostart;&csflock("unlock" ) }
+elsif 	( ( $input{command} eq "--start" ) 			or ( $input{command} eq "-s" ) 		or ( $input{command} eq "--restart" ) or ( $input{command} eq "-r" ) ) {if ($config{LFDSTART}) {&lfdstart} else {&csflock("lock" );&dostop(1);&dostart;&csflock("unlock" )}}
+elsif 	( ( $input{command} eq "--startq" ) 		or ( $input{command} eq "-q" ) ) 	{ &lfdstart }
+elsif 	( ( $input{command} eq "--restartall" ) 	or ( $input{command} eq "-ra" ) ) 	{ &dorestartall }
+elsif 	( ( $input{command} eq "--add" ) 			or ( $input{command} eq "-a" ) ) 	{ &doadd }
+elsif 	( ( $input{command} eq "--deny" )			or ( $input{command} eq "-d" ) ) 	{ &dodeny }
+elsif 	( ( $input{command} eq "--denyrm" ) 		or ( $input{command} eq "-dr" ) ) 	{ &dokill }
+elsif 	( ( $input{command} eq "--denyf" ) 			or ( $input{command} eq "-df" ) ) 	{ &dokillall }
+elsif 	( ( $input{command} eq "--addrm" ) 			or ( $input{command} eq "-ar" ) ) 	{ &doakill }
+elsif 	( ( $input{command} eq "--update" ) 		or ( $input{command} eq "-u" ) 		or ( $input{command} eq "-uf" ) ) { &doupdate }
+elsif 	( ( $input{command} eq "--disable" ) 		or ( $input{command} eq "-x" ) ) 	{ &csflock("lock" );&dodisable;&csflock("unlock" ) }
+elsif 	( ( $input{command} eq "--enable" ) 		or ( $input{command} eq "-e" ) ) 	{ &csflock("lock" );&doenable;&csflock("unlock" ) }
+elsif 	( ( $input{command} eq "--check" ) 			or ( $input{command} eq "-c" ) ) 	{ &docheck }
+elsif 	( ( $input{command} eq "--grep" )			or ( $input{command} eq "-g" ) ) 	{ &dogrep }
+elsif 	( ( $input{command} eq "--iplookup" )		or ( $input{command} eq "-i" ) ) 	{ &doiplookup }
+elsif 	( ( $input{command} eq "--temp" )			or ( $input{command} eq "-t" ) ) 	{ &dotempban }
+elsif 	( ( $input{command} eq "--temprm" ) 		or ( $input{command} eq "-tr" ) ) 	{ &dotemprm }
+elsif 	( ( $input{command} eq "--temprma" ) 		or ( $input{command} eq "-tra" ) ) 	{ &dotemprma }
+elsif 	( ( $input{command} eq "--temprmd" ) 		or ( $input{command} eq "-trd" ) ) 	{ &dotemprmd }
+elsif 	( ( $input{command} eq "--tempdeny" )		or ( $input{command} eq "-td" ) ) 	{ &dotempdeny }
+elsif 	( ( $input{command} eq "--tempallow" ) 		or ( $input{command} eq "-ta" ) ) 	{ &dotempallow }
+elsif 	( ( $input{command} eq "--tempf" ) 			or ( $input{command} eq "-tf" ) ) 	{ &dotempf }
+elsif 	( ( $input{command} eq "--mail" )			or ( $input{command} eq "-m" ) ) 	{ &domail }
+elsif 	( ( $input{command} eq "--cdeny" ) 			or ( $input{command} eq "-cd" ) ) 	{ &doclusterdeny }
+elsif 	( ( $input{command} eq "--ctempdeny" ) 		or ( $input{command} eq "-ctd" ) ) 	{ &doclustertempdeny }
+elsif 	( ( $input{command} eq "--callow" ) 		or ( $input{command} eq "-ca" ) ) 	{ &doclusterallow }
+elsif 	( ( $input{command} eq "--ctempallow" ) 	or ( $input{command} eq "-cta" ) ) 	{ &doclustertempallow }
+elsif 	( ( $input{command} eq "--crm" ) 			or ( $input{command} eq "-cr" ) ) 	{ &doclusterrm }
+elsif 	( ( $input{command} eq "--carm" )			or ( $input{command} eq "-car" ) ) 	{ &doclusterarm }
+elsif 	( ( $input{command} eq "--cignore" ) 		or ( $input{command} eq "-ci" ) ) 	{ &doclusterignore }
+elsif 	( ( $input{command} eq "--cirm" )			or ( $input{command} eq "-cir" ) ) 	{ &doclusterirm }
+elsif 	( ( $input{command} eq "--cping" ) 			or ( $input{command} eq "-cp" ) ) 	{ &clustersend( "PING" ) }
+elsif 	( ( $input{command} eq "--cgrep" ) 			or ( $input{command} eq "-cg" ) ) 	{ &doclustergrep }
+elsif 	( ( $input{command} eq "--cconfig" ) 		or ( $input{command} eq "-cc" ) ) 	{ &docconfig }
+elsif	( ( $input{command} eq "--cfile" ) 			or ( $input{command} eq "-cf" ) ) 	{ &docfile }
+elsif 	( ( $input{command} eq "--crestart" )		or ( $input{command} eq "-crs" ) ) 	{ &docrestart }
+elsif 	( ( $input{command} eq "--watch" ) 			or ( $input{command} eq "-w" ) ) 	{ &dowatch }
+elsif 	( ( $input{command} eq "--logrun" ) 		or ( $input{command} eq "-lr" ) ) 	{ &dologrun }
+elsif 	( ( $input{command} eq "--ports" ) 			or ( $input{command} eq "-p" ) ) 	{ &doports }
+elsif 	( ( $input{command} eq "--addport" ) 		or ( $input{command} eq "-ap" ) ) 	{ &portAdd }
+elsif 	( ( $input{command} eq "--removeport" ) 	or ( $input{command} eq "-rp" ) ) 	{ &portRemove }
+elsif 	( ( $input{command} eq "--listports" )		or ( $input{command} eq "-lp" ) ) 	{ &portsList }
+elsif 	( $input{command} eq "--cloudflare" ) 											{ &docloudflare }
+elsif 	( $input{command} eq "--graphs" ) 												{ &dographs }
+elsif 	( $input{command} eq "--lfd" ) 													{ &dolfd }
+elsif 	( $input{command} eq "--rbl" ) 													{ &dorbls }
+elsif 	( $input{command} eq "--initup" ) 												{ &doinitup }
+elsif 	( $input{command} eq "--initdown" ) 											{ &doinitdown }
+elsif 	( $input{command} eq "--profile" ) 												{ &doprofile }
+elsif 	( $input{command} eq "--mregen" ) 												{ &domessengerv2 }
+elsif 	( $input{command} eq "--trace" ) 												{ &dotrace }
+elsif 	( ( $input{command} eq "--insiders" ) 		or ( $input{command} eq "-in" ) ) 	{ &doinsiders }
+else 	{ &dohelp }
 
 # #
 #	Warning › TESTING (Enabled)
@@ -422,16 +422,16 @@ else { &dohelp }
 #	End-user should not have testing mode enabled; throw warning.
 # #
 
-if ($config{TESTING})
+if ( $config{TESTING} )
 {
 	print "*WARNING* TESTING mode is enabled - do not forget to disable it in the configuration\n"
 }
 
-if ($config{AUTO_UPDATES})
+if ( $config{AUTO_UPDATES} )
 {
-	unless (-e "/etc/cron.d/csf_update") {&autoupdates}
+	unless ( -e "/etc/cron.d/csf_update" ) { &autoupdates }
 }
-elsif (-e "/etc/cron.d/csf_update")
+elsif ( -e "/etc/cron.d/csf_update" )
 {
 	unlink "/etc/cron.d/csf_update"
 }
@@ -440,9 +440,14 @@ elsif (-e "/etc/cron.d/csf_update")
 #	Warning › Startup
 # #
 
-if (($input{command} eq "--start") or ($input{command} eq "-s") or ($input{command} eq "--restart") or ($input{command} eq "-r") or ($input{command} eq "--restartall") or ($input{command} eq "-ra"))
+if ( ( $input{command} eq "--start" )
+or ( $input{command} eq "-s" )
+or ( $input{command} eq "--restart" )
+or ( $input{command} eq "-r" )
+or ( $input{command} eq "--restartall" )
+or ( $input{command} eq "-ra" ) )
 {
-	if ($warning)
+	if ( $warning )
 	{
 		print $warning
 	}
@@ -537,7 +542,7 @@ sub load_config
 		import IO::Socket::INET;
 	}
 
-	if ($config{CF_ENABLE})
+	if ( $config{CF_ENABLE} )
 	{
 		require ConfigServer::CloudFlare;
 		import ConfigServer::CloudFlare;
@@ -564,33 +569,45 @@ sub load_config
 	unless ($config{DROP_UID_LOGGING}) {$logouttarget = "LOG --log-prefix"}
 
 	$accept = "ACCEPT";
-	if ($config{WATCH_MODE}) {
-		$accept = "LOGACCEPT";
-		$config{DROP_NOLOG} = "";
-		$config{DROP_LOGGING} = "1";
-		$config{DROP_IP_LOGGING} = "1";
-		$config{DROP_OUT_LOGGING} = "1";
-		$config{DROP_PF_LOGGING} = "1";
-		$config{PS_INTERVAL} = "0";
-		$config{DROP_ONLYRES} = "0";
+	if ( $config{WATCH_MODE} )
+	{
+		$accept 					= "LOGACCEPT";
+		$config{DROP_NOLOG} 		= "";
+		$config{DROP_LOGGING} 		= "1";
+		$config{DROP_IP_LOGGING} 	= "1";
+		$config{DROP_OUT_LOGGING} 	= "1";
+		$config{DROP_PF_LOGGING} 	= "1";
+		$config{PS_INTERVAL} 		= "0";
+		$config{DROP_ONLYRES} 		= "0";
 	}
 
-	if ($config{MESSENGER}) {
+	if ( $config{MESSENGER} )
+	{
 		foreach my $port (split(/\,/,$config{MESSENGER_HTTPS_IN})) {$messengerports{$port} = 1}
 		foreach my $port (split(/\,/,$config{MESSENGER_HTML_IN})) {$messengerports{$port} = 1}
 		foreach my $port (split(/\,/,$config{MESSENGER_TEXT_IN})) {$messengerports{$port} = 1}
 	}
 	
 	$statemodule = "-m state --state";
-	if ($config{USE_CONNTRACK}) {$statemodule = "-m conntrack --ctstate"}
-	if ($config{LF_SPI}) {
+	if ( $config{USE_CONNTRACK} )
+	{
+		$statemodule = "-m conntrack --ctstate"
+	}
+
+	if ( $config{LF_SPI} )
+	{
 		$statemodulenew = "$statemodule NEW";
-	} else {
+	}
+	else
+	{
 		$statemodulenew = "";
 	}
+
 	if ($config{IPV6_SPI}) {
 		$statemodule6new = "$statemodule NEW";
-	} else {
+	}
+	else
+	{
 		$statemodule6new = "";
 	}
 
@@ -603,54 +620,62 @@ sub load_config
 		}
 	}
 
-	foreach my $line (@entries)
+	foreach my $line ( @entries )
 	{
 		$line =~ s/$cleanreg//g;
-		if ($line eq "") { next }
-		if ($line =~ /^\s*\#|Include/) { next }
+	
+		if 	( $line eq "" )					{ next }
+		if 	( $line =~ /^\s*\#|Include/ ) 	{ next }
 
-		my ($name,$interval,$max,$url) = split(/\|/,$line);
+		my ( $name, $interval, $max, $url) 	= split( /\|/, $line );
 
 		# Trim whitespace
-		for ($name, $interval, $max, $url) { s/^\s+|\s+$//g; }
+		for ( $name, $interval, $max, $url ) { s/^\s+|\s+$//g; }
 
-		if ($name =~ /^\w+$/)
+		if ( $name =~ /^\w+$/ )
 		{
-			$name = substr(uc $name, 0, 25);
-			if ($name =~ /^CXS_/) {$name =~ s/^CXS_/X_CXS_/}
-			if ($interval < 3600) {$interval = 3600}
-			if ($max eq "") {$max = 0}
-			$blocklists{$name}{interval} = $interval;
-			$blocklists{$name}{max} = $max;
-			$blocklists{$name}{url} = $url;
+			$name = substr( uc $name, 0, 25 );
+	
+			if ( $name =~ /^CXS_/) 							{ $name =~ s/^CXS_/X_CXS_/ }
+			if ( !length $interval || $interval < 3600 ) 	{ $interval = 3600 }
+			if ( $max eq "" ) 								{ $max = 0 }
+	
+			$blocklists{$name}{interval} 	= $interval;
+			$blocklists{$name}{max} 		= $max;
+			$blocklists{$name}{url} 		= $url;
 		}
 	}
 
-	if (-e "/etc/cxs/cxs.reputation" and -e "/usr/local/csf/lib/ConfigServer/cxs.pm") {
+	if ( -e "/etc/cxs/cxs.reputation" and -e "/usr/local/csf/lib/ConfigServer/cxs.pm" )
+	{
 		require ConfigServer::cxs;
 		import ConfigServer::cxs;
+
 		$cxsreputation = 1;
-		if (-e "/etc/cxs/cxs.blocklists")
+		if ( -e "/etc/cxs/cxs.blocklists" )
 		{
-			my $all = 0;
-			my @lines = slurp("/etc/cxs/cxs.blocklists");
-			if (grep {$_ =~ /^CXS_ALL/} @lines) {$all = 1}
-			foreach my $line (@lines) {
+			my $all 	= 0;
+			my @lines 	= slurp( "/etc/cxs/cxs.blocklists" );
+	
+			if ( grep {$_ =~ /^CXS_ALL/} @lines ) { $all = 1 }
+	
+			foreach my $line (@lines)
+			{
 				$line =~ s/$cleanreg//g;
-				if ($line =~ /^(\s|\#|$)/) {next}
-				my ($name,$interval,$max,$url) = split(/\|/,$line);
+				if ( $line =~ /^(\s|\#|$)/ ) { next }
+				my ( $name, $interval, $max, $url ) = split(/\|/, $line );
 
 				# Trim whitespace
-				for ($name, $interval, $max, $url) { s/^\s+|\s+$//g; }
+				for ( $name, $interval, $max, $url ) { s/^\s+|\s+$//g; }
 
-				if ($all and $name ne "CXS_ALL") {next}
-				if ($name =~ /^\w+$/)
+				if ( $all and $name ne "CXS_ALL" ) { next }
+				if ( $name =~ /^\w+$/ )
 				{
-					$name = substr(uc $name, 0, 25);
-					if ($max eq "") {$max = 0}
-					$blocklists{$name}{interval} = $interval;
-					$blocklists{$name}{max} = $max;
-					$blocklists{$name}{url} = $url;
+					$name = substr( uc $name, 0, 25 );
+					if ( $max eq "" ) { $max = 0 }
+					$blocklists{$name}{interval} 	= $interval;
+					$blocklists{$name}{max} 		= $max;
+					$blocklists{$name}{url} 		= $url;
 				}
 			}
 		}
@@ -842,10 +867,10 @@ sub dolfd
 {
 	my $lfd = $input{argument};
 
-	if ( $lfd eq "start" )		{ ConfigServer::Service::startlfd( ) }
-	elsif ( $lfd eq "stop" )	{ ConfigServer::Service::stoplfd( ) }
-	elsif ( $lfd eq "restart" )	{ ConfigServer::Service::restartlfd( ) }
-	elsif ( $lfd eq "status" ) 	{ ConfigServer::Service::statuslfd( ) }
+	if 		( $lfd eq "start" )		{ ConfigServer::Service::startlfd( ) }
+	elsif 	( $lfd eq "stop" )		{ ConfigServer::Service::stoplfd( ) }
+	elsif 	( $lfd eq "restart" )	{ ConfigServer::Service::restartlfd( ) }
+	elsif 	( $lfd eq "status" )	{ ConfigServer::Service::statuslfd( ) }
 	else
 	{
 		log_info( "Invalid flag; lfd service includes the following flags" );
@@ -950,12 +975,13 @@ sub doinitup
 	&csflock("unlock");
 	return;
 }
-# end doinitup
-###############################################################################
-# start doinitdown
-sub doinitdown {
-	if ($config{FASTSTART}) {
-		if (-x $config{IPTABLES_SAVE}) {
+
+sub doinitdown
+{
+	if ($config{FASTSTART})
+	{
+		if (-x $config{IPTABLES_SAVE})
+		{
 			print "(saving iptables) ";
 
 			my ($childin, $childout);
@@ -986,6 +1012,7 @@ sub doinitdown {
 				}
 			}
 		}
+
 		if ($config{IPV6} and -x $config{IP6TABLES_SAVE}) {
 			print "(saving ip6tables) ";
 
@@ -1003,13 +1030,13 @@ sub doinitdown {
 	}
 	return;
 }
-# end doinitdown
-###############################################################################
-# start doclusterdeny
-sub doclusterdeny {
-	my ($ip,$comment) = split (/\s/,$input{argument},2);
 
-	if (!checkip(\$ip)) {
+sub doclusterdeny
+{
+	my ( $ip, $comment ) = split( /\s/,$input{argument}, 2 );
+
+	if ( !checkip( \$ip ) )
+	{
 		print "[$ip] is not a valid PUBLIC IP/CIDR\n";
 		return;
 	}
@@ -1017,158 +1044,175 @@ sub doclusterdeny {
 	&clustersend("D $ip 1 * inout 3600 $comment");
 	return;
 }
-# end doclusterdeny
-###############################################################################
-# start doclustertempdeny
-sub doclustertempdeny {
-	my ($ip,$timeout,$portdir) = split(/\s/,$input{argument},3);
-	my $inout = "in";
-	my $ports = "";
-	my $perm = 0;
-	if ($timeout =~ /^(\d*)(m|h|d)/i) {
-		my $secs = $1;
-		my $dur = $2;
-		if ($dur eq "m") {$timeout = $secs * 60}
-		elsif ($dur eq "h") {$timeout = $secs * 60 * 60}
-		elsif ($dur eq "d") {$timeout = $secs * 60 * 60 * 24}
-		else {$timeout = $secs}
+
+sub doclustertempdeny
+{
+	my ( $ip, $timeout, $portdir ) = split( /\s/, $input{argument}, 3 );
+	my $inout 		= "in";
+	my $ports 		= "";
+	my $perm 		= 0;
+
+	if ( $timeout =~ /^(\d*)(m|h|d)/i )
+	{
+		my $secs 	= $1;
+		my $dur 	= $2;
+	
+		if 			( $dur eq "m" ) { $timeout = $secs * 60 }
+		elsif 		( $dur eq "h" ) { $timeout = $secs * 60 * 60 }
+		elsif 		( $dur eq "d" ) { $timeout = $secs * 60 * 60 * 24 }
+		else 						{ $timeout = $secs }
 	}
 
-	my $iptype = checkip(\$ip);
-	if ($iptype == 6 and !$config{IPV6}) {
-		print "failed: [$ip] is valid IPv6 but IPV6 is not enabled in csf.conf\n";
-	}
-
-	unless ($iptype) {
+	my $iptype = checkip( \$ip );
+	if ( !$iptype )
+	{
 		print "csf: [$ip] is not a valid PUBLIC IP\n";
 		return;
 	}
 
-	if ($timeout =~ /\D/) {
-		$portdir = join(" ",$timeout,$portdir);
-		$timeout = 0;
+	if ( $iptype == 6 and !$config{IPV6} )
+	{
+		print "failed: [$ip] is valid IPv6; but IPV6 is not enabled in csf.conf\n";
 	}
 
-	if ($portdir =~ /\-d\s*out/i) {$inout = "out"}
-	if ($portdir =~ /\-d\s*inout/i) {$inout = "inout"}
-	if ($portdir =~ /\-p\s*([\w\,\*\;]+)/) {$ports = $1}
-	my $comment = $portdir;
-	$comment =~ s/\-d\s*out//ig;
-	$comment =~ s/\-d\s*inout//ig;
-	$comment =~ s/\-d\s*in//ig;
-	$comment =~ s/\-p\s*[\w\,\*\;]+//ig;
-	$comment =~ s/^\s*|\s*$//g;
-	if ($comment eq "") {$comment = "Manually added: ".iplookup($ip)}
-	if ($timeout < 2) {$timeout = 3600}
-	if ($ports eq "") {$ports = "*"}
+	if ( $timeout =~ /\D/ )
+	{
+		$portdir 	= join( " ", $timeout, $portdir );
+		$timeout 	= 0;
+	}
 
-	if (!checkip(\$ip)) {
+	if ( $portdir =~ /\-d\s*out/i ) 			{ $inout = "out" }
+	if ( $portdir =~ /\-d\s*inout/i ) 			{ $inout = "inout" }
+	if ( $portdir =~ /\-p\s*([\w\,\*\;]+)/ ) 	{ $ports = $1 }
+
+	my $comment 	= $portdir;
+	$comment 		=~ s/\-d\s*out//ig;
+	$comment 		=~ s/\-d\s*inout//ig;
+	$comment 		=~ s/\-d\s*in//ig;
+	$comment 		=~ s/\-p\s*[\w\,\*\;]+//ig;
+	$comment 		=~ s/^\s*|\s*$//g;
+
+	if ( $comment eq "" ) 						{ $comment = "Manually added: " . iplookup( $ip ) }
+	if ( !length $timeout || $timeout < 2 ) 	{ $timeout = 3600 }
+	if ( $ports eq "" ) 						{ $ports = "*" }
+
+	if ( !checkip( \$ip ) )
+	{
 		print "[$ip] is not a valid PUBLIC IP/CIDR\n";
 		return;
 	}
 
-	&clustersend("TD $ip $perm $ports $inout $timeout $comment");
+	&clustersend( "TD $ip $perm $ports $inout $timeout $comment" );
+
 	return;
 }
-# end doclustertempdeny
-###############################################################################
-# start doclusterrm
-sub doclusterrm {
+
+sub doclusterrm
+{
+	my ( $ip, $comment ) = split( /\s/,$input{argument}, 2 );
+
+	if ( !checkip( \$ip ) )
+	{
+		print "[$ip] is not a valid PUBLIC IP/CIDR\n";
+		return;
+	}
+
+	&clustersend( "R $ip" );
+	return;
+}
+
+sub doclusterarm
+{
+	my ( $ip, $comment ) = split( /\s/,$input{argument}, 2 );
+
+	if ( !checkip(\$ip ) )
+	{
+		print "[$ip] is not a valid PUBLIC IP/CIDR\n";
+		return;
+	}
+
+	&clustersend( "AR $ip" );
+	return;
+}
+
+sub doclusterallow
+{
 	my ($ip,$comment) = split (/\s/,$input{argument},2);
 
-	if (!checkip(\$ip)) {
+	if ( !checkip(\$ip ) )
+	{
 		print "[$ip] is not a valid PUBLIC IP/CIDR\n";
 		return;
 	}
 
-	&clustersend("R $ip");
+	&clustersend( "A $ip 1 * inout 3600 $comment" );
 	return;
 }
-# end doclusterrm
-###############################################################################
-# start doclusterarm
-sub doclusterarm {
-	my ($ip,$comment) = split (/\s/,$input{argument},2);
 
-	if (!checkip(\$ip)) {
-		print "[$ip] is not a valid PUBLIC IP/CIDR\n";
-		return;
+sub doclustertempallow
+{
+	my ( $ip, $timeout, $portdir ) = split( /\s/, $input{argument}, 3 );
+	my $inout 		= "in";
+	my $ports 		= "";
+	my $perm 		= 0;
+
+	if ( $timeout =~ /^(\d*)(m|h|d)/i )
+	{
+		my $secs	= $1;
+		my $dur		= $2;
+
+		if 			( $dur eq "m" ) { $timeout = $secs * 60 }
+		elsif 		( $dur eq "h" ) { $timeout = $secs * 60 * 60 }
+		elsif 		( $dur eq "d" ) { $timeout = $secs * 60 * 60 * 24 }
+		else 						{ $timeout = $secs }
 	}
 
-	&clustersend("AR $ip");
-	return;
-}
-# end doclusterarm
-###############################################################################
-# start doclusterallow
-sub doclusterallow {
-	my ($ip,$comment) = split (/\s/,$input{argument},2);
-
-	if (!checkip(\$ip)) {
-		print "[$ip] is not a valid PUBLIC IP/CIDR\n";
-		return;
-	}
-
-	&clustersend("A $ip 1 * inout 3600 $comment");
-	return;
-}
-# end doclusterallow
-###############################################################################
-# start doclustertempallow
-sub doclustertempallow {
-	my ($ip,$timeout,$portdir) = split(/\s/,$input{argument},3);
-	my $inout = "in";
-	my $ports = "";
-	my $perm = 0;
-	if ($timeout =~ /^(\d*)(m|h|d)/i) {
-		my $secs = $1;
-		my $dur = $2;
-		if ($dur eq "m") {$timeout = $secs * 60}
-		elsif ($dur eq "h") {$timeout = $secs * 60 * 60}
-		elsif ($dur eq "d") {$timeout = $secs * 60 * 60 * 24}
-		else {$timeout = $secs}
-	}
-
-	my $iptype = checkip(\$ip);
-	if ($iptype == 6 and !$config{IPV6}) {
-		print "failed: [$ip] is valid IPv6 but IPV6 is not enabled in csf.conf\n";
-	}
-
-	unless ($iptype) {
+	my $iptype = checkip( \$ip );
+	if ( !$iptype )
+	{
 		print "csf: [$ip] is not a valid PUBLIC IP\n";
 		return;
 	}
 
-	if ($timeout =~ /\D/) {
-		$portdir = join(" ",$timeout,$portdir);
-		$timeout = 0;
+	if ( $iptype == 6 and !$config{IPV6} )
+	{
+		print "failed: [$ip] is valid IPv6; but IPV6 is not enabled in csf.conf\n";
+	}
+	
+	if ( $timeout =~ /\D/ )
+	{
+		$portdir 	= join( " ", $timeout, $portdir );
+		$timeout 	= 0;
 	}
 
-	if ($portdir =~ /\-d\s*out/i) {$inout = "out"}
-	if ($portdir =~ /\-d\s*inout/i) {$inout = "inout"}
-	if ($portdir =~ /\-p\s*([\w\,\*\;]+)/) {$ports = $1}
-	my $comment = $portdir;
-	$comment =~ s/\-d\s*out//ig;
-	$comment =~ s/\-d\s*inout//ig;
-	$comment =~ s/\-d\s*in//ig;
-	$comment =~ s/\-p\s*[\w\,\*\;]+//ig;
-	$comment =~ s/^\s*|\s*$//g;
-	if ($comment eq "") {$comment = "Manually added: ".iplookup($ip)}
-	if ($timeout < 2) {$timeout = 3600}
-	if ($ports eq "") {$ports = "*"}
+	if ( $portdir =~ /\-d\s*out/i ) 			{ $inout = "out" }
+	if ( $portdir =~ /\-d\s*inout/i ) 			{ $inout = "inout" }
+	if ( $portdir =~ /\-p\s*([\w\,\*\;]+)/ ) 	{ $ports = $1 }
 
-	if (!checkip(\$ip)) {
+	my $comment 	= $portdir;
+	$comment 		=~ s/\-d\s*out//ig;
+	$comment 		=~ s/\-d\s*inout//ig;
+	$comment 		=~ s/\-d\s*in//ig;
+	$comment 		=~ s/\-p\s*[\w\,\*\;]+//ig;
+	$comment 		=~ s/^\s*|\s*$//g;
+
+	if ( $comment eq "" ) 						{ $comment = "Manually added: " . iplookup( $ip ) }
+	if ( !length $timeout || $timeout < 2 ) 	{ $timeout = 3600 }
+	if ( $ports eq "" ) 						{ $ports = "*" }
+
+	if ( !checkip( \$ip ) )
+	{
 		print "[$ip] is not a valid PUBLIC IP/CIDR\n";
 		return;
 	}
 
-	&clustersend("TA $ip $perm $ports $inout $timeout $comment");
+	&clustersend( "TA $ip $perm $ports $inout $timeout $comment" );
+
 	return;
 }
-# end doclustertempallow
-###############################################################################
-# start doclusterignore
-sub doclusterignore {
+
+sub doclusterignore
+{
 	my ($ip,$comment) = split (/\s/,$input{argument},2);
 
 	if (!checkip(\$ip)) {
@@ -2047,10 +2091,9 @@ sub dostart {
 	}
 	return;
 }
-# end dostart
-###############################################################################
-# start doadd
-sub doadd {
+
+sub doadd
+{
 	my ($ip,$comment) = split (/\s/,$input{argument},2);
 	my $checkip = checkip(\$ip);
 
@@ -2117,7 +2160,7 @@ sub doadd {
 	@allow = split(/$slurpreg/,$text);
 	chomp @allow;
 	unless ($allowmatches) {
-		if ($comment eq "") {$comment = "Manually allowed: ".iplookup($ip)}
+		if ( $comment eq "" ) {$comment = "Manually allowed: ".iplookup($ip)}
 		print $ALLOW "$ip \# $comment - ".localtime(time)."\n";
 		if ($config{TESTING}) {
 			print "Adding $ip to csf.allow only while in TESTING mode (not iptables ACCEPT)\n";
@@ -2131,16 +2174,17 @@ sub doadd {
 	close ($ALLOW) or &error(__LINE__,"Could not close /etc/csf/csf.allow: $!");
 	return;
 }
-# end doadd
-###############################################################################
-# start dodeny
-sub dodeny {
-	my ($ip,$comment) = split (/\s/,$input{argument},2);
-	my $checkip = checkip(\$ip);
+
+
+sub dodeny
+{
+	my ($ip,$comment) 	= split (/\s/,$input{argument},2);
+	my $checkip 		= checkip(\$ip);
 
 	&getethdev;
 
-	if ($ips{$ip} or $ipscidr->find($ip) or $ipscidr6->find($ip)) {
+	if ($ips{$ip} or $ipscidr->find($ip) or $ipscidr6->find($ip))
+	{
 		print "deny failed: [$ip] is one of this servers addresses!\n";
 		return;
 	}
@@ -2156,12 +2200,15 @@ sub dodeny {
 	}
 
 	my @allow = slurp("/etc/csf/csf.allow");
-	foreach my $line (@allow) {
-		if ($line =~ /^Include\s*(.*)$/) {
-			my @incfile = slurp($1);
+	foreach my $line ( @allow )
+	{
+		if ( $line =~ /^Include\s*(.*)$/ )
+		{
+			my @incfile = slurp( $1 );
 			push @allow,@incfile;
 		}
 	}
+
 	foreach my $line (@allow) {
         $line =~ s/$cleanreg//g;
 		if ($line eq "") {next}
@@ -2293,7 +2340,7 @@ sub dodeny {
 
 		}
 
-		if ($comment eq "") {$comment = "Manually denied: ".iplookup($ip)}
+		if ( $comment eq "" ) {$comment = "Manually denied: ".iplookup($ip)}
 		print $DENY "$ip \# $comment - ".localtime(time)."\n";
 
 		if ($config{TESTING}) {
@@ -4116,23 +4163,31 @@ sub version {
 	chomp $myv;
 	return $myv;
 }
-# end version
-###############################################################################
-# start getethdev
-sub getethdev {
-	my $ethdev = ConfigServer::GetEthDev->new();
-	my %g_ifaces = $ethdev->ifaces;
-	my %g_ipv4 = $ethdev->ipv4;
-	my %g_ipv6 = $ethdev->ipv6;
-	foreach my $key (keys %g_ifaces) {
+
+
+sub getethdev
+{
+	my $ethdev 		= ConfigServer::GetEthDev->new();
+	my %g_ifaces 	= $ethdev->ifaces;
+	my %g_ipv4 		= $ethdev->ipv4;
+	my %g_ipv6 		= $ethdev->ipv6;
+
+	foreach my $key ( keys %g_ifaces )
+	{
 		$ifaces{$key} = 1;
 	}
-	foreach my $key (keys %g_ipv4) {
+
+	foreach my $key ( keys %g_ipv4 )
+	{
 		$ips{$key} = 1;
 	}
-	if ($config{IPV6}) {
-		foreach my $key (keys %g_ipv6) {
-			eval {
+
+	if ( $config{IPV6} )
+	{
+		foreach my $key ( keys %g_ipv6 )
+		{
+			eval
+			{
 				local $SIG{__DIE__} = undef;
 				$ipscidr6->add($key);
 			};
@@ -5178,31 +5233,36 @@ $deny, $ip,                                   $ports,  $inout,$time,$message
 	}
 	return;
 }
-# end dotempban
-###############################################################################
-# start dotempdeny
-sub dotempdeny {
-	my $cftemp = shift;
-	my ($ip,$timeout,$portdir) = split(/\s/,$input{argument},3);
-	my $inout = "in";
-	my $port = "";
-	if ($timeout =~ /^(\d*)(m|h|d)/i) {
-		my $secs = $1;
-		my $dur = $2;
-		if ($dur eq "m") {$timeout = $secs * 60}
-		elsif ($dur eq "h") {$timeout = $secs * 60 * 60}
-		elsif ($dur eq "d") {$timeout = $secs * 60 * 60 * 24}
-		else {$timeout = $secs}
+
+
+sub dotempdeny
+{
+	my $cftemp 		= shift;
+	my ( $ip, $timeout, $portdir ) = split( /\s/, $input{argument}, 3 );
+	my $inout 		= "in";
+	my $port 		= "";
+
+	if ( $timeout =~ /^(\d*)(m|h|d)/i )
+	{
+		my $secs	= $1;
+		my $dur		= $2;
+
+		if 			( $dur eq "m" ) { $timeout = $secs * 60 }
+		elsif 		( $dur eq "h" ) { $timeout = $secs * 60 * 60 }
+		elsif 		( $dur eq "d" ) { $timeout = $secs * 60 * 60 * 24 }
+		else 						{ $timeout = $secs }
 	}
 
-	my $iptype = checkip(\$ip);
-	if ($iptype == 6 and !$config{IPV6}) {
-		print "failed: [$ip] is valid IPv6 but IPV6 is not enabled in csf.conf\n";
-	}
-
-	unless ($iptype) {
+	my $iptype = checkip( \$ip );
+    if ( !$iptype )
+	{
 		print "csf: [$ip] is not a valid PUBLIC IP\n";
 		return;
+	}
+
+	if ( $iptype == 6 and !$config{IPV6} )
+	{
+		print "failed: [$ip] is valid IPv6; but IPV6 is not enabled in csf.conf\n";
 	}
 
 	&getethdev;
@@ -5226,7 +5286,7 @@ sub dotempdeny {
 	$comment =~ s/\-d\s*in//ig;
 	$comment =~ s/\-p\s*[\w\,\*\;]+//ig;
 	$comment =~ s/^\s*|\s*$//g;
-	if ($comment eq "") {$comment = "Manually added: ".iplookup($ip)}
+	if ( $comment eq "" ) {$comment = "Manually added: ".iplookup($ip)}
 
 	my @deny = slurp("/etc/csf/csf.deny");
 	foreach my $line (@deny) {
@@ -5245,17 +5305,20 @@ sub dotempdeny {
 	@deny = <$IN>;
 	close ($IN);
 	chomp @deny;
-	if (grep {$_ =~ /\b$ip\|$port\|\b/} @deny) {
+
+	if ( grep {$_ =~ /\b$ip\|$port\|\b/} @deny )
+	{
 		print "csf: $ip is already temporarily blocked\n";
 		exit 0;
 	}
 
-	my $dropin = $config{DROP};
-	my $dropout = $config{DROP_OUT};
-	if ($config{DROP_IP_LOGGING}) {$dropin = "LOGDROPIN"}
-	if ($config{DROP_OUT_LOGGING}) {$dropout = "LOGDROPOUT"}
-	if ($timeout < 2) {$timeout = 3600}
-	if ($port =~ /\*/) {$port = ""}
+	my $dropin 									= $config{DROP};
+	my $dropout 								= $config{DROP_OUT};
+
+	if ( $config{DROP_IP_LOGGING} ) 			{ $dropin = "LOGDROPIN" }
+	if ( $config{DROP_OUT_LOGGING} ) 			{ $dropout = "LOGDROPOUT" }
+	if ( !length $timeout || $timeout < 2 ) 	{ $timeout = 3600 }
+	if ( $port =~ /\*/ ) 						{ $port = "" }
 
 	if ($inout =~ /in/) {
 		if ($port) {
@@ -5316,72 +5379,87 @@ sub dotempdeny {
 	print "csf: $ip blocked on port $port for $timeout seconds $inout\n";
 	return;
 }
-# end dotempdeny
-###############################################################################
-# start dotempallow
-sub dotempallow {
-	my $cftemp = shift;
-	my ($ip,$timeout,$portdir) = split(/\s/,$input{argument},3);
-	my $inout = "inout";
-	my $port = "";
-	if ($timeout =~ /^(\d*)(m|h|d)/i) {
-		my $secs = $1;
-		my $dur = $2;
-		if ($dur eq "m") {$timeout = $secs * 60}
-		elsif ($dur eq "h") {$timeout = $secs * 60 * 60}
-		elsif ($dur eq "d") {$timeout = $secs * 60 * 60 * 24}
-		else {$timeout = $secs}
+
+sub dotempallow
+{
+	my $cftemp 		= shift;
+	my ( $ip, $timeout, $portdir ) = split( /\s/, $input{argument}, 3 );
+	my $inout 		= "inout";
+	my $port 		= "";
+
+	if ( $timeout =~ /^(\d*)(m|h|d)/i )
+	{
+		my $secs	= $1;
+		my $dur		= $2;
+	
+		if 			( $dur eq "m" ) { $timeout = $secs * 60 }
+		elsif 		( $dur eq "h" ) { $timeout = $secs * 60 * 60 }
+		elsif 		( $dur eq "d" ) { $timeout = $secs * 60 * 60 * 24 }
+		else 						{ $timeout = $secs }
 	}
 
-	my $iptype = checkip(\$ip);
-	if ($iptype == 6 and !$config{IPV6}) {
-		print "failed: [$ip] is valid IPv6 but IPV6 is not enabled in csf.conf\n";
-	}
-
-	unless ($iptype) {
+	my $iptype = checkip( \$ip );
+	if ( !$iptype )
+	{
 		print "csf: [$ip] is not a valid PUBLIC IP\n";
 		return;
 	}
-	if ($timeout =~ /\D/) {
-		$portdir = join(" ",$timeout,$portdir);
-		$timeout = 0;
+
+	if ( $iptype == 6 and !$config{IPV6} )
+	{
+		print "failed: [$ip] is valid IPv6; but IPV6 is not enabled in csf.conf\n";
 	}
 
-	if ($portdir =~ /\-d\s*in/i) {$inout = "in"}
-	if ($portdir =~ /\-d\s*out/i) {$inout = "out"}
-	if ($portdir =~ /\-d\s*inout/i) {$inout = "inout"}
-	if ($portdir =~ /\-p\s*([\w\,\*\;]+)/) {$port = $1}
-	my $comment = $portdir;
-	$comment =~ s/\-d\s*out//ig;
-	$comment =~ s/\-d\s*inout//ig;
-	$comment =~ s/\-d\s*in//ig;
-	$comment =~ s/\-p\s*[\w\,\*\;]+//ig;
-	$comment =~ s/^\s*|\s*$//g;
-	if ($comment eq "") {$comment = "Manually added: ".iplookup($ip)}
+	if ( $timeout =~ /\D/ )
+	{
+		$portdir 	= join( " ", $timeout, $portdir );
+		$timeout 	= 0;
+	}
 
-	my @allow = slurp("/etc/csf/csf.allow");
-	foreach my $line (@allow) {
-		if ($line =~ /^Include\s*(.*)$/) {
+	if ( $portdir =~ /\-d\s*in/i)			{ $inout = "in" }
+	if ( $portdir =~ /\-d\s*out/i)			{ $inout = "out" }
+	if ( $portdir =~ /\-d\s*inout/i) 		{ $inout = "inout" }
+	if ( $portdir =~ /\-p\s*([\w\,\*\;]+)/) { $port = $1 }
+
+	my $comment 	= $portdir;
+	$comment 		=~ s/\-d\s*out//ig;
+	$comment 		=~ s/\-d\s*inout//ig;
+	$comment 		=~ s/\-d\s*in//ig;
+	$comment 		=~ s/\-p\s*[\w\,\*\;]+//ig;
+	$comment 		=~ s/^\s*|\s*$//g;
+	
+	if ( $comment eq "" ) { $comment = "Manually added: " . iplookup( $ip ) }
+
+	my @allow = slurp( "/etc/csf/csf.allow" );
+	foreach my $line (@allow)
+	{
+		if ($line =~ /^Include\s*(.*)$/)
+		{
 			my @incfile = slurp($1);
 			push @allow,@incfile;
 		}
 	}
-	if (grep {$_ =~ /^$ip\b/} @allow) {
+
+	if ( grep {$_ =~ /^$ip\b/} @allow )
+	{
 		print "csf: $ip is already permanently allowed\n";
 		exit 0;
 	}
+
 	open (my $IN, "<", "/var/lib/csf/csf.tempallow");
 	flock ($IN, LOCK_SH);
 	@allow = <$IN>;
 	close ($IN);
 	chomp @allow;
-	if (grep {$_ =~ /\b$ip\|$port\|\b/} @allow) {
+
+	if ( grep {$_ =~ /\b$ip\|$port\|\b/} @allow )
+	{
 		print "csf: $ip is already temporarily allowed\n";
 		exit 0;
 	}
 
-	if ($timeout < 2) {$timeout = 3600}
-	if ($port =~ /\*/) {$port = ""}
+	if ( !length $timeout || $timeout < 2 ) 	{ $timeout = 3600 }
+	if ( $port =~ /\*/ )						{ $port = "" }
 
 	&getethdev;
 
@@ -5440,28 +5518,33 @@ sub dotempallow {
 	print "csf: $ip allowed on port $port for $timeout seconds $inout\n";
 	return;
 }
-# end dotempallow
-###############################################################################
-# start dotemprm
-sub dotemprm {
+
+sub dotemprm
+{
 	my $ip = $input{argument};
 
-	if ($ip eq "") {
+	if ( $ip eq "" )
+	{
 		print "csf: No IP specified\n";
 		return;
 	}
 
-	my $iptype = checkip(\$ip);
-	if ($iptype == 6 and !$config{IPV6}) {
-		print "failed: [$ip] is valid IPv6 but IPV6 is not enabled in csf.conf\n";
-	}
-
-	unless ($iptype) {
+	my $iptype = checkip( \$ip );
+	if ( !$iptype )
+	{
 		print "csf: [$ip] is not a valid PUBLIC IP\n";
 		return;
 	}
+
+	if ( $iptype == 6 and !$config{IPV6} )
+	{
+		print "failed: [$ip] is valid IPv6 but IPV6 is not enabled in csf.conf\n";
+	}
+
 	&getethdev;
-	if (! -z "/var/lib/csf/csf.tempban") {
+
+	if (! -z "/var/lib/csf/csf.tempban")
+	{
 		my $unblock = 0;
 		sysopen (my $TEMPBAN, "/var/lib/csf/csf.tempban", O_RDWR | O_CREAT);
 		flock ($TEMPBAN, LOCK_EX);
@@ -5608,28 +5691,33 @@ sub dotemprm {
 	}
 	return;
 }
-# end dotemprm
-###############################################################################
-# start dotemprmd
-sub dotemprmd {
+
+sub dotemprmd
+{
 	my $ip = $input{argument};
 
-	if ($ip eq "") {
+	if ( $ip eq "" )
+	{
 		print "csf: No IP specified\n";
 		return;
 	}
 
-	my $iptype = checkip(\$ip);
-	if ($iptype == 6 and !$config{IPV6}) {
-		print "failed: [$ip] is valid IPv6 but IPV6 is not enabled in csf.conf\n";
-	}
-
-	unless ($iptype) {
+	my $iptype = checkip( \$ip );
+	if ( !$iptype )
+	{
 		print "csf: [$ip] is not a valid PUBLIC IP\n";
 		return;
 	}
+
+	if ( $iptype == 6 and !$config{IPV6} )
+	{
+		print "failed: [$ip] is valid IPv6 but IPV6 is not enabled in csf.conf\n";
+	}
+
 	&getethdev;
-	if (! -z "/var/lib/csf/csf.tempban") {
+
+	if (! -z "/var/lib/csf/csf.tempban")
+	{
 		my $unblock = 0;
 		sysopen (my $TEMPBAN, "/var/lib/csf/csf.tempban", O_RDWR | O_CREAT);
 		flock ($TEMPBAN, LOCK_EX);
@@ -5709,28 +5797,33 @@ sub dotemprmd {
 
 	return;
 }
-# end dotemprmd
-###############################################################################
-# start dotemprma
-sub dotemprma {
+
+sub dotemprma
+{
 	my $ip = $input{argument};
 
-	if ($ip eq "") {
+	if ( $ip eq "" )
+	{
 		print "csf: No IP specified\n";
 		return;
 	}
 
-	my $iptype = checkip(\$ip);
-	if ($iptype == 6 and !$config{IPV6}) {
-		print "failed: [$ip] is valid IPv6 but IPV6 is not enabled in csf.conf\n";
-	}
-
-	unless ($iptype) {
+	my $iptype = checkip( \$ip );
+	if ( !$iptype )
+	{
 		print "csf: [$ip] is not a valid PUBLIC IP\n";
 		return;
 	}
+
+	if ( $iptype == 6 and !$config{IPV6} )
+	{
+		print "failed: [$ip] is valid IPv6 but IPV6 is not enabled in csf.conf\n";
+	}
+
 	&getethdev;
-	if (! -z "/var/lib/csf/csf.tempallow") {
+
+	if (! -z "/var/lib/csf/csf.tempallow")
+	{
 		my $unblock = 0;
 		sysopen (my $TEMPALLOW, "/var/lib/csf/csf.tempallow", O_RDWR | O_CREAT);
 		flock ($TEMPALLOW, LOCK_EX);
