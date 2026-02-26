@@ -205,12 +205,18 @@ sub html_safe
 #   Escape all HTML-sensitive chars (&, <, >, ", ') into their entity variant.
 #	Unlike html_safe(), no tags are restored; everything is escaped.
 #	
+#	Optionally accepts a second arg specifying which chars to escape.
+#	When omitted, all 5 chars are escaped (default).
+#	
 #	@assoc		ConfigServer::Sanitize::html_escape
 #	@package	ConfigServer::Sanitize
 #   @usage      my $safe = html_escape( '<script>alert(1)</script>' );
 #					# returns: &lt;script&gt;alert(1)&lt;/script&gt;
+#				my $safe = html_escape( $line, '&<>' );
+#					# escapes only &, <, >
 #   @scope      public
 #   @param      text        str        				html to escape
+#   @param      chars       str        				(optional) characters to escape; default '&<>"\'' 
 #   @return                 str         			escaped text safe for HTML attributes
 # #
 
@@ -224,11 +230,20 @@ my %HTML_ESCAPE_MAP = (
 
 sub html_escape
 {
-    my ( $text ) = @_;
+    my ( $text, $chars ) = @_;
     return '' unless defined $text;
-    return $text if $text !~ tr/&<>"'//;
 
-    $text =~ s/([&<>"'])/$HTML_ESCAPE_MAP{$1}/sg;
+    if ( defined $chars )
+    {
+        my $class = quotemeta( $chars );
+        return $text unless $text =~ /[$class]/;
+        $text =~ s/([$class])/$HTML_ESCAPE_MAP{$1}/sg;
+    }
+    else
+    {
+        return $text if $text !~ tr/&<>"'//;
+        $text =~ s/([&<>"'])/$HTML_ESCAPE_MAP{$1}/sg;
+    }
 
     return $text;
 }
