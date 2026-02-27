@@ -3297,10 +3297,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#release-v1509" class="md-nav__link">
+  <a href="#release-v1510" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Release: v15.09
+        Release: v15.10
       
     </span>
   </a>
@@ -3308,10 +3308,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#release-v1510" class="md-nav__link">
+  <a href="#release-v1509" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Release: v15.10
+        Release: v15.09
       
     </span>
   </a>
@@ -3780,10 +3780,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#release-v1509" class="md-nav__link">
+  <a href="#release-v1510" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Release: v15.09
+        Release: v15.10
       
     </span>
   </a>
@@ -3791,10 +3791,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#release-v1510" class="md-nav__link">
+  <a href="#release-v1509" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Release: v15.10
+        Release: v15.09
       
     </span>
   </a>
@@ -3815,6 +3815,63 @@
       <header class="md-typeset">
         <h1 id="directadmin">directadmin<a class="headerlink" href="#directadmin" title="Permanent link">¶</a></h1>
       </header>
+      
+        <article class="md-post md-post--excerpt">
+  <header class="md-post__header">
+    
+      <nav class="md-post__authors md-typeset">
+        
+          <span class="md-author">
+            <img src="https://avatars.githubusercontent.com/u/118329232" alt="Aetherinox">
+          </span>
+        
+      </nav>
+    
+    <div class="md-post__meta md-meta">
+      <ul class="md-meta__list">
+        <li class="md-meta__item">
+          <time datetime="2026-02-24 00:00:00+00:00">Tuesday, February 24, 2026</time></li>
+        
+          <li class="md-meta__item">
+            in
+            
+              <a href="../release/" class="md-meta__link">release</a>, 
+              <a href="../changelog/" class="md-meta__link">changelog</a>, 
+              <a href="../v15x/" class="md-meta__link">v15.x</a>, 
+              <a href="../cyberpanel/" class="md-meta__link">cyberpanel</a>, 
+              <a href="./" class="md-meta__link">directadmin</a></li>
+        
+        
+          
+          <li class="md-meta__item">
+            
+              6 min read
+            
+          </li>
+        
+        
+      </ul>
+      
+    </div>
+  </header>
+  <div class="md-post__content md-typeset">
+    <h2 id="release-v1510"><a class="toclink" href="../2026/release-v1510/">Release: v15.10</a></h2>
+<p>The <strong>v15.10</strong> release includes a collection of minor bug fixes primarily focused on theme-related issues affecting both the revised original white theme and the new dark theme introduced in <strong>v15.09</strong>. </p>
+<p>One fix resolves an issue where the <code>CF_ENABLE</code> setting would continue to display the <strong><abbr title="A web infrastructure and security company providing CDN, DNS, and DDoS protection services.">Cloudflare</abbr> Integration</strong> buttons in the web interface even when the value was set to <code>0</code>. A similar issue was identified and corrected with the statistics buttons, which were appearing regardless of their corresponding configuration setting. </p>
+<p>Additionally, several stylesheet refinements were made to correct text positioning in the home navigation menu buttons, along with fixes for a small number of <code>&lt;div&gt;</code> elements that had incorrect CSS classes applied.</p>
+<p>This release also introduces support for preserving <strong>custom comments</strong> in your <code>/etc/csf/csf.conf</code> file across updates. In previous versions, <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> compared your existing configuration against the default configuration shipped with each release, adding any missing settings as needed. This process resulted in the removal of any existing custom comments. With this update, custom comments are now retained, ensuring your configuration remains fully intact between upgrades.</p>
+<p>Finally, a small bug was fixed regarding <code>Messenger v1</code> related to reCAPTCHA tokens being truncated depending on the length of bytes. The limit has been increased to <code>4096 bytes</code>, which provides approximately 4053 bytes for the token after accounting for the 43 bytes of URL overhead, comfortably accommodating current reCAPTCHA token sizes.</p>
+
+    
+      <nav class="md-post__action">
+        <a href="../2026/release-v1510/">
+          Continue reading
+        </a>
+      </nav>
+    
+    
+  </div>
+</article>
       
         <article class="md-post md-post--excerpt">
   <header class="md-post__header">
@@ -3870,61 +3927,6 @@
           Continue reading
         </a>
       </nav>
-    
-    
-  </div>
-</article>
-      
-        <article class="md-post md-post--excerpt">
-  <header class="md-post__header">
-    
-      <nav class="md-post__authors md-typeset">
-        
-          <span class="md-author">
-            <img src="https://avatars.githubusercontent.com/u/118329232" alt="Aetherinox">
-          </span>
-        
-      </nav>
-    
-    <div class="md-post__meta md-meta">
-      <ul class="md-meta__list">
-        <li class="md-meta__item">
-          <time datetime="2026-02-23 00:00:00+00:00">Monday, February 23, 2026</time></li>
-        
-          <li class="md-meta__item">
-            in
-            
-              <a href="../release/" class="md-meta__link">release</a>, 
-              <a href="../changelog/" class="md-meta__link">changelog</a>, 
-              <a href="../v15x/" class="md-meta__link">v15.x</a>, 
-              <a href="../cyberpanel/" class="md-meta__link">cyberpanel</a>, 
-              <a href="./" class="md-meta__link">directadmin</a></li>
-        
-        
-          
-          <li class="md-meta__item">
-            
-              1 min read
-            
-          </li>
-        
-        
-      </ul>
-      
-    </div>
-  </header>
-  <div class="md-post__content md-typeset">
-    <h2 id="release-v1510"><a class="toclink" href="../2026/release-v1510/">Release: v15.10</a></h2>
-<p>The <strong>v15.10</strong> release includes a collection of minor bug fixes primarily focused on theme-related issues affecting both the revised original white theme and the new dark theme introduced in <strong>v15.09</strong>. </p>
-<p>One fix resolves an issue where the <code>CF_ENABLE</code> setting would continue to display the <strong><abbr title="A web infrastructure and security company providing CDN, DNS, and DDoS protection services.">Cloudflare</abbr> Integration</strong> buttons in the web interface even when the value was set to <code>0</code>. A similar issue was identified and corrected with the statistics buttons, which were appearing regardless of their corresponding configuration setting. </p>
-<p>Additionally, several stylesheet refinements were made to correct text positioning in the home navigation menu buttons, along with fixes for a small number of <code>&lt;div&gt;</code> elements that had incorrect CSS classes applied.</p>
-<p><br></p>
-<hr>
-<p><br></p>
-<h3 id="full-changelog"><a class="toclink" href="../2026/release-v1510/#full-changelog">Full Changelog</a></h3>
-<p>The full changelog is available <a data-preview="" href="../../about/changelog/">here</a>.</p>
-<p><br>
-<br></p>
     
     
   </div>
