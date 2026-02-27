@@ -37,6 +37,7 @@ tags:
 - `fix(cpanel)`: add Ace Editor support for light and dark themes
 - `fix(core)`: properly escape and encode form input values
 - `fix(messenger)`: prevent reCAPTCHA response truncation by increasing HTTP limit to `4096`
+- `feat(communication)`: new Mattermost server and bridge to discord https://mm.configserver.dev
 
 <br />
 
