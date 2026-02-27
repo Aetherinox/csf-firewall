@@ -8479,12 +8479,11 @@ sub iptablescmd {
 	}
 	return;
 }
-# end iptablescmd
-###############################################################################
-# start syscommand
-sub syscommand {
+
+sub syscommand
+{
 	my ($line, @cmd) = @_;
-	my $cmdline = join(" ",@cmd);
+	my $cmdline = join( " ", @cmd );
 	my $status = 0;
 	my @output;
 

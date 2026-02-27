@@ -1865,7 +1865,7 @@ EOF
 					#	HEADER: text is handled a bit differently than SECTION: tag.
 					#	Strip leading # and space.
 					#	
-					#	@todo		investigate later post v15.09
+					#	@todo		investigate later post v15.10
 					# #
 
 					$raw =~ s/^\s*#([ \t]*)//;

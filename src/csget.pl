@@ -10,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            02.12.2026
+#   @updated            02.27.2026
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@
 #   After latest version is fetched from @downloadserver, a file is created in:
 #       /var/lib/configserver/csf.txt
 #   With contents like:
-#       15.09
+#       15.10
 #       
 #   If you run the script with the cmd below; a process is created with a random
 #   duration between 0-6 hours.
