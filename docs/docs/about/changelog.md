@@ -38,6 +38,8 @@ tags:
 - `fix(core)`: properly escape and encode form input values
 - `fix(messenger)`: prevent reCAPTCHA response truncation by increasing HTTP limit to `4096`
 - `feat(communication)`: new Mattermost server and bridge to discord https://mm.configserver.dev
+    - Discord server will remain online.
+    - Mattermost server is for users wishing to not give their personal info to discord.
 
 <br />
 
