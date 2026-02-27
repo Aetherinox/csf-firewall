@@ -1,5 +1,47 @@
 ChangeLog:
-15.10 - Fix bug showing Cloudflare Integration when CF_ENABLE = 0.
+15.10 - feat(conf): preserve custom user comments in config files across
+        CSF updates
+
+        feat(cyberpanel): footer theme toggle now syncs CyberPanel and CSF
+        WebUI themes
+
+        feat(webui): add new **RBLCheck** interface with `info` and `warning`
+        message types during tests
+
+        feat(cpanel): implement new header layout
+
+        build(deps): remove external Perl dependency `URI::Escape`
+
+        refactor(core): consolidate codename detection into a single Perl
+        subroutine
+
+        refactor(webui): use lookup table for **RBLCheck** processing
+
+        fix(cpanel): correct alternating table row colors in dark theme
+
+        fix(webui): hide **Cloudflare Integration** button when 
+        CF_ENABLE = "0"
+
+        fix(webui): hide **Statistics** buttons when `GD::Graph` dependency
+        is missing
+
+        fix(webui): fix **Sponsor** container class causing excessive padding
+
+        fix(webui): fix main navigation text alignment in Chromium / Edge
+        browsers
+
+        fix(webui): remove unsafe `innerHTML` usage to prevent potential XSS
+
+        fix(webui): strip ANSI SGR sequences from exec command output
+
+        fix(webui): enforce monospace font in config editor inputs
+
+        fix(cpanel): add Ace Editor support for light and dark themes
+
+        fix(core): properly escape and encode form input values
+
+        fix(messenger): prevent reCAPTCHA response truncation by increasing
+        HTTP limit to `4096`
 
 15.09 - URLs in /etc/csf/csf.conf are now clickable in the Firewall
         Configuration web interface.

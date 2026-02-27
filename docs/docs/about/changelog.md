@@ -17,12 +17,26 @@ tags:
 
 </p>
 
-### <!-- md:version stable- --> 15.10 <small>Feb 23 2026</small> { id="15.10" }
+### <!-- md:version stable- --> 15.10 <small>Feb 28 2026</small> { id="15.10" }
 
-- `fix(webui)`: **Cloudflare Integration** button showing on all control panels when `CF_ENABLE = "0"`
-- `fix(webui)`: **Statistics** buttons showing on all control panels, even with requirements such as `GD:GRAPH` were not being met.
-- `fix(webui)`: **Sponsor** div element had incorrect class name, causing too much padding between the outter and inner containers
-- `fix(webui)`: Main navigation buttons had incorrect text positioning and were not properly centered in Chromium / Edge browsers.
+- `feat(conf)`: preserve custom user comments in config files across CSF updates
+- `feat(cyberpanel)`: footer theme toggle now syncs CyberPanel and CSF WebUI themes
+- `feat(webui)`: add new **RBLCheck** interface with `info` and `warning` message types during tests
+- `feat(cpanel)`: implement new header layout
+- `build(deps)`: remove external Perl dependency `URI::Escape`
+- `refactor(core)`: consolidate codename detection into a single Perl subroutine
+- `refactor(webui)`: use lookup table for **RBLCheck** processing
+- `fix(cpanel)`: correct alternating table row colors in dark theme
+- `fix(webui)`: hide **Cloudflare Integration** button when `CF_ENABLE = "0"`
+- `fix(webui)`: hide **Statistics** buttons when `GD::Graph` dependency is missing
+- `fix(webui)`: fix **Sponsor** container class causing excessive padding
+- `fix(webui)`: fix main navigation text alignment in Chromium / Edge browsers
+- `fix(webui)`: remove unsafe `innerHTML` usage to prevent potential XSS
+- `fix(webui)`: strip ANSI SGR sequences from exec command output
+- `fix(webui)`: enforce monospace font in config editor inputs
+- `fix(cpanel)`: add Ace Editor support for light and dark themes
+- `fix(core)`: properly escape and encode form input values
+- `fix(messenger)`: prevent reCAPTCHA response truncation by increasing HTTP limit to `4096`
 
 <br />
 
@@ -33,9 +47,9 @@ tags:
 - `feat(webui)`: page **Firewall Configuration** now supports `SECTION:` tags as independent element.
 - `feat(csf)`: correctly detect interactive `--version` input in the CLI.
 - `feat(sponsor)`: sponsor icon updates:
-    - added new setting `SPONSOR_ICON_HIDE` in `/etc/csf/csf.conf` to hide sponsor icon in web interface footer.
-    - added new setting `SPONSOR_ICON_ANIM` in `/etc/csf/csf.conf` to enable/disable beating heart icon. Disabled by default.
-    - sponsor icon will automatically hide if the user enters a sponsor license.
+    - new setting `SPONSOR_ICON_HIDE` in `/etc/csf/csf.conf`; hides sponsor icon in web footer.
+    - new setting `SPONSOR_ICON_ANIM` in `/etc/csf/csf.conf`; enable/disable beating heart icon.
+    - sponsor icon automatically hidden if user provides licensekey.
     - removed the beating animation for the sponsor icon.
 - `feat(csf)`: added **AbuseIPDB** service template to the blocklist file `/etc/csf/csf.blocklists`.
 - `feat(sponsor)`: added timeout functionality to ensure csf does not wait on sponsor confirmation.
@@ -122,10 +136,10 @@ tags:
 
 ### <!-- md:version stable- --> 15.07 <small>Oct 24 2025</small> { id="15.07" }
 
-- `feat`: Add new "Resources" tab interface.
-- `feat`: Add "Insiders" releases.
-- `docs`: Add Privacy Policy to CSF.
-- `chore`: Add Discord server
+- `feat(webui)`: new "Resources" tab interface.
+- `feat(webui)`: new release type "Insiders".
+- `docs`: add Privacy Policy to CSF.
+- `chore`: add Discord server
     - https://discord.configserver.dev
 - `chore`: Remove spamhaus edrop list, merged with drop.
 - `refactor`: Cyberpanel installation script to ensure POSIX compliant.
@@ -133,14 +147,15 @@ tags:
 - `perf`: optimized logic to make restarts faster when using resource intense pre/post scripts
 - `fix`: Cyberpanel integration error: 
     - `"address form post error Data supplied is not accepted"`
-- `fix`: Dark-reader causing login page to not render properly.
-- `fix`: Whitespace in ipset blocklist definitions causing entire blocklist to not load.
+- `fix(webui)`: Dark-reader causing login page to not render properly.
+- `fix(blocklists)`: Whitespace in ipset blocklist definitions causing entire blocklist to not load.
 
 <br />
 
 ### <!-- md:version stable- --> 15.06 <small>Oct 16 2025</small> { id="15.06" }
 
-- `fix`: Backwards compatibility issue related to older versions of Webmin control panel. Specifically v2.111 and Authentic theme v21.10. Webmin detected as "Generic" installation; header icon missing; generic footer loaded.
+- `fix(webmin)`: restore compatibility with Webmin v2.111 / Authentic v21.10
+- `fix(webui)`: prevent misdetection as **Generic**, missing header icon, and generic footer
 
 <br />
 
