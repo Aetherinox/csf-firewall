@@ -4200,22 +4200,24 @@
 </p>
 <h3 id="15.10"><span class="mdx-badge mdx-badge--version"><span class="mdx-badge__icon"><a href="../conventions/#release-types" title="Stable Release"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M0 80V229.5c0 17 6.7 33.3 18.7 45.3l176 176c25 25 65.5 25 90.5 0L418.7 317.3c25-25 25-65.5 0-90.5l-176-176c-12-12-28.3-18.7-45.3-18.7H48C21.5 32 0 53.5 0 80zm112 32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"></path></svg></span></a></span></span> 15.10 <small>Feb 28 2026</small><a class="headerlink" data-preview="" href="#15.10" title="Permanent link">¶</a></h3>
 <ul>
-<li><code>feat(conf)</code>: custom user comments now presistent in config files after each update of <abbr title="ConfigServer Security &amp; Firewall">csf</abbr></li>
-<li><code>feat(cyberpanel)</code>: footer theme button now controls both cyberpanel and <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> webui</li>
-<li><code>feat(webui)</code>: new RBL check interface; add new message types <code>info</code>, <code>warning</code> when running tests</li>
-<li><code>feat(cpanel)</code>: new header implemented</li>
-<li><code>build(deps)</code>: remove external perl dependency <code>URI::Escape</code></li>
-<li><code>refactor(core)</code>: codename detection now handled by single perl subroutine; remove duplicates</li>
-<li><code>refactor(webui)</code>: implement lookup table for RBL Check</li>
-<li><code>fix(webui)</code>: <strong><abbr title="A web infrastructure and security company providing CDN, DNS, and DDoS protection services.">Cloudflare</abbr> Integration</strong> button showing on all control panels when <code>CF_ENABLE = "0"</code></li>
-<li><code>fix(webui)</code>: <strong>Statistics</strong> buttons show on all control panels, regardless of dependency <code>GD:GRAPH</code></li>
-<li><code>fix(webui)</code>: <strong>Sponsor</strong> div element incorrect class name, too much padding between containers</li>
-<li><code>fix(webui)</code>: main navigation buttons incorrect text positioning; improperly aligned in Chromium / Edge browsers</li>
-<li><code>fix(webui)</code>: remove potential risk of XSS vulnerability with <code>innerHTML</code> usage</li>
-<li><code>fix(webui)</code>: ensure exec commands do not contain ansi sgr sequences</li>
-<li><code>fix(cpanel)</code>: add Ace Editor light and dark theme</li>
-<li><code>fix(core)</code>: escape/encode form values</li>
-<li><code>fix(messenger)</code>:  recaptcha response truncated; increase <abbr title="Hypertext Transfer Protocol, the standard protocol for transmitting web data.">http</abbr> request limit from 2048 to <code>4096</code> </li>
+<li><code>feat(conf)</code>: preserve custom user comments in config files across <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> updates</li>
+<li><code>feat(cyberpanel)</code>: footer theme toggle now syncs CyberPanel and <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr> WebUI themes</li>
+<li><code>feat(webui)</code>: add new <strong>RBLCheck</strong> interface with <code>info</code> and <code>warning</code> message types during tests</li>
+<li><code>feat(cpanel)</code>: implement new header layout</li>
+<li><code>build(deps)</code>: remove external Perl dependency <code>URI::Escape</code></li>
+<li><code>refactor(core)</code>: consolidate codename detection into a single Perl subroutine</li>
+<li><code>refactor(webui)</code>: use lookup table for <strong>RBLCheck</strong> processing</li>
+<li><code>fix(cpanel)</code>: correct alternating table row colors in dark theme</li>
+<li><code>fix(webui)</code>: hide <strong><abbr title="A web infrastructure and security company providing CDN, DNS, and DDoS protection services.">Cloudflare</abbr> Integration</strong> button when <code>CF_ENABLE = "0"</code></li>
+<li><code>fix(webui)</code>: hide <strong>Statistics</strong> buttons when <code>GD::Graph</code> dependency is missing</li>
+<li><code>fix(webui)</code>: fix <strong>Sponsor</strong> container class causing excessive padding</li>
+<li><code>fix(webui)</code>: fix main navigation text alignment in Chromium / Edge browsers</li>
+<li><code>fix(webui)</code>: remove unsafe <code>innerHTML</code> usage to prevent potential XSS</li>
+<li><code>fix(webui)</code>: strip ANSI SGR sequences from exec command output</li>
+<li><code>fix(webui)</code>: enforce monospace font in config editor inputs</li>
+<li><code>fix(cpanel)</code>: add Ace Editor support for light and dark themes</li>
+<li><code>fix(core)</code>: properly escape and encode form input values</li>
+<li><code>fix(messenger)</code>: prevent reCAPTCHA response truncation by increasing HTTP limit to <code>4096</code></li>
 </ul>
 <p><br></p>
 <h3 id="15.09"><span class="mdx-badge mdx-badge--version"><span class="mdx-badge__icon"><a href="../conventions/#release-types" title="Stable Release"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M0 80V229.5c0 17 6.7 33.3 18.7 45.3l176 176c25 25 65.5 25 90.5 0L418.7 317.3c25-25 25-65.5 0-90.5l-176-176c-12-12-28.3-18.7-45.3-18.7H48C21.5 32 0 53.5 0 80zm112 32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"></path></svg></span></a></span></span> 15.09 <small>Feb 23 2026</small><a class="headerlink" data-preview="" href="#15.09" title="Permanent link">¶</a></h3>
@@ -4225,9 +4227,9 @@
 <li><code>feat(webui)</code>: page <strong>Firewall Configuration</strong> now supports <code>SECTION:</code> tags as independent element.</li>
 <li><code>feat(csf)</code>: correctly detect interactive <code>--version</code> input in the CLI.</li>
 <li><code>feat(sponsor)</code>: sponsor icon updates:<ul>
-<li>added new setting <code>SPONSOR_ICON_HIDE</code> in <code>/etc/csf/csf.conf</code> to hide sponsor icon in web interface footer.</li>
-<li>added new setting <code>SPONSOR_ICON_ANIM</code> in <code>/etc/csf/csf.conf</code> to enable/disable beating heart icon. Disabled by default.</li>
-<li>sponsor icon will automatically hide if the user enters a sponsor license.</li>
+<li>new setting <code>SPONSOR_ICON_HIDE</code> in <code>/etc/csf/csf.conf</code>; hides sponsor icon in web footer.</li>
+<li>new setting <code>SPONSOR_ICON_ANIM</code> in <code>/etc/csf/csf.conf</code>; enable/disable beating heart icon.</li>
+<li>sponsor icon automatically hidden if user provides licensekey.</li>
 <li>removed the beating animation for the sponsor icon.</li>
 </ul>
 </li>
@@ -4340,10 +4342,10 @@
 <p><br></p>
 <h3 id="15.07"><span class="mdx-badge mdx-badge--version"><span class="mdx-badge__icon"><a href="../conventions/#release-types" title="Stable Release"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M0 80V229.5c0 17 6.7 33.3 18.7 45.3l176 176c25 25 65.5 25 90.5 0L418.7 317.3c25-25 25-65.5 0-90.5l-176-176c-12-12-28.3-18.7-45.3-18.7H48C21.5 32 0 53.5 0 80zm112 32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"></path></svg></span></a></span></span> 15.07 <small>Oct 24 2025</small><a class="headerlink" data-preview="" href="#15.07" title="Permanent link">¶</a></h3>
 <ul>
-<li><code>feat</code>: Add new "Resources" tab interface.</li>
-<li><code>feat</code>: Add "Insiders" releases.</li>
-<li><code>docs</code>: Add Privacy Policy to <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>.</li>
-<li><code>chore</code>: Add Discord server<ul>
+<li><code>feat(webui)</code>: new "Resources" tab interface.</li>
+<li><code>feat(webui)</code>: new release type "Insiders".</li>
+<li><code>docs</code>: add Privacy Policy to <abbr title="ConfigServer Security &amp; Firewall">CSF</abbr>.</li>
+<li><code>chore</code>: add Discord server<ul>
 <li><a href="https://discord.configserver.dev">https://discord.configserver.dev</a></li>
 </ul>
 </li>
@@ -4355,13 +4357,14 @@
 <li><code>"address form post error Data supplied is not accepted"</code></li>
 </ul>
 </li>
-<li><code>fix</code>: Dark-reader causing login page to not render properly.</li>
-<li><code>fix</code>: Whitespace in ipset blocklist definitions causing entire blocklist to not load.</li>
+<li><code>fix(webui)</code>: Dark-reader causing login page to not render properly.</li>
+<li><code>fix(blocklists)</code>: Whitespace in ipset blocklist definitions causing entire blocklist to not load.</li>
 </ul>
 <p><br></p>
 <h3 id="15.06"><span class="mdx-badge mdx-badge--version"><span class="mdx-badge__icon"><a href="../conventions/#release-types" title="Stable Release"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M0 80V229.5c0 17 6.7 33.3 18.7 45.3l176 176c25 25 65.5 25 90.5 0L418.7 317.3c25-25 25-65.5 0-90.5l-176-176c-12-12-28.3-18.7-45.3-18.7H48C21.5 32 0 53.5 0 80zm112 32a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"></path></svg></span></a></span></span> 15.06 <small>Oct 16 2025</small><a class="headerlink" data-preview="" href="#15.06" title="Permanent link">¶</a></h3>
 <ul>
-<li><code>fix</code>: Backwards compatibility issue related to older versions of Webmin control panel. Specifically v2.111 and Authentic theme v21.10. Webmin detected as "Generic" installation; header icon missing; generic footer loaded.</li>
+<li><code>fix(webmin)</code>: restore compatibility with Webmin v2.111 / Authentic v21.10</li>
+<li><code>fix(webui)</code>: prevent misdetection as <strong>Generic</strong>, missing header icon, and generic footer</li>
 </ul>
 <p><br></p>
 <hr>
