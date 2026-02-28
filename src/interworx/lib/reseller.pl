@@ -38,7 +38,7 @@ use ConfigServer::Config;
 use ConfigServer::Slurp qw(slurp);
 use ConfigServer::Sanitize qw(html_safe html_escape);
 
-our ($reseller, %rprivs, $script, $images, $myv, %FORM, %in);
+our ( $reseller, %rprivs, $script, $images, $version, %FORM, %in );
 
 # #
 #	Load configs
@@ -91,10 +91,10 @@ else
 #	open version.txt
 # #
 
-open (my $IN, "<", "/etc/csf/version.txt") or die $!;
-$myv = <$IN>;
-close ($IN);
-chomp $myv;
+open ( my $IN, "<", "/etc/csf/version.txt" ) or die $!;
+$version = <$IN>;
+close ( $IN );
+chomp $version;
 
 $script = "/nodeworx/configservercsf";
 $images = "/configserver/csf";
@@ -123,25 +123,26 @@ my $csfjs = qq{
 	<script>
 		var csfCodename = "$codename";
 	</script>
-	<script src="$images/csf.min.js"></script>
+	<script src="$images/csf.min.js?v=$version"></script>
 };
-my $bootstrapcss = "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css'>";
-my $csfnt = "<script src='$images/csfont.min.js'></script>";
-my $jqueryjs = "<script src='$images/jquery.min.js'></script>";
-my $bootstrapjs = "<script src='$images/bootstrap/js/bootstrap.min.js'></script>";
 
-unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq "logtailcmd" or $FORM{action} eq "loggrepcmd")
+my $bootstrapcss 	= "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css?v=$version'>";
+my $csfnt 			= "<script src='$images/csfont.min.js?v=$version'></script>";
+my $jqueryjs 		= "<script src='$images/jquery.min.js?v=$version'></script>";
+my $bootstrapjs 	= "<script src='$images/bootstrap/js/bootstrap.min.js?v=$version'></script>";
+
+unless ( $FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq "logtailcmd" or $FORM{action} eq "loggrepcmd" )
 {
 	print <<EOF;
 <!doctype html>
 <html lang='en'>
 <head>
 	<script>
-		(function()
+		( function( )
 		{
-			var theme = localStorage.getItem('theme') || 'light';
-			document.documentElement.setAttribute('data-theme', theme);
-		})();
+			const theme = localStorage.getItem( 'theme' ) || 'light';
+			document.documentElement.setAttribute( 'data-theme', theme );
+		})( );
 	</script>
 
 	$bootstrapcss
@@ -193,7 +194,7 @@ EOF
 <div class='container-fluid'>
 <br>
 <div class='panel panel-default'>
-<h4><img src='$images/csf_small.png' style='padding-left: 10px'> ConfigServer Security &amp; Firewall - csf v$myv</h4>
+<h4><img src='$images/csf_small.png' style='padding-left: 10px'> ConfigServer Security &amp; Firewall - csf v$version</h4>
 </div>
 EOF
 }
@@ -201,7 +202,7 @@ EOF
 my $templatehtml;
 open (my $SCRIPTOUT, '>', \$templatehtml);
 select $SCRIPTOUT;
-ConfigServer::DisplayResellerUI::main(\%FORM, $script, 0, $images, $myv);
+ConfigServer::DisplayResellerUI::main( \%FORM, $script, 0, $images, $version );
 close ($SCRIPTOUT);
 select STDOUT;
 $templatehtml =~ s/\?action\=/?iworxme=/g;

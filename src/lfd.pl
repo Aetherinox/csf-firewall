@@ -9467,15 +9467,16 @@ sub messengerrecaptcha {
 	}
 	return;
 }
-# end messengerrecaptcha
-###############################################################################
-# start messenger
-sub messengerstop {
+
+
+sub messengerstop
+{
 	my $version = shift;
-	if ($version == 1) {
+	if ( $version == 1 )
+	{
 		return;
 	}
-	elsif ($version == 2) {
+	elsif ($version == 2){
 		if (-e "/etc/apache2/conf.d/csf.messenger.conf") {
 			unlink("/etc/apache2/conf.d/csf.messenger.conf");
 			system("/scripts/restartsrv_httpd");
@@ -10806,12 +10807,14 @@ SVG_EOF
 						}
 						if ($file eq "/") {
 							print "HTTP/1.0 200 OK\r\n";
-							if ($application eq "csf") {
-								open (my $IN, "<", "/etc/csf/version.txt") or die $!;
-								flock ($IN, LOCK_SH);
+							if ($application eq "csf")
+							{
+								open ( my $IN, "<", "/etc/csf/version.txt" ) or die $!;
+								flock ( $IN, LOCK_SH );
 								$myv = <$IN>;
-								close ($IN);
+								close ( $IN );
 								chomp $myv;
+				
 								$script = "/$session/";
 								$images = "/$session/images";
 								$config{THIS_UI} = 1;
@@ -10820,12 +10823,13 @@ SVG_EOF
 									<script>
 										var csfCodename = "$codename";
 									</script>
-									<script src="$images/csf.min.js"></script>
+									<script src="$images/csf.min.js?v=$myv"></script>
 								};
-								my $bootstrapcss = "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css'>";
-								my $csfnt = "<script src='$images/csfont.min.js'></script>";
-								my $jqueryjs = "<script src='$images/jquery.min.js'></script>";
-								my $bootstrapjs = "<script src='$images/bootstrap/js/bootstrap.min.js'></script>";
+
+								my $bootstrapcss 	= "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css?v=$myv'>";
+								my $csfnt 			= "<script src='$images/csfont.min.js?v=$myv'></script>";
+								my $jqueryjs 		= "<script src='$images/jquery.min.js?v=$myv'></script>";
+								my $bootstrapjs 	= "<script src='$images/bootstrap/js/bootstrap.min.js?v=$myv'></script>";
 								my @header;
 								my @footer;
 								my $htmltag = "data-post='$FORM{action}'";
@@ -11102,13 +11106,14 @@ EOF
 									<script>
 										var csfCodename = "$codename";
 									</script>
-									<script src="$images/csf.min.js"></script>
+									<script src="$images/csf.min.js?v=$myv"></script>
 								};
-								my $bootstrapcss = "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css'>";
-								my $csfnt = "<script src='$images/csfont.min.js'></script>";
-								my $jqueryjs = "<script src='$images/jquery.min.js'></script>";
-								my $bootstrapjs = "<script src='$images/bootstrap/js/bootstrap.min.js'></script>";
-								my $fontawesome = "<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.0.10/css/all.css'>";
+
+								my $bootstrapcss 	= "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css?v=$myv'>";
+								my $csfnt 			= "<script src='$images/csfont.min.js?v=$myv'></script>";
+								my $jqueryjs		= "<script src='$images/jquery.min.js?v=$myv'></script>";
+								my $bootstrapjs 	= "<script src='$images/bootstrap/js/bootstrap.min.js?v=$myv'></script>";
+								my $fontawesome 	= "<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.0.10/css/all.css?v=$myv'>";
 
 								if ($FORM{action} eq "cc_body" or $FORM{action} eq "cc_dbody" or $FORM{action} eq "cc_showreports")
 								{

@@ -47,7 +47,7 @@ require Cpanel::Rlimit;
 require Cpanel::Template;
 require Cpanel::Version::Tiny;
 
-our ( $reseller, $script, $images, %rprivs, $myv, %FORM, $appUrl );
+our ( $reseller, $script, $images, %rprivs, $version, %FORM, $appUrl );
 
 Whostmgr::ACLS::init_acls();
 %FORM 			= Cpanel::Form::parseform();
@@ -106,21 +106,21 @@ if (!Whostmgr::ACLS::hasroot())
 # #
 
 open ( my $IN, "<", "/etc/csf/version.txt" ) or die $!;
-$myv = <$IN>;
+$version = <$IN>;
 close ( $IN );
-chomp $myv;
+chomp $version;
 
 my $csfjs = qq{
 	<script>
 		var csfCodename = "$codename";
 	</script>
-	<script src="$images/csf.min.js"></script>
+	<script src="$images/csf.min.js?v=$version"></script>
 };
 
-my $bootstrapcss	= "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css'>";
-my $csfnt 			= "<script src='$images/csfont.min.js'></script>";
-my $jqueryjs 		= "<script src='$images/jquery.min.js'></script>";
-my $bootstrapjs 	= "<script src='$images/bootstrap/js/bootstrap.min.js'></script>";
+my $bootstrapcss	= "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css?v=$version'>";
+my $csfnt 			= "<script src='$images/csfont.min.js?v=$version'></script>";
+my $jqueryjs 		= "<script src='$images/jquery.min.js?v=$version'></script>";
+my $bootstrapjs 	= "<script src='$images/bootstrap/js/bootstrap.min.js?v=$version'></script>";
 
 my @header;
 my @footer;
@@ -254,7 +254,7 @@ unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq
             </a>
             <div class="app-info">
                 <span class="app-name">ConfigServer Firewall</span>
-                <span class="app-version"><code>v$myv</code></span>
+                <span class="app-version"><code>v$version</code></span>
             </div>
         </div>
     </div>
@@ -265,9 +265,9 @@ EOF
 
 #eval {
 if ($reseller) {
-	ConfigServer::DisplayResellerUI::main(\%FORM, $script, 0, $images, $myv);
+	ConfigServer::DisplayResellerUI::main(\%FORM, $script, 0, $images, $version);
 } else {
-	ConfigServer::DisplayUI::main(\%FORM, $script, 0, $images, $myv);
+	ConfigServer::DisplayUI::main(\%FORM, $script, 0, $images, $version);
 }
 #};
 #if ($@) {

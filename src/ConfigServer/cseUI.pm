@@ -42,7 +42,7 @@ our @EXPORT_OK   = qw();
 umask(0177);
 
 our ($chart, $ipscidr6, $ipv6reg, $ipv4reg, %config, %ips, $mobile,
-	 %FORM, $script, $script_da, $images, $myv);
+	 %FORM, $script, $script_da, $images, $version);
 
 our ($act, $destpath, $element, $extramessage, $fieldname, $fileinc,
 	$filetemp, $message, $name, $origpath, $storepath, $tgid, $thisdir,
@@ -56,14 +56,14 @@ our ($act, $destpath, $element, $extramessage, $fieldname, $fileinc,
 
 sub main
 {
-	my $FORM_ref = shift;
-	%FORM = %{$FORM_ref};
-	$fileinc = shift;
-	$script = shift;
-	$script_da = shift;
-	$images = shift;
-	$myv = shift;
-	$| = 1;
+	my $FORM_ref 	= shift;
+	%FORM 			= %{$FORM_ref};
+	$fileinc 		= shift;
+	$script 		= shift;
+	$script_da 		= shift;
+	$images 		= shift;
+	$version 		= shift;
+	$| 				= 1;
 
 	&loadconfig;
 	my $codename 	= ConfigServer::Config->getCodename();
@@ -82,12 +82,13 @@ sub main
 		<script>
 			var csfCodename = "$codename";
 		</script>
-		<script src="$images/csf.min.js"></script>
+		<script src="$images/csf.min.js?v=$version"></script>
 	};
-	my $bootstrapcss = "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css'>";
-	my $csfnt = "<script src='$images/csfont.min.js'></script>";
-	my $jqueryjs = "<script src='$images/jquery.min.js'></script>";
-	my $bootstrapjs = "<script src='$images/bootstrap/js/bootstrap.min.js'></script>";
+
+	my $bootstrapcss 	= "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css?v=$version'>";
+	my $csfnt 			= "<script src='$images/csfont.min.js?v=$version'></script>";
+	my $jqueryjs 		= "<script src='$images/jquery.min.js?v=$version'></script>";
+	my $bootstrapjs 	= "<script src='$images/bootstrap/js/bootstrap.min.js?v=$version'></script>";
 
 	print <<EOF;
 <!doctype html>

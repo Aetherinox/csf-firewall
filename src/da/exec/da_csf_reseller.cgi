@@ -41,7 +41,7 @@ use ConfigServer::Config;
 use ConfigServer::Slurp qw(slurp);
 use ConfigServer::Sanitize qw(html_safe html_escape);
 
-our ($reseller, $script, $script_da, $images, %rprivs, $myv, %FORM, %daconfig);
+our ($reseller, $script, $script_da, $images, %rprivs, $version, %FORM, %daconfig);
 
 # #
 #	Load configs
@@ -130,10 +130,10 @@ if ($ENV{REMOTE_USER} ne "" and $ENV{REMOTE_USER} eq $ENV{CSF_RESELLER} and $rpr
 #	open version.txt
 # #
 
-open (my $IN, "<", "/etc/csf/version.txt") or die $!;
-$myv = <$IN>;
-close ($IN);
-chomp $myv;
+open ( my $IN, "<", "/etc/csf/version.txt" ) or die $!;
+$version = <$IN>;
+close ( $IN );
+chomp $version;
 
 $script = "/CMD_PLUGINS_RESELLER/csf/index.raw";
 $script_da = "/CMD_PLUGINS_RESELLER/csf/index.raw";
@@ -145,64 +145,76 @@ my @pairs = split(/&/, $buffer);
 foreach my $pair ( @pairs )
 {
 	my ($name, $value) = split(/=/, $pair);
-	$value =~ tr/+/ /;
-	$value =~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C", hex($1))/eg;
-	$FORM{$name} = html_escape($value);
+
+	$value 			=~ tr/+/ /;
+	$value 			=~ s/%([a-fA-F0-9][a-fA-F0-9])/pack("C", hex($1))/eg;
+	$FORM{$name} 	= html_escape($value);
 }
 
-open (my $DIRECTADMIN, "<", "/usr/local/directadmin/conf/directadmin.conf");
+open ( my $DIRECTADMIN, "<", "/usr/local/directadmin/conf/directadmin.conf" );
 my @data = <$DIRECTADMIN>;
-close ($DIRECTADMIN);
+close ( $DIRECTADMIN );
 chomp @data;
 
-foreach my $line (@data)
+foreach my $line ( @data )
 {
-	my ($name,$value) = split(/\=/,$line);
-	$daconfig{$name} = $value;
+	my ($name,$value) 	= split(/\=/,$line);
+	$daconfig{$name} 	= $value;
 }
 
 my $csfjs = qq{
 	<script>
 		var csfCodename = "$codename";
 	</script>
-	<script src="$images/csf.min.js"></script>
+	<script src="$images/csf.min.js?v=$version"></script>
 };
-my $bootstrapcss = "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css'>";
-my $csfnt = "<script src='$images/csfont.min.js'></script>";
-my $jqueryjs = "<script src='$images/jquery.min.js'></script>";
-my $bootstrapjs = "<script src='$images/bootstrap/js/bootstrap.min.js'></script>";
+
+my $bootstrapcss 	= "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css?v=$version'>";
+my $csfnt 			= "<script src='$images/csfont.min.js?v=$version'></script>";
+my $jqueryjs 		= "<script src='$images/jquery.min.js?v=$version'></script>";
+my $bootstrapjs 	= "<script src='$images/bootstrap/js/bootstrap.min.js?v=$version'></script>";
 
 my @header;
 my @footer;
 my $bodytag;
 my $htmltag = " data-post='$FORM{action}' ";
-if (-e "/etc/csf/csf.header") {
+
+if (-e "/etc/csf/csf.header")
+{
 	open (my $HEADER, "<", "/etc/csf/csf.header");
 	flock ($HEADER, LOCK_SH);
 	@header = <$HEADER>;
 	close ($HEADER);
 }
-if (-e "/etc/csf/csf.footer") {
+
+if (-e "/etc/csf/csf.footer")
+{
 	open (my $FOOTER, "<", "/etc/csf/csf.footer");
 	flock ($FOOTER, LOCK_SH);
 	@footer = <$FOOTER>;
 	close ($FOOTER);
 }
-if (-e "/etc/csf/csf.htmltag") {
+
+if (-e "/etc/csf/csf.htmltag")
+{
 	open (my $HTMLTAG, "<", "/etc/csf/csf.htmltag");
 	flock ($HTMLTAG, LOCK_SH);
 	$htmltag .= <$HTMLTAG>;
 	chomp $htmltag;
 	close ($HTMLTAG);
 }
-if (-e "/etc/csf/csf.bodytag") {
+
+if (-e "/etc/csf/csf.bodytag")
+{
 	open (my $BODYTAG, "<", "/etc/csf/csf.bodytag");
 	flock ($BODYTAG, LOCK_SH);
 	$bodytag = <$BODYTAG>;
 	chomp $bodytag;
 	close ($BODYTAG);
 }
-unless ($config{STYLE_CUSTOM}) {
+
+unless ($config{STYLE_CUSTOM})
+{
 	undef @header;
 	undef @footer;
 	$htmltag = "";
@@ -273,12 +285,12 @@ EOF
 <div class='container-fluid'>
 <br>
 <div class='panel panel-default'>
-<h4><img src='$images/csf_small.png' style='padding-left: 10px'> ConfigServer Security &amp; Firewall - csf v$myv</h4>
+<h4><img src='$images/csf_small.png' style='padding-left: 10px'> ConfigServer Security &amp; Firewall - csf v$version</h4>
 </div>
 EOF
 }
 
-ConfigServer::DisplayResellerUI::main(\%FORM, $script, 0, $images, $myv);
+ConfigServer::DisplayResellerUI::main( \%FORM, $script, 0, $images, $version );
 
 unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq "logtailcmd" or $FORM{action} eq "loggrepcmd") {
 	print <<EOF;

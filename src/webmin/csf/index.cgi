@@ -36,7 +36,7 @@ use lib '/usr/local/csf/lib';
 use ConfigServer::DisplayUI;
 use ConfigServer::Config;
 
-our ($script, $images, $myv, %FORM, %in);
+our ( $script, $images, $version, %FORM, %in );
 
 # #
 #	Load configs
@@ -50,10 +50,10 @@ my $codename 	= ConfigServer::Config->getCodename();
 #	open version.txt
 # #
 
-open (my $IN, "<", "/etc/csf/version.txt") or die $!;
-$myv = <$IN>;
-close ($IN);
-chomp $myv;
+open ( my $IN, "<", "/etc/csf/version.txt" ) or die $!;
+$version = <$IN>;
+close ( $IN );
+chomp $version;
 
 $script = "index.cgi";
 $images = "csfimages";
@@ -71,12 +71,13 @@ my $csfjs = qq{
 	<script>
 		var csfCodename = "$codename";
 	</script>
-	<script src="$images/csf.min.js"></script>
+	<script src="$images/csf.min.js?v=$version"></script>
 };
-my $bootstrapcss = "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css'>";
-my $csfnt = "<script src='$images/csfont.min.js'></script>";
-my $jqueryjs = "<script src='$images/jquery.min.js'></script>";
-my $bootstrapjs = "<script src='$images/bootstrap/js/bootstrap.min.js'></script>";
+
+my $bootstrapcss 	= "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css?v=$version'>";
+my $csfnt 			= "<script src='$images/csfont.min.js?v=$version'></script>";
+my $jqueryjs 		= "<script src='$images/jquery.min.js?v=$version'></script>";
+my $bootstrapjs 	= "<script src='$images/bootstrap/js/bootstrap.min.js?v=$version'></script>";
 
 my @header;
 my @body;
@@ -181,11 +182,11 @@ unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq
 	print "<a id='toplink' class='toplink' title='Go to bottom'><span class='glyphicon glyphicon-hand-down'></span></a>\n";
 	print "<div class='container-fluid'>\n";
 	print "<div class='panel panel-default'>\n";
-	print "<h4><img src='$images/csf_small.png' style='padding-left: 10px'> ConfigServer Security &amp; Firewall - csf v$myv</h4>\n";
+	print "<h4><img src='$images/csf_small.png' style='padding-left: 10px'> ConfigServer Security &amp; Firewall - csf v$version</h4>\n";
 	print "</div>\n";
 }
 
-ConfigServer::DisplayUI::main(\%FORM, $script, 0, $images, $myv);
+ConfigServer::DisplayUI::main( \%FORM, $script, 0, $images, $version );
 
 unless ($FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq "logtailcmd" or $FORM{action} eq "loggrepcmd") {
 	print "<a class='botlink' id='botlink' title='Go to top'><span class='glyphicon glyphicon-hand-up'></span></a>\n";

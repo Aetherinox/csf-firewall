@@ -86,13 +86,13 @@ my $csfjs = qq{
     <script>
         var csfCodename = "$codename";
     </script>
-    <script src="$images/csf.min.js"></script>
+    <script src="$images/csf.min.js?v=$version"></script>
 };
 
-my $bootstrapcss 	= "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css'>";
-my $csfnt 			= "<script src='$images/csfont.min.js'></script>";
-my $jqueryjs 		= "<script src='$images/jquery.min.js'></script>";
-my $bootstrapjs 	= "<script src='$images/bootstrap/js/bootstrap.min.js'></script>";
+my $bootstrapcss 	= "<link rel='stylesheet' href='$images/bootstrap/css/bootstrap.min.css?v=$version'>";
+my $csfnt 			= "<script src='$images/csfont.min.js?v=$version'></script>";
+my $jqueryjs 		= "<script src='$images/jquery.min.js?v=$version'></script>";
+my $bootstrapjs 	= "<script src='$images/bootstrap/js/bootstrap.min.js?v=$version'></script>";
 
 unless ( $FORM{action} eq "tailcmd" or $FORM{action} =~ /^cf/ or $FORM{action} eq "logtailcmd" or $FORM{action} eq "loggrepcmd" )
 {
