@@ -235,6 +235,53 @@ your server from unwanted or harmful traffic.
 </figure>
 
 <br />
+<br />
+
+### New Mattermost Server (Discord Changes & Community Options)
+
+Recently, **[Discord](https://discord.configserver.dev)** announced plans to introduce **age verification** in partnership with the company **Persona**. Under this system, users may be required to submit government issued identification or other sensitive personal documents. Accounts that do not complete verification could face restrictions or limited functionality. (_This is for Discord, not CSF_)
+
+This announcement raises many concerns; particularly around how sensitive identification data would be stored, protected, and handled, and the potential risk of data breaches. Understandably, many users are uncomfortable with being required to provide personal identification in order to continue using the Discord platform.
+
+Following significant community backlash, Discord has since **delayed** the rollout of age verification. However, the possibility remains that similar requirements could be implemented in the future.
+
+Given this uncertainty with Discord, and the expectation that users may be asked to trust a third-party verification provider with highly sensitive data, we felt it was important to provide an alternative communication platform that does not impose these requirements.
+
+As a result, we have launched a **[Mattermost](https://mm.configserver.dev)** server. **We will continue to operate our Discord server as usual**, but Mattermost is now available as an additional option for those who prefer it.
+
+Our goal is to keep the community connected regardless of which platform you prefer, while also providing options for those who wish to avoid Discord's mandatory identity verification.
+
+<br />
+
+#### What Is Mattermost
+
+Mattermost is a team communication platform that is similar to Discord in many ways. It supports real-time chat, channels, direct messaging, and file sharing, making it an easy transition for users who are already familiar with Discord’s style of communication. Mattermost is however, **open-source**.
+
+<br />
+
+#### How It Works
+
+To ensure that no one is forced to choose between Discord or Mattermost, we have implemented a **Mattermost ↔ Discord bridge**. This bridge allows users on both platforms to communicate with one another. Messages sent on Mattermost appear in Discord, and messages sent on Discord appear in Mattermost.
+
+We have also integrated our Github commit services on Mattermost as well, so you will get most of the same information as you do on Discord.
+
+You may choose to stay on **Discord**, **Mattermost**, or use both; whatever works best for you.
+
+<br />
+
+#### Other Platforms
+
+We are toying with the idea of also integrating services such as Fluxer. However, we want to ensure they are integrated properly, with bridges to link all of the services together.
+
+<br />
+
+#### Getting Started
+- **Join the Mattermost server:** https://mm.configserver.dev  
+- **Download the Mattermost desktop application:** https://mattermost.com/apps/
+
+Mattermost also offers a **web client** for those who do not wish to install the Mattermost desktop app. You can access the web client using the [mm.configserver.dev](https://mm.configserver.dev/) link.
+
+<br />
 
 ---
 
