@@ -1450,12 +1450,13 @@ th
 .table-bordered > tbody > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > td, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th
 {
 	border: none;
+	border-bottom: 1px solid color-mix( in srgb, currentColor 13%, transparent );
 }
 
 .table-bordered > tbody > tr > td
 {
-	vertical-align: middle;
-	border-bottom: 1px solid var( --general-page-background );
+	vertical-align: top;
+	border-bottom: 1px solid color-mix( in srgb, currentColor 13%, transparent );
 }
 
 .well
