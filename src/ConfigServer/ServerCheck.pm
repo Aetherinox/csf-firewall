@@ -1816,6 +1816,20 @@ sub phpcheck {
 			my $status = 0;
 			if ($values ne "") { $status = 1 }
 			&addline($status,"Check php version","Any version of PHP older than v8.1.* is now obsolete and should be considered a security threat. You should upgrade to at least PHP v8.1+:<br><b>Affected PHP versions:</b>$values");
+
+	# #
+	#	WHM › Prevent user 'nobody' from sending email
+	# #
+
+	$status = 0;
+	unless ( $cpconf->{nobodyspam} ) { $status = 1 }
+	addline(
+		$status,
+		"WHM: Allow 'Nobody' Email",
+		"You should prevent the user 'nobody' from sending mail." .
+		"<br><small><i>WHM &gt; <a href='$cpurl/scripts2/tweaksettings' target='_blank'>Tweak Settings</a> &gt; Prevent \“nobody\” from sending mail</i></small>",
+	);
+
 		}
 		if ($key eq "enable_dl") {
 			my $status = 0;
