@@ -476,11 +476,272 @@ sub firewallcheck
 	}
 	return;
 }
-# end firewallcheck
-###############################################################################
-# start servercheck
-sub servercheck {
-	&addtitle("Server Check");
+
+# #
+#	ServerCheck.pm › Services › Check
+#	
+#	This is a list of services that are not required for a server to operate.
+#	Inform the user that these services can be disabled.
+#	
+#	Provide instructions to user for both manually deactivation, and offer an
+#	automatic way to shut down and disable the services.
+# #
+
+sub servicescheck
+{
+	my $systemctl 	= "/usr/bin/systemctl";
+	my $chkconfig 	= "/sbin/chkconfig";
+	my $servicebin 	= "/sbin/service";
+
+	if ( -e "/bin/systemctl" ) 		{ $systemctl = "/bin/systemctl" }
+	if ( -e "/usr/sbin/chkconfig" ) { $chkconfig = "/usr/sbin/chkconfig" }
+	if ( -e "/usr/sbin/service" ) 	{ $servicebin = "/usr/sbin/service" }
+
+	addtitle( "Server Services Check" );
+
+	my @services = (
+		"abrt-xorg",		"abrtd",				"alsa-state",		"anacron",		"avahi-daemon",
+		"avahi-dnsconfd",	"bluetooth", 			"bolt", 			"canna", 		"colord",
+		"cups", 			"cups-config-daemon", 	"cupsd", 			"firewalld", 	"FreeWnn",
+		"gdm", 				"gpm", 					"gssproxy", 		"hidd", 		"iiim",
+		"ksmtuned", 		"mDNSResponder", 		"ModemManager", 	"nfslock", 		"nifd",
+		"packagekit", 		"pcscd", 				"portreserve",		"pulseaudio", 	"qpidd",
+		"rpcbind", 			"rpcidmapd", 			"saslauthd", 		"sbadm", 		"wpa_supplicant",
+		"xfs", 				"xinetd"
+	);
+
+	my $disable;
+	my ( $childin, $childout );
+	my $mypid;
+
+	if ( $sysinit eq "init" )
+	{
+		$disable 	= "<ul><li><code>$servicebin [service] stop</code></li><li><code>$chkconfig [service] off</code></li></ul>";
+		$mypid		= open3($childin, $childout, $childout, $chkconfig,"--list");
+	}
+	else
+	{
+		$disable 	= "<ul><li><code>$systemctl stop [service]</code></li><li><code>$systemctl disable [service]</code></li></ul>";
+		$mypid 		= open3( $childin, $childout, $childout, $systemctl, "list-unit-files", "--state=enabled", "--no-pager", "--no-legend" );
+	}
+
+	my @chkconfig = <$childout>;
+	waitpid ( $mypid, 0 );
+	chomp @chkconfig;
+
+	my @enabled;
+	foreach my $service ( @services )
+	{
+		if ( $service eq "xinetd" and $config{PLESK} ) { next }
+		if ( $sysinit eq "init" )
+		{
+			if ( my @ls = grep {$_ =~ /^$service\b/} @chkconfig )
+			{
+				if ( $ls[0] =~ /\:on/ ) { push @enabled, $service }
+			}
+		}
+		else
+		{
+			if ( my @ls = grep {$_ =~ /^$service\.service/} @chkconfig ) { push @enabled, $service }
+		}
+	}
+
+	if ( scalar @enabled > 0 )
+	{
+		my $list;
+		foreach my $service ( @enabled )
+		{
+			# First service in list
+			if ( length( $list ) == 0 )
+			{
+				$list = "<li><code>$service</code></li>";
+			}
+
+			# Append additional services if more than one
+			else
+			{
+				$list .= "<li><code>$service</code></li>";
+			}
+		}
+
+		my $services_autofix_form = "";
+
+		# Only show the action button in a web UI context
+		if ( defined $ENV{SCRIPT_NAME} or defined $ENV{GATEWAY_INTERFACE} )
+		{
+			my $script = $ENV{SCRIPT_NAME} // "";
+			$script =~ s/'/&#39;/g;
+
+			my $verbose_field = "";
+			if ( $verbose )
+			{
+				$verbose_field = "<input type='hidden' name='verbose' value='1'>";
+			}
+
+			my $btn = "<form action='$script' method='post' style='margin:0'>"
+				. "<input type='hidden' name='action' value='servercheck'>"
+				. "<input type='hidden' name='fix' value='services_disable'>"
+				. $verbose_field
+				. "<button type='submit' class='btn btn-default'>Disable listed services</button>"
+				. "</form>";
+
+			$services_autofix_form = "<div style='margin-top:10px;'>$btn</div>";
+		}
+
+		addline( 
+			"1",
+			"Check server services",
+			"On most systems, the following services are typically unnecessary and should be stopped and disabled unless they are explicitly required: <p><ul>$list</ul></p><br>\nManually disable each service using the commands:<br>$disable<br>Automatically stop and disable all services listed above by clicking the button below:<br />$services_autofix_form"
+		);
+	}
+	else
+	{
+		addline(
+			"0",
+			"Check server services",
+			"On most systems, the following services are typically unnecessary and should be stopped and disabled unless they are explicitly required: <p><b>none found</b></p><br>\nManually disable each service using the commands:<br>$disable"
+		);
+	}
+
+	return;
+}
+
+# #
+#	ServerCheck.pm › Services › Run Command
+#	
+#	Run command quietly, wait to finish, return the exit status 
+#	while draining all output to avoid deadlocks.
+#	
+#	Used primarily to stop/disable services for systemctl / initd.
+# #
+
+sub _run_quiet_rc
+{
+	my @cmd = @_;
+
+	my ( $childin, $childout );
+	my $pid = open3( $childin, $childout, $childout, @cmd );
+
+	# Drain output (so the child cannot block on a full pipe)
+	while (<$childout>) { }
+
+	waitpid ( $pid, 0 );
+	my $rc = $? >> 8;
+
+	close ( $childin );
+	close ( $childout );
+
+	return $rc;
+}
+
+# #
+#	ServerCheck.pm › Services › Disable Automatically
+#	
+#	This is a list of services that are not required for a server to operate.
+#	Inform the user that these services can be disabled.
+#	
+#	Provide instructions to user for both manually deactivation, and offer an
+#	automatic way to shut down and disable the services.
+# #
+
+sub services_disable_automatic
+{
+	my $sysinit		= ConfigServer::Service::type();
+	if ( $sysinit ne "systemd" ) { $sysinit = "init" }
+
+	my $systemctl 	= "/usr/bin/systemctl";
+	my $chkconfig 	= "/sbin/chkconfig";
+	my $servicebin 	= "/sbin/service";
+
+	if ( -e "/bin/systemctl" ) 		{ $systemctl = "/bin/systemctl" }
+	if ( -e "/usr/sbin/chkconfig" ) { $chkconfig = "/usr/sbin/chkconfig" }
+	if ( -e "/usr/sbin/service" ) 	{ $servicebin = "/usr/sbin/service" }
+
+	my $is_plesk = 0;
+	if ( -e "/etc/psa/psa.conf" ) { $is_plesk = 1 }
+
+	my @services = (
+		"abrt-xorg",		"abrtd",				"alsa-state",		"anacron",		"avahi-daemon",
+		"avahi-dnsconfd",	"bluetooth", 			"bolt", 			"canna", 		"colord",
+		"cups", 			"cups-config-daemon", 	"cupsd", 			"firewalld", 	"FreeWnn",
+		"gdm", 				"gpm", 					"gssproxy", 		"hidd", 		"iiim",
+		"ksmtuned", 		"mDNSResponder", 		"ModemManager", 	"nfslock", 		"nifd",
+		"packagekit", 		"pcscd", 				"portreserve",		"pulseaudio", 	"qpidd",
+		"rpcbind", 			"rpcidmapd", 			"saslauthd", 		"sbadm", 		"wpa_supplicant",
+		"xfs", 				"xinetd"
+	);
+
+	my ( $childin, $childout );
+	my $mypid;
+
+	if ( $sysinit eq "init" )
+	{
+		$mypid = open3( $childin, $childout, $childout, $chkconfig, "--list" );
+	}
+	else
+	{
+		$mypid = open3( $childin, $childout, $childout, $systemctl, "list-unit-files", "--state=enabled", "--no-pager", "--no-legend" );
+	}
+
+	my @chkconfig = <$childout>;
+	waitpid ( $mypid, 0 );
+	close ( $childin );
+	close ( $childout );
+	chomp @chkconfig;
+
+	my @enabled;
+	foreach my $service ( @services )
+	{
+		if ( $service eq "xinetd" and $is_plesk ) { next }
+
+		if ( $sysinit eq "init" )
+		{
+			if ( my @ls = grep {$_ =~ /^$service\b/} @chkconfig )
+			{
+				if ( $ls[0] =~ /\:on/ ) { push @enabled, $service }
+			}
+		}
+		else
+		{
+			if ( my @ls = grep {$_ =~ /^$service\.service/} @chkconfig ) { push @enabled, $service }
+		}
+	}
+
+	my @disabled;
+	my @failed;
+
+	foreach my $service ( @enabled )
+	{
+		my @stop_cmd;
+		my @disable_cmd;
+
+		if ( $sysinit eq "init" )
+		{
+			@stop_cmd    = ( $servicebin, $service, "stop" );
+			@disable_cmd = ( $chkconfig,  $service, "off"  );
+		}
+		else
+		{
+			@stop_cmd    = ( $systemctl, "stop",    $service );
+			@disable_cmd = ( $systemctl, "disable", $service );
+		}
+
+		my $stop_rc    = _run_quiet_rc(@stop_cmd);
+		my $disable_rc = _run_quiet_rc(@disable_cmd);
+
+		if ( $stop_rc == 0 and $disable_rc == 0 )
+		{
+			push @disabled, $service;
+		}
+		else
+		{
+			push @failed, $service;
+		}
+	}
+
+	return (\@disabled, \@failed);
+}
+
 	my $status = 0;
 
 	my ($dev,$ino,$mode,$nlink,$uid,$gid,$rdev,$size,$atime,$mtime,$ctime,$blksize,$blocks) = stat("/tmp");

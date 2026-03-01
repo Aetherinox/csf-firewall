@@ -1114,8 +1114,28 @@ EOF
 		&resize("bot",0);
 		&renderBtnReturn;
 	}
-	elsif ($FORM{action} eq "servercheck")
+	elsif ( $FORM{action} eq "servercheck" )
 	{
+		if ( $FORM{fix} eq "disable_services" )
+		{
+			my ( $disabled, $failed ) 	= ConfigServer::ServerCheck::disable_services_automatic();
+			my $disabled_list 			= html_escape( join( ", ", @{$disabled} ) );
+			my $failed_list   			= html_escape( join( ", ", @{$failed} ) );
+
+			if ( @{$failed} )
+			{
+				print "<div class='bs-callout bs-callout-warning'>Attempted to disable services. Disabled: <b>$disabled_list</b>. Failed: <b>$failed_list</b></div>\n";
+			}
+			elsif ( @{$disabled} )
+			{
+				print "<div class='bs-callout bs-callout-success'>Disabled services: <b>$disabled_list</b></div>\n";
+			}
+			else
+			{
+				print "<div class='bs-callout bs-callout-info'>No matching enabled services found to disable</div>\n";
+			}
+		}
+
 		print ConfigServer::ServerCheck::report($FORM{verbose});
 
 		open (my $IN, "<", "/etc/cron.d/csf-cron");
