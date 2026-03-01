@@ -221,17 +221,12 @@ sub addline
 	if ( $status )
 	{
 		$output 	.= "<tr><td style='background-color: color-mix(in srgb, currentColor 3%, transparent);white-space: nowrap;min-width:18%;'>$check</td><td style='width:100%'>$comment</td></tr>\n\n";
-
 		$failures ++;
 		$current++;
 	}
 	elsif ( $verbose )
 	{
-		$output 	.= "<div style='display: flex;width: 100%;clear: both;'>\n";
-		$output 	.= "<div style='width: 250px;background: #BDECB6;padding: 8px;border-bottom: 1px solid #DDDDDD;border-left: 1px solid #DDDDDD;border-right: 1px solid #DDDDDD;'>$check</div>\n";
-		$output 	.= "<div style='flex: 1;padding: 8px;border-bottom: 1px solid #DDDDDD;border-right: 1px solid #DDDDDD;'>$comment</div>\n";
-		$output 	.= "</div>\n";
-
+		$output 	.= "<tr><td style='background-color: color-mix(in srgb, currentColor 3%, transparent);white-space: nowrap;min-width:18%;'>$check</td><td style='width:100%'>$comment</td></tr>\n\n";
 		$current++;
 	}
 	return;
