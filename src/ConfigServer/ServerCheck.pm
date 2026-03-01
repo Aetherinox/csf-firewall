@@ -284,7 +284,7 @@ sub endoutput
 	$output .= "</table>";
 	if ( defined $current and $current == 0 )
 	{
-		$output .= "<div style='clear: both;background: #BDECB6;padding: 8px;border: 1px solid #DDDDDD;'>OK</div>\n";
+		$output .= "<div class='bs-callout-success' style='box-shadow: inset 0 0 0 9999px color-mix(in srgb, currentColor 16%, transparent);padding:10px;'>OK</div>\n";
 	}
 
 	$output 	.= "<br>\n";
