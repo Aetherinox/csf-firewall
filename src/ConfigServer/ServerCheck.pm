@@ -43,21 +43,21 @@ use ConfigServer::GetEthDev;
 
 use Exporter qw(import);
 our $VERSION     = 1.05;
-our @ISA         = qw(Exporter);
-our @EXPORT_OK   = qw();
-
-my (%config, $cpconf, %daconfig, $cleanreg, $mypid, $childin, $childout,
-    $verbose, $cpurl, @processes, $total, $failures, $current, $DEBIAN,
-	$output, $sysinit, %g_ifaces, %g_ipv4, %g_ipv6);
-
-my $ipv4reg = ConfigServer::Config->ipv4reg;
-my $ipv6reg = ConfigServer::Config->ipv6reg;
-
-use Exporter qw(import);
 
 # #
-#	Server Check › Report
+#	Globals
 # #
+
+use constant IS_DEBUG => 0;
+
+# #
+#	Minimum supported distro versions
+# #
+
+use constant MIN_FEDORA           => 30;      # Fedora 30+
+use constant MIN_RH               => 6;       # RHEL / CentOS / AlmaLinux / Rocky 6+
+use constant MIN_DEBIAN           => 10;      # Debian 10+
+use constant MIN_UBUNTU           => 20.04;   # Ubuntu 20.04+
 
 sub report
 {
@@ -832,29 +832,82 @@ sub services_disable_automatic
 	$status = 0;
 	if ((-e "/var/spool/cron/nobody") and !(-z "/var/spool/cron/nobody")) { $status = 1 }
 	&addline($status,"Check nobody cron","You have a nobody cron log file - you should check that this has not been created by an exploit");
+	# #
+	#	Unsupported Distro
+	# #
 
 	$status = 0;
-	my ($isfedora, $isrh, $version, $conf) = 0;
-	if (-e "/etc/fedora-release") {
-		open (my $IN, "<", "/etc/fedora-release");
-		flock ($IN, LOCK_SH);
-		$conf = <$IN>;
-		close ($IN);
-		$isfedora = 1;
-		if ($conf =~ /release (\d+)/i) {$version = $1}
-	} elsif (-e "/etc/redhat-release") {
-		open (my $IN, "<", "/etc/redhat-release");
-		flock ($IN, LOCK_SH);
-		$conf = <$IN>;
-		close ($IN);
-		$isrh = 1;
-		if ($conf =~ /release (\d+)/i) {$version = $1}
-	}
-	chomp $conf;
+	my ( $isfedora, $isrh, $isdebian, $isubuntu, $version, $conf ) = (0,0,0,0,0,'');
 
-	if ($isrh or $isfedora) {
-		if (($isfedora and $version < 30) or ($isrh and $version < 6)) { $status = 1 }
-		&addline($status,"Check Operating System support","You are running an OS - <i>$conf</i> - that is no longer supported by the OS vendor, or is about to become obsolete. This means that you will be receiving no OS updates (i.e. application or security bug fixes) or kernel updates and should consider moving to an OS that is supported as soon as possible");
+	# Fedora
+	if ( -e "/etc/fedora-release" )
+	{
+		open( my $IN, "<", "/etc/fedora-release" ) or die $!;
+		flock( $IN, LOCK_SH );
+		$conf = <$IN>;
+		close( $IN );
+
+		$isfedora = 1;
+		if ( $conf =~ /release (\d+)/i ) { $version = $1; }
+	}
+
+	# RHEL / CentOS / AlmaLinux / Rocky
+	elsif (-e "/etc/redhat-release")
+	{
+		open( my $IN, "<", "/etc/redhat-release" ) or die $!;
+		flock( $IN, LOCK_SH );
+		$conf = <$IN>;
+		close( $IN );
+
+		$isrh = 1;
+		if ( $conf =~ /release (\d+)/i ) { $version = $1; }
+	}
+
+	# Ubuntu
+	elsif ( -e "/etc/lsb-release" )
+	{
+		open( my $IN, "<", "/etc/lsb-release" ) or die $!;
+		while ( <$IN> )
+		{
+			$conf .= $_;
+			if ( /DISTRIB_ID="?Ubuntu"?/ ) 			{ $isubuntu = 1; $isdebian = 0; }
+			if ( /DISTRIB_DESCRIPTION=(.*)/ ) 		{ $conf = $1; $conf =~ s/^"|"$//g; }
+			if ( /DISTRIB_RELEASE="?([\d\.]+)"?/ ) 	{ $version = $1; }
+		}
+		close( $IN );
+	}
+
+	# Debian
+	elsif ( -e "/etc/debian_version" )
+	{
+		open( my $IN, "<", "/etc/debian_version" ) or die $!;
+		flock( $IN, LOCK_SH );
+		$conf = <$IN>;
+		close( $IN );
+
+		$isdebian 	= 1;
+		$version 	= $conf;  # e.g., "11.6"
+		$conf 		= "Debian $version";
+	}
+
+	chomp( $conf );
+
+	# Unsupported distro check
+	if ( $isrh or $isfedora or $isdebian or $isubuntu or IS_DEBUG )
+	{
+		# Minimal supported versions
+		my $unsupported 									= 0;
+		if 		( $isfedora and $version < MIN_FEDORA )  	{ $unsupported = 1; }
+		elsif 	( $isrh     and $version < MIN_RH )      	{ $unsupported = 1; }
+		elsif 	( $isdebian and $version < MIN_DEBIAN )  	{ $unsupported = 1; }
+		elsif 	( $isubuntu and $version < MIN_UBUNTU )  	{ $unsupported = 1; }
+		if (	 IS_DEBUG )									{ $unsupported = 1; }
+
+		addline(
+			$unsupported,
+			"Server: Distro Unsupported",
+			"<i>$conf</i> is no longer supported by the OS vendor, or is about to become obsolete. You will receive no further updates or security fixes. You should consider moving to a distro that is supported as soon as possible."
+		);
 	}
 
 	$status = 0;
