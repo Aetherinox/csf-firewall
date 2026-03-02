@@ -226,6 +226,13 @@
 
 	--ace-indent-guide: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bdu3f/BwAlfgctduB85QAAAABJRU5ErkJggg==);
 	--ace-indent-guide-active: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAAZSURBVHjaYvj///9/hivKyv8BAAAA//8DACLqBhbvk+/eAAAAAElFTkSuQmCC);
+
+	--tag-pill-red-bg: #da3251;
+	--tag-pill-red-text: #FFF;
+	--tag-pill-yellow-bg: #f0ad4e;
+	--tag-pill-yellow-text: #000;
+	--tag-pill-green-bg: #2c7018;
+	--tag-pill-green-text: #FFF;
 }
 
 /*
@@ -2872,6 +2879,43 @@ button.btn-update
 .ace-tomorrow .ace_indent-guide-active
 {
 	background: var(--ace-indent-guide-active) right repeat-y;
+}
+
+/*
+	Tags
+*/
+
+.tag-location
+{
+	font-size: 0.70em;
+}
+
+.tag-pill
+{
+	display: inline-block;
+	padding: 1px 5px;
+	border-radius: 6px;
+	font-weight: 700;
+	min-width: 50px;
+	text-align: center;
+}
+
+.tag-pill-red
+{
+	background-color: var( --tag-pill-red-bg );
+	color: var( --tag-pill-red-text );
+}
+
+.tag-pill-yellow
+{
+	background-color: var( --tag-pill-yellow-bg );
+	color: var( --tag-pill-yellow-text );
+}
+
+.tag-pill-green
+{
+	background-color: var( --tag-pill-green-bg );
+	color: var( --tag-pill-green-text );
 }
 
 /*
