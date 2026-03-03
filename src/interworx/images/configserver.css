@@ -227,12 +227,16 @@
 	--ace-indent-guide: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bdu3f/BwAlfgctduB85QAAAABJRU5ErkJggg==);
 	--ace-indent-guide-active: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAAZSURBVHjaYvj///9/hivKyv8BAAAA//8DACLqBhbvk+/eAAAAAElFTkSuQmCC);
 
-	--tag-pill-red-bg: #da3251;
+	--tag-pill-red-bg: #f04e6c;
 	--tag-pill-red-text: #FFF;
-	--tag-pill-yellow-bg: #f0ad4e;
+	--tag-pill-yellow-bg: #ffca7f;
 	--tag-pill-yellow-text: #000;
-	--tag-pill-green-bg: #2c7018;
+	--tag-pill-green-bg: #5c9e49;
 	--tag-pill-green-text: #FFF;
+	--tag-pill-blue-bg: #7c7edc;
+	--tag-pill-blue-text: #FFF;
+	--tag-pill-grey-bg: #777;
+	--tag-pill-grey-text: #FFF;
 }
 
 /*
@@ -435,6 +439,17 @@
 
 	--ace-indent-guide: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAEklEQVQImWNgYGBgYHB3d/8PAAOIAdULw8qMAAAAAElFTkSuQmCC);
 	--ace-indent-guide-active: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAEklEQVQIW2PQ1dX9zzBz5sz/ABCcBFFentLlAAAAAElFTkSuQmCC);
+
+	--tag-pill-red-bg: #da3251;
+	--tag-pill-red-text: #FFF;
+	--tag-pill-yellow-bg: #f0ad4e;
+	--tag-pill-yellow-text: #000;
+	--tag-pill-green-bg: #2c7018;
+	--tag-pill-green-text: #FFF;
+	--tag-pill-blue-bg: #585abe;
+	--tag-pill-blue-text: #FFF;
+	--tag-pill-grey-bg: #474747;
+	--tag-pill-grey-text: #FFF;
 }
 
 /*
@@ -2887,7 +2902,7 @@ button.btn-update
 
 .tag-location
 {
-	font-size: 0.70em;
+	font-size: 0.80em;
 }
 
 .tag-pill
@@ -2896,8 +2911,11 @@ button.btn-update
 	padding: 1px 5px;
 	border-radius: 6px;
 	font-weight: 700;
-	min-width: 50px;
+	min-width: 60px;
 	text-align: center;
+	margin: 3px 1px;
+	vertical-align: middle;
+	font-size: 0.80em;
 }
 
 .tag-pill-red
@@ -2916,6 +2934,18 @@ button.btn-update
 {
 	background-color: var( --tag-pill-green-bg );
 	color: var( --tag-pill-green-text );
+}
+
+.tag-pill-blue
+{
+	background-color: var( --tag-pill-blue-bg );
+	color: var( --tag-pill-blue-text );
+}
+
+.tag-pill-grey
+{
+	background-color: var( --tag-pill-grey-bg );
+	color: var( --tag-pill-grey-text );
 }
 
 /*
