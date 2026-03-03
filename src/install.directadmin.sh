@@ -524,6 +524,7 @@ if [ "$dr" = "false" ]; then
 	cp -avf remove_apf_bfd.sh /usr/local/csf/bin/
 	cp -avf readme.txt /etc/csf/
 	cp -avf sanity.txt /usr/local/csf/lib/
+	cp -avf defaults.txt /usr/local/csf/lib/
 	cp -avf csf.rbls /usr/local/csf/lib/
 	cp -avf restricted.txt /usr/local/csf/lib/
 	cp -avf changelog.txt /etc/csf/

@@ -54,6 +54,30 @@ my $slurpreg 	= ConfigServer::Slurp->slurpreg;
 my $cleanreg 	= ConfigServer::Slurp->cleanreg;
 my $configfile	= "/etc/csf/csf.conf";
 
+my %defaults;
+my $defaultsfile = "/usr/local/csf/lib/defaults.txt";
+
+# #
+#	Trim
+#	
+#	Certain CSF features will append spaces or underscores_ to the end
+#	of a config item.
+#	
+#	Remove trailing spaces and underscore_
+# #
+
+sub _trim
+{
+	my ( $s, $strip_trailing_underscore ) = @_;
+	return undef unless defined $s;
+	$s =~ s/^\s+|\s+$//g;
+	if ($strip_trailing_underscore)
+	{
+		$s =~ s/_\z//;
+	}
+	return $s;
+}
+
 # #
 #	load config
 # #
@@ -538,6 +562,40 @@ sub resetconfig
 sub configsetting
 {
 	return %configsetting;
+}
+
+# #
+#	Get Config Defaults
+# #
+
+sub getdefault
+{
+	my $item = _trim( shift, 1 );
+
+	if ( -e $defaultsfile )
+	{
+		open ( my $IN, "<", $defaultsfile ) or die "Cannot open $defaultsfile: $!";
+		flock ( $IN, LOCK_SH );
+		my @data = <$IN>;
+		close ( $IN );
+		chomp @data;
+
+		foreach my $line ( @data )
+		{
+			next if $line =~ /^(\s|\#|$)/;
+			my ( $name, $value ) = split( /\=/, $line, 2 );
+
+			# Clean since certain features can add trailing spaces or underscores_
+			$name  	= _trim( $name, 1 );
+			$value 	= _trim( $value );
+			$value 	= undef if !defined $value || $value eq '';
+
+			$defaults{$name} = $value;
+		}
+	}
+
+	return $defaults{$item} if defined $defaults{$item};
+	return undef;
 }
 
 sub ipv4reg

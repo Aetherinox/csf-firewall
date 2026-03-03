@@ -85,6 +85,7 @@ cp -avf /etc/csf/lfd.start /var/lib/csf/
 cp -avf /etc/csf/lock/ /var/lib/csf/
 cp -avf /etc/csf/nocheck /var/lib/csf/
 cp -avf /etc/csf/sanity.txt /usr/local/csf/lib/
+cp -avf /etc/csf/defaults.txt /usr/local/csf/lib/
 cp -avf /etc/csf/stats/ /var/lib/csf/
 cp -avf /etc/csf/suspicious.tar /var/lib/csf/
 cp -avf /etc/csf/ui/ui.session /var/lib/csf/ui/
@@ -143,6 +144,7 @@ rm -fv /etc/csf/lfd.start
 rm -Rfv /etc/csf/lock/
 rm -fv /etc/csf/nocheck
 rm -fv /etc/csf/sanity.txt
+rm -fv /etc/csf/defaults.txt
 rm -Rfv /etc/csf/stats/
 rm -fv /etc/csf/suspicious.tar
 rm -fv /etc/csf/ui/ui.session
