@@ -59,18 +59,18 @@ use constant MIN_RH               => 6;       # RHEL / CentOS / AlmaLinux / Rock
 use constant MIN_DEBIAN           => 10;      # Debian 10+
 use constant MIN_UBUNTU           => 20.04;   # Ubuntu 20.04+
 
-sub report
-{
-	$verbose 		= shift;
-	my $config 		= ConfigServer::Config->loadconfig();
-	%config 		= $config->config();
-	$cleanreg		= ConfigServer::Slurp->cleanreg;
-	$| = 1;
+# #
+#	Declare
+# #
 
-	# #
-	#	Server Check › Report › Webmin
-	# #
+my (
+	%config, 	$cpconf, 	%daconfig, 	$cleanreg, 	$mypid, 	$childin, 	$childout,
+    $verbose, 	$cpurl, 	@processes, $total, 	$failures, 	$current, 	$DEBIAN,
+	$output, 	$sysinit, 	%g_ifaces, 	%g_ipv4, 	%g_ipv6
+);
 
+my $ipv4reg = ConfigServer::Config->ipv4reg;
+my $ipv6reg = ConfigServer::Config->ipv6reg;
 	if ( defined $ENV{WEBMIN_VAR} and defined $ENV{WEBMIN_CONFIG} )
 	{
 		$config{GENERIC} = 1;
