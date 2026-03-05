@@ -9,7 +9,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            02.12.2026
+#   @updated            03.05.2026
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -25,71 +25,97 @@
 #   along with this program; if not, see <https://www.gnu.org/licenses>.
 # #
 ## no critic (RequireUseWarnings, ProhibitExplicitReturnUndef, ProhibitMixedBooleanOperators, RequireBriefOpen)
-# start main
 package ConfigServer::Sanity;
 
 use strict;
+use warnings;
 use lib '/usr/local/csf/lib';
 use Fcntl qw(:DEFAULT :flock);
 use Carp;
 use ConfigServer::Config;
 
-use Exporter qw(import);
-our $VERSION     = 1.02;
-our @ISA         = qw(Exporter);
-our @EXPORT_OK   = qw(sanity);
+# #
+#	Sanity.pm › Declare › Version
+# #
 
-my %sanity;
-my %sanitydefault;
-my $sanityfile = "/usr/local/csf/lib/sanity.txt";
+our $VERSION 	= 15.10;
 
-open (my $IN, "<", $sanityfile);
-flock ($IN, LOCK_SH);
-my @data = <$IN>;
-close ($IN);
-chomp @data;
-foreach my $line (@data) {
-	my ($name,$value,$def) = split(/\=/,$line);
-	$sanity{$name} = $value;
-	$sanitydefault{$name} = $def;
+# #
+#	URLGet.pm › Declare › Config
+# #
+
+my $config_obj	= ConfigServer::Config->loadconfig();
+my %config 		= $config_obj->config();
+
+# #
+#	Sanity.pm › Declare › Generic
+# #
+
+my %sanity_current;
+my %sanity_default;
+my $sanity_file = "/usr/local/csf/lib/sanity.txt";
+
+# #
+#	Sanity.pm › Open /etc/csf/sanity.txt
+# #
+
+{
+    open my $IN, '<', $sanity_file or croak "Cannot open $sanity_file: $!";
+    flock $IN, LOCK_SH;
+    chomp( my @data = <$IN> );
+    close $IN;
+
+    for my $line ( @data )
+	{
+        my ( $name, $value, $def ) 	= split /=/, $line, 3;
+        $sanity_current{$name}	= $value;
+        $sanity_default{$name}	= $def;
+    }
 }
 
-my $config = ConfigServer::Config->loadconfig();
-my %config = $config->config();
+# #
+#	Sanity.pm › Remove DENY_IP_LIMIT if IPSET enabled
+# #
 
-if ($config{IPSET}) {
-	delete $sanity{"DENY_IP_LIMIT"};
-	delete $sanitydefault{"DENY_IP_LIMIT"};
+if ( $config{IPSET} )
+{
+	delete $sanity_current{"DENY_IP_LIMIT"};
+	delete $sanity_default{"DENY_IP_LIMIT"};
 }
+
+# #
+#	Sanity.pm › Sanity
+# #
 
 sub sanity
 {
-	my $sanity_item 	= shift;
-	my $sanity_value 	= shift;
-	my $insane = 0;
+	my $ident		= shift;
+	my $value 		= shift;
+	my $insane		= 0;
 
-	$sanity_item =~ s/\s//g;
-	$sanity_value =~ s/\s//g;
+	$ident			=~ s/\s//g;
+	$value 			=~ s/\s//g;
 
-	if (defined $sanity{$sanity_item})
+	if ( defined $sanity_current{$ident} )
 	{
 		$insane = 1;
-		foreach my $check (split(/\|/,$sanity{$sanity_item}))
+		foreach my $check ( split(/\|/, $sanity_current{$ident} ) )
 		{
 			if ($check =~ /-/)
 			{
-				my ($from,$to) = split(/\-/,$check);
-				if (($sanity_value >= $from) and ($sanity_value <= $to)) {$insane = 0}
-
-			} else {
-				if ($sanity_value eq $check) {$insane = 0}
+				my ( $from,$to) = split( /\-/, $check );
+				if ( ( $value >= $from ) and ( $value <= $to ) ) { $insane = 0 }
+			}
+			else
+			{
+				if ( $value eq $check) { $insane = 0 }
 			}
 		}
 	
-		$sanity{$sanity_item} =~ s/\|/ or /g;
+		$sanity_current{$ident} =~ s/\|/ or /g;
 	}
 
-	return ( $insane, $sanity{$sanity_item}, $sanitydefault{$sanity_item} );
+	return ( $insane, $sanity_current{$ident}, $sanity_default{$ident} );
 }
 
 1;
