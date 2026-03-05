@@ -62,21 +62,22 @@ if ($config{IPSET}) {
 	delete $sanitydefault{"DENY_IP_LIMIT"};
 }
 
-# end main
-###############################################################################
-# start sanity
-sub sanity {
-	my $sanity_item = shift;
-	my $sanity_value = shift;
+sub sanity
+{
+	my $sanity_item 	= shift;
+	my $sanity_value 	= shift;
 	my $insane = 0;
 
 	$sanity_item =~ s/\s//g;
 	$sanity_value =~ s/\s//g;
 
-	if (defined $sanity{$sanity_item}) {
+	if (defined $sanity{$sanity_item})
+	{
 		$insane = 1;
-		foreach my $check (split(/\|/,$sanity{$sanity_item})) {
-			if ($check =~ /-/) {
+		foreach my $check (split(/\|/,$sanity{$sanity_item}))
+		{
+			if ($check =~ /-/)
+			{
 				my ($from,$to) = split(/\-/,$check);
 				if (($sanity_value >= $from) and ($sanity_value <= $to)) {$insane = 0}
 
@@ -84,11 +85,11 @@ sub sanity {
 				if ($sanity_value eq $check) {$insane = 0}
 			}
 		}
+	
 		$sanity{$sanity_item} =~ s/\|/ or /g;
 	}
-	return ($insane,$sanity{$sanity_item},$sanitydefault{$sanity_item});
+
+	return ( $insane, $sanity{$sanity_item}, $sanitydefault{$sanity_item} );
 }
-# end sanity
-###############################################################################
 
 1;
