@@ -84,19 +84,22 @@ if ($config{LF_APACHE_ERRPORT} == 0) {
 		if ("$mas.$maj" < 2.4) {$config{LF_APACHE_ERRPORT} = 1}
 	}
 }
-unless ($config{LF_APACHE_ERRPORT} == 1) {$config{LF_APACHE_ERRPORT} = 2}
+
+if ( $config{LF_APACHE_ERRPORT} != 1 )
+{
+    $config{LF_APACHE_ERRPORT} = 2;
+}
+
 ConfigServer::Logger::logfile("LF_APACHE_ERRPORT: Set to [$config{LF_APACHE_ERRPORT}]");
 
-my $ethdev = ConfigServer::GetEthDev->new();
-%brd = $ethdev->brd;
-%ips = $ethdev->ipv4;
+my $ethdev 	= ConfigServer::GetEthDev->new();
+%brd 		= $ethdev->brd;
+%ips 		= $ethdev->ipv4;
 
 if (-e "/usr/local/csf/bin/regex.custom.pm") {require "/usr/local/csf/bin/regex.custom.pm"} ##no critic
 
-# end main
-###############################################################################
-# start processline
-sub processline {
+sub processline
+{
 	my $line = shift;
 	my $lgfile = shift;
 	my $globlogs_ref = shift;
@@ -104,107 +107,146 @@ sub processline {
 	$line =~ s/\n//g;
 	$line =~ s/\r//g;
 
-	if (-e "/usr/local/csf/bin/regex.custom.pm") {
+	if (-e "/usr/local/csf/bin/regex.custom.pm")
+	{
 		my ($text,$ip,$app,$trigger,$ports,$temp,$cf) = &custom_line($line,$lgfile);
 		if ($text) {
 			return ($text,$ip,$app,$trigger,$ports,$temp,$cf);
 		}
 	}
 
-#openSSH
-#RH
-	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd(?:-[0-9A-Za-z_]+)?\[\d+\]: pam_unix\(sshd:auth\): authentication failure; logname=\S* uid=\S* euid=\S* tty=\S* ruser=\S* rhost=(\S+)\s+(user=(\S+))?/)) {
+	# #
+	#	OpenSSH ( Redhat )
+	# #
+
+	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd(?:-[0-9A-Za-z_]+)?\[\d+\]: pam_unix\(sshd:auth\): authentication failure; logname=\S* uid=\S* euid=\S* tty=\S* ruser=\S* rhost=(\S+)\s+(user=(\S+))?/))
+	{
 		my $ip = $3;
 		my $acc = $5;
 		$ip =~ s/^::ffff://;
 		if (checkip(\$ip)) {return ("Failed SSH login from","$ip|$acc","sshd")} else {return}
 	}
-	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd(?:-[0-9A-Za-z_]+)?\[\d+\]: Failed none for (\S*) from (\S+) port \S+/)) {
+
+	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd(?:-[0-9A-Za-z_]+)?\[\d+\]: Failed none for (\S*) from (\S+) port \S+/))
+	{
         my $ip = $4;
 		my $acc = $3;
 		$ip =~ s/^::ffff://;
 		if (checkip(\$ip)) {return ("Failed SSH login from","$ip|$acc","sshd")} else {return}
 	}
-	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd(?:-[0-9A-Za-z_]+)?\[\d+\]: Failed password for (invalid user |illegal user )?(\S*) from (\S+)( port \S+ \S+\s*)?/)) {
+
+	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd(?:-[0-9A-Za-z_]+)?\[\d+\]: Failed password for (invalid user |illegal user )?(\S*) from (\S+)( port \S+ \S+\s*)?/))
+	{
         my $ip = $5;
 		my $acc = $4;
 		$ip =~ s/^::ffff://;
 		if (checkip(\$ip)) {return ("Failed SSH login from","$ip|$acc","sshd")} else {return}
 	}
-	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd(?:-[0-9A-Za-z_]+)?\[\d+\]: Failed keyboard-interactive(\/pam)? for (invalid user )?(\S*) from (\S+) port \S+/)) {
+
+	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd(?:-[0-9A-Za-z_]+)?\[\d+\]: Failed keyboard-interactive(\/pam)? for (invalid user )?(\S*) from (\S+) port \S+/))
+	{
         my $ip = $6;
 		my $acc = $4;
 		$ip =~ s/^::ffff://;
 		if (checkip(\$ip)) {return ("Failed SSH login from","$ip|$acc","sshd")} else {return}
 	}
-	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd(?:-[0-9A-Za-z_]+)?\[\d+\]: Invalid user (\S*) from (\S+)/)) {
+
+	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd(?:-[0-9A-Za-z_]+)?\[\d+\]: Invalid user (\S*) from (\S+)/))
+	{
         my $ip = $4;
 		my $acc = $3;
 		$ip =~ s/^::ffff://;
 		if (checkip(\$ip)) {return ("Failed SSH login from","$ip|$acc","sshd")} else {return}
 	}
-	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd(?:-[0-9A-Za-z_]+)?\[\d+\]: User (\S*) from (\S+)\s* not allowed because not listed in AllowUsers/)) {
+
+	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd(?:-[0-9A-Za-z_]+)?\[\d+\]: User (\S*) from (\S+)\s* not allowed because not listed in AllowUsers/))
+	{
         my $ip = $4;
 		my $acc = $3;
 		$ip =~ s/^::ffff://;
 		if (checkip(\$ip)) {return ("Failed SSH login from","$ip|$acc","sshd")} else {return}
 	}
-	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd(?:-[0-9A-Za-z_]+)?\[\d+\]: Did not receive identification string from (\S+)/)) {
+
+	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd(?:-[0-9A-Za-z_]+)?\[\d+\]: Did not receive identification string from (\S+)/))
+	{
         my $ip = $3;
 		my $acc = "";
 		$ip =~ s/^::ffff://;
 		if (checkip(\$ip)) {return ("Failed SSH login from","$ip|$acc","sshd")} else {return}
 	}
-	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd(?:-[0-9A-Za-z_]+)?\[\d+\]: refused connect from (\S+)/)) {
+
+	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd(?:-[0-9A-Za-z_]+)?\[\d+\]: refused connect from (\S+)/))
+	{
         my $ip = $3;
 		my $acc = "";
 		$ip =~ s/^::ffff://;
 		if (checkip(\$ip)) {return ("Failed SSH login from","$ip|$acc","sshd")} else {return}
 	}
-	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd(?:-[0-9A-Za-z_]+)?\[\d+\]: error: maximum authentication attempts exceeded for (\S*) from (\S+)/)) {
+
+	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd(?:-[0-9A-Za-z_]+)?\[\d+\]: error: maximum authentication attempts exceeded for (\S*) from (\S+)/))
+	{
         my $ip = $4;
 		my $acc = "";
 		$ip =~ s/^::ffff://;
 		if (checkip(\$ip)) {return ("Failed SSH login from","$ip|$acc","sshd")} else {return}
 	}
 
-#Debian/Ubuntu
-	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd(?:-[0-9A-Za-z_]+)?\[\d+\]: Illegal user (\S*) from (\S+)/)) {
+	# #
+	#	Debian/Ubuntu
+	# #
+
+	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd(?:-[0-9A-Za-z_]+)?\[\d+\]: Illegal user (\S*) from (\S+)/))
+	{
         my $ip = $4;
 		my $acc = $3;
 		$ip =~ s/^::ffff://;
 		if (checkip(\$ip)) {return ("Failed SSH login from","$ip|$acc","sshd")} else {return}
 	}
 
-#Gentoo
-	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd(?:-[0-9A-Za-z_]+)?\[\d+\]: error: PAM: Authentication failure for (\S*) from (\S+)/)) {
+	# #
+	#	Gentoo
+	# #
+
+	if (($config{LF_SSHD}) and (($lgfile eq "/var/log/messages") or ($lgfile eq "/var/log/secure") or ($globlogs{SSHD_LOG}{$lgfile})) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) (\S+ )?sshd(?:-[0-9A-Za-z_]+)?\[\d+\]: error: PAM: Authentication failure for (\S*) from (\S+)/))
+	{
         my $ip = $4;
 		my $acc = $3;
 		$ip =~ s/^::ffff://;
 		if (checkip(\$ip)) {return ("Failed SSH login from","$ip|$acc","sshd")} else {return}
 	}
 
-#courier-imap
-	if (($config{LF_POP3D}) and ($globlogs{POP3D_LOG}{$lgfile}) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) \S+ pop3d(-ssl)?: LOGIN FAILED, user=(\S*), ip=\[(\S+)\]\s*$/)) {
+	# #
+	#	courier-imap
+	# #
+
+	if (($config{LF_POP3D}) and ($globlogs{POP3D_LOG}{$lgfile}) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) \S+ pop3d(-ssl)?: LOGIN FAILED, user=(\S*), ip=\[(\S+)\]\s*$/))
+	{
         my $ip = $4;
 		my $acc = $3;
 		$ip =~ s/^::ffff://;
 		if (checkip(\$ip)) {return ("Failed POP3 login from","$ip|$acc","pop3d")} else {return}
 	}
-	if (($config{LF_IMAPD}) and ($globlogs{IMAPD_LOG}{$lgfile}) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) \S+ imapd(-ssl)?: LOGIN FAILED, user=(\S*), ip=\[(\S+)\]\s*$/)) {
+
+	if (($config{LF_IMAPD}) and ($globlogs{IMAPD_LOG}{$lgfile}) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) \S+ imapd(-ssl)?: LOGIN FAILED, user=(\S*), ip=\[(\S+)\]\s*$/))
+	{
         my $ip = $4;
 		my $acc = $3;
 		$ip =~ s/^::ffff://;
 		if (checkip(\$ip)) {return ("Failed IMAP login from","$ip|$acc","imapd")} else {return}
 	}
 
-#uw-imap
-	if (($config{LF_POP3D}) and ($globlogs{POP3D_LOG}{$lgfile}) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) \S+ ipop3d\[\d+\]: Login failed user=(\S*) auth=\S+ host=\S+ \[(\S+)\]\s*$/)) {
+	# #
+	#	uw-imap
+	# #
+
+	if (($config{LF_POP3D}) and ($globlogs{POP3D_LOG}{$lgfile}) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) \S+ ipop3d\[\d+\]: Login failed user=(\S*) auth=\S+ host=\S+ \[(\S+)\]\s*$/))
+	{
         my $ip = $3;
 		my $acc = $2;
 		$ip =~ s/^::ffff://;
 		if (checkip(\$ip)) {return ("Failed POP3 login from","$ip|$acc","pop3d")} else {return}
 	}
+
 	if (($config{LF_IMAPD}) and ($globlogs{IMAPD_LOG}{$lgfile}) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) \S+ imapd\[\d+\]: Login failed user=(\S*) auth=\S+ host=\S+ \[(\S+)\]\s*$/)) {
         my $ip = $3;
 		my $acc = $2;
@@ -212,29 +254,59 @@ sub processline {
 		if (checkip(\$ip)) {return ("Failed IMAP login from","$ip|$acc","imapd")} else {return}
 	}
 
-#dovecot
-	if (($config{LF_POP3D}) and ($globlogs{POP3D_LOG}{$lgfile}) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) \S+ dovecot(\[\d+\])?: pop3-login: ((?:Disconnected|Login aborted): )?(Aborted login( by logging out)?|Connection closed|Disconnected|Disconnected: Inactivity)(:\s*\S+\sfailed: Connection reset by peer)?(\s*\((?:auth failed|auth service reported temporary failure), \d+ attempts( in \d+ secs)?\))?(?:\s*\(\S+\))?: (user=(<\S*>)?, )?(method=\S+, )?rip=(\S+), lip=/)) {
+	# #
+	#	dovecot
+	# #
+
+	if (($config{LF_POP3D}) and ($globlogs{POP3D_LOG}{$lgfile}) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) \S+ dovecot(\[\d+\])?: pop3-login: ((?:Disconnected|Login aborted): )?(Aborted login( by logging out)?|Connection closed|Disconnected|Disconnected: Inactivity|Inactivity|Too many invalid commands|Logged out)(:\s*\S+\sfailed: Connection reset by peer)?(\s*\((?:auth failed|auth service reported temporary failure), \d+ attempts( in \d+ secs)?\))?(?:\s*\(\S+\))?: (user=(<\S*>)?, )?(method=\S+, )?rip=(\S+), lip=/))
+	{
+		ConfigServer::Logger::logfile("Checking dovecot regex for LF_POP3");
+
         my $ip = $12;
 		my $acc = $10;
 		$ip =~ s/^::ffff://;
 		$acc =~ s/^<|>$//g;
 		if (checkip(\$ip)) {return ("Failed POP3 login from","$ip|$acc","pop3d")} else {return}
 	}
-		if (($config{LF_IMAPD}) and ($globlogs{IMAPD_LOG}{$lgfile}) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) \S+ dovecot(\[\d+\])?: imap-login: ((?:Disconnected|Login aborted): )?(Aborted login( by logging out)?|Connection closed|Disconnected|Disconnected: Inactivity)(:\s*\S+\sfailed: Connection reset by peer)?(\s*\((?:auth failed|auth service reported temporary failure), \d+ attempts( in \d+ secs)?\))?(?:\s*\(\S+\))?: (user=(<\S*>)?, )?(method=\S+, )?rip=(\S+), lip=/)) {
+
+	if (($config{LF_IMAPD}) and ($globlogs{IMAPD_LOG}{$lgfile}) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) \S+ dovecot(\[\d+\])?: imap-login: ((?:Disconnected|Login aborted): )?(Aborted login( by logging out)?|Connection closed|Disconnected|Disconnected: Inactivity|Inactivity|Too many invalid commands|Logged out)(:\s*\S+\sfailed: Connection reset by peer)?(\s*\((?:auth failed|auth service reported temporary failure), \d+ attempts( in \d+ secs)?\))?(?:\s*\(\S+\))?: (user=(<\S*>)?, )?(method=\S+, )?rip=(\S+), lip=/))
+	{
+		ConfigServer::Logger::logfile("Checking dovecot regex for LF_IMAPD");
+
         my $ip = $12;
-		my $acc = $10;
+		my $acc = $10;		
 		$ip =~ s/^::ffff://;
 		$acc =~ s/^<|>$//g;
-		if (checkip(\$ip)) {return ("Failed IMAP login from","$ip|$acc","imapd")} else {return}
+		if (checkip(\$ip))
+		{
+			ConfigServer::Logger::logfile( "Triggered checkip : $ip" );
+		}
+
+		if ( checkip( \$ip ) )
+		{
+			return ("Failed IMAP login from","$ip|$acc","imapd")
+		}
+		else
+		{
+			return
+		}
 	}
-	if (($config{LF_POP3D}) and ($globlogs{POP3D_LOG}{$lgfile}) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) pop3-login(\[\d+\])?: Info: (?:Login aborted: )?(Aborted login( by logging out)?|Connection closed|Disconnected|Disconnected: Inactivity)(\s*\((?:auth failed|auth service reported temporary failure), \d+ attempts( in \d+ secs)?\))?(?:\s*\(\S+\))?: (user=(<\S*>)?, )?(method=\S+, )?rip=(\S+), lip=/)) {
+
+	if (($config{LF_POP3D}) and ($globlogs{POP3D_LOG}{$lgfile}) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) pop3-login(\[\d+\])?: Info: (?:Login aborted: )?(Aborted login( by logging out)?|Connection closed|Disconnected|Disconnected: Inactivity|Inactivity|Too many invalid commands|Logged out)(\s*\((?:auth failed|auth service reported temporary failure), \d+ attempts( in \d+ secs)?\))?(?:\s*\(\S+\))?: (user=(<\S*>)?, )?(method=\S+, )?rip=(\S+), lip=/))
+	{
+		ConfigServer::Logger::logfile("Checking pop3-login regex for LF_POP3D");
+		
         my $ip = $10;
 		my $acc = $8;
 		$ip =~ s/^::ffff://;
 		$acc =~ s/^<|>$//g;
 		if (checkip(\$ip)) {return ("Failed POP3 login from","$ip|$acc","pop3d")} else {return}
 	}
-	if (($config{LF_IMAPD}) and ($globlogs{IMAPD_LOG}{$lgfile}) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) imap-login(\[\d+\])?: Info: (?:Login aborted: )?(Aborted login( by logging out)?|Connection closed|Disconnected|Disconnected: Inactivity)(\s*\((?:auth failed|auth service reported temporary failure), \d+ attempts( in \d+ secs)?\))?(?:\s*\(\S+\))?: (user=(<\S*>)?, )?(method=\S+, )?rip=(\S+), lip=/)) {
+
+	if (($config{LF_IMAPD}) and ($globlogs{IMAPD_LOG}{$lgfile}) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) imap-login(\[\d+\])?: Info: (?:Login aborted: )?(Aborted login( by logging out)?|Connection closed|Disconnected|Disconnected: Inactivity|Inactivity|Too many invalid commands|Logged out)(\s*\((?:auth failed|auth service reported temporary failure), \d+ attempts( in \d+ secs)?\))?(?:\s*\(\S+\))?: (user=(<\S*>)?, )?(method=\S+, )?rip=(\S+), lip=/))
+	{
+		ConfigServer::Logger::logfile("Checking imap-login regex for LF_IMAPD");
+
         my $ip = $10;
 		my $acc = $8;
 		$ip =~ s/^::ffff://;
@@ -562,14 +634,14 @@ sub processline {
 	}
 
 #InterWorx (dovecot, proftpd, qmail)
-	if (($config{LF_POP3D}) and ($globlogs{POP3D_LOG}{$lgfile}) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) pop3-login(\[\d+\])?: Info: (?:Login aborted: )?(Aborted login|Connection closed|Disconnected|Disconnected: Inactivity)( \((?:auth failed|auth service reported temporary failure), \d+ attempts( in \d+ secs)?\))?(?:\s*\(\S+\))?: (user=(<\S*>)?, )?(method=\S+, )?rip=(\S+), lip=/)) {
+	if (($config{LF_POP3D}) and ($globlogs{POP3D_LOG}{$lgfile}) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) pop3-login(\[\d+\])?: Info: (?:Login aborted: )?(Aborted login|Connection closed|Disconnected|Disconnected: Inactivity|Inactivity|Too many invalid commands|Logged out)( \((?:auth failed|auth service reported temporary failure), \d+ attempts( in \d+ secs)?\))?(?:\s*\(\S+\))?: (user=(<\S*>)?, )?(method=\S+, )?rip=(\S+), lip=/)) {
         my $ip = $9;
 		my $acc = $7;
 		$ip =~ s/^::ffff://;
 		$acc =~ s/^<|>$//g;
 		if (checkip(\$ip)) {return ("Failed POP3 login from","$ip|$acc","pop3d")} else {return}
 	}
-	if (($config{LF_IMAPD}) and ($globlogs{IMAPD_LOG}{$lgfile}) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) imap-login(\[\d+\])?: Info: (?:Login aborted: )?(Aborted login|Connection closed|Disconnected|Disconnected: Inactivity)( \((?:auth failed|auth service reported temporary failure), \d+ attempts( in \d+ secs)?\))?(?:\s*\(\S+\))?: (user=(<\S*>)?, )?(method=\S+, )?rip=(\S+), lip=/)) {
+	if (($config{LF_IMAPD}) and ($globlogs{IMAPD_LOG}{$lgfile}) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) imap-login(\[\d+\])?: Info: (?:Login aborted: )?(Aborted login|Connection closed|Disconnected|Disconnected: Inactivity|Inactivity|Too many invalid commands|Logged out)( \((?:auth failed|auth service reported temporary failure), \d+ attempts( in \d+ secs)?\))?(?:\s*\(\S+\))?: (user=(<\S*>)?, )?(method=\S+, )?rip=(\S+), lip=/)) {
         my $ip = $9;
 		my $acc = $7;
 		$ip =~ s/^::ffff://;
