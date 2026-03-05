@@ -1116,9 +1116,9 @@ EOF
 	}
 	elsif ( $FORM{action} eq "servercheck" )
 	{
-		if ( $FORM{fix} eq "disable_services" )
+		if ( $FORM{fix} eq "services_disable" )
 		{
-			my ( $disabled, $failed ) 	= ConfigServer::ServerCheck::disable_services_automatic();
+			my ( $disabled, $failed ) 	= ConfigServer::ServerCheck::services_disable_automatic();
 			my $disabled_list 			= html_escape( join( ", ", @{$disabled} ) );
 			my $failed_list   			= html_escape( join( ", ", @{$failed} ) );
 
