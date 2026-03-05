@@ -2907,14 +2907,16 @@ button.btn-update
 
 .tag-pill
 {
-	display: inline-block;
+	display: inline-flex;
 	padding: 1px 5px;
+	margin: 3px 1px;
 	border-radius: 6px;
 	font-weight: 700;
 	min-width: 60px;
-	text-align: center;
-	margin: 3px 1px;
 	vertical-align: middle;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
 	font-size: 0.80em;
 }
 
