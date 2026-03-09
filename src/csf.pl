@@ -39,7 +39,7 @@ use ConfigServer::Slurp qw(slurp);
 use ConfigServer::CheckIP qw(checkip cccheckip);
 use ConfigServer::Ports;
 use ConfigServer::URLGet;
-use ConfigServer::Sanity qw(sanity);
+use ConfigServer::Sanity;
 use ConfigServer::ServerCheck;
 use ConfigServer::ServerStats;
 use ConfigServer::Service;
@@ -454,7 +454,7 @@ or ( $input{command} eq "-ra" ) )
 
 	foreach my $key ( keys %config )
 	{
-		my ( $insane,$range,$default ) = sanity( $key,$config{$key} );
+		my ( $insane,$range,$default ) = ConfigServer::Sanity::sanity( $key,$config{$key} );
 		if ( $insane )
 		{
 			log_warn( "${yellowl}$key${greym} sanity check. ${yellowl}$key = $config{$key}${end}" );
