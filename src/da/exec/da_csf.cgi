@@ -261,7 +261,7 @@ EOF
 
 <div class="section-header">
     <div class="header-left">
-        <a href="/">
+        <a href="/" target="_top">
             <img class="logo" src="$images/csf.png" alt="ConfigServer Firewall">
         </a>
         <div class="app-info">
