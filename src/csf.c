@@ -27,11 +27,13 @@
 	# #
 */
 #include <stdio.h>
+#include <stdlib.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include <string.h>
 #include <pwd.h>
-main ()
+
+int main(void)
 {
 	FILE *adminFile;
 	FILE *resellerFile;
@@ -57,13 +59,16 @@ main ()
 		}
 		fclose(adminFile);
 	}
+
 	if (admin == 1)
 	{
 		setuid(0);
 		setgid(0);
 
 		execv("/usr/local/directadmin/plugins/csf/exec/da_csf.cgi", NULL);
-	} else {
+	}
+	else
+	{
 		resellerFile=fopen ("/usr/local/directadmin/data/admin/reseller.list","r");
 		if (resellerFile!=NULL)
 		{
@@ -80,14 +85,17 @@ main ()
 			}
 			fclose(resellerFile);
 		}
+
 		if (reseller == 1)
 		{
 			setuid(0);
 			setgid(0);
 
 			execv("/usr/local/directadmin/plugins/csf/exec/da_csf_reseller.cgi", NULL);
-		} else {
-			printf("Permission denied [User:%s UID:%d]\n", pw->pw_name, ruid);
+		}
+		else
+		{
+			printf( "Permission denied [User:%s UID:%d]\n", pw->pw_name, ruid );
 		}
 	}
 
