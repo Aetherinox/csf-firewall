@@ -430,6 +430,7 @@ sub new
 sub _route_url
 {
 	my ( $url, $file, $quiet ) = @_;
+	$file //= '';
 
 	if ( $option == 3 )
 	{
