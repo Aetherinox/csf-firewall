@@ -1394,6 +1394,15 @@ th
 }
 
 /*
+	Center align content in main nav table
+*/
+
+.tab-pane table td
+{
+	vertical-align: middle !important;
+}
+
+/*
 	Blocklist (RBL
 */
 
@@ -2903,6 +2912,7 @@ button.btn-update
 .tag-location
 {
 	font-size: 0.80em;
+	vertical-align: middle;
 }
 
 .tag-pill
