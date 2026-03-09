@@ -40,7 +40,7 @@ use ConfigServer::CheckIP qw(checkip);
 use ConfigServer::Ports;
 use ConfigServer::JSON qw(encode_json decode_json);
 use ConfigServer::URLGet;
-use ConfigServer::Sanity qw(sanity);;
+use ConfigServer::Sanity;
 use ConfigServer::ServerCheck;
 use ConfigServer::ServerStats;
 use ConfigServer::Service;
@@ -2002,7 +2002,7 @@ EOF
 				my $size 						= length( $end ) + 4;
 				my $class 						= "value-default";
 				my $tip							= "";
-				my ($status,$range,$default) 	= sanity( $start, $end );
+				my ($status,$range,$default) 	= ConfigServer::Sanity::sanity( $start, $end );
 				my $showrange 					= "";
 				my $showfrom;
 				my $showto;
@@ -2422,7 +2422,7 @@ EOD
 		my %newconfig = $config->config;
 		foreach my $key (keys %newconfig)
 		{
-			my ( $insane,$range,$default) = sanity( $key,$newconfig{$key});
+			my ( $insane,$range,$default) = ConfigServer::Sanity::sanity( $key,$newconfig{$key});
 			if ( $insane) {print "<br>WARNING: $key sanity check. $key = \"$newconfig{$key}\". Recommended range: $range (Default: $default)\n"}
 		}
 

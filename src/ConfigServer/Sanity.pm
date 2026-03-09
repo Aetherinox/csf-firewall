@@ -28,7 +28,6 @@
 package ConfigServer::Sanity;
 
 use strict;
-use warnings;
 use lib '/usr/local/csf/lib';
 use Fcntl qw(:DEFAULT :flock);
 use Carp;
@@ -93,7 +92,8 @@ sub sanity
 	my $value 		= shift;
 	my $insane		= 0;
 
-	$ident			=~ s/\s//g;
+	$ident 			=~ s/\s//g;
+	$value 			= '' unless defined $value;
 	$value 			=~ s/\s//g;
 
 	if ( defined $sanity_current{$ident} )
