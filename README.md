@@ -589,8 +589,8 @@ By leveraging blocklists, CSF empowers users to proactively defend their infrast
 CSF hosts our own set of blocklists which are are automatically updated every `12 hours`. You may add these sets to your ConfigServer Firewall `/etc/csf/csf.blocklists` with the following new lines:
 
 ```
-CSF_MASTER|43200|400000|https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/blocklists/master.ipset
-CSF_HIGHRISK|43200|0|https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/blocklists/highrisk.ipset
+CSF_MASTER|43200|400000|https://blocklist.configserver.dev/master.ipset
+CSF_HIGHRISK|43200|0|https://blocklist.configserver.dev/highrisk.ipset
 ```
 
 <br />
