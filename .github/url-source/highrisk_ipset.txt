@@ -1,1 +1,0 @@
-https://blocklist.configserver.dev/highrisk.ipset

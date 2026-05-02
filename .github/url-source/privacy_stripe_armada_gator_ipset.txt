@@ -1,1 +1,0 @@
-https://stripe.com/files/ips/ips_armada_gator.txt

@@ -1,1 +1,0 @@
-https://api.fastly.com/public-ip-list

@@ -1,1 +1,0 @@
-https://raw.githubusercontent.com/Aetherinox/blocklists/main/blocklists/isp/isp_aol.ipset
