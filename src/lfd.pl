@@ -1100,6 +1100,16 @@ if ($config{LF_DIRWATCH}) {
 	$dirwatchtimeout = 0;
 }
 
+if ( $config{LF_POP3D} )
+{
+	logfile("POP3 Authentication Watching...");
+}
+
+if ( $config{LF_IMAPD} )
+{
+	logfile("IAMP Authentication Watching...");
+}
+
 if ($config{LF_DIRWATCH_FILE}) {
 	if (-e "/etc/csf/csf.dirwatch") {
 		logfile("Directory File Watching...");
