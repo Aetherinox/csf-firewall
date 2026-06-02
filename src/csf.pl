@@ -721,17 +721,82 @@ sub load_config
 		%cxsports = ConfigServer::cxs::Rports();
 	}
 
-	my @binaries = ("IPTABLES","IPTABLES_SAVE","IPTABLES_RESTORE","MODPROBE","SENDMAIL","PS","VMSTAT","LS","MD5SUM","TAR","CHATTR","UNZIP","GUNZIP","DD","TAIL","GREP","HOST");
-	if ($config{IPV6}) {push @binaries, ("IP6TABLES","IP6TABLES_SAVE","IP6TABLES_RESTORE")}
-	if ($config{LF_IPSET}) {push @binaries, ("IPSET")}
-	if (ConfigServer::Service::type() eq "systemd") {push @binaries, ("SYSTEMCTL")}
+	# #
+	#	Binaries and Installable Packages
+	# #
+
+	my %binaries = (
+		IPTABLES         	=> { pkg => "iptables" },
+		IPTABLES_SAVE    	=> { pkg => "iptables" },
+		IPTABLES_RESTORE 	=> { pkg => "iptables" },
+		MODPROBE         	=> { pkg => "kmod" },
+		SENDMAIL         	=> { pkg => undef },
+		PS               	=> { pkg => "procps" },
+		VMSTAT           	=> { pkg => "procps-ng" },
+		LS               	=> { pkg => "coreutils" },
+		MD5SUM           	=> { pkg => "coreutils" },
+		TAR              	=> { pkg => "tar" },
+		CHATTR           	=> { pkg => "e2fsprogs" },
+		UNZIP            	=> { pkg => "unzip" },
+		GUNZIP           	=> { pkg => "gzip" },
+		DD               	=> { pkg => "coreutils" },
+		TAIL             	=> { pkg => "coreutils" },
+		GREP             	=> { pkg => "grep" },
+		HOST             	=> { pkg => "bind-utils" },
+		CURL             	=> { pkg => "curl" },
+		WGET             	=> { pkg => "wget" },
+		IPSET            	=> { pkg => "ipset" },
+		IFCONFIG         	=> { pkg => "net-tools" },
+		NETSTAT          	=> { pkg => "net-tools" },
+		IP6TABLES        	=> { pkg => "iptables" },
+		IP6TABLES_SAVE   	=> { pkg => "iptables" },
+		IP6TABLES_RESTORE	=> { pkg => "iptables" },
+		SYSTEMCTL        	=> { pkg => "systemd" },
+	);
+
+	# #
+	#	List of binaries to check
+	# #
+
+	my @binaries = (
+		"IPTABLES", 	"IPTABLES_SAVE", 	"IPTABLES_RESTORE",
+		"MODPROBE", 	"SENDMAIL", 		"PS",
+		"VMSTAT", 		"LS", 				"MD5SUM",
+		"TAR", 			"CHATTR", 			"UNZIP",
+		"GUNZIP", 		"DD", 				"TAIL",
+		"GREP", 		"HOST"
+	);
+
+	if ( $config{IPV6} ) 								{ push @binaries, ( "IP6TABLES", "IP6TABLES_SAVE", "IP6TABLES_RESTORE" ) }
+	if ( $config{LF_IPSET} ) 							{ push @binaries, ( "IPSET" ) }
+	if ( ConfigServer::Service::type() eq "systemd" ) 	{ push @binaries, ( "SYSTEMCTL" ) }
 
 	my $hit = 0;
-	foreach my $bin (@binaries)
+	my $msg;
+	foreach my $bin ( @binaries )
 	{
-		if ($bin eq "SENDMAIL" and $config{LF_ALERT_SMTP}) {next}
-		unless (-e $config{$bin} and -x $config{$bin}) {
-			$warning .= "*WARNING* Binary location for [$bin] [$config{$bin}] in /etc/csf/csf.conf is either incorrect, is not installed or is not executable\n";
+		if ( $bin eq "SENDMAIL" and $config{LF_ALERT_SMTP} )
+		{
+			next
+		}
+
+		if ( !-e $config{$bin} or !-x $config{$bin} )
+		{
+			push @warnings, sub
+			{
+				log_warn( "Binary location for ${yellowl}[$bin] [$config{$bin}]${greym} in ${yellowl}/etc/csf/csf.conf${greym} is either incorrect, is not installed or is not executable\n" )
+			};
+
+			if ( defined $binaries{$bin}{pkg} )
+			{
+				my $pkg = $binaries{$bin}{pkg};
+				my $cmd = ConfigServer::Packages::getcommand( all => $pkg );
+				if ( $cmd ne "Unknown" )
+				{
+					push @warnings, sub { log_warn( "         Install using: $cmd\n" ) };
+				}
+			}
+
 			$hit = 1;
 		}
 	}
