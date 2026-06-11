@@ -227,6 +227,8 @@
 	--ace-indent-guide: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bdu3f/BwAlfgctduB85QAAAABJRU5ErkJggg==);
 	--ace-indent-guide-active: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAAZSURBVHjaYvj///9/hivKyv8BAAAA//8DACLqBhbvk+/eAAAAAElFTkSuQmCC);
 
+	--tag-pill-purple-bg: #862caf;
+	--tag-pill-purple-text: #FFF;
 	--tag-pill-red-bg: #f04e6c;
 	--tag-pill-red-text: #FFF;
 	--tag-pill-yellow-bg: #ffca7f;
@@ -388,7 +390,7 @@
 	--callout-warning-text-a: #FFF;
     --callout-warning-border: #7c5c00;
 	--callout-warning-accent: #fddd2d;
-    --callout-danger-background: #2c0b0e;
+    --callout-danger-background: #4e191e;
     --callout-danger-text-n: #ff818f;
 	--callout-danger-text-a: #FFF;
     --callout-danger-border: #a21d2b;
@@ -440,10 +442,12 @@
 	--ace-indent-guide: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAEklEQVQImWNgYGBgYHB3d/8PAAOIAdULw8qMAAAAAElFTkSuQmCC);
 	--ace-indent-guide-active: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAEklEQVQIW2PQ1dX9zzBz5sz/ABCcBFFentLlAAAAAElFTkSuQmCC);
 
+	--tag-pill-purple-bg: #782aad;
+	--tag-pill-purple-text: #FFF;
 	--tag-pill-red-bg: #da3251;
 	--tag-pill-red-text: #FFF;
-	--tag-pill-yellow-bg: #f0ad4e;
-	--tag-pill-yellow-text: #000;
+	--tag-pill-yellow-bg: #975c09;
+	--tag-pill-yellow-text: #FFF;
 	--tag-pill-green-bg: #2c7018;
 	--tag-pill-green-text: #FFF;
 	--tag-pill-blue-bg: #585abe;
@@ -2911,8 +2915,10 @@ button.btn-update
 
 .tag-location
 {
-	font-size: 0.80em;
-	vertical-align: middle;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.80em;
 }
 
 .tag-pill
@@ -2921,13 +2927,21 @@ button.btn-update
 	padding: 1px 5px;
 	margin: 3px 1px;
 	border-radius: 6px;
-	font-weight: 700;
 	min-width: 60px;
 	vertical-align: middle;
 	justify-content: center;
 	align-items: center;
 	text-align: center;
-	font-size: 0.80em;
+    line-height: 1.4 !important;
+    font-size: 10px;
+	font-weight: 800;
+  	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.tag-pill-purple
+{
+	background-color: var( --tag-pill-purple-bg );
+	color: var( --tag-pill-purple-text );
 }
 
 .tag-pill-red
