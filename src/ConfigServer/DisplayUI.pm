@@ -3925,7 +3925,7 @@ END_JS
 
 		if ( $codename ne "cwp" )
 		{
-			print "<div style='padding-bottom: 50px;'></div>";
+			print "<div id='ui-spacer-bottom' style='padding-bottom: 3rem;'></div>";
 		}
 	}
 
