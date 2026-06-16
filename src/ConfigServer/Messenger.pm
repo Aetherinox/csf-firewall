@@ -1106,7 +1106,7 @@ sub childcleanup {
 	my $message = shift;
 
 	if (($message eq "") and $line) {
-		$message = "Child $childproc: $line";
+		$message = "SHUTDOWN: Child $childproc: $line";
 		$line = "";
 	}
 

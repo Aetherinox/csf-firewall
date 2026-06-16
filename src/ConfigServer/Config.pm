@@ -488,16 +488,16 @@ sub loadconfig
 	{
 		if ( -f $config{CLUSTER_SENDTO} )
 		{
-			if ($config{DEBUG} >= 1) { $warning .= "*DEBUG* CLUSTER_SENDTO retrieved from $config{CLUSTER_SENDTO} and set to: " }
-			$config{CLUSTER_SENDTO} = join(",", slurp($config{CLUSTER_SENDTO}));
-			if ($config{DEBUG} >= 1) { $warning .= "[$config{CLUSTER_SENDTO}]\n" }
-		}
+			if ( $config{DEBUG} >= 1 ) 		{ $warning .= "*DEBUG* CLUSTER_SENDTO retrieved from $config{CLUSTER_SENDTO} and set to: " }
+			$config{CLUSTER_SENDTO} 		= join(",", slurp($config{CLUSTER_SENDTO}));
+			if ( $config{DEBUG} >= 1 )		{ $warning .= "[$config{CLUSTER_SENDTO}]\n" }
+			}
 
 		if ( -f $config{CLUSTER_RECVFROM} )
 		{
-			if ($config{DEBUG} >= 1) { $warning .= "*DEBUG* CLUSTER_RECVFROM retrieved from $config{CLUSTER_RECVFROM} and set to: " }
-			$config{CLUSTER_RECVFROM} = join(",", slurp($config{CLUSTER_RECVFROM}));
-			if ($config{DEBUG} >= 1) { $warning .= "[$config{CLUSTER_RECVFROM}]\n" }
+			if ( $config{DEBUG} >= 1 ) 		{ $warning .= "*DEBUG* CLUSTER_RECVFROM retrieved from $config{CLUSTER_RECVFROM} and set to: " }
+			$config{CLUSTER_RECVFROM} 		= join(",", slurp($config{CLUSTER_RECVFROM}));
+			if ( $config{DEBUG} >= 1 ) 		{ $warning .= "[$config{CLUSTER_RECVFROM}]\n" }
 		}
 	}
 
