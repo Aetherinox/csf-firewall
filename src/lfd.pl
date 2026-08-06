@@ -2434,7 +2434,7 @@ if ( $config{LF_PERMBLOCK} or $config{LF_NETBLOCK} )
 
 		unless ( $old )
 		{
-			print $TEMPIP "$line\n"
+			print $TEMPIP "$line\n";
 			$count++;
 		}
 	}
@@ -2680,12 +2680,12 @@ if ( $config{PT_LIMIT} )
 			{
 				if ( &testregex( $rule ) )
 				{
-					$pskip{$item}{$rule} = 1
+					$pskip{$item}{$rule} = 1;
 					$count++;
 				}
 				else
 				{
-					logfile( "*Error* Invalid regex [$line] in csf.pignore" )
+					logfile( "*Error* Invalid regex [$line] in csf.pignore" );
 				}
 			}
 		}
@@ -2865,7 +2865,7 @@ if ( -e "/etc/ssh/sshd_config" )
 
 unless ( $ports{sshd} )
 {
-	$ports{sshd} = $sshdef
+	$ports{sshd} = $sshdef;
 }
 
 logfile( "(/etc/ssh/sshd_config): [" . ( $ports{sshd} || "None" ) . "]" );
@@ -2909,7 +2909,7 @@ while ( 1 )
 	{
 		&shutdown( __LINE__, "*Error* pid mismatch or missing" );
 	}
-s
+
 	if ( -e "/etc/csf/csf.error" )
 	{
 		&shutdown( __LINE__, "*Error* You have an unresolved error when starting csf. You need to restart csf successfully before restarting lfd (see /etc/csf/csf.error). *lfd stopped*");
@@ -4821,10 +4821,13 @@ sub logindisable {
 	}
 	return;
 }
-# end logindisable
-###############################################################################
-# start portscans
-sub portscans {
+
+# #
+# 	Port Scans
+# #
+
+sub portscans
+{
 	my $ip = shift;
 	my $count = shift;
 	my $blocks = shift;
@@ -4954,7 +4957,7 @@ sub uidscans
 
 		my $user = getpwuid($uid);
 		if ( $user eq "" ) { $user = $uid }
-		logfile( "*UID Tracking* $count blocks for UID $uid ($user)" );
+		logfile( "[STATUS] *UID Tracking* $count blocks for UID $uid ($user)" );
 
 		my @alert = slurp( "/usr/local/csf/tpl/uidscan.txt" );
 		my @message;
@@ -5022,8 +5025,8 @@ sub lfdrestart
 
 	logfile( "Daemon restart requested" );
 
-	close($PIDFILE);
-	unlink $pidfile;
+	close( $PIDFILE );
+	unlink( $pidfile );
 
 	$SIG{HUP} = 'IGNORE';
 	kill HUP => -$$;
