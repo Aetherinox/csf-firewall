@@ -35,6 +35,7 @@ use POSIX qw(strftime);
 use Fcntl qw(:DEFAULT :flock);
 use ConfigServer::Config;
 use ConfigServer::CheckIP qw(checkip);
+use ConfigServer::Logger qw(logfile);
 
 use Exporter qw(import);
 our $VERSION     = 1.02;
