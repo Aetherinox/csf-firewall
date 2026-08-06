@@ -10,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            06.12.2026
+#   @updated            08.06.2026
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@
 # #
 
 ## no critic (RequireUseWarnings, ProhibitExplicitReturnUndef, ProhibitMixedBooleanOperators, RequireBriefOpen, RequireLocalizedPunctuationVars)
-# start main
+
 use strict;
 use lib '/usr/local/csf/lib';
 use Fcntl qw(:DEFAULT :flock);
@@ -2022,15 +2022,17 @@ if ( $cc_ignore )
 
 logfile( "[STARTUP] Integrity Tracking [" . ( $config{LF_INTEGRITY} ? "Enabled" : "Disabled" ) . "]" );
 
+my $MIN_INTEGRITY_INTERVAL = 120;
 if ( $config{LF_INTEGRITY} )
 {
-	&integrity;
-	$integritytimeout = 0;
-	if ( $config{LF_INTEGRITY} < 120 )
-	{
-		logfile( "(LF_INTEGRITY): Setting lower than 120 seconds. Reverting back to 300 to prevent looping (csf.conf setting: $config{LF_INTEGRITY})" );
-		$config{LF_INTEGRITY} = 300;
-	}
+    &integrity;
+    $integritytimeout = 0;
+
+    if ( $config{LF_INTEGRITY} < $MIN_INTEGRITY_INTERVAL )
+    {
+        logfile( "(LF_INTEGRITY): Setting lower than $MIN_INTEGRITY_INTERVAL seconds. Reverting back to 300 to prevent looping (csf.conf setting: $config{LF_INTEGRITY})" );
+        $config{LF_INTEGRITY} = 300;
+    }
 }
 
 # # 
