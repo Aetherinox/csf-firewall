@@ -2896,18 +2896,50 @@ my $lastline 	= "";
 $scripttimeout 	= 0;
 my $duration 	= 0;
 my $maintimer 	= 0;
+my $parent_bind = ( defined $config{LFD_PROCESS_BIND} and $config{LFD_PROCESS_BIND} ) ? 1 : 0;
+
+logfile( "[STARTUP] PID binding: " . ( $parent_bind ? "parent only" : "parent + children" ) . " | PID=$$" );
 
 while ( 1 )
 {
 	$0 = "lfd - processing";
 	$maintimer = time;
 
-	seek ( $PIDFILE, 0, 0 );
-	my @piddata = <$PIDFILE>;
-	chomp @piddata;
-	if ( ( $pid ne $piddata[0] ) or ( $pidino ne ( stat( $pidfile ) )[1] ) )
+	# #
+	#    LFD Process Shutdown Ownership
+	#   
+	#    Controls which LFD processes are allowed to perform a full daemon
+	#    shutdown when a fatal error, PID mismatch, or internal failure occurs.
+	#   
+	#    0 = All LFD processes are allowed to validate the PID file and perform
+	#        a full shutdown if an error is detected. (Default behavior)
+	#   
+	#    1 = Only the main LFD parent process is allowed to stop the daemon.
+	#        Child processes will still report errors to the log file but will
+	#        exit individually without removing the PID file or terminating the
+	#        main LFD process.
+	# #
+
+	my $do_pid_check = 1;
+	if ( $parent_bind )
 	{
-		&shutdown( __LINE__, "*Error* pid mismatch or missing" );
+		$do_pid_check = ( defined $masterpid and $$ == $masterpid ) ? 1 : 0;
+	}
+
+	if ( $do_pid_check )
+	{
+		seek ( $PIDFILE, 0, 0 );
+		my @piddata = <$PIDFILE>;
+		chomp @piddata;
+
+		my $file_pid = defined $piddata[0] ? $piddata[0] : '';
+		my $file_ino = ( stat( $pidfile ) )[1];
+		$file_ino = '' unless defined $file_ino;
+
+		if ( ( $pid ne $file_pid ) or ( $pidino ne $file_ino ) )
+		{
+			&shutdown( __LINE__, "*Error* pid mismatch or missing [mem=$pid file=$file_pid ino_mem=$pidino ino_file=$file_ino]" );
+		}
 	}
 
 	if ( -e "/etc/csf/csf.error" )
@@ -9672,6 +9704,44 @@ sub shutdown
 	$SIG{HUP} 		= 'IGNORE';
 	my $line 		= shift;
 	my $message 	= shift;
+
+	# #
+	#    LFD Process Shutdown Ownership
+	#   
+	#    Controls which LFD processes are allowed to perform a full daemon
+	#    shutdown when a fatal error, PID mismatch, or internal failure occurs.
+	#   
+	#    0 = All LFD processes are allowed to validate the PID file and perform
+	#        a full shutdown if an error is detected. (Default behavior)
+	#   
+	#    1 = Only the main LFD parent process is allowed to stop the daemon.
+	#        Child processes will still report errors to the log file but will
+	#        exit individually without removing the PID file or terminating the
+	#        main LFD process.
+	# #
+
+	my $parent_bind 	= ( defined $config{LFD_PROCESS_BIND} and $config{LFD_PROCESS_BIND} ) ? 1 : 0;
+	my $is_master 		= ( defined $masterpid and $$ == $masterpid );
+
+	if ( $parent_bind and !$is_master )
+	{
+		if ( ( $message eq "" ) and $line )
+		{
+			$message = "[SHUTDOWN] Child Process: $line";
+			$line = "";
+		}
+
+		if ( $message )
+		{
+			if ( $line ne "" )
+			{
+				$message .= ", at line $line";
+			}
+			logfile( "$message" );
+		}
+
+		exit 0;
+	}
 
 	if ( ( $message eq "" ) and $line )
 	{
