@@ -581,9 +581,26 @@ sub urlget
 		return;
 	}
 
-	my $url_sanitized = _url_sanitize( $url );
+	# #
+	# 	Reject control chars (ASCII 0-31 and DEL 127).
+	# 	Block crlf/nul injection in URLs before any fetch runs
+	# #
 
-	ConfigServer::Logger::logfile( __PACKAGE__ . " :: Start Request for url $url_sanitized" ) if $config{DEBUG};
+	if ( $url =~ /[\x00-\x1F\x7F]/ )
+	{
+		ConfigServer::Logger::logfile(
+			__PACKAGE__ . " :: Rejected URL containing control characters"
+		) if $config{DEBUG};
+
+		return ( 1, "Invalid URL: control characters not allowed" );
+	}
+
+	unless ( $url =~ m{^https?://}i )
+	{
+		return ( 1, "Invalid URL: only HTTP and HTTPS URLs are allowed" );
+	}
+
+	my $url_sanitized = _url_sanitize( $url );
 
 	my %p;
 	if ( @_ and ref( $_[0] ) eq 'HASH' )
@@ -594,6 +611,23 @@ sub urlget
 	{
 		@p{qw(file quiet timeout)} = @_;
 	}
+
+	# #
+	#	Reject control chars in local save path
+	# #
+
+	if ( defined $p{file} and $p{file} ne '' and $p{file} =~ /[\x00-\x1F\x7F]/ )
+	{
+		ConfigServer::Logger::logfile(
+			__PACKAGE__ . " :: Rejected local save path containing control characters"
+		) if $config{DEBUG};
+
+		return ( 1, "Invalid file path: control characters not allowed" );
+	}
+
+	ConfigServer::Logger::logfile(
+		__PACKAGE__ . " :: Start Request for url $url_sanitized"
+	) if $config{DEBUG};
 
 	my ( $status, $text ) = _with_alarm_timeout(
 		$p{timeout},
