@@ -59,6 +59,33 @@ my $proxy 		= "";
 $SIG{PIPE} 		= 'IGNORE';
 
 # #
+#	URLGet.pm › Redact sensitive query params
+#	
+#	Prevent license/API secrets from being exposed in URLs.
+#	Case-insensitive.
+#	
+#	Monitored params:		key, license, secret, secrets
+#	Example:				https://url.tld/?license=key-here => https://domain.tld/?license=REDACTED
+# #
+
+sub _url_sanitize
+{
+	my ( $url ) = @_;
+	return '' unless defined $url && $url ne '';
+
+	my $safe = $url;
+
+	$safe =~ s{
+		([?&#])
+		(key|license|secret|secrets|token|access_token|refresh_token|apikey|api_key|auth|authorization|password|passwd|pwd)
+		=
+		([^&#]*)
+	}{$1$2=REDACTED}gix;
+
+	return $safe;
+}
+
+# #
 #	URLGet.pm › Method › HTTP::Tiny (1)
 # #
 
@@ -368,13 +395,13 @@ sub _method_curlwget
 				}
 				else
 				{
-					return ( 1, "Unable to download: " . $errormsg );
+					return ( 1, "Unable to download: " . _url_sanitize( $errormsg ) );
 				}
 			}
 		}
 	}
 
-	my $detail = $option == 3 ? "" : ": $errormsg";
+	my $detail = $option == 3 ? "" : ": " . _url_sanitize( $errormsg );
 	return ( 1, "Unable to download (CURL/WGET also not present, see csf.conf) $detail" );
 }
 
@@ -431,20 +458,21 @@ sub _route_url
 {
 	my ( $url, $file, $quiet ) = @_;
 	$file //= '';
+	my $url_sanitized = _url_sanitize( $url );
 
 	if ( $option == 3 )
 	{
-		ConfigServer::Logger::logfile( "URLGET :: Routing method curl/wget ($option) on url $url from file $file" ) if $config{DEBUG};
+		ConfigServer::Logger::logfile( __PACKAGE__ . " :: Routing method curl/wget ($option) on url $url_sanitized from file $file" ) if $config{DEBUG};
 		return _method_curlwget( $url, $file, $quiet );
 	}
 	elsif ( $option == 2 )
 	{
-		ConfigServer::Logger::logfile( "URLGET :: Routing method LWP::UserAgent ($option) on url $url from file $file" ) if $config{DEBUG};
+		ConfigServer::Logger::logfile( __PACKAGE__ . " :: Routing method LWP::UserAgent ($option) on url $url_sanitized from file $file" ) if $config{DEBUG};
 		return _method_lwp( $url, $file, $quiet );
 	}
 	else
 	{
-		ConfigServer::Logger::logfile( "URLGET :: Routing method HTTP::Tiny ($option) on url $url from file $file" ) if $config{DEBUG};
+		ConfigServer::Logger::logfile( __PACKAGE__ . " :: Routing method HTTP::Tiny ($option) on url $url_sanitized from file $file" ) if $config{DEBUG};
 		return _method_tiny( $url, $file, $quiet );
 	}
 }
@@ -460,12 +488,13 @@ sub _route_url
 
 sub _with_alarm_timeout
 {
-	my ( $timeout, $code, $url ) = @_;  # $url is optional third argument; only used for logging
+	my ( $timeout, $code, $url ) = @_;  		# $url is optional third argument; only used for logging
+	my $url_sanitized = _url_sanitize( $url );
 
 	# No timeout; legacy behavior
 	if ( !defined $timeout or $timeout !~ /^\d+$/ or $timeout <= 0 )
 	{
-		ConfigServer::Logger::logfile( "URLGET :: No timeout defined" ) if $config{DEBUG};
+		ConfigServer::Logger::logfile( __PACKAGE__ . " :: No valid timeout provided; execute using default behavior without alarm protection or timeout." ) if $config{DEBUG};
 		return $code->();
 	}
 
@@ -488,20 +517,20 @@ sub _with_alarm_timeout
 		if ( $err eq "timeout\n" )
 		{
 			ConfigServer::Logger::logfile(
-				"URLGET :: TIMEOUT after $timeout seconds for URL $url"
+				__PACKAGE__ . " :: TIMEOUT after $timeout seconds for URL $url_sanitized"
 			) if $config{DEBUG};
 		}
 		else
 		{
 			ConfigServer::Logger::logfile(
-				"URLGET :: ERROR fetching URL $url :: $err"
+				__PACKAGE__ . " :: ERROR fetching URL $url_sanitized :: $err"
 			) if $config{DEBUG};
 		}
 
-		return ( 1, "Request failed or timed out: $err" );
+		return ( 1, "Request failed or timed out: " . _url_sanitize( $err ) );
 	};
 
-	ConfigServer::Logger::logfile( "URLGET :: Completed Request for URL $url in under $timeout seconds" ) if $config{DEBUG};
+	ConfigServer::Logger::logfile( __PACKAGE__ . " :: Completed Request for URL $url_sanitized in under $timeout seconds" ) if $config{DEBUG};
 
 	return ( $status, $text );
 }
@@ -521,7 +550,9 @@ sub urlget
 		return;
 	}
 
-	ConfigServer::Logger::logfile( "URLGET :: Start Request for url $url" ) if $config{DEBUG};
+	my $url_sanitized = _url_sanitize( $url );
+
+	ConfigServer::Logger::logfile( __PACKAGE__ . " :: Start Request for url $url_sanitized" ) if $config{DEBUG};
 
 	my %p;
 	if ( @_ and ref( $_[0] ) eq 'HASH' )
