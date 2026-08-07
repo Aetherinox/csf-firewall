@@ -59,6 +59,15 @@ my $proxy 		= "";
 $SIG{PIPE} 		= 'IGNORE';
 
 # #
+#	URLGet.pm › Declare › Settings
+#	
+#	GET_URL_LEN_MAX
+#		Max length allowed per URL passed to URLGet
+# #
+
+my $GET_URL_LEN_MAX		= 2048;
+
+# #
 #	URLGet.pm › Redact sensitive query params
 #	
 #	Prevent license/API secrets from being exposed in URLs.
@@ -593,6 +602,19 @@ sub urlget
 		) if $config{DEBUG};
 
 		return ( 1, "Invalid URL: control characters not allowed" );
+	}
+
+	# #
+	#	Restrict URL length
+	# #
+
+	if ( length( $url ) > $GET_URL_LEN_MAX )
+	{
+		ConfigServer::Logger::logfile(
+			__PACKAGE__ . " :: Rejected URL exceeding maximum length (" . length( $url ) . " > $GET_URL_LEN_MAX)"
+		) if $config{DEBUG};
+
+		return ( 1, "Invalid URL: exceeds maximum length" );
 	}
 
 	unless ( $url =~ m{^https?://}i )
