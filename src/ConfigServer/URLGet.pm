@@ -9,7 +9,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            03.05.2026
+#   @updated            08.07.2026
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -53,19 +53,40 @@ my %config 		= $config->config();
 #	URLGet.pm › Declare › Generic
 # #
 
-my $agent 		= "ConfigServer $VERSION";
-my $option 		= 1;
-my $proxy 		= "";
 $SIG{PIPE} 		= 'IGNORE';
 
 # #
 #	URLGet.pm › Declare › Settings
 #	
+#	GET_METHOD
+#		1. Perl module HTTP::Tiny
+#		2. Perl module LWP::UserAgent
+#		3. CURL/WGET (set location at the bottom of csf.conf if installed)
+#	
+#	GET_AGENT
+#		Useragent passed in URLGet requests
+#	
+#	GET_PROXY
+#   	Optional HTTP proxy server used for outbound downloads
+#   	Example: 		http://proxy.example.com:8080
+#   	Empty string: 	direct connection
+#	
 #	GET_URL_LEN_MAX
 #		Max length allowed per URL passed to URLGet
+#	
+#	GET_TIMEOUT_ALARM
+#		Overall perl alarm protection
+#	
+#	GET_TIMEOUT_CONNECT
+#		Http client timeout
 # #
 
+my $GET_METHOD 			= 1;
+my $GET_AGENT 			= "ConfigServer $VERSION";
+my $GET_PROXY			= "";
 my $GET_URL_LEN_MAX		= 2048;
+my $GET_TIMEOUT_CONNECT	= 300;
+my $GET_TIMEOUT_ALARM	= 600;
 
 # #
 #	URLGet.pm › Redact sensitive query params
@@ -104,15 +125,15 @@ sub _method_tiny
 	my $file 		= shift;
 	my $quiet 		= shift;
 	my $status		= 0;
-	my $timeout		= 1200;
+	my $timeout		= $GET_TIMEOUT_ALARM;
 
-	if ( $proxy eq "" ) { undef $proxy }
+	if ( $GET_PROXY eq "" ) { undef $GET_PROXY }
 
 	my $ua = HTTP::Tiny->new(
-		'agent' 	=> $agent,
-		'timeout' 	=> 300,
-		'proxy' 	=> $proxy
-		);
+		'agent' 	=> $GET_AGENT,
+		'timeout' 	=> $GET_TIMEOUT_CONNECT,
+		'proxy' 	=> $GET_PROXY
+	);
 	
 	my $res;
 	my $text;
@@ -214,13 +235,13 @@ sub _method_lwp
 	my $file 		= shift;
 	my $quiet 		= shift;
 	my $status 		= 0;
-	my $timeout		= 300;
+	my $timeout		= $GET_TIMEOUT_ALARM;
 	my $ua 			= LWP::UserAgent->new;
 
-	$ua->agent( $agent );
-	$ua->timeout( 30 );
+	$ua->agent( $GET_AGENT );
+	$ua->timeout( $GET_TIMEOUT_CONNECT );
 
-	if ( $proxy ne "" ) { $ua->proxy( [ 'http', 'https' ], $proxy ) }
+	if ( $GET_PROXY ne "" ) { $ua->proxy( [ 'http', 'https' ], $GET_PROXY ) }
 
 	# #
 	#	use LWP::ConnCache;
@@ -373,7 +394,10 @@ sub _method_curlwget
 
 		my ( $childin, $childout );
 		my $cmdpid = IPC::Open3::open3( $childin, $childout, $childout, @cmd );
+		close( $childin ) if defined $childin;
+
 		my @output = <$childout>;
+		close( $childout ) if defined $childout;
 		waitpid( $cmdpid, 0 );
 		my $exit = ( $? == -1 ) ? -1 : ( $? >> 8 );
 
@@ -386,7 +410,7 @@ sub _method_curlwget
 
 		if ( $file )
 		{
-			if ( !( $quiet and $option != 3 ) )
+			if ( !( $quiet and $GET_METHOD != 3 ) )
 			{
 				print "Using fallback [$cmd_label]\n";
 				print @output;
@@ -399,7 +423,7 @@ sub _method_curlwget
 			}
 			else
 			{
-				if ( $option == 3 )
+				if ( $GET_METHOD == 3 )
 				{
 					return (
 						1,
@@ -423,7 +447,7 @@ sub _method_curlwget
 			}
 			else
 			{
-				if ( $option == 3 )
+				if ( $GET_METHOD == 3 )
 				{
 					return (
 						1,
@@ -441,7 +465,7 @@ sub _method_curlwget
 		}
 	}
 
-	my $detail = $option == 3 ? "" : ": " . _url_sanitize( $errormsg );
+	my $detail = $GET_METHOD == 3 ? "" : ": " . _url_sanitize( $errormsg );
 	return ( 1, "Unable to download (CURL/WGET also not present, see csf.conf) $detail" );
 }
 
@@ -452,18 +476,18 @@ sub _method_curlwget
 sub new
 {
 	my $class 	= shift;
-	$option		= shift;
-	$agent 		= shift;
-	$proxy 		= shift;
+	$GET_METHOD	= shift;
+	$GET_AGENT	= shift;
+	$GET_PROXY	= shift;
 	my $self 	= {};
 
 	bless $self, $class;
 
-	if ( $option == 3 )
+	if ( $GET_METHOD == 3 )
 	{
 		return $self;
 	}
-	elsif ( $option ==  2)
+	elsif ( $GET_METHOD ==  2)
 	{
 		eval ( 'use LWP::UserAgent;' ); ##no critic
 		if ( $@ ) { return undef }
@@ -484,7 +508,7 @@ sub new
 #	URLGet.pm › Route
 #	
 #	Routes a URL download request to the appropriate HTTP method based on the global
-#	$option value.
+#	$GET_METHOD value.
 #	
 #	Options:
 #		1. Perl module HTTP::Tiny
@@ -500,19 +524,19 @@ sub _route_url
 	$file //= '';
 	my $url_sanitized = _url_sanitize( $url );
 
-	if ( $option == 3 )
+	if ( $GET_METHOD == 3 )
 	{
-		ConfigServer::Logger::logfile( __PACKAGE__ . " :: Routing method curl/wget ($option) on url $url_sanitized from file $file" ) if $config{DEBUG};
+		ConfigServer::Logger::logfile( __PACKAGE__ . " :: Routing method curl/wget ($GET_METHOD) on url $url_sanitized from file $file" ) if $config{DEBUG};
 		return _method_curlwget( $url, $file, $quiet );
 	}
-	elsif ( $option == 2 )
+	elsif ( $GET_METHOD == 2 )
 	{
-		ConfigServer::Logger::logfile( __PACKAGE__ . " :: Routing method LWP::UserAgent ($option) on url $url_sanitized from file $file" ) if $config{DEBUG};
+		ConfigServer::Logger::logfile( __PACKAGE__ . " :: Routing method LWP::UserAgent ($GET_METHOD) on url $url_sanitized from file $file" ) if $config{DEBUG};
 		return _method_lwp( $url, $file, $quiet );
 	}
 	else
 	{
-		ConfigServer::Logger::logfile( __PACKAGE__ . " :: Routing method HTTP::Tiny ($option) on url $url_sanitized from file $file" ) if $config{DEBUG};
+		ConfigServer::Logger::logfile( __PACKAGE__ . " :: Routing method HTTP::Tiny ($GET_METHOD) on url $url_sanitized from file $file" ) if $config{DEBUG};
 		return _method_tiny( $url, $file, $quiet );
 	}
 }
