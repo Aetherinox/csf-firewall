@@ -533,12 +533,7 @@ sub urlget
 		@p{qw(file quiet timeout)} = @_;
 	}
 
-	my $result = _with_alarm_timeout(
-		$p{timeout},
-		sub { _route_url( $url, $p{file}, $p{quiet} ) }
-	);
-
-	ConfigServer::Logger::logfile( "URLGET :: Completed Request for url $url" ) if $config{DEBUG};
+	ConfigServer::Logger::logfile( __PACKAGE__ . " :: Completed Request for url $url_sanitized" ) if $config{DEBUG};
 
 	return _with_alarm_timeout(
 		$p{timeout},
