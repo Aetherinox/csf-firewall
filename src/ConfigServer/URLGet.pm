@@ -339,7 +339,7 @@ sub _method_curlwget
 	{
 		$cmd_label = $config{CURL};
 
-		ConfigServer::Logger::logfile( __PACKAGE__ . " :: Running config(CURL) = $cmd_label to process url" ) if $config{DEBUG};
+		ConfigServer::Logger::logfile( __PACKAGE__ . " :: Running $cmd_label to process url" ) if $config{DEBUG};
 
 		@cmd = $file
 			? ( $config{CURL}, '-kLf', '-m', '120', '-o', "$file.tmp", $url )
@@ -349,7 +349,7 @@ sub _method_curlwget
 	{
 		$cmd_label = $config{WGET};
 
-		ConfigServer::Logger::logfile( __PACKAGE__ . " :: Running config(WGET) = $cmd_label to process url" ) if $config{DEBUG};
+		ConfigServer::Logger::logfile( __PACKAGE__ . " :: Running $cmd_label to process url" ) if $config{DEBUG};
 
 		@cmd = $file
 			? ( $config{WGET}, '-T', '120', '-O', "$file.tmp", $url )
