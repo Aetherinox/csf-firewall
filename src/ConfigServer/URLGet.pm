@@ -326,63 +326,88 @@ sub _method_curlwget
 	my $file 		= shift;
 	my $quiet 		= shift;
 	my $errormsg 	= shift;
-	my $cmd;
-	$url 			= "'$url'";
+	my @cmd;
+	my $cmd_label;
+
+	# #
+	#	@note		v15.10		Build argv as list, not a shell string.
+	#							open3(@argv) execs directly and skips /bin/sh, so URLs/paths
+	#							with spaces or shell metacharacters cannot inject commands.
+	# #
 
 	if ( -e $config{CURL} )
 	{
-		$cmd = $file
-			? "$config{CURL} -kLf -m 120 -o"
-			: "$config{CURL} -skLf -m 120";
+		$cmd_label = $config{CURL};
+
+		ConfigServer::Logger::logfile( __PACKAGE__ . " :: Running config(CURL) = $cmd_label to process url" ) if $config{DEBUG};
+
+		@cmd = $file
+			? ( $config{CURL}, '-kLf', '-m', '120', '-o', "$file.tmp", $url )
+			: ( $config{CURL}, '-skLf', '-m', '120', $url );
 	}
 	elsif ( -e $config{WGET} )
 	{
-		$cmd = $file
-			? "$config{WGET} -T 120 -O"
-			: "$config{WGET} -qT 120 -O-";
+		$cmd_label = $config{WGET};
+
+		ConfigServer::Logger::logfile( __PACKAGE__ . " :: Running config(WGET) = $cmd_label to process url" ) if $config{DEBUG};
+
+		@cmd = $file
+			? ( $config{WGET}, '-T', '120', '-O', "$file.tmp", $url )
+			: ( $config{WGET}, '-qT', '120', '-O-', $url );
 	}
 
-	if ( $cmd ne "" )
+	if ( @cmd )
 	{
+		ConfigServer::Logger::logfile(
+			__PACKAGE__ . " :: CMD [" . join( ' ', map { _url_sanitize( $_ ) } @cmd ) . "]"
+		) if $config{DEBUG};
+
+		my ( $childin, $childout );
+		my $cmdpid = IPC::Open3::open3( $childin, $childout, $childout, @cmd );
+		my @output = <$childout>;
+		waitpid( $cmdpid, 0 );
+		my $exit = ( $? == -1 ) ? -1 : ( $? >> 8 );
+
+
+		ConfigServer::Logger::logfile(
+			__PACKAGE__ . " :: exit=$exit bytes=" . length( join( '', @output ) )
+			. " file_exists=" . ( ( $file && -e "$file.tmp" ) ? 1 : 0 )
+			. " out=[" . _url_sanitize( join( '', @output ) ) . "]"
+		) if $config{DEBUG};
+
 		if ( $file )
 		{
-			my ( $childin, $childout );
-			my $cmdpid 		= IPC::Open3::open3( $childin, $childout, $childout, $cmd . " $file\.tmp $url" );
-			my @output 		= <$childout>;
-
-			waitpid ( $cmdpid, 0 );
-
 			if ( !( $quiet and $option != 3 ) )
 			{
-				print "Using fallback [$cmd]\n";
+				print "Using fallback [$cmd_label]\n";
 				print @output;
 			}
 
-			if ( -e "$file\.tmp" )
+			if ( -e "$file.tmp" )
 			{
-				rename ( "$file\.tmp", "$file" ) or return ( 1, "Unable to rename $file\.tmp to $file: $!" );
+				rename ( "$file.tmp", "$file" ) or return ( 1, "Unable to rename $file.tmp to $file: $!" );
 				return ( 0, $file );
 			}
 			else
 			{
 				if ( $option == 3 )
 				{
-					return ( 1, "Unable to download: " . $cmd . " $file\.tmp $url".join( "", @output ) );
+					return (
+						1,
+						"Unable to download: ["
+						. join( ' ', map { _url_sanitize($_) } @cmd )
+						. "]"
+						. _url_sanitize( join( "", @output ) )
+					);
 				}
 				else
 				{
-					return ( 1, "Unable to download: " . $errormsg );
+					return ( 1, "Unable to download: " . _url_sanitize( $errormsg ) );
 				}
 			}
 		}
 		else
 		{
-			my ( $childin, $childout );
-			my $cmdpid 		= IPC::Open3::open3( $childin, $childout, $childout, $cmd." $url" );
-			my @output 		= <$childout>;
-	
-			waitpid ( $cmdpid, 0 );
-	
 			if ( scalar @output > 0 )
 			{
 				return ( 0, join( "", @output ) );
@@ -391,7 +416,13 @@ sub _method_curlwget
 			{
 				if ( $option == 3 )
 				{
-					return ( 1, "Unable to download: [$cmd $url]".join( "", @output ) );
+					return (
+						1,
+						"Unable to download: ["
+						. join( ' ', map { _url_sanitize($_) } @cmd )
+						. "]"
+						. _url_sanitize( join( "", @output ) )
+					);
 				}
 				else
 				{
