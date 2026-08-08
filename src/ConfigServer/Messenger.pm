@@ -333,201 +333,223 @@ sub messenger {
 
 	if ($user ne "")
 	{
-		my (undef,undef,$uid,$gid,undef,undef,undef,$homedir) = getpwnam($user);
-		if (($uid > 0) and ($gid > 0)) {
-			local $( = $gid;
-			local $) = "$gid $gid";
-			local $> = local $< = $uid;
-			if (($) != $gid) or ($> != $uid) or ($( != $gid) or ($< != $uid))
-			{
-				logfile("MESSENGER_USER unable to drop privileges - stopping $oldtype Messenger");
-				exit;
-			}
+		my ( undef, undef, $uid, $gid, undef, undef, undef, $homedir ) = getpwnam( $user );
 
-			my %children;
-			while (1)
+		# #
+		#	Reject root. Messenger must never run as uid/gid 0.
+		# #
+
+		unless ( defined $uid and defined $gid and $uid > 0 and $gid > 0 )
+		{
+			logfile( "MESSENGER_USER invalid or root - stopping $oldtype Messenger" );
+			return ( 1, "MESSENGER_USER must not be root (uid/gid 0) or invalid [$user]" );
+		}
+
+		local $( = $gid;
+		local $) = "$gid $gid";
+		local $> = local $< = $uid;
+		if (($) != $gid) or ($> != $uid) or ($( != $gid) or ($< != $uid))
+		{
+			logfile("MESSENGER_USER unable to drop privileges - stopping $oldtype Messenger");
+			exit;
+		}
+
+		my %children;
+		while (1)
+		{
+			while (my $client = $server->accept())
 			{
-				while (my $client = $server->accept())
+				while (scalar (keys %children) >= $chldallow)
 				{
-					while (scalar (keys %children) >= $chldallow)
-					{
-						sleep 1;
-						foreach my $pid (keys %children) {
-							unless (kill(0,$pid)) {delete $children{$pid}}
-						}
-						$0 = "lfd $oldtype messenger (busy)";
+					sleep 1;
+					foreach my $pid (keys %children) {
+						unless (kill(0,$pid)) {delete $children{$pid}}
 					}
-	
-					$0 = "lfd $oldtype messenger";
-					$SIG{CHLD} = 'IGNORE';
-					my $pid = fork;
-					$children{$pid} = 1;
-					if ($pid == 0)
+					$0 = "lfd $oldtype messenger (busy)";
+				}
+
+				$0 = "lfd $oldtype messenger";
+				$SIG{CHLD} = 'IGNORE';
+				my $pid = fork;
+				$children{$pid} = 1;
+				if ($pid == 0)
+				{
+					eval
 					{
-						eval
+						local $SIG{__DIE__} = undef;
+						local $SIG{'ALRM'} = sub {die};
+						alarm(10);
+						close $server;
+
+						$0 = "lfd $oldtype messenger client";
+
+						binmode $client;
+						$| = 1;
+						my $firstline;
+
+						my $hostaddress = $client->sockhost();
+						my $peeraddress = $client->peerhost();
+						$peeraddress =~ s/^::ffff://;
+						$hostaddress =~ s/^::ffff://;
+
+						if ($type eq "HTML")
 						{
-							local $SIG{__DIE__} = undef;
-							local $SIG{'ALRM'} = sub {die};
-							alarm(10);
-							close $server;
-
-							$0 = "lfd $oldtype messenger client";
-
-							binmode $client;
-							$| = 1;
-							my $firstline;
-
-							my $hostaddress = $client->sockhost();
-							my $peeraddress = $client->peerhost();
-							$peeraddress =~ s/^::ffff://;
-							$hostaddress =~ s/^::ffff://;
-
-							if ($type eq "HTML")
+							while ($firstline !~ /\n$/)
 							{
-								while ($firstline !~ /\n$/)
+								my $char;
+								$client->read($char,1);
+								$firstline .= $char;
+								if ($char eq "") {exit}
+
+								# #
+								#	RFC 7230, Sec 3.1.1: recommends supporting at least 8000 octets.
+								#		Prefix: 	GET /unblk?g-recaptcha-response=	= 32 bytes
+								#		Suffix:  	HTTP/1.1\r\n						= 11 bytes			(\r\n = 2 bytes) (carriage return (0x0D)/line feed (0x0A))
+								#		 												32 + 11 = 43 bytes
+								#	
+								#		Remaining for Recaptcha token					4053 bytes
+								#		Acceptable Limit								4096 bytes
+								#	
+								#	@since				v15.10
+								#	@reference			https://datatracker.ietf.org/doc/html/rfc7230#autoid-17
+								#						https://mothereff.in/byte-counter
+								# #
+
+								if ( length $firstline > 4096 )
 								{
-									my $char;
-									$client->read($char,1);
-									$firstline .= $char;
-									if ($char eq "") {exit}
-
-									# #
-									#	RFC 7230, Sec 3.1.1: recommends supporting at least 8000 octets.
-									#		Prefix: 	GET /unblk?g-recaptcha-response=	= 32 bytes
-									#		Suffix:  	HTTP/1.1\r\n						= 11 bytes			(\r\n = 2 bytes) (carriage return (0x0D)/line feed (0x0A))
-									#		 												32 + 11 = 43 bytes
-									#	
-									#		Remaining for Recaptcha token					4053 bytes
-									#		Acceptable Limit								4096 bytes
-									#	
-									#	@since				v15.10
-									#	@reference			https://datatracker.ietf.org/doc/html/rfc7230#autoid-17
-									#						https://mothereff.in/byte-counter
-									# #
-
-									if ( length $firstline > 4096 )
-									{
-										last
-									}
-								}
-
-								chomp $firstline;
-								if ($firstline =~ /\r$/) {chop $firstline}
-							}
-
-							&messengerlog($homedir,"Client connection [$peeraddress] [$firstline]");
-							my $error;
-							my $success;
-							my $failure;
-							if (($type eq "HTML") and ($firstline =~ /^GET \/unblk\?g-recaptcha-response=(\S+)/i)) {
-								my $recv = $1;
-								my $status = 1;
-								my $text;
-								eval {
-									local $SIG{__DIE__} = undef;
-									eval("no lib '/usr/local/csf/lib'");
-									my $urlget = ConfigServer::URLGet->new(2, "", $config{URLPROXY});
-									my $url = "https://www.google.com/recaptcha/api/siteverify?secret=$config{RECAPTCHA_SECRET}&response=$recv";
-									($status, $text) = $urlget->urlget($url);
-								};
-								if ($status) {
-									&messengerlog($homedir,"*Error*, ReCaptcha ($peeraddress): $text");
-									if ($config{DEBUG} >= 1) {
-										if ($@) {$error .= "Error:".$@}
-										if ($!) {$error .= "Error:".$!}
-										$error .= " Error Status: $status";
-									}
-									$error .= "Unable to verify with Google reCAPTCHA";
-								} else {
-									my $resp  = JSON::Tiny::decode_json($text);
-									if ($resp->{success}) {
-										my $ip = $resp->{hostname};
-										unless ($ip =~ /^($ipv4reg|$ipv6reg)$/) {$ip = (getips($ip))[0]}
-										if ($ips{$ip} or $ip eq $hostaddress or $ipscidr6->find($ip)) {
-											sysopen (my $UNBLOCK, "$homedir/unblock.txt", O_WRONLY | O_APPEND | O_CREAT) or $error .= "Unable to write to [$homedir/unblock.txt] (make sure that MESSENGER_USER has a home directory)";
-											flock($UNBLOCK, LOCK_EX);
-											print $UNBLOCK "$peeraddress;$resp->{hostname};$ip\n";
-											close ($UNBLOCK);
-											$success = 1;
-											&messengerlog($homedir,"*Success*, ReCaptcha ($peeraddress): [$resp->{hostname} ($ip)] requested unblock");
-										} else {
-											$error .= "Failed, [$resp->{hostname} ($ip)] does not appear to be hosted on this server.";
-											&messengerlog($homedir,"*Failed*, ReCaptcha ($peeraddress): [$resp->{hostname} ($ip)] does not appear to be hosted on this server");
-										}
-									} else {
-										$failure = 1;
-										my @codes = @{$resp->{'error-codes'}};
-										&messengerlog($homedir,"*Failure*, ReCaptcha ($peeraddress): [$codes[0]]");
-									}
+									last
 								}
 							}
-							if (($type eq "HTML") and ($firstline =~ /^GET\s+(\S*\/)?(\S*\.(gif|png|jpg))\s+/i)) {
-								my $type = $3;
-								if ($type eq "jpg") {$type = "jpeg"}
-								print $client "HTTP/1.1 200 OK\r\n";
-								print $client "Content-type: image/$type\r\n";
-								print $client "\r\n";
-								print $client $images{$2};
+
+							chomp $firstline;
+							if ($firstline =~ /\r$/) {chop $firstline}
+						}
+
+						&messengerlog($homedir,"Client connection [$peeraddress] [$firstline]");
+						my $error;
+						my $success;
+						my $failure;
+						if (($type eq "HTML") and ($firstline =~ /^GET \/unblk\?g-recaptcha-response=(\S+)/i)) {
+							my $recv = $1;
+							my $status = 1;
+							my $text;
+							eval {
+								local $SIG{__DIE__} = undef;
+								eval("no lib '/usr/local/csf/lib'");
+								my $urlget = ConfigServer::URLGet->new(2, "", $config{URLPROXY});
+								my $url = "https://www.google.com/recaptcha/api/siteverify?secret=$config{RECAPTCHA_SECRET}&response=$recv";
+								($status, $text) = $urlget->urlget($url);
+							};
+							if ($status) {
+								&messengerlog($homedir,"*Error*, ReCaptcha ($peeraddress): $text");
+								if ($config{DEBUG} >= 1) {
+									if ($@) {$error .= "Error:".$@}
+									if ($!) {$error .= "Error:".$!}
+									$error .= " Error Status: $status";
+								}
+								$error .= "Unable to verify with Google reCAPTCHA";
 							} else {
-								if ($type eq "HTML") {
-									print $client "HTTP/1.1 403 OK\r\n";
-									print $client "Content-type: text/html\r\n";
-									print $client "\r\n";
-									foreach my $line (@message) {
-										if ($line =~ /\[IPADDRESS\]/) {$line =~ s/\[IPADDRESS\]/$peeraddress/}
-										if ($line =~ /\[HOSTNAME\]/) {$line =~ s/\[HOSTNAME\]/$hostname/}
-										if ($line =~ /\[RECAPTCHA_SITEKEY\]/) {$line =~ s/\[RECAPTCHA_SITEKEY\]/$config{RECAPTCHA_SITEKEY}/}
-										if ($line =~ /\[RECAPTCHA_ERROR=\"([^\"]+)\"\]/) {
-											my $text = $1;
-											if ($error ne "") {$line =~ s/\[RECAPTCHA_ERROR=\"([^\"]+)\"\]/$text $error/} else {$line =~ s/\[RECAPTCHA_ERROR=\"([^\"]+)\"\]//}
-										}
-										if ($line =~ /\[RECAPTCHA_SUCCESS=\"([^\"]+)\"\]/) {
-											my $text = $1;
-											if ($success) {$line =~ s/\[RECAPTCHA_SUCCESS=\"([^\"]+)\"\]/$text/} else {$line =~ s/\[RECAPTCHA_SUCCESS=\"([^\"]+)\"\]//}
-										}
-										if ($line =~ /\[RECAPTCHA_FAILURE=\"([^\"]+)\"\]/) {
-											my $text = $1;
-											if ($failure) {$line =~ s/\[RECAPTCHA_FAILURE=\"([^\"]+)\"\]/$text/} else {$line =~ s/\[RECAPTCHA_FAILURE=\"([^\"]+)\"\]//}
-										}
-										print $client "$line\r\n";
+								my $resp  = JSON::Tiny::decode_json($text);
+								if ($resp->{success}) {
+									my $ip = $resp->{hostname};
+									unless ($ip =~ /^($ipv4reg|$ipv6reg)$/) {$ip = (getips($ip))[0]}
+									if ($ips{$ip} or $ip eq $hostaddress or $ipscidr6->find($ip)) {
+										sysopen (my $UNBLOCK, "$homedir/unblock.txt", O_WRONLY | O_APPEND | O_CREAT) or $error .= "Unable to write to [$homedir/unblock.txt] (make sure that MESSENGER_USER has a home directory)";
+										flock($UNBLOCK, LOCK_EX);
+										print $UNBLOCK "$peeraddress;$resp->{hostname};$ip\n";
+										close ($UNBLOCK);
+										$success = 1;
+										&messengerlog($homedir,"*Success*, ReCaptcha ($peeraddress): [$resp->{hostname} ($ip)] requested unblock");
+									} else {
+										$error .= "Failed, [$resp->{hostname} ($ip)] does not appear to be hosted on this server.";
+										&messengerlog($homedir,"*Failed*, ReCaptcha ($peeraddress): [$resp->{hostname} ($ip)] does not appear to be hosted on this server");
 									}
-									print $client "\r\n";
 								} else {
-									foreach my $line (@message) {
-										if ($line =~ /\[IPADDRESS\]/) {$line =~ s/\[IPADDRESS\]/$peeraddress/}
-										if ($line =~ /\[HOSTNAME\]/) {$line =~ s/\[HOSTNAME\]/$hostname/}
-										print $client "$line ";
-									}
-									print $client "\n";
+									$failure = 1;
+									my @codes = @{$resp->{'error-codes'}};
+									&messengerlog($homedir,"*Failure*, ReCaptcha ($peeraddress): [$codes[0]]");
 								}
 							}
-							alarm(0);
-						};
-						shutdown ($client,2);
-						$client->close();
+						}
+						if (($type eq "HTML") and ($firstline =~ /^GET\s+(\S*\/)?(\S*\.(gif|png|jpg))\s+/i)) {
+							my $type = $3;
+							if ($type eq "jpg") {$type = "jpeg"}
+							print $client "HTTP/1.1 200 OK\r\n";
+							print $client "Content-type: image/$type\r\n";
+							print $client "\r\n";
+							print $client $images{$2};
+						} else {
+							if ($type eq "HTML") {
+								print $client "HTTP/1.1 403 OK\r\n";
+								print $client "Content-type: text/html\r\n";
+								print $client "\r\n";
+								foreach my $line (@message) {
+									if ($line =~ /\[IPADDRESS\]/) {$line =~ s/\[IPADDRESS\]/$peeraddress/}
+									if ($line =~ /\[HOSTNAME\]/) {$line =~ s/\[HOSTNAME\]/$hostname/}
+									if ($line =~ /\[RECAPTCHA_SITEKEY\]/) {$line =~ s/\[RECAPTCHA_SITEKEY\]/$config{RECAPTCHA_SITEKEY}/}
+									if ($line =~ /\[RECAPTCHA_ERROR=\"([^\"]+)\"\]/) {
+										my $text = $1;
+										if ($error ne "") {$line =~ s/\[RECAPTCHA_ERROR=\"([^\"]+)\"\]/$text $error/} else {$line =~ s/\[RECAPTCHA_ERROR=\"([^\"]+)\"\]//}
+									}
+									if ($line =~ /\[RECAPTCHA_SUCCESS=\"([^\"]+)\"\]/) {
+										my $text = $1;
+										if ($success) {$line =~ s/\[RECAPTCHA_SUCCESS=\"([^\"]+)\"\]/$text/} else {$line =~ s/\[RECAPTCHA_SUCCESS=\"([^\"]+)\"\]//}
+									}
+									if ($line =~ /\[RECAPTCHA_FAILURE=\"([^\"]+)\"\]/) {
+										my $text = $1;
+										if ($failure) {$line =~ s/\[RECAPTCHA_FAILURE=\"([^\"]+)\"\]/$text/} else {$line =~ s/\[RECAPTCHA_FAILURE=\"([^\"]+)\"\]//}
+									}
+									print $client "$line\r\n";
+								}
+								print $client "\r\n";
+							} else {
+								foreach my $line (@message) {
+									if ($line =~ /\[IPADDRESS\]/) {$line =~ s/\[IPADDRESS\]/$peeraddress/}
+									if ($line =~ /\[HOSTNAME\]/) {$line =~ s/\[HOSTNAME\]/$hostname/}
+									print $client "$line ";
+								}
+								print $client "\n";
+							}
+						}
 						alarm(0);
-						exit;
-					}
-					if ($oldtype eq "HTTPS") {
-						$client->close(SSL_no_shutdown => 1);
-					} else {
-						$client->close();
-					}
+					};
+					shutdown ($client,2);
+					$client->close();
+					alarm(0);
+					exit;
+				}
+				if ($oldtype eq "HTTPS") {
+					$client->close(SSL_no_shutdown => 1);
+				} else {
+					$client->close();
 				}
 			}
-		} else {
-			logfile("MESSENGER_USER invalid - stopping $oldtype Messenger");
 		}
-	} else {
-		logfile("MESSENGER_USER not set - stopping $oldtype Messenger");
 	}
+	else
+	{
+		logfile( "MESSENGER_USER not set - stopping $oldtype Messenger" );
+		return ( 1, "MESSENGER_USER is not configured" );
+	}
+
 	return;
 }
-# end messenger
-###############################################################################
-# start messengerv2
-sub messengerv2 {
-	my (undef,undef,$uid,$gid,undef,undef,undef,$homedir) = getpwnam($config{MESSENGER_USER});
+
+sub messengerv2
+{
+	$config{DEBUG} >= 2 and logfile( "[" . __PACKAGE__ . "] (" . SUB_MESSENGER_V2 . ") : Initializing subroutine" );
+
+	my ( undef, undef, $uid, $gid, undef, undef, undef, $homedir ) = getpwnam($config{MESSENGER_USER});
+
+	# #
+	#	Reject root. Messenger must never run as uid/gid 0.
+	# #
+
+	unless ( defined $uid and defined $gid and $uid > 0 and $gid > 0 )
+	{
+		return ( 1, "MESSENGER_USER must not be root (uid/gid 0) or invalid [$config{MESSENGER_USER}]" );
+	}
+
 	if ($homedir eq "" or $homedir eq "/" or $homedir =~ m[/etc/csf]) {
 		return (1, "The home directory for $config{MESSENGER_USER} is not valid [$homedir]");
 	}
@@ -774,11 +796,22 @@ sub messengerv2 {
 	}
 	return;
 }
-# end messengerv2
-###############################################################################
-# start messengerv3
+
+sub messengerv3
+{
 sub messengerv3 {
-	my (undef,undef,$uid,$gid,undef,undef,undef,$homedir) = getpwnam($config{MESSENGER_USER});
+
+	my ( undef, undef, $uid, $gid, undef, undef, undef, $homedir ) = getpwnam( $config{MESSENGER_USER} );
+
+	# #
+	#	Reject root. Messenger must never run as uid/gid 0.
+	# #
+
+	unless ( defined $uid and defined $gid and $uid > 0 and $gid > 0 )
+	{
+		return ( 1, "MESSENGER_USER must not be root (uid/gid 0) or invalid [$config{MESSENGER_USER}]" );
+	}
+
 	if ($homedir eq "" or $homedir eq "/" or $homedir =~ m[/etc/csf]) {
 		return (1, "The home directory for $config{MESSENGER_USER} is not valid [$homedir]");
 	}
