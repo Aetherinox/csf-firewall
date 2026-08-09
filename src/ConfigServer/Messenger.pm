@@ -591,15 +591,16 @@ sub messengerv2
 		system("chmod","644",$homedir."/en.php");
 	}
 	open (my $CONF, ">", $homedir."/recaptcha.php");
-	flock ($CONF, LOCK_EX);
+	open ( my $CONF, ">", $homedir . "/recaptcha.php" );
+	flock ( $CONF, LOCK_EX );
 	print $CONF "<?php\n";
 	print $CONF "\$secret = '$config{RECAPTCHA_SECRET}';\n";
 	print $CONF "\$sitekey = '$config{RECAPTCHA_SITEKEY}';\n";
 	print $CONF "\$unblockfile = '$homedir/unblock.txt';\n";
 	print $CONF "\$logfile = '/var/log/lfd_messenger.log';\n";
 	print $CONF "?>\n";
-	system("chown","$config{MESSENGER_USER}:$config{MESSENGER_USER}",$homedir."/recaptcha.php");
-	system("chmod","644",$homedir."/recaptcha.php");
+	system( "chown", "$config{MESSENGER_USER}:$config{MESSENGER_USER}", $homedir . "/recaptcha.php" );
+	system( "chmod", "600", $homedir . "/recaptcha.php" );
 
 	
 	open (my $OUT, ">", "/var/lib/csf/csf.conf");
@@ -853,16 +854,17 @@ EOF
 		system("chown","$config{MESSENGER_USER}:$config{MESSENGER_USER}",$homedir."/en.php");
 		system("chmod","644",$homedir."/en.php");
 	}
-	open (my $CONF, ">", $homedir."/recaptcha.php");
-	flock ($CONF, LOCK_EX);
+
+	open ( my $CONF, ">", $homedir . "/recaptcha.php" );
+	flock ( $CONF, LOCK_EX );
 	print $CONF "<?php\n";
 	print $CONF "\$secret = '$config{RECAPTCHA_SECRET}';\n";
 	print $CONF "\$sitekey = '$config{RECAPTCHA_SITEKEY}';\n";
 	print $CONF "\$unblockfile = '$homedir/unblock.txt';\n";
 	print $CONF "\$logfile = '/var/log/lfd_messenger.log';\n";
 	print $CONF "?>\n";
-	system("chown","$config{MESSENGER_USER}:$config{MESSENGER_USER}",$homedir."/recaptcha.php");
-	system("chmod","644",$homedir."/recaptcha.php");
+	system( "chown", "$config{MESSENGER_USER}:$config{MESSENGER_USER}", $homedir . "/recaptcha.php" );
+	system( "chmod", "600", $homedir . "/recaptcha.php" );
 
 	if ($config{MESSENGERV3WEBSERVER} eq "apache") {
 		$webserver = "apache";
