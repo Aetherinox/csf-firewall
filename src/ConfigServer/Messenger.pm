@@ -50,13 +50,13 @@ our $VERSION     = 3.00;
 our @ISA         = qw(Exporter);
 our @EXPORT_OK   = qw();
 
-my $slurpreg = ConfigServer::Slurp->slurpreg;
-my $cleanreg = ConfigServer::Slurp->cleanreg;
+my $slurpreg 	= ConfigServer::Slurp->slurpreg;
+my $cleanreg 	= ConfigServer::Slurp->cleanreg;
 
-my $config = ConfigServer::Config->loadconfig();
-my %config = $config->config();
-my $ipv4reg = ConfigServer::Config->ipv4reg;
-my $ipv6reg = ConfigServer::Config->ipv6reg;
+my $config 		= ConfigServer::Config->loadconfig();
+my %config 		= $config->config();
+my $ipv4reg 	= ConfigServer::Config->ipv4reg;
+my $ipv6reg 	= ConfigServer::Config->ipv6reg;
 
 my $childproc;
 my $hostname;
@@ -86,21 +86,30 @@ my $serverroot;
 ###############################################################################
 # start init
 sub init {
-	my $class = shift;
-	$version = shift;
-	my $self = {};
-	bless $self,$class;
 
-	if (-e "/proc/sys/kernel/hostname") {
+sub init
+{
+	my $class 	= shift;
+	$version 	= shift;
+	my $self 	= {};
+
+	bless $self, $class;
+
+	if (-e "/proc/sys/kernel/hostname")
+	{
 		open (my $IN, "<", "/proc/sys/kernel/hostname");
 		flock ($IN, LOCK_SH);
 		$hostname = <$IN>;
 		chomp $hostname;
 		close ($IN);
-	} else {
+	}
+	else
+	{
 		$hostname = "unknown";
 	}
-	if ($version == 1) {
+
+	if ($version == 1)
+	{
 		if ($config{MESSENGER6}) {
 			eval('use IO::Socket::INET6;'); ##no critic
 			if ($@) {$config{MESSENGER6} = "0"}
@@ -148,24 +157,29 @@ sub start {
 # end start
 ###############################################################################
 # start messenger
-sub messenger {
-	my $port = shift;
-	my $user = shift;
-	my $type = shift;
-	my $oldtype = $type;
+sub messenger
+{
+	$config{DEBUG} >= 2 and logfile( "[" . __PACKAGE__ . "] (" . SUB_MESSENGER_V1 . ") : Initializing subroutine" );
+
+	my $port 		= shift;
+	my $user 		= shift;
+	my $type 		= shift;
+	my $oldtype 	= $type;
 	my $server;
 	my %sslcerts;
 	my %sslkeys;
 
-	$SIG{CHLD} = 'IGNORE';
-	$SIG{INT} = \&childcleanup;
-	$SIG{TERM} = \&childcleanup;
-	$SIG{HUP} = \&childcleanup;
-	$SIG{__DIE__} = sub {&childcleanup(@_);};
-	$0 = "lfd $type messenger";
-	$childproc = "Messenger ($type)";
+	$SIG{CHLD} 		= 'IGNORE';
+	$SIG{INT} 		= \&childcleanup;
+	$SIG{TERM} 		= \&childcleanup;
+	$SIG{HUP} 		= \&childcleanup;
+	$SIG{__DIE__} 	= sub { &childcleanup( @_ ); };
 
-	if ($type eq "HTTPS") {
+	$0 				= "lfd $type messenger";
+	$childproc 		= "Messenger ($type)";
+
+	if ( $type eq "HTTPS" )
+	{
 		eval {
 			local $SIG{__DIE__} = undef;
 			require IO::Socket::SSL;
@@ -178,8 +192,14 @@ sub messenger {
 		my $sslkey;
 		my $sslaliases;
 		my %messengerports;
-		foreach my $serverports (split(/\,/,$config{MESSENGER_HTTPS_IN})) {$messengerports{$serverports} = 1}
-		foreach my $file (glob($config{MESSENGER_HTTPS_CONF})) {
+
+		foreach my $serverports ( split(/\,/,$config{MESSENGER_HTTPS_IN}) )
+		{
+			$messengerports{$serverports} = 1
+		}
+
+		foreach my $file ( glob( $config{MESSENGER_HTTPS_CONF} ) )
+		{
 			if (-e $file) {
 				foreach my $line (slurp($file)) {
 					$line =~ s/\'|\"//g;
@@ -199,25 +219,32 @@ sub messenger {
 						}
 					}
 
-					if (($webserver eq "apache" and $line =~ /^\s*<\/VirtualHost\s*>/)) {
+					if ( ( $webserver eq "apache" and $line =~ /^\s*<\/VirtualHost\s*>/ ) )
+					{
 						$start = 0;
-						if ($sslhost ne "" and !checkip($sslhost) and $sslcert ne "") {
-							$sslcerts{$sslhost} = $sslcert;
-							if ($sslkey eq "") {$sslkey = $sslcert}
-							$sslkeys{$sslhost} = $sslkey;
-							foreach my $alias (split(/\s+/,$sslaliases)) {
-								if ($alias eq "") {next}
-								if (checkip($alias)) {next}
-								if ($alias =~ /^[a-zA-Z0-9\.\-]+$/) {
-									if ($config{MESSENGER_HTTPS_SKIPMAIL} and $alias =~ /^mail\./) {next}
-									$sslcerts{$alias} = $sslcert;
-									$sslkeys{$alias} = $sslkey;
+						if ( $sslhost ne "" and !checkip( $sslhost ) and $sslcert ne "" )
+						{
+							$sslcerts{$sslhost} 	= $sslcert;
+							if ( $sslkey eq "" ) 	{ $sslkey = $sslcert }
+							$sslkeys{$sslhost} 		= $sslkey;
+
+							foreach my $alias ( split( /\s+/, $sslaliases ) )
+							{
+								if ( $alias eq "" ) { next }
+								if ( checkip( $alias ) ) { next }
+								if ( $alias =~ /^[a-zA-Z0-9\.\-]+$/ )
+								{
+									if ( $config{MESSENGER_HTTPS_SKIPMAIL} and $alias =~ /^mail\./ ) { next }
+
+									$sslcerts{$alias} 	= $sslcert;
+									$sslkeys{$alias} 	= $sslkey;
 								}
 							}
 						}
-						$sslhost = "";
-						$sslcert = "";
-						$sslkey = "";
+
+						$sslhost 	= "";
+						$sslcert 	= "";
+						$sslkey 	= "";
 						$sslaliases = "";
 					}
 				}
@@ -229,62 +256,85 @@ sub messenger {
 		if (-e $config{MESSENGER_HTTPS_KEY}) {
 			$sslkeys{''} = $config{MESSENGER_HTTPS_KEY};
 		}
-		if (-e $config{MESSENGER_HTTPS_CRT}) {
+
+		if ( -e $config{MESSENGER_HTTPS_CRT} )
+		{
 			$sslcerts{''} = $config{MESSENGER_HTTPS_CRT};
 		}
-		if ($config{DEBUG} >= 1) {
-			foreach my $key (keys %sslcerts) {
-				logfile("SSL: [$key] [$sslcerts{$key}] [$sslkeys{$key}]");
+
+		# #
+		#	Debug Only - log SSL keys
+		#	
+		#	@example		SSL: [certificate name/index] [certificate file] [private key file]
+		#					SSL: [localhost] [/etc/pki/tls/certs/localhost.crt] [/etc/pki/tls/private/localhost.key]
+		# #
+
+		if ( $config{DEBUG} >= 1 )
+		{
+			foreach my $key ( keys %sslcerts )
+			{
+				logfile( "SSL: [$key] [$sslcerts{$key}] [$sslkeys{$key}]" );
 			}
 		}
-		eval {
+
+		eval
+		{
 			local $SIG{__DIE__} = undef;
-			if ($config{MESSENGER6}) {
+			if ( $config{MESSENGER6} )
+			{
 				$server = IO::Socket::SSL->new(
-							Domain => AF_INET6,
-							LocalPort => $port,
-							Type => SOCK_STREAM,
-							ReuseAddr => 1,
-							Listen => $config{MESSENGER_CHILDREN},
-							SSL_server => 1,
-							SSL_use_cert => 1,
-							SSL_cert_file => \%sslcerts,
-							SSL_key_file => \%sslkeys,
-				) or &error("MESSENGER: *Error* cannot open server on port $port: ".IO::Socket::SSL->errstr);
-			} else {
-				$server = IO::Socket::SSL->new(
-							Domain => AF_INET,
-							LocalPort => $port,
-							Type => SOCK_STREAM,
-							ReuseAddr => 1,
-							Listen => $config{MESSENGER_CHILDREN},
-							SSL_server => 1,
-							SSL_use_cert => 1,
-							SSL_cert_file => \%sslcerts,
-							SSL_key_file => \%sslkeys,
-				) or &error("MESSENGER: *Error* cannot open server on port $port: ".IO::Socket::SSL->errstr);
+					Domain 			=> AF_INET6,
+					LocalPort 		=> $port,
+					Type 			=> SOCK_STREAM,
+					ReuseAddr 		=> 1,
+					Listen 			=> $config{MESSENGER_CHILDREN},
+					SSL_server 		=> 1,
+					SSL_use_cert 	=> 1,
+					SSL_cert_file 	=> \%sslcerts,
+					SSL_key_file 	=> \%sslkeys,
+				) or &error( "MESSENGER: *Error* cannot open server on port $port: " . IO::Socket::SSL->errstr );
 			}
-			&logfile("Messenger HTTPS Service started for ".scalar(keys %sslcerts)." domains");
+			else
+			{
+				$server = IO::Socket::SSL->new(
+					Domain 			=> AF_INET,
+					LocalPort 		=> $port,
+					Type 			=> SOCK_STREAM,
+					ReuseAddr 		=> 1,
+					Listen 			=> $config{MESSENGER_CHILDREN},
+					SSL_server 		=> 1,
+					SSL_use_cert 	=> 1,
+					SSL_cert_file 	=> \%sslcerts,
+					SSL_key_file 	=> \%sslkeys,
+				) or &error( "MESSENGER: *Error* cannot open server on port $port: " . IO::Socket::SSL->errstr );
+			}
+
+			&logfile( "Messenger HTTPS Service started for " . scalar( keys %sslcerts ) . " domains" );
 			$type = "HTML";
 		};
-		if ($@) {
-			return (1, $@);
+	
+		if ( $@ )
+		{
+			return ( 1, $@ );
 		}
 	}
-	elsif ($config{MESSENGER6}) {
+	elsif ( $config{MESSENGER6} )
+	{
 		$server = IO::Socket::INET6->new(
-			LocalPort => $port, 
-			Type => SOCK_STREAM, 
-			ReuseAddr => 1, 
-			Listen => $config{MESSENGER_CHILDREN}) or &childcleanup(__LINE__,"*Error* cannot open server on port $port: $!");
-	} else {
-		$server = IO::Socket::INET->new(
-			LocalPort => $port, 
-			Type => SOCK_STREAM, 
-			ReuseAddr => 1, 
-			Listen => $config{MESSENGER_CHILDREN}) or &childcleanup(__LINE__,"*Error* cannot open server on port $port: $!");
+			LocalPort 	=> $port, 
+			Type 		=> SOCK_STREAM, 
+			ReuseAddr 	=> 1, 
+			Listen 		=> $config{MESSENGER_CHILDREN}) or &childcleanup(__LINE__,"*Error* cannot open server on port $port: $!");
 	}
-	
+	else
+	{
+		$server = IO::Socket::INET->new(
+			LocalPort 	=> $port, 
+			Type 		=> SOCK_STREAM, 
+			ReuseAddr 	=> 1, 
+			Listen 		=> $config{MESSENGER_CHILDREN}) or &childcleanup(__LINE__,"*Error* cannot open server on port $port: $!");
+	}
+
 	my $index;
 	if ($type eq "HTML" and $config{RECAPTCHA_SITEKEY} ne "") {$index = "/etc/csf/messenger/index.recaptcha.html"}
 	elsif ($type eq "HTML") {$index = "/etc/csf/messenger/index.html"}
@@ -553,16 +603,20 @@ sub messengerv2
 	if ($homedir eq "" or $homedir eq "/" or $homedir =~ m[/etc/csf]) {
 		return (1, "The home directory for $config{MESSENGER_USER} is not valid [$homedir]");
 	}
+
 	if (! -e $homedir) {
 		return (1, "The home directory for $config{MESSENGER_USER} does not exist [$homedir]");
 	}
+
 	system("chmod","711",$homedir);
 	my $public_html = $homedir."/public_html";
+
 	unless (-e $public_html) {
 		system("mkdir","-p",$public_html);
 		system("chown","$config{MESSENGER_USER}:nobody",$public_html);
 		system("chmod","711",$public_html);
 	}
+
 	unless (-e $public_html."/.htaccess") {
 		open (my $HTACCESS, ">", $public_html."/.htaccess");
 		flock ($HTACCESS, LOCK_EX);
@@ -576,6 +630,7 @@ sub messengerv2
 		system("chown","$config{MESSENGER_USER}:$config{MESSENGER_USER}",$public_html."/.htaccess");
 		system("chmod","644",$public_html."/.htaccess");
 	}
+
 	unless (-e $public_html."/index.php") {
 		if ($config{RECAPTCHA_SITEKEY}) {
 			system("cp","/etc/csf/messenger/index.recaptcha.php",$public_html."/index.php");
@@ -585,12 +640,13 @@ sub messengerv2
 		system("chown","$config{MESSENGER_USER}:$config{MESSENGER_USER}",$public_html."/index.php");
 		system("chmod","644",$public_html."/index.php");
 	}
+
 	unless (-e $homedir."/en.php") {
 		system("cp","/etc/csf/messenger/en.php",$homedir."/en.php");
 		system("chown","$config{MESSENGER_USER}:$config{MESSENGER_USER}",$homedir."/en.php");
 		system("chmod","644",$homedir."/en.php");
 	}
-	open (my $CONF, ">", $homedir."/recaptcha.php");
+
 	open ( my $CONF, ">", $homedir . "/recaptcha.php" );
 	flock ( $CONF, LOCK_EX );
 	print $CONF "<?php\n";
@@ -770,18 +826,22 @@ sub messengerv2
 	}
 	close ($OUT);
 
-	system("cp","-f","/var/lib/csf/csf.conf","/etc/apache2/conf.d/csf.messenger.conf");
+	system( "cp", "-f", "/var/lib/csf/csf.conf", "/etc/apache2/conf.d/csf.messenger.conf" );
 
 	my ($childin, $childout);
-	my $cmdpid = open3($childin, $childout, $childout, "/usr/sbin/apachectl", "configtest");
-	my @data = <$childout>;
-	waitpid ($cmdpid, 0);
+	my $cmdpid 	= open3($childin, $childout, $childout, "/usr/sbin/apachectl", "configtest");
+	my @data 	= <$childout>;
+
+	waitpid ( $cmdpid, 0 );
 
 	if (-e "/var/lib/csf/apachectl.error") {unlink("/var/lib/csf/apachectl.error")}
+
 	my $ok = 0;
-	foreach (@data) {
+	foreach (@data)
+	{
 		if ($_ =~ /^Syntax OK/) {$ok = 1}
 	}
+
 	if ($ok) {
 		system("/scripts/restartsrv_httpd");
 		logfile("MESSENGERV2: Started Apache MESSENGERV2 service using /etc/apache2/conf.d/csf.messenger.conf");
@@ -866,10 +926,12 @@ EOF
 	system( "chown", "$config{MESSENGER_USER}:$config{MESSENGER_USER}", $homedir . "/recaptcha.php" );
 	system( "chmod", "600", $homedir . "/recaptcha.php" );
 
-	if ($config{MESSENGERV3WEBSERVER} eq "apache") {
+	if ($config{MESSENGERV3WEBSERVER} eq "apache")
+	{
 		$webserver = "apache";
 	}
-	elsif ($config{MESSENGERV3WEBSERVER} eq "litespeed") {
+	elsif ($config{MESSENGERV3WEBSERVER} eq "litespeed")
+	{
 		$webserver = "litespeed";
 	}
 
@@ -1130,10 +1192,9 @@ sub messengerlog {
 	}
 	return;
 }
-# end messengerlog
-###############################################################################
-# start childcleanup
-sub childcleanup {
+
+sub childcleanup
+{
 	$SIG{INT} = 'IGNORE';
 	$SIG{TERM} = 'IGNORE';
 	$SIG{HUP} = 'IGNORE';
@@ -1153,18 +1214,20 @@ sub childcleanup {
 	}
     exit;
 }
-# end childcleanup
-###############################################################################
-# start getethdev
-sub getethdev {
+
+sub getethdev
+{
 	my $ethdev = ConfigServer::GetEthDev->new();
 	my %g_ipv4 = $ethdev->ipv4;
 	my %g_ipv6 = $ethdev->ipv6;
-	foreach my $key (keys %g_ipv4) {
+
+	foreach my $key (keys %g_ipv4)
+	{
 		my $netip = Net::IP->new($key);
 		my $type = $netip->iptype();
 		if ($type eq "PUBLIC") {$ips{$key} = 1}
 	}
+
 	if ($config{IPV6}) {
 		foreach my $key (keys %g_ipv6) {
 			if ($key !~ m[::1/128]) {
@@ -1177,18 +1240,16 @@ sub getethdev {
 	}
 	return;
 }
-# end getethdev
-###############################################################################
-# start error
-sub error {
+
+sub error
+{
 	my $error = shift;
 	logfile($error);
 	exit;
 }
-# end error
-###############################################################################
-# start conftree
-sub conftree {
+
+sub conftree
+{
 	my $fileglob = shift;
 	foreach my $file (glob($fileglob)) {
 		if ($file =~ /csf\.messenger\.conf$/) {next}
