@@ -82,10 +82,10 @@ my $phphandler;
 my $version = 1;
 my $serverroot;
 
-# end main
-###############################################################################
-# start init
-sub init {
+use constant PACKAGE_NAME 		=> __PACKAGE__;
+use constant SUB_MESSENGER_V1 	=> "MessengerV1";
+use constant SUB_MESSENGER_V2 	=> "MessengerV2";
+use constant SUB_MESSENGER_V3 	=> "MessengerV3";
 
 sub init
 {
@@ -132,31 +132,37 @@ sub init
 	
 	return $self;
 }
-# end init
-###############################################################################
-# start start
-sub start {
-	my $self = shift;
-	my $port = shift;
-	my $user = shift;
-	my $type = shift;
+
+sub start
+{
+	my $self 	= shift;
+	my $port 	= shift;
+	my $user 	= shift;
+	my $type 	= shift;
 	my $status;
 	my $reason;
-	if ($version == 1) {
-		($status,$reason) = &messenger($port, $user, $type);
+
+	$config{DEBUG} >= 2 and logfile( "[" . __PACKAGE__ . "] Determining which MESSENGER version to use" );
+
+	if ( $version == 1 )
+	{
+		( $status, $reason ) = &messenger( $port, $user, $type );
+		$config{DEBUG} >= 2 and logfile( "[" . __PACKAGE__ . "] Trying [" . SUB_MESSENGER_V1 . "] : " . ( $status ? "Failure" : "Successful" ) . " (reason: $reason)" );
 	}
-	elsif ($version == 2) {
-		($status,$reason) = &messengerv2();
+	elsif ( $version == 2 )
+	{
+		( $status, $reason ) = &messengerv2();
+		$config{DEBUG} >= 2 and logfile( "[" . __PACKAGE__ . "] Trying [" . SUB_MESSENGER_V2 . "] : " . ( $status ? "Failure" : "Successful" ) . " (reason: $reason)" );
 	}
-	elsif ($version == 3) {
-		($status,$reason) = &messengerv3();
+	elsif ( $version == 3 )
+	{
+		( $status, $reason ) = &messengerv3();
+		$config{DEBUG} >= 2 and logfile( "[" . __PACKAGE__ . "] Trying [" . SUB_MESSENGER_V3 . "] : " . ( $status ? "Failure" : "Successful" ) . " (reason: $reason)" );
 	}
 	
-	return ($status,$reason);
+	return ( $status, $reason );
 }
-# end start
-###############################################################################
-# start messenger
+
 sub messenger
 {
 	$config{DEBUG} >= 2 and logfile( "[" . __PACKAGE__ . "] (" . SUB_MESSENGER_V1 . ") : Initializing subroutine" );
@@ -260,6 +266,22 @@ sub messenger
 			return ( 1, "[" . __PACKAGE__ . "] No SSL certs found in MESSENGER_HTTPS_CONF = \"$config{MESSENGER_HTTPS_CONF}\" (defined in /etc/csf/csf.conf)" );
 		}
 
+		# # 
+		#	Load custom SSL key & cert
+		#	
+		#   The following options can be specified to provide a default fallback
+		#   certificate to be used if either SNI is not supported or a hosted domain does
+		#   not have an SSL certificate. If a fallback is not provided, one of the certs
+		#   obtained from MESSENGER_HTTPS_CONF will be used
+		#   
+		#   This is used by MESSENGERV1 and MESSENGERV2 only
+		# 
+		#	MESSENGER_HTTPS_KEY = "/etc/pki/tls/private/localhost.key"
+		#	MESSENGER_HTTPS_CRT = "/etc/pki/tls/certs/localhost.crt"
+		# # 
+
+		if ( -e $config{MESSENGER_HTTPS_KEY} )
+		{
 			$sslkeys{''} = $config{MESSENGER_HTTPS_KEY};
 		}
 
@@ -352,7 +374,8 @@ sub messenger
 	chomp @message;
 
 	my %images;
-	if ($type eq "HTML") {
+	if ( $type eq "HTML" )
+	{
 		opendir (DIR, "/etc/csf/messenger");
 		foreach my $file (readdir(DIR)) {
 			if ($file =~ /\.(gif|png|jpg)$/) {
@@ -368,6 +391,7 @@ sub messenger
 		}
 		closedir (DIR);
 	}
+
 	my $chldallow = $config{MESSENGER_CHILDREN};
 
 	if ($oldtype eq "HTTPS") {
@@ -663,12 +687,12 @@ sub messengerv2
 	print $CONF "?>\n";
 	system( "chown", "$config{MESSENGER_USER}:$config{MESSENGER_USER}", $homedir . "/recaptcha.php" );
 	system( "chmod", "600", $homedir . "/recaptcha.php" );
-
 	
 	open (my $OUT, ">", "/var/lib/csf/csf.conf");
 	flock ($OUT, LOCK_EX);
 
-	if ($config{MESSENGER_HTML_IN} ne "") {
+	if ($config{MESSENGER_HTML_IN} ne "")
+	{
 		print $OUT "Listen 0.0.0.0:$config{MESSENGER_HTML}\n";
 		if ($config{IPV6}) {print $OUT "Listen [::]:$config{MESSENGER_HTML}\n"}
 		print $OUT "<VirtualHost *:$config{MESSENGER_HTML}>\n";
@@ -794,6 +818,7 @@ sub messengerv2
 			print $OUT " KeepAlive Off\n";
 			print $OUT "</VirtualHost>\n";
 		}
+	
 		foreach my $key (keys %ssldomains) {
 			if ($key eq "") {next}
 			if ($key =~ /^\s+$/) {next}
@@ -866,7 +891,7 @@ sub messengerv2
 
 sub messengerv3
 {
-sub messengerv3 {
+	$config{DEBUG} >= 2 and logfile( "[" . __PACKAGE__ . "] (" . SUB_MESSENGER_V3 . ") : Initializing subroutine" );
 
 	my ( undef, undef, $uid, $gid, undef, undef, undef, $homedir ) = getpwnam( $config{MESSENGER_USER} );
 
