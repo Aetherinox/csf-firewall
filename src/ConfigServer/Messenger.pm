@@ -250,10 +250,16 @@ sub messenger
 				}
 			}
 		}
-		if (scalar(keys %sslcerts < 1)) {
-			return (1, "No SSL certs found in MESSENGER_HTTPS_CONF location");
+
+		# #
+		#	Verify at least one SSL certificate was found
+		# #
+
+		if ( !keys %sslcerts )
+		{
+			return ( 1, "[" . __PACKAGE__ . "] No SSL certs found in MESSENGER_HTTPS_CONF = \"$config{MESSENGER_HTTPS_CONF}\" (defined in /etc/csf/csf.conf)" );
 		}
-		if (-e $config{MESSENGER_HTTPS_KEY}) {
+
 			$sslkeys{''} = $config{MESSENGER_HTTPS_KEY};
 		}
 
