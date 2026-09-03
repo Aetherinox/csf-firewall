@@ -2110,7 +2110,7 @@ EOF
 
 						print "<div class='$class' style='margin-block-end:1em !important;padding-left:10px !important'>"
 							. ($tip ? "<span class='glyphicon glyphicon-cog' style='font-size:1.3em;' data-tooltip='tooltip' title='$tip'></span> " : "")
-							. "<b'>$start</b> = <select name='$name'>\n";
+							. "<b>$start</b> = <select name='$name'>\n";
 
 						for ( $showfrom..$showto )
 						{
