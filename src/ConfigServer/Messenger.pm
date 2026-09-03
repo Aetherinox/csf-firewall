@@ -617,7 +617,7 @@ sub messenger
 
 sub messengerv2
 {
-	$config{DEBUG} >= 2 and logfile( "[" . __PACKAGE__ . "] (" . SUB_MESSENGER_V2 . ") : Initializing subroutine" );
+	$config{DEBUG} >= 1 and logfile( "[" . __PACKAGE__ . "] (" . SUB_MESSENGER_V2 . ") : Initializing subroutine" );
 
 	my ( undef, undef, $uid, $gid, undef, undef, undef, $homedir ) = getpwnam($config{MESSENGER_USER});
 
@@ -630,12 +630,14 @@ sub messengerv2
 		return ( 1, "MESSENGER_USER must not be root (uid/gid 0) or invalid [$config{MESSENGER_USER}]" );
 	}
 
-	if ($homedir eq "" or $homedir eq "/" or $homedir =~ m[/etc/csf]) {
-		return (1, "The home directory for $config{MESSENGER_USER} is not valid [$homedir]");
+	if ( $homedir eq "" or $homedir eq "/" or $homedir =~ m[/etc/csf] )
+	{
+		return ( 1, "The home directory for $config{MESSENGER_USER} is not valid [$homedir]" );
 	}
 
-	if (! -e $homedir) {
-		return (1, "The home directory for $config{MESSENGER_USER} does not exist [$homedir]");
+	if ( ! -e $homedir )
+	{
+		return ( 1, "The home directory for $config{MESSENGER_USER} does not exist [$homedir]" );
 	}
 
 	system("chmod","711",$homedir);
@@ -647,7 +649,8 @@ sub messengerv2
 		system("chmod","711",$public_html);
 	}
 
-	unless (-e $public_html."/.htaccess") {
+	unless ( -e $public_html . "/.htaccess" )
+	{
 		open (my $HTACCESS, ">", $public_html."/.htaccess");
 		flock ($HTACCESS, LOCK_EX);
 		print $HTACCESS "Require all granted\n";
@@ -661,12 +664,19 @@ sub messengerv2
 		system("chmod","644",$public_html."/.htaccess");
 	}
 
-	unless (-e $public_html."/index.php") {
-		if ($config{RECAPTCHA_SITEKEY}) {
-			system("cp","/etc/csf/messenger/index.recaptcha.php",$public_html."/index.php");
-		} else {
-			system("cp","/etc/csf/messenger/index.php",$public_html."/index.php");
+	unless ( -e $public_html . "/index.php" )
+	{
+		if ( $config{RECAPTCHA_SITEKEY})
+		{
+			$config{DEBUG} >= 1 and logfile( "[" . __PACKAGE__ . "] (" . SUB_MESSENGER_V2 . ") : Copying recaptcha file (/etc/csf/messenger/index.recaptcha.php) => $public_html/index.php" );
+			system( "cp", "/etc/csf/messenger/index.recaptcha.php", $public_html . "/index.php" );
 		}
+		else
+		{
+			$config{DEBUG} >= 1 and logfile( "[" . __PACKAGE__ . "] (" . SUB_MESSENGER_V2 . ") : Copying recaptcha file /etc/csf/messenger/index.php => $public_html/index.php" );
+			system( "cp", "/etc/csf/messenger/index.php", $public_html . "/index.php" );
+		}
+
 		system("chown","$config{MESSENGER_USER}:$config{MESSENGER_USER}",$public_html."/index.php");
 		system("chmod","644",$public_html."/index.php");
 	}
@@ -907,9 +917,12 @@ sub messengerv3
 	if ($homedir eq "" or $homedir eq "/" or $homedir =~ m[/etc/csf]) {
 		return (1, "The home directory for $config{MESSENGER_USER} is not valid [$homedir]");
 	}
-	if (! -e $homedir) {
-		return (1, "The home directory for $config{MESSENGER_USER} does not exist [$homedir]");
+
+	if ( ! -e $homedir )
+	{
+		return ( 1, "The home directory for $config{MESSENGER_USER} does not exist [$homedir]" );
 	}
+
 	my $public_html = $homedir."/public_html";
 	unless (-e $public_html) {
 		system("mkdir","-p",$public_html);
@@ -931,21 +944,28 @@ EOF
 		system("chown","$config{MESSENGER_USER}:$config{MESSENGER_USER}",$public_html."/.htaccess");
 		system("chmod","644",$public_html."/.htaccess");
 	}
-	unless (-e $public_html."/index.php") {
-		if ($config{RECAPTCHA_SITEKEY}) {
-			system("cp","/etc/csf/messenger/index.recaptcha.php",$public_html."/index.php");
-		} else {
-			system("cp","/etc/csf/messenger/index.php",$public_html."/index.php");
+
+	unless ( -e $public_html."/index.php" )
+	{
+		if ($config{RECAPTCHA_SITEKEY})
+		{
+			system( "cp", "/etc/csf/messenger/index.recaptcha.php", $public_html . "/index.php" );
 		}
-		system("chown","$config{MESSENGER_USER}:$config{MESSENGER_USER}",$public_html."/index.php");
-		system("chmod","644",$public_html."/index.php");
+		else
+		{
+			system( "cp", "/etc/csf/messenger/index.php" , $public_html . "/index.php" );
+		}
+
+		system( "chown", "$config{MESSENGER_USER}:$config{MESSENGER_USER}", $public_html . "/index.php" );
+		system( "chmod", "644", $public_html . "/index.php" );
 	}
+
 	unless (-e $homedir."/en.php") {
 		system("cp","/etc/csf/messenger/en.php",$homedir."/en.php");
 		system("chown","$config{MESSENGER_USER}:$config{MESSENGER_USER}",$homedir."/en.php");
 		system("chmod","644",$homedir."/en.php");
 	}
-
+	
 	open ( my $CONF, ">", $homedir . "/recaptcha.php" );
 	flock ( $CONF, LOCK_EX );
 	print $CONF "<?php\n";
@@ -1448,7 +1468,5 @@ sub conftree
 	}
 	return;
 }
-# end conftree
-###############################################################################
 
 1;
