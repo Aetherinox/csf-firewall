@@ -228,40 +228,132 @@ m1hngnebTLMxlxQ8W6k4u5zzZHp7+H9AvfLOjcU5DwAAAABJRU5ErkJggg==" />
 
 	<br />
 	<?php
-		if (!empty($_POST)) {
-			$alert = '';
-			$message = '';
-			$pieces = explode(".", php_uname('n'));
-			$date = @date('M j H:i:s'). " " . $pieces[0] . " ";
-			if (isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])) {
-				$data = array('secret' => $secret,'response' => $_POST['g-recaptcha-response']);
-				$verify = curl_init();
-				curl_setopt($verify, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
-				curl_setopt($verify, CURLOPT_POST, true);
-				curl_setopt($verify, CURLOPT_POSTFIELDS, http_build_query($data));
-				curl_setopt($verify, CURLOPT_SSL_VERIFYPEER, false);
-				curl_setopt($verify, CURLOPT_RETURNTRANSFER, true);
-				$verifyResponse = curl_exec($verify);
-				$responseData = json_decode($verifyResponse);
-				if($responseData->success) {
-					if ($responseData->hostname == $_SERVER['SERVER_NAME']) {
-						$alert = 'success';
-						$message = $lang["recaptcha success"] . "<br /><a href='" . $_SERVER['REQUEST_URI'] . "'>" . $_SERVER['REQUEST_URI'] . "</a>";
-						file_put_contents($unblockfile, $_SERVER['REMOTE_ADDR'].";".$_SERVER['SERVER_NAME'].";".$_SERVER['SERVER_ADDR']."\n", FILE_APPEND | LOCK_EX);
-						file_put_contents($logfile,$date . "*Success*, ReCaptcha (" . $_SERVER['REMOTE_ADDR'].": [".$_SERVER['SERVER_NAME']." (".$_SERVER['SERVER_ADDR'].")] requested unblock\n", FILE_APPEND | LOCK_EX);
-					} else {
-						$alert = "danger";
-						$message = $lang["recaptcha hostfail"] . ' ['.$responseData->hostname.' != '.$_SERVER['SERVER_NAME'].']';
-						file_put_contents($logfile,$date . "*Failed*, ReCaptcha (" . $_SERVER['REMOTE_ADDR'].": [".$_SERVER['SERVER_NAME']." (".$_SERVER['SERVER_ADDR'].")] does not appear to be hosted on this server\n", FILE_APPEND | LOCK_EX);
-					}
-				} else {
-					$alert = "danger";
-					$message = $lang["recaptcha failure"];
-					file_put_contents($logfile,$date . "*Error*, ReCaptcha (" . $_SERVER['REMOTE_ADDR'].": $responseData\n", FILE_APPEND | LOCK_EX);
+		if ( !empty( $_POST ) )
+        {
+			$alert      = '';
+			$message    = '';
+			$pieces     = explode( ".", php_uname( 'n' ) );
+			$date       = @date( 'M j H:i:s' ). " " . $pieces[ 0 ] . " ";
+
+			if ( isset( $_POST[ 'g-recaptcha-response' ] ) && !empty( $_POST[ 'g-recaptcha-response' ] ) )
+            {
+				$data       = array( 'secret' => $secret,'response' => $_POST[ 'g-recaptcha-response' ] );
+				$verify     = curl_init( );
+
+                /*
+                    @note           curl_close() no-op in PHP 8.0; deprecated since PHP 8.5
+                    @ref            https://www.php.net/manual/en/migration85.deprecated.php
+                */
+
+				curl_setopt( $verify, CURLOPT_URL,              "https://www.google.com/recaptcha/api/siteverify"   );
+				curl_setopt( $verify, CURLOPT_POST,             true                                                );
+				curl_setopt( $verify, CURLOPT_POSTFIELDS,       http_build_query( $data )                           );
+				curl_setopt( $verify, CURLOPT_SSL_VERIFYPEER,   false                                               );
+				curl_setopt( $verify, CURLOPT_RETURNTRANSFER,   true                                                );
+				curl_setopt( $verify, CURLOPT_CONNECTTIMEOUT,   20                                                  );
+				curl_setopt( $verify, CURLOPT_TIMEOUT,          30                                                  );
+
+				$verifyResponse     = curl_exec( $verify );
+				$curlError          = curl_error( $verify );
+				$curlErrno          = curl_errno( $verify );
+				$httpCode           = curl_getinfo( $verify, CURLINFO_HTTP_CODE );
+				$curlError          = $curlError === '' ? 'None' : $curlError;
+
+				if ( $verifyResponse === false )
+				{
+					$responseData = null;
 				}
-			} else {
-				$alert = "danger";
-				$message = $lang["recaptcha error"];
+				else
+				{
+					$responseData = json_decode( $verifyResponse );
+				}
+
+				file_put_contents( $logfile, $date . "*Debug*, ReCaptcha verification request ( HTTP: $httpCode | cURL: $curlErrno | Error: $curlError )\n", FILE_APPEND | LOCK_EX );
+
+				if ( $verifyResponse !== false && json_last_error( ) !== JSON_ERROR_NONE )
+				{
+                    /* 
+                        json_last_error_msg: PHP 5 >= 5.5.0, PHP 7, PHP 8
+                        Could break in PHP 5.3/4.
+
+                        @ref            https://www.php.net/manual/en/function.json-last-error-msg.php
+                    */
+
+					if ( function_exists( 'json_last_error_msg' ) )
+						file_put_contents( $logfile, $date . "*Debug*, ReCaptcha JSON decode failed: " . json_last_error_msg( ) . "\n", FILE_APPEND | LOCK_EX );
+					else
+						file_put_contents( $logfile, $date . "*Debug*, ReCaptcha JSON decode failed ( Error Code: " . json_last_error( ) . " )\n", FILE_APPEND | LOCK_EX );
+				}
+
+                if ( is_object( $responseData ) && isset( $responseData->success ) && $responseData->success && isset( $responseData->hostname ) )
+                {
+					file_put_contents( $logfile, $date . "*Debug*, ReCaptcha hostname check ( Google: [$responseData->hostname] | Server: [" . $_SERVER[ 'SERVER_NAME' ] . "] )\n", FILE_APPEND | LOCK_EX );
+
+					if ( $responseData->hostname == $_SERVER[ 'SERVER_NAME' ] )
+                    {
+                        /*
+                            ENT_SUBSTITUTE      Replace invalid code unit sequences with a Unicode Replacement
+                                                Character U+FFFD (UTF-8) or &#xFFFD; (otherwise) instead of
+                                                returning an empty string. 
+
+                                                Added in PHP 5.4
+
+                                                https://php.watch/codex/ENT_SUBSTITUTE
+
+                            ENT_QUOTES          Will convert both double and single quotes.
+
+                                                https://php.watch/codex/ENT_QUOTES
+                        */
+
+						$alert      = 'success';
+                        $htmlFlags  = defined( 'ENT_SUBSTITUTE' ) ? ENT_QUOTES | ENT_SUBSTITUTE : ENT_QUOTES;
+						$requestURI = htmlspecialchars( $_SERVER[ 'REQUEST_URI' ], $htmlFlags, 'UTF-8' );
+						$message    = $lang[ "recaptcha success" ] . "<br /><a href='" . $requestURI . "'>" . $requestURI . "</a>";
+						$entry      = $_SERVER[ 'REMOTE_ADDR' ].";".$_SERVER[ 'SERVER_NAME' ].";".$_SERVER[ 'SERVER_ADDR' ]."\n";
+
+						file_put_contents( $logfile, $date . "*Debug*, ReCaptcha preparing unblock entry ( File: [$unblockfile] | Remote IP: [" . $_SERVER[ 'REMOTE_ADDR' ] . "] | Host: [" . $_SERVER[ 'SERVER_NAME' ] . "] | Server IP: [" . $_SERVER[ 'SERVER_ADDR' ] . "] )\n", FILE_APPEND | LOCK_EX );
+
+						$written    = file_put_contents( $unblockfile, $entry, FILE_APPEND | LOCK_EX );
+
+                        if ( $written === false )
+                        {
+                            $error  = error_get_last( );
+                            $reason = isset( $error[ 'message' ] ) ? $error[ 'message' ] : 'Unknown error';
+                        
+                            file_put_contents( $logfile, $date . "*Failed*, ReCaptcha unable to write to [$unblockfile]: $reason\n", FILE_APPEND | LOCK_EX );
+                        }
+                        else
+                        {
+							file_put_contents( $logfile, $date . "*Debug*, ReCaptcha wrote [$written] bytes to [$unblockfile]: $entry", FILE_APPEND | LOCK_EX );
+                            file_put_contents( $logfile, $date . "*Success*, ReCaptcha (" . $_SERVER[ 'REMOTE_ADDR' ] . "): [" . $_SERVER[ 'SERVER_NAME' ] . " (" . $_SERVER[ 'SERVER_ADDR' ] . ")] requested unblock\n", FILE_APPEND | LOCK_EX );
+						}
+					}
+                    else
+                    {
+						$alert              = "danger";
+                        $htmlFlags          = defined( 'ENT_SUBSTITUTE' ) ? ENT_QUOTES | ENT_SUBSTITUTE : ENT_QUOTES;
+						$googleHostname     = htmlspecialchars( $responseData->hostname, $htmlFlags, 'UTF-8' );
+						$serverHostname     = htmlspecialchars( $_SERVER[ 'SERVER_NAME' ], $htmlFlags, 'UTF-8' );
+						$message            = $lang[ "recaptcha hostfail" ] . ' [' . $googleHostname . ' != ' . $serverHostname . ']';
+
+                        file_put_contents( $logfile, $date . "*Failed*, ReCaptcha (" . $_SERVER[ 'REMOTE_ADDR' ] . "): [" . $_SERVER[ 'SERVER_NAME' ] . " (" . $_SERVER[ 'SERVER_ADDR' ] . ")] does not appear to be hosted on this server\n", FILE_APPEND | LOCK_EX );
+					}
+				}
+                else
+                {
+					$alert          = "danger";
+					$message        = $lang[ "recaptcha failure" ];
+                    $errorCodes     = is_object( $responseData ) && isset( $responseData->{'error-codes'} ) && is_array( $responseData->{'error-codes'} ) ? implode( ", ", $responseData->{'error-codes'} ) : "none";
+
+					file_put_contents( $logfile, $date . "*Error*, ReCaptcha (" . $_SERVER[ 'REMOTE_ADDR' ] . ") verification failed ( Error Codes: [$errorCodes] )\n", FILE_APPEND | LOCK_EX );
+				}
+			}
+			else
+            {
+				$alert      = "danger";
+				$message    = $lang[ "recaptcha error" ];
+
+				file_put_contents( $logfile, $date . "*Debug*, ReCaptcha request received without g-recaptcha-response\n", FILE_APPEND | LOCK_EX );
 			}
 			echo '<div class="alert alert-' . $alert . '"><h4>' . $message . '</h4></div>';
 		}
