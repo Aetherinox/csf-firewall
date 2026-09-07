@@ -30,35 +30,53 @@ package ConfigServer::Config;
 use strict;
 use lib '/usr/local/csf/lib';
 use version;
-use Fcntl qw(:DEFAULT :flock);
+use Fcntl qw( :DEFAULT :flock );
 use Carp;
 use IPC::Open3;
-use ConfigServer::Slurp qw(slurp);
-use ConfigServer::JSON qw(decode_json);
-use ConfigServer::Perl::URI qw(uri_escape);
+use ConfigServer::Slurp qw( slurp );
+use ConfigServer::JSON qw( decode_json );
+use ConfigServer::Perl::URI qw( uri_escape );
 
-use Exporter 	qw(import);
-our $VERSION	= 1.05;
-our @ISA		= qw(Exporter);
+# #
+#	Config › Declare › Export
+# #
+
+use Exporter 	qw( import );
 our @EXPORT_OK	= qw();
 
-our $ipv4reg 	= qr/(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/;
+# # 
+#	Config › Declare › Version
+# #
+
+our $VERSION	= 1.05;
+
+# #
+#
+# #
+
+use constant LICENSE_URL => 'https://license.configserver.dev/';
+
+# #
+#   Config › Declare › IP Regex
+# #
+
+our $ipv4reg    = qr/(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/;
 our $ipv6reg 	= qr/((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?/;
 
 my %config;
 my %configsetting;
+my $configfile  = "/etc/csf/csf.conf";
 my $warning;
 my $version;
 
 my $slurpreg 	= ConfigServer::Slurp->slurpreg;
 my $cleanreg 	= ConfigServer::Slurp->cleanreg;
-my $configfile	= "/etc/csf/csf.conf";
 
 my %defaults;
 my $defaultsfile = "/usr/local/csf/lib/defaults.txt";
 
 # #
-#	Trim
+#   Config › Trim
 #	
 #	Certain CSF features will append spaces or underscores_ to the end
 #	of a config item.
@@ -70,26 +88,28 @@ sub _trim
 {
 	my ( $s, $strip_trailing_underscore ) = @_;
 	return undef unless defined $s;
+
 	$s =~ s/^\s+|\s+$//g;
-	if ($strip_trailing_underscore)
+	if ( $strip_trailing_underscore )
 	{
 		$s =~ s/_\z//;
 	}
+
 	return $s;
 }
 
 # #
-#	load config
+#   Config › Load
 # #
 
 sub loadconfig
 {
 	my $class 	= shift;
-	my $self 	= {};
+	my $self    = {};
 
 	bless $self, $class;
 
-	if (%config)
+	if ( %config )
 	{
 		$self->{warning} = $warning;
 		return $self;
@@ -99,13 +119,21 @@ sub loadconfig
 	undef %config;
 	undef $warning;
 
-	my @file = slurp($configfile);
+	my @file = slurp( $configfile );
 	foreach my $line ( @file )
 	{
 		$line =~ s/$cleanreg//g;
-		if ($line =~ /^(\s|\#|$)/) { next }
-		if ($line !~ /=/) { next }
-		my ( $name,$value ) = split (/=/,$line,2);
+		if ( $line =~ /^(\s|\#|$)/ )
+        {
+            next
+        }
+
+		if ( $line !~ /=/ )
+        {
+            next
+        }
+
+		my ( $name,$value ) = split ( /=/, $line, 2 );
 		$name =~ s/\s//g;
 
 		if ( $value =~ /\"(.*)\"/ )
@@ -122,18 +150,18 @@ sub loadconfig
 			croak "*Error* Setting $name is repeated in $configfile - you must remove the duplicates and then restart csf and lfd";
 		}
 	
-		$config{$name} = $value;
-		$configsetting{$name} = 1;
+		$config{$name}          = $value;
+		$configsetting{$name}   = 1;
 	}
 
 	if ( $config{LF_IPSET} )
 	{
-		unless ( $config{LF_IPSET_HASHSIZE} )
+		if ( !$config{LF_IPSET_HASHSIZE} )
 		{
 			$config{LF_IPSET_HASHSIZE} 			= "1024";
 			$configsetting{LF_IPSET_HASHSIZE} 	= 1;
 		}
-		unless ($config{LF_IPSET_MAXELEM})
+		if ( !$config{LF_IPSET_MAXELEM} )
 		{
 			$config{LF_IPSET_MAXELEM} 			= "65536";
 			$configsetting{LF_IPSET_MAXELEM} 	= 1;
@@ -181,37 +209,38 @@ sub loadconfig
 			eval
 			{
 				local $SIG{__DIE__} 	= undef;
-				local $SIG{'ALRM'} 		= sub { die "alarm\n" };
+				local $SIG{'ALRM'}      = sub { die "alarm\n" };
 	
 				alarm( $config{WAITLOCK_TIMEOUT} );
 	
 				my ( $childin, $childout );
-				my $cmdpid = open3( $childin, $childout, $childout, "$config{IPTABLES} --wait -L OUTPUT -nv" );
-				@ipdata = <$childout>;
-				waitpid ( $cmdpid, 0 );
-				chomp @ipdata;
+				my $cmdpid  = open3( $childin, $childout, $childout, "$config{IPTABLES} --wait -L OUTPUT -nv" );
+				@ipdata     = <$childout>;
 
-				if ( $ipdata[0] =~ /# Warning: iptables-legacy tables present/ )
+				waitpid     ( $cmdpid, 0 );
+				chomp       @ipdata;
+
+				if ( $ipdata[ 0 ] =~ /# Warning: iptables-legacy tables present/ )
 				{
 					shift @ipdata
 				}
 				alarm(0);
 			};
 	
-			alarm(0);
+			alarm( 0 );
 			if ( $@ eq "alarm\n" )
 			{
 				croak "*ERROR* Timeout after $config{WAITLOCK_TIMEOUT} seconds for iptables --wait - WAITLOCK\n";
 			}
 
-			if ( $ipdata[0] =~ /^Chain OUTPUT/ )
+			if ( $ipdata[ 0 ] =~ /^Chain OUTPUT/ )
 			{
 				$config{IPTABLESWAIT} = "--wait";
 			}
 			else
 			{
-				$warning .= "*WARNING* This version of iptables does not support the --wait option - disabling WAITLOCK\n";
-				$config{WAITLOCK} = 0;
+				$warning            .= "*WARNING* This version of iptables does not support the --wait option - disabling WAITLOCK\n";
+				$config{WAITLOCK}   = 0;
 			}
 		}
 	}
@@ -279,18 +308,91 @@ sub loadconfig
 		}
 	}
 
-	my @raw = &systemcmd("$config{IPTABLES} $config{IPTABLESWAIT} -L PREROUTING -t raw");
-	if ($raw[0] =~ /^Chain PREROUTING/) {$config{RAW} = 1} else {$config{RAW} = 0}
-	my @mangle = &systemcmd("$config{IPTABLES} $config{IPTABLESWAIT} -L PREROUTING -t mangle");
-	if ($mangle[0] =~ /^Chain PREROUTING/) {$config{MANGLE} = 1} else {$config{MANGLE} = 0}
+    # #
+    #   iptables › Table › RAW
+    #   
+    #   Check whether the iptables raw table is available.
+    #   Set RAW to 1 when the PREROUTING chain can be read.
+    # #
 
-	if ($config{IPV6} and -x $config{IP6TABLES} and $version)
+	my @raw = &systemcmd( "$config{IPTABLES} $config{IPTABLESWAIT} -L PREROUTING -t raw" );
+	if ( $raw[ 0 ] =~ /^Chain PREROUTING/ )
+    {
+        $config{RAW} = 1
+    }
+    else
+    {
+        $config{RAW} = 0 
+    }
+
+    # #
+    #   iptables › Table › MANGLE
+    #   
+    #   Check whether the iptables mangle table is available.
+    #   Set MANGLE to 1 when the PREROUTING chain can be read.
+    # #
+
+	my @mangle = &systemcmd( "$config{IPTABLES} $config{IPTABLESWAIT} -L PREROUTING -t mangle" );
+	if ( $mangle[0] =~ /^Chain PREROUTING/ )
+    {
+        $config{MANGLE} = 1
+    }
+    else
+    {
+        $config{MANGLE} = 0 
+    }
+
+    # #
+    #   iptables › Version
+    #   
+    #   IPv6-specific checks only if IPv6 is enabled.
+    #   
+    #   Configured ip6tables binary is executable, and an iptables 
+    #   version was successfully detected.
+    # #
+
+	if ( $config{IPV6} and -x $config{IP6TABLES} and $version )
 	{
-		if ($config{USE_CONNTRACK} and version->parse($version) <= version->parse("1.3.5")) {$config{USE_CONNTRACK} = 0}
-		if ($config{PORTFLOOD} and version->parse($version) >= version->parse("1.4.3")) {$config{PORTFLOOD6} = 1}
-		if ($config{CONNLIMIT} and version->parse($version) >= version->parse("1.4.3")) {$config{CONNLIMIT6} = 1}
-		if ($config{MESSENGER} and version->parse($version) >= version->parse("1.4.17")) {$config{MESSENGER6} = 1}
-		if ($config{SMTP_REDIRECT} and version->parse($version) >= version->parse("1.4.17")) {$config{SMTP_REDIRECT6} = 1}
+        # #
+        #   iptables › Version › < 1.3.5
+        #   
+        #   Disable USE_CONNTRACK if detected iptables version is 1.3.5 or
+        #   older.
+        #   
+        #   USE_CONNTRACK       This option should be enabled unless the kernel
+        #                       does not support the "conntrack" module.
+        #   
+        #                       To use the deprecated iptables "state" module,
+        #                       change this to 0
+        # #
+
+		if ( $config{USE_CONNTRACK} and version->parse( $version ) <= version->parse( "1.3.5" ) )
+        {
+            $config{USE_CONNTRACK} = 0
+        }
+
+        # #
+        #   iptables › Version › >= 1.4.3
+        #   
+        #   Enable PORTFLOOD6 if detected iptables version is 1.4.3 or
+        #   newer.
+        #   
+        #   PORTFLOOD           limits how many new connections can be made to
+        #                       specific ports within a set time period.
+        #   
+        #                       Enable IPv6 PORTFLOOD support when PORTFLOOD is
+        #                       enabled and the required iptables version is
+        #                       available.
+        # #
+
+		if ( $config{PORTFLOOD} and version->parse( $version ) >= version->parse( "1.4.3" ) )
+        {
+            $config{PORTFLOOD6} = 1
+        }
+
+		if ( $config{CONNLIMIT} and version->parse($version) >= version->parse("1.4.3")) {$config{CONNLIMIT6} = 1}
+		if ( $config{MESSENGER} and version->parse($version) >= version->parse("1.4.17")) {$config{MESSENGER6} = 1}
+		if ( $config{SMTP_REDIRECT} and version->parse($version) >= version->parse("1.4.17")) {$config{SMTP_REDIRECT6} = 1}
 		my @ipdata = &systemcmd("$config{IP6TABLES} $config{IPTABLESWAIT} -t nat -L POSTROUTING -nv");
 
 		if ($ipdata[0] =~ /^Chain POSTROUTING/)
@@ -368,9 +470,9 @@ sub loadconfig
 		$config{DROP_IP_LOGGING} = 0;
 	}
 
-	if ($config{FASTSTART})
+	if ( $config{FASTSTART} )
 	{
-		unless (-x $config{IPTABLES_RESTORE})
+		unless ( -x $config{IPTABLES_RESTORE} )
 		{
 			$warning .= "*WARNING* Unable to use FASTSTART as [$config{IPTABLES_RESTORE}] is not executable or does not exist\n";
 			$config{FASTSTART} = 0;
@@ -545,10 +647,22 @@ sub loadconfig
 	return $self;
 }
 
+# #
+#   Config › Get Loaded Config
+#   
+#   Return all currently loaded CSF config settings.
+# #
+
 sub config
 {
-	return %config;
+    return %config;
 }
+
+# #
+#   Config › Reset Loaded Config
+#   
+#   Clear cached config, setting map, and warnings.
+# #
 
 sub resetconfig
 {
@@ -558,6 +672,12 @@ sub resetconfig
 
 	return;
 }
+
+# #
+#   Config › Get Config Settings
+#   
+#   Return map of config settings that are loaded.
+# #
 
 sub configsetting
 {
@@ -645,6 +765,8 @@ sub getsingle
 }
 
 # #
+#	Config › Get › Default
+# #
 
 sub getdefault
 {
@@ -652,19 +774,23 @@ sub getdefault
 
 	if ( -e $defaultsfile )
 	{
-		open ( my $IN, "<", $defaultsfile ) or die "Cannot open $defaultsfile: $!";
-		flock ( $IN, LOCK_SH );
-		my @data = <$IN>;
-		close ( $IN );
-		chomp @data;
+		open        ( my $IN, "<", $defaultsfile ) or die "Cannot open $defaultsfile: $!";
+		flock       ( $IN, LOCK_SH );
+		my @data    = <$IN>;
+		close       ( $IN );
+		chomp       @data;
 
 		foreach my $line ( @data )
 		{
 			next if $line =~ /^(\s|\#|$)/;
 			my ( $name, $value ) = split( /\=/, $line, 2 );
 
-			# Clean since certain features can add trailing spaces or underscores_
-			$name  	= _trim( $name, 1 );
+			# #
+            #   Clean since certain features can add trailing spaces or
+            #   _underscores_
+            # #
+
+			$name   = _trim( $name, 1 );
 			$value 	= _trim( $value );
 			$value 	= undef if !defined $value || $value eq '';
 
@@ -676,15 +802,34 @@ sub getdefault
 	return undef;
 }
 
+# #
+#   Config › IPv4 Regex
+#   
+#   Return the IPv4 validation regular expression.
+# #
+
 sub ipv4reg
 {
 	return $ipv4reg;
 }
 
+# #
+#   Config › IPv6 Regex
+#   
+#   Return the IPv6 validation regular expression.
+# #
+
 sub ipv6reg
 {
 	return $ipv6reg;
 }
+
+# #
+#   Config › System Command
+#   
+#   Run system command, get output, wait for command to finish.
+#   Remove the iptables legacy warning from the returned output when present.
+# #
 
 sub systemcmd
 {
@@ -693,13 +838,13 @@ sub systemcmd
 
 	eval
 	{
-		my ($childin, $childout);
-		my $pid = open3($childin, $childout, $childout, @command);
-		@result = <$childout>;
-		waitpid ($pid, 0);
-		chomp @result;
+		my ( $childin, $childout );
+		my $pid     = open3( $childin, $childout, $childout, @command );
+		@result     = <$childout>;
+		waitpid     ( $pid, 0 );
+		chomp       @result;
 
-		if ($result[0] =~ /# Warning: iptables-legacy tables present/)
+		if ( $result[0] =~ /# Warning: iptables-legacy tables present/ )
 		{
 			shift @result
 		}
@@ -709,7 +854,7 @@ sub systemcmd
 }
 
 # #
-#	getLicense
+#	Config › Get › License Key
 #	
 #	Returns the sponsor license key from config.
 #	Uses internal %config hash; call after loadconfig().
@@ -723,18 +868,18 @@ sub getLicense
 }
 
 # #
-#	License › Status
+#	Config › Get › License Status
 #	
 #	Returns both the license status of a user, as well as any errors that
 #	may return from the validation process.
 #	
 #	License fetching utilizes URLGET, which can be changed in csf.conf.
 #	Three options available:
-#   	1. Perl module HTTP::Tiny
-#   	2. Perl module LWP::UserAgent
-#   	3. CURL/WGET (set location at the bottom of csf.conf if installed)
+#   	1.  Perl module HTTP::Tiny
+#   	2.  Perl module LWP::UserAgent
+#   	3.  CURL/WGET (set location at the bottom of csf.conf if installed)
 #	
-#	If using URLGET = "2"; requires LWP
+#	If URLGET = "2"; requires LWP
 #		yum install perl-libwww-perl.noarch perl-LWP-Protocol-https.noarch
 #		apt-get install libwww-perl liblwp-protocol-https-perl
 #	
@@ -749,17 +894,27 @@ sub getLicenseStatus
 {
 	my $timeout 	= 3;
 	my $license 	= getLicense();	
-	return ( 0, 'No license configured' ) unless $license;
+	if ( !$license )
+	{
+		return ( 0, 'No license configured' );
+	}
 
-	# avoid circular dependency
+    # #
+    #   avoid circular dependency
+    # #
+
 	require ConfigServer::URLGet;
 
 	my $urlget = ConfigServer::URLGet->new( $config{URLGET}, "csf/$VERSION", $config{URLPROXY} );
-	unless ( defined $urlget )
+	if ( !defined $urlget )
 	{
 		$urlget = ConfigServer::URLGet->new( 1, "csf/$VERSION", $config{URLPROXY} );
 	}
-	return ( 0, 'Unable to initialize URL fetcher' ) unless $urlget;
+
+	if ( !$urlget )
+	{
+		return ( 0, 'Unable to initialize URL fetcher' );
+	}
 
 	my $licenseEnc = uri_escape( $license );
 	my ( $statusCode, $resp );
@@ -770,7 +925,7 @@ sub getLicenseStatus
 		local $SIG{'ALRM'} 		= sub { die "timeout\n" };
 		alarm( $timeout );
 	
-		( $statusCode, $resp ) = $urlget->urlget( "https://license.configserver.dev/?license=$licenseEnc" );
+		( $statusCode, $resp )  = $urlget->urlget( LICENSE_URL . "?license=$licenseEnc" );
 		alarm( 0 );
 	};
 	alarm( 0 );
@@ -792,21 +947,23 @@ sub getLicenseStatus
 	return ( 0, 'Invalid license key' ) if $statusCode;
 
 	my $data = decode_json( $resp );
-	return ( 0, 'Invalid response from license server' ) unless defined $data;
+	if ( !defined $data )
+	{
+		return ( 0, 'Invalid response from license server' );
+	}
 
 	my $valid 	= $data->{message}{valid} ? 1 : 0;
 	my $msg 	= $data->{message}{response} // 'Unknown error';
-
-	$msg = "$msg";
-	$msg =~ s/[\x00-\x1F\x7F]//g;
-	$msg =~ s/\s+/ /g;
-	$msg = substr( $msg, 0, 200 );
+	$msg        = "$msg";
+	$msg        =~ s/[\x00-\x1F\x7F]//g;
+	$msg        =~ s/\s+/ /g;
+	$msg        = substr( $msg, 0, 200 );
 
 	return ( $valid, $msg );
 }
 
 # #
-#	getCodename
+#	Config › Get › Codename
 #	
 #	Returns the codename based on which control panel a user is running.
 #	Uses internal %config hash; call after loadconfig().
@@ -817,13 +974,16 @@ sub getLicenseStatus
 sub getCodename
 {
 	my $cname = "cpanel";
+	if ( $config{GENERIC} )         { $cname = "generic"        }
+	if ( $config{DIRECTADMIN} )     { $cname = "directadmin"    }
+	if ( $config{INTERWORX} )       { $cname = "interworx"      }
+	if ( $config{CYBERPANEL} )      { $cname = "cyberpanel"     }
+	if ( $config{CWP} )             { $cname = "cwp"            }
+	if ( $config{VESTA} )           { $cname = "vestacp"        }
 
-	if ($config{GENERIC})      { $cname = "generic" }
-	if ($config{DIRECTADMIN})  { $cname = "directadmin" }
-	if ($config{INTERWORX})    { $cname = "interworx" }
-	if ($config{CYBERPANEL})   { $cname = "cyberpanel" }
-	if ($config{CWP})          { $cname = "cwp" }
-	if ($config{VESTA})        { $cname = "vestacp" }
+    # #
+    #   Check for Webmin binaries
+    # #
 
 	if ( -e "/usr/share/webmin/miniserv.pl" || -e "/usr/libexec/webmin/bin/webmin" || -e "/usr/bin/webmin" )
 	{
@@ -834,6 +994,8 @@ sub getCodename
 }
 
 # #
+#	Config › Get › Download Server
+#   
 #	fetches a list of csf download server endpoints
 # #
 
@@ -843,15 +1005,19 @@ sub getdownloadserver
 	my $downloadservers = "/etc/csf/downloadservers";
 	my $chosen;
 
-	if (-e $downloadservers)
+    # #
+    #   /etc/csf/downloadservers exists; run the code inside the block.
+    # #
+
+	if ( -e $downloadservers )
 	{
-		open (my $DOWNLOAD, "<", $downloadservers);
-		flock ($DOWNLOAD, LOCK_SH);
-		my @data = <$DOWNLOAD>;
-		close ($DOWNLOAD);
-		chomp @data;
+		open        ( my $DOWNLOAD, "<", $downloadservers );
+		flock       ( $DOWNLOAD, LOCK_SH );
+		my @data    = <$DOWNLOAD>;
+		close       ( $DOWNLOAD );
+		chomp       @data;
 	
-		foreach my $line (@data) 
+		foreach my $line ( @data ) 
 		{
 			# #
 			#	whitelist of acceptable subdomains
@@ -860,22 +1026,22 @@ sub getdownloadserver
 			#		cdn.configserver.dev
 			# #
 
-			if ($line =~ /^(?:raw|download|cdn)\./) 
+			if ( $line =~ /^(?:raw|download|cdn)\./ ) 
 			{
 				push @servers, $line;
 			}
 		}
 
-		foreach my $line (slurp($downloadservers)) 
+		foreach my $line ( slurp( $downloadservers ) ) 
 		{
 			$line =~ s/$cleanreg//g;
-			if ($line =~ /^(?:raw|download|cdn)\./) 
+			if ( $line =~ /^(?:raw|download|cdn)\./ ) 
 			{
 				push @servers, $line;
 			}
 		}
 	
-		$chosen = $servers[rand @servers];
+		$chosen = $servers[ rand @servers ];
 	}
 
 	# #
