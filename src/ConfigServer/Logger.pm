@@ -23,6 +23,8 @@
 #   
 #   You should have received a copy of the GNU General Public License
 #   along with this program; if not, see <https://www.gnu.org/licenses>.
+#   
+#   @usage          perl -I. -MConfigServer::Logger -e "ConfigServer::Logger::tests_run()"
 # #
 
 # #
@@ -101,7 +103,7 @@ use constant
 {
     DEBUG                   => 1,
     _PRINT_SEP_LENGTH       => 140
-}
+};
 
 # #
 #	Logger › Declare › Status
@@ -164,7 +166,7 @@ my %C =
 	strength_good      	=> "\e[38;5;184m",
 	strength_strong    	=> "\e[38;5;47m",
 	strength_excellent 	=> "\e[38;5;40m",
-	strength_insane    	=> "\e[38;5;28m"
+	strength_insane     => "\e[38;5;28m"
 );
 
 # #

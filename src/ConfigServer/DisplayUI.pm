@@ -3872,7 +3872,7 @@ END_JS
 
 		# #
 		#	@notes			generic loads theme switch, css, footer
-		#					webmin does not load configserver.css; uses its own built-in theme and bootstramp
+		#					webmin does not load configserver.css; uses its own built-in theme and bootstrap
 		#					cwp loads theme switch, css, footer
 		#					directadmin loads theme switch, css, footer. (unless noscript used)
 		#					cpanel loads theme switch, css, footer

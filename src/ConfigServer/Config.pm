@@ -48,7 +48,7 @@ our @EXPORT_OK	= qw();
 #	Config › Declare › Version
 # #
 
-our $VERSION	= 1.05;
+our $VERSION	= 15.11;
 
 # #
 #
