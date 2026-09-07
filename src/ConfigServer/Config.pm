@@ -9,7 +9,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            02.19.2026
+#   @updated            09.07.2026
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -565,7 +565,85 @@ sub configsetting
 }
 
 # #
-#	Get Config Defaults
+#	Config › Get › Single Value
+#	
+#	Read a single setting in csf.conf without needing to load the
+#	entire CSF configuration.
+#	
+#	This does not call loadconfig() or perform any of its config
+#	validation or system checks.
+#	
+#	@usage			ConfigServer::Config->getsingle( "DEBUG" );
+#	
+#	@param			item			str			setting to get
+#	@return							str			setting value
+# #
+
+sub getsingle
+{
+	my ( $class, $item ) = @_;
+
+	$item = _trim( $item, 1 );
+	return undef if !defined $item || $item eq "";
+
+	open    ( my $IN, "<", $configfile ) or return undef;
+	flock   ( $IN, LOCK_SH );
+
+	my $value;
+	my $found = 0;
+
+	while ( my $line = <$IN> )
+	{
+		$line =~ s/$cleanreg//g;
+
+        # #
+        #   /^(\s|\#|$)/        Skip lines starting with whitespace, # chars,
+        #                       or empty.
+        #   
+        #   /=/                 Skip lines without equal = sign.
+        #   
+        #   s/\s//g             Remove all whitespace from setting name.
+        # #
+
+		next if $line =~ /^(\s|\#|$)/;
+		next if $line !~ /=/;
+
+		my ( $name, $setting ) = split( /=/, $line, 2 );
+		$name =~ s/\s//g;
+
+		next if $name ne $item;
+
+        # #
+        #   Checks if $setting contains a value inside double quotes.
+        #   If so, capture setting between the quotes.
+        # #
+
+		if ( $setting =~ /\"(.*)\"/ )
+		{
+			$setting = $1;
+		}
+		else
+		{
+			close( $IN );
+			croak "*Error* Invalid configuration line [$line] in $configfile";
+		}
+
+		if ( $found )
+		{
+			close( $IN );
+			croak "*Error* Setting $item is repeated in $configfile - you must remove the duplicates and then restart csf and lfd";
+		}
+
+		$value  = $setting;
+		$found  = 1;
+	}
+
+	close( $IN );
+
+	return $value if $found;
+	return undef;
+}
+
 # #
 
 sub getdefault
