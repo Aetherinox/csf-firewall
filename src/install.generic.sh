@@ -534,7 +534,7 @@ if [ "$dr" = "false" ]; then
 	cp -avf csf/* da/images/
 	cp -avf csf/* interworx/images/
 
-	cp -avf messenger/*.php /etc/csf/messenger/
+    cp -avf messenger/*.php messenger/*.html /etc/csf/messenger/
 	cp -avf uninstall.generic.sh /usr/local/csf/bin/uninstall.sh
 	cp -avf csftest.pl /usr/local/csf/bin/
 	cp -avf remove_apf_bfd.sh /usr/local/csf/bin/

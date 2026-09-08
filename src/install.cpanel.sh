@@ -528,7 +528,7 @@ if [ "$dr" = "false" ]; then
 	cp -avf csf/* da/images/
 	cp -avf csf/* interworx/images/
 
-	cp -avf messenger/*.php /etc/csf/messenger/
+	cp -avf messenger/*.php messenger/*.html /etc/csf/messenger/
 	cp -avf csf/csf_small.png /usr/local/cpanel/whostmgr/docroot/addon_plugins/
 	cp -avf uninstall.sh /usr/local/csf/bin/
 	cp -avf csftest.pl /usr/local/csf/bin/
@@ -560,7 +560,7 @@ if [ "$dr" = "false" ]; then
 	cp -avf cpanel.comodo.allow /etc/csf/
 	cp -avf cpanel.ignore /etc/csf/
 	cp -avf cpanel.allow /etc/csf/
-	cp -avf messenger/*.php /etc/csf/messenger/.
+	cp -avf messenger/*.php messenger/*.html /etc/csf/messenger/
 	cp -avf lfd.logrotate /etc/logrotate.d/lfd
 fi
 
