@@ -9,7 +9,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            09.07.2026
+#   @updated            09.08.2026
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -407,10 +407,12 @@ sub logfile
 	my @caller_direct   = caller( 0 );
 	my $file            = $caller_direct[ 1 ] // 'unknown';
 	my $line            = $caller_direct[ 2 ];
+	my $sub             = ( caller( 1 ) )[ 3 ] // 'unknown';
 
 	$file               =~ s{^.*/}{};
 	$file               =~ s{\.pl$}{};
-	my $source          = $file . ":" . $line;
+	$sub                =~ s{^.*::}{};
+	my $source          = $file . ":" . $line . "->" . $sub . "()";
 
     # #
     #   Status Mapping
