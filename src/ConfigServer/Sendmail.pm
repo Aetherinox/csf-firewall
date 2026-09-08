@@ -123,9 +123,16 @@ sub relay {
 		open (my $MAIL, "|-", "$config{SENDMAIL} -f $from -t") or carp("Unable to send SENDMAIL alert via [$config{SENDMAIL}]: $!");
 		print $MAIL $data;
 		close ($MAIL) or $error = 1;
-		if ($error and $config{DEBUG}) {
-			logfile("Failed to send message via sendmail binary: $?");
-			logfile("Failed message: [$data]");
+
+        # #
+        #   DEBUG:1         Log basic SendMail errors
+        #   DEBUG:2         Log basic SendMail errors and the full failed e-mail message
+        # #
+
+		if ( $error )
+        {
+            logfile( "DEBUG:1", "error", "[Sendmail] Failed to send message via sendmail binary: $?" );
+            logfile( "DEBUG:2", "error", "[Sendmail] Failed message: [$data]" );
 		}
 	}
 
