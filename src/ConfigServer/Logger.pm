@@ -407,12 +407,21 @@ sub logfile
 	my @caller_direct   = caller( 0 );
 	my $file            = $caller_direct[ 1 ] // 'unknown';
 	my $line            = $caller_direct[ 2 ];
-	my $sub             = ( caller( 1 ) )[ 3 ] // 'unknown';
+	my $sub             = ( caller( 1 ) )[ 3 ];
 
 	$file               =~ s{^.*/}{};
 	$file               =~ s{\.pl$}{};
-	$sub                =~ s{^.*::}{};
-	my $source          = $file . ":" . $line . "->" . $sub . "()";
+
+	my $source;
+	if ( defined $sub )
+	{
+		$sub    =~ s{^.*::}{};
+		$source = $file . ":" . $line . "->" . $sub . "()";
+	}
+	else
+	{
+		$source = $file . ":" . $line . "::global";
+	}
 
     # #
     #   Status Mapping
