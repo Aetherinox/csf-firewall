@@ -2,7 +2,7 @@
 #   @type               github workflow
 #   @author             Aetherinox
 #   @url                https://github.com/Aetherinox
-#   @updated            10.14.25
+#   @updated            09.11.26
 #   @usage              releases a new public copy of ConfigServer Firewall
 #
 #   @secrets            secrets.SELF_TOKEN                                          self github personal access token (fine-grained)
@@ -1222,7 +1222,7 @@ jobs:
                   prerelease: false
                   body: |
                       > [!WARNING]
-                      > This is a **release candidate**, which means it is not a stable release and could contain bugs. You should download it at your own risk.
+                      > This is a **release candidate (RC)**, which means it is not a stable release and could contain bugs. You should download it at your own risk.
 
                       ${{ steps.task_release_changelog_categorized.outputs.changelog }}
                       ${{ steps.task_release_changelog_uncategorized.outputs.changelog }}
