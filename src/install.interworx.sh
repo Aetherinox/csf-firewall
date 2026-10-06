@@ -982,6 +982,10 @@ run chmod -v 0711 /usr/local/interworx/html/configserver
 run cp -avf interworx/* /usr/local/interworx/plugins/configservercsf
 run cp -avf csf /usr/local/interworx/html/configserver/
 run chown -R iworx:iworx /usr/local/interworx/plugins/configservercsf /usr/local/interworx/html/configserver
+run mkdir -v -p -m 0700 /usr/local/csf/interworx
+run cp -avf interworx/lib/index.pl interworx/lib/reseller.pl /usr/local/csf/interworx/
+run chown -R root:root /usr/local/csf/interworx
+run chmod -v 0700 /usr/local/csf/interworx /usr/local/csf/interworx/index.pl /usr/local/csf/interworx/reseller.pl
 run find /usr/local/interworx/plugins/configservercsf -type d -exec chmod -v 700 {} \;
 run find /usr/local/interworx/plugins/configservercsf -type f -exec chmod -v 600 {} \;
 run /usr/local/interworx/bin/nodeworx.pex -u --controller Plugins --action edit --plugin_name configservercsf --status 1 -n

@@ -29,14 +29,6 @@
 class Ctrl_Nodeworx_Configservercsf extends Ctrl_Nodeworx_Plugin
 {
 
-    protected function _init()
-    {
-        chmod('/usr/local/interworx/plugins/configservercsf', 0711);
-        chmod('/usr/local/interworx/plugins/configservercsf/lib', 0711);
-        chmod('/usr/local/interworx/plugins/configservercsf/lib/index.pl', 0711);
-        chmod('/usr/local/interworx/plugins/configservercsf/lib/reseller.pl', 0711);
-	}
-
     public function launchAction()
     {
         $this->getView()->assign('title', 'Configservercsf Services');
