@@ -51,78 +51,75 @@ class Plugin_Configservercsf extends Plugin
 
     public function runReseller()
     {
-        putenv('IWORX_SESSION_ID=' . session_id());
+        $env = array('IWORX_SESSION_ID' => session_id());
         session_write_close();
 
-        $cmd = Ini::get(Ini::IWORX_BIN, 'runasuser');
-
-        $user = 'root';
-        $cmd .= " {$user} custom /usr/local/interworx/plugins/configservercsf/lib/reseller.pl 2>&1";
-
         $InterWorx   = IW::Env()->getActiveSession()->getInterWorx();
-		$WorkingUser = $InterWorx->getWorkingUser();
-		putenv('REMOTE_USER=' . $WorkingUser->getNickname());
+        $WorkingUser = $InterWorx->getWorkingUser();
+        $env['REMOTE_USER'] = $WorkingUser->getNickname();
 
-		putenv('QUERY_STRING=' . http_build_query($_GET));
-        putenv('REQUEST_METHOD=' . $_SERVER['REQUEST_METHOD']);
-
-        putenv('REMOTE_ADDR=' . $_SERVER['REMOTE_ADDR']);
-        putenv('HTTP_USER_AGENT=' . $_SERVER['HTTP_USER_AGENT']);
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            putenv('CONTENT_LENGTH=' . $_SERVER['CONTENT_LENGTH']);
-            putenv('POST=' . http_build_query($_POST));
-            putenv('HTTP_RAW_POST_DATA=' . http_build_query($_POST));
-        }
-
-        IWorxExec::exec($cmd, $result, $retval, IWorxExec::STDERR_2_STDOUT);
-		$header = 1;
-		foreach ($result as $line) {
-			if ($header) {
-				header ("$line\n");
-			} else {
-				print "$line\n";
-			}
-			if ($header && $line == "") {
-				$header = 0;
-			}
-		}
+        $this->_runPage('reseller', $env);
     }
 
     public function runAdmin()
     {
-        putenv('IWORX_SESSION_ID=' . session_id());
+        $env = array('IWORX_SESSION_ID' => session_id());
         session_write_close();
 
-        $cmd = Ini::get(Ini::IWORX_BIN, 'runasuser');
+        $this->_runPage('index', $env);
+    }
 
-        $user = 'root';
-        $cmd .= " {$user} custom /usr/local/interworx/plugins/configservercsf/lib/index.pl 2>&1";
+    /**
+     * Runs a CSF page script as root and prints its CGI response.
+     *
+     * Uses the InterWorx CsfPage escalation when this InterWorx has it, and
+     * falls back to runasuser on older releases.
+     */
+    private function _runPage($page, array $env)
+    {
+        $env['QUERY_STRING']   = http_build_query($_GET);
+        $env['REQUEST_METHOD'] = $_SERVER['REQUEST_METHOD'];
 
-        putenv('QUERY_STRING=' . http_build_query($_GET));
-        putenv('REQUEST_METHOD=' . $_SERVER['REQUEST_METHOD']);
-
-        putenv('REMOTE_ADDR=' . $_SERVER['REMOTE_ADDR']);
-        putenv('HTTP_USER_AGENT=' . $_SERVER['HTTP_USER_AGENT']);
+        $env['REMOTE_ADDR']     = $_SERVER['REMOTE_ADDR'];
+        $env['HTTP_USER_AGENT'] = $_SERVER['HTTP_USER_AGENT'];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            putenv('CONTENT_LENGTH=' . $_SERVER['CONTENT_LENGTH']);
-            putenv('POST=' . http_build_query($_POST));
-            putenv('HTTP_RAW_POST_DATA=' . http_build_query($_POST));
+            $env['CONTENT_LENGTH']     = $_SERVER['CONTENT_LENGTH'];
+            $env['POST']               = http_build_query($_POST);
+            $env['HTTP_RAW_POST_DATA'] = http_build_query($_POST);
         }
 
-        IWorxExec::exec($cmd, $result, $retval, IWorxExec::STDERR_2_STDOUT);
-		$header = 1;
-		foreach ($result as $line) {
-			if ($header) {
-				header ("$line\n");
-			} else {
-				print "$line\n";
-			}
-			if ($header && $line == "") {
-				$header = 0;
-			}
-		}
+        if (class_exists('IWorx\\Process\\IWorx\\CsfPage')) {
+            $Page = \IWorx\Process\IWorx\CsfPage::factory();
+            $Page->setPage($page);
+            $Page->setEnvVariables($env);
+            $Page->exec();
+            $result = $Page->getOutput();
+            if ($Page->getRetval() === \IWorx\Process\IWorx\ProcessRunAsUser::RETVAL_RECONSTRUCTION_REJECTED) {
+                header('Content-Type: text/plain');
+                print implode("\n", $result) . "\n";
+                return;
+            }
+        } else {
+            foreach ($env as $name => $value) {
+                putenv($name . '=' . $value);
+            }
+            $cmd = Ini::get(Ini::IWORX_BIN, 'runasuser');
+            $cmd .= " root custom /usr/local/interworx/plugins/configservercsf/lib/{$page}.pl 2>&1";
+            IWorxExec::exec($cmd, $result, $retval, IWorxExec::STDERR_2_STDOUT);
+        }
+
+        $header = 1;
+        foreach ($result as $line) {
+            if ($header) {
+                header ("$line\n");
+            } else {
+                print "$line\n";
+            }
+            if ($header && $line == "") {
+                $header = 0;
+            }
+        }
     }
 
     public function updateNodeworxMenu(IWorxMenuManager $MenuMan)
