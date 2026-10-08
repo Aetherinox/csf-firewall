@@ -5801,7 +5801,7 @@ sub connectiontracking
 			sysopen (my $TEMPCONF, "/var/lib/csf/csf.tempconf", O_WRONLY | O_APPEND | O_CREAT) or &shutdown_child(__LINE__,"*Error* Cannot append out file: $!");
 			flock ($TEMPCONF, LOCK_EX);
 			print $TEMPCONF "CT_INTERVAL = \"$config{CT_INTERVAL}\"\n";
-			close ($TEMPCONF);
+			close ( $TEMPCONF );
 			logfile("CT_INTERVAL taking $alarm seconds, temporarily throttled to run every $config{CT_INTERVAL} seconds");
 		}
 
@@ -6112,7 +6112,7 @@ sub processtracking
 					}
 					$deleted = 1;
 					if ($config{PT_DELETED}) {
-						$exet .= "\n\nThe file system shows this process is running an executable file that has been deleted. This typically happens when the original file has been replaced by a new file when the application is updated. To prevent this being reported again, restart the process that runs this excecutable file. See csf.conf and the PT_DELETED text for more information about the security implications of processes running deleted executable files.";
+						$exet .= "\n\nThe file system shows this process is running an executable file that has been deleted. This typically happens when the original file has been replaced by a new file when the application is updated. To prevent this being reported again, restart the process that runs this executable file. See csf.conf and the PT_DELETED text for more information about the security implications of processes running deleted executable files.";
 					} else { next }
 				}
 
@@ -6358,11 +6358,21 @@ sub processtracking
 			}
 		}
 
-		if ($config{PT_USERMEM} or $config{PT_USERRSS} or $config{PT_USERTIME}) {
-			foreach my $pid (keys %procres) {
+        # #
+        #   @note           Keep the log format below stable. Users may rely on
+        #                   regex patterns to match these entries for alerts or
+        #                   e-mail processing, so changing the format may break
+        #                   existing rules for a user.
+        # #
+
+		if ($config{PT_USERMEM} or $config{PT_USERRSS} or $config{PT_USERTIME})
+        {
+			foreach my $pid (keys %procres)
+            {
 				my $report = 0;
 				my $resource;
 				my $level;
+
 				if ($config{PT_USERMEM} and ($procres{$pid}{vmsize} > ($config{PT_USERMEM} * 1024))) {
 					$report = 1;
 					$resource = "Virtual Memory Size";
@@ -9201,7 +9211,7 @@ sub dirwatch {
 			sysopen (my $TEMPCONF, "/var/lib/csf/csf.tempconf", O_WRONLY | O_APPEND | O_CREAT) or &shutdown_child(__LINE__,"*Error* Cannot append out file: $!");
 			flock ($TEMPCONF, LOCK_EX);
 			print $TEMPCONF "LF_DIRWATCH = \"$config{LF_DIRWATCH}\"\n";
-			close ($TEMPCONF);
+			close ( $TEMPCONF );
 			logfile("LF_DIRWATCH taking $alarm seconds, temporarily throttled to run every $config{LF_DIRWATCH} seconds");
 		}
 
@@ -9484,7 +9494,7 @@ sub integrity {
 			sysopen (my $TEMPCONF, "/var/lib/csf/csf.tempconf", O_WRONLY | O_APPEND | O_CREAT) or &shutdown_child(__LINE__,"*Error* Cannot append out file: $!");
 			flock ($TEMPCONF, LOCK_EX);
 			print $TEMPCONF "LF_INTEGRITY = \"$config{LF_INTEGRITY}\"\n";
-			close ($TEMPCONF);
+			close ( $TEMPCONF );
 			logfile("LF_INTEGRITY taking $alarm seconds, temporarily throttled to run every $config{LF_INTEGRITY} seconds");
 		}
 
@@ -9808,72 +9818,112 @@ sub shutdown_child
 
 sub ignoreip
 {
-	my $ip = shift;
-	my $skip = shift;
+	my $ip      = shift;
+	my $skip    = shift;
 
-	if ($ip eq "") {return 0}
+	if ( $ip eq "" )
+    {
+        return 0
+    }
 
-	if ($ips{$ip} or $ipscidr->find($ip) or $ipscidr6->find($ip)) {return 1}
+	if ( $ips{$ip} or $ipscidr->find( $ip ) or $ipscidr6->find( $ip ) )
+    {
+        return 1
+    }
 
-	if ($ignoreips{$ip}) {return 1}
+	if ( $ignoreips{$ip} )
+    {
+        return 1
+    }
 
-	if ($gignoreips{$ip}) {return 1}
+	if ( $gignoreips{$ip} )
+    {
+        return 1
+    }
 
-	if ($config{CC_IGNORE}) {
-		my ($cc,$asn) = iplookup($ip,1);
-		($asn,undef) = split(/\s+/,$asn);
-		if ($cc ne "" and $config{CC_IGNORE} =~ /$cc/i) {return 1}
-		if ($asn ne "" and $config{CC_IGNORE} =~ /$asn/i) {return 1}
+	if ( $config{CC_IGNORE} )
+    {
+		my ( $cc, $asn )    = iplookup( $ip,1 );
+		( $asn, undef )     = split( /\s+/, $asn );
+
+		if ( $cc ne "" and $config{CC_IGNORE} =~ /$cc/i )
+        {
+            return 1
+        }
+
+		if ( $asn ne "" and $config{CC_IGNORE} =~ /$asn/i )
+        {
+            return 1
+        }
 	}
 
-	if ($relayip{$ip} and !$skip) {return 1}
+	if ( $relayip{$ip} and !$skip )
+    {
+        return 1
+    }
 
-	if (@cidrs) {
-		if ($cidr->find($ip)) {return 1}
-		if ($cidr6->find($ip)) {return 1}
+	if ( @cidrs )
+    {
+		if ( $cidr->find( $ip ) )   { return 1 }
+		if ( $cidr6->find( $ip ) )  { return 1 }
 	}
 
-	if (@gcidrs) {
-		if ($gcidr->find($ip)) {return 1}
-		if ($gcidr6->find($ip)) {return 1}
+	if ( @gcidrs )
+    {
+		if ( $gcidr->find( $ip ) )  { return 1 }
+		if ( $gcidr6->find( $ip ) ) { return 1 }
 	}
 
-	if (@rdns and !$skip) {
+	if ( @rdns and !$skip )
+    {
 		my $matchdomain;
 		my $matchip;
-
 		my $dnsip;
 		my $dnsrip;
 		my $dnshost;
 		my $cachehit;
-		open (my $DNS, "<", "/var/lib/csf/csf.dnscache");
-		flock ($DNS, LOCK_SH);
-		while (my $line = <$DNS>) {
+
+		open    ( my $DNS, "<", "/var/lib/csf/csf.dnscache" );
+		flock   ( $DNS, LOCK_SH );
+
+		while ( my $line = <$DNS> )
+        {
 			chomp $line;
-			($dnsip,$dnsrip,$dnshost) = split(/\|/,$line);
-			if ($ip eq $dnsip) {
+			( $dnsip, $dnsrip, $dnshost ) = split( /\|/, $line );
+			if ( $ip eq $dnsip )
+            {
 				$cachehit = 1;
 				last;
 			}
 		}
-		close ($DNS);
-		if ($cachehit) {
-			$matchip = $dnsrip;
-			$matchdomain = $dnshost;
-			if ($config{DEBUG} >= 2) {logfile("debug: (ignoreip) [cached] [$ip]:[$matchip] [$matchdomain]")}
-		} else {
+
+		close   ( $DNS );
+		if ( $cachehit )
+        {
+			$matchip        = $dnsrip;
+			$matchdomain    = $dnshost;
+
+			if ( $config{DEBUG} >= 2 )
+            {
+                logfile( "debug: (ignoreip) [cached] [$ip]:[$matchip] [$matchdomain]" );
+            }
+		}
+        else
+        {
 			eval {
-				local $SIG{__DIE__} = undef;
-				local $SIG{'ALRM'} = sub {die};
+				local $SIG{__DIE__}     = undef;
+				local $SIG{'ALRM'}      = sub { die };
 				alarm(8);
-				$matchip = inet_aton($ip);
-				$matchdomain = gethostbyaddr($matchip, AF_INET);
-				if ($matchdomain ne "") {
-					$matchip = gethostbyname($matchdomain);
-					$matchip = inet_ntoa($matchip);
+				$matchip                = inet_aton( $ip );
+				$matchdomain            = gethostbyaddr( $matchip, AF_INET );
+				if ( $matchdomain ne "" )
+                {
+					$matchip    = gethostbyname( $matchdomain );
+					$matchip    = inet_ntoa( $matchip );
 				}
-				alarm(0);
+				alarm( 0 );
 			};
+
 			alarm(0);
 			unless (checkip(\$matchip)) {$matchip = ""}
 			sysopen (my $DNS, "/var/lib/csf/csf.dnscache", O_WRONLY | O_APPEND | O_CREAT);
@@ -11212,19 +11262,22 @@ sub messengerstop
 	{
 		return;
 	}
-	elsif ($version == 2){
-		if (-e "/etc/apache2/conf.d/csf.messenger.conf") {
-			unlink("/etc/apache2/conf.d/csf.messenger.conf");
-			system("/scripts/restartsrv_httpd");
-			logfile("*MESSENGERV2* Removed /etc/apache2/conf.d/csf.messenger.conf");
+	elsif ($version == 2)
+	{
+		if ( -e "/etc/apache2/conf.d/csf.messenger.conf" )
+		{
+			unlink( "/etc/apache2/conf.d/csf.messenger.conf" );
+			system( "/scripts/restartsrv_httpd" );
 		}
 	}
-	elsif ($version == 3) {
-		if (-d $config{MESSENGERV3LOCATION}) {
-			if (-e $config{MESSENGERV3LOCATION}."/csf.messenger.conf") {
-				unlink($config{MESSENGERV3LOCATION}."/csf.messenger.conf");
-				system($config{MESSENGERV3RESTART});
-				logfile("*MESSENGERV3* Removed ".$config{MESSENGERV3LOCATION}."/csf.messenger.conf");
+	elsif ($version == 3)
+	{
+		if ( -d $config{MESSENGERV3LOCATION} )
+		{
+			if ( -e $config{MESSENGERV3LOCATION} . "/csf.messenger.conf" )
+			{
+				unlink( $config{MESSENGERV3LOCATION} . "/csf.messenger.conf" );
+				system( $config{MESSENGERV3RESTART} );
 			}
 		}
 		elsif (-f $config{MESSENGERV3LOCATION}) {
@@ -11232,23 +11285,25 @@ sub messengerstop
 			if (grep {$_ =~ m[^Include /var/lib/csf/csf.conf]i} @conf) {
 				sysopen (my $FILE, $config{MESSENGERV3LOCATION}, O_WRONLY | O_CREAT | O_TRUNC);
 				flock ($FILE, LOCK_EX);
-				foreach my $line (@conf) {
+	
+				foreach my $line (@conf)
+				{
 			        $line =~ s/$cleanreg//g;
 					if ($line =~ m[^Include /var/lib/csf/csf.conf]i) { next }
 					print $FILE $line."\n";
 				}
+
 				close ($FILE);
 				system($config{MESSENGERV3RESTART});
-				logfile("*MESSENGERV3* Removed from $config{MESSENGERV3LOCATION}");
+
+                logfile( "DEBUG:1", "info", "[MessengerV3] Found Include directive in [" . $config{MESSENGERV3LOCATION} . "]; removing" );
 			}
 		}
 	}
 	
 	return;
 }
-# end messengerstop
-###############################################################################
-# start messenger
+
 sub messenger
 {
 	my $port = shift;
@@ -11285,58 +11340,61 @@ sub messenger
 	}
 	return;
 }
-# end messenger
-###############################################################################
-# start messengerv2
+
 sub messengerv2
 {
-	my $timer = time;
+	my $timer   = time;
+	$SIG{CHLD}  = 'IGNORE';
 
-	$SIG{CHLD} = 'IGNORE';
-	unless (defined ($childpid = fork)) {
+	unless (defined ($childpid = fork))
+    {
 		&shutdown(__LINE__,"*Error* cannot fork: $!");
 	} 
+
 	$forks{$childpid} = 1;
-	unless ($childpid) {
+	unless ($childpid)
+    {
 		if ($config{DEBUG} >= 3) {$timer = &timer("start","messengerv2",$timer)}
 		$0 = "lfd - messenger csf...";
 
 		my ($status,$reason) = $messenger2->start();
-		if ($status) {
-			logfile("*MESSENGERV2* Error: $reason");
+		if ($status)
+        {
 		}
+
 		if ($config{DEBUG} >= 3) {$timer = &timer("stop","messengerv2",$timer)}
 		exit;
 	}
 	return;
 }
-# end messengerv2
-###############################################################################
-# start messengerv3
-sub messengerv3 {
-	my $timer = time;
 
+sub messengerv3
+{
+	my $timer = time;
 	$SIG{CHLD} = 'IGNORE';
-	unless (defined ($childpid = fork)) {
+
+	unless (defined ($childpid = fork))
+	{
 		&shutdown(__LINE__,"*Error* cannot fork: $!");
 	} 
+
 	$forks{$childpid} = 1;
-	unless ($childpid) {
+	unless ($childpid)
+	{
 		if ($config{DEBUG} >= 3) {$timer = &timer("start","messengerv3",$timer)}
 		$0 = "lfd - messenger csf...";
 
 		my ($status,$reason) = $messenger3->start();
-		if ($status) {
-			logfile("*MESSENGERV3* Error: $reason");
+		if ($status)
+        {
 		}
+
 		if ($config{DEBUG} >= 3) {$timer = &timer("stop","messengerv3",$timer)}
 		exit;
 	}
 	return;
 }
-# end messengerv3
-###############################################################################
-# start domessenger
+
 sub domessenger
 {
 	my $ip = shift;
