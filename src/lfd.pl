@@ -7131,6 +7131,50 @@ sub blocklist {
 }
 # end blocklist
 ###############################################################################
+# start ccindex
+# Index the requested country codes and ASNs once, so the GeoLite2/ip2asn
+# databases are scanned with a hash lookup per record instead of looping over
+# every CC_* entry (with a regex) for every record.
+sub ccindex {
+	my $cclist = shift;
+	my %byiso;
+	my %byasn;
+	foreach my $cc (keys %{$cclist}) {
+		push @{$byiso{uc $cc}}, $cc;
+		if (uc($cc) =~ /AS(\d+)/) {push @{$byasn{$1}}, $cc}
+	}
+	return (\%byiso, \%byasn);
+}
+# end ccindex
+###############################################################################
+# start ccemptyzone
+# A country code or ASN without entries for this IP family still gets a zone
+# file. Otherwise the missing file is treated as out of date and every hourly
+# check re-reads the database and repopulates every CC_* ipset.
+# Nothing is written when the database could not be read (a failed download
+# or unzip leaves it missing or empty), and a zone that still has entries is
+# kept, so a broken database never replaces existing zones.
+sub ccemptyzone {
+	my $file = shift;
+	my $db = shift;
+	unless (-s $db) {return}
+	if (-s $file) {
+		open (my $IN, "<", $file);
+		flock ($IN, LOCK_SH);
+		my @entries = grep {!/^(\s|\#|$)/} <$IN>;
+		close ($IN);
+		if (@entries) {return}
+	}
+	sysopen (my $CIDROUT, $file, O_WRONLY | O_CREAT);
+	flock ($CIDROUT, LOCK_EX);
+	seek ($CIDROUT, 0, 0);
+	truncate ($CIDROUT, 0);
+	print $CIDROUT "# no entries found in the database\n";
+	close ($CIDROUT);
+	return;
+}
+# end ccemptyzone
+###############################################################################
 # start countrycode
 sub countrycode {
 	my $force = shift;
@@ -7287,6 +7331,7 @@ sub countrycode {
 
 			if ($getgeo) {
 				logfile("CC: Processing $config{cc_src} Country/ASN database");
+				my ($ccbyiso,$ccbyasn) = &ccindex(\%cclist);
 				my %dcidr;
 				my %geoid;
 				open (my $GEO, "<", "/var/lib/csf/Geo/GeoLite2-Country-Locations-en.csv");
@@ -7295,10 +7340,8 @@ sub countrycode {
 					chomp $record;
 					$record =~ s/\"//g;
 					my ($geoname_id,undef,undef,undef,$country_iso_code,undef) = split (/\,/,$record);
-					foreach my $cc (keys %cclist) {
-						if (uc $cc eq uc $country_iso_code) {
-							$geoid{$cc}{$geoname_id} = 1;
-						}
+					foreach my $cc (@{$ccbyiso->{uc $country_iso_code} || []}) {
+						push @{$geoid{$geoname_id}}, $cc;
 					}
 				}
 				close ($GEO);
@@ -7308,10 +7351,8 @@ sub countrycode {
 					chomp $record;
 					$record =~ s/\"//g;
 					my ($range,$geoname_id,undef) = split (/\,/,$record);
-					foreach my $cc (keys %cclist) {
-						if ($geoid{$cc}{$geoname_id}) {
-							$dcidr{$cc}{$range} = 1;
-						}
+					foreach my $cc (@{$geoid{$geoname_id} || []}) {
+						$dcidr{$cc}{$range} = 1;
 					}
 				}
 				close ($IN);
@@ -7321,12 +7362,8 @@ sub countrycode {
 					chomp $record;
 					$record =~ s/\"//g;
 					my ($range,$asn,undef) = split (/\,/,$record);
-					foreach my $cc (keys %cclist) {
-						if (uc($cc) =~ /AS(\d+)/) {
-							if ($1 eq $asn) {
-								$dcidr{$cc}{$range} = 1;
-							}
-						}
+					foreach my $cc (@{$ccbyasn->{$asn} || []}) {
+						$dcidr{$cc}{$range} = 1;
 					}
 				}
 				close ($IN);
@@ -7335,8 +7372,10 @@ sub countrycode {
 					if (keys %{$dcidr{$cc}} eq 0) {
 						if (length($cc) == 2) {
 							logfile("CC: No entries found for [".uc($cc)."] in /var/lib/csf/Geo/GeoLite2-Country-Blocks-IPv4.csv");
+							&ccemptyzone("/var/lib/csf/zone/$cc.zone","/var/lib/csf/Geo/GeoLite2-Country-Blocks-IPv4.csv");
 						} else {
 							logfile("CC: No entries found for [".uc($cc)."] in /var/lib/csf/Geo/GeoLite2-ASN-Blocks-IPv4.csv");
+							&ccemptyzone("/var/lib/csf/zone/$cc.zone","/var/lib/csf/Geo/GeoLite2-ASN-Blocks-IPv4.csv");
 						}
 					} else {
 						sysopen (my $CIDROUT, "/var/lib/csf/zone/$cc.zone", O_WRONLY | O_CREAT);
@@ -7411,6 +7450,7 @@ sub countrycode {
 
 			if ($getgeo) {
 				logfile("CC: Processing $config{asn_src} ASN database");
+				my (undef,$ccbyasn) = &ccindex(\%cclist);
 				my %dcidr;
 				open ($IN, "<", "/var/lib/csf/Geo/ip2asn-combined.tsv");
 				flock ($IN, LOCK_SH);
@@ -7419,16 +7459,12 @@ sub countrycode {
 					$record =~ s/\"//g;
 					my ($start,$end,$asn,undef) = split (/\t/,$record);
 					if (checkip($start) == 6) {last}
-					foreach my $cc (keys %cclist) {
-						if (uc($cc) =~ /AS(\d+)/) {
-							if ($1 eq $asn) {
-								my $ipscidr = Net::CIDR::Lite->new;
-								eval {local $SIG{__DIE__} = undef; $ipscidr->add_range("$start-$end")};
-								my @cidr_list = $ipscidr->list;
-								foreach my $list (@cidr_list) {
-									$dcidr{$cc}{$list} = 1;
-								}
-							}
+					foreach my $cc (@{$ccbyasn->{$asn} || []}) {
+						my $ipscidr = Net::CIDR::Lite->new;
+						eval {local $SIG{__DIE__} = undef; $ipscidr->add_range("$start-$end")};
+						my @cidr_list = $ipscidr->list;
+						foreach my $list (@cidr_list) {
+							$dcidr{$cc}{$list} = 1;
 						}
 					}
 				}
@@ -7438,6 +7474,7 @@ sub countrycode {
 						logfile("CC: Extracting zone from $config{asn_src} ASN database for [".uc($cc)."]");
 						if (keys %{$dcidr{$cc}} eq 0) {
 							logfile("CC: No entries found for [".uc($cc)."] in /var/lib/csf/Geo/ip2asn-combined.tsv");
+							&ccemptyzone("/var/lib/csf/zone/$cc.zone","/var/lib/csf/Geo/ip2asn-combined.tsv");
 						} else {
 							sysopen (my $CIDROUT, "/var/lib/csf/zone/$cc.zone", O_WRONLY | O_CREAT);
 							flock ($CIDROUT, LOCK_EX);
@@ -8136,6 +8173,7 @@ sub countrycode6 {
 	if ($config{CC_SRC} eq "" or $config{CC_SRC} eq "1") {
 		if ($getgeo) {
 			logfile("CC: Processing $config{cc_src} Country/ASN IPv6 database");
+			my ($ccbyiso,$ccbyasn) = &ccindex(\%cclist);
 			my %dcidr;
 			my %geoid;
 			open (my $GEO, "<", "/var/lib/csf/Geo/GeoLite2-Country-Locations-en.csv");
@@ -8144,10 +8182,8 @@ sub countrycode6 {
 				chomp $record;
 				$record =~ s/\"//g;
 				my ($geoname_id,undef,undef,undef,$country_iso_code,undef) = split (/\,/,$record);
-				foreach my $cc (keys %cclist) {
-					if (uc $cc eq uc $country_iso_code) {
-						$geoid{$cc}{$geoname_id} = 1;
-					}
+				foreach my $cc (@{$ccbyiso->{uc $country_iso_code} || []}) {
+					push @{$geoid{$geoname_id}}, $cc;
 				}
 			}
 			close ($GEO);
@@ -8157,10 +8193,8 @@ sub countrycode6 {
 				chomp $record;
 				$record =~ s/\"//g;
 				my ($range,$geoname_id,undef) = split (/\,/,$record);
-				foreach my $cc (keys %cclist) {
-					if ($geoid{$cc}{$geoname_id}) {
-						$dcidr{$cc}{$range} = 1;
-					}
+				foreach my $cc (@{$geoid{$geoname_id} || []}) {
+					$dcidr{$cc}{$range} = 1;
 				}
 			}
 			close ($IN);
@@ -8170,12 +8204,8 @@ sub countrycode6 {
 				chomp $record;
 				$record =~ s/\"//g;
 				my ($range,$asn,undef) = split (/\,/,$record);
-				foreach my $cc (keys %cclist) {
-					if (uc($cc) =~ /AS(\d+)/) {
-						if ($1 eq $asn) {
-							$dcidr{$cc}{$range} = 1;
-						}
-					}
+				foreach my $cc (@{$ccbyasn->{$asn} || []}) {
+					$dcidr{$cc}{$range} = 1;
 				}
 			}
 			close ($IN);
@@ -8184,8 +8214,10 @@ sub countrycode6 {
 				if (keys %{$dcidr{$cc}} eq 0) {
 					if (length($cc) == 2) {
 						logfile("CC: No IPv6 entries found for [".uc($cc)."] in /var/lib/csf/Geo/GeoLite2-Country-Blocks-IPv6.csv");
+						&ccemptyzone("/var/lib/csf/zone/$cc.zone6","/var/lib/csf/Geo/GeoLite2-Country-Blocks-IPv6.csv");
 					} else {
 						logfile("CC: No IPv6 entries found for [".uc($cc)."] in /var/lib/csf/Geo/GeoLite2-ASN-Blocks-IPv6.csv");
+						&ccemptyzone("/var/lib/csf/zone/$cc.zone6","/var/lib/csf/Geo/GeoLite2-ASN-Blocks-IPv6.csv");
 					}
 				} else {
 					sysopen (my $CIDROUT, "/var/lib/csf/zone/$cc.zone6", O_WRONLY | O_CREAT);
@@ -8200,6 +8232,7 @@ sub countrycode6 {
 	} elsif ($config{CC_SRC} eq "2") {
 		if ($getgeo) {
 			logfile("CC: Processing $config{cc_src} Country/ASN IPv6 database");
+			my (undef,$ccbyasn) = &ccindex(\%cclist);
 			my %dcidr;
 			open ($IN, "<", "/var/lib/csf/Geo/ip2asn-combined.tsv");
 			flock ($IN, LOCK_SH);
@@ -8208,16 +8241,12 @@ sub countrycode6 {
 				$record =~ s/\"//g;
 				my ($start,$end,$asn,undef) = split (/\t/,$record);
 				if (checkip($start) == 4) { next }
-				foreach my $cc (keys %cclist) {
-					if (uc($cc) =~ /AS(\d+)/) {
-						if ($1 eq $asn) {
-							my $ipscidr = Net::CIDR::Lite->new;
-							eval {local $SIG{__DIE__} = undef; $ipscidr->add_range("$start-$end")};
-							my @cidr_list = $ipscidr->list;
-							foreach my $list (@cidr_list) {
-								$dcidr{$cc}{$list} = 1;
-							}
-						}
+				foreach my $cc (@{$ccbyasn->{$asn} || []}) {
+					my $ipscidr = Net::CIDR::Lite->new;
+					eval {local $SIG{__DIE__} = undef; $ipscidr->add_range("$start-$end")};
+					my @cidr_list = $ipscidr->list;
+					foreach my $list (@cidr_list) {
+						$dcidr{$cc}{$list} = 1;
 					}
 				}
 			}
@@ -8227,6 +8256,7 @@ sub countrycode6 {
 					logfile("CC: Extracting IPv6 zone from $config{asn_src} ASN database for [".uc($cc)."]");
 					if (keys %{$dcidr{$cc}} eq 0) {
 						logfile("CC: No entries found for [".uc($cc)."] in /var/lib/csf/Geo/ip2asn-combined.tsv");
+						&ccemptyzone("/var/lib/csf/zone/$cc.zone6","/var/lib/csf/Geo/ip2asn-combined.tsv");
 					} else {
 						sysopen (my $CIDROUT, "/var/lib/csf/zone/$cc.zone6", O_WRONLY | O_CREAT);
 						flock ($CIDROUT, LOCK_EX);
