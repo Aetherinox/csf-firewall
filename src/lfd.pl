@@ -6989,6 +6989,11 @@ sub blocklist {
 				if ($config{FASTSTART}) {$faststart = 1}
 				foreach my $line (@uniqueips) {
 					if ($line =~ /^\#/) { next }
+
+					# Spamhaus JSON (NDJSON) format is supported alongside text; e.g.
+					# {"cidr":"1.10.16.0/20","sblid":"SBL256894","rir":"apnic"}
+					if ($line =~ /"cidr"\s*:\s*"([^"]+)"/) { $line = $1 }
+
 					if ($line =~ /($ipv4reg(\/\d+)?)/) {
 						my $iprange = $1;
 						if ($name eq "DSHIELD" and $iprange !~/\/24/) {$iprange .= "/24"}
