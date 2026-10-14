@@ -222,7 +222,14 @@ sub _method_tiny
 	alarm( 0 );
 
 	if ( $@ ) { return ( 1, $@ ) }
-	return ( $status, $text );
+
+	# #
+	#	An empty response body must not be reported as a successful download;
+	#	otherwise the caller replaces the existing list with an empty one.
+	# #
+
+	if ( defined $text and length $text ) { return ( $status, $text ) }
+	return ( 1, "Empty response received from server" );
 }
 
 # #
@@ -336,13 +343,20 @@ sub _method_lwp
 	{
 		return ( 1, $@ );
 	}
-	if ( $text )
+
+	# #
+	#	An empty response body must not be reported as a download timeout; real
+	#	timeouts are caught by the eval handler above. Fail so the caller keeps
+	#	the existing list instead of replacing it with nothing.
+	# #
+
+	if ( defined $text and length $text )
 	{
 		return ( $status, $text );
 	}
 	else
 	{
-		return ( 1, "Download timeout after $timeout seconds" );
+		return ( 1, "Empty response received from server" );
 	}
 }
 
