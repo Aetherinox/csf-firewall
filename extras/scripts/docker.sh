@@ -63,6 +63,26 @@ export PATH="$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 bridge_default="docker0"
 csf_comment="Docker container whitelist"
 file_csf_allow="/etc/csf/csf.allow"
+file_csf_conf="/etc/csf/csf.conf"
+
+# #
+#   CSF › Port Allow Lists
+#
+#   Parsed from /etc/csf/csf.conf; used to keep published container ports
+#   in sync with the CSF allow lists (TCP_IN, UDP_IN, TCP6_IN, UDP6_IN).
+# #
+
+TCP_IN=""
+UDP_IN=""
+TCP6_IN=""
+UDP6_IN=""
+
+if [ -f "${file_csf_conf}" ]; then
+    TCP_IN=$( sed -n 's/^TCP_IN[[:space:]]*=[[:space:]]*"\(.*\)"/\1/p' "${file_csf_conf}" | head -1 )
+    UDP_IN=$( sed -n 's/^UDP_IN[[:space:]]*=[[:space:]]*"\(.*\)"/\1/p' "${file_csf_conf}" | head -1 )
+    TCP6_IN=$( sed -n 's/^TCP6_IN[[:space:]]*=[[:space:]]*"\(.*\)"/\1/p' "${file_csf_conf}" | head -1 )
+    UDP6_IN=$( sed -n 's/^UDP6_IN[[:space:]]*=[[:space:]]*"\(.*\)"/\1/p' "${file_csf_conf}" | head -1 )
+fi
 
 # #
 #   Define › User-defined Bridge (Subnets)
@@ -679,6 +699,47 @@ iptables_flush()
     run "${ipt6}" -t mangle -X
 
     ok "    Successfully flushed iptable chains and rules"
+}
+
+# #
+#   Helpers › CSF › Port Allow List
+#
+#   Checks if a port is present in a CSF port allow list (TCP_IN, UDP_IN, TCP6_IN, UDP6_IN).
+#   Supports comma-separated values and colon port ranges (e.g. "80,443,3000:3010").
+#       › $1    Port to check
+#       › $2    CSF port list
+# #
+
+csf_port_allowed()
+{
+    p_port=$( printf '%s' "$1" | tr -d ' ' )
+    p_list=$( printf '%s' "$2" | tr -d ' ' | tr ',' ' ' )
+
+    case "$p_port" in ''|*[!0-9]*) return 1 ;; esac
+
+    for p_entry in ${p_list}; do
+        case "$p_entry" in
+            *:*)
+                p_lo=${p_entry%%:*}
+                p_hi=${p_entry##*:}
+
+                case "${p_lo}${p_hi}" in ''|*[!0-9]*) continue ;; esac
+
+                if [ "$p_port" -ge "$p_lo" ] && [ "$p_port" -le "$p_hi" ]; then
+                    return 0
+                fi
+                ;;
+            *)
+                case "$p_entry" in ''|*[!0-9]*) continue ;; esac
+
+                if [ "$p_port" -eq "$p_entry" ]; then
+                    return 0
+                fi
+                ;;
+        esac
+    done
+
+    return 1
 }
 
 # #
@@ -2135,6 +2196,22 @@ EOF
                         printf '\n'
 
                         # #
+                        #   CSF › Port Allow List
+                        #
+                        #   Skip publishing ports not present in TCP6_IN / UDP6_IN
+                        #   (only when /etc/csf/csf.conf exists and the list is not empty).
+                        # #
+
+                        csf_allow_ports="${TCP6_IN}"
+                        [ "${dst_proto}" = "udp" ] && csf_allow_ports="${UDP6_IN}"
+                        csf_v6_port=$( printf '%s' "$src" | sed -n 's|.*\]:\([0-9][0-9]*\)$|\1|p' )
+
+                        if [ -f "${file_csf_conf}" ] && [ -n "${csf_allow_ports}" ] && ! csf_port_allowed "${csf_v6_port}" "${csf_allow_ports}"; then
+                            label "                         ! RULES V6 ${yellowl}[SKP]${yellowl} Host port ${csf_v6_port}/${dst_proto} not in CSF TCP6_IN/UDP6_IN - skipping publish${end}"
+                            continue
+                        fi
+
+                        # #
                         #   Iptables › IPv6
                         # #
 
@@ -2165,6 +2242,21 @@ EOF
                         printf '\n%-4s %-42s %-55s' " " "${greyd}┌── ${greyd}SOURCE" "${fuchsial}${src}${end}"
                         printf '\n%-4s %-42s %-55s' " " "${greyd}└── ${greyd}DEST" "${fuchsial}${dst}${end}"
                         printf '\n'
+
+                        # #
+                        #   CSF › Port Allow List
+                        #
+                        #   Skip publishing ports not present in TCP_IN / UDP_IN
+                        #   (only when /etc/csf/csf.conf exists).
+                        # #
+
+                        csf_allow_ports="${TCP_IN}"
+                        [ "${dst_proto}" = "udp" ] && csf_allow_ports="${UDP_IN}"
+
+                        if [ -f "${file_csf_conf}" ] && [ -n "${csf_allow_ports}" ] && ! csf_port_allowed "${src_port}" "${csf_allow_ports}"; then
+                            label "                         ! RULES V4 ${yellowl}[SKP]${yellowl} Host port ${src_port}/${dst_proto} not in CSF TCP_IN/UDP_IN - skipping publish${end}"
+                            continue
+                        fi
 
                         # #
                         #   Iptables Rules › IPv4
