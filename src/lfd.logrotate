@@ -10,3 +10,9 @@
         compress
 	missingok
 }
+/var/log/csf/lfd_messenger.log {
+        weekly
+        rotate 1
+        compress
+	missingok
+}
