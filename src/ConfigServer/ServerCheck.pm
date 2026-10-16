@@ -71,6 +71,15 @@ my (
 
 my $ipv4reg = ConfigServer::Config->ipv4reg;
 my $ipv6reg = ConfigServer::Config->ipv6reg;
+
+sub report
+{
+	$verbose 		= shift;
+	my $config 		= ConfigServer::Config->loadconfig();
+	%config 		= $config->config();
+	$cleanreg		= ConfigServer::Slurp->cleanreg;
+	$| = 1;
+
 	if ( defined $ENV{WEBMIN_VAR} and defined $ENV{WEBMIN_CONFIG} )
 	{
 		$config{GENERIC} = 1;
@@ -737,6 +746,7 @@ sub services_disable_automatic
 	return (\@disabled, \@failed);
 }
 
+sub servercheck {
 	my $status = 0;
 
 	my ($dev,$ino,$mode,$nlink,$uid,$gid,$rdev,$size,$atime,$mtime,$ctime,$blksize,$blocks) = stat("/tmp");
