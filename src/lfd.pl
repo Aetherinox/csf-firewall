@@ -3566,23 +3566,38 @@ while ( 1 )
 		}
 	}
 
-	if ($config{MESSENGER}) {
-		unless (-e "/var/log/lfd_messenger.log") {
-			open (my $OUT, ">", "/var/log/lfd_messenger.log");
-			close ($OUT);
+    # #
+    #   Messenger
+    # #
+
+    logfile( "DEBUG:1", "info",
+        "[Sanitizer Test] " .
+        "password=visible-password " .
+        "API_KEY=\"visible-api-key\" " .
+        "RECAPTCHA_SITEKEY=public-site-key"
+    );
+
+	if ( $config{MESSENGER} )
+	{
+		my $messenger_user              = $config{MESSENGER_USER};
+		my ( $log_ok, $log_error )      = _prepare_messenger_audit_log( $messenger_user );
+
+		if ( !$log_ok )
+		{
+			_disable_messenger_services( $log_error );
 		}
-		system("chown","$config{MESSENGER_USER}:$config{MESSENGER_USER}","/var/log/lfd_messenger.log");
-		foreach my $key (keys %messengerips) {
-			if ($messengerips{$key} > 1 and $config{"MESSENGER_${key}_IN"} ne "") {
-				unless (kill(0,$messengerips{$key})) {
-					&messenger($config{"MESSENGER_${key}"},$config{MESSENGER_USER},$key);
-					logfile("Messenger $key Service died, restarted");
-				}
-			}
+		else
+		{
+			_restart_failed_messenger_services( $messenger_user );
+
+			logfile( "DEBUG:2", "info", "[Messenger] Service running sub messengerrecaptcha()" );
+
+			messengerrecaptcha();
 		}
-		&messengerrecaptcha;
 	}
-	if ($config{UI}) {
+
+	if ($config{UI})
+    {
 		if ($uiip > 1 and !(kill(0,$uiip))) {
 			&ui;
 			logfile("Integrated UI Service died, restarted");
@@ -11415,6 +11430,149 @@ sub messengerrecaptcha {
 	return;
 }
 
+# #
+#	Messenger › Audit Log
+#   
+#   Validate the messenger user, such as the uid/gid, and prepare the
+#   audit log with the correct ownership
+#   
+#   @account                csf !! 974 974    /home/csf /usr/sbin/nologin
+#   $messenger_user         csf
+#   $messenger_uid          974
+#   $messenger_gid          974 
+#   $log_ok                 1
+# #
+
+sub _prepare_messenger_audit_log
+{
+	my ( $messenger_user ) = @_;
+
+	return ( undef, "Invalid Messenger account" )
+		if !defined( $messenger_user ) or ref( $messenger_user ) or $messenger_user eq "";
+
+	my @account = getpwnam( $messenger_user );
+	return ( undef, "Invalid Messenger account" )
+		if !@account;
+
+	my ( $messenger_uid, $messenger_gid ) = @account[ 2, 3 ];
+	return ( undef, "Invalid Messenger account" )
+		if !defined( $messenger_uid ) or !defined( $messenger_gid ) or $messenger_uid <= 0 or $messenger_gid <= 0;
+
+	my ( $log_ok, $log_error ) = ConfigServer::Logger::msngr_log_prepare( $messenger_uid, $messenger_gid );
+	$log_error = "Unable to prepare the Messenger audit log"
+		if !$log_ok and !defined( $log_error );
+
+	return ( $log_ok, $log_error );
+}
+
+# #
+#	Messenger › Service Disable
+#   
+#   Terminate any active Messenger processes, disable every Messenger mode
+#   when its audit log cannot be prepared.
+# #
+
+sub _disable_messenger_services
+{
+	my ( $log_error ) = @_;
+
+	$log_error = "Unknown Messenger audit log failure"
+		if !defined( $log_error );
+
+	logfile( "normal", "error", "[Messenger] Secure audit log check failed " . "[$log_error]; service disabled" );
+
+    # #
+    #   Terminate every active Messenger child processes
+    # #
+
+	for my $messenger_pid ( values %messengerips )
+	{
+		next
+			if !defined( $messenger_pid ) or $messenger_pid !~ /\A[0-9]+\z/ or $messenger_pid <= 1;
+
+		kill( "TERM", $messenger_pid );
+	}
+
+    # #
+    #   Runs messengerstop( ); which requires you to specify version number.
+    #       &messengerstop( 2 );
+    #       &messengerstop( 3 );
+    # #
+
+	%messengerips = ();
+	@config{
+		qw(
+			MESSENGER
+			MESSENGER6
+			MESSENGERV2
+			MESSENGERV3
+		)
+	} = ( 0 ) x 4;
+
+	for my $messenger_version ( 2, 3 )
+	{
+		messengerstop( $messenger_version );
+	}
+
+	return;
+}
+
+# #
+#   Messenger › Service Monitoring
+#   
+#   Restart configured Messenger listeners whose recorded processes are
+#   no longer running.
+#   
+#   $messenger_pid          916094
+#   $incoming_ports         21
+#   $service_type           TEXT
+#   $messenger_user         csf
+# #
+
+sub _restart_failed_messenger_services
+{
+	my ( $messenger_user ) = @_;
+
+	for my $service_type ( keys %messengerips )
+	{
+		my $messenger_pid   = $messengerips{$service_type};
+		my $incoming_ports  = $config{"MESSENGER_${service_type}_IN"};
+
+        # #
+        #   Skip bad process ids; all numeric
+        # #
+
+		next
+			if !defined( $messenger_pid ) or
+			   $messenger_pid !~ /\A[0-9]+\z/ or
+			   $messenger_pid <= 1;
+
+        # #
+        #   Skip $incoming_ports missing
+        # #
+
+		next
+			if !defined( $incoming_ports ) or
+			   $incoming_ports eq "";
+
+        # #
+        #   Skip if service process is still running
+        # #
+
+		next
+			if kill( 0, $messenger_pid );
+
+        # #
+        #   Start a Messenger service in a child process, track the PID,
+        #   and temp disable service if startup fails
+        # #
+
+		messenger( $config{"MESSENGER_${service_type}"}, $messenger_user, $service_type, );
+		logfile( "Messenger $service_type Service died, restarted" );
+	}
+
+	return;
+}
 
 sub messengerstop
 {
