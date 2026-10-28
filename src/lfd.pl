@@ -395,12 +395,12 @@ my $session_id = setsid();
 if ( !defined( $session_id ) || $session_id == -1 )
 {
     my $err = $! || 'unknown error';
-    logfile( "[STARTUP] *Error* Can't start a new session: $err" );
+    logfile( "all", "error", "[STARTUP] Can't start a new session: $err" );
     exit 1;
 }
 else
 {
-	logfile( "[STARTUP] Session ID (SID): $session_id, Process ID (PID): $$" );
+    logfile( "all", "info", "[STARTUP] Session ID (SID): $session_id, Process ID (PID): $$" );
 }
 
 # #
@@ -706,13 +706,13 @@ if ( ConfigServer::Service::type() eq "systemd" )
 #	Logs › General Settings
 # #
 
-logfile( "[STARTUP] SSH Tracking [" . ( $config{LF_SSH_EMAIL_ALERT} ? "Enabled" : "Disabled" ) . "]" );
-logfile( "[STARTUP] Webmin Tracking [" . ( $config{LF_WEBMIN_EMAIL_ALERT} ? "Enabled" : "Disabled" ) . "]" );
-logfile( "[STARTUP] SU Tracking [" . ( $config{LF_SU_EMAIL_ALERT} ? "Enabled" : "Disabled" ) . "]" );
-logfile( "[STARTUP] SUDO Tracking [" . ( $config{LF_SUDO_EMAIL_ALERT} ? "Enabled" : "Disabled" ) . "]" );
-logfile( "[STARTUP] Console Tracking [" . ( $config{LF_CONSOLE_EMAIL_ALERT} ? "Enabled" : "Disabled" ) . "]" );
-logfile( "[STARTUP] POP3 Authentication Watch [" . ( $config{LF_POP3D} ? "Enabled" : "Disabled" ) . "]" );
-logfile( "[STARTUP] IAMP Authentication Watch [" . ( $config{LF_IMAPD} ? "Enabled" : "Disabled" ) . "]" );
+logfile( "all", "info", "[STARTUP] SSH Tracking [" . ( $config{LF_SSH_EMAIL_ALERT} ? "Enabled" : "Disabled" ) . "]" );
+logfile( "all", "info", "[STARTUP] Webmin Tracking [" . ( $config{LF_WEBMIN_EMAIL_ALERT} ? "Enabled" : "Disabled" ) . "]" );
+logfile( "all", "info", "[STARTUP] SU Tracking [" . ( $config{LF_SU_EMAIL_ALERT} ? "Enabled" : "Disabled" ) . "]" );
+logfile( "all", "info", "[STARTUP] SUDO Tracking [" . ( $config{LF_SUDO_EMAIL_ALERT} ? "Enabled" : "Disabled" ) . "]" );
+logfile( "all", "info", "[STARTUP] Console Tracking [" . ( $config{LF_CONSOLE_EMAIL_ALERT} ? "Enabled" : "Disabled" ) . "]" );
+logfile( "all", "info", "[STARTUP] POP3 Authentication Watch [" . ( $config{LF_POP3D} ? "Enabled" : "Disabled" ) . "]" );
+logfile( "all", "info", "[STARTUP] IAMP Authentication Watch [" . ( $config{LF_IMAPD} ? "Enabled" : "Disabled" ) . "]" );
 
 # #
 #   The option RESTRICT_SYSLOG disables all these features that rely on affected
@@ -824,7 +824,7 @@ if ( $config{SYSLOG} or $config{SYSLOG_CHECK} )
 #	lfd.pl › Blocklists
 # #
 
-logfile( "[STARTUP] Blocklists: Scanning" );
+logfile( "normal", "info", "[STARTUP] Blocklists: Scanning" );
 
 # #
 #	lfd.pl › Blocklists › /etc/csf/csf.blocklists
@@ -1049,7 +1049,7 @@ else
 #           the IP address will be counted towards the blocking trigger as normal
 # #
 
-logfile( "[STARTUP] csf.rignore: Scanning" );
+logfile( "normal", "info", "[STARTUP] csf.rignore: Scanning" );
 
 if ( -e "/etc/csf/csf.rignore" )
 {
@@ -1098,12 +1098,12 @@ else
 #   
 #   See readme.txt for more information
 #   
-#   Note:   IP addressess listed in this file will NOT be ignored by
+#   Note:   IP addresses listed in this file will NOT be ignored by
 #           lfd, so they can still be blocked. If you do not want lfd
 #           to block an IP address you must add it to csf.ignore
 # #
 
-logfile( "[STARTUP] Ignore Allow [" . ( $config{IGNORE_ALLOW} ? "Enabled" : "Disabled" ) . "]" );
+logfile( "normal", "info", "[STARTUP] Ignore Allow [" . ( $config{IGNORE_ALLOW} ? "Enabled" : "Disabled" ) . "]" );
 
 if ( $config{IGNORE_ALLOW} and -e "/etc/csf/csf.allow" )
 {
@@ -9923,7 +9923,8 @@ sub shutdown
 			{
 				$message .= ", at line $line";
 			}
-			logfile( "$message" );
+
+            logfile( "all", "$status", "$message" );
 		}
 
 		exit 0;
@@ -9943,19 +9944,19 @@ sub shutdown
 		{
 			$message .= ", at line $line"
 		}
-		logfile( "$message" );
+        logfile( "all", "$status", "$message" );
 	}
-
-	logfile( "[SHUTDOWN] Daemon stopped" );
 
 	if ( $PIDFILE and fileno( $PIDFILE ) )
 	{
 		close( $PIDFILE );
 		unlink $pidfile;
+
+        logfile( "all", "ok", "[SHUTDOWN] Closed out $pidfile" );
 	}
 
+    logfile( "all", "ok", "[SHUTDOWN] Daemon stopping; terminating process group [$$]" );
 	kill ( 9, -$$ );
-
     exit 0;
 }
 
@@ -11683,6 +11684,7 @@ sub messengerv2
 		my ($status,$reason) = $messenger2->start();
 		if ($status)
         {
+            logfile( "all", "error", "[MessengerV2] Failed to start service: $reason" );
 		}
 
 		if ($config{DEBUG} >= 3) {$timer = &timer("stop","messengerv2",$timer)}
@@ -11710,6 +11712,7 @@ sub messengerv3
 		my ($status,$reason) = $messenger3->start();
 		if ($status)
         {
+			logfile( "[" . PACKAGE_NAME . "] [" . ConfigServer::Messenger::SUB_MESSENGER_V3( ) . "] Error: $reason");
 		}
 
 		if ($config{DEBUG} >= 3) {$timer = &timer("stop","messengerv3",$timer)}
