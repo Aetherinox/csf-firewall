@@ -1488,14 +1488,14 @@ if ( -e "/var/lib/csf/csf.restart" )
 #	
 #	Periodic CSF health check; unless `TESTING` is enabled.
 #	
-#	Verifiy LOCALINPUT iptables state, restores CSF if rules were flushed, 
+#	Verify LOCALINPUT iptables state, restores CSF if rules were flushed, 
 #	applies InterWorx APF stub updates, and on cPanel upgrades forks a child to
 #	restart related services and trigger an lfd restart with lock/skip safety.
 #	
 #	Check ran every 300 seconds
 # #
 
-logfile( "[STARTUP] CSF maintenance tracking [" . ( $config{LF_CSF} ? "Enabled" : "Disabled" ) . "] (300 seconds)" );
+logfile( "normal", "info", "[STARTUP] CSF maintenance tracking [" . ( $config{LF_CSF} ? "Enabled" : "Disabled" ) . "] (300 seconds)" );
 
 if ( $config{LF_CSF} ) 
 {
@@ -1514,7 +1514,7 @@ if ( $config{LF_CSF} )
 #	Enables IPv6 support (ip6tables)
 # #
 
-logfile( "[STARTUP] IPv6 [" . ( $config{IPV6} ? "Enabled" : "Disabled" ) . "]" );
+logfile( "normal", "info", "[STARTUP] IPv6 [" . ( $config{IPV6} ? "Enabled" : "Disabled" ) . "]" );
 
 # #
 #	lfd.pl › CXS Reputation
@@ -1524,7 +1524,7 @@ logfile( "[STARTUP] IPv6 [" . ( $config{IPV6} ? "Enabled" : "Disabled" ) . "]" )
 #		/usr/local/csf/lib/ConfigServer/cxs.pm
 # #
 
-logfile( "[STARTUP] CXS Reputation [" . ( $cxsreputation ? "Enabled" : "Disabled" ) . "]" );
+logfile( "normal", "info", "[STARTUP] CXS Reputation [" . ( $cxsreputation ? "Enabled" : "Disabled" ) . "]" );
 
 # #
 #	lfd.pl › Load Tracking
@@ -1533,7 +1533,8 @@ logfile( "[STARTUP] CXS Reputation [" . ( $cxsreputation ? "Enabled" : "Disabled
 #	load threshold is exceeded, while preventing duplicate notifications.
 # #
 
-logfile( "[STARTUP] LOAD Tracking [" . ( $config{PT_LOAD} ? "Enabled" : "Disabled" ) . "]" );
+logfile( "normal", "info", "[STARTUP] LOAD Tracking [" . ( $config{PT_LOAD} ? "Enabled" : "Disabled" ) . "]" );
+
 if ( $config{PT_LOAD} )
 {
     &loadcheck;
@@ -1552,7 +1553,7 @@ if ( $config{PT_LOAD} )
 #   for other HTTP daemons
 # #
 
-logfile( "[STARTUP] Cloudflare Integration [" . ( $config{CF_ENABLE} ? "Enabled" : "Disabled" ) . "]" );
+logfile( "normal", "info", "[STARTUP] Cloudflare Integration [" . ( $config{CF_ENABLE} ? "Enabled" : "Disabled" ) . "]" );
 
 if ( $config{CF_ENABLE} and -e "/etc/csf/csf.cloudflare" )
 {
@@ -1563,9 +1564,9 @@ if ( $config{CF_ENABLE} and -e "/etc/csf/csf.cloudflare" )
 #	$cfblocks{LF_WEBMIN} 		= 1;
 }
 
-# #
-#	lfd.pl › Messenger Services
-#	
+# # 
+#   SECTION:Messenger service
+# # 
 #   Messenger service. This feature allows the display of a message to a blocked
 #   connecting IP address to inform the user that they are blocked in the
 #   firewall. This can help when users get themselves blocked, e.g. due to
@@ -1576,14 +1577,35 @@ if ( $config{CF_ENABLE} and -e "/etc/csf/csf.cloudflare" )
 #   ipt_REDIRECT loaded. Typically, this will be with MONOLITHIC kernels. VPS
 #   server admins should check with their VPS host provider that the iptables
 #   module is included
-# #
+#   
+#   IPv6 will need the IO::Socket::INET6 perl module
+#       Test Package:
+#           perl -MIO::Socket::INET6 -e 'print "IO::Socket::INET6 OK\n"'
+#   
+#       Install Package:
+#           RHEL / CentOS / Rocky / AlmaLinux / Fedora
+#               sudo dnf install perl-IO-Socket-INET6 perl-Socket6
+#           Debian / Ubuntu
+#               sudo apt install libio-socket-inet6-perl libsocket6-perl -y
+#   
+#   For further information on features and limitations refer to the csf
+#   readme.txt
+#   
+#   Note: Run /etc/csf/csftest.pl to check whether this option will function on
+#   this server
+#   
+#   1 to enable, 0 to disable
+# # 
 
 if ( $config{MESSENGER} )
 {
-	unless ( -e "/var/log/lfd_messenger.log" )
+    logfile( "normal", "ok", "[Messenger] Service enabled" );
+	if ( !-e "/var/log/lfd_messenger.log" )
 	{
-		open ( my $OUT, ">", "/var/log/lfd_messenger.log" );
-		close ( $OUT );
+		logfile( "info", "[Messenger] Creating log /var/log/lfd_messenger.log" );
+		open ( my $OUT, ">", "/var/log/lfd_messenger.log" ) or
+            logfile( "normal", "error", "[Messenger] Failed to create /var/log/lfd_messenger.log: $!" );
+		close ( $OUT ) if $OUT;
 	}
 
 	system( "chown", "$config{MESSENGER_USER}:$config{MESSENGER_USER}", "/var/log/lfd_messenger.log" );
@@ -1733,6 +1755,19 @@ if ( $config{MESSENGER} )
 }
 else
 {
+
+	# #
+	#	Messenger › Disabled
+	#	
+	#	$config{MESSENGER} = "0" | ""
+	#	
+	#	Stop and remove any previously configured webserver for Messenger services.
+	#	- 	MESSENGERv1 returns with nothing to do; built-in lfd/Perl listener.
+	#	-	MESSENGERV2 removes Apache Messenger configuration and restarts Apache.
+	#	-	MESSENGERV3 removes Messenger configuration from the configured location
+	#		and restarts the web server.
+	# #
+
 	&messengerstop( 2 );
 	&messengerstop( 3 );
 }
@@ -1762,19 +1797,42 @@ if ( $config{UI} )
 		require ConfigServer::cxsUI;
 	}
 
-	if ( $config{UI_USER} eq "" or $config{UI_USER} eq "username" )
+	# #
+	#	Disable lfd web ui if configured username is too generic.
+	# #
+
+	if ( $config{UI_USER} eq "" or $config{UI_USER} =~ /^(?:admin(?:istrator)?|user(?:name)?|csf|configserver|guest|root)$/i )
 	{
-		logfile( "[WEBUI] Error: Cannot run csf Integrated UI - UI_USER must set" );
+        logfile( "normal", "error", "[WebUI] Disabling! Cannot enable LFD web UI - UI_USER must be set to a unique, non-generic username. Current value: '$config{UI_USER}'." );
 		$config{UI} = 0;
 	}
-	elsif ( $config{UI_PASS} eq "" or $config{UI_PASS} eq "password" )
+
+	# #
+	#	Disable lfd web ui if configured password is too generic.
+	# #
+
+	if ( $config{UI_PASS} eq "" or $config{UI_PASS} =~ /^(?:p[a@4][s\$][s\$]w[o0]rd|p[a@4][s\$][s\$]wd|admin(?:istrator)?|user|csf|configserver)$/i )
 	{
-		logfile( "[WEBUI] Error: Cannot run Integrated csf UI - UI_PASS must set" );
+        logfile( "normal", "error", "[WebUI] Disabling! Cannot enable LFD web UI - UI_PASS must be set to a unique, non-generic password." );
 		$config{UI} = 0;
 	}
-	else
+
+	# #
+	#	Warn if configured password is less than 5 characters.
+	# #
+
+	if ( length( $config{UI_PASS} ) < 5 )
 	{
-		logfile( "[WEBUI] Web Interface enabled on port [$config{UI_PORT}]" );
+        logfile( "normal", "warn", "[WebUI] Warning! UI_PASS is less than 5 characters long and should be changed to a longer password." );
+	}
+
+	# #
+	#	Enable lfd web ui if configuration is valid.
+	# #
+
+	if ( $config{UI} )
+	{
+        logfile( "normal", "ok", "[WebUI] Success! Web Interface enabled on port [$config{UI_PORT}]" );
 		&ui;
 	}
 }
@@ -2724,7 +2782,7 @@ if ( $config{PT_LIMIT} )
 #   3 = enable this feature only for the root account
 # # 
 
-logfile( "[STARTUP] Account Tracking [" . ( $config{AT_ALERT} ? "Enabled" : "Disabled" ) . "]" );
+logfile( "normal", "info", "[STARTUP] Account Tracking [" . ( $config{AT_ALERT} ? "Enabled" : "Disabled" ) . "]" );
 
 if ( $config{AT_ALERT} )
 {

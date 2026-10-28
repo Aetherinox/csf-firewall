@@ -133,6 +133,83 @@ sub init
 	return $self;
 }
 
+# #
+#	Messenger › Failure
+#	
+#	Log Messenger failuresl return failure status and reason.
+#	
+#	If only a reason is provided, failure applies to all Messenger
+#	versions.
+#   
+#   The log target defaults to "normal".
+#	
+#	@usage		_messenger_fail( "Failure reason" );                # Messenger failure
+#				_messenger_fail( 2, "Failure reason" );             # MessengerV2 failure
+#				_messenger_fail( 1, "Failure reason", "root" );     # MessengerV1 failure
+#	
+#	@param      version     num|str     Messenger version (1, 2, 3, or All)
+#	@param		reason		str         failure reason
+#	@param		target		str         log target: normal, root, or all
+#	@return					num         failure status (1)
+#							str         failure reason
+# #
+
+sub _messenger_fail
+{
+	my ( $version, $reason, $target ) = @_;
+
+	if ( @_ == 1 )
+	{
+		$reason     = $version;
+		$version    = "All";
+	}
+
+	$reason //= "Unknown Messenger failure";
+	$target //= "normal";
+	$target = "normal" if $target !~ /^(?:normal|root|all)$/;
+
+	logfile( $target, "error", "[Messenger$version] $reason" );
+
+	return ( 1, $reason );
+}
+
+# #
+#	Messenger › Log
+#	
+#	Write Messenger debug messages to dedicated /var/log/lfd_messenger.log
+#	when DEBUG is enabled.
+#	
+#	@usage      _messengerlog( $homedir, "Message" );
+#   
+#   @note       In CSF < 15.10; Messenger module maintained two separate
+#               logging paths:
+#                   /var/log/lfd.log
+#                   /var/log/lfd_messenger.log
+#   
+#               This should be taken care of by the main Logger.
+#   
+#	@param		homedir		str			Messenger home directory
+#	@param		message		str			message to write to the log
+# #
+
+sub _messengerlog
+{
+	my ( $homedir, $message ) = @_;
+	$message //= "Unknown Messenger log";
+
+	if ( $config{DEBUG} )
+	{
+		my $isLogged = logfile( $message );
+
+		if ( !$isLogged )
+		{
+			die "Failed to write Messenger response to the log\n";
+		}
+	}
+
+	return 1;
+}
+
 sub start
 {
 	my $self 	= shift;
@@ -142,22 +219,24 @@ sub start
 	my $status;
 	my $reason;
 
-	$config{DEBUG} >= 2 and logfile( "[" . __PACKAGE__ . "] Determining which MESSENGER version to use" );
+
+    logfile( "DEBUG:1", "info", "[" . __PACKAGE__ . "] Determining which messenger version to use" );
 
 	if ( $version == 1 )
 	{
 		( $status, $reason ) = &messenger( $port, $user, $type );
-		$config{DEBUG} >= 2 and logfile( "[" . __PACKAGE__ . "] Trying [" . SUB_MESSENGER_V1 . "] : " . ( $status ? "Failure" : "Successful" ) . " (reason: $reason)" );
+
+        logfile( "DEBUG:1", "info", "[" . __PACKAGE__ . "] Trying [" . SUB_MESSENGER_V1 . "] : " . ( $status ? "Failure" : "Successful" ) . " (reason: $reason)" );
 	}
 	elsif ( $version == 2 )
 	{
 		( $status, $reason ) = &messengerv2();
-		$config{DEBUG} >= 2 and logfile( "[" . __PACKAGE__ . "] Trying [" . SUB_MESSENGER_V2 . "] : " . ( $status ? "Failure" : "Successful" ) . " (reason: $reason)" );
+        logfile( "DEBUG:1", "info", "[" . __PACKAGE__ . "] Trying [" . SUB_MESSENGER_V2 . "] : " . ( $status ? "Failure" : "Successful" ) . " (reason: $reason)" );
 	}
 	elsif ( $version == 3 )
 	{
 		( $status, $reason ) = &messengerv3();
-		$config{DEBUG} >= 2 and logfile( "[" . __PACKAGE__ . "] Trying [" . SUB_MESSENGER_V3 . "] : " . ( $status ? "Failure" : "Successful" ) . " (reason: $reason)" );
+        logfile( "DEBUG:1", "info", "[" . __PACKAGE__ . "] Trying [" . SUB_MESSENGER_V3 . "] : " . ( $status ? "Failure" : "Successful" ) . " (reason: $reason)" );
 	}
 	
 	return ( $status, $reason );
@@ -165,7 +244,8 @@ sub start
 
 sub messenger
 {
-	$config{DEBUG} >= 2 and logfile( "[" . __PACKAGE__ . "] (" . SUB_MESSENGER_V1 . ") : Initializing subroutine" );
+
+    logfile( "DEBUG:1", "info", "[" . SUB_MESSENGER_V1 . "] Initializing subroutine" );
 
 	my $port 		= shift;
 	my $user 		= shift;
@@ -263,7 +343,7 @@ sub messenger
 
 		if ( !keys %sslcerts )
 		{
-			return ( 1, "[" . __PACKAGE__ . "] No SSL certs found in MESSENGER_HTTPS_CONF = \"$config{MESSENGER_HTTPS_CONF}\" (defined in /etc/csf/csf.conf)" );
+            return _messenger_failed( 1, "No SSL certs found in MESSENGER_HTTPS_CONF = \"$config{MESSENGER_HTTPS_CONF}\" (defined in /etc/csf/csf.conf)" );
 		}
 
 		# # 
@@ -343,7 +423,7 @@ sub messenger
 	
 		if ( $@ )
 		{
-			return ( 1, $@ );
+			return _messenger_failed( 1, $@ );
 		}
 	}
 	elsif ( $config{MESSENGER6} )
@@ -364,9 +444,21 @@ sub messenger
 	}
 
 	my $index;
-	if ($type eq "HTML" and $config{RECAPTCHA_SITEKEY} ne "") {$index = "/etc/csf/messenger/index.recaptcha.html"}
-	elsif ($type eq "HTML") {$index = "/etc/csf/messenger/index.html"}
-	else {$index = "/etc/csf/messenger/index.text"}
+	if ( $type eq "HTML" and $config{RECAPTCHA_SITEKEY} ne "" )
+    {
+        $index = "/etc/csf/messenger/index.recaptcha.html"
+    }
+	elsif ( $type eq "HTML" )
+    {
+        $index = "/etc/csf/messenger/index.html"
+    }
+	else
+    {
+        $index = "/etc/csf/messenger/index.text"
+    }
+
+    logfile( "DEBUG:1", "info", "[reCAPTCHA] type [$type] detected - sitekey [" . ( $config{RECAPTCHA_SITEKEY} ne "" ? "provided" : "empty" ) . "] - using $index" );
+
 	open (my $IN, "<", $index);
 	flock ($IN, LOCK_SH);
 	my @message = <$IN>;
@@ -411,8 +503,12 @@ sub messenger
 		logfile("lfd $oldtype messenger using $vmsize kB of VIRT memory at startup, adding up to $config{MESSENGER_CHILDREN} children = ".(($config{MESSENGER_CHILDREN} + 1) * $vmsize)." kB");
 	}
 
+    logfile( "DEBUG:1", "info", "[" . SUB_MESSENGER_V1 . "] reee  1" );
+
+
 	if ($user ne "")
 	{
+            logfile( "DEBUG:1", "info", "[" . SUB_MESSENGER_V1 . "] Found user  1" );
 		my ( undef, undef, $uid, $gid, undef, undef, undef, $homedir ) = getpwnam( $user );
 
 		# #
@@ -421,8 +517,7 @@ sub messenger
 
 		unless ( defined $uid and defined $gid and $uid > 0 and $gid > 0 )
 		{
-			logfile( "MESSENGER_USER invalid or root - stopping $oldtype Messenger" );
-			return ( 1, "MESSENGER_USER must not be root (uid/gid 0) or invalid [$user]" );
+            return _messenger_failed( 1, "MESSENGER_USER must not be root (uid/gid 0) or invalid [$user]" );
 		}
 
 		local $( = $gid;
@@ -439,6 +534,7 @@ sub messenger
 		{
 			while (my $client = $server->accept())
 			{
+                logfile( "DEBUG:1", "info", "[" . SUB_MESSENGER_V1 . "] while client 1" );
 				while (scalar (keys %children) >= $chldallow)
 				{
 					sleep 1;
@@ -505,7 +601,7 @@ sub messenger
 							if ($firstline =~ /\r$/) {chop $firstline}
 						}
 
-						&messengerlog($homedir,"Client connection [$peeraddress] [$firstline]");
+						_messengerlog($homedir,"Client connection [$peeraddress] [$firstline]");
 						my $error;
 						my $success;
 						my $failure;
@@ -521,7 +617,7 @@ sub messenger
 								($status, $text) = $urlget->urlget($url);
 							};
 							if ($status) {
-								&messengerlog($homedir,"*Error*, ReCaptcha ($peeraddress): $text");
+								_messengerlog($homedir,"*Error*, ReCaptcha ($peeraddress): $text");
 								if ($config{DEBUG} >= 1) {
 									if ($@) {$error .= "Error:".$@}
 									if ($!) {$error .= "Error:".$!}
@@ -608,8 +704,7 @@ sub messenger
 	}
 	else
 	{
-		logfile( "MESSENGER_USER not set - stopping $oldtype Messenger" );
-		return ( 1, "MESSENGER_USER is not configured" );
+        return _messenger_failed( 1, "MESSENGER_USER not configured - stopping $oldtype Messenger" );
 	}
 
 	return;
@@ -617,9 +712,9 @@ sub messenger
 
 sub messengerv2
 {
-	$config{DEBUG} >= 1 and logfile( "[" . __PACKAGE__ . "] (" . SUB_MESSENGER_V2 . ") : Initializing subroutine" );
+    logfile( "DEBUG:1", "info", "[" . SUB_MESSENGER_V2 . "] Initializing subroutine" );
 
-	my ( undef, undef, $uid, $gid, undef, undef, undef, $homedir ) = getpwnam($config{MESSENGER_USER});
+	my ( undef, undef, $uid, $gid, undef, undef, undef, $homedir ) = getpwnam( $config{MESSENGER_USER} );
 
 	# #
 	#	Reject root. Messenger must never run as uid/gid 0.
@@ -627,31 +722,41 @@ sub messengerv2
 
 	unless ( defined $uid and defined $gid and $uid > 0 and $gid > 0 )
 	{
-		return ( 1, "MESSENGER_USER must not be root (uid/gid 0) or invalid [$config{MESSENGER_USER}]" );
+        return _messenger_failed( 2, "Setting MESSENGER_USER cannot be root (uid:gid 0:0) or specify an invalid user [" . ( defined $config{MESSENGER_USER} && $config{MESSENGER_USER} ne "" ? $config{MESSENGER_USER} : "missing" ) . "] - stopping Messenger" );
 	}
 
 	if ( $homedir eq "" or $homedir eq "/" or $homedir =~ m[/etc/csf] )
 	{
-		return ( 1, "The home directory for $config{MESSENGER_USER} is not valid [$homedir]" );
+        return _messenger_failed( 2, "The home directory for $config{MESSENGER_USER} is not valid [$homedir]" );
 	}
 
 	if ( ! -e $homedir )
 	{
-		return ( 1, "The home directory for $config{MESSENGER_USER} does not exist [$homedir]" );
+        return _messenger_failed( 2, "The home directory for $config{MESSENGER_USER} does not exist [$homedir]" );
 	}
 
-	system("chmod","711",$homedir);
-	my $public_html = $homedir."/public_html";
+    logfile( "DEBUG:1", "info", "[Messenger2] Set chmod 711: $homedir" );
+	system( "chmod", "711", $homedir );
 
-	unless (-e $public_html) {
-		system("mkdir","-p",$public_html);
-		system("chown","$config{MESSENGER_USER}:nobody",$public_html);
-		system("chmod","711",$public_html);
+	my $public_html = $homedir . "/public_html";
+    logfile( "DEBUG:1", "info", "[Messenger2] Declared public_html path: $public_html" );
+
+	if ( !-e $public_html )
+    {
+		system( "mkdir", "-p", $public_html );
+		system( "chown", "$config{MESSENGER_USER}:nobody", $public_html );
+		system( "chmod", "711", $public_html );
+
+        logfile( "DEBUG:1", "info", "[Messenger2] Created public_html path: $public_html - chown:[$config{MESSENGER_USER}:nobody] - chmod:711" );
+    }
+    else
+    {
+        logfile( "DEBUG:1", "info", "[Messenger2] Skip creating public_html path: $public_html - already exists" );
 	}
 
-	unless ( -e $public_html . "/.htaccess" )
+	if ( !-e $public_html . "/.htaccess" )
 	{
-		open (my $HTACCESS, ">", $public_html."/.htaccess");
+		open    (my $HTACCESS, ">", $public_html."/.htaccess");
 		flock ($HTACCESS, LOCK_EX);
 		print $HTACCESS "Require all granted\n";
 		print $HTACCESS "DirectoryIndex index.php index.cgi index.html index.htm\n";
@@ -660,46 +765,90 @@ sub messengerv2
 		print $HTACCESS "RewriteCond \%{REQUEST_FILENAME} !-f\n";
 		print $HTACCESS "RewriteCond \%{REQUEST_FILENAME} !-d\n";
 		print $HTACCESS "RewriteRule ^ /index.php [L,QSA]\n";
-		system("chown","$config{MESSENGER_USER}:$config{MESSENGER_USER}",$public_html."/.htaccess");
-		system("chmod","644",$public_html."/.htaccess");
+		system  ("chown","$config{MESSENGER_USER}:$config{MESSENGER_USER}",$public_html."/.htaccess");
+		system  ("chmod","644",$public_html."/.htaccess");
 	}
 
-	unless ( -e $public_html . "/index.php" )
+    # #
+    #   @note           Messenger's apache index.php will be re-copied to apache public
+    #                   folder if CSF is restarted.
+    #   
+    #                   NO $public_html/index.php" exists:
+    #                       YES set RECAPTCHA_SITEKEY in csf.conf
+    #                           copy /etc/csf/messenger/index.recaptcha.php     => $public_html/index.php
+    #   
+    #                       NO hasn't set RECAPTCHA_SITEKEY in csf.conf
+    #                           copy /etc/csf/messenger/index.php               => $public_html/index.php
+    #   
+    #                   unblock.txt created only after user attempts to access
+    #                   web server https://192.168.0.2:8887/
+    # #
+
+    # /home/csf/index.php DOES NOT exist
+	if ( !-e $public_html . "/index.php" )
 	{
-		if ( $config{RECAPTCHA_SITEKEY})
+        # csf.conf RECAPTCHA_SITEKEY not set
+		if ( $config{RECAPTCHA_SITEKEY} )
 		{
-			$config{DEBUG} >= 1 and logfile( "[" . __PACKAGE__ . "] (" . SUB_MESSENGER_V2 . ") : Copying recaptcha file (/etc/csf/messenger/index.recaptcha.php) => $public_html/index.php" );
+            logfile( "DEBUG:1", "info", "[reCAPTCHA] sitekey [" . ( $config{RECAPTCHA_SITEKEY} ne "" ? "provided" : "empty" ) . "] - Copying file (/etc/csf/messenger/index.recaptcha.php) => $public_html/index.php" );
 			system( "cp", "/etc/csf/messenger/index.recaptcha.php", $public_html . "/index.php" );
 		}
+        # csf.conf RECAPTCHA_SITEKEY set
 		else
 		{
-			$config{DEBUG} >= 1 and logfile( "[" . __PACKAGE__ . "] (" . SUB_MESSENGER_V2 . ") : Copying recaptcha file /etc/csf/messenger/index.php => $public_html/index.php" );
+            logfile( "DEBUG:1", "info", "[reCAPTCHA] sitekey [" . ( $config{RECAPTCHA_SITEKEY} ne "" ? "provided" : "empty" ) . "] - Copying file (/etc/csf/messenger/index.php) => $public_html/index.php" );
 			system( "cp", "/etc/csf/messenger/index.php", $public_html . "/index.php" );
 		}
 
-		system("chown","$config{MESSENGER_USER}:$config{MESSENGER_USER}",$public_html."/index.php");
-		system("chmod","644",$public_html."/index.php");
+		system( "chown", "$config{MESSENGER_USER}:$config{MESSENGER_USER}", $public_html . "/index.php");
+		system( "chmod", "644", $public_html . "/index.php" );
+    }
+    # /home/csf/index.php exists
+    else
+    {
+        logfile( "DEBUG:1", "info", "[reCAPTCHA] sitekey [" . ( $config{RECAPTCHA_SITEKEY} ne "" ? "provided" : "empty" ) . "] - Found $public_html/index.php - skipping cp file from /etc/csf/messenger/" );
 	}
 
-	unless (-e $homedir."/en.php") {
-		system("cp","/etc/csf/messenger/en.php",$homedir."/en.php");
-		system("chown","$config{MESSENGER_USER}:$config{MESSENGER_USER}",$homedir."/en.php");
-		system("chmod","644",$homedir."/en.php");
+    # #
+    #   Apache Messenger php language file doesn't exist
+    # #
+
+	if ( !-e $homedir . "/en.php" )
+    {
+		system( "cp", "/etc/csf/messenger/en.php", $homedir . "/en.php" );
+		system( "chown", "$config{MESSENGER_USER}:$config{MESSENGER_USER}", $homedir . "/en.php" );
+		system( "chmod", "644", $homedir . "/en.php" );
 	}
 
-	open ( my $CONF, ">", $homedir . "/recaptcha.php" );
-	flock ( $CONF, LOCK_EX );
+	open    ( my $CONF, ">", $homedir . "/recaptcha.php" );
+	flock   ( $CONF, LOCK_EX );
 	print $CONF "<?php\n";
 	print $CONF "\$secret = '$config{RECAPTCHA_SECRET}';\n";
 	print $CONF "\$sitekey = '$config{RECAPTCHA_SITEKEY}';\n";
 	print $CONF "\$unblockfile = '$homedir/unblock.txt';\n";
 	print $CONF "\$logfile = '/var/log/lfd_messenger.log';\n";
 	print $CONF "?>\n";
-	system( "chown", "$config{MESSENGER_USER}:$config{MESSENGER_USER}", $homedir . "/recaptcha.php" );
-	system( "chmod", "600", $homedir . "/recaptcha.php" );
+	system  ( "chown", "$config{MESSENGER_USER}:$config{MESSENGER_USER}", $homedir . "/recaptcha.php" );
+	system  ( "chmod", "600", $homedir . "/recaptcha.php" );
 	
-	open (my $OUT, ">", "/var/lib/csf/csf.conf");
-	flock ($OUT, LOCK_EX);
+    # #
+    #   Messenger v2
+    #   
+    #   OPEN /var/lib/csf/csf.conf
+    #       missing file    => create
+    #       existing file   => empty first, then write from scratch
+    #   BUILD <Virtualhost>
+    #       Generate apache http port :80 <VirtualHost> if MESSENGER_HTML_IN exists
+    #       Generate apache https port :443 <VirtualHost> if MESSENGER_HTTPS_IN exists
+    #   COPY /var/lib/csf/csf.conf => /etc/httpd/conf.d/csf.messenger.conf
+    # #
+
+	open    ( my $OUT, ">", "/var/lib/csf/csf.conf" );
+	flock   ( $OUT, LOCK_EX );
+
+    # #
+    #   Messenger v2 > Build Apache <VirtualHost> - Port :80 http
+    # #
 
 	if ($config{MESSENGER_HTML_IN} ne "")
 	{
@@ -729,6 +878,10 @@ sub messengerv2
 		print $OUT " KeepAlive Off\n";
 		print $OUT "</VirtualHost>\n";
 	}
+
+    # #
+    #   Messenger v2 > Build Apache <VirtualHost> - Port :443 https
+    # #
 
 	if ($config{MESSENGER_HTTPS_IN} ne "") {
 		my %sslcerts;
@@ -786,8 +939,9 @@ sub messengerv2
 				}
 			}
 		}
-		if (scalar(keys %ssldomains < 1)) {
-			return (1, "No SSL domains found in MESSENGER_HTTPS_CONF location");
+		if (scalar(keys %ssldomains < 1))
+        {
+            return _messenger_failed( 2, "No SSL domains found in MESSENGER_HTTPS_CONF location" );
 		}
 
 		print $OUT "Listen 0.0.0.0:$config{MESSENGER_HTTPS}\n";
@@ -867,6 +1021,18 @@ sub messengerv2
 	}
 	close ($OUT);
 
+    # #
+    #   Messenger / Apache
+    #   
+    #   OPEN /var/lib/csf/csf.conf
+    #       missing file    => create
+    #       existing file   => empty first, then write from scratch
+    #   BUILD <Virtualhost>
+    #       Generate apache http port :80 <VirtualHost> if MESSENGER_HTML_IN exists
+    #       Generate apache https port :443 <VirtualHost> if MESSENGER_HTTPS_IN exists
+    #   COPY /var/lib/csf/csf.conf => /etc/httpd/conf.d/csf.messenger.conf
+    # #
+
 	system( "cp", "-f", "/var/lib/csf/csf.conf", "/etc/apache2/conf.d/csf.messenger.conf" );
 
 	my ($childin, $childout);
@@ -901,7 +1067,7 @@ sub messengerv2
 
 sub messengerv3
 {
-	$config{DEBUG} >= 2 and logfile( "[" . __PACKAGE__ . "] (" . SUB_MESSENGER_V3 . ") : Initializing subroutine" );
+    logfile( "DEBUG:1", "info", "[" . SUB_MESSENGER_V3 . "] Initializing subroutine" );
 
 	my ( undef, undef, $uid, $gid, undef, undef, undef, $homedir ) = getpwnam( $config{MESSENGER_USER} );
 
@@ -911,26 +1077,38 @@ sub messengerv3
 
 	unless ( defined $uid and defined $gid and $uid > 0 and $gid > 0 )
 	{
-		return ( 1, "MESSENGER_USER must not be root (uid/gid 0) or invalid [$config{MESSENGER_USER}]" );
+        _messenger_fail( 3, "MESSENGER_USER must not be root (uid/gid 0) or invalid [$config{MESSENGER_USER}]" );
 	}
 
-	if ($homedir eq "" or $homedir eq "/" or $homedir =~ m[/etc/csf]) {
-		return (1, "The home directory for $config{MESSENGER_USER} is not valid [$homedir]");
+	if ($homedir eq "" or $homedir eq "/" or $homedir =~ m[/etc/csf]) 
+    {
+        _messenger_fail( 3, "The home directory for $config{MESSENGER_USER} is not valid [$homedir]" );
 	}
 
 	if ( ! -e $homedir )
 	{
-		return ( 1, "The home directory for $config{MESSENGER_USER} does not exist [$homedir]" );
+        _messenger_fail( 3, "The home directory for $config{MESSENGER_USER} does not exist [$homedir]" );
 	}
 
-	my $public_html = $homedir."/public_html";
-	unless (-e $public_html) {
-		system("mkdir","-p",$public_html);
-		system("chown","$config{MESSENGER_USER}:$config{MESSENGERV3GROUP}",$public_html);
-		system("chmod",$config{MESSENGERV3PERMS},$public_html);
+	my $public_html = $homedir . "/public_html";
+    logfile( "DEBUG:1", "info", "[Messenger3] Declared public_html path: $public_html" );
+
+	if ( !-e $public_html )
+    {
+		system( "mkdir", "-p", $public_html );
+		system( "chown", "$config{MESSENGER_USER}:$config{MESSENGERV3GROUP}", $public_html );
+		system( "chmod", $config{MESSENGERV3PERMS}, $public_html );
+
+        logfile( "DEBUG:1", "info", "[Messenger3] Created public_html path: $public_html - chown:[$config{MESSENGER_USER}:nobody] - chmod:$config{MESSENGERV3PERMS}" );
+    }
+    else
+    {
+        logfile( "DEBUG:1", "info", "[Messenger3] Skip creating public_html path: $public_html - already exists" );
 	}
-	unless (-e $public_html."/.htaccess") {
-		open (my $HTACCESS, ">", $public_html."/.htaccess");
+
+	if ( !-e $public_html . "/.htaccess" )
+	{
+		open    (my $HTACCESS, ">", $public_html."/.htaccess");
 		flock ($HTACCESS, LOCK_EX);
 		print $HTACCESS <<EOF;
 Require all granted
@@ -945,19 +1123,25 @@ EOF
 		system("chmod","644",$public_html."/.htaccess");
 	}
 
-	unless ( -e $public_html."/index.php" )
+	unless ( -e $public_html . "/index.php" )
 	{
 		if ($config{RECAPTCHA_SITEKEY})
 		{
+            logfile( "DEBUG:1", "info", "[reCAPTCHA] sitekey [" . ( $config{RECAPTCHA_SITEKEY} ne "" ? "provided" : "empty" ) . "] - Copying recaptcha file (/etc/csf/messenger/index.recaptcha.php) => $public_html/index.php" );
 			system( "cp", "/etc/csf/messenger/index.recaptcha.php", $public_html . "/index.php" );
 		}
 		else
 		{
+            logfile( "DEBUG:1", "info", "[reCAPTCHA] sitekey [" . ( $config{RECAPTCHA_SITEKEY} ne "" ? "provided" : "empty" ) . "] - Copying recaptcha file (/etc/csf/messenger/index.php) => $public_html/index.php" );
 			system( "cp", "/etc/csf/messenger/index.php" , $public_html . "/index.php" );
 		}
 
 		system( "chown", "$config{MESSENGER_USER}:$config{MESSENGER_USER}", $public_html . "/index.php" );
 		system( "chmod", "644", $public_html . "/index.php" );
+    }
+    else
+    {
+        logfile( "DEBUG:1", "info", "[reCAPTCHA] sitekey [" . ( $config{RECAPTCHA_SITEKEY} ne "" ? "provided" : "empty" ) . "] - Found $public_html/index.php - skipping cp file from /etc/csf/messenger/" );
 	}
 
 	unless (-e $homedir."/en.php") {
@@ -1066,8 +1250,9 @@ EOF
 			}
 		}
 
-		if (scalar(keys %ssldomains < 1)) {
-			return (1, "No SSL domains found in MESSENGERV3HTTPS_CONF location [$config{MESSENGERV3HTTPS_CONF}] for $webserver web server");
+		if ( scalar( keys %ssldomains < 1 ) )
+        {
+            return _messenger_failed( 1, "No SSL domains found in MESSENGERV3HTTPS_CONF location [$config{MESSENGERV3HTTPS_CONF}] for $webserver web server" );
 		}
 
 		my @virtualhost;
@@ -1178,9 +1363,9 @@ EOF
 		}
 		$location = $config{MESSENGERV3LOCATION};
 	}
-	else {
-		logfile("MESSENGERV3: [$config{MESSENGERV3LOCATION}] is neither a directory nor a file. You must manually include /var/lib/csf/csf.conf into the $webserver configuration");
-		return;
+	else
+    {
+        return _messenger_failed( 3, "[$config{MESSENGERV3LOCATION}] is neither a directory nor a file. You must manually include /var/lib/csf/csf.conf into the $webserver configuration" );
 	}
 
 	if ($config{MESSENGERV3TEST} ne "") {
@@ -1227,19 +1412,6 @@ EOF
 	} else {
 		system($config{MESSENGERV3RESTART});
 		logfile("MESSENGERV3: Restarted $webserver MESSENGERV3 service using $location");
-	}
-	return;
-}
-# end messengerv3
-###############################################################################
-# start messengerlog
-sub messengerlog {
-	my $homedir = shift;
-	my $message = shift;
-	if ($config{DEBUG}) {
-		sysopen (my $LOG, "/var/log/lfd_messenger.log", O_WRONLY | O_APPEND | O_CREAT);
-		print $LOG "[$$]: ".$message."\n";
-		close ($LOG);
 	}
 	return;
 }
