@@ -3081,7 +3081,53 @@ while ( 1 )
 		&lockhang;
 	}
 
-	if ( scalar( keys %forks ) > 200 )
+    # #
+    #   Forks › Tracked
+    #   
+    #   Total number of entries stored in %forks; includes stale/dead PIDs.
+    #   
+    #   This should be set to DEBUG:5; it is insanely verbose and will spam
+    #   logs. Prints about eery 5s (defined by LF_PARSE).
+    #   
+    #   Sep  7 02:15:23 csf lfd[ 258900 ] [lfd:3114] [INFO] [DEBUG:5]: Tracked forks:[187]
+    #   Sep  7 02:15:24 csf lfd[ 258900 ] [lfd:3131] [INFO] [DEBUG:1]: Active forks:[3]
+    # #
+
+	my $forkcnt_total = scalar( keys %forks );
+	logfile( "DEBUG:5", "info", "Tracked forks:[$forkcnt_total]" );
+
+	my $forkcnt_active = 0;
+	foreach my $key ( keys %forks )
+	{
+		if ( $key =~ /\d+/ and $key > 1 and kill( 0, $key ) )
+		{
+			$forkcnt_active++;
+		}
+	}
+
+    # #
+    #   Forks › Active
+    #   
+    #   Currently alive PIDs.
+    #   
+    #   Should be assigned to DEBUG:1 or DEBUG:2; moderately prints to log
+    #   about eery 5s (defined by LF_PARSE).
+    #   
+    #   Sep  7 02:15:24 csf lfd[ 258900 ] [lfd:3131] [INFO] [DEBUG:1]: Active forks:[3]
+    # #
+
+	logfile( "DEBUG:1", "info", "Active forks:[$forkcnt_active]" );
+
+    # #
+    #   Forks › Cleanup
+    #   
+    #   When more than 200 fork PIDs are tracked, check each PID and remove
+    #   any entries for processes that are no longer running.
+    #   
+    #   If more than 200 active forks remain after cleanup, restart LFD.
+    # #
+
+    if ( $forkcnt_total > FORK_LIMIT )
 	{
 		my $forkcnt = 0;
 		foreach my $key ( keys %forks )
@@ -3089,10 +3135,12 @@ while ( 1 )
 			if ( $key =~ /\d+/ and $key > 1 and kill( 0, $key ) )
 			{
 				$forkcnt++;
-				if ( $config{DEBUG} >= 3 )
-				{
-					logfile( "[DEBUG][3] fork:[$key]" )
-				}
+
+                # #
+                #   Log each PID that survived cleanup
+                # #
+
+                logfile( "DEBUG:1", "info", "Fork survived cleanup: [$key]" );
 			}
 			else
 			{
@@ -3100,12 +3148,19 @@ while ( 1 )
 			}
 		}
 
-		if ( $config{DEBUG} >= 2 )
-		{
-			logfile( "[DEBUG][2] Forks:[$forkcnt]" )
-		}
+        # #
+        #   Print total count of forks that survived cleanup
+        # #
 
-		if ( $forkcnt > 200 )
+        logfile( "DEBUG:0", "info", "Forks Survived Cleanup: [$forkcnt]" );
+
+        # #
+        #   Forks › Cleanup › Excessive Forks (Post Cleanup)
+        #   
+        #   If more than 200 active forks remain after cleanup, restart LFD.
+        # #
+
+		if ( $forkcnt > FORK_LIMIT )
 		{
 			logfile( "normal", "error", "Excessive number of children forks ($forkcnt), restarting lfd" );
 			&lfdrestart;
