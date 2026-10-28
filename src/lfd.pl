@@ -1600,16 +1600,20 @@ if ( $config{CF_ENABLE} and -e "/etc/csf/csf.cloudflare" )
 
 if ( $config{MESSENGER} )
 {
-    logfile( "normal", "ok", "[Messenger] Service enabled" );
-	if ( !-e "/var/log/lfd_messenger.log" )
-	{
-		logfile( "info", "[Messenger] Creating log /var/log/lfd_messenger.log" );
-		open ( my $OUT, ">", "/var/log/lfd_messenger.log" ) or
-            logfile( "normal", "error", "[Messenger] Failed to create /var/log/lfd_messenger.log: $!" );
-		close ( $OUT ) if $OUT;
-	}
+    my ( undef, undef, $uid, $gid ) = getpwnam( $config{MESSENGER_USER} );
 
-	system( "chown", "$config{MESSENGER_USER}:$config{MESSENGER_USER}", "/var/log/lfd_messenger.log" );
+    logfile( "normal", "ok", "[Messenger] Service enabled" );
+
+    my ( $log_ready, $log_error ) = ConfigServer::Logger::msngr_log_prepare( $uid, $gid );
+    if ( !$log_ready )
+    {
+        logfile( "normal", "error", "[Messenger] Failed to prepare Messenger log: $log_error" );
+    }
+    else
+    {
+        my $messenger_log = ConfigServer::Logger::LOGFILE_DIR( ) . '/' . ConfigServer::Logger::LOGFILE_MESSENGER( );
+        logfile( "normal", "ok", "[Messenger] Log prepared and validated [$messenger_log]" );
+    }
 
 	# #
 	#   Messenger System Summary
@@ -1641,7 +1645,25 @@ if ( $config{MESSENGER} )
 	}
 
 	my ( undef, undef, $uid, $gid ) = getpwnam( $config{MESSENGER_USER} );
-	if ( ( $config{MESSENGER_USER} ne "" ) and ( $config{MESSENGER_USER} ne "root" ) and ( $uid > 0 ) and ( $gid > 0 ) )
+
+	# #
+	#	Messenger › Configured Account
+	#	
+	#	Disallow proceeding if the configured MESSENGER user:
+	#		- Does not exist
+	#		- Set to 'root'
+	#		- Empty value
+	#		- Has a UID of 0 or less
+	#		- Has a GID of 0 or less
+	# #
+
+    my $messenger_user = $config{MESSENGER_USER} eq "" ? "none" : $config{MESSENGER_USER};
+    if ( ( $config{MESSENGER_USER} eq "" ) or ( $config{MESSENGER_USER} eq "root" ) or ( $uid <= 0 ) or ( $gid <= 0 ) )
+    {
+        logfile( "normal", "error", "[Messenger] Disabled Service - Configured account [$messenger_user] is invalid. Must create a dedicated user!" );
+        $config{MESSENGER} = 0;
+    }
+	else
 	{
 
         # #
@@ -1791,11 +1813,6 @@ if ( $config{MESSENGER} )
             logfile( "normal", "ok", "[Messenger] TEXT Service: Starting" );
 			&messenger( $config{MESSENGER_TEXT}, $config{MESSENGER_USER}, "TEXT" );
 		}
-	}
-	else
-	{
-		logfile( "[MESSENGER] account [$config{MESSENGER_USER}] invalid, MESSENGER service *disabled*" );
-		$config{MESSENGER} = 0;
 	}
 }
 else
