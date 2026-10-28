@@ -170,8 +170,8 @@ if ( !$config{LF_DAEMON} )
     &shutdown( __LINE__, "*Error* LF_DAEMON not enabled in /etc/csf/csf.conf" )
 }
 else
-{
-	logfile( "[STARTUP] LF_DAEMON enabled; starting LFD service" );
+{    
+    logfile( "all", "info", "[STARTUP] LF_DAEMON enabled; starting LFD service" );
 }
 
 # #
@@ -361,7 +361,7 @@ if ( $pid )
 
 $pid = $$;     # child stores its own PID
 
-logfile( "[STARTUP] Registering Process ID (PID) $pid" );
+logfile( "all", "info", "[STARTUP] Registering Process ID (PID) $pid" );
 
 # #
 #	Set fixed working directory for the daemon process.
@@ -462,7 +462,7 @@ my $hostip = do {
     defined( $packed ) ? inet_ntoa( $packed ) : '127.0.0.1';
 };
 
-logfile( "[STARTUP] Fetching hostname $hostname [$hostshort] ($hostip)" );
+logfile( "all", "info", "[STARTUP] Fetching hostname $hostname [$hostshort] ($hostip)" );
 
 # #
 #	Get system clock tick rate (used for CPU/process timing) when reading
@@ -592,9 +592,10 @@ unless ( defined $urlget )
 # #
 #	lfd.pl › cPanel › wwwacct.conf
 #	
-#	The /etc/wwwacct.conf file contains the basic setup information for cPanel & WHM. After you install cPanel & WHM,
-#	you can find and edit this information in WHM’s Basic WebHost Manager Setup interface:
-#		WHM » Home » Server Configuration » Basic WebHost Manager Setup
+#	The "/etc/wwwacct.conf" file contains the basic setup information for
+#   cPanel & WHM. After you install cPanel & WHM, you can find and edit this
+#   information in WHM's Basic WebHost Manager Setup interface:
+#       WHM » Home » Server Configuration » Basic WebHost Manager Setup
 #	
 #	@ref			https://docs.cpanel.net/installation-guide/customize-your-installation/
 # #
@@ -669,7 +670,7 @@ import ConfigServer::RegexMain;
 #	Logs › Start Daemon
 # #
 
-logfile( "[STARTUP] Daemon started on $hostname - csf v$version ($codename)" );
+logfile( "all", "ok", "[STARTUP] Daemon started on $hostname - v$version ($codename)" );
 
 if ( $config{DEBUG} >= 1 )
 {
@@ -796,7 +797,7 @@ if ( $config{RESTRICT_SYSLOG} == 1 )
 
 elsif ( $config{RESTRICT_SYSLOG} == 3 )
 {
-	logfile( "Restricting syslog/rsyslog socket acccess to group [$config{RESTRICT_SYSLOG_GROUP}]..." );
+	logfile( "Restricting syslog/rsyslog socket access to group [$config{RESTRICT_SYSLOG_GROUP}]..." );
 	&syslog_init;
 }
 
@@ -926,7 +927,7 @@ else
 my $blocklist_count = scalar( keys %blocklists );
 if ( $blocklist_count > 0 )
 {
-	logfile( "[STARTUP] Blocklists: Importing $blocklist_count entries from /etc/csf/csf.blocklists and /etc/cxs/cxs.blocklists" );
+    logfile( "normal", "info", "[STARTUP] Blocklists: Importing $blocklist_count entries from /etc/csf/csf.blocklists and /etc/cxs/cxs.blocklists" );
 	&blocklist;
 	$blocklisttimeout = 0;
 }
@@ -942,7 +943,7 @@ if ( $blocklist_count > 0 )
 #   Only list IP addresses, not domain names (they will be ignored)
 # #
 
-logfile( "[STARTUP] csf.ignore: Scanning" );
+logfile( "normal", "info", "[STARTUP] csf.ignore: Scanning" );
 
 if ( -e "/etc/csf/csf.ignore" )
 {
@@ -1642,17 +1643,41 @@ if ( $config{MESSENGER} )
 	my ( undef, undef, $uid, $gid ) = getpwnam( $config{MESSENGER_USER} );
 	if ( ( $config{MESSENGER_USER} ne "" ) and ( $config{MESSENGER_USER} ne "root" ) and ( $uid > 0 ) and ( $gid > 0 ) )
 	{
+
+        # #
+        #   Messenger (All)
+        #   
+        #   csf.conf MESSENGER_USER config valid
+        # #
+
+        logfile( "normal", "ok", "[Messenger] Starting Service - Configured account [$messenger_user] is valid." );
+
+		# #
+		#	Messenger (All) › Internal Setting › HTTPS Disabled
+		#	
+		#	Log the runtime warning if HTTPS Messenger has been disabled.
+		#	This setting is populated internally when HTTPS cannot be used.
+		# #
+
 		if ( $config{MESSENGER_HTTPS_DISABLED} ne "" )
 		{
 			logfile( $config{MESSENGER_HTTPS_DISABLED} );
 		}
 	
+		# #
+		#	Messenger (v3) › Setup
+		#	
+		#	Initialize MESSENGERV3 service.
+		#	Disallow cPanel accounts from running the service.
+		#	Configure HTTPS and HTML redirect ports, then start service.
+		# #
+
 		if ( $config{MESSENGERV3} )
 		{
 			$messenger3 = ConfigServer::Messenger->init( 3 );
 			if ( -e "/var/cpanel/users/$config{MESSENGER_USER}" )
 			{
-				logfile( "[MESSENGERV3] Cannot run service using a cPanel account:[$config{MESSENGER_USER}], MESSENGER service disabled" );
+                logfile( "normal", "error", "[MessengerV3] Disabling Service - Cannot run service using a cPanel account:[$config{MESSENGER_USER}]." );
 				$config{MESSENGER} 		= 0;
 				$config{MESSENGERV3} 	= 0;
 
@@ -1663,25 +1688,37 @@ if ( $config{MESSENGER} )
 				if ( $config{MESSENGER_HTTPS_IN} ne "" )
 				{
 					foreach my $port ( split( /\,/, $config{MESSENGER_HTTPS_IN})) { $messengerports{$port} = 1 }
-					logfile( "[MESSENGER] HTTPS Service starting" );
+                    logfile( "normal", "ok", "[MessengerV3] HTTPS Service: Starting" );
 				}
+
 				if ( $config{MESSENGER_HTML_IN} ne "" )
 				{
 					foreach my $port ( split( /\,/, $config{MESSENGER_HTML_IN})) { $messengerports{$port} = 1 }
-					logfile( "[MESSENGER] HTML Service starting" );
+                    logfile( "normal", "ok", "[MessengerV3] HTML Service: Starting" );
 				}
 
 				&messengerv3;
 			}
 		}
+
+		# #
+		#	Messenger (v2) › Setup
+		#	
+		#	Initialize MESSENGERV2 service.
+		#	Disallow cPanel accounts from running the service.
+		#	Configure HTTPS and HTML redirect ports, then start service.
+		# #
+
 		elsif ( $config{MESSENGERV2} )
 		{
 			$messenger2 = ConfigServer::Messenger->init( 2 );
 			if ( -e "/var/cpanel/users/$config{MESSENGER_USER}" )
 			{
-				logfile( "[MESSENGERV2] Cannot run service using a cPanel account:[$config{MESSENGER_USER}], MESSENGER service disabled" );
+                logfile( "normal", "ok", "[MessengerV2] Service Disabled - Cannot run service using a cPanel account: [$config{MESSENGER_USER}]" );
+
 				$config{MESSENGER} 		= 0;
 				$config{MESSENGERV2} 	= 0;
+
 				&messengerstop( 2 );
 			}
 			else
@@ -1692,7 +1729,7 @@ if ( $config{MESSENGER} )
 					{
 						$messengerports{$port} = 1
 					}
-					logfile( "[MESSENGER] HTTPS Service starting" );
+					logfile( "normal", "ok", "[MessengerV2] HTTPS Service: Starting" );
 				}
 
 				if ( $config{MESSENGER_HTML_IN} ne "" )
@@ -1701,12 +1738,20 @@ if ( $config{MESSENGER} )
 					{
 						$messengerports{$port} = 1
 					}
-					logfile( "[MESSENGER] HTML Service starting" );
+					logfile( "normal", "ok", "[MessengerV2] HTML Service: Starting" );
 				}
 
 				&messengerv2;
 			}
 		}
+
+		# #
+		#	Messenger (v1) › Setup
+		#	
+		#	Initialize MESSENGERV1 service.
+		#	Configure HTTPS and HTML redirect ports, then start services.
+		# #
+
 		else
 		{
 			$messenger1 = ConfigServer::Messenger->init(1);
@@ -1716,7 +1761,7 @@ if ( $config{MESSENGER} )
 				{
 					$messengerports{$port} = 1
 				}
-				logfile( "[MESSENGER] HTTPS Service starting" );
+				logfile( "normal", "ok", "[MessengerV1] HTTPS Service: Starting" );
 				&messenger( $config{MESSENGER_HTTPS}, $config{MESSENGER_USER}, "HTTPS" );
 			}
 
@@ -1726,14 +1771,14 @@ if ( $config{MESSENGER} )
 				{
 					$messengerports{$port} = 1
 				}
-				logfile( "[MESSENGER] HTML Service starting" );
+                logfile( "normal", "ok", "[MessengerV1] HTML Service: Starting" );
 				&messenger( $config{MESSENGER_HTML}, $config{MESSENGER_USER}, "HTML" );
 			}
 		}
 
 		if ( $config{MESSENGER_TEXT_IN} ne "" )
 		{
-			unless ( defined $messenger1 )
+			if ( !defined $messenger1 )
 			{
 				$messenger1 = ConfigServer::Messenger->init( 1 );
 			}
@@ -1743,7 +1788,7 @@ if ( $config{MESSENGER} )
 				$messengerports{$port} = 1
 			}
 
-			logfile( "[MESSENGER] TEXT Service starting" );
+            logfile( "normal", "ok", "[Messenger] TEXT Service: Starting" );
 			&messenger( $config{MESSENGER_TEXT}, $config{MESSENGER_USER}, "TEXT" );
 		}
 	}
@@ -1848,7 +1893,7 @@ if ( $config{UI} )
 
 if ( $config{CLUSTER_RECVFROM} )
 {
-	logfile( "Cluster Service starting..." );
+    logfile( "normal", "ok", "[Cluster] Service Starting" );
 	if (length $config{CLUSTER_KEY} < 8) {
 		logfile("Failed: Cluster Service - CLUSTER_KEY too short");
 		$config{CLUSTER_RECVFROM} = 0;
@@ -1876,7 +1921,7 @@ if ( $config{CLUSTER_RECVFROM} )
 #   to 0 to disable the feature
 # #
 
-logfile( "[STARTUP] DynDNS Tracking [" . ( $config{DYNDNS} ? "Enabled" : "Disabled" ) . "]" );
+logfile( "normal", "info", "[STARTUP] DynDNS Tracking [" . ( $config{DYNDNS} ? "Enabled" : "Disabled" ) . "]" );
 
 if ( $config{DYNDNS} )
 {
@@ -1910,14 +1955,14 @@ if ( $config{DYNDNS} )
 #   A minimum value of 300 is enforced for LF_GLOBAL if enabled.
 # #
 
-logfile( "[STARTUP] Global Tracking [" . ( $config{LF_GLOBAL} ? "Enabled" : "Disabled" ) . "]" );
+logfile( "normal", "info", "[STARTUP] Global Tracking [" . ( $config{LF_GLOBAL} ? "Enabled" : "Disabled" ) . "]" );
 
 if ( $config{LF_GLOBAL} )
 {
-	logfile( "[STARTUP] Global Tracking (Ignore List) [" . ( $config{GLOBAL_IGNORE} ? $config{GLOBAL_IGNORE} : "Unset" ) . "]" );
-	logfile( "[STARTUP] Global Tracking (Allow List) ["  . ( $config{GLOBAL_ALLOW}  ? $config{GLOBAL_ALLOW}  : "Unset" ) . "]" );
-	logfile( "[STARTUP] Global Tracking (Deny List) ["   . ( $config{GLOBAL_DENY}   ? $config{GLOBAL_DENY}   : "Unset" ) . "]" );
-	logfile( "[STARTUP] Global Tracking (DynDNS List) [" . ( $config{GLOBAL_DYNDNS} ? $config{GLOBAL_DYNDNS} : "Unset" ) . "]" );
+	logfile( "normal", "info", "[STARTUP] Global Tracking (Ignore List) [" . ( $config{GLOBAL_IGNORE} ? $config{GLOBAL_IGNORE} : "Unset" ) . "]" );
+	logfile( "normal", "info", "[STARTUP] Global Tracking (Allow List) ["  . ( $config{GLOBAL_ALLOW}  ? $config{GLOBAL_ALLOW}  : "Unset" ) . "]" );
+	logfile( "normal", "info", "[STARTUP] Global Tracking (Deny List) ["   . ( $config{GLOBAL_DENY}   ? $config{GLOBAL_DENY}   : "Unset" ) . "]" );
+	logfile( "normal", "info", "[STARTUP] Global Tracking (DynDNS List) [" . ( $config{GLOBAL_DYNDNS} ? $config{GLOBAL_DYNDNS} : "Unset" ) . "]" );
 
 	&global;
 	$globaltimeout = 0;
@@ -1974,13 +2019,13 @@ my %cc_lookup_desc = (
 #   "4" - Reports: Country Code and Country and Region and City (db-ip.com)
 # #
 
-logfile( "[STARTUP] CC Lookups [" . ( $config{CC_LOOKUPS} ? "Enabled" : "Disabled" ) . "]" );
+logfile( "normal", "info", "[STARTUP] CC Lookups [" . ( $config{CC_LOOKUPS} ? "Enabled" : "Disabled" ) . "]" );
 
 if ( $config{CC_LOOKUPS} )
 {
 	if ( $config{CC_LOOKUPS} != 4 and $config{MM_LICENSE_KEY} eq "" and $config{CC_SRC} eq "1" )
 	{
-		logfile( "[CC] Error: Country Code Lookups setting MM_LICENSE_KEY must be set in /etc/csf/csf.conf to continue updating the MaxMind databases" );
+        logfile( "normal", "error", "[CC] Error! Country Code Lookups setting MM_LICENSE_KEY must be set in /etc/csf/csf.conf to continue updating the MaxMind databases" );
 	}
 
 	&countrycodelookups;
@@ -2022,13 +2067,13 @@ my $cc_enabled = grep { $config{$_} } qw(
     CC_ALLOW_SMTPAUTH
 );
 
-logfile( "[STARTUP] CC Initialize [" . ( $cc_enabled ? "Enabled" : "Disabled" ) . "]" );
+logfile( "normal", "info", "[STARTUP] CC Initialize [" . ( $cc_enabled ? "Enabled" : "Disabled" ) . "]" );
 
 if ( $cc_enabled )
 {
 	if ( $config{MM_LICENSE_KEY} eq "" and $config{CC_SRC} eq "1" )
 	{
-		logfile( "[CC] Error: Country Code Filters setting MM_LICENSE_KEY must be set in /etc/csf/csf.conf to continue updating the MaxMind databases" );
+        logfile( "normal", "error", "[CC] Error! Country Code Filters setting MM_LICENSE_KEY must be set in /etc/csf/csf.conf to continue updating the MaxMind databases" );
 	}
 
 	&countrycode;
@@ -2046,7 +2091,7 @@ if ( $cc_enabled )
 #   					Each option is a comma separated list of CC's, e.g. "US,GB,DE,AS15169"
 # #
 
-logfile( "[STARTUP] CC Ignore Countries [" . ( $cc_ignore ne '' ? $cc_ignore : "Disabled" ) . "]" );
+logfile( "normal", "info", "[STARTUP] CC Ignore Countries [" . ( $cc_ignore ne '' ? $cc_ignore : "Disabled" ) . "]" );
 
 if ( $cc_ignore )
 {
@@ -2078,7 +2123,7 @@ if ( $cc_ignore )
 #   To disable set to "0"
 # # 
 
-logfile( "[STARTUP] Integrity Tracking [" . ( $config{LF_INTEGRITY} ? "Enabled" : "Disabled" ) . "]" );
+logfile( "normal", "info", "[STARTUP] Integrity Tracking [" . ( $config{LF_INTEGRITY} ? "Enabled" : "Disabled" ) . "]" );
 
 my $MIN_INTEGRITY_INTERVAL = 120;
 if ( $config{LF_INTEGRITY} )
@@ -2100,10 +2145,12 @@ if ( $config{LF_INTEGRITY} )
 #   To enable this feature set the following to the checking interval in seconds
 #   (a value of 300 would seem sensible).
 #   
+#   If set lower than 60 seconds; will revert back to 60 seconds.
+#   
 #   To disable set to "0"
 # # 
 
-logfile( "[STARTUP] Exploit Tracking [" . ( $config{LF_EXPLOIT} ? "Enabled" : "Disabled" ) . "]" );
+logfile( "normal", "info", "[STARTUP] Exploit Tracking [" . ( $config{LF_EXPLOIT} ? "Enabled" : "Disabled" ) . "]" );
 
 if ( $config{LF_EXPLOIT} )
 {
@@ -2175,7 +2222,7 @@ if ( $config{X_ARF} )
 my $dirwatch = defined( $config{LF_DIRWATCH}) ? $config{LF_DIRWATCH} : '' ;
 $dirwatch =~ s/^\s+|\s+$//g;
 
-logfile( "[STARTUP] Directory Watch (Core) [" . ( $dirwatch =~ /^\d+$/ && $dirwatch > 0 ? "Enabled ($dirwatch seconds)" : "Disabled" ) . "]" );
+logfile( "normal", "info", "[STARTUP] Directory Watch (Core) [" . ( $dirwatch =~ /^\d+$/ && $dirwatch > 0 ? "Enabled ($dirwatch seconds)" : "Disabled" ) . "]" );
 
 if ( $dirwatch )
 {
@@ -2243,7 +2290,7 @@ if ( $dirwatch )
 my $dirwatch_file = defined( $config{LF_DIRWATCH_FILE}) ? $config{LF_DIRWATCH_FILE} : '' ;
 $dirwatch_file =~ s/^\s+|\s+$//g;
 
-logfile( "[STARTUP] Directory Watch (File) [" . ( $dirwatch_file =~ /^\d+$/ && $dirwatch_file > 0 ? "Enabled ($dirwatch_file seconds)" : "Disabled" ) . "]" );
+logfile( "normal", "info", "[STARTUP] Directory Watch (File) [" . ( $dirwatch_file =~ /^\d+$/ && $dirwatch_file > 0 ? "Enabled ($dirwatch_file seconds)" : "Disabled" ) . "]" );
 
 if ( $config{LF_DIRWATCH_FILE} )
 {
@@ -2301,7 +2348,7 @@ if ( $config{LF_DIRWATCH_FILE} )
 #   culprit
 # # 
 
-logfile( "[STARTUP] Email Script Tracking [" . ( $config{LF_SCRIPT_ALERT} ? "Enabled" : "Disabled" ) . "]" );
+logfile( "normal", "info", "[STARTUP] Email Script Tracking [" . ( $config{LF_SCRIPT_ALERT} ? "Enabled" : "Disabled" ) . "]" );
 
 if ( $config{LF_SCRIPT_ALERT} )
 {
@@ -2341,7 +2388,7 @@ if ( $config{LF_SCRIPT_ALERT} )
 #   To disable set to "0"
 # # 
 
-logfile( "[STARTUP] Email Queue Tracking [" . ( $config{LF_QUEUE_ALERT} ? "Enabled" : "Disabled" ) . "]" );
+logfile( "normal", "info", "[STARTUP] Email Queue Tracking [" . ( $config{LF_QUEUE_ALERT} ? "Enabled" : "Disabled" ) . "]" );
 
 if ( $config{LF_QUEUE_ALERT} )
 {
@@ -2370,7 +2417,7 @@ if ( $config{LF_QUEUE_ALERT} )
 #   file to report in gigabytes, e.g. set to 5 for 5GB
 # # 
 
-logfile( "[STARTUP] ModSecurity IP DB Tracking [" . ( $config{LF_MODSECIPDB_ALERT} ? "Enabled" : "Disabled" ) . "]" );
+logfile( "normal", "info", "[STARTUP] ModSecurity IP DB Tracking [" . ( $config{LF_MODSECIPDB_ALERT} ? "Enabled" : "Disabled" ) . "]" );
 
 if ( $config{LF_MODSECIPDB_ALERT} )
 {
@@ -2386,7 +2433,7 @@ my $rt_enabled = grep { $config{$_} } qw(
     RT_LOCALHOSTRELAY_ALERT
 );
 
-logfile( "[STARTUP] Email Relay Tracking [" . ( $rt_enabled ? "Enabled" : "Disabled" ) . "]" );
+logfile( "normal", "info", "[STARTUP] Email Relay Tracking [" . ( $rt_enabled ? "Enabled" : "Disabled" ) . "]" );
 
 if ( $rt_enabled )
 {
@@ -2395,7 +2442,7 @@ if ( $rt_enabled )
 	#   This option triggers for email sent via /usr/sbin/sendmail or /usr/sbin/exim
 	# # 
 
-	logfile( "[STARTUP] Email Local Relay Alerts [" . ( $config{RT_LOCALRELAY_ALERT} ? "Enabled" : "Disabled" ) . "]" );
+	logfile( "normal", "info", "[STARTUP] Email Local Relay Alerts [" . ( $config{RT_LOCALRELAY_ALERT} ? "Enabled" : "Disabled" ) . "]" );
 
 	if ( $config{RT_LOCALRELAY_ALERT} )
 	{
@@ -2442,7 +2489,7 @@ if ( $rt_enabled )
 #   Set LF_PERMBLOCK to "0" to disable this feature
 # # 
 
-logfile( "[STARTUP] Temp to Perm Block Tracking [" . ( $config{LF_PERMBLOCK} ? "Enabled" : "Disabled" ) . "]" );
+logfile( "normal", "info", "[STARTUP] Temp to Perm Block Tracking [" . ( $config{LF_PERMBLOCK} ? "Enabled" : "Disabled" ) . "]" );
 
 # # 
 #   Permanently block IPs by network class.
@@ -2461,7 +2508,7 @@ logfile( "[STARTUP] Temp to Perm Block Tracking [" . ( $config{LF_PERMBLOCK} ? "
 #   Set LF_NETBLOCK to "0" to disable this feature
 # # 
 
-logfile( "[STARTUP] Netblock Tracking [" . ( $config{LF_NETBLOCK} ? "Enabled" : "Disabled" ) . "]" );
+logfile( "normal", "info", "[STARTUP] Netblock Tracking [" . ( $config{LF_NETBLOCK} ? "Enabled" : "Disabled" ) . "]" );
 
 if ( $config{LF_PERMBLOCK} or $config{LF_NETBLOCK} )
 {
@@ -2504,7 +2551,7 @@ if ( $config{LF_PERMBLOCK} or $config{LF_NETBLOCK} )
 }
 
 # # 
-#   This option will gather basic system statstics. Through the UI it displays
+#   This option will gather basic system statistics. Through the UI it displays
 #   various graphs for disk, cpu, memory, network, etc usage over 4 intervals:
 #       . Hourly (per minute)
 #       . 24 hours (per minute)
@@ -2522,7 +2569,7 @@ if ( $config{LF_PERMBLOCK} or $config{LF_NETBLOCK} )
 #       - View System Statistics
 # # 
 
-logfile( "[STARTUP] System Statistics [" . ( $config{ST_SYSTEM} ? "Enabled ($config{ST_SYSTEM})" : "Disabled" ) . "]" );
+logfile( "normal", "info", "[STARTUP] System Statistics [" . ( $config{ST_SYSTEM} ? "Enabled ($config{ST_SYSTEM})" : "Disabled" ) . "]" );
 
 if ( $config{ST_SYSTEM} )
 {
@@ -2582,7 +2629,7 @@ if ( $config{ST_SYSTEM} )
 #						this option.
 # # 
 
-logfile( "[STARTUP] Port Scan Tracking [" . ( $config{PS_INTERVAL} ? "Enabled ($config{PS_INTERVAL})" : "Disabled" ) . "]" );
+logfile( "normal", "info", "[STARTUP] Port Scan Tracking [" . ( $config{PS_INTERVAL} ? "Enabled ($config{PS_INTERVAL})" : "Disabled" ) . "]" );
 
 if ( $config{PS_INTERVAL} )
 {
@@ -2613,7 +2660,7 @@ if ( $config{PS_INTERVAL} )
 #   this file about RESTRICT_SYSLOG before enabling this option:
 # # 
 
-logfile( "[STARTUP] User ID Tracking [" . ( $config{UID_INTERVAL} ? "Enabled ($config{UID_INTERVAL})" : "Disabled" ) . "]" );
+logfile( "normal", "info", "[STARTUP] User ID Tracking [" . ( $config{UID_INTERVAL} ? "Enabled ($config{UID_INTERVAL})" : "Disabled" ) . "]" );
 
 if ( $config{UID_INTERVAL} )
 {
@@ -2666,7 +2713,7 @@ if ( $config{UID_INTERVAL} )
 #   To disable this feature, set this to 0
 # # 
 
-logfile( "[STARTUP] Connection Tracking" . ( $config{CT_STATES} ? " ($config{CT_STATES})" : "" ) . " [" . ( $config{CT_LIMIT} ? "Enabled" : "Disabled" ) . "]" );
+logfile( "normal", "info", "[STARTUP] Connection Tracking" . ( $config{CT_STATES} ? " ($config{CT_STATES})" : "" ) . " [" . ( $config{CT_LIMIT} ? "Enabled" : "Disabled" ) . "]" );
 
 if ( $config{CT_LIMIT} )
 {
@@ -2700,7 +2747,7 @@ if ( $config{CT_LIMIT} )
 #   Set the value to 0 to disable this feature
 # # 
 
-logfile( "[STARTUP] Process Tracking [" . ( $config{PT_LIMIT} ? "Enabled ($config{PT_LIMIT})" : "Disabled" ) . "]" );
+logfile( "normal", "info", "[STARTUP] Process Tracking [" . ( $config{PT_LIMIT} ? "Enabled ($config{PT_LIMIT})" : "Disabled" ) . "]" );
 
 if ( $config{PT_LIMIT} )
 {
@@ -2763,7 +2810,7 @@ if ( $config{PT_LIMIT} )
 		$config{PT_INTERVAL} = 60;
 	}
 
-	logfile( "[STARTUP] Hung Session Tracking [" . ( $config{PT_SSHDHUNG} ? "Enabled" : "Disabled" ) . "]" );
+	logfile( "normal", "info", "[STARTUP] Hung Session Tracking [" . ( $config{PT_SSHDHUNG} ? "Enabled" : "Disabled" ) . "]" );
 }
 
 # #
@@ -2830,7 +2877,7 @@ if ( $config{AT_ALERT} )
 #   last tracked access (or if lfd is restarted)
 # # 
 
-logfile( "[STARTUP] WHM Tracking [" . ( $config{LF_CPANEL_ALERT} ? "Enabled" : "Disabled" ) . "]" );
+logfile( "normal", "info", "[STARTUP] WHM Tracking [" . ( $config{LF_CPANEL_ALERT} ? "Enabled" : "Disabled" ) . "]" );
 
 if ( $config{LF_CPANEL_ALERT} )
 {
@@ -2866,7 +2913,7 @@ if ( $config{LF_CPANEL_ALERT} )
 #   e.g.: 22;TCP;20;100;200;300;400
 # # 
 
-logfile( "[STARTUP] Port Knocking Tracking [" . ( $config{PORTKNOCKING} && $config{PORTKNOCKING_ALERT} ? "Enabled" : "Disabled" ) . "]" );
+logfile( "normal", "info", "[STARTUP] Port Knocking Tracking [" . ( $config{PORTKNOCKING} && $config{PORTKNOCKING_ALERT} ? "Enabled" : "Disabled" ) . "]" );
 
 my $sshdef 				= $config{PORTS_sshd};
 $ports{pop3d} 			= $config{PORTS_pop3d};
@@ -2956,7 +3003,7 @@ my $duration 	= 0;
 my $maintimer 	= 0;
 my $parent_bind = ( defined $config{LFD_PROCESS_BIND} and $config{LFD_PROCESS_BIND} ) ? 1 : 0;
 
-logfile( "[STARTUP] PID binding: " . ( $parent_bind ? "parent only" : "parent + children" ) . " | PID=$$" );
+logfile( "normal", "info", "[STARTUP] PID binding: " . ( $parent_bind ? "parent only" : "parent + children" ) . " | PID=$$" );
 
 while ( 1 )
 {
@@ -2990,9 +3037,9 @@ while ( 1 )
 		my @piddata = <$PIDFILE>;
 		chomp @piddata;
 
-		my $file_pid = defined $piddata[0] ? $piddata[0] : '';
-		my $file_ino = ( stat( $pidfile ) )[1];
-		$file_ino = '' unless defined $file_ino;
+		my $file_pid    = defined $piddata[0] ? $piddata[0] : '';
+		my $file_ino    = ( stat( $pidfile ) )[1];
+		$file_ino       = '' unless defined $file_ino;
 
 		if ( ( $pid ne $file_pid ) or ( $pidino ne $file_ino ) )
 		{
@@ -3010,21 +3057,21 @@ while ( 1 )
 	{
 		chmod ( 0600, "/etc/csf" );
 
-		logfile( "[STARTUP] Permissions* on /etc/csf reset to 0600 [currently: $perms]" );
+		logfile( "normal", "info", "[STARTUP] Permissions* on /etc/csf reset to 0600 [currently: $perms]" );
 	}
 
 	$perms = sprintf "%04o", ( stat( "/var/lib/csf" ) )[2] & oct( "07777" );
 	if ( $perms != "0600" )
 	{
 		chmod ( 0600, "/var/lib/csf" );
-		logfile( "[STARTUP] Permissions* on /var/lib/csf reset to 0600 [currently: $perms]" );
+		logfile( "normal", "info", "[STARTUP] Permissions* on /var/lib/csf reset to 0600 [currently: $perms]" );
 	}
 
 	$perms = sprintf "%04o", ( stat( "/usr/local/csf" ) )[2] & oct( "07777" );
 	if ( $perms != "0600" )
 	{
 		chmod ( 0600, "/usr/local/csf" );
-		logfile( "[STARTUP] Permissions* on /usr/local/csf reset to 0600 [currently: $perms]" );
+		logfile( "normal", "info", "[STARTUP] Permissions* on /usr/local/csf reset to 0600 [currently: $perms]" );
 	}
 
 	$locktimeout+=$duration;
@@ -3060,7 +3107,7 @@ while ( 1 )
 
 		if ( $forkcnt > 200 )
 		{
-			logfile( "[STARTUP] Error: Excessive number of children ($forkcnt), restarting lfd" );
+			logfile( "normal", "error", "Excessive number of children forks ($forkcnt), restarting lfd" );
 			&lfdrestart;
 			exit;
 		}
@@ -9770,6 +9817,7 @@ sub shutdown
 	$SIG{INT} 		= 'IGNORE';
 	$SIG{TERM} 		= 'IGNORE';
 	$SIG{HUP} 		= 'IGNORE';
+
 	my $line 		= shift;
 	my $message 	= shift;
 
@@ -9842,7 +9890,7 @@ sub shutdown
 }
 
 # #
-#	lfd.pl › Shutdown Child
+#   lfd.pl › Shutdown Child
 # #
 
 sub shutdown_child 
@@ -9868,7 +9916,7 @@ sub shutdown_child
 			$message .= ", at line $line"
 		}
 
-		logfile( "$message" );
+        logfile( "all", "ok", "$message" );
 	}
 
     exit;
@@ -11326,6 +11374,7 @@ sub messengerstop
 		{
 			unlink( "/etc/apache2/conf.d/csf.messenger.conf" );
 			system( "/scripts/restartsrv_httpd" );
+            logfile( "DEBUG:1", "info", "[MessengerV2] Found file /etc/apache2/conf.d/csf.messenger.conf; removing" );
 		}
 	}
 	elsif ($version == 3)
@@ -11336,6 +11385,9 @@ sub messengerstop
 			{
 				unlink( $config{MESSENGERV3LOCATION} . "/csf.messenger.conf" );
 				system( $config{MESSENGERV3RESTART} );
+
+                logfile( "DEBUG:1", "info", "[MessengerV3] Found configuration file [" . $config{MESSENGERV3LOCATION} . "/csf.messenger.conf]; removing" );
+
 			}
 		}
 		elsif (-f $config{MESSENGERV3LOCATION}) {
