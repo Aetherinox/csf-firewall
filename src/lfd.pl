@@ -11372,60 +11372,197 @@ sub checkvps {
 	}
 	return 0;
 }
-# end checkvps
-###############################################################################
-# start messengerrecaptcha
-sub messengerrecaptcha {
+
+# #
+#   Messenger › ReCaptcha
+#   
+#   All reCAPTCHA files are stored in the $homedir of the user
+#   configured in csf.conf as:
+#       MESSENGER_USER = "csf"
+#   
+#   If MESSENGER_USER blank "" in csf.conf; LFD throws:
+#       [ConfigServer::Messenger] Configured account [none] is invalid. 
+#       Must create a dedicated user! MESSENGER service *disabled*
+#   
+#   To define $homedir, LFD uses getpwnam() on MESSENGER_USER.
+#   This retrieves the same account info shown by:
+#       getent passwd csf
+#   
+#   Eg:
+#       csf:x:974:974::/home/csf:/usr/sbin/nologin
+#   
+#   getpwnam() returns separated account args, LFD can get values 
+#   such as UID, GID, and homedir.
+#   
+#   When starting CSF, LFD checks $homedir for the files required
+#   by reCAPTCHA. The following files/folders are created as part 
+#   of the CSF startup process:
+#       /home/csf/en.php
+#       /home/csf/public_html
+#       /home/csf/recaptcha.php
+#   
+#   unblock.txt file is not created during startup. It is created
+#   after a user completes a reCAPTCHA challenge on a CSF page. We
+#   can use the local test page to trigger this:
+#       https://localhost:8887/
+#   
+#   After the challenge is completed, the user's IP is temp written
+#   inside unblock.txt. This file acts as a queue, not a log.
+#   
+#   LFD then periodically scans unblock.txt (5s) and validates each
+#   queued line to see if it's a valid IP. For each valid IP address,
+#   LFD runs:
+#       csf -dr <ip_address>    Remove IP from /etc/csf/csf.deny
+#       csf -tr <ip_address>    Remove IP from temporary IP lists
+#   
+#   After all valid entries are processed, unblock.txt is truncated
+#   and waits for the next batch.
+#   
+#   @note           localhost (127.0.0.1) is intentionally not seen
+#                   as a valid IP by checkip(); will reject.
+# #
+
+sub messengerrecaptcha
+{
 	my $timer = time;
-	my (undef,undef,$uid,$gid,undef,undef,undef,$homedir) = getpwnam($config{MESSENGER_USER});
-	if (-z "$homedir/unblock.txt") {return}
+	my ( undef, undef, $uid, $gid, undef, undef, undef, $homedir ) = getpwnam( $config{MESSENGER_USER} );
+
+    # #
+    #   unblock.txt › Get Current State
+    # #
+
+	if ( !-e "$homedir/unblock.txt" )
+    {
+        logfile( "DEBUG:0", "warn", "$homedir/unblock.txt - File missing" );
+        return
+    }
+	elsif ( -z "$homedir/unblock.txt" )
+    {
+        logfile( "DEBUG:2", "info", "$homedir/unblock.txt - File empty with no queued entries" );
+        return
+    }
+    else
+    {
+        logfile( "DEBUG:0", "info", "$homedir/unblock.txt - Contains queued entries. LFD will process the queue in approximately $config{LF_PARSE} seconds." );
+    }
+
+    # #
+    #   Fork; if fork() returns undef, shutdown().
+    #   Child process could not be created.
+    # #
 
 	$SIG{CHLD} = 'IGNORE';
-	unless (defined ($childpid = fork)) {
-		&shutdown(__LINE__,"*Error* cannot fork: $!");
+	unless ( defined ( $childpid = fork ) )
+    {
+		&shutdown( __LINE__,"*Error* cannot fork: $!" );
 	} 
-	$forks{$childpid} = 1;
-	unless ($childpid) {
-		if ($config{DEBUG} >= 3) {$timer = &timer("start","messengerrecaptcha",$timer)}
-		$0 = "lfd - reCAPTCHA csf...";
-		$childproc = "Messenger (Recaptcha)";
-		$SIG{INT} = \&shutdown_child;
-		$SIG{TERM} = \&shutdown_child;
-		$SIG{HUP} = \&shutdown_child;
-		$SIG{__DIE__} = sub {&shutdown_child(@_);};
 
-		if (-f "$homedir/unblock.txt") {
-			my @alert = slurp("/usr/local/csf/tpl/recaptcha.txt");
-			sysopen (my $UNBLOCK, "$homedir/unblock.txt", O_RDWR | O_CREAT);
-			flock($UNBLOCK, LOCK_EX);
-			while (my $line = <$UNBLOCK>) {
+	$forks{$childpid} = 1;
+	unless ($childpid)
+    {
+		if ( $config{DEBUG} >= 3 )
+        {
+            $timer = &timer( "start", "messengerrecaptcha", $timer )
+        }
+    
+		$0 = "lfd - reCAPTCHA csf...";
+		$childproc      = "Messenger (Recaptcha)";
+		$SIG{INT}       = \&shutdown_child;
+		$SIG{TERM}      = \&shutdown_child;
+		$SIG{HUP}       = \&shutdown_child;
+		$SIG{__DIE__}   = sub {&shutdown_child(@_);};
+
+		if ( -f "$homedir/unblock.txt" )
+        {
+            logfile( "DEBUG:1", "ok", "$homedir/unblock.txt - File found" );
+
+			my @alert   = slurp( "/usr/local/csf/tpl/recaptcha.txt" );
+			sysopen     ( my $UNBLOCK, "$homedir/unblock.txt", O_RDWR | O_CREAT );
+			flock       ( $UNBLOCK, LOCK_EX );
+    
+			while ( my $line = <$UNBLOCK> )
+            {
 				chomp $line;
-				my ($unblockip,$host,$hostip) = split(/;/,$line);
-				if (checkip(\$unblockip)) {
-					&logfile("reCAPTCHA: Unblocking client [$unblockip] on domain [$host ($hostip)]");
+				my ( $unblockip, $host, $hostip ) = split( /;/, $line );
+                logfile( "DEBUG:1", "ok", "$homedir/unblock.txt - Entry found: [$unblockip ($host:$hostip)]" );
+
+                # #
+                #   Unblock › Intentionally block localhost
+                # #
+
+                if ( $unblockip eq "127.0.0.1" || $unblockip eq "::1" )
+                {
+                    logfile( "DEBUG:1", "warn", "$homedir/unblock.txt - Entry skipped checkip(): [$unblockip ($host:$hostip)] - loopback addresses are intentionally excluded by checkip()" );
+                }
+
+                # #
+                #   Unblock › Unblock IP accepted as valid IP
+                #   
+                #   checkip     (CheckIP.pm) accepts string or scalar reference.
+                #               Accepts CIDR notation (CIDR must contain only digits).
+                #   
+                #   @ranges         ipv4        /1 - /32
+                #                   ipv6        /1 - /128
+                #   
+                #   @examples       127.0.0.1           0               (reject)
+                #                   ::1                 0               (reject)
+                #                   192.168.1.1/33      0               (reject)
+                #                   127.0.0.2           4               (accept)
+                #                   127.1.2.3           4               (accept)
+                #                   127.255.255.255     4               (accept)
+                #                   2001:db8::1         6               (accept)
+                #                   2001:db8::1/64      6               (accept)
+                #   
+                #   @returns        numeric     status
+                #                   0           invalid/rejected
+                #                   4           Valid ipv4
+                #                   6           Valid ipv6
+                # #
+
+                elsif ( checkip(\$unblockip) )
+                {
+                    logfile( "DEBUG:1", "ok", "$homedir/unblock.txt - Entry passed checkip(): [$unblockip ($host:$hostip)] is a valid IP address." );
+
+					&logfile( "reCAPTCHA: Unblocking client [$unblockip] on domain [$host ($hostip)]" );
 					&syscommand(__LINE__,"/usr/sbin/csf","-dr",$unblockip);
 					&syscommand(__LINE__,"/usr/sbin/csf","-tr",$unblockip);
 
-					if ($config{RECAPTCHA_ALERT}) {
-						my $tip = iplookup($unblockip);
+					if ( $config{RECAPTCHA_ALERT} )
+                    {
+						my $tip = iplookup( $unblockip );
 						my @message;
-						foreach my $line (@alert) {
+						foreach my $line ( @alert )
+                        {
 							$line =~ s/\[ip\]/$tip/ig;
 							$line =~ s/\[host\]/$host ($hostip)/ig;
 							push @message, $line;
 						}
-						ConfigServer::Sendmail::relay("", "", @message);
 
-						if ($config{DEBUG} >= 1) {logfile("debug: recaptcha email sent for $unblockip")}
+						ConfigServer::Sendmail::relay( "", "", @message );
+                        logfile( "DEBUG:1", "ok", "$homedir/unblock.txt - Email sent for reCAPTCHA entry unblocked: [$unblockip]" );
 					}
+                }
+
+                # #
+                #   Unblock › Unblock IP denied; not valid IP
+                # #
+
+                else
+                {
+                    logfile( "DEBUG:1", "warn", "$homedir/unblock.txt - Entry failed checkip(): [$unblockip ($host:$hostip)] is not a valid IP address." );
 				}
 			}
-			seek ($UNBLOCK, 0, 0);
-			truncate ($UNBLOCK, 0);
-			close ($UNBLOCK);
+
+			seek        ( $UNBLOCK, 0, 0    );
+			truncate    ( $UNBLOCK, 0       );
+			close       ( $UNBLOCK          );
 		}
 
-		if ($config{DEBUG} >= 3) {$timer = &timer("stop","messengerrecaptcha",$timer)}
+		if ( $config{DEBUG} >= 3 )
+        {
+            $timer = &timer( "stop", "messengerrecaptcha", $timer )
+        }
+
 		exit;
 	}
 	return;
