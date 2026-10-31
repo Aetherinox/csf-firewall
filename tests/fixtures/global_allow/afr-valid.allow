@@ -20,8 +20,13 @@
 #   
 #                   2.  Restart csf:
 #                           sudo csf -ra
+#                       Note (does not reload lfd rules):
+#                           sudo csf -sf
+#   
+#                   3.  Any valid rules loaded into:
+#                           /var/lib/csf/csf.gallow
 #
-#                   3.  View debug print "LINEFILTER (Result):"
+#                   4.  View debug print "LINEFILTER (Result):"
 #                           /var/log/lfd.log
 #   
 #   @file           afr-valid.allow
