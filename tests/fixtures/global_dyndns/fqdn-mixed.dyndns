@@ -1,0 +1,87 @@
+# #
+#   Tests › GLOBAL_DYNDNS › Validation › Mixed
+#   
+#   List of valid and invalid FQDNs and advanced filtering rules,
+#   used to test GLOBAL_DYNDNS functionality.
+#   
+#   Before 15.11:   Malformed ports and owners passed through.
+#   15.11 + later:  Malformed ports and owners are rejected.
+#   
+#   Initialized:    lfd.pl::global()
+#   Tests:          lfd.pl::globaldyndns()
+#                   lfd.pl::linefilter()
+#   
+#   @usage          1.  Set in /etc/csf/csf.conf:
+#                           LF_GLOBAL               = "300"
+#                           GLOBAL_DYNDNS_INTERVAL  = "600"
+#                           GLOBAL_DYNDNS           = "https://raw.githubusercontent.com/Aetherinox/csf-firewall/refs/heads/main/tests/fixtures/global_dyndns/fqdn-mixed.dyndns"
+#                           DEBUG                   = "2"
+#   
+#                       This process is repeated based on x2 timer
+#                       settings that expire:
+#   
+#                       LF_GLOBAL: desired interval (seconds); how often
+#                       LFD should download the GLOBAL_DYNDNS url and
+#                       add the entries to /var/lib/csf/csf.gdyndns,
+#                       then resolve the downloaded hostnames into IPs
+#                       which are stored in /var/lib/csf/csf.tempgdyn.
+#   
+#                       GLOBAL_DYNDNS_INTERVAL: desired interval
+#                       (seconds); how often LFD should read
+#                       /var/lib/csf/csf.gdyndns and resolve the
+#                       downloaded hostnames into IPs which are stored
+#                       in /var/lib/csf/csf.tempgdyn.
+#   
+#                   2.  Restart csf:
+#                           sudo csf -ra
+#                       Note (does not reload lfd rules):
+#                           sudo csf -sf
+#   
+#                   3.  Any valid hostnames / FQDNs loaded into:
+#                           /var/lib/csf/csf.gdyndns
+#                       Hostnames resolved to IPs and loaded into:
+#                           /var/lib/csf/csf.tempgdyn
+#   
+#                   4.  View debug print "LINEFILTER (Result):"
+#                           /var/log/lfd.log
+#   
+#   @file           fqdn-mixed.dyndns
+#   
+#   @warn           Do not use these as a value within
+#                   /etc/csf/csf.conf for the setting GLOBAL_DYNDNS
+#                   unless you know what you are doing.
+# #
+
+# #
+#   Valid FQDNs
+# #
+
+example.com
+example.org
+
+# #
+#   Valid advanced filtering rules
+# #
+
+tcp:in:d=22:s=example.com
+tcp:out:d=443:d=example.org
+
+# #
+#   Invalid FQDNs
+# #
+
+does-not-exist.invalid
+bad-host.invalid
+
+# #
+#   Invalid dest port
+# #
+
+tcp:out:d=22;test:d=example.com
+
+# #
+#   Invalid uid and gid owners
+# #
+
+tcp:out:d=22:u=root;test:d=example.com
+tcp:out:d=22:g=root;test:d=example.org
