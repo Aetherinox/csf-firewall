@@ -77,3 +77,15 @@ tcp|out|d=22||g=root;test
 tcp|out|d=22|d=horribly-bad-ip
 tcp|out|d=22|s=bad-again-ip
 tcp|out|d=22|d=broken-ip|u=974
+
+# #
+#   Valid multiport limit: 15 ports
+# #
+
+tcp|out|d=60001,60002,60003,60004,60005,60006,60007,60008,60009,60010,60011,60012,60013,60014,60015|d=192.0.2.15
+
+# #
+#   Invalid multiport limit: 16 ports
+# #
+
+tcp|out|d=60001,60002,60003,60004,60005,60006,60007,60008,60009,60010,60011,60012,60013,60014,60015,60016|d=192.0.2.16
