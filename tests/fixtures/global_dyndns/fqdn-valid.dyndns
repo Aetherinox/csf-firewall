@@ -37,9 +37,9 @@
 #                       Note (does not reload lfd rules):
 #                           sudo csf -sf
 #   
-#                   3.  Any valid hostnames / FQDNs loaded into:
+#                   3.  Hostnames downloaded from GLOBAL_DYNDNS url to:
 #                           /var/lib/csf/csf.gdyndns
-#                       Hostnames resolved to IPs and loaded into:
+#                       Hostnames resolved to IPs from 'csf.gdyndns' to:
 #                           /var/lib/csf/csf.tempgdyn
 #   
 #                   4.  View debug print "LINEFILTER (Result):"

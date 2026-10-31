@@ -1,17 +1,16 @@
 # #
 #   Tests › GLOBAL_IGNORE › Validation › Valid
 #   
-#   List of valid basic ip firewall rules, used to test
-#   LF_GLOBAL functionality.
+#   List of valid IP / CIDR firewall rules, used to test
+#   GLOBAL_IGNORE functionality.
 #   
-#   Before 15.11:   Malformed ports and owners passed through,
-#                       invalid IP fields were ignored.
-#   15.11 + later:  Malformed ports and owners rejected, 
-#                       invalid IP fields are rejected.
-#                       (unless valid owner is present).
+#   Before 15.11:   Invalid IP and CIDR entries were ignored,
+#                       advanced filtering rules were unsupported.
+#   15.11 + later:  Invalid IP and CIDR entries are rejected,
+#                       advanced filtering rules remain unsupported.
 #   
 #   Initialized:    lfd.pl::global()
-#   Tests:          lfd.pl::linefilter()
+#   Tests:          lfd.pl::ignoreip()
 #   
 #   @usage          1.  Set in /etc/csf/csf.conf:
 #                           LF_GLOBAL       = "300"
@@ -23,13 +22,16 @@
 #                       Note (does not reload lfd rules):
 #                           sudo csf -sf
 #   
-#                   3.  Any valid rules loaded into:
+#                   3.  IP / CIDR entries downloaded from GLOBAL_IGNORE url to:
 #                           /var/lib/csf/csf.gignore
+#                       Entries loaded into LFD memory using Perl vars:
+#                           %gignoreips     Individual IPs
+#                           @gcidrs         IPv4 / IPv6 CIDRs
 #
 #                   4.  View debug print "LINEFILTER (Result):"
 #                           /var/log/lfd.log
 #   
-#   @file           afr-valid.ignore
+#   @file           ip-valid.ignore
 #   
 #   @warn           Do not use these as a value within
 #                   /etc/csf/csf.conf for the setting GLOBAL_IGNORE
