@@ -1984,13 +1984,13 @@ if ( $config{LF_GLOBAL} )
 	&global;
 	$globaltimeout = 0;
 
-	if ( $config{LF_GLOBAL} < 60 )
+	if ( $config{LF_GLOBAL} < 300 )
 	{
 		logfile( "LF_GLOBAL refresh increased to 300 to prevent looping (csf.conf setting: $config{LF_GLOBAL})" );
 		$config{LF_GLOBAL} = 300;
 	}
 
-	if ( $config{GLOBAL_DYNDNS_INTERVAL} < 60 )
+	if ( $config{GLOBAL_DYNDNS_INTERVAL} < 300 )
 	{
 		logfile( "GLOBAL_DYNDNS_INTERVAL refresh increased to 300 to prevent looping (csf.conf setting: $config{GLOBAL_DYNDNS_INTERVAL})" );
 		$config{GLOBAL_DYNDNS_INTERVAL} = 300;
