@@ -1,0 +1,61 @@
+# #
+#   Tests › GLOBAL_DENY › Validation › Invalid
+#   
+#   List of invalid advanced filtering firewall rules, used to test
+#   LF_GLOBAL functionality.
+#   
+#   Before 15.11:   Malformed ports and owners passed through,
+#                       invalid IP fields were ignored.
+#   15.11 + later:  Malformed ports and owners rejected, 
+#                       invalid IP fields are rejected.
+#                       (unless valid owner is present).
+#   
+#   Initialized:    lfd.pl::global()
+#   Tests:          lfd.pl::linefilter()
+#   
+#   @usage          1.  Set in /etc/csf/csf.conf:
+#                           LF_GLOBAL       = "300"
+#                           GLOBAL_DENY     = "https://raw.githubusercontent.com/Aetherinox/csf-firewall/refs/heads/main/tests/fixtures/global_deny/afr-invalid.deny"
+#                           DEBUG           = "2"
+#   
+#                   2.  Restart csf:
+#                           sudo csf -ra
+#
+#                   3.  View debug print "LINEFILTER (Result):"
+#                           /var/log/lfd.log
+#   
+#   @file           afr-invalid.deny
+#   
+#   @warn           Do not use these as a value within
+#                   /etc/csf/csf.conf for the setting GLOBAL_DENY
+#                   unless you know what you are doing.
+# #
+
+# #
+#   Invalid dest and src ports
+# #
+
+tcp|out|d=|d=192.0.2.1
+tcp|out|d=-22|d=192.0.2.1
+tcp|out|d=22;test|d=192.0.2.1
+tcp|out|s=22 test|d=192.0.2.1
+
+# #
+#   Invalid uid and gid owners
+# #
+
+tcp|out|d=22||u=
+tcp|out|d=22||g=
+tcp|out|d=22||u=-root
+tcp|out|d=22||g=root;test
+tcp|out|d=22||u=root/test
+tcp|out|d=22||g=root test
+
+# #
+#   Invalid dest and src IPs
+# #
+
+tcp|out|d=22|d=not-an-ip
+tcp|out|d=22|s=not-an-ip
+tcp|out|d=22|d=192.0.2.999
+tcp|out|d=22|s=2001:db8::gg
