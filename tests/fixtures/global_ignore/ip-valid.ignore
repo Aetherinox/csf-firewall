@@ -1,0 +1,65 @@
+# #
+#   Tests › GLOBAL_IGNORE › Validation › Valid
+#   
+#   List of valid basic ip firewall rules, used to test
+#   LF_GLOBAL functionality.
+#   
+#   Before 15.11:   Malformed ports and owners passed through,
+#                       invalid IP fields were ignored.
+#   15.11 + later:  Malformed ports and owners rejected, 
+#                       invalid IP fields are rejected.
+#                       (unless valid owner is present).
+#   
+#   Initialized:    lfd.pl::global()
+#   Tests:          lfd.pl::linefilter()
+#   
+#   @usage          1.  Set in /etc/csf/csf.conf:
+#                           LF_GLOBAL       = "300"
+#                           GLOBAL_IGNORE   = "https://raw.githubusercontent.com/Aetherinox/csf-firewall/refs/heads/main/tests/fixtures/global_ignore/ip-valid.ignore"
+#                           DEBUG           = "2"
+#   
+#                   2.  Restart csf:
+#                           sudo csf -ra
+#                       Note (does not reload lfd rules):
+#                           sudo csf -sf
+#   
+#                   3.  Any valid rules loaded into:
+#                           /var/lib/csf/csf.gignore
+#
+#                   4.  View debug print "LINEFILTER (Result):"
+#                           /var/log/lfd.log
+#   
+#   @file           afr-valid.ignore
+#   
+#   @warn           Do not use these as a value within
+#                   /etc/csf/csf.conf for the setting GLOBAL_IGNORE
+#                   unless you know what you are doing.
+# #
+
+# #
+#   Valid IPv4 addresses
+# #
+
+192.0.2.1
+198.51.100.2
+
+# #
+#   Valid IPv4 CIDRs
+# #
+
+192.0.2.0/24
+198.51.100.0/24
+
+# #
+#   Valid IPv6 addresses
+# #
+
+2001:db8::1
+2001:db8:1::1
+
+# #
+#   Valid IPv6 CIDRs
+# #
+
+2001:db8::/32
+2001:db8:1::/48
