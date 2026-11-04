@@ -34,6 +34,10 @@
 
 ## no critic (RequireUseWarnings, ProhibitExplicitReturnUndef, ProhibitMixedBooleanOperators, RequireBriefOpen, RequireLocalizedPunctuationVars)
 
+# #
+#   Declare › Use
+# #
+
 use strict;
 use lib '/usr/local/csf/lib';
 use Fcntl qw(:DEFAULT :flock);
@@ -56,6 +60,48 @@ use ConfigServer::Logger qw(logfile);
 use ConfigServer::KillSSH;
 use ConfigServer::LookUpIP qw(iplookup);
 use ConfigServer::Sanitize qw(html_safe html_escape);
+
+# #
+#   Declare › Constants
+#	
+#   PACKAGE_NAME
+#       Package name used to identify LFD code in logs.
+#       Use PACKAGE_NAME instead of __PACKAGE__; avoids changing
+#       current package and breaking fully qualified sub names.
+#           main:subroutine() => lfd:subroutine()
+#   
+#   FORKS_LIMIT
+#       Max number of tracked child processes allowed before cleanup.
+#       Restart LFD if active process count stays above this limit.
+#   
+#   IPTABLES_ARGS_MAX
+#       Max number of args allowed in one complete iptables command.
+#       'iptables' executable itself counts as one arg:
+#           Eg: [
+#               "iptables",     # Arg 1
+#               "--wait",       # Arg 2
+#               "-A",           # Arg 3
+#           ]
+#   
+#   IPTABLES_ARGS_EACH_LEN_MAX
+#       Max number of chars allowed in each single iptables arg. Each
+#       arg in array is checked separately:
+#           Eg: [
+#               "iptables",     # 8 chars
+#               "--wait",       # 6 chars
+#               "-A",           # 2 chars
+#           ]
+#   
+#   @todo       Migrate to fully qualified sub names later.
+# #
+
+use constant
+{
+	PACKAGE_NAME                => 'main',
+	FORKS_LIMIT                 => 200,
+	IPTABLES_ARGS_MAX           => 128,
+	IPTABLES_ARGS_EACH_LEN_MAX  => 4_096,
+};
 
 # #
 #	Restrict new files and folders to the owner only (0600)
@@ -198,7 +244,8 @@ if ( $config{TESTING} )
 #   Use caution when enabling. Additional security restrictions apply.
 #   Refer to readme.txt before enabling.
 #	
-#   Set to 1 to enable, 0 to disable.
+#   "1"     Enable
+#   "0"     Disable
 # #
 
 if ( $config{UI} )
@@ -217,12 +264,13 @@ if ( $config{UI} )
 }
 
 # #
-#   LF_DIRWATCH		Enable Directory Watching. This enables lfd to check /tmp and /dev/shm
-#   				directories for suspicious files, i.e. script exploits. If a suspicious
-#   				file is found an email alert is sent. One alert per file per LF_FLUSH
-#					interval is sent
+#   LF_DIRWATCH		    Enable Dir Watching. Enables lfd to check /tmp and
+#                       /dev/shm dirs for suspicious files such as script
+#                       exploits. If suspicious files are found; send one
+#                       email alert per file when LF_FLUSH expires.
 #	
-#   				Set the checking interval in seconds to enable. Set to "0" to disable.
+#   				    "300"   Recommended
+#                       "0"     Disable
 # #
 
 if ( $config{LF_DIRWATCH} )
@@ -232,12 +280,13 @@ if ( $config{LF_DIRWATCH} )
 }
 
 # #
-#   UI					Integrated User Interface. This feature provides a HTML UI to csf and lfd,
-#   					without requiring a control panel or web server. The UI runs as a sub process
-#   					to the lfd daemon
+#   UI					Integrated User Interface. HTML UI to csf and lfd,
+#   					without requiring web server. UI runs as a sub process
+#   					of the lfd daemon
 #	
-#	LF_DIRWATCH_FILE	This option allows you to have lfd watch a particular file or directory for
-#   					changes and should they change and email alert using watchalert.txt is sent
+#	LF_DIRWATCH_FILE	Allows you to have lfd watch a particular file or dir for
+#   					changes if they change, send email alert using
+#                       watchalert.txt
 # #
 
 if ( $config{UI} or $config{LF_DIRWATCH_FILE} )
@@ -250,9 +299,11 @@ if ( $config{UI} or $config{LF_DIRWATCH_FILE} )
 #   SYSLOG        		Log LFD messages to SYSLOG as well as /var/log/lfd.log.
 #                 		Requires the Perl module Sys::Syslog.
 #	
-#   SYSLOG_CHECK  		Verify syslog is running. Sends a coded message every SYSLOG_CHECK
-#                 		seconds and checks it appears in SYSLOG_LOG. If not, an alert is sent.
-#                 		Recommended: 300–3600 seconds. Set to 0 to disable.
+#   SYSLOG_CHECK  		Verify syslog running. Send coded message every SYSLOG_CHECK
+#                 		seconds, checks if it appears in SYSLOG_LOG. If not,
+#                       send alert.
+#                 		"3600"  Recommended
+#                       "0"     Disable
 # #
 
 
@@ -263,8 +314,7 @@ if ( $config{SYSLOG} or $config{SYSLOG_CHECK} )
 }
 
 # # 
-#   DEBUG   			For internal use only. Should not enable this option as it could cause
-#                     	instability in csf and lfd.
+#   DEBUG   			For internal use only.
 # # 
 
 if ( $config{DEBUG} )
@@ -274,12 +324,15 @@ if ( $config{DEBUG} )
 }
 
 # #
-#   CLUSTER_SENDTO   	Configure LFD cluster: send requests to other servers.
-#                     	Use a comma-separated list of IPs or a file (/etc/csf/cluster_sendto.txt).
+#   CLUSTER_SENDTO   	Comma separated list of cluster member IP addresses to
+#                       send requests to. Can also be set to the full path of a
+#                       file that will read in one IP per line:
+#                           Eg: "/etc/csf/cluster_sendto.txt"
 #	
-#   CLUSTER_RECVFROM 	Configure LFD cluster: receive requests from other servers.
-#                     	Use a comma-separated list of IPs or a file (/etc/csf/cluster_recvfrom.txt).
-#   					See readme.txt for setup details and security considerations.
+#   CLUSTER_RECVFROM 	Comma separated list of cluster member IP addresses to
+#                       receive requests from. Can also be set to the full path
+#                       of a file that will read in one IP per line:
+#                           Eg: "/etc/csf/cluster_sendto.txt"
 # #
 
 
@@ -395,12 +448,12 @@ my $session_id = setsid();
 if ( !defined( $session_id ) || $session_id == -1 )
 {
     my $err = $! || 'unknown error';
-    logfile( "all", "error", "[STARTUP] Can't start a new session: $err" );
+    logfile( "all", "error", "[STARTUP] Cannot start new session: [ $err ]" );
     exit 1;
 }
 else
 {
-    logfile( "all", "info", "[STARTUP] Session ID (SID): $session_id, Process ID (PID): $$" );
+    logfile( "all", "info", "[STARTUP] Session ID (SID): [ $session_id ], Process ID (PID): [ $$ ]" );
 }
 
 # #
@@ -462,7 +515,7 @@ my $hostip = do {
     defined( $packed ) ? inet_ntoa( $packed ) : '127.0.0.1';
 };
 
-logfile( "all", "info", "[STARTUP] Fetching hostname $hostname [$hostshort] ($hostip)" );
+logfile( "all", "info", "[STARTUP] Fetching hostname $hostname [ $hostshort ] ( $hostip )" );
 
 # #
 #	Get system clock tick rate (used for CPU/process timing) when reading
@@ -3157,7 +3210,7 @@ while ( 1 )
                 #   Log each PID that survived cleanup
                 # #
 
-                logfile( "DEBUG:1", "info", "Fork survived cleanup: [$key]" );
+                logfile( "DEBUG:1", "info", "Fork survived cleanup: key [ $key ]" );
 			}
 			else
 			{
@@ -10353,17 +10406,116 @@ sub linefilter {
 	}
 	return;
 }
-# end linefilter
-###############################################################################
-# start iptablescmd
-sub iptablescmd {
+
+# #
+#   lfd › Iptables Command
+#   
+#   Supports two syntax of command inputs:
+#       1. Legacy (single string shell command)
+#       2. Arg Vector (argv) (prevent shell parsing)
+#           Supports max of 128 args (IPTABLES_ARGS_MAX)
+#   
+#   Legacy:      &iptablescmd( __LINE__, "$iptables --wait -A GALLOWOUT -o eth0 -p tcp -d 192.0.2.3 -m multiport --dport 80,443 -j ACCEPT" );
+#   Array ref:   &iptablescmd( __LINE__, [ $iptables, "--wait", "-A", "GALLOWOUT", "-o", "eth0", "-p", "tcp", "-d", "192.0.2.3", "-m", "multiport", "--dport", "80,443", "-j", "ACCEPT" ] );
+#   
+#   @todo       Deprecate legacy string commands
+#   
+#   @test       Note:           (Legacy) Test single string rule
+#               Command:        Create Chain:   sudo /sbin/iptables --wait -F CSF_LFD_LEGACY_TEST_20261031 2>/dev/null || true; sudo /sbin/iptables --wait -X CSF_LFD_LEGACY_TEST_20261031 2>/dev/null || true; sudo /sbin/iptables --wait -N CSF_LFD_LEGACY_TEST_20261031
+#                               Add Rule:       sudo perl -e 'use IPC::Open3 ( ); local $SIG{CHLD} = q{DEFAULT}; my ($in, $out); my $command = q{/sbin/iptables --wait -A CSF_LFD_LEGACY_TEST_20261031 -p tcp -d 192.0.2.123 --dport 60001 -j ACCEPT}; my $pid = IPC::Open3::open3($in, $out, $out, $command); close($in); my $text = join(q{}, <$out>); waitpid($pid, 0); my $exit = $? >> 8; chomp($text); $text = q{none} if $text eq q{}; print qq{Legacy exit [$exit] output [$text]\n};'
+#                               Verify Rule:    sudo /sbin/iptables --wait -S CSF_LFD_LEGACY_TEST_20261031
+#                               Cleanup Rule:   sudo /sbin/iptables --wait -F CSF_LFD_LEGACY_TEST_20261031 && sudo /sbin/iptables --wait -X CSF_LFD_LEGACY_TEST_20261031
+#   
+#               Note:           Test arg vector rule
+#               Command:        Create Chain:   sudo /sbin/iptables --wait -F CSF_LFD_ARGV_TEST_20261031 2>/dev/null || true; sudo /sbin/iptables --wait -X CSF_LFD_ARGV_TEST_20261031 2>/dev/null || true; sudo /sbin/iptables --wait -N CSF_LFD_ARGV_TEST_20261031
+#                               Add Rule:       sudo perl -e 'use IPC::Open3 ( ); local $SIG{CHLD} = q{DEFAULT}; my @argv = (q{/sbin/iptables}, q{--wait}, q{-A}, q{CSF_LFD_ARGV_TEST_20261031}, q{-p}, q{tcp}, q{-d}, q{198.51.100.123}, q{--dport}, q{60002}, q{-j}, q{ACCEPT}); my ($in, $out); my $pid = IPC::Open3::open3($in, $out, $out, @argv); close($in); my $text = join(q{}, <$out>); waitpid($pid, 0); my $exit = $? >> 8; chomp($text); $text = q{none} if $text eq q{}; print qq{Argv exit [$exit] output [$text]\n};'
+#                               Verify Rule:    sudo /sbin/iptables --wait -S CSF_LFD_ARGV_TEST_20261031
+#                               Cleanup Rule:   sudo /sbin/iptables --wait -F CSF_LFD_ARGV_TEST_20261031 && sudo /sbin/iptables --wait -X CSF_LFD_ARGV_TEST_20261031
+#   
+#   @params     line            int             Source line num
+#               input           str|arrayref    Command str || argv array
+#   @return     void
+# #
+
+sub iptablescmd
+{
 	my $line = shift;
-	my $command = shift;
-	$command =~ s/;`|//g;
+	my $input = shift;
+
+	local $SIG{CHLD} = 'DEFAULT';
+
+	my ( $argv, $command );
+	if (ref($input) eq "ARRAY")
+	{
+		my $args_i = scalar @{$input};
+
+		logfile( "debug:1", "info", "iptables: argv count [ $args_i (current) / " . IPTABLES_ARGS_MAX . " (max) ]" );
+
+		if ( $args_i == 0 or $args_i > IPTABLES_ARGS_MAX )
+		{
+			logfile( "normal", "error", "iptables: Invalid argv count [ $args_i (current) / " . IPTABLES_ARGS_MAX . " (max) ] on line [ $line ]" );
+			return;
+		}
+
+		if ( !defined( $input->[0] ) or ref( $input->[0] ) or $input->[0] eq "" )
+		{
+			logfile( "normal", "error", "iptables: Invalid executable on line [ $line ]" );
+			return;
+		}
+		my $arg_len_max         = IPTABLES_ARGS_EACH_LEN_MAX;
+		my $arg_control_chars   = '\x{0000}-\x{001F}\x{007F}';
+		my @args_valid;
+		for my $arg ( @{$input} )
+		{
+			if ( !defined( $arg ) )
+			{
+				logfile( "normal", "error", "iptables: Invalid argv on line [ $line ]: undefined arg" );
+				return;
+			}
+
+			if ( ref( $arg ) )
+			{
+				logfile( "normal", "error", "iptables: Invalid argv on line [ $line ]: arg is a ref [ " . ref( $arg ) . " ]" );
+				return;
+			}
+
+			my $arg_len = length( $arg );
+			if ( $arg_len > $arg_len_max )
+			{
+				logfile( "normal", "error", "iptables: Invalid argv on line [ $line ]: " . "arg len [ $arg_len (current) / $arg_len_max (max) ]" );
+				return;
+			}
+
+			if ( $arg =~ /[$arg_control_chars]/ )
+			{
+				logfile( "normal", "error", "iptables: Invalid argv on line [ $line ]: arg contains ascii control chars" );
+				return;
+			}
+			my ($arg_valid) = $arg =~ /\A([^$arg_control_chars]{0,$arg_len_max})\z/;
+			push @args_valid, $arg_valid;
+		}
+		$argv = \@args_valid;
+		$command = join(" ", @args_valid);
+	}
+	elsif ( defined( $input ) and !ref( $input ) and $input ne "" )
+	{
+		$command = $input;
+		$command =~ s/;`|//g;
+	}
+	else
+	{
+        logfile( "normal", "error", "iptables: Invalid command on line [ $line ]" );
+		return;
+	}
 	my $status = 0;
 	my $iptableslock = 0;
-	if ($command =~ /^($config{IPTABLES}|$config{IP6TABLES})/) {$iptableslock = 1}
+	if ($argv)
+	{
+		if ($argv->[0] eq $config{IPTABLES} or $argv->[0] eq $config{IP6TABLES}) {$iptableslock = 1}
+	}
+	elsif ($command =~ /^($config{IPTABLES}|$config{IP6TABLES})/) {$iptableslock = 1}
 	if ($faststart) {
+		logfile( "debug:1", "info", "iptables: FASTSTART queue [ $command ] from line [ $line ]" );
 		if ($command =~ /^$config{IPTABLES}\s+(.*)$/) {
 			my $fastcmd = $1;
 			$fastcmd =~ s/-v//;
@@ -10400,20 +10552,26 @@ sub iptablescmd {
 	} else {
 		if ($config{DEBUG} >= 2) {logfile("debug[$line]: Command:$command")}
 		if (&csflock) {
-			logfile("csf is currently restarting - command [$command] skipped on line $line");
+            logfile( "normal", "info", "iptables: csf currently restarting - command [ $command ] skipped on line [ $line ]" );
 			unless ($masterpid == $$) {exit}
 		}
 		if ($iptableslock) {&iptableslock("lock")}
+
+		logfile( "debug:1", "info", "iptables: Execute [ $command ] from line [ $line ]" );
+
 		my @output;
+		my $cmd_status;
 		if ($iptableslock and $config{WAITLOCK}) {
 			eval {
 				local $SIG{__DIE__} = undef;
 				local $SIG{'ALRM'} = sub {die "alarm\n"};
 				alarm($config{WAITLOCK_TIMEOUT});
 				my ($childin, $childout);
-				my $cmdpid = open3($childin, $childout, $childout, $command);
-				@output = <$childout>;
+                my @open3_cmd   = $argv ? @{$argv} : ($command);
+				my $cmdpid      = IPC::Open3::open3( $childin, $childout, $childout, @open3_cmd );
+				@output         = <$childout>;
 				waitpid ($cmdpid, 0);
+				$cmd_status     = $?;
 				alarm(0);
 			};
 			alarm(0);
@@ -10422,11 +10580,13 @@ sub iptablescmd {
 			}
 		} else {
 			my ($childin, $childout);
-			my $cmdpid = open3($childin, $childout, $childout, $command);
-			@output = <$childout>;
+			my @open3_cmd   = $argv ? @{$argv} : ($command);
+			my $cmdpid      = IPC::Open3::open3( $childin, $childout, $childout, @open3_cmd );
+			@output         = <$childout>;
 			waitpid ($cmdpid, 0);
+			$cmd_status     = $?;
 		}
-		if ($iptableslock) {&iptableslock("unlock")}
+		if ($iptableslock) { &iptableslock( "unlock" ) }
 
 		chomp @output;
 		if ($output[0] =~ /# Warning: iptables-legacy tables present/) {shift @output}
@@ -10442,9 +10602,11 @@ sub iptablescmd {
 				if ($config{DEBUG} >= 1) {logfile("debug[$line]: Retry (".($cnt+1).") [$command] due to [$output[0]]")}
 				if ($iptableslock) {&iptableslock("lock")}
 				my ($childin, $childout);
-				my $cmdpid = open3($childin, $childout, $childout, $command);
-				my @output = <$childout>;
+				my @open3_cmd   = $argv ? @{$argv} : ($command);
+				my $cmdpid      = IPC::Open3::open3( $childin, $childout, $childout, @open3_cmd );
+				@output         = <$childout>;
 				waitpid ($cmdpid, 0);
+				$cmd_status     = $?;
 				if ($iptableslock) {&iptableslock("unlock")}
 				chomp @output;
 				if ($output[0] =~ /# Warning: iptables-legacy tables present/) {shift @output}
@@ -10454,7 +10616,31 @@ sub iptablescmd {
 			}
 		}
 		elsif ($config{DEBUG} >= 1 and $output[0] =~ /^iptables|ip6tables|xtables|Bad|Another/) {
-				logfile("*Error* processing command for line [$line]: [$output[0]]");
+            logfile( "normal", "error", "iptables: Failed processing command for line [ $line ] : output [ $output[0] ]" );
+		}
+
+		if ( defined( $cmd_status ) )
+		{
+			my $exit_code   = $cmd_status >> 8;
+			my $exit_signal = $cmd_status & 127;
+			my $output_text = @output ? join( " ", @output ) : "none";
+
+			if ( $cmd_status == -1 )
+			{
+				logfile( "normal", "error", "iptables: Unable to collect command status [ $command ] from line [ $line ]" );
+			}
+			elsif ( $cmd_status == 0 )
+			{
+				logfile( "debug:1", "info", "iptables: Command completed successfully [ $command ] from line [ $line ]" );
+			}
+			elsif ( $exit_signal )
+			{
+				logfile( "normal", "error", "iptables: Command terminated by signal [ $exit_signal ] output [ $output_text ] [ $command ] from line [ $line ]" );
+			}
+			else
+			{
+				logfile( "normal", "error", "iptables: Command failed with exit code [ $exit_code ] output [ $output_text ] [ $command ] from line [ $line ]" );
+			}
 		}
 	}
 	return;
