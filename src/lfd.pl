@@ -3197,7 +3197,7 @@ while ( 1 )
     #   If more than 200 active forks remain after cleanup, restart LFD.
     # #
 
-    if ( $forkcnt_total > FORK_LIMIT )
+    if ( $forkcnt_total > FORKS_LIMIT )
 	{
 		my $forkcnt = 0;
 		foreach my $key ( keys %forks )
@@ -3230,9 +3230,9 @@ while ( 1 )
         #   If more than 200 active forks remain after cleanup, restart LFD.
         # #
 
-		if ( $forkcnt > FORK_LIMIT )
+		if ( $forkcnt > FORKS_LIMIT )
 		{
-			logfile( "normal", "error", "Excessive number of children forks ($forkcnt), restarting lfd" );
+			logfile( "normal", "error", "Excessive total number [ $forkcnt ] of children forks, restarting lfd" );
 			&lfdrestart;
 			exit;
 		}
@@ -3639,13 +3639,6 @@ while ( 1 )
     # #
     #   Messenger
     # #
-
-    logfile( "DEBUG:1", "info",
-        "[Sanitizer Test] " .
-        "password=visible-password " .
-        "API_KEY=\"visible-api-key\" " .
-        "RECAPTCHA_SITEKEY=public-site-key"
-    );
 
 	if ( $config{MESSENGER} )
 	{
@@ -8830,13 +8823,16 @@ sub global {
 						}
 					}
 				}
+
+                logfile( "normal", "info", "Global Allow: checking file [ csf.gallow ]" );
 				sysopen (my $GALLOW, "/var/lib/csf/csf.gallow", O_WRONLY | O_CREAT) or &shutdown_child(__LINE__,"*Error* Cannot open out file: $!");
 				flock ($GALLOW, LOCK_EX);
 				seek ($GALLOW, 0, 0);
 				truncate ($GALLOW, 0);
 				if ($config{FASTSTART}) {$faststart = 1}
 				foreach my $line (split (/\n/,$text)) {
-					if ($line =~ /^\#/) { next }
+					if ($line =~ /^\s*(?:\#|$)/) { next }
+                    logfile( "debug:1", "info", "Global Allow: Process csf.gallow line [ $line ]" );
 					my ($ip,$comment) = split (/\s/,$line,2);
 					print $GALLOW "$ip\n";
 					if ($config{SAFECHAINUPDATE}) {
@@ -9960,24 +9956,50 @@ sub shutdown
 
 	my $line 		= shift;
 	my $message 	= shift;
+	my $status 		= shift // "info";
 
 	# #
-	#    LFD Process Shutdown Ownership
+	#   LFD Process Shutdown Ownership
 	#   
-	#    Controls which LFD processes are allowed to perform a full daemon
-	#    shutdown when a fatal error, PID mismatch, or internal failure occurs.
+	#   Controls which LFD processes are allowed to perform a full daemon
+	#   shutdown when a fatal error, PID mismatch, or internal failure occurs.
 	#   
-	#    0 = All LFD processes are allowed to validate the PID file and perform
-	#        a full shutdown if an error is detected. (Default behavior)
+	#   0   All LFD processes are allowed to validate the PID file and perform
+	#       a full shutdown if an error is detected. (Default behavior)
 	#   
-	#    1 = Only the main LFD parent process is allowed to stop the daemon.
-	#        Child processes will still report errors to the log file but will
-	#        exit individually without removing the PID file or terminating the
-	#        main LFD process.
+	#   1   Only the main LFD parent process is allowed to stop the daemon.
+	#       Child processes will still report errors to the log file but will
+	#       exit individually without removing the PID file or terminating the
+	#       main LFD process.
 	# #
 
 	my $parent_bind 	= ( defined $config{LFD_PROCESS_BIND} and $config{LFD_PROCESS_BIND} ) ? 1 : 0;
 	my $is_master 		= ( defined $masterpid and $$ == $masterpid );
+
+	# #
+	#   Shutdown › Child Process
+	#   
+    #   Trigger when LFD_PROCESS_BIND enabled (1); and when shutdown() is called
+    #   from a child process, instead of the main LFD process.
+    #   
+    #   Logs the shutdown reason, exit only the current child process.
+    #   
+    #   Doesn't remove the LFD PID file, don't terminate the main LFD process.
+    #   
+    #   LFD_PROCESS_BIND        Control when LFD processes are allowed to perform
+    #                           a full daemon shutdown when fatal errors, PID
+    #                           mismatch, or internal failures happen.
+    #   
+    #                           0   All LFD processes allowed to validate PID
+    #                               file and perform full shutdown if error
+    #                               occurs (Default)
+    #   
+    #                           1   Only main LFD parent process allowed to stop
+    #                               the daemon. Child process still reports 
+    #                               errors to log file, but exit individually
+    #                               without removing PID file or killing main 
+    #                               LFD process.
+	# #
 
 	if ( $parent_bind and !$is_master )
 	{
@@ -10244,7 +10266,10 @@ sub linefilter {
 		} else {return}
 	}
 
-	if ($checkip) {
+	if ($checkip)
+    {
+        logfile( "debug:1", "info", "linefilter: [Step] Processing standalone IP or CIDR [ $line ]" );
+
 		if ($chain) {
 			if ($config{LF_IPSET}) {
 				if ($ipv4) {&ipsetadd("chain_$chainin",$line)}
@@ -11979,27 +12004,41 @@ sub messenger
 	unless (defined ($childpid = fork)) {
 		&shutdown(__LINE__,"*Error* cannot fork: $!");
 	} 
-	$forks{$childpid} = 1;
-	$messengerips{$type} = $childpid;
-	unless ($childpid) {
-		if ($config{DEBUG} >= 3) {$timer = &timer("start","messenger",$timer)}
-		$0 = "lfd - messenger csf...";
-		$SIG{INT} = \&shutdown_child;
-		$SIG{TERM} = \&shutdown_child;
-		$SIG{HUP} = \&shutdown_child;
-		$SIG{__DIE__} = sub {&shutdown_child(@_);};
-		$childproc = "Messenger ($type)";
 
-		my ($status,$reason) = $messenger1->start($port,$user,$type);
-		if ($status) {
-			logfile("*MESSENGER*: Error starting $type service: $reason");
-			sysopen (my $TEMPCONF, "/var/lib/csf/csf.tempconf", O_WRONLY | O_APPEND | O_CREAT) or &shutdown_child(__LINE__,"*Error* Cannot append out file: $!");
-			flock ($TEMPCONF, LOCK_EX);
-			print $TEMPCONF "MESSENGER_${type}_IN = \"\"\n";
-			close ($TEMPCONF);
-			logfile("*MESSENGER*: $type service temporarily *DISABLED*");
+	$forks{$childpid} 		= 1;
+	$messengerips{$type} 	= $childpid;
+	unless ( $childpid )
+	{
+		if ( $config{DEBUG} >= 3 )
+		{
+			$timer = &timer( "start", "messenger", $timer)
 		}
-		if ($config{DEBUG} >= 3) {$timer = &timer("stop","messenger",$timer)}
+
+		$0 				= "lfd - messenger csf...";
+		$SIG{INT} 		= \&shutdown_child;
+		$SIG{TERM} 		= \&shutdown_child;
+		$SIG{HUP} 		= \&shutdown_child;
+		$SIG{__DIE__} 	= sub {&shutdown_child(@_);};
+		$childproc 		= "Messenger ($type)";
+
+		my ( $status, $reason ) = $messenger1->start( $port, $user, $type );
+		if ( $status )
+		{
+            logfile( "all", "error", "[MessengerV1] Failed to start $type service: $reason" );
+
+			sysopen     (my $TEMPCONF, "/var/lib/csf/csf.tempconf", O_WRONLY | O_APPEND | O_CREAT) or &shutdown_child(__LINE__,"*Error* Cannot append out file: $!");
+			flock       ($TEMPCONF, LOCK_EX);
+			print       $TEMPCONF "MESSENGER_${type}_IN = \"\"\n";
+			close       ( $TEMPCONF );
+
+            logfile( "all", "error", "[MessengerV1] Temporarily disabled $type service after startup failure" );
+		}
+
+		if ( $config{DEBUG} >= 3 )
+		{
+			$timer = &timer( "stop", "messenger", $timer )
+		}
+
 		exit;
 	}
 	return;
@@ -14260,7 +14299,10 @@ sub stats
 					close ($IPTABLES);
 				}
 
-				if ($config{DEBUG} >= 2) {logfile("debug: STATS added iptables [$src -> $dst] log line")}
+				if ( $config{DEBUG} >= 2 )
+                {
+                    logfile( "debug: STATS added iptables [ $src => $dst ] log line" );
+                }
 			}
 			alarm(0);
 		};
