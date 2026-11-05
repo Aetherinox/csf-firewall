@@ -9,7 +9,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            09.07.2026
+#   @updated            11.05.2026
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -23,9 +23,29 @@
 #   
 #   You should have received a copy of the GNU General Public License
 #   along with this program; if not, see <https://www.gnu.org/licenses>.
+#   
+#   @commands       Load module directly:
+#                       sudo perl -I. ConfigServer/Config.pm
+#   
+#                   Check module for syntax errors:
+#                       sudo  perl -I. -c ConfigServer/Config.pm
+#   
+#                   Module docs:
+#                       perldoc -T ConfigServer/Config.pm
+#   
+#                   Run test suite:
+#                       sudo prove -I. -v tests/Config.t
+# #
+
+# #
+#   Declare › Package
 # #
 
 package ConfigServer::Config;
+
+# #
+#   Declare › Use
+# #
 
 use strict;
 use lib '/usr/local/csf/lib';
@@ -42,36 +62,77 @@ use ConfigServer::Perl::URI qw( uri_escape );
 # #
 
 use Exporter 	qw( import );
-our @EXPORT_OK	= qw();
+our @EXPORT_OK	= qw( );
 
 # # 
-#	Config › Declare › Version
+#	Declare › Version
 # #
 
-our $VERSION	= 15.11;
+our $VERSION    = 15.11;
 
 # #
-#
+#   Declare › License
 # #
 
 use constant LICENSE_URL => 'https://license.configserver.dev/';
 
 # #
-#   Config › Declare › IP Regex
+#   Declare › IP Regex
+#   
+#   Original ipv6 regex was one large expression which contained 
+#   almost 74 numbered capture groups.
+#   
+#   An audit concluded that only capture group $1 returned the 
+#   complete address. The remaining capture groups had repetitive 
+#   fragments depending on the format.
+#
+#   New regex builds expressions from named v4 and v6 parts.
+#   
+#   Created the sub _test_ipreg() to test ipv4 and ipv6 regex.
+#   
+#   @since      15.11
+#   @todo       Migrate to new regex module
 # #
 
-our $ipv4reg    = qr/(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/;
-our $ipv6reg 	= qr/((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}))|:)))(%.+)?/;
+our $ipv4octet   = qr/(?:25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])/;
+our $ipv4address = qr/$ipv4octet(?:\.$ipv4octet){3}/;
+our $ipv4reg     = qr/(?<![A-Za-z0-9_.-])$ipv4address(?![A-Za-z0-9_.-])/;
+our $ipv6group   = qr/[0-9A-Fa-f]{1,4}/;
+our $ipv6ending  = qr/(?:$ipv6group:$ipv6group|$ipv4address)/;
+our $ipv6address = qr/
+	(?:
+		(?:$ipv6group:){6}$ipv6ending
+		|
+		::(?:$ipv6group:){5}$ipv6ending
+		|
+		(?:$ipv6group)?::(?:$ipv6group:){4}$ipv6ending
+		|
+		(?:(?:$ipv6group:){0,1}$ipv6group)?::(?:$ipv6group:){3}$ipv6ending
+		|
+		(?:(?:$ipv6group:){0,2}$ipv6group)?::(?:$ipv6group:){2}$ipv6ending
+		|
+		(?:(?:$ipv6group:){0,3}$ipv6group)?::$ipv6group:$ipv6ending
+		|
+		(?:(?:$ipv6group:){0,4}$ipv6group)?::$ipv6ending
+		|
+		(?:(?:$ipv6group:){0,5}$ipv6group)?::$ipv6group
+		|
+		(?:(?:$ipv6group:){0,6}$ipv6group)?::
+	)
+/x;
+our $ipv6reg     = qr/(?<![A-Za-z0-9_.:%-])($ipv6address)(?![A-Za-z0-9_.:%-])/;
+
+# #
+#   Declare › Vars
+# #
 
 my %config;
 my %configsetting;
 my $configfile  = "/etc/csf/csf.conf";
 my $warning;
 my $version;
-
 my $slurpreg 	= ConfigServer::Slurp->slurpreg;
 my $cleanreg 	= ConfigServer::Slurp->cleanreg;
-
 my %defaults;
 my $defaultsfile = "/usr/local/csf/lib/defaults.txt";
 
@@ -82,15 +143,18 @@ my $defaultsfile = "/usr/local/csf/lib/defaults.txt";
 #	of a config item.
 #	
 #	Remove trailing spaces and underscore_
+#   
+#   @test       Note:           Test a bunch of words to trim
+#               Command:        sudo env DEBUG=4 perl -I. -MConfigServer::Config -e 'my $failed = 0; for my $test ([q{Plain word},q{csf},0,q{csf}],[q{Leading spaces},q{  csf},0,q{csf}],[q{Trailing spaces},q{csf  },0,q{csf}],[q{Spaces on both sides},q{  csf security  },0,q{csf security}],[q{Trailing underscore kept},q{csf_},0,q{csf_}],[q{Trailing underscore removed},q{csf_},1,q{csf}],[q{Spaces then underscore removed},q{  csf_  },1,q{csf}],[q{Multiple trailing underscores},q{csf___},1,q{csf__}],[q{Leading underscore},q{_csf},1,q{_csf}],[q{Internal underscore},q{csf_security},1,q{csf_security}],[q{Empty string},q{},0,q{}],[q{Spaces only},q{   },0,q{}],[q{Undefined input},undef,1,undef]) { my ($description,$input,$strip,$expected) = @{$test}; my $res = ConfigServer::Config::_trim($input,$strip); my $shown = defined($input) ? qq{[$input]} : q{<undef>}; my $got = defined($res) ? qq{[$res]} : q{<undef>}; my $expected_value = defined($expected) ? qq{[$expected]} : q{<undef>}; my $status = $got eq $expected_value ? q{OK} : q{FAILED}; printf "%-31s %-24s strip=%-3s => %-20s %s\n",$description,$shown,$strip,$got,$status; $failed++ if $status eq q{FAILED}; } die qq{$failed trim tests failed\n} if $failed;'
 # #
 
 sub _trim
 {
-	my ( $s, $strip_trailing_underscore ) = @_;
+	my ( $s, $strip_underscore ) = @_;
 	return undef unless defined $s;
 
 	$s =~ s/^\s+|\s+$//g;
-	if ( $strip_trailing_underscore )
+	if ( $strip_underscore )
 	{
 		$s =~ s/_\z//;
 	}
@@ -164,7 +228,7 @@ sub loadconfig
 		if ( !$config{LF_IPSET_MAXELEM} )
 		{
 			$config{LF_IPSET_MAXELEM} 			= "65536";
-			$configsetting{LF_IPSET_MAXELEM} 	= 1;
+			$configsetting{LF_IPSET_MAXELEM}    = 1;
 		}
 	}
 
@@ -785,11 +849,6 @@ sub getdefault
 			next if $line =~ /^(\s|\#|$)/;
 			my ( $name, $value ) = split( /\=/, $line, 2 );
 
-			# #
-            #   Clean since certain features can add trailing spaces or
-            #   _underscores_
-            # #
-
 			$name   = _trim( $name, 1 );
 			$value 	= _trim( $value );
 			$value 	= undef if !defined $value || $value eq '';
@@ -803,9 +862,69 @@ sub getdefault
 }
 
 # #
+#   Config › IPv4 Address
+#   
+#   Return base IPv4 address regex.
+#   Use with \A and \z to validate a var with only an IPv4 addr.
+#   
+#   @usage      my $ipv4regex   = ConfigServer::Config->ipv4address;
+#               my $ipv4test    = "192.0.2.10" =~ /\A(?:$ipv4regex)\z/ ? 1 : 0;
+#               print "IPv4: $ipv4test\n";  # Returns "IPv4: 1"
+#   
+#   @test       Note:           Return regex string
+#               Command:        sudo env DEBUG=4 perl -I. -MConfigServer::Config -e 'my $regex = ConfigServer::Config->ipv4address; print qq{Type: },ref($regex),qq{\nRegex: $regex\n};'
+#   
+#               Note:           Test all 4 subs
+#                               ipv4address, ipv6address, ipv4reg, ipv6reg
+#               Command:        sudo env DEBUG=4 perl -I. -MConfigServer::Config -e 'my $failed = 0; for my $test ([q{IPv4 complete value},q{ipv4address},q{validate},q{192.0.2.10},q{192.0.2.10}],[q{IPv6 complete value},q{ipv6address},q{validate},q{2001:db8::10},q{2001:db8::10}],[q{IPv4 command output},q{ipv4reg},q{extract},q{2: eth0    inet 192.0.2.10/24 brd 192.0.2.255 scope global eth0},q{192.0.2.10}],[q{IPv6 command output},q{ipv6reg},q{extract},q{2: eth0    inet6 2001:db8::10/64 scope global},q{2001:db8::10}]) { my ($description,$method,$operation,$input,$expected) = @{$test}; my $regex = ConfigServer::Config->$method(); my $res; if ($operation eq q{validate}) { ($res) = $input =~ /\A($regex)\z/; } else { ($res) = $input =~ /($regex)/; } my $got = defined($res) ? $res : q{undef}; my $status = $got eq $expected ? q{OK} : q{FAILED}; printf "%-22s %-13s %-76s => %-39s type=%-7s %s\n",$description,$method,$input,$got,ref($regex),$status; $failed++ if $status eq q{FAILED}; } die qq{$failed regex tests failed\n} if $failed;'
+#   
+#   @params     void
+#   @return     ipv4address     Regexp      IPv4 addr regex
+# #
+
+sub ipv4address
+{
+	return $ipv4address;
+}
+
+# #
+#   Config › IPv6 Address
+#   
+#   Return base IPv6 address regex.
+#   Use with \A and \z to validate a var with only an IPv6 addr.
+#   
+#   @usage      my $ipv6regex   = ConfigServer::Config->ipv6address;
+#               my $ipv6test    = "2001:db8::10" =~ /\A(?:$ipv6regex)\z/ ? 1 : 0;
+#               print "IPv6: $ipv6test\n";  # Returns "IPv6: 1"
+#   
+#   @test       Note:           Return regex string
+#               Command:        sudo env DEBUG=4 perl -I. -MConfigServer::Config -e 'my $regex = ConfigServer::Config->ipv6address; print qq{Type: },ref($regex),qq{\nRegex: $regex\n};'
+#   
+#   @params     void
+#   @return     ipv6address     Regexp      IPv6 addr regex
+# #
+
+sub ipv6address
+{
+	return $ipv6address;
+}
+
+# #
 #   Config › IPv4 Regex
 #   
-#   Return the IPv4 validation regular expression.
+#   Returns IPv4 extraction regex.
+#   Extract IPv4 addr from longer lines (config or log).
+#   
+#   @usage      my $ipv4regex       = ConfigServer::Config->ipv4reg;
+#               my $ipv4line        = "2: eth0 inet 192.0.2.10/24 brd 192.0.2.255";
+#               my ( $ipv4test )    = $ipv4line =~ /($ipv4regex)/;
+#               print "$ipv4test\n";  # Returns "192.0.2.10"
+#   
+#   @test       Note:           Return regex string
+#               Command:        sudo env DEBUG=4 perl -I. -MConfigServer::Config -e 'my $regex = ConfigServer::Config->ipv4reg; print qq{Type: },ref($regex),qq{\nRegex: $regex\n};'
+#   
+#   @params     void
+#   @return     ipv4reg         Regexp      IPv4 addr extraction regex
 # #
 
 sub ipv4reg
@@ -816,7 +935,19 @@ sub ipv4reg
 # #
 #   Config › IPv6 Regex
 #   
-#   Return the IPv6 validation regular expression.
+#   Returns IPv6 extraction regex.
+#   Extract IPv6 addr from longer lines (config or log).
+#   
+#   @usage      my $ipv6regex       = ConfigServer::Config->ipv6reg;
+#               my $ipv6line        = "2: eth0 inet6 2001:db8::10/64 scope global";
+#               my ( $ipv6test )    = $ipv6line =~ /($ipv6regex)/;
+#               print "$ipv6test\n";  # Returns "2001:db8::10"
+#   
+#   @test       Note:           Return regex string
+#               Command:        sudo env DEBUG=4 perl -I. -MConfigServer::Config -e 'my $regex = ConfigServer::Config->ipv6reg; print qq{Type: },ref($regex),qq{\nRegex: $regex\n};'
+#   
+#   @params     void
+#   @return     ipv6reg         Regexp      IPv6 addr extraction regex
 # #
 
 sub ipv6reg
@@ -1054,6 +1185,45 @@ sub getdownloadserver
 	}
 
 	return $chosen;
+}
+
+# #
+#	Config › Test › Regex IPs
+#   
+#   Test sub used to extract ipv4 / ipv6 from longer strings.
+#
+#   @test       Note:           Test IP regex boundaries and addr validation
+#               Command:        sudo env DEBUG=4 perl -I. -MConfigServer::Config -MConfigServer::CheckIP -e 'my $failed = 0; for my $test ([q{IPv4 valid},q{192.0.2.10},q{192.0.2.10},q{4}],[q{IPv4 maximum},q{255.255.255.255},q{255.255.255.255},q{4}],[q{IPv4 leading zero},q{192.168.001.1},q{undef},q{DENIED}],[q{IPv4 octet too large},q{256.0.0.1},q{undef},q{DENIED}],[q{IPv4 zero CIDR},q{192.0.2.10/0},q{192.0.2.10/0},q{DENIED}],[q{IPv4 maximum CIDR},q{192.0.2.10/32},q{192.0.2.10/32},q{4}],[q{IPv4 CIDR too large},q{192.0.2.10/33},q{192.0.2.10/33},q{DENIED}],[q{IPv4 CIDR text},q{192.0.2.10/abc},q{192.0.2.10},q{DENIED}],[q{IPv6 valid},q{2001:db8::1},q{2001:db8::1},q{6}],[q{IPv6 full},q{2001:0db8:0000:0000:0000:ff00:0042:8329},q{2001:0db8:0000:0000:0000:ff00:0042:8329},q{6}],[q{IPv6 zero CIDR},q{2001:db8::1/0},q{2001:db8::1/0},q{DENIED}],[q{IPv6 maximum CIDR},q{2001:db8::1/128},q{2001:db8::1/128},q{6}],[q{IPv6 CIDR too large},q{2001:db8::1/129},q{2001:db8::1/129},q{DENIED}],[q{IPv6 CIDR text},q{2001:db8::1/abc},q{2001:db8::1},q{DENIED}],[q{IPv6 scope ID},q{fe80::1%eth0},q{undef},q{DENIED}],[q{IPv6 leading text},q{x2001:db8::1},q{undef},q{DENIED}],[q{IPv6 too few groups},q{1:2:3:4:5:6:7},q{undef},q{DENIED}]) { my ($description,$input,$regex_expected,$parse_expected) = @{$test}; my $res = ConfigServer::Config::_test_ipreg($input); my $regex_got = defined($res) ? $res : q{undef}; my $parsed = ConfigServer::CheckIP::addr_parse($input); my $parse_got = defined($parsed) ? $parsed->{family} : q{DENIED}; my $status = $regex_got eq $regex_expected && $parse_got eq $parse_expected ? q{OK} : q{FAILED}; printf "%-27s %-47s => regex=%-42s parse=%-6s %s\n",$description,$input,$regex_got,$parse_got,$status; $failed++ if $status eq q{FAILED}; } die qq{$failed IP tests failed\n} if $failed;'
+#
+#               Note:           Test IP regex, sim real config entries mixed with ips
+#               Command:        sudo env DEBUG=4 perl -I. -MConfigServer::Config -MConfigServer::CheckIP -e 'my $failed = 0; for my $test ([q{ip inet},q{2: eth0    inet 192.0.2.10/24 brd 192.0.2.255 scope global eth0},q{192.0.2.10},q{4}],[q{ip brd segment},q{brd 192.0.2.255 scope global eth0},q{192.0.2.255},q{4}],[q{ip inet6},q{2: eth0    inet6 2001:db8::10/64 scope global},q{2001:db8::10},q{6}],[q{ifconfig inet},q{inet addr:192.0.2.10  Bcast:192.0.2.255  Mask:255.255.255.0},q{192.0.2.10},q{4}],[q{ifconfig Bcast segment},q{Bcast:192.0.2.255  Mask:255.255.255.0},q{192.0.2.255},q{4}],[q{ifconfig inet6},q{inet6 addr: 2001:db8::10/64 Scope:Global},q{2001:db8::10},q{6}],[q{resolv IPv4},q{nameserver 1.1.1.1},q{1.1.1.1},q{4}],[q{resolv IPv6},q{nameserver 2606:4700:4700::1111},q{2606:4700:4700::1111},q{6}],[q{csf.deny IPv4},q{192.0.2.10 # temporary deny},q{192.0.2.10},q{4}],[q{csf.allow IPv6},q{2001:db8::1/128 # temporary allow},q{2001:db8::1},q{6}],[q{host IPv4},q{example.com has address 192.0.2.10},q{192.0.2.10},q{4}],[q{host IPv6},q{example.com has IPv6 address 2001:db8::10},q{2001:db8::10},q{6}]) { my ($description,$input,$expected,$family_expected) = @{$test}; my $res = ConfigServer::Config::_test_ipreg($input); my $got = defined($res) ? $res : q{undef}; my $parsed = defined($res) ? ConfigServer::CheckIP::addr_parse($res) : undef; my $family_got = defined($parsed) ? $parsed->{family} : q{DENIED}; my $status = $got eq $expected && $family_got eq $family_expected ? q{OK} : q{FAILED}; printf "%-24s %-92s => %-39s parse=%-6s %s\n",$description,$input,$got,$family_got,$status; $failed++ if $status eq q{FAILED}; } die qq{$failed caller-format tests failed\n} if $failed;'
+#   
+#   @usage      my $res = ConfigServer::Config::_test_ipreg( "csf.dev has address 192.0.2.10" );
+#               print defined( $res ) ? "$res\n" : "undef\n";   # Return 192.0.2.10
+#   
+#   @todo       Migrate to new Regex module
+#   
+#   @params     input           str         Str to search
+#   @return     res             str|undef   Matched IP value or no match
+# #
+
+sub _test_ipreg
+{
+	my ( $input ) = @_;
+
+	return
+		if !defined( $input ) or ref( $input );
+
+	my ( $res ) = $input =~ /($ipv4reg|$ipv6reg)/;
+	return
+		if !defined( $res );
+
+	if ( $input =~ /(\/\d+)$/ )
+	{
+		$res .= $1
+	}
+
+	return $res;
 }
 
 1;
