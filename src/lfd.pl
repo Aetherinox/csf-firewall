@@ -7810,6 +7810,9 @@ sub countrycode {
 				} else {
 					&iptablescmd(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} -F CC_DENY");
 				}
+				# Keep return traffic of server-initiated connections flowing (#119)
+				my $ccdeny_chain = $config{SAFECHAINUPDATE} ? "NEWCC_DENY" : "CC_DENY";
+				&iptablescmd(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} -A $ccdeny_chain -m conntrack --ctstate ESTABLISHED,RELATED --ctdir REPLY -j $accept");
 				foreach my $cc (split(/\,/,$config{CC_DENY})) {
 					$cc = lc $cc;
 					if (-e "/var/lib/csf/zone/$cc.zone") {

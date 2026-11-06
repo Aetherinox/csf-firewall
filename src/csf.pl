@@ -3335,6 +3335,19 @@ sub doportfilters {
 				}
 			}
 		}
+
+		# #
+		#   Let replies to connections the server itself opened back through,
+		#   so CC_DENY only blocks traffic that originates in a denied country.
+		#   Inserted last so it sits at the top of the chain. --ctdir REPLY keeps
+		#   inbound-initiated sessions from denied countries blocked. (#119)
+		# #
+
+		&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -I CC_DENY -m conntrack --ctstate ESTABLISHED,RELATED --ctdir REPLY -j $accept");
+		if ($config{IPV6}) {
+			&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} $verbose -I CC_DENY -m conntrack --ctstate ESTABLISHED,RELATED --ctdir REPLY -j $accept");
+		}
+
 		&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -A LOCALINPUT $ethdevin -j CC_DENY");
 		if ($config{IPV6}) {
 			&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} $verbose -A LOCALINPUT $ethdevin -j CC_DENY");
