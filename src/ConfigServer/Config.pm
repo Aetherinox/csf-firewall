@@ -1181,7 +1181,8 @@ sub getdownloadserver
 
 	if ($chosen eq "")
 	{
-		$chosen = "download.configserver.dev"
+		# Fork: fall back to this fork's releases so updates never replace it with upstream
+		$chosen = "raw.githubusercontent.com/jwklijnsma/csf-firewall/dist"
 	}
 
 	return $chosen;

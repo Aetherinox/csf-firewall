@@ -383,28 +383,28 @@ To download and install CSF, you have two options. Both options give you the lat
 
 ##### Download Direct
 
-To download the latest CSF release, run one of the commands:
+To download the latest CSF release from [this fork's releases](https://github.com/jwklijnsma/csf-firewall/releases/latest), run one of the commands:
 
 ```shell
 # Using wget
-wget https://download.configserver.dev/csf.zip
+wget https://github.com/jwklijnsma/csf-firewall/releases/latest/download/csf.zip
 
 # Using curl
-curl -O https://download.configserver.dev/csf.zip
+curl -LO https://github.com/jwklijnsma/csf-firewall/releases/latest/download/csf.zip
 ```
 
 <br />
 
 ##### Download Get.sh
 
-To download the latest version of CSF using our [get.sh](https://get.configserver.dev) script, run one of the commands below. This will simply give you the zip file in the folder you run the command from.
+To download the latest version of CSF using the [get.sh](https://github.com/jwklijnsma/csf-firewall/blob/main/get.sh) script, run one of the commands below. This will simply give you the zip file in the folder you run the command from.
 
 ```shell
 # Using wget
-bash <(wget -qO - https://get.configserver.dev)
+bash <(wget -qO - https://raw.githubusercontent.com/jwklijnsma/csf-firewall/main/get.sh)
 
 # Using curl
-bash <(curl -sL https://get.configserver.dev)
+bash <(curl -sL https://raw.githubusercontent.com/jwklijnsma/csf-firewall/main/get.sh)
 ```
 
 <br />
@@ -1562,8 +1562,8 @@ The following people have helped get this project going:
   [general-npmtrends-uri]: http://npmtrends.com/csf-firewall
 
 <!-- BADGE > VERSION > GITHUB -->
-  [github-version-img]: https://img.shields.io/github/v/tag/Aetherinox/csf-firewall?logo=GitHub&label=Version&color=ba5225
-  [github-version-uri]: https://github.com/Aetherinox/csf-firewall/releases
+  [github-version-img]: https://img.shields.io/github/v/tag/jwklijnsma/csf-firewall?logo=GitHub&label=Version&color=ba5225
+  [github-version-uri]: https://github.com/jwklijnsma/csf-firewall/releases
 
 <!-- BADGE > VERSION > NPMJS -->
   [npm-version-img]: https://img.shields.io/npm/v/csf-firewall?logo=npm&label=Version&color=ba5225
@@ -1578,16 +1578,16 @@ The following people have helped get this project going:
   [license-mit-uri]: https://github.com/Aetherinox/csf-firewall/blob/main/LICENSE
 
 <!-- BADGE > GITHUB > DOWNLOAD COUNT -->
-  [github-downloads-img]: https://img.shields.io/github/downloads/Aetherinox/csf-firewall/total?logo=github&logoColor=FFFFFF&label=Downloads&color=376892
-  [github-downloads-uri]: https://github.com/Aetherinox/csf-firewall/releases
+  [github-downloads-img]: https://img.shields.io/github/downloads/jwklijnsma/csf-firewall/total?logo=github&logoColor=FFFFFF&label=Downloads&color=376892
+  [github-downloads-uri]: https://github.com/jwklijnsma/csf-firewall/releases
 
 <!-- BADGE > NPMJS > DOWNLOAD COUNT -->
   [npmjs-downloads-img]: https://img.shields.io/npm/dw/%40aetherinox%2Fcsf-firewall?logo=npm&&label=Downloads&color=376892
   [npmjs-downloads-uri]: https://npmjs.com/package/csf-firewall
 
 <!-- BADGE > GITHUB > DOWNLOAD SIZE -->
-  [github-size-img]: https://img.shields.io/github/repo-size/Aetherinox/csf-firewall?logo=github&label=Size&color=59702a
-  [github-size-uri]: https://github.com/Aetherinox/csf-firewall/releases
+  [github-size-img]: https://img.shields.io/github/repo-size/jwklijnsma/csf-firewall?logo=github&label=Size&color=59702a
+  [github-size-uri]: https://github.com/jwklijnsma/csf-firewall/releases
 
 <!-- BADGE > NPMJS > DOWNLOAD SIZE -->
   [npmjs-size-img]: https://img.shields.io/npm/unpacked-size/csf-firewall/latest?logo=npm&label=Size&color=59702a

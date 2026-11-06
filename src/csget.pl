@@ -247,10 +247,23 @@ if ( $@ )
 #           version.txt
 # #
 
-my @downloadservers = (
-        "https://download.configserver.dev"
-    #   "https://raw.githubusercontent.com/Aetherinox/csf-firewall/main/api/templates/versions"
-);
+# #
+#   Read the same /etc/csf/downloadservers list csf and lfd use, so the daily
+#   version check follows the configured update source (this fork by default).
+# #
+
+my @downloadservers;
+if ( open( my $DLS, "<", "/etc/csf/downloadservers" ) )
+{
+    while ( my $line = <$DLS> )
+    {
+        $line =~ s/[\r\n]//g;
+        $line =~ s/^\s+|\s+$//g;
+        push @downloadservers, "https://$line" if $line =~ /^(?:raw|download|cdn)\./;
+    }
+    close( $DLS );
+}
+@downloadservers = ( "https://raw.githubusercontent.com/jwklijnsma/csf-firewall/dist" ) unless @downloadservers;
 
 # #
 #   Declare › Fetch Types

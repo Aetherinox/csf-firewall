@@ -7,6 +7,8 @@
 #                       3. merge into main      → run the same syntax checks as the release workflow
 #                       4. clean merge + checks → push to main
 #                       5. conflict or failed checks → push a sync/upstream-* branch and open a PR instead
+#                       6. after a successful push   → start "Make Release" with the next version, so
+#                                                      servers (csf -u / AUTO_UPDATES / csget cron) get it
 #
 #   @secrets            secrets.SYNC_TOKEN (optional)   fine-grained PAT with Contents + Pull requests + Workflows
 #                                                       write on this repo. Only needed when upstream changes
@@ -28,6 +30,7 @@ on:
 permissions:
     contents: write
     pull-requests: write
+    actions: write
 
 concurrency:
     group: sync-upstream
@@ -122,6 +125,35 @@ jobs:
                       cat /tmp/new-commits.txt
                       echo '```'
                   } >> "$GITHUB_STEP_SUMMARY"
+
+            # #
+            #   New version
+            #
+            #   Upstream version newer than our latest tag → use the upstream version (e.g. 15.12)
+            #   Otherwise                                  → bump our latest tag   (15.11 → 15.11.1 → 15.11.2)
+            # #
+
+            - name: '📦 Start release'
+              if: steps.fetch.outputs.new != '0' && steps.merge.outputs.conflict == 'false' && steps.checks.outcome == 'success'
+              env:
+                  GH_TOKEN: ${{ github.token }}
+              run: |
+                  git fetch -q --tags origin
+                  LATEST=$(git tag -l | grep -E '^[0-9]+(\.[0-9]+)+$' | sort -V | tail -1)
+                  UPSTREAM=$(head -n1 src/version.txt | xargs)
+
+                  newer() { [ "$1" != "$2" ] && [ "$(printf '%s\n%s\n' "$1" "$2" | sort -V | tail -1)" = "$1" ]; }
+
+                  if [ -z "${LATEST}" ] || newer "${UPSTREAM}" "${LATEST}"; then
+                      NEXT="${UPSTREAM}"
+                  else
+                      IFS=. read -r a b c <<< "${LATEST}"
+                      NEXT="${a}.${b}.$(( ${c:-0} + 1 ))"
+                  fi
+
+                  echo "Latest tag: ${LATEST:-none} | upstream version.txt: ${UPSTREAM} | releasing: ${NEXT}"
+                  gh workflow run release-fork.yml --ref "${TARGET_BRANCH}" -f VERSION="${NEXT}" -f PRERELEASE=false -f DRAFT=false
+                  echo "Started release ${NEXT}" >> "$GITHUB_STEP_SUMMARY"
 
             # #
             #   Conflict or failing checks → open a PR so nothing broken lands on main

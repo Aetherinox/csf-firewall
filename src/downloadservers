@@ -1,2 +1,4 @@
-# raw.githubusercontent.com/Aetherinox/csf-firewall/main/api/templates/versions
-download.configserver.dev
+# Update source for csf -u, lfd auto-updates and csget (one host/path per line).
+# Must start with raw., download. or cdn. and serve csf/version.txt and csf.tgz.
+# This fork publishes them on the "dist" branch on every release.
+raw.githubusercontent.com/jwklijnsma/csf-firewall/dist

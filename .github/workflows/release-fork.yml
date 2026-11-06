@@ -160,7 +160,11 @@ jobs:
                   tar -czf "../${PACKAGE}.tgz" csf
                   cd ..
 
-                  sha256sum "${PACKAGE}.zip" "${PACKAGE}.tgz" > SHA256SUMS
+                  # Fixed names so README links (releases/latest/download/csf.zip) always work
+                  cp "${PACKAGE}.zip" csf.zip
+                  cp "${PACKAGE}.tgz" csf.tgz
+
+                  sha256sum "${PACKAGE}.zip" "${PACKAGE}.tgz" csf.zip csf.tgz > SHA256SUMS
                   cat SHA256SUMS
 
             # #
@@ -175,7 +179,7 @@ jobs:
                   PRERELEASE: ${{ inputs.PRERELEASE }}
                   DRAFT: ${{ inputs.DRAFT }}
               run: |
-                  args=( "${VERSION}" "${PACKAGE}.zip" "${PACKAGE}.tgz" SHA256SUMS
+                  args=( "${VERSION}" "${PACKAGE}.zip" "${PACKAGE}.tgz" csf.zip csf.tgz SHA256SUMS
                          --title "${PROJECT_NAME} v${VERSION}"
                          --generate-notes
                          --target "${GITHUB_SHA}" )
@@ -195,3 +199,35 @@ jobs:
                       echo
                       echo "https://github.com/${GITHUB_REPOSITORY}/releases/tag/${VERSION}"
                   } >> "$GITHUB_STEP_SUMMARY"
+
+            # #
+            #   Update source for installed servers
+            #
+            #   csf -u, lfd AUTO_UPDATES and the daily csget cron read
+            #   https://raw.githubusercontent.com/<repo>/dist/csf/version.txt and .../dist/csf.tgz
+            #   (see src/downloadservers). Publish them on a single-commit "dist" branch.
+            #   Skipped for drafts and pre-releases so servers only get stable versions.
+            # #
+
+            - name: '🌐 Publish update source (dist branch)'
+              if: inputs.DRAFT != true && inputs.PRERELEASE != true && !contains(steps.version.outputs.version, '-')
+              env:
+                  VERSION: ${{ steps.version.outputs.version }}
+              run: |
+                  rm -rf dist && mkdir -p dist/csf
+                  cp csf.tgz csf.zip dist/
+                  printf '%s\n' "${VERSION}" > dist/csf/version.txt
+                  for f in changelog.txt install.txt readme.txt; do
+                      [ -f "src/$f" ] && cp "src/$f" "dist/csf/$f"
+                  done
+                  cp LICENSE.md dist/csf/license.txt
+
+                  cd dist
+                  git init -q -b dist
+                  git config user.name  "github-actions[bot]"
+                  git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+                  git add -A
+                  git commit -q -m "dist: ${VERSION}"
+                  git push -f "https://x-access-token:${{ github.token }}@github.com/${GITHUB_REPOSITORY}.git" dist:dist
+
+                  echo "Update source now serves ${VERSION}: https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/dist/csf/version.txt" >> "$GITHUB_STEP_SUMMARY"
