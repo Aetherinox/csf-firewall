@@ -92,8 +92,7 @@ sub action {
 			my ($rip,$mode,$user,$raccount,$rapikey,$rid,$time) = split(/\|/,$line);
 
 			if ($ip eq $rip) {
-				$args{"X-Auth-Email"} = $raccount;
-				$args{"X-Auth-Key"} = $rapikey;
+				&setauth($raccount,$rapikey);
 
 				$status = &remove($ip,$mode,$rid);
 				logfile($status." ($user)");
@@ -124,36 +123,34 @@ sub action {
 
 		foreach my $user (keys %{$scope->{user}}) {
 			if ($allowany and ($scope->{user}{$user}{domain} eq "any" or $scope->{user}{$user}{any})) {
-				$authlist{$scope->{user}{$user}{account}}{apikey} = $scope->{user}{$user}{apikey};
-				$authlist{$scope->{user}{$user}{account}}{user} = $user;
+				&addauth(\%authlist,$scope->{user}{$user}{account},$scope->{user}{$user}{apikey},$user);
 			}
 
 			foreach my $domain (keys %domains) {
 				if ($scope->{domain}{$domain}{user} eq $user) {
-					$authlist{$scope->{domain}{$domain}{account}}{apikey} = $scope->{domain}{$domain}{apikey};
-					$authlist{$scope->{domain}{$domain}{account}}{user} = $scope->{domain}{$domain}{user};
+					&addauth(\%authlist,$scope->{domain}{$domain}{account},$scope->{domain}{$domain}{apikey},$scope->{domain}{$domain}{user});
 				}
 				foreach my $userdomain (keys %{$scope->{user}{$user}{domain}}) {
 					if ($user eq $domain and $scope->{user}{$user}{domain}{$userdomain} ne "") {
-						$authlist{$scope->{user}{$user}{account}}{apikey} = $scope->{user}{$user}{apikey};
-						$authlist{$scope->{user}{$user}{account}}{user} = $user;
+						&addauth(\%authlist,$scope->{user}{$user}{account},$scope->{user}{$user}{apikey},$user);
 					}
 				}
 			}
 		}
 
 		my @list;
-		foreach my $account (sort keys %authlist) {
-			$args{"X-Auth-Email"} = $account;
-			$args{"X-Auth-Key"} = $authlist{$account}{apikey};
-			my $user = $authlist{$account}{user};
+		foreach my $authkey (sort keys %authlist) {
+			my $account = $authlist{$authkey}{account};
+			my $apikey = $authlist{$authkey}{apikey};
+			&setauth($account,$apikey);
+			my $user = $authlist{$authkey}{user};
 
 			if ($action eq "deny") {
 				my ($id,$status) = &block($ip);
 				logfile($status." ($user)");
 				sysopen (my $TEMP, "/var/lib/csf/cloudflare.temp", O_WRONLY | O_APPEND | O_CREAT);
 				flock($TEMP, LOCK_EX);
-				print $TEMP "$ip|$mode|$user|$account|$authlist{$account}{apikey}|$id|".time."\n";
+				print $TEMP "$ip|$mode|$user|$account|$apikey|$id|".time."\n";
 				close ($TEMP);
 			}
 			elsif ($action eq "allow") {
@@ -161,7 +158,7 @@ sub action {
 				logfile($status." ($user)");
 				sysopen (my $TEMP, "/var/lib/csf/cloudflare.temp", O_WRONLY | O_APPEND | O_CREAT);
 				flock($TEMP, LOCK_EX);
-				print $TEMP "$ip|$mode|$user|$account|$authlist{$account}{apikey}|$id|".time."\n";
+				print $TEMP "$ip|$mode|$user|$account|$apikey|$id|".time."\n";
 				close ($TEMP);
 			}
 			elsif ($action eq "del") {
@@ -186,6 +183,40 @@ sub action {
 	return;
 }
 # end action
+###############################################################################
+# start setauth
+# #
+#   Sets the request auth headers. CFACCOUNT "token" (or "cf_user_api_token")
+#   means CFAPIKEY is a Cloudflare API token sent as a Bearer token; anything
+#   else is treated as the account email + Global API Key. (#110)
+# #
+sub setauth {
+	my $account = shift;
+	my $apikey = shift;
+	delete $args{"X-Auth-Email"};
+	delete $args{"X-Auth-Key"};
+	delete $args{"Authorization"};
+	if (lc($account) eq "token" or lc($account) eq "cf_user_api_token") {
+		$args{"Authorization"} = "Bearer $apikey";
+	} else {
+		$args{"X-Auth-Email"} = $account;
+		$args{"X-Auth-Key"} = $apikey;
+	}
+	return;
+}
+# end setauth
+###############################################################################
+# start addauth
+# Keyed by account and key so several users with API tokens do not collide
+sub addauth {
+	my ($authlist,$account,$apikey,$user) = @_;
+	my $key = "$account|$apikey";
+	$authlist->{$key}{account} = $account;
+	$authlist->{$key}{apikey} = $apikey;
+	$authlist->{$key}{user} = $user;
+	return;
+}
+# end addauth
 ###############################################################################
 # start block
 sub block {
