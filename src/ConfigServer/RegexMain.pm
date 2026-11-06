@@ -258,9 +258,19 @@ sub processline
 	#	dovecot
 	# #
 
+	# #
+	#	Optionally skip "Login aborted: Connection closed" lines, which mobile
+	#	clients produce when power saving cuts the connection mid-login (#120)
+	# #
+
+	if (($config{LF_DOVECOT_IGNORE_ABORTED}) and ($line =~ /(?:pop3|imap)-login(?:\[\d+\])?: (?:Info: )?Login aborted: Connection closed/))
+	{
+		return;
+	}
+
 	if (($config{LF_POP3D}) and ($globlogs{POP3D_LOG}{$lgfile}) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) \S+ dovecot(\[\d+\])?: pop3-login: ((?:Disconnected|Login aborted): )?(Aborted login( by logging out)?|Connection closed|Disconnected|Disconnected: Inactivity|Inactivity|Too many invalid commands|Logged out)(:\s*\S+\sfailed: Connection reset by peer)?(\s*\((?:auth failed|auth service reported temporary failure), \d+ attempts( in \d+ secs)?\))?(?:\s*\(\S+\))?: (user=(<\S*>)?, )?(method=\S+, )?rip=(\S+), lip=/))
 	{
-		ConfigServer::Logger::logfile("Checking dovecot regex for LF_POP3");
+		if ($config{DEBUG} >= 1) {ConfigServer::Logger::logfile("debug: Checking dovecot regex for LF_POP3")}
 
         my $ip = $12;
 		my $acc = $10;
@@ -271,7 +281,7 @@ sub processline
 
 	if (($config{LF_IMAPD}) and ($globlogs{IMAPD_LOG}{$lgfile}) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) \S+ dovecot(\[\d+\])?: imap-login: ((?:Disconnected|Login aborted): )?(Aborted login( by logging out)?|Connection closed|Disconnected|Disconnected: Inactivity|Inactivity|Too many invalid commands|Logged out)(:\s*\S+\sfailed: Connection reset by peer)?(\s*\((?:auth failed|auth service reported temporary failure), \d+ attempts( in \d+ secs)?\))?(?:\s*\(\S+\))?: (user=(<\S*>)?, )?(method=\S+, )?rip=(\S+), lip=/))
 	{
-		ConfigServer::Logger::logfile("Checking dovecot regex for LF_IMAPD");
+		if ($config{DEBUG} >= 1) {ConfigServer::Logger::logfile("debug: Checking dovecot regex for LF_IMAPD")}
 
         my $ip = $12;
 		my $acc = $10;		
@@ -279,7 +289,7 @@ sub processline
 		$acc =~ s/^<|>$//g;
 		if (checkip(\$ip))
 		{
-			ConfigServer::Logger::logfile( "Triggered checkip : $ip" );
+			if ($config{DEBUG} >= 1) {ConfigServer::Logger::logfile("debug: Triggered checkip : $ip")}
 		}
 
 		if ( checkip( \$ip ) )
@@ -294,7 +304,7 @@ sub processline
 
 	if (($config{LF_POP3D}) and ($globlogs{POP3D_LOG}{$lgfile}) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) pop3-login(\[\d+\])?: Info: (?:Login aborted: )?(Aborted login( by logging out)?|Connection closed|Disconnected|Disconnected: Inactivity|Inactivity|Too many invalid commands|Logged out)(\s*\((?:auth failed|auth service reported temporary failure), \d+ attempts( in \d+ secs)?\))?(?:\s*\(\S+\))?: (user=(<\S*>)?, )?(method=\S+, )?rip=(\S+), lip=/))
 	{
-		ConfigServer::Logger::logfile("Checking pop3-login regex for LF_POP3D");
+		if ($config{DEBUG} >= 1) {ConfigServer::Logger::logfile("debug: Checking pop3-login regex for LF_POP3D")}
 		
         my $ip = $10;
 		my $acc = $8;
@@ -305,7 +315,7 @@ sub processline
 
 	if (($config{LF_IMAPD}) and ($globlogs{IMAPD_LOG}{$lgfile}) and ($line =~ /^(\S+|\S+\s+\d+\s+\S+) imap-login(\[\d+\])?: Info: (?:Login aborted: )?(Aborted login( by logging out)?|Connection closed|Disconnected|Disconnected: Inactivity|Inactivity|Too many invalid commands|Logged out)(\s*\((?:auth failed|auth service reported temporary failure), \d+ attempts( in \d+ secs)?\))?(?:\s*\(\S+\))?: (user=(<\S*>)?, )?(method=\S+, )?rip=(\S+), lip=/))
 	{
-		ConfigServer::Logger::logfile("Checking imap-login regex for LF_IMAPD");
+		if ($config{DEBUG} >= 1) {ConfigServer::Logger::logfile("debug: Checking imap-login regex for LF_IMAPD")}
 
         my $ip = $10;
 		my $acc = $8;
