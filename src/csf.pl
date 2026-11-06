@@ -3722,18 +3722,24 @@ sub doportfilters {
 	$config{CONNLIMIT} =~ s/\s//g;
 	if ($config{CONNLIMIT}) {
 		foreach my $connlimit (split(/\,/,$config{CONNLIMIT})) {
-			my ($port,$limit) = split(/\;/,$connlimit);
-			if (($port < 0) or ($port > 65535) or ($limit < 1) or ($limit !~ /\d+/)) {&error(__LINE__,"csf: Incorrect CONNLIMIT setting: [$connlimit]")}
-			&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -A INPUT $ethdevin -p tcp --syn --dport $port -m connlimit --connlimit-above $limit -j CONNLIMIT");
+			# port;limit[;proto] - proto is tcp (default) or udp, e.g. 443;100;udp for HTTP/3 (#107)
+			my ($port,$limit,$proto) = split(/\;/,$connlimit);
+			$proto = lc($proto // "tcp");
+			$proto = "tcp" if $proto eq "";
+			if (($port !~ /^\d+$/) or ($port < 0) or ($port > 65535) or ($limit !~ /^\d+$/) or ($limit < 1) or ($proto !~ /^(tcp|udp)$/)) {&error(__LINE__,"csf: Incorrect CONNLIMIT setting: [$connlimit]")}
+			my $match = ($proto eq "udp") ? "-p udp --dport $port -m conntrack --ctstate NEW" : "-p tcp --syn --dport $port";
+			&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -A INPUT $ethdevin $match -m connlimit --connlimit-above $limit -j CONNLIMIT");
 			if ($config{CONNLIMIT6}) {
-				&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} $verbose -A INPUT $ethdevin -p tcp --syn --dport $port -m connlimit --connlimit-above $limit -j CONNLIMIT");
+				&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} $verbose -A INPUT $ethdevin $match -m connlimit --connlimit-above $limit -j CONNLIMIT");
 			}
 		}
 		if ($config{CONNLIMIT_LOGGING}) {&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -A CONNLIMIT -m limit --limit 30/m --limit-burst 5 -j $logintarget 'Firewall: *ConnLimit* '");}
 		&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -A CONNLIMIT -p tcp -j REJECT --reject-with tcp-reset");
+		&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -A CONNLIMIT -p udp -j $config{DROP}");
 		if ($config{CONNLIMIT6}) {
 			if ($config{CONNLIMIT_LOGGING}) {&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} $verbose -A CONNLIMIT -m limit --limit 30/m --limit-burst 5 -j $logintarget 'Firewall: *ConnLimit* '");}
 			&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} $verbose -A CONNLIMIT -p tcp -j REJECT --reject-with tcp-reset");
+			&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} $verbose -A CONNLIMIT -p udp -j $config{DROP}");
 		}
 	}
 
