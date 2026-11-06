@@ -4753,7 +4753,7 @@ sub blockaccount {
 			}
 		}
 
-		if ($config{LF_EMAIL_ALERT}) {
+		if ($config{LF_EMAIL_ALERT} and ($perm or $config{LF_TEMP_EMAIL_ALERT})) {
 			my @alert = slurp("/usr/local/csf/tpl/alert.txt");
 			my $block = "Temporary Block for $temp seconds [LF_DISTATTACK]";
 			if ($perm) {$block = "Permanent Block [LF_DISTATTACK]"}
