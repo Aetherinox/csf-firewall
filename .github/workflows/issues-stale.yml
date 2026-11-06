@@ -332,7 +332,7 @@ jobs:
 
             - name: >-
                   🎫 Labels › Verify Existing
-              uses: actions/github-script@v7
+              uses: actions/github-script@v9
               with:
                   github-token: ${{ secrets.ADMINSERV_TOKEN_CL || github.token }}
                   script: |
@@ -507,7 +507,7 @@ jobs:
 
             - name: >-
                   🎫 Labels › Check
-              uses: actions/github-script@v7
+              uses: actions/github-script@v9
               with:
                   github-token: ${{ secrets.ADMINSERV_TOKEN_CL || github.token }}
                   script: |
