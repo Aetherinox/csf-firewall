@@ -4322,7 +4322,7 @@ sub editfile
 		if ($extra ) {print "<input type='hidden' name='$extra' value='$FORM{$extra}'>\n";}
 		print "<div id='editor' style='width:100%;height:500px;border: 1px solid #000;display:none;'>";
 		print "Loading...</div>\n";
-		print "<div id='textarea'><textarea class='textarea' name='formdata' id='formdata' style='width:100%;height:500px;border: 1px solid #000;font-family:\"Courier New\", Courier;font-size:14px;line-height:1.1' wrap='off'>";
+		print "<div id='textarea'><textarea class='textarea' name='formdata' id='formdata' spellcheck='false' autocomplete='off' autocorrect='off' autocapitalize='off' style='width:100%;height:500px;border: 1px solid #000;font-family:\"Courier New\", Courier;font-size:14px;line-height:1.1' wrap='off'>";
 		print "# Do not remove or change this line as it is a safeguard for the UI editor\n";
 		foreach my $line ( @confdata )
 		{
@@ -4444,7 +4444,7 @@ EOF
 			print "<input type='hidden' name='$extra' value='$FORM{$extra}'>\n";
 		}
 
-		print "<textarea class='textarea' name='formdata' style='width:100%;height:600px;border: 1px solid #000;font-family: Monospace;' wrap='off'>";
+		print "<textarea class='textarea' name='formdata' style='width:100%;height:600px;border: 1px solid #000;font-family: Monospace;' wrap='off' spellcheck='false' autocomplete='off' autocorrect='off' autocapitalize='off'>";
 	
 		foreach my $line ( @confdata )
 		{
