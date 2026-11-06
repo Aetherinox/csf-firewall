@@ -227,6 +227,34 @@ sub _debug
 }
 
 # #
+#   CheckIP › Subroutine › _singleip()
+#   
+#   Run the same steps Net::IP->new() performs for a single address
+#   (ip_normalize() and set()) without building a Net::IP object.
+#   
+#   Net::IP->new() also runs find_prefixes() and bit-string maths that
+#   checkip() / cccheckip() never use. That costs ~1ms per IPv6 address and
+#   ~0.1ms per IPv4 address, which makes loading large CC_* / ASN zones
+#   (hundreds of thousands of prefixes) take many minutes in csf and lfd.
+#   ip_iptype() and ip_compress_address() on the values returned here give
+#   the same result as Net::IP->new( $ip )->iptype() and ->short().
+#   
+#   @param          ip              str         single v4 / v6 address, no CIDR
+#   @return                         list        ( version, expanded ip, binary ip )
+#                                               empty list if Net::IP rejects the address
+# #
+
+sub _singleip
+{
+	my $ip          = shift;
+	my $version     = Net::IP::ip_get_version( $ip ) or return;
+	my $expanded    = Net::IP::ip_expand_address( $ip, $version ) or return;
+	my $binip       = Net::IP::ip_iptobin( $expanded, $version ) or return;
+
+	return ( $version, $expanded, $binip );
+}
+
+# #
 #   CheckIP › Subroutine › checkip()
 #   
 #   Validate IPv4 and IPv6 addresses.
@@ -397,32 +425,30 @@ sub checkip
 
 		if ( $ipref )
         {
-			eval {
-				local $SIG{__DIE__} = undef;
-				my $netip           = Net::IP->new( $testip );
-				my $myip            = $netip->short( );
-
-				if ( $myip ne "" )
-                {
-					if ( $cidr eq "" )
-                    {
-						${$ipin} = $myip;
-					}
-                    else
-                    {
-						${$ipin} = $myip . "/" . $cidr;
-					}
-				}
-			};
+			my ( $version, $expanded ) = _singleip( $testip );
 
             # #
-            #   IPv6 › Net::IP Threw an Error
+            #   IPv6 › Not a valid address for Net::IP
             # #
 
-			if ( $@ )
+			if ( !$version )
             {
                 return 0
             }
+
+			my $myip            = Net::IP::ip_compress_address( $expanded, $version );
+
+			if ( $myip ne "" )
+            {
+				if ( $cidr eq "" )
+                {
+					${$ipin} = $myip;
+				}
+                else
+                {
+					${$ipin} = $myip . "/" . $cidr;
+				}
+			}
 		}
 	}
 
@@ -560,22 +586,18 @@ sub cccheckip
             return 0
         }
 
-		my $type;
-
-		eval {
-			local $SIG{__DIE__} = undef;
-			my $netip           = Net::IP->new( $testip );
-			$type               = $netip->iptype( );
-		};
+		my ( $version, undef, $binip ) = _singleip( $testip );
 
         # #
-        #   IPv4 › Net::IP Threw an Error
+        #   IPv4 › Not a valid address for Net::IP
         # #
 
-		if ( $@ )
+		if ( !$version )
         {
             return 0
         }
+
+		my $type            = Net::IP::ip_iptype( $binip, $version );
     
 		if ( $type ne "PUBLIC" )
         {
@@ -628,32 +650,30 @@ sub cccheckip
 
 		if ( $ipref )
         {
-			eval {
-				local $SIG{__DIE__} = undef;
-				my $netip           = Net::IP->new( $testip );
-				my $myip            = $netip->short( );
-
-				if ( $myip ne "" )
-                {
-					if ( $cidr eq "" )
-                    {
-						${$ipin} = $myip;
-					}
-                    else
-                    {
-						${$ipin} = $myip . "/" . $cidr;
-					}
-				}
-			};
+			my ( $version, $expanded ) = _singleip( $testip );
 
             # #
-            #   IPv6 › Net::IP Threw an Error
+            #   IPv6 › Not a valid address for Net::IP
             # #
 
-			if ( $@ )
+			if ( !$version )
             {
                 return 0
             }
+
+			my $myip            = Net::IP::ip_compress_address( $expanded, $version );
+
+			if ( $myip ne "" )
+            {
+				if ( $cidr eq "" )
+                {
+					${$ipin} = $myip;
+				}
+                else
+                {
+					${$ipin} = $myip . "/" . $cidr;
+				}
+			}
 		}
 	}
 
