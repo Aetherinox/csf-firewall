@@ -4452,7 +4452,9 @@ sub syslog_init {
 		$line =~ s/$cleanreg//g;
 		if ( $line eq "" ) { next }
 		if ( $line =~ /^\s*\#|Include/ ) { next }
-		if ($line =~ /^[a-zA-Z0-9]+([\_\s\-\.]?[a-zA-Z0-9])*$/) {$syslogusers{$line} = 1}
+		# Allow a leading underscore (Debian/Ubuntu system users such as _apt, _chrony)
+		if ($line =~ /^[a-zA-Z0-9_][a-zA-Z0-9_.\-]*\$?$/) {$syslogusers{$line} = 1}
+		else {logfile("RESTRICT_SYSLOG: Ignoring invalid username [$line] in /etc/csf/csf.syslogusers")}
 	}
 
 	$sysloggid = getgrnam($config{RESTRICT_SYSLOG_GROUP});
