@@ -90,14 +90,20 @@
 #   @details:               https://www.spamhaus.org/blocklists/do-not-route-or-peer/
 # #
 
+#   Both the text and JSON (NDJSON) variants of the DROP list are supported:
+
 #   SPAMDROP|86400|0|https://www.spamhaus.org/drop/drop.txt
+#   SPAMDROP|86400|0|https://www.spamhaus.org/drop/drop_v4.json
 
 # #
 #   @blocklist              Spamhaus IPv6 Don't Route Or Peer List (DROPv6)
 #   @details:               https://www.spamhaus.org/blocklists/do-not-route-or-peer/
 # #
 
+#   Both the text and JSON (NDJSON) variants of the DROPv6 list are supported:
+
 #   SPAMDROPV6|86400|0|https://www.spamhaus.org/drop/dropv6.txt
+#   SPAMDROPV6|86400|0|https://www.spamhaus.org/drop/drop_v6.json
 
 # #
 #   @blocklist              AbuseIPDB
@@ -150,25 +156,14 @@
 #   @details:               https://ciarmy.com
 # #
 
-#   CIARMY|86400|0|http://ciarmy.com/list/ci-badguys.txt
+#   CIARMY|86400|0|https://ciarmy.com/list/ci-badguys.txt
 
 # #
 #   @blocklist              BruteForceBlocker IP List
-#   @details:               http://danger.rulez.sk/index.php/bruteforceblocker
+#   @details:               https://danger.rulez.sk/index.php/bruteforceblocker
 # #
 
-#   BFB|86400|0|http://danger.rulez.sk/projects/bruteforceblocker/blist.php
-
-# #
-#   @blocklist              MaxMind GeoIP Anonymous Proxies
-#   @details:               https://maxmind.com/en/anonymous_proxies
-#   @notes:                 Set URLGET in csf.conf to use LWP as this list
-#                           uses an SSL connection
-#   
-#                           This is now a paid service.
-# #
-
-#   MAXMIND|86400|0|https://www.maxmind.com/en/anonymous_proxies
+#   BFB|86400|0|https://danger.rulez.sk/projects/bruteforceblocker/blist.php
 
 # #
 #   @blocklist              Blocklist.de
@@ -191,23 +186,23 @@
 
 # #
 #   @blocklist              Stop Forum Spam IPv4
-#   @details:               http://stopforumspam.com/downloads
+#   @details:               https://stopforumspam.com/downloads
 #   @notes:                 Many of the lists available contain a vast number of
 #                           IP addresses so special care needs to be made when
 #                           selecting from their lists
 # #
 
-#   STOPFORUMSPAMV4|86400|0|http://www.stopforumspam.com/downloads/listed_ip_1.zip
+#   STOPFORUMSPAMV4|86400|0|https://www.stopforumspam.com/downloads/listed_ip_1.zip
 
 # #
 #   @blocklist              Stop Forum Spam IPv6
-#   @details:               http://stopforumspam.com/downloads
+#   @details:               https://stopforumspam.com/downloads
 #   @notes:                 Many of the lists available contain a vast number of
 #                           IP addresses so special care needs to be made when
 #                           selecting from their lists
 # #
 
-#   STOPFORUMSPAMV6|86400|0|http://www.stopforumspam.com/downloads/listed_ip_1_ipv6.zip
+#   STOPFORUMSPAMV6|86400|0|https://www.stopforumspam.com/downloads/listed_ip_1_ipv6.zip
 
 # #
 #   @blocklist              GreenSnow Hack List

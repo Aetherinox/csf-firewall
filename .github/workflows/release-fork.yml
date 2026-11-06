@@ -1,0 +1,197 @@
+# #
+#   @type               github workflow
+#   @desc               builds csf and publishes a GitHub release using only the built-in GITHUB_TOKEN
+#   @notes              the upstream release.yml needs the upstream maintainer's private secrets
+#                       (GPG keys, ADMINSERV tokens, Discord webhooks) and cannot run in a fork.
+#                       this workflow produces the same csf/ package layout without them.
+#
+#   @usage              Actions › 📦 Release › Make Release › Run workflow
+#                       or push a tag:  git tag 15.11 && git push origin 15.11
+#
+#   @output             csf-firewall-v<version>.zip
+#                       csf-firewall-v<version>.tgz
+#                       SHA256SUMS
+# #
+
+name: '📦 Release › Make Release'
+run-name: '📦 Release › Make Release ${{ inputs.VERSION || github.ref_name }}'
+
+on:
+    workflow_dispatch:
+        inputs:
+            VERSION:
+                description:        '🏷️ Version / tag (empty = src/version.txt). Must not already exist as a tag'
+                required:           false
+                default:            ''
+                type:               string
+            PRERELEASE:
+                description:        '🧪 Mark as pre-release'
+                required:           true
+                default:            false
+                type:               boolean
+            DRAFT:
+                description:        '📝 Create as draft (publish manually later)'
+                required:           true
+                default:            false
+                type:               boolean
+    push:
+        tags:
+            - '[0-9]+.[0-9]+*'
+
+permissions:
+    contents: write
+
+concurrency:
+    group: release-${{ github.ref }}
+    cancel-in-progress: false
+
+env:
+    PROJECT_NAME: csf-firewall
+
+jobs:
+    release:
+        name: '📦 Build & Publish'
+        runs-on: ubuntu-latest
+
+        steps:
+
+            # #
+            #   Checkout (full history so release notes can be generated)
+            # #
+
+            - name: '✅ Checkout'
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            # #
+            #   Version
+            #
+            #   tag push      → version is the tag that was pushed
+            #   manual run    → VERSION input, or src/version.txt when empty
+            # #
+
+            - name: '🏷️ Resolve Version'
+              id: version
+              env:
+                  INPUT_VERSION: ${{ inputs.VERSION }}
+              run: |
+                  if [ "${GITHUB_EVENT_NAME}" = "push" ]; then
+                      VERSION="${GITHUB_REF_NAME}"
+                      TAG_EXISTS_OK=true
+                  else
+                      VERSION="$(printf '%s' "${INPUT_VERSION}" | xargs)"
+                      [ -z "${VERSION}" ] && VERSION="$(head -n1 src/version.txt | xargs)"
+                      TAG_EXISTS_OK=false
+                  fi
+
+                  VERSION="${VERSION#v}"
+
+                  if ! printf '%s' "${VERSION}" | grep -Eq '^[0-9]+\.[0-9]+(\.[0-9]+)?(-[0-9A-Za-z.]+)?$'; then
+                      echo "::error::Invalid version '${VERSION}'. Use e.g. 15.11, 15.11.1 or 15.11-rc.1"
+                      exit 1
+                  fi
+
+                  if [ "${TAG_EXISTS_OK}" = "false" ] && git rev-parse -q --verify "refs/tags/${VERSION}" >/dev/null; then
+                      echo "::error::Tag ${VERSION} already exists. Enter a new VERSION (e.g. bump src/version.txt or type 15.11)."
+                      exit 1
+                  fi
+
+                  echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+                  echo "package=${PROJECT_NAME}-v${VERSION}" >> "$GITHUB_OUTPUT"
+                  echo "Releasing ${VERSION}"
+
+            # #
+            #   Checks - stop broken code from being released
+            # #
+
+            - name: '🧪 Install Check Dependencies'
+              run: |
+                  sudo apt-get -qq update
+                  sudo apt-get -qq install -y libwww-perl liblwp-protocol-https-perl libnet-ip-perl iptables ipset gcc zip >/dev/null
+
+            - name: '🧪 Check › Perl Syntax'
+              run: |
+                  # lfd/csf load /etc/csf/csf.conf at compile time; give them a throwaway copy
+                  sudo mkdir -p /etc/csf /usr/local/csf/lib
+                  sudo cp src/csf.conf /etc/csf/csf.conf
+                  sudo cp src/sanity.txt /usr/local/csf/lib/sanity.txt
+
+                  cd src
+                  fail=0
+                  for f in ConfigServer/*.pm csf.pl lfd.pl auto*.pl; do
+                      if ! out=$(perl -I. -c "$f" 2>&1); then
+                          echo "::error file=src/$f::$out"
+                          fail=1
+                      fi
+                  done
+                  exit $fail
+
+            - name: '🧪 Check › Shell Syntax'
+              run: |
+                  fail=0
+                  for f in src/*.sh extras/scripts/*.sh get.sh; do
+                      [ -f "$f" ] || continue
+                      bash -n "$f" || { echo "::error file=$f::bash syntax error"; fail=1; }
+                  done
+                  exit $fail
+
+            - name: '🧪 Check › Compile csf.c (DirectAdmin wrapper)'
+              run: gcc -Wall -Werror -o /tmp/csf-wrapper src/csf.c
+
+            # #
+            #   Build - same layout as the upstream release: an archive containing csf/
+            # #
+
+            - name: '🔨 Build Package'
+              env:
+                  VERSION: ${{ steps.version.outputs.version }}
+                  PACKAGE: ${{ steps.version.outputs.package }}
+              run: |
+                  rm -rf build && mkdir -p build/csf
+                  cp README.md LICENSE.md build/csf/
+                  cp -r src/* build/csf/
+
+                  # Packaged version.txt matches the release version
+                  printf '%s\n' "${VERSION}" > build/csf/version.txt
+
+                  cd build
+                  zip -qr "../${PACKAGE}.zip" csf
+                  tar -czf "../${PACKAGE}.tgz" csf
+                  cd ..
+
+                  sha256sum "${PACKAGE}.zip" "${PACKAGE}.tgz" > SHA256SUMS
+                  cat SHA256SUMS
+
+            # #
+            #   Publish
+            # #
+
+            - name: '🚀 Create GitHub Release'
+              env:
+                  GH_TOKEN: ${{ github.token }}
+                  VERSION: ${{ steps.version.outputs.version }}
+                  PACKAGE: ${{ steps.version.outputs.package }}
+                  PRERELEASE: ${{ inputs.PRERELEASE }}
+                  DRAFT: ${{ inputs.DRAFT }}
+              run: |
+                  args=( "${VERSION}" "${PACKAGE}.zip" "${PACKAGE}.tgz" SHA256SUMS
+                         --title "${PROJECT_NAME} v${VERSION}"
+                         --generate-notes
+                         --target "${GITHUB_SHA}" )
+
+                  [ "${PRERELEASE}" = "true" ] && args+=( --prerelease )
+                  [ "${DRAFT}" = "true" ] && args+=( --draft )
+                  case "${VERSION}" in *-*) args+=( --prerelease ) ;; esac
+
+                  gh release create "${args[@]}"
+
+                  {
+                      echo "## 📦 Released ${PROJECT_NAME} v${VERSION}"
+                      echo
+                      echo "- ${PACKAGE}.zip"
+                      echo "- ${PACKAGE}.tgz"
+                      echo "- SHA256SUMS"
+                      echo
+                      echo "https://github.com/${GITHUB_REPOSITORY}/releases/tag/${VERSION}"
+                  } >> "$GITHUB_STEP_SUMMARY"

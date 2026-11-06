@@ -1139,7 +1139,7 @@ This option configures iptables to offer port knocking to open sensitive ports
 based on a sequence of knocked ports for the connecting IP address.
 
 For mor information on the idea of port knocking see:
-http://www.portknocking.org/
+https://en.wikipedia.org/wiki/Port_knocking
 
 The feature requires that you list a random selection of unused ports (at least
 3) with a timeout. The ports you choose must not be in use and not appear in
@@ -1194,12 +1194,19 @@ module is included.
 Also, although included in some older versions or RedHat/CentOS, it was only
 actually available from v5.3+
 
-The protection can only be applied to the TCP protocol.
+The protection applies to TCP by default. UDP ports (for example HTTP/3 /
+QUIC on 443/udp) can be limited by adding the protocol as a third field. For
+UDP, each new conntrack flow from an IP counts as a connection.
 
 Syntax for the CONNLIMIT setting:
 
 CONNLIMIT is a comma separated list of:
-port;limit
+port;limit[;protocol]
+
+where protocol is tcp (default) or udp.
+
+For example, CONNLIMIT = "80;100,443;100,443;100;udp" limits both HTTP/2 and
+HTTP/3 traffic on port 443.
 
 So, a setting of CONNLIMIT = "22;5,80;20" means:
 

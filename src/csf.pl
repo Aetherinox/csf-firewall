@@ -3335,6 +3335,19 @@ sub doportfilters {
 				}
 			}
 		}
+
+		# #
+		#   Let replies to connections the server itself opened back through,
+		#   so CC_DENY only blocks traffic that originates in a denied country.
+		#   Inserted last so it sits at the top of the chain. --ctdir REPLY keeps
+		#   inbound-initiated sessions from denied countries blocked. (#119)
+		# #
+
+		&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -I CC_DENY -m conntrack --ctstate ESTABLISHED,RELATED --ctdir REPLY -j $accept");
+		if ($config{IPV6}) {
+			&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} $verbose -I CC_DENY -m conntrack --ctstate ESTABLISHED,RELATED --ctdir REPLY -j $accept");
+		}
+
 		&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -A LOCALINPUT $ethdevin -j CC_DENY");
 		if ($config{IPV6}) {
 			&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} $verbose -A LOCALINPUT $ethdevin -j CC_DENY");
@@ -3709,18 +3722,24 @@ sub doportfilters {
 	$config{CONNLIMIT} =~ s/\s//g;
 	if ($config{CONNLIMIT}) {
 		foreach my $connlimit (split(/\,/,$config{CONNLIMIT})) {
-			my ($port,$limit) = split(/\;/,$connlimit);
-			if (($port < 0) or ($port > 65535) or ($limit < 1) or ($limit !~ /\d+/)) {&error(__LINE__,"csf: Incorrect CONNLIMIT setting: [$connlimit]")}
-			&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -A INPUT $ethdevin -p tcp --syn --dport $port -m connlimit --connlimit-above $limit -j CONNLIMIT");
+			# port;limit[;proto] - proto is tcp (default) or udp, e.g. 443;100;udp for HTTP/3 (#107)
+			my ($port,$limit,$proto) = split(/\;/,$connlimit);
+			$proto = lc($proto // "tcp");
+			$proto = "tcp" if $proto eq "";
+			if (($port !~ /^\d+$/) or ($port < 0) or ($port > 65535) or ($limit !~ /^\d+$/) or ($limit < 1) or ($proto !~ /^(tcp|udp)$/)) {&error(__LINE__,"csf: Incorrect CONNLIMIT setting: [$connlimit]")}
+			my $match = ($proto eq "udp") ? "-p udp --dport $port -m conntrack --ctstate NEW" : "-p tcp --syn --dport $port";
+			&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -A INPUT $ethdevin $match -m connlimit --connlimit-above $limit -j CONNLIMIT");
 			if ($config{CONNLIMIT6}) {
-				&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} $verbose -A INPUT $ethdevin -p tcp --syn --dport $port -m connlimit --connlimit-above $limit -j CONNLIMIT");
+				&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} $verbose -A INPUT $ethdevin $match -m connlimit --connlimit-above $limit -j CONNLIMIT");
 			}
 		}
 		if ($config{CONNLIMIT_LOGGING}) {&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -A CONNLIMIT -m limit --limit 30/m --limit-burst 5 -j $logintarget 'Firewall: *ConnLimit* '");}
 		&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -A CONNLIMIT -p tcp -j REJECT --reject-with tcp-reset");
+		&syscommand(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} $verbose -A CONNLIMIT -p udp -j $config{DROP}");
 		if ($config{CONNLIMIT6}) {
 			if ($config{CONNLIMIT_LOGGING}) {&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} $verbose -A CONNLIMIT -m limit --limit 30/m --limit-burst 5 -j $logintarget 'Firewall: *ConnLimit* '");}
 			&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} $verbose -A CONNLIMIT -p tcp -j REJECT --reject-with tcp-reset");
+			&syscommand(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} $verbose -A CONNLIMIT -p udp -j $config{DROP}");
 		}
 	}
 
@@ -6426,6 +6445,11 @@ sub doprofile {
 				$name =~ s/\s//g;
 				if ($value =~ /\"(.*)\"/) {$value = $1}
 				$apply{$name} = $value;
+			}
+
+			if (defined $apply{SMTP_BLOCK} and $apply{SMTP_BLOCK} eq "1") {
+				print "*WARNING* This profile enables SMTP_BLOCK: outgoing email from local users and applications\n";
+				print "          will be blocked unless they are listed in SMTP_ALLOWUSER or SMTP_ALLOWGROUP\n";
 			}
 
 			sysopen (my $CONF, "/etc/csf/csf.conf", O_RDWR | O_CREAT) or die "Unable to open file: $!";

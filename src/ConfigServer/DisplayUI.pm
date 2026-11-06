@@ -1572,7 +1572,9 @@ EOF
 		my $start = 0;
 		while (<$childout>)
 		{
-			my $line = $_;
+			# Escape and strip colour codes like printcmd does; raw output
+			# containing < or ANSI sequences was clipped in the browser (#125)
+			my $line = html_escape( strip_ansi( $_ ) );
 			if ($line =~ /^====/)
 			{
 				if ($start)
@@ -1582,7 +1584,7 @@ EOF
 				}
 				else
 				{
-					print "</pre><pre class='comment' style='white-space: pre-wrap;background:#F4F4EA'>$line";
+					print "</pre><pre class='comment' style='white-space: pre-wrap;'>$line";
 					$start = 1;
 				}
 			}
@@ -2685,15 +2687,22 @@ EOD
 			{
 				$text = "This is the installation default profile and will reset all csf.conf settings, including enabling TESTING mode";
 			}
-			elsif ( $profiledata[0] =~ /^\# Profile:/)
+			elsif ( grep { /^\#\s+Profile:/ } @profiledata[0..2] )
 			{
+				# Supports both "# Profile: ..." and the "# #" / "#   Profile:" header style
 				foreach my $line ( @profiledata )
 				{
-					if ( $line =~ /^\# (.*)$/)
+					last unless $line =~ /^\#/;
+					if ( $line =~ /^\#\s+(?:Profile:\s*)?(\S.*)$/ and $line !~ /^\#\s*\#\s*$/ )
 					{
-						$text .= "$1 "
+						$text .= html_escape( $1 )." "
 					}
 				}
+			}
+
+			if ( grep { /^SMTP_BLOCK\s*=\s*"1"/ } @profiledata )
+			{
+				$text .= "<br><b>Warning:</b> this profile enables SMTP_BLOCK, which stops all outgoing email from this server except from root, exim/mailman and SMTP_ALLOWUSER/SMTP_ALLOWGROUP. Adjust those settings afterwards if users or applications send mail directly.";
 			}
 
 			print "<tr><td><b>$file</b><br>\n$text</td><td style='border-left:1px solid #990000'><input type='radio' name='profile' value='$file'></td></tr>\n";
@@ -4313,7 +4322,7 @@ sub editfile
 		if ($extra ) {print "<input type='hidden' name='$extra' value='$FORM{$extra}'>\n";}
 		print "<div id='editor' style='width:100%;height:500px;border: 1px solid #000;display:none;'>";
 		print "Loading...</div>\n";
-		print "<div id='textarea'><textarea class='textarea' name='formdata' id='formdata' style='width:100%;height:500px;border: 1px solid #000;font-family:\"Courier New\", Courier;font-size:14px;line-height:1.1' wrap='off'>";
+		print "<div id='textarea'><textarea class='textarea' name='formdata' id='formdata' spellcheck='false' autocomplete='off' autocorrect='off' autocapitalize='off' style='width:100%;height:500px;border: 1px solid #000;font-family:\"Courier New\", Courier;font-size:14px;line-height:1.1' wrap='off'>";
 		print "# Do not remove or change this line as it is a safeguard for the UI editor\n";
 		foreach my $line ( @confdata )
 		{
@@ -4435,7 +4444,7 @@ EOF
 			print "<input type='hidden' name='$extra' value='$FORM{$extra}'>\n";
 		}
 
-		print "<textarea class='textarea' name='formdata' style='width:100%;height:600px;border: 1px solid #000;font-family: Monospace;' wrap='off'>";
+		print "<textarea class='textarea' name='formdata' style='width:100%;height:600px;border: 1px solid #000;font-family: Monospace;' wrap='off' spellcheck='false' autocomplete='off' autocorrect='off' autocapitalize='off'>";
 	
 		foreach my $line ( @confdata )
 		{

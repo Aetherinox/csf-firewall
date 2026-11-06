@@ -39,9 +39,14 @@
 #   USER:       This must be a unique name for the entry, but does not have to be a local
 #               linux account name
 #   
-#   CFACCOUNT:  This is the CloudFlare login user (email address)
+#   CFACCOUNT:  This is the CloudFlare login user (email address), or the word
+#               "token" to authenticate with a CloudFlare API token instead of
+#               the Global API Key
 #   
-#   CFAPIKEY:   This is the CloudFlare Client API Key
+#   CFAPIKEY:   This is the CloudFlare Global API Key, or the API token when
+#               CFACCOUNT is "token". The token needs the user-level
+#               "Firewall Access Rules: Edit" permission (or the zone-level
+#               equivalent for the zones you protect)
 #   
 #   DISABLE:    Normally, comment out a line to disable it. On servers with CF_CPANEL enabled
 #               a cPanel user can be disabled here
@@ -67,6 +72,13 @@
 # #
 
 #   DOMAIN:domain2.com:USER:myuser:CFACCOUNT:myuser@hotmail.com:CFAPIKEY:12345abcdef6789
+
+# #
+#   CloudFlare API token (Bearer auth) for any domain triggered, instead of
+#   the Global API Key:
+# #
+
+#   DOMAIN:any:USER:myuser:CFACCOUNT:token:CFAPIKEY:your_cloudflare_api_token
 
 # #
 #   Disable CloudFlare cPanel user mycpanel from this feature:

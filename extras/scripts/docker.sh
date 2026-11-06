@@ -63,6 +63,26 @@ export PATH="$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 bridge_default="docker0"
 csf_comment="Docker container whitelist"
 file_csf_allow="/etc/csf/csf.allow"
+file_csf_conf="/etc/csf/csf.conf"
+
+# #
+#   CSF › Port Allow Lists
+#
+#   Parsed from /etc/csf/csf.conf; used to keep published container ports
+#   in sync with the CSF allow lists (TCP_IN, UDP_IN, TCP6_IN, UDP6_IN).
+# #
+
+TCP_IN=""
+UDP_IN=""
+TCP6_IN=""
+UDP6_IN=""
+
+if [ -f "${file_csf_conf}" ]; then
+    TCP_IN=$( sed -n 's/^TCP_IN[[:space:]]*=[[:space:]]*"\(.*\)"/\1/p' "${file_csf_conf}" | head -1 )
+    UDP_IN=$( sed -n 's/^UDP_IN[[:space:]]*=[[:space:]]*"\(.*\)"/\1/p' "${file_csf_conf}" | head -1 )
+    TCP6_IN=$( sed -n 's/^TCP6_IN[[:space:]]*=[[:space:]]*"\(.*\)"/\1/p' "${file_csf_conf}" | head -1 )
+    UDP6_IN=$( sed -n 's/^UDP6_IN[[:space:]]*=[[:space:]]*"\(.*\)"/\1/p' "${file_csf_conf}" | head -1 )
+fi
 
 # #
 #   Define › User-defined Bridge (Subnets)
@@ -660,6 +680,22 @@ fi
 
 iptables_flush()
 {
+    if [ "$1" = "accept" ]; then
+        warn "    Setting default chain policies to ${bluel}ACCEPT${end} before flushing"
+
+        run "${ipt4}" -P INPUT ACCEPT
+        run "${ipt4}" -P FORWARD ACCEPT
+        run "${ipt4}" -P OUTPUT ACCEPT
+
+        if [ -n "${ipt6}" ]; then
+            run "${ipt6}" -P INPUT ACCEPT
+            run "${ipt6}" -P FORWARD ACCEPT
+            run "${ipt6}" -P OUTPUT ACCEPT
+        fi
+    else
+        warn "    Default chain policies unchanged; use ${bluel}--flush-accept${end} to set ${bluel}ACCEPT${end} first and avoid locking yourself out"
+    fi
+
     info "    Flushing iptable chains and rules for ${bluel}IPv4${end}"
     
     run "${ipt4}" -F
@@ -679,6 +715,47 @@ iptables_flush()
     run "${ipt6}" -t mangle -X
 
     ok "    Successfully flushed iptable chains and rules"
+}
+
+# #
+#   Helpers › CSF › Port Allow List
+#
+#   Checks if a port is present in a CSF port allow list (TCP_IN, UDP_IN, TCP6_IN, UDP6_IN).
+#   Supports comma-separated values and colon port ranges (e.g. "80,443,3000:3010").
+#       › $1    Port to check
+#       › $2    CSF port list
+# #
+
+csf_port_allowed()
+{
+    p_port=$( printf '%s' "$1" | tr -d ' ' )
+    p_list=$( printf '%s' "$2" | tr -d ' ' | tr ',' ' ' )
+
+    case "$p_port" in ''|*[!0-9]*) return 1 ;; esac
+
+    for p_entry in ${p_list}; do
+        case "$p_entry" in
+            *:*)
+                p_lo=${p_entry%%:*}
+                p_hi=${p_entry##*:}
+
+                case "${p_lo}${p_hi}" in ''|*[!0-9]*) continue ;; esac
+
+                if [ "$p_port" -ge "$p_lo" ] && [ "$p_port" -le "$p_hi" ]; then
+                    return 0
+                fi
+                ;;
+            *)
+                case "$p_entry" in ''|*[!0-9]*) continue ;; esac
+
+                if [ "$p_port" -eq "$p_entry" ]; then
+                    return 0
+                fi
+                ;;
+        esac
+    done
+
+    return 1
 }
 
 # #
@@ -781,6 +858,10 @@ add_to_forward()
     rule_append FORWARD -o "${docker_int}" -j DOCKER
     rule_append FORWARD -i "${docker_int}" ! -o "${docker_int}" -j ACCEPT
     rule_append FORWARD -i "${docker_int}" -o "${docker_int}" -j ACCEPT
+
+    # Docker 28+: mirror the daemon's per-network chain layout
+    rule_append DOCKER-CT -o "${docker_int}" -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+    rule_append DOCKER-BRIDGE -o "${docker_int}" -j DOCKER
 }
 
 # #
@@ -1284,7 +1365,7 @@ opt_usage( )
     print "   ${blued}${bold}${app_name}${end} - v${app_version}"
     print "   ${greenl}${bold}${app_repo_url}"
     printf "   ${greym}${bold}${app_desc}\n"
-    printf "   ${magental}${app_file_this}${end} ${greyd}[ ${greym}--list${greyd} | ${greym}--restart${greyd} | ${greym}--flush${greyd} | ${greym}--detect${greyd} | ${greym}--dryrun${greyd} | ${greym}--version${greyd} | ${greym}--help ${greyd}]${end}" 1>&2
+    printf "   ${magental}${app_file_this}${end} ${greyd}[ ${greym}--list${greyd} | ${greym}--restart${greyd} | ${greym}--flush${greyd} | ${greym}--flush-accept${greyd} | ${greym}--detect${greyd} | ${greym}--dryrun${greyd} | ${greym}--version${greyd} | ${greym}--help ${greyd}]${end}" 1>&2
     echo
     echo
     printf '   %-5s %-40s\n' "${greyd}Syntax:${end}" "" 1>&2
@@ -1304,6 +1385,7 @@ opt_usage( )
     printf '   %-5s %-81s %-40s\n' "    " "${blued}-l${greyd},${blued}  --list ${yellowd}${end}                       " "list all docker containers and associated information${end}" 1>&2
     printf '   %-5s %-81s %-40s\n' "    " "${blued}-r${greyd},${blued}  --restart ${yellowd}${end}                    " "restart csf and lfd services${end}" 1>&2
     printf '   %-5s %-81s %-40s\n' "    " "${blued}-f${greyd},${blued}  --flush ${yellowd}${end}                      " "flush all iptable rules from server${end}" 1>&2
+    printf '   %-5s %-81s %-40s\n' "    " "${blued}-fa${greyd},${blued} --flush-accept ${yellowd}${end}              " "set default chain policies to ACCEPT, then flush all iptable rules${end}" 1>&2
     printf '   %-5s %-81s %-40s\n' "    " "${blued}-d${greyd},${blued}  --dryrun ${yellowd}${end}                     " "simulates installation, does not install csf ${navy}<default> ${peach}${argDryrun:-"disabled"} ${end}" 1>&2
     printf '   %-5s %-81s %-40s\n' "    " "${blued}-v${greyd},${blued}  --version ${yellowd}${end}                    " "current version of this utilty ${navy}<current> ${peach}${app_version:-"unknown"} ${end}" 1>&2
     printf '   %-5s %-81s %-40s\n' "    " "${blued}-h${greyd},${blued}  --help ${yellowd}${end}                       " "show this help menu ${end}" 1>&2
@@ -1343,6 +1425,11 @@ while [ "$#" -gt 0 ]; do
 
         -f|--flush)
             iptables_flush
+            exit 1
+            ;;
+
+        -fa|--flush-accept)
+            iptables_flush accept
             exit 1
             ;;
 
@@ -1519,7 +1606,13 @@ fi
 # #
 
 info "    Stripping all ${bluel}DOCKER${greym} chains from existing iptable rules; restoring without ${bluel}DOCKER${greym} chain"
-iptables-save | grep -v '\-j DOCKER' | iptables-restore
+
+# #
+#   Also purge any rules left inside the Docker 28+ chains (DOCKER-FORWARD,
+#   DOCKER-CT, DOCKER-BRIDGE, DOCKER-INTERNAL) so re-runs rebuild them cleanly
+# #
+
+iptables-save | grep -v '\-j DOCKER' | grep -vE '^\-A (DOCKER-FORWARD|DOCKER-CT|DOCKER-BRIDGE|DOCKER-INTERNAL) ' | iptables-restore
 
 # #
 #   Rule › Docker Chain
@@ -1533,6 +1626,29 @@ chain_create DOCKER-USER
 chain_create DOCKER-ISOLATION-STAGE-1
 chain_create DOCKER-ISOLATION-STAGE-2
 chain_create DOCKER nat
+
+# #
+#   Rule › Docker Chain (28+)
+#   
+#   Docker 28+ reworked its iptables layout and now uses these chains:
+#
+#   DOCKER-FORWARD              Entry point for forwarded container traffic.
+#   DOCKER-CT                   Connection tracked traffic destined for containers.
+#   DOCKER-BRIDGE               Traffic to each docker bridge interface.
+#   DOCKER-INTERNAL             Traffic across internal-only networks.
+#   
+#   Without these chains, daemon network operations (docker network
+#   create/connect, start-up metadata restore) fail with:
+#       › iptables ... -A DOCKER-FORWARD -i br-<id> -j ACCEPT
+#       ›   No chain/target/match by that name
+#   until the Docker daemon is restarted. Empty chains are harmless on
+#   older Docker releases that do not use them.
+# #
+
+chain_create DOCKER-FORWARD
+chain_create DOCKER-CT
+chain_create DOCKER-BRIDGE
+chain_create DOCKER-INTERNAL
 
 # #
 #   Rule › Default Docker Bridge › docker0
@@ -1555,11 +1671,24 @@ fi
 #   
 #   Check with commands:
 #       › sudo iptables -C FORWARD -j DOCKER-USER
+#       › sudo iptables -C FORWARD -j DOCKER-FORWARD
 #       › sudo iptables -C FORWARD -j DOCKER-ISOLATION-STAGE-1
 # #
 
 rule_append FORWARD -j DOCKER-USER
+rule_append FORWARD -j DOCKER-FORWARD
 rule_append FORWARD -j DOCKER-ISOLATION-STAGE-1
+
+# #
+#   Docker 28+ calls DOCKER-CT, DOCKER-INTERNAL and DOCKER-BRIDGE from
+#   DOCKER-FORWARD. Keep the same jump order as the Docker daemon so any
+#   per-network rules it appends are only evaluated after the connection
+#   tracking, internal and bridge filters.
+# #
+
+rule_append DOCKER-FORWARD -j DOCKER-CT
+rule_append DOCKER-FORWARD -j DOCKER-INTERNAL
+rule_append DOCKER-FORWARD -j DOCKER-BRIDGE
 
 # #
 #   Add docker0 to forward
@@ -2135,6 +2264,22 @@ EOF
                         printf '\n'
 
                         # #
+                        #   CSF › Port Allow List
+                        #
+                        #   Skip publishing ports not present in TCP6_IN / UDP6_IN
+                        #   (only when /etc/csf/csf.conf exists and the list is not empty).
+                        # #
+
+                        csf_allow_ports="${TCP6_IN}"
+                        [ "${dst_proto}" = "udp" ] && csf_allow_ports="${UDP6_IN}"
+                        csf_v6_port=$( printf '%s' "$src" | sed -n 's|.*\]:\([0-9][0-9]*\)$|\1|p' )
+
+                        if [ -f "${file_csf_conf}" ] && [ -n "${csf_allow_ports}" ] && ! csf_port_allowed "${csf_v6_port}" "${csf_allow_ports}"; then
+                            label "                         ! RULES V6 ${yellowl}[SKP]${yellowl} Host port ${csf_v6_port}/${dst_proto} not in CSF TCP6_IN/UDP6_IN - skipping publish${end}"
+                            continue
+                        fi
+
+                        # #
                         #   Iptables › IPv6
                         # #
 
@@ -2165,6 +2310,21 @@ EOF
                         printf '\n%-4s %-42s %-55s' " " "${greyd}┌── ${greyd}SOURCE" "${fuchsial}${src}${end}"
                         printf '\n%-4s %-42s %-55s' " " "${greyd}└── ${greyd}DEST" "${fuchsial}${dst}${end}"
                         printf '\n'
+
+                        # #
+                        #   CSF › Port Allow List
+                        #
+                        #   Skip publishing ports not present in TCP_IN / UDP_IN
+                        #   (only when /etc/csf/csf.conf exists).
+                        # #
+
+                        csf_allow_ports="${TCP_IN}"
+                        [ "${dst_proto}" = "udp" ] && csf_allow_ports="${UDP_IN}"
+
+                        if [ -f "${file_csf_conf}" ] && [ -n "${csf_allow_ports}" ] && ! csf_port_allowed "${src_port}" "${csf_allow_ports}"; then
+                            label "                         ! RULES V4 ${yellowl}[SKP]${yellowl} Host port ${src_port}/${dst_proto} not in CSF TCP_IN/UDP_IN - skipping publish${end}"
+                            continue
+                        fi
 
                         # #
                         #   Iptables Rules › IPv4

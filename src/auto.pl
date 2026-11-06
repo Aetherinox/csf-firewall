@@ -1165,34 +1165,24 @@ if ( not grep { $_ =~ /^lfd/ } @chkservd )
 
 if ( $config{TESTING} )
 {
-	open ( IN, "<", "/etc/ssh/sshd_config" ) or die $!;
-	flock ( IN, LOCK_SH ) or die $!;
-	my @sshconfig = <IN>;
-	close ( IN );
-	chomp @sshconfig;
+	# #
+	#   Detect the SSH port(s), including sshd_config.d drop-ins and
+	#   systemd socket activation, and make sure they are open (#143)
+	# #
 
-	my $sshport = "22";
-	foreach my $line ( @sshconfig )
-	{
-		if ( $line =~ /^Port (\d+)/ )
-		{
-			$sshport = $1
-		}
-	}
+	my @sshports = ( "22" );
+	eval {
+		unshift @INC, "/usr/local/csf/lib", ".";
+		require ConfigServer::SSHPorts;
+		@sshports = ConfigServer::SSHPorts::sshports();
+	};
 
 	$config{TCP_IN} =~ s/\s//g;
-	if ( $config{TCP_IN} ne "" )
-	{
-		foreach my $port ( split( /\,/, $config{TCP_IN} ) )
-		{
-			if ( $port eq $sshport )
-			{
-				$sshport = "22"
-			}
-		}
-	}
+	my %tcpin = map { $_ => 1 } split( /\,/, $config{TCP_IN} );
+	my @newports = grep { $_ ne "22" and !$tcpin{$_} } @sshports;
+	my $sshport = join( ",", @newports );
 
-	if ( $sshport ne "22" )
+	if ( @newports )
 	{
 		$config{TCP_IN} 	.= ",$sshport";
 		$config{TCP6_IN} 	.= ",$sshport";
@@ -1212,12 +1202,12 @@ if ( $config{TESTING} )
 			if ( $line =~ /^TCP6_IN/ )
 			{
 				print OUT "TCP6_IN = \"$config{TCP6_IN}\"\n";
-				print "\n*** SSH port $sshport added to the TCP6_IN port list\n\n";
+				print "\n*** SSH port(s) $sshport added to the TCP6_IN port list\n\n";
 			}
 			elsif ( $line =~ /^TCP_IN/ )
 			{
 				print OUT "TCP_IN = \"$config{TCP_IN}\"\n";
-				print "\n*** SSH port $sshport added to the TCP_IN port list\n\n";
+				print "\n*** SSH port(s) $sshport added to the TCP_IN port list\n\n";
 			}
 			else
 			{
