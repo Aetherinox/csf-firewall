@@ -1,0 +1,157 @@
+# #
+#   @type               github workflow
+#   @desc               merges new commits from upstream Aetherinox/csf-firewall into this fork's main on a schedule
+#
+#   @flow               1. fetch upstream main
+#                       2. nothing new         → stop
+#                       3. merge into main      → run the same syntax checks as the release workflow
+#                       4. clean merge + checks → push to main
+#                       5. conflict or failed checks → push a sync/upstream-* branch and open a PR instead
+#
+#   @secrets            secrets.SYNC_TOKEN (optional)   fine-grained PAT with Contents + Pull requests + Workflows
+#                                                       write on this repo. Only needed when upstream changes
+#                                                       files in .github/workflows/ — GitHub does not let the
+#                                                       built-in GITHUB_TOKEN push workflow changes.
+#
+#   @notes              open upstream pull requests are NOT merged automatically: they are unreviewed
+#                       third-party code for a firewall. Review those by hand.
+# #
+
+name: '🔄 Upstream › Sync'
+run-name: '🔄 Upstream › Sync'
+
+on:
+    schedule:
+        - cron: '17 3 * * *'        # daily 03:17 UTC
+    workflow_dispatch:
+
+permissions:
+    contents: write
+    pull-requests: write
+
+concurrency:
+    group: sync-upstream
+    cancel-in-progress: false
+
+env:
+    UPSTREAM_REPO: Aetherinox/csf-firewall
+    UPSTREAM_BRANCH: main
+    TARGET_BRANCH: main
+
+jobs:
+    sync:
+        name: '🔄 Merge upstream'
+        runs-on: ubuntu-latest
+
+        steps:
+
+            - name: '✅ Checkout'
+              uses: actions/checkout@v4
+              with:
+                  ref: ${{ env.TARGET_BRANCH }}
+                  fetch-depth: 0
+                  token: ${{ secrets.SYNC_TOKEN || github.token }}
+
+            - name: '🔎 Fetch upstream'
+              id: fetch
+              run: |
+                  git config user.name  "github-actions[bot]"
+                  git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+                  git remote add upstream "https://github.com/${UPSTREAM_REPO}.git"
+                  git fetch --no-tags upstream "${UPSTREAM_BRANCH}"
+
+                  NEW=$(git rev-list --count "HEAD..upstream/${UPSTREAM_BRANCH}")
+                  echo "new=${NEW}" >> "$GITHUB_OUTPUT"
+                  echo "Upstream commits not yet in ${TARGET_BRANCH}: ${NEW}"
+
+                  if [ "${NEW}" -gt 0 ]; then
+                      git log --oneline "HEAD..upstream/${UPSTREAM_BRANCH}" | tee /tmp/new-commits.txt
+                  fi
+
+            - name: '🔀 Merge'
+              id: merge
+              if: steps.fetch.outputs.new != '0'
+              run: |
+                  if git merge --no-edit "upstream/${UPSTREAM_BRANCH}" -m "Merge upstream ${UPSTREAM_REPO} ${UPSTREAM_BRANCH}"; then
+                      echo "conflict=false" >> "$GITHUB_OUTPUT"
+                  else
+                      echo "conflict=true" >> "$GITHUB_OUTPUT"
+                      git diff --name-only --diff-filter=U | tee /tmp/conflicts.txt
+                      git merge --abort
+                  fi
+
+            # #
+            #   Same checks as the release workflow: never push broken code to main
+            # #
+
+            - name: '🧪 Checks'
+              id: checks
+              if: steps.fetch.outputs.new != '0' && steps.merge.outputs.conflict == 'false'
+              continue-on-error: true
+              run: |
+                  sudo apt-get -qq update
+                  sudo apt-get -qq install -y libwww-perl liblwp-protocol-https-perl libnet-ip-perl iptables ipset gcc >/dev/null
+
+                  sudo mkdir -p /etc/csf /usr/local/csf/lib
+                  sudo cp src/csf.conf /etc/csf/csf.conf
+                  sudo cp src/sanity.txt /usr/local/csf/lib/sanity.txt
+
+                  fail=0
+                  ( cd src
+                    for f in ConfigServer/*.pm csf.pl lfd.pl auto*.pl; do
+                        perl -I. -c "$f" >/dev/null 2>/tmp/perl.err || { echo "::error file=src/$f::$(tail -1 /tmp/perl.err)"; exit 1; }
+                    done ) || fail=1
+
+                  for f in src/*.sh extras/scripts/*.sh get.sh; do
+                      [ -f "$f" ] || continue
+                      bash -n "$f" || { echo "::error file=$f::bash syntax error"; fail=1; }
+                  done
+
+                  gcc -Wall -Werror -o /tmp/csf-wrapper src/csf.c || fail=1
+
+                  exit $fail
+
+            - name: '🚀 Push to main'
+              if: steps.fetch.outputs.new != '0' && steps.merge.outputs.conflict == 'false' && steps.checks.outcome == 'success'
+              run: |
+                  git push origin "HEAD:${TARGET_BRANCH}"
+                  {
+                      echo "## 🔄 Merged upstream into ${TARGET_BRANCH}"
+                      echo '```'
+                      cat /tmp/new-commits.txt
+                      echo '```'
+                  } >> "$GITHUB_STEP_SUMMARY"
+
+            # #
+            #   Conflict or failing checks → open a PR so nothing broken lands on main
+            # #
+
+            - name: '📝 Open PR instead'
+              if: steps.fetch.outputs.new != '0' && (steps.merge.outputs.conflict == 'true' || steps.checks.outcome == 'failure')
+              env:
+                  GH_TOKEN: ${{ secrets.SYNC_TOKEN || github.token }}
+                  CONFLICT: ${{ steps.merge.outputs.conflict }}
+              run: |
+                  BRANCH="sync/upstream-$(date -u +%Y%m%d)"
+
+                  # Branch from upstream itself so the PR shows exactly what is new
+                  git checkout -B "${BRANCH}" "upstream/${UPSTREAM_BRANCH}"
+                  git push -f origin "${BRANCH}"
+
+                  if [ "${CONFLICT}" = "true" ]; then
+                      REASON="Merging upstream into \`${TARGET_BRANCH}\` has conflicts in:"$'\n\n'"$(sed 's/^/- /' /tmp/conflicts.txt)"
+                  else
+                      REASON="The merge was clean, but the syntax checks failed, so it was not pushed to \`${TARGET_BRANCH}\`. See the workflow run."
+                  fi
+
+                  BODY="Automatic upstream sync from [${UPSTREAM_REPO}](https://github.com/${UPSTREAM_REPO}) could not be applied automatically."$'\n\n'"${REASON}"$'\n\n'"New upstream commits:"$'\n\n```\n'"$(cat /tmp/new-commits.txt)"$'\n```\n\n'"Run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+
+                  if gh pr list --head "${BRANCH}" --state open --json number --jq '.[0].number' | grep -q .; then
+                      echo "PR for ${BRANCH} already open"
+                  else
+                      gh pr create --base "${TARGET_BRANCH}" --head "${BRANCH}" \
+                          --title "Upstream sync $(date -u +%Y-%m-%d) needs review" --body "${BODY}"
+                  fi
+
+                  exit 1
