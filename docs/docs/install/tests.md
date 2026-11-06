@@ -29,9 +29,10 @@ If any issues are detected, the script will report them so you can fix missing d
 
 <br />
 
-To run these tests; ensure you have the package `perl` installed on your system as explained in the previous step [Dependencies](../install/dependencies.md). You also need to have CSF extracted to your server. After these are complete, run the tests:
+To run these tests; ensure you have the package `perl` installed on your system as explained in the previous step [Dependencies](../install/dependencies.md). You also need to have CSF extracted to your server. After these are complete, change into the folder you extracted CSF to (the archive contains its own `csf/` folder), then run the tests:
 
 ```shell
+cd csf
 sudo perl csf/csftest.pl
 ```
 
