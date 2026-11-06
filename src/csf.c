@@ -46,6 +46,11 @@ int main(void)
 	setenv("CSF_RESELLER", "", 1);
 	ruid = getuid();
 	pw = getpwuid(ruid);
+	if (pw == NULL)
+	{
+		printf( "Permission denied [UID:%d]\n", ruid );
+		return 1;
+	}
 
 	adminFile=fopen ("/usr/local/directadmin/data/admin/admin.list","r");
 	if (adminFile!=NULL)
@@ -62,10 +67,14 @@ int main(void)
 
 	if (admin == 1)
 	{
-		setuid(0);
-		setgid(0);
+		char *const args[] = { "/usr/local/directadmin/plugins/csf/exec/da_csf.cgi", NULL };
 
-		execv("/usr/local/directadmin/plugins/csf/exec/da_csf.cgi", NULL);
+		setgid(0);
+		setuid(0);
+
+		execv(args[0], args);
+		perror("execv da_csf.cgi");
+		return 1;
 	}
 	else
 	{
@@ -88,10 +97,14 @@ int main(void)
 
 		if (reseller == 1)
 		{
-			setuid(0);
-			setgid(0);
+			char *const args[] = { "/usr/local/directadmin/plugins/csf/exec/da_csf_reseller.cgi", NULL };
 
-			execv("/usr/local/directadmin/plugins/csf/exec/da_csf_reseller.cgi", NULL);
+			setgid(0);
+			setuid(0);
+
+			execv(args[0], args);
+			perror("execv da_csf_reseller.cgi");
+			return 1;
 		}
 		else
 		{

@@ -744,7 +744,22 @@ if [ -e "/usr/local/directadmin/plugins/csf/exec/csf" ]; then
 fi
 
 run export PATH=$PATH;
-run gcc -o /usr/local/directadmin/plugins/csf/exec/csf csf.c
+
+# #
+#	The DirectAdmin plugin needs a compiled setuid wrapper; without it the
+#	CSF page in DirectAdmin stays blank. Fail loudly instead of silently. (#105)
+# #
+
+if ! command -v gcc >/dev/null 2>&1; then
+	echo "    Error: gcc is required to build the DirectAdmin plugin wrapper (exec/csf)." >&2
+	echo "    Install it (e.g. 'dnf install gcc' or 'apt install gcc') and re-run this installer." >&2
+fi
+
+run gcc -O2 -o /usr/local/directadmin/plugins/csf/exec/csf csf.c
+
+if [ ! -x "/usr/local/directadmin/plugins/csf/exec/csf" ] && [ "${dr}" != "true" ]; then
+	echo "    Error: failed to build /usr/local/directadmin/plugins/csf/exec/csf - the CSF page in DirectAdmin will be blank." >&2
+fi
 run chown -Rv diradmin:diradmin /usr/local/directadmin/plugins/csf
 run chmod -v 755 /usr/local/directadmin/plugins/csf/admin/index.html
 run chmod -v 755 /usr/local/directadmin/plugins/csf/admin/index.raw
