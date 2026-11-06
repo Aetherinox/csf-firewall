@@ -6447,6 +6447,11 @@ sub doprofile {
 				$apply{$name} = $value;
 			}
 
+			if (defined $apply{SMTP_BLOCK} and $apply{SMTP_BLOCK} eq "1") {
+				print "*WARNING* This profile enables SMTP_BLOCK: outgoing email from local users and applications\n";
+				print "          will be blocked unless they are listed in SMTP_ALLOWUSER or SMTP_ALLOWGROUP\n";
+			}
+
 			sysopen (my $CONF, "/etc/csf/csf.conf", O_RDWR | O_CREAT) or die "Unable to open file: $!";
 			flock ($CONF, LOCK_SH);
 			my @confdata = <$CONF>;

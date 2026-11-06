@@ -2687,15 +2687,22 @@ EOD
 			{
 				$text = "This is the installation default profile and will reset all csf.conf settings, including enabling TESTING mode";
 			}
-			elsif ( $profiledata[0] =~ /^\# Profile:/)
+			elsif ( grep { /^\#\s+Profile:/ } @profiledata[0..2] )
 			{
+				# Supports both "# Profile: ..." and the "# #" / "#   Profile:" header style
 				foreach my $line ( @profiledata )
 				{
-					if ( $line =~ /^\# (.*)$/)
+					last unless $line =~ /^\#/;
+					if ( $line =~ /^\#\s+(?:Profile:\s*)?(\S.*)$/ and $line !~ /^\#\s*\#\s*$/ )
 					{
-						$text .= "$1 "
+						$text .= html_escape( $1 )." "
 					}
 				}
+			}
+
+			if ( grep { /^SMTP_BLOCK\s*=\s*"1"/ } @profiledata )
+			{
+				$text .= "<br><b>Warning:</b> this profile enables SMTP_BLOCK, which stops all outgoing email from this server except from root, exim/mailman and SMTP_ALLOWUSER/SMTP_ALLOWGROUP. Adjust those settings afterwards if users or applications send mail directly.";
 			}
 
 			print "<tr><td><b>$file</b><br>\n$text</td><td style='border-left:1px solid #990000'><input type='radio' name='profile' value='$file'></td></tr>\n";
