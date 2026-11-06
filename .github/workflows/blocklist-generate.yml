@@ -737,7 +737,7 @@ jobs:
 
             - name: '🧱 Geographical › GeoLite2 (Cache)'
               id: task_blocklist_geographical_generate_cache
-              uses: actions/cache@v4
+              uses: actions/cache@v6
               if: steps.task_blocklist_geographical_generate_setup.outcome == 'success'
               with:
                   path: .github/.temp
