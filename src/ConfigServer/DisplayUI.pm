@@ -1572,7 +1572,9 @@ EOF
 		my $start = 0;
 		while (<$childout>)
 		{
-			my $line = $_;
+			# Escape and strip colour codes like printcmd does; raw output
+			# containing < or ANSI sequences was clipped in the browser (#125)
+			my $line = html_escape( strip_ansi( $_ ) );
 			if ($line =~ /^====/)
 			{
 				if ($start)
@@ -1582,7 +1584,7 @@ EOF
 				}
 				else
 				{
-					print "</pre><pre class='comment' style='white-space: pre-wrap;background:#F4F4EA'>$line";
+					print "</pre><pre class='comment' style='white-space: pre-wrap;'>$line";
 					$start = 1;
 				}
 			}
