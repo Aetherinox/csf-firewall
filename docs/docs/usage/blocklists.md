@@ -53,10 +53,9 @@ There are numerous popular choices for maintained blocklists such as:
 - [BOGON](http://team-cymru.org/Services/Bogons/)
 - [Project Honey Pot](http://projecthoneypot.org)
 - [C.I. Army Malicious IP List](http://ciarmy.com)
-- [BruteForceBlocker](http://danger.rulez.sk/index.php/bruteforceblocker/)
-- [MaxMind GeoIP Anonymous Proxies](https://maxmind.com/en/anonymous_proxies)
+- [BruteForceBlocker](https://danger.rulez.sk/index.php/bruteforceblocker/)
 - [Blocklist.de](https://blocklist.de)
-- [Stop Forum Spam](http://stopforumspam.com/downloads/)
+- [Stop Forum Spam](https://stopforumspam.com/downloads/)
 - [GreenSnow Hack List](https://greensnow.co)
 
 <br />
@@ -216,25 +215,14 @@ By default, every blocklist is commented out with a ++"#"++ symbol at the beginn
 #   @details:               https://ciarmy.com
 # #
 
-#   CIARMY|86400|0|http://www.ciarmy.com/list/ci-badguys.txt
+#   CIARMY|86400|0|https://www.ciarmy.com/list/ci-badguys.txt
 
 # #
 #   @blocklist              BruteForceBlocker IP List
-#   @details:               http://danger.rulez.sk/index.php/bruteforceblocker
+#   @details:               https://danger.rulez.sk/index.php/bruteforceblocker
 # #
 
-#   BFB|86400|0|http://danger.rulez.sk/projects/bruteforceblocker/blist.php
-
-# #
-#   @blocklist              MaxMind GeoIP Anonymous Proxies
-#   @details:               https://maxmind.com/en/anonymous_proxies
-#   @notes:                 Set URLGET in csf.conf to use LWP as this list
-#                           uses an SSL connection
-#   
-#   This first list only retrieves the IP addresses added in the last hour
-# #
-
-#   MAXMIND|86400|0|https://www.maxmind.com/en/anonymous_proxies
+#   BFB|86400|0|https://danger.rulez.sk/projects/bruteforceblocker/blist.php
 
 # #
 #   @blocklist              Blocklist.de
@@ -257,23 +245,23 @@ By default, every blocklist is commented out with a ++"#"++ symbol at the beginn
 
 # #
 #   @blocklist              Stop Forum Spam
-#   @details:               http://stopforumspam.com/downloads
+#   @details:               https://stopforumspam.com/downloads
 #   @notes:                 Many of the lists available contain a vast number of
 #                           IP addresses so special care needs to be made when
 #                           selecting from their lists
 # #
 
-#   STOPFORUMSPAM|86400|0|http://www.stopforumspam.com/downloads/listed_ip_1.zip
+#   STOPFORUMSPAM|86400|0|https://www.stopforumspam.com/downloads/listed_ip_1.zip
 
 # #
 #   @blocklist              Stop Forum Spam IPv6
-#   @details:               http://stopforumspam.com/downloads
+#   @details:               https://stopforumspam.com/downloads
 #   @notes:                 Many of the lists available contain a vast number of
 #                           IP addresses so special care needs to be made when
 #                           selecting from their lists
 # #
 
-#   STOPFORUMSPAMV6|86400|0|http://www.stopforumspam.com/downloads/listed_ip_1_ipv6.zip
+#   STOPFORUMSPAMV6|86400|0|https://www.stopforumspam.com/downloads/listed_ip_1_ipv6.zip
 
 # #
 #   @blocklist              GreenSnow Hack List

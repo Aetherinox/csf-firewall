@@ -1045,10 +1045,9 @@ There are many vendors that also host their own blocklists. You can find these v
 - [BOGON](http://team-cymru.org/Services/Bogons/)
 - [Project Honey Pot](http://projecthoneypot.org)
 - [C.I. Army Malicious IP List](http://ciarmy.com)
-- [BruteForceBlocker](http://danger.rulez.sk/index.php/bruteforceblocker/)
-- [MaxMind GeoIP Anonymous Proxies](https://maxmind.com/en/anonymous_proxies)
+- [BruteForceBlocker](https://danger.rulez.sk/index.php/bruteforceblocker/)
 - [Blocklist.de](https://blocklist.de)
-- [Stop Forum Spam](http://stopforumspam.com/downloads/)
+- [Stop Forum Spam](https://stopforumspam.com/downloads/)
 - [GreenSnow Hack List](https://greensnow.co)
 
 <br />
