@@ -9,7 +9,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            10.27.2026
+#   @updated            11.07.2026
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -325,17 +325,35 @@ Log destination depends on B<TARGET> AND the user running the process:
 
 =item *
 
-Messenger writes logs to C</var/log/lfd_messenger.log> once the sub 
-C<ConfigServer::Messenger::drop_messenger_privileges()> succeeds, AND
-after the Messenger process's user changes from root to 
-C<MESSENGER_USER> ( defined in C</etc/csf/csf.conf> ).
+When LFD starts Messenger, the Messenger process initially runs as
+root. During initialization, Messenger calls
+C<ConfigServer::MessengerSecurity::identity_restrict()>, which changes
+the process identity to the user configured by C<MESSENGER_USER> in
+C</etc/csf/csf.conf> and permanently removes root access.
+
+Messenger will then verify that root access cannot be regained.
 
 =item *
 
-Messenger only writes logs when target is C<normal> or C<debug:X>.
+After Messenger changes its process identity from root to
+C<MESSENGER_USER> and verifies that root access cannot be regained,
+messages sent to C<ConfigServer::Logger::logfile()> using the C<normal>
+or C<debug:X> B<TARGET> are written to C</var/log/lfd_messenger.log>.
 
-Do not use target C<all> after Messenger privilege drops because it
-attempts to write C</var/log/lfd_root.log> first.
+Do not use C<all> after this identity change. The C<all> B<TARGET>
+also writes to C</var/log/lfd_root.log>, which C<MESSENGER_USER> cannot
+access. This security restriction is intentional.
+
+=item *
+
+Messenger begins accepting client connections only after
+C<ConfigServer::MessengerSecurity::identity_restrict()> changes the
+process identity from root to the UID and GID of C<MESSENGER_USER>.
+
+If the restriction fails before the identity change begins, Messenger
+aborts startup and an error is written to C</var/log/lfd.log>. If a
+failure occurs after the identity change begins, the process exits
+immediately.
 
 =item *
 
@@ -397,58 +415,102 @@ hyphens, with a max length of C<16> chars (C<LOG_STATUS_CHAR_MAX>):
 C<ConfigServer::Logger> writes plain text CSF and LFD messages to
 persistent log files in production environments. Log messages are
 created by calling C<ConfigServer::Logger::logfile()> and specifying
-a string log message. The C<logfile()> subroutine also accepts the
-optional arguments B<TARGET> and B<STATUS>.
+a string log message. The C<logfile()> subroutine also accepts 
+optional args B<TARGET> and B<STATUS>.
 
-When any module calls C<ConfigServer::Logger::logfile()>, the provided
-arguments define how that log will be processed.
-
-    Eg: sub test_sub
+    Eg: # #
+        #   Log with TARGET and STATUS.
+        #   Sets to 'normal' and 'info'
+        # #
+        
+        sub test_sub
         {
             ConfigServer::Logger::logfile(
                 "normal", "info", "Log msg"
             );
         }
 
-B<TARGET>: specifies which log file will receive the message. When
-the app runs a process as root, specifying the targets C<normal> or
-C<debug:X> will make the module write logs to C</var/log/lfd.log>.
-The target C<root> writes logs to C</var/log/lfd_root.log>. The
-target C<all> writes logs to both C</var/log/lfd.log> and
-C</var/log/lfd_root.log>.
+    Eg: # #
+        #   Log without TARGET or STATUS.
+        #   Defaults to 'normal' and 'info'
+        # #
 
-B<STATUS>: adds a label to each log message. Supported labels include
-C<fail>, C<ok>, C<warn>, C<abort>, and C<info>. The label is primarily
-cosmetic and does not affect which log file receives the message.
+        sub test_sub2
+        {
+            ConfigServer::Logger::logfile( "Log msg" );
+        }
+
+B<TARGET>: specifies which log file will get the message. Options are
+C<normal>, C<root>, C<all>, or C<debug:X>.
+
+B<STATUS>: adds a label to each log message. Options are 
+C<fail>, C<ok>, C<warn>, C<abort>, and C<info>. This label is cosmetic.
 
     Eg: lfd[ 355716 ] [lfd::global:3148] [info]: Log with normal target
                                          ^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^
                                          STATUS         MESSAGE
 
-This module maintains a separate log for the B<Messenger> module at
+When calling C<ConfigServer::Logger::logfile()>, the specified target
+will write logs to:
+
+=over 4
+
+=item "B<normal>":
+
+Writes normal logs to C</var/log/lfd.log>.
+
+Writes Messenger logs to C</var/log/lfd_messenger.log>.
+
+=item "B<root>":
+
+Writes root logs to C</var/log/lfd_root.log>.
+
+=item "B<all>":
+
+Writes normal logs to C</var/log/lfd.log>.
+
+Writes root logs to C</var/log/lfd_root.log>.
+
+=item "B<debug:x>":
+
+Writes normal logs to C</var/log/lfd.log>.
+
+Writes debug logs to C</var/log/lfd.log>.
+
+Writes Messenger logs to C</var/log/lfd_messenger.log>.
+
+=back
+
+A separate log is maintained for the B<Messenger> module at
 C</var/log/lfd_messenger.log>. Access to this log is restricted to
-prevent unauthorized users from reading the log's contents.
+prevent unauthorized users from reading the log's contents. Messenger
+logging requires matching real and effective user IDs. The log file
+C</var/log/lfd_messenger.log> must be owned by C<MESSENGER_USER> with
+mode C<0600>.
 
-To write Messenger logs, call C<ConfigServer::Logger::logfile()>
-using target C<normal> or C<debug:X>.
+When LFD starts Messenger, the Messenger process initially runs as
+root. During initialization, Messenger calls
+C<ConfigServer::MessengerSecurity::identity_restrict()>, which changes
+the process identity to the user configured by C<MESSENGER_USER> in
+C</etc/csf/csf.conf> and permanently removes root access.
 
-Messages begin writing to the Messenger log after
-C<ConfigServer::Messenger::drop_messenger_privileges()> succeeds and
-the Messenger process's user changes from root to C<MESSENGER_USER>.
+Messenger will then verify that root access cannot be regained.
 
-Messenger logging requires matching real and effective user IDs. The
-log file must be owned by C<MESSENGER_USER> with mode C<0600>.
+Once this permission drop occurs and root cannot be regained, 
+any logs sent using C<ConfigServer::Logger::logfile()> with the
+targets C<normal> or C<debug:X> are written to 
+C</var/log/lfd_messenger.log>.
 
-This module also supports defining the target C<debug:X> when calling
-C<ConfigServer::Logger::logfile()>. When the process runs as root,
-debug messages are written to C</var/log/lfd.log> only when the
-C<DEBUG> setting in C</etc/csf/csf.conf> enables the specified level
-that you wish to see logs for.
+Do not use targets C<all> or C<root> after this identity change.
+These targets writes logs to C</var/log/lfd_root.log>, which
+C<MESSENGER_USER> cannot access. This security restriction is
+intentional.
 
-When the process runs as root, debug levels C<0> - C<5> will write log
-messages to C</var/log/lfd.log> only if the level specified by target
+The C<debug:X> target allows debugging messages to be written to 
+C</var/log/lfd.log> when calling C<ConfigServer::Logger::logfile()>.
+These messages are written only if the level specified by target
 C<debug:X> matches or is lower than the C<DEBUG> setting defined in
-C</etc/csf/csf.conf>.
+C</etc/csf/csf.conf>. Valid debug levels are C<0> - C<5>.
 
     Eg: ConfigServer::Logger::logfile( 
             "debug:2", "info", "A debug log"
@@ -468,9 +530,10 @@ syslog.
 
 Log file write errors are reported through C<STDERR>.
 
-When C<ConfigServer::Logger::logfile()> is called by a module, it returns
-a hashref when a message is written or suppressed, or returns C<undef>
-if a log fails to write.
+When C<ConfigServer::Logger::logfile()> is called, it returns a
+hashref, if the write is successful and not suppressed.
+
+If a log fails to write, the hashref will return as C<undef>.
 
 This module does not send messages to the terminal. Use
 C<ConfigServer::DebugLocal> to display debug messages in the terminal.
@@ -1526,18 +1589,16 @@ sub logfile
     # #
     #   Logfile › Type › Normal / Debug › Messenger
     #   
-    #   @important      After ConfigServer::Messenger::drop_messenger_privileges()
-    #                   succeeds, logs can be written to /var/log/lfd_messenger.log
-    #                   by going to ConfigServer/Messenger.pm, and calling logfile()
-    #                   with either target 'normal' or 'debug:x'.
-    #                       logfile( "normal", "info", "Messenger log" );
-    #                       logfile( "debug:1", "info", "Messenger log" );
+    #   @warn       During initialization, Messenger runs the sub
+    #               identity_restrict(), which changes the process
+    #               from root to MESSENGER_USER, and verifies that
+    #               root access cannot be regained.
     #   
-    #                   Do not use the 'all' target after the privilege drop since it
-    #                   attempts to write to lfd_root.log first.
+    #               After this change, use only the targets 'normal'
+    #               or 'debug:X' to write to /var/log/lfd_messenger.log.
     #   
-    #                   First expected Messenger log:
-    #                       Messenger initialized securely as MESSENGER_USER
+    #               Target 'all' will not have perms to write to
+    #               lfd_root.log.
     # #
 
     if ( $ruid != ROOT_UID or $euid != ROOT_UID )
