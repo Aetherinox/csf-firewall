@@ -9,7 +9,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            11.05.2026
+#   @updated            11.07.2026
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -50,12 +50,12 @@ package ConfigServer::Config;
 use strict;
 use lib '/usr/local/csf/lib';
 use version;
-use Fcntl qw( :DEFAULT :flock );
+use Fcntl ( );
 use Carp;
 use IPC::Open3;
-use ConfigServer::Slurp qw( slurp );
-use ConfigServer::JSON qw( decode_json );
-use ConfigServer::Perl::URI qw( uri_escape );
+use ConfigServer::Slurp qw( );
+use ConfigServer::JSON qw( );
+use ConfigServer::Perl::URI qw( );
 
 # #
 #	Config › Declare › Export
@@ -183,7 +183,7 @@ sub loadconfig
 	undef %config;
 	undef $warning;
 
-	my @file = slurp( $configfile );
+	my @file = ConfigServer::Slurp::slurp( $configfile );
 	foreach my $line ( @file )
 	{
 		$line =~ s/$cleanreg//g;
@@ -245,7 +245,7 @@ sub loadconfig
 
 	if ( -e "/proc/sys/net/netfilter/nf_conntrack_helper" and !$config{USE_FTPHELPER} )
 	{
-		my $setting = slurp( "/proc/sys/net/netfilter/nf_conntrack_helper" );
+		my $setting = ConfigServer::Slurp::slurp( "/proc/sys/net/netfilter/nf_conntrack_helper" );
 		chomp $setting;
 
 		if ( $setting == 0 )
@@ -514,7 +514,7 @@ sub loadconfig
 	}
 	else
 	{
-		foreach my $line (slurp("/proc/self/status"))
+		foreach my $line (ConfigServer::Slurp::slurp("/proc/self/status"))
 		{
 			$line =~ s/$cleanreg//g;
 			if ($line =~ /^envID:\s*(\d+)\s*$/)
@@ -630,7 +630,7 @@ sub loadconfig
 	if ( $config{IPV6} and $config{IPV6_SPI} )
 	{
 		open (my $FH, "<", "/proc/sys/kernel/osrelease");
-		flock ($FH, LOCK_SH);
+        CORE::flock( $FH, Fcntl::LOCK_SH() );
 		my @data = <$FH>;
 		close ($FH);
 		chomp @data;
@@ -655,14 +655,14 @@ sub loadconfig
 		if ( -f $config{CLUSTER_SENDTO} )
 		{
 			if ( $config{DEBUG} >= 1 ) 		{ $warning .= "*DEBUG* CLUSTER_SENDTO retrieved from $config{CLUSTER_SENDTO} and set to: " }
-			$config{CLUSTER_SENDTO} 		= join(",", slurp($config{CLUSTER_SENDTO}));
+			$config{CLUSTER_SENDTO} 		= join(",", ConfigServer::Slurp::slurp($config{CLUSTER_SENDTO}));
 			if ( $config{DEBUG} >= 1 )		{ $warning .= "[$config{CLUSTER_SENDTO}]\n" }
 			}
 
 		if ( -f $config{CLUSTER_RECVFROM} )
 		{
 			if ( $config{DEBUG} >= 1 ) 		{ $warning .= "*DEBUG* CLUSTER_RECVFROM retrieved from $config{CLUSTER_RECVFROM} and set to: " }
-			$config{CLUSTER_RECVFROM} 		= join(",", slurp($config{CLUSTER_RECVFROM}));
+			$config{CLUSTER_RECVFROM} 		= join(",", ConfigServer::Slurp::slurp($config{CLUSTER_RECVFROM}));
 			if ( $config{DEBUG} >= 1 ) 		{ $warning .= "[$config{CLUSTER_RECVFROM}]\n" }
 		}
 	}
@@ -770,8 +770,8 @@ sub getsingle
 	$item = _trim( $item, 1 );
 	return undef if !defined $item || $item eq "";
 
-	open    ( my $IN, "<", $configfile ) or return undef;
-	flock   ( $IN, LOCK_SH );
+	open ( my $IN, "<", $configfile ) or return undef;
+	CORE::flock( $IN, Fcntl::LOCK_SH() );
 
 	my $value;
 	my $found = 0;
@@ -838,11 +838,11 @@ sub getdefault
 
 	if ( -e $defaultsfile )
 	{
-		open        ( my $IN, "<", $defaultsfile ) or die "Cannot open $defaultsfile: $!";
-		flock       ( $IN, LOCK_SH );
-		my @data    = <$IN>;
-		close       ( $IN );
-		chomp       @data;
+		open ( my $IN, "<", $defaultsfile ) or die "Cannot open $defaultsfile: $!";
+		CORE::flock( $IN, Fcntl::LOCK_SH() );
+		my @data = <$IN>;
+		close ( $IN );
+		chomp @data;
 
 		foreach my $line ( @data )
 		{
@@ -1047,7 +1047,7 @@ sub getLicenseStatus
 		return ( 0, 'Unable to initialize URL fetcher' );
 	}
 
-	my $licenseEnc = uri_escape( $license );
+	my $licenseEnc = ConfigServer::Perl::URI::uri_escape( $license );
 	my ( $statusCode, $resp );
 
 	eval
@@ -1077,7 +1077,7 @@ sub getLicenseStatus
 
 	return ( 0, 'Invalid license key' ) if $statusCode;
 
-	my $data = decode_json( $resp );
+	my $data = ConfigServer::JSON::decode_json( $resp );
 	if ( !defined $data )
 	{
 		return ( 0, 'Invalid response from license server' );
@@ -1142,11 +1142,11 @@ sub getdownloadserver
 
 	if ( -e $downloadservers )
 	{
-		open        ( my $DOWNLOAD, "<", $downloadservers );
-		flock       ( $DOWNLOAD, LOCK_SH );
-		my @data    = <$DOWNLOAD>;
-		close       ( $DOWNLOAD );
-		chomp       @data;
+		open ( my $DOWNLOAD, "<", $downloadservers );
+		CORE::flock( $DOWNLOAD, Fcntl::LOCK_SH() );
+		my @data = <$DOWNLOAD>;
+		close ( $DOWNLOAD );
+		chomp @data;
 	
 		foreach my $line ( @data ) 
 		{
@@ -1163,7 +1163,7 @@ sub getdownloadserver
 			}
 		}
 
-		foreach my $line ( slurp( $downloadservers ) ) 
+		foreach my $line ( ConfigServer::Slurp::slurp( $downloadservers ) ) 
 		{
 			$line =~ s/$cleanreg//g;
 			if ( $line =~ /^(?:raw|download|cdn)\./ ) 
