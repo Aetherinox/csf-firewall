@@ -10,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            08.06.2026
+#   @updated            09.11.2026
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -8760,13 +8760,19 @@ sub countrycode6 {
 # end countrycode6
 ###############################################################################
 # start global
+
 sub global {
+    logfile( "debug:1", "info", "Running Global" );
+
 	$SIG{CHLD} = 'IGNORE';
-	unless (defined ($childpid = fork)) {
+	unless (defined ($childpid = fork))
+    {
 		&shutdown(__LINE__,"*Error* cannot fork: $!");
 	} 
 	$forks{$childpid} = 1;
-	unless ($childpid) {
+	unless ($childpid)
+    {
+        logfile( "debug:1", "info", "Global Started" );
 		my $timer = time;
 		if ($config{DEBUG} >= 3) {$timer = &timer("start","global",$timer)}
 		$0 = "lfd - retrieving global lists";
@@ -8780,13 +8786,27 @@ sub global {
 		&listlock("lock");
 		$0 = "lfd - retrieving global lists";
 
-		if ($config{GLOBAL_ALLOW}) {
-			my ($status, $text) = $urlget->urlget($config{GLOBAL_ALLOW});
-			if ($status) {
-				logfile("Unable to retrieve global allow list - $text");
-			} else {
-				if (&csflock) {&lockfail("GLOBAL_ALLOW")}
-				logfile("Global Allow - retrieved and allowing IP address ranges");
+        # #
+        #   Global › Allow
+        #   
+        #   Triggered by setting URL in /etc/csf/csf.conf:
+        #       Eg:     LF_GLOBAL = "300"
+        #               GLOBAL_ALLOW = "https://raw.githubusercontent.com/Aetherinox/csf-firewall/refs/heads/main/tests/fixtures/global_allow/afr-valid.allow"
+        # #
+
+		if ($config{GLOBAL_ALLOW})
+        {
+            logfile( "normal", "info", "Global Allow: enabled" );
+			my ( $status, $text ) = $urlget->urlget( $config{GLOBAL_ALLOW} );
+            logfile( "normal", "info", "Global Allow Status: $status [$text]" );
+			if ( $status )
+            {
+				logfile( "Unable to retrieve global allow list - $text" );
+			}
+            else
+            {
+				if ( &csflock ) { &lockfail( "GLOBAL_ALLOW" ) }
+                logfile( "normal", "info", "Global Allow: retrieved and allowing IP address ranges" );
 
 				if ($config{SAFECHAINUPDATE}) {
 					&iptablescmd(__LINE__,"$config{IPTABLES} $config{IPTABLESWAIT} -N NEWGALLOWIN");
@@ -8876,7 +8896,17 @@ sub global {
 			}
 		}
 
-		if ($config{GLOBAL_DENY}) {
+        # #
+        #   Global › Deny
+        #   
+        #   Triggered by setting URL in /etc/csf/csf.conf:
+        #       Eg:     LF_GLOBAL = "300"
+        #               GLOBAL_DENY = "https://raw.githubusercontent.com/Aetherinox/csf-firewall/refs/heads/main/tests/fixtures/global_deny/afr-valid.deny"
+        # #
+
+		if ($config{GLOBAL_DENY})
+        {
+            logfile( "normal", "info", "Global Deny: enabled" );
 			my ($status, $text) = $urlget->urlget($config{GLOBAL_DENY});
 			if ($status) {
 				logfile("Unable to retrieve global deny list - $text");
@@ -8937,13 +8967,15 @@ sub global {
 						}
 					}
 				}
+                logfile( "normal", "info", "Global Deny: checking file [ csf.gdeny ]" );
 				sysopen (my $GDENY, "/var/lib/csf/csf.gdeny", O_WRONLY | O_CREAT) or &shutdown_child(__LINE__,"*Error* Cannot open out file: $!");
 				flock ($GDENY, LOCK_EX);
 				seek ($GDENY, 0, 0);
 				truncate ($GDENY, 0);
 				if ($config{FASTSTART}) {$faststart = 1}
 				foreach my $line (split (/\n/,$text)) {
-					if ($line =~ /^\#/) { next }
+					if ($line =~ /^\s*(?:\#|$)/) { next }
+                    logfile( "debug:1", "info", "Global Deny: Process csf.gdeny line [ $line ]" );
 					my ($ip,$comment) = split (/\s/,$line,2);
 					print $GDENY "$ip\n";
 					if ($config{SAFECHAINUPDATE}) {
@@ -8987,19 +9019,27 @@ sub global {
 			}
 		}
 
+        # #
+        #   Global › Ignore
+        #   
+        #   Triggered by setting URL in '/etc/csf/csf.conf':
+        #       Eg:     LF_GLOBAL = "300"
+        #               GLOBAL_IGNORE = "https://raw.githubusercontent.com/Aetherinox/csf-firewall/refs/heads/main/tests/fixtures/global_ignore/ip-valid.ignore"
+        # #
+
 		if ($config{GLOBAL_IGNORE}) {
-			my ($status, $text) = $urlget->urlget($config{GLOBAL_IGNORE});
+			my ( $status, $text ) = $urlget->urlget($config{GLOBAL_IGNORE});
 			if ($status) {
 				logfile("Unable to retrieve global ignore list - $text");
 			} else {
-				logfile("Global Ignore - retrieved and ignoring");
-
+                logfile( "normal", "info", "Global Ignore: checking file [ csf.gignore ]" );
 				sysopen (my $GIGNORE, "/var/lib/csf/csf.gignore", O_WRONLY | O_CREAT) or &shutdown_child(__LINE__,"*Error* Cannot open out file: $!");
 				flock ($GIGNORE, LOCK_EX);
 				seek ($GIGNORE, 0, 0);
 				truncate ($GIGNORE, 0);
 				foreach my $line (split (/\n/,$text)) {
-					if ($line =~ /^\#/) { next }
+					if ($line =~ /^\s*(?:\#|$)/) { next }
+                    logfile( "debug:1", "info", "Global Ignore: Process csf.gignore line [ $line ]" );
 					my ($ip,$comment) = split (/\s/,$line,2);
 					print $GIGNORE "$ip\n";
 				}
@@ -9007,19 +9047,50 @@ sub global {
 			}
 		}
 
+        # #
+        #   Global › DynDNS
+        #   
+        #   GLOBAL_DYNDNS reads hosts from an external URL source; an alternative
+        #   to setting DYNDNS:
+        #   
+        #   1.  Set in /etc/csf/csf.conf:
+        #           LF_GLOBAL               = "300"
+        #           GLOBAL_DYNDNS_INTERVAL  = "600"
+        #           GLOBAL_DYNDNS           = "https://raw.githubusercontent.com/Aetherinox/csf-firewall/refs/heads/main/tests/fixtures/global_dyndns/fqdn-invalid.dyndns"
+        #           DEBUG                   = "2"
+        #   
+        #       Eg of external url contents:
+        #           office.example.ddns.net
+        #           home.example.ddns.net
+        #           tcp:in:d=22:s=example.com
+        #   
+        #   2.  Restart csf:
+        #           sudo csf -ra
+        #       Note (does not reload lfd rules):
+        #           sudo csf -sf
+        #   
+        #   3.  Hostnames downloaded from GLOBAL_DYNDNS url to:
+        #           /var/lib/csf/csf.gdyndns
+        #       Hostnames resolved to IPs from 'csf.gdyndns' to:
+        #           /var/lib/csf/csf.tempgdyn
+        #   
+        #   4.  View debug print "LINEFILTER (Result):"
+        #           /var/log/lfd.log
+        # #
+
 		if ($config{GLOBAL_DYNDNS}) {
-			my ($status, $text) = $urlget->urlget($config{GLOBAL_DYNDNS});
+			my ( $status, $text ) = $urlget->urlget( $config{GLOBAL_DYNDNS} );
 			if ($status) {
 				logfile("Unable to retrieve global dyndns list - $text");
 			} else {
-				logfile("Global DynDNS - retrieved and allowing IP addresses");
-
+                logfile( "normal", "info", "Global DynDNS: checking file [ csf.gdyndns ]" );
 				sysopen (my $GDYNDNS, "/var/lib/csf/csf.gdyndns", O_WRONLY | O_CREAT) or &shutdown_child(__LINE__,"*Error* Cannot open out file: $!");
 				flock ($GDYNDNS, LOCK_EX);
 				seek ($GDYNDNS, 0, 0);
 				truncate ($GDYNDNS, 0);
 				foreach my $line (split (/\n/,$text)) {
-					if ($line =~ /^\#/) { next }
+					if ($line =~ /^\s*(?:\#|$)/) { next }
+                    logfile( "debug:1", "info", "Global DynDNS: Process csf.gdyndns line [ $line ]" );
 					my ($ip,$comment) = split (/\s/,$line,2);
 					print $GDYNDNS "$ip\n";
 				}
@@ -9100,6 +9171,36 @@ sub dyndns {
 				&iptablescmd(__LINE__,"$config{IP6TABLES} $config{IPTABLESWAIT} -F ALLOWDYNOUT");
 			}
 		}
+
+        # #
+        #   Local › DynDNS
+        #   
+        #   DYNDNS reads hosts from local file '/etc/csf/csf.dyndns';
+        #   an alternative to setting GLOBAL_DYNDNS:
+        #   
+        #   1.  Set in /etc/csf/csf.conf:
+        #           LF_GLOBAL   = "300"
+        #           DEBUG       = "2"
+        #   
+        #       Eg of '/etc/csf/csf.dyndns' contents:
+        #           office.example.ddns.net
+        #           home.example.ddns.net
+        #           tcp:in:d=22:s=example.com
+        #   
+        #   2.  Restart csf:
+        #           sudo csf -ra
+        #       Note (does not reload lfd rules):
+        #           sudo csf -sf
+        #   
+        #   3.  Hostnames loaded from local file:
+        #           /var/lib/csf/csf.dyndns
+        #       Hostnames resolved to IPs from 'csf.dyndns' to:
+        #           /var/lib/csf/csf.tempdyn
+        #   
+        #   4.  View debug print "LINEFILTER (Result):"
+        #           /var/log/lfd.log
+        # #
+
 		sysopen (my $TEMPDYN, "/var/lib/csf/csf.tempdyn", O_WRONLY | O_CREAT) or &shutdown_child(__LINE__,"*Error* Cannot open out file: $!");
 		flock ($TEMPDYN, LOCK_EX);
 		seek ($TEMPDYN, 0, 0);
@@ -9108,6 +9209,10 @@ sub dyndns {
 			my $adport;
 			my ($fqdn,undef) = split(/\s/,$line,2);
 			if ($fqdn =~ /^(.*(s|d)=)(.*)$/) {$adport = $1; $fqdn = $3}
+			if (!ConfigServer::Validate::validate_filter_chars($adport)) {
+                logfile( "normal", "warn", "DynDNS: Ignoring line [ $line ]: malformed advanced filtering rule prefix");
+				next;
+			}
 			my @results = ConfigServer::GetIPs::resolve( $fqdn );
 			if (@results) {
 				foreach my $ip (@results) {
@@ -9236,6 +9341,10 @@ sub globaldyndns {
 			my $adport;
 			my ($fqdn,undef) = split(/\s/,$line,2);
 			if ($fqdn =~ /(.*:(s|d)=)(.*)$/) {$adport = $1; $fqdn = $3}
+			if (!ConfigServer::Validate::validate_filter_chars($adport)) {
+                logfile( "normal", "warn", "Global DynDNS: Ignoring line [ $line ]: malformed advanced filtering rule prefix" );
+				next;
+			}
 			my @results = ConfigServer::GetIPs::resolve( $fqdn );
 			if (@results) {
 				foreach my $ip (@results) {
@@ -10218,10 +10327,42 @@ sub ignoreip
 
 	return 0;
 }
-# end ignoreip
-###############################################################################
-# start linefilter
-sub linefilter {
+
+# #
+#   lfd › Filter Rules › Reject
+#   
+#   Logs if / why advanced rule rejected. Return no value so caller can
+#   stop processing the rule.
+#   
+#   @params     line            str         Complete rule
+#               name            str         Invalid field name
+#   @return     void
+# #
+
+sub _linefilter_rule_reject
+{
+	my ( $line, $name ) = @_;
+	logfile( "normal", "warn", "Skipping filter rule [ $line ]: invalid name [ $name ]");
+	return;
+}
+
+# #
+#   lfd › Filter Rules › Process Line
+#
+#   Validate a simple rule such as IP / CIDR, or an advanced rule.
+#   Add / remove a corresponding iptables firewall rule.lfd
+#
+#	@params		line		string		IP addr, CIDR, or advanced rule
+#				ad			string		Rule action: allow or deny
+#				chain		string		(Optional) chain name prefix
+#				delete		int|undef	Remove rule when true
+#	@return		result		undef		Rule processed, rejected, or skipped
+# #
+
+sub linefilter
+{
+    logfile( "normal", "info", "linefilter Started" );
+
 	my $line = shift;
 	my $ad = shift;
 	my $chain = shift;
@@ -10303,6 +10444,8 @@ sub linefilter {
 		}
 	}
 	elsif ($line =~ /\:|\|/) {
+        logfile( "debug:1", "info", "linefilter: [Step] Parsing advanced filtering firewall rule candidate [ $line ]" );
+
 		if ($line !~ /\|/) {$line =~ s/\:/\|/g}
 		my $sip;
 		my $dip;
@@ -10329,6 +10472,7 @@ sub linefilter {
 			$from = 1;
 		}
 		for (my $x = $from;$x < 2;$x++) {
+			next unless defined $ll[$x];
 			if (($ll[$x] eq "out")) {
 				$inout = "out";
 				$from = $x + 1;
@@ -10341,53 +10485,90 @@ sub linefilter {
 			}
 		}
 		for (my $x = $from;$x < 3;$x++) {
-			if (($ll[$x] =~ /d=(.*)/)) {
-				$dport = "--dport $1";
+			next unless defined $ll[$x];
+			if (($ll[$x] =~ /d=(.*)/))
+            {
+				my $port = $1;
+				ConfigServer::Validate::validate_port( $port ) or return _linefilter_rule_reject( $line, "port" );
+				$dport = "--dport $port";
 				$dport =~ s/_/:/g;
-				if ($protocol eq "-p icmp") {$dport = "--icmp-type $1"}
+				if ($protocol eq "-p icmp") {$dport = "--icmp-type $port"}
 				if ($dport =~ /,/) {$dport = "-m multiport ".$dport}
 				$from = $x + 1;
 				last;
 			}
-			elsif (($ll[$x] =~ /s=(.*)/)) {
-				$sport = "--sport $1";
+			elsif (($ll[$x] =~ /s=(.*)/))
+            {
+				my $port = $1;
+				ConfigServer::Validate::validate_port( $port ) or return _linefilter_rule_reject( $line, "port" );
+				$sport = "--sport $port";
 				$sport =~ s/_/:/g;
-				if ($protocol eq "-p icmp") {$sport = "--icmp-type $1"}
+				if ($protocol eq "-p icmp") {$sport = "--icmp-type $port"}
 				if ($sport =~ /,/) {$sport = "-m multiport ".$sport}
 				$from = $x + 1;
 				last;
 			}
 		}
-		for (my $x = $from;$x < 4;$x++) {
-			if (($ll[$x] =~ /d=(.*)/)) {
-				my $ip = $1;
-				my $status = checkip(\$ip);
-				if ($status) {
-					$iptype = $status;
-					$dip = "-d $1";
-				}
-				last;
-			}
-			elsif (($ll[$x] =~ /s=(.*)/)) {
-				my $ip = $1;
-				my $status = checkip(\$ip);
-				if ($status) {
-					$iptype = $status;
-					$sip = "-s $1";
-				}
-				last;
-			}
-		}
 		for (my $x = $from;$x < 5;$x++) {
-			if (($ll[$x] =~ /u=(.*)/)) {
-				$uid = "--uid-owner $1";
+			next unless defined $ll[$x];
+			if (($ll[$x] =~ /u=(.*)/))
+            {
+				my $owner = $1;
+				ConfigServer::Validate::validate_owner( $owner ) or return _linefilter_rule_reject( $line, "owner" );
+				$uid = "--uid-owner $owner";
 				last;
 			}
-			elsif (($ll[$x] =~ /g=(.*)/)) {
-				$gid = "--gid-owner $1";
+			elsif (($ll[$x] =~ /g=(.*)/))
+            {
+				my $owner = $1;
+				ConfigServer::Validate::validate_owner( $owner ) or return _linefilter_rule_reject( $line, "owner" );
+				$gid = "--gid-owner $owner";
 				last;
 			}
 		}
+		for ( my $x = $from; $x < 4; $x++ )
+        {
+			next unless defined $ll[$x];
+			if (($ll[$x] =~ /d=(.*)/))
+            {
+				my $ip = $1;
+				my $status = checkip(\$ip);
+				last if !$status and ($uid or $gid);
+				$status or return _linefilter_rule_reject( $line, "dest ip" );
+				$iptype = $status;
+				$dip = "-d $ip";
+				last;
+			}
+			elsif (($ll[$x] =~ /s=(.*)/))
+            {
+				my $ip = $1;
+				my $status = checkip(\$ip);
+				last if !$status and ($uid or $gid);
+				$status or return _linefilter_rule_reject( $line, "src ip" );
+				$iptype = $status;
+				$sip = "-s $ip";
+				last;
+			}
+		}
+
+		logfile(
+			"debug:2",
+			"info",
+			"LINEFILTER (Result): " .
+			"line=[" . ( defined $line ? $line : "undef" ) . "] " .
+			"fields=[" . join( " | ", map { defined $_ ? $_ : "undef" } @ll ) . "] " .
+			"from=[" . ( defined $from ? $from : "undef" ) . "] " .
+			"protocol=[" . ( defined $protocol ? $protocol : "undef" ) . "] " .
+			"inout=[" . ( defined $inout ? $inout : "undef" ) . "] " .
+			"dport=[" . ( defined $dport ? $dport : "undef" ) . "] " .
+			"sport=[" . ( defined $sport ? $sport : "undef" ) . "] " .
+			"dip=[" . ( defined $dip ? $dip : "undef" ) . "] " .
+			"sip=[" . ( defined $sip ? $sip : "undef" ) . "] " .
+			"uid=[" . ( defined $uid ? $uid : "undef" ) . "] " .
+			"gid=[" . ( defined $gid ? $gid : "undef" ) . "] " .
+			"iptype=[" . ( defined $iptype ? $iptype : "undef" ) . "]"
+		);
+
 		if (($sip or $dip) and ($dport or $sport)) {
 			my $iptables = $config{IPTABLES};
 			if ($iptype == 6) {
@@ -10761,15 +10942,16 @@ sub lockfail {
 ###############################################################################
 # start ipblock
 sub ipblock {
-	my $perm = shift;
+	my $perm    = shift;
 	my $message = shift;
-	my $ip = shift;
-	my $port = shift;
-	my $inout = shift;
+	my $ip      = shift;
+	my $port    = shift;
+	my $inout   = shift;
 	my $timeout = shift;
 	my $cluster = shift;
-	my $logs = shift;
-	my $active = shift;
+	my $logs    = shift;
+	my $active  = shift;
+	$message    = ConfigServer::Validate::normalize_text_fragment( $message, bytes_max => 1024 );
 	unless ($active) {$active = "other"}
 	my $return = 0;
 
@@ -10788,7 +10970,7 @@ sub ipblock {
 	my $ipv = checkip(\$ip);
 	unless ($ipv) {return 1}
 	my (undef,$iscidr) = split(/\//,$ip);
-	if ($iscidr and !$cluster and ($active ne "CT_SUBNET_LIMIT")) {
+	if (defined $iscidr and length $iscidr and !$cluster and ($active ne "CT_SUBNET_LIMIT")) {
 		if ($config{DEBUG} >= 1) {logfile("debug: IP [$ip] not blocked, contains a CIDR (ignore already blocked message)")}
 		return 1;
 	}
