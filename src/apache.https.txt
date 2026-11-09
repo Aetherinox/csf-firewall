@@ -8,8 +8,20 @@ Listen [::]:[SSLPORT]
 	DocumentRoot [DOCUMENTROOT]
 	UseCanonicalName Off
 	KeepAlive Off
+	<IfModule userdir_module>
+		UserDir disabled
+	</IfModule>
 	<Directory "[DIRECTORY]">
-		AllowOverride All
+		AllowOverride None
+		Options None
+		Require all denied
+	</Directory>
+	<Directory "[DOCUMENTROOT]">
+		AllowOverride None
+		Options None
+		Require all granted
+		DirectoryIndex index.php
+		FallbackResource /index.php
 	</Directory>
 	<IfModule suphp_module>
 		suPHP_Engine On
@@ -30,7 +42,6 @@ Listen [::]:[SSLPORT]
 	<IfModule mod_lsapi.c>
 		lsapi_user_group [USER] [USER]
 	</IfModule>
-	ScriptAlias /local-bin /usr/bin
 	<FilesMatch "\.(inc|php)$">
 		[PHPHANDLER]
 	</FilesMatch>
