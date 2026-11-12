@@ -235,6 +235,112 @@ my @iptype_ipv6_prefixes = sort { length( $b ) <=> length( $a ) }
 	keys( %iptype_ipv6_ranges );
 
 # #
+#   CheckIP › Addr › Fast Checkip
+#
+#   Accept plain text IPv4 / IPv6 addrs, with or without a CIDR prefix,
+#   without calling addr_parse().
+#
+#   addr_parse() builds up to 3 Net::IP objects per CIDR, plus
+#   reverse_ip() and intip(), and checkip() / cccheckip() use none of
+#   it. csf and lfd call checkip() for every line of every CC_* / ASN
+#   zone, so with large CC_DENY lists that adds minutes to every
+#   csf -r and lfd restart.
+#
+#   Runs the same Net::IP steps that Net::IP->new() runs for a single
+#   addr ( ip_get_version, ip_expand_address, ip_iptobin ), and the
+#   same checks addr_parse() and _checkip_validate() run on the result.
+#
+#   Only returns accepted addrs. Anything else ( rejected, loopback,
+#   non-PUBLIC with require_public_ip, zone id, IPv4 mapped IPv6,
+#   binary / hex / decimal input ) returns undef, and the caller falls
+#   back to addr_parse(), so rejects are unchanged.
+#
+#   @params     ip              str                     v4, v6, or CIDR IP to validate
+#               opts            hashref                 Parser and validation options
+#   @return                     hashref|undef           Accepted IP
+#                                                           family              4 or 6
+#                                                           addr_zone_cidr      same value as addr_parse()
+#                                                       undef   Not accepted, use addr_parse()
+# #
+
+sub _checkip_fast
+{
+	my ( $ip, $opts ) = @_;
+
+	my $input_format    = defined( $opts->{input_format} )
+                            ? $opts->{input_format}
+                            : "auto";
+
+	return
+		if ref( $input_format ) or
+		   ( $input_format ne "auto" and $input_format ne "text" ) or
+		   length( $ip ) > IP_LENGTH_MAX;
+
+    # #
+    #   Addr must have a period or colon, so `auto` input_format
+    #   always handles it as text.
+    # #
+
+	my ( $addr, $cidr ) =
+        $ip =~ m{\A(@{[ IP_ADDRESS_CHARS ]})(?:/(@{[ CIDR_PREFIX ]}))?\z};
+
+	return
+		if !defined( $addr ) or $addr !~ /[.:]/;
+
+	my $family = index( $addr, ":" ) >= 0 ? IPV6_FAMILY : IPV4_FAMILY;
+	my $bits_count = $family == IPV4_FAMILY ? IPV4_BITS : IPV6_BITS;
+
+	return
+		if $family == IPV4_FAMILY and $addr !~ /\A$ipv4address\z/;
+
+	return
+		if $family == IPV6_FAMILY and $addr !~ /\A$ipv6address\z/;
+
+	return
+		if defined( $cidr ) and
+		   ( $cidr > $bits_count or $cidr == 0 );
+
+	my $version = Net::IP::ip_get_version( $addr );
+	return
+		if !$version or $version != $family;
+
+	my $addr_full = Net::IP::ip_expand_address( $addr, $family );
+	return
+		if !defined( $addr_full );
+
+	my $binip = Net::IP::ip_iptobin( $addr_full, $family );
+	return
+		if !defined( $binip ) or length( $binip ) != $bits_count;
+
+	my $addr_only = $family == IPV4_FAMILY
+                        ? Net::IP::ip_compress_v4_prefix( $addr_full, IPV4_BITS )
+                        : Net::IP::ip_compress_address( $addr_full, $family );
+
+	my $addr_regex = $family == IPV4_FAMILY ? $ipv4address : IP_ADDRESS_CHARS;
+	return
+		if !defined( $addr_only ) or $addr_only !~ /\A$addr_regex\z/ or
+		   $addr_full !~ /\A$addr_regex\z/;
+
+	$addr_only = lc( $addr_only )
+		if $family == IPV6_FAMILY;
+
+	my $iptype = addr_iptype( $binip, $family );
+	return
+		if !defined( $iptype ) or
+		   $iptype eq "IPV4MAP" or
+		   ( $family == IPV4_FAMILY and $addr_only =~ /\A127\./ ) or
+		   ( $family == IPV6_FAMILY and $addr_only eq "::1" ) or
+		   ( $opts->{require_public_ip} and
+		     $family == IPV4_FAMILY and $iptype ne "PUBLIC" );
+
+	return
+	{
+		family              => $family,
+		addr_zone_cidr      => defined( $cidr ) ? "$addr_only/$cidr" : $addr_only,
+	};
+}
+
+# #
 #   CheckIP › Addr › Validate Checkip
 #   
 #   Shared IP validation for checkip() and cccheckip(). All IPs will
@@ -297,6 +403,15 @@ sub _checkip_validate
 	else
 	{
 		$value = $ipin;
+	}
+
+	my $fast = _checkip_fast( $value, $opts );
+	if ( defined( $fast ) )
+	{
+		${$ipin} = $fast->{addr_zone_cidr}
+			if ref( $ipin ) eq "SCALAR";
+
+		return $fast->{family};
 	}
 
 	my $parsed = addr_parse( $value, $opts );
