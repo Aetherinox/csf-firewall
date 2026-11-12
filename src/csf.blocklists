@@ -90,14 +90,20 @@
 #   @details:               https://www.spamhaus.org/blocklists/do-not-route-or-peer/
 # #
 
+#   Both the text and JSON (NDJSON) variants of the DROP list are supported:
+
 #   SPAMDROP|86400|0|https://www.spamhaus.org/drop/drop.txt
+#   SPAMDROP|86400|0|https://www.spamhaus.org/drop/drop_v4.json
 
 # #
 #   @blocklist              Spamhaus IPv6 Don't Route Or Peer List (DROPv6)
 #   @details:               https://www.spamhaus.org/blocklists/do-not-route-or-peer/
 # #
 
+#   Both the text and JSON (NDJSON) variants of the DROPv6 list are supported:
+
 #   SPAMDROPV6|86400|0|https://www.spamhaus.org/drop/dropv6.txt
+#   SPAMDROPV6|86400|0|https://www.spamhaus.org/drop/drop_v6.json
 
 # #
 #   @blocklist              AbuseIPDB
