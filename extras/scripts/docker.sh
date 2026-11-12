@@ -660,6 +660,22 @@ fi
 
 iptables_flush()
 {
+    if [ "$1" = "accept" ]; then
+        warn "    Setting default chain policies to ${bluel}ACCEPT${end} before flushing"
+
+        run "${ipt4}" -P INPUT ACCEPT
+        run "${ipt4}" -P FORWARD ACCEPT
+        run "${ipt4}" -P OUTPUT ACCEPT
+
+        if [ -n "${ipt6}" ]; then
+            run "${ipt6}" -P INPUT ACCEPT
+            run "${ipt6}" -P FORWARD ACCEPT
+            run "${ipt6}" -P OUTPUT ACCEPT
+        fi
+    else
+        warn "    Default chain policies unchanged; use ${bluel}--flush-accept${end} to set ${bluel}ACCEPT${end} first and avoid locking yourself out"
+    fi
+
     info "    Flushing iptable chains and rules for ${bluel}IPv4${end}"
     
     run "${ipt4}" -F
@@ -1284,7 +1300,7 @@ opt_usage( )
     print "   ${blued}${bold}${app_name}${end} - v${app_version}"
     print "   ${greenl}${bold}${app_repo_url}"
     printf "   ${greym}${bold}${app_desc}\n"
-    printf "   ${magental}${app_file_this}${end} ${greyd}[ ${greym}--list${greyd} | ${greym}--restart${greyd} | ${greym}--flush${greyd} | ${greym}--detect${greyd} | ${greym}--dryrun${greyd} | ${greym}--version${greyd} | ${greym}--help ${greyd}]${end}" 1>&2
+    printf "   ${magental}${app_file_this}${end} ${greyd}[ ${greym}--list${greyd} | ${greym}--restart${greyd} | ${greym}--flush${greyd} | ${greym}--flush-accept${greyd} | ${greym}--detect${greyd} | ${greym}--dryrun${greyd} | ${greym}--version${greyd} | ${greym}--help ${greyd}]${end}" 1>&2
     echo
     echo
     printf '   %-5s %-40s\n' "${greyd}Syntax:${end}" "" 1>&2
@@ -1304,6 +1320,7 @@ opt_usage( )
     printf '   %-5s %-81s %-40s\n' "    " "${blued}-l${greyd},${blued}  --list ${yellowd}${end}                       " "list all docker containers and associated information${end}" 1>&2
     printf '   %-5s %-81s %-40s\n' "    " "${blued}-r${greyd},${blued}  --restart ${yellowd}${end}                    " "restart csf and lfd services${end}" 1>&2
     printf '   %-5s %-81s %-40s\n' "    " "${blued}-f${greyd},${blued}  --flush ${yellowd}${end}                      " "flush all iptable rules from server${end}" 1>&2
+    printf '   %-5s %-81s %-40s\n' "    " "${blued}-fa${greyd},${blued} --flush-accept ${yellowd}${end}              " "set default chain policies to ACCEPT, then flush all iptable rules${end}" 1>&2
     printf '   %-5s %-81s %-40s\n' "    " "${blued}-d${greyd},${blued}  --dryrun ${yellowd}${end}                     " "simulates installation, does not install csf ${navy}<default> ${peach}${argDryrun:-"disabled"} ${end}" 1>&2
     printf '   %-5s %-81s %-40s\n' "    " "${blued}-v${greyd},${blued}  --version ${yellowd}${end}                    " "current version of this utilty ${navy}<current> ${peach}${app_version:-"unknown"} ${end}" 1>&2
     printf '   %-5s %-81s %-40s\n' "    " "${blued}-h${greyd},${blued}  --help ${yellowd}${end}                       " "show this help menu ${end}" 1>&2
@@ -1343,6 +1360,11 @@ while [ "$#" -gt 0 ]; do
 
         -f|--flush)
             iptables_flush
+            exit 1
+            ;;
+
+        -fa|--flush-accept)
+            iptables_flush accept
             exit 1
             ;;
 

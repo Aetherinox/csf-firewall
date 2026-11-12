@@ -390,6 +390,22 @@ Completely flushes all **iptable** rules.
 <br />
 <br />
 
+#### Flush Accept
+<!-- md:version stable-15.10 --> <!-- md:command `-fa, --flush-accept` -->
+
+Sets the default chain policies to **ACCEPT** (IPv4 and IPv6), then completely flushes all **iptable** rules.
+
+Use this option instead of `--flush` when connected remotely to avoid locking yourself out; plain `--flush` may leave a `DROP` policy in place with no rules.
+
+=== ":aetherx-axs-command: Command"
+
+    ```bash
+    sudo sh /usr/local/include/csf/post.d/docker.sh --flush-accept
+    ```
+
+<br />
+<br />
+
 #### Dryrun
 <!-- md:version stable-15.05 --> <!-- md:command `-d, --dryrun` -->
 
