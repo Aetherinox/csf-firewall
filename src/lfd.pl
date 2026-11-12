@@ -7392,7 +7392,9 @@ sub ccindex {
 # check re-reads the database and repopulates every CC_* ipset.
 # Nothing is written when the database could not be read (a failed download
 # or unzip leaves it missing or empty), and a zone that still has entries is
-# kept, so a broken database never replaces existing zones.
+# kept, so a broken database never replaces existing zones. Such a zone (e.g.
+# written from another CC_SRC, or before the prefixes left the database) gets
+# a new mtime instead, or it would be out of date again after CC_INTERVAL days.
 sub ccemptyzone {
 	my $file = shift;
 	my $db = shift;
@@ -7402,7 +7404,10 @@ sub ccemptyzone {
 		flock ($IN, LOCK_SH);
 		my @entries = grep {!/^(\s|\#|$)/} <$IN>;
 		close ($IN);
-		if (@entries) {return}
+		if (@entries) {
+			utime (undef, undef, $file);
+			return;
+		}
 	}
 	sysopen (my $CIDROUT, $file, O_WRONLY | O_CREAT);
 	flock ($CIDROUT, LOCK_EX);
