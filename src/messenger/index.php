@@ -18,6 +18,7 @@
 		require( $fileRecaptcha );
     ?>
 	<?php
+        // $lang defined in csf/messenger/en.php
         $lang = defined( 'DEBUG' ) && DEBUG == 1 ? DEBUG_LANGUAGE : ( isset( $_SERVER[ 'HTTP_ACCEPT_LANGUAGE' ] ) ? $_SERVER[ 'HTTP_ACCEPT_LANGUAGE' ] : 'en' );
         $lang = strtolower( substr( $lang, 0, 2 ) );
 

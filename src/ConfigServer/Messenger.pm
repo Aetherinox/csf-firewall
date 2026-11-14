@@ -494,7 +494,8 @@ sub messenger
 		chomp @status;
 		my $vmsize = 0;
 		my $vmrss = 0;
-		foreach my $line (@status) {
+		foreach my $line ( @status )
+        {
 			if ($line =~ /^VmSize:\s+(\d+) kB$/) {$vmsize = $1}
 			if ($line =~ /^VmRSS:\s+(\d+) kB$/) {$vmrss = $1}
 		}
@@ -503,12 +504,12 @@ sub messenger
 		logfile("lfd $oldtype messenger using $vmsize kB of VIRT memory at startup, adding up to $config{MESSENGER_CHILDREN} children = ".(($config{MESSENGER_CHILDREN} + 1) * $vmsize)." kB");
 	}
 
-    logfile( "DEBUG:1", "info", "[" . SUB_MESSENGER_V1 . "] reee  1" );
+    # #
+    #   If $user not empty; proceed
+    # #
 
-
-	if ($user ne "")
+	if ( $user ne "" )
 	{
-            logfile( "DEBUG:1", "info", "[" . SUB_MESSENGER_V1 . "] Found user  1" );
 		my ( undef, undef, $uid, $gid, undef, undef, undef, $homedir ) = getpwnam( $user );
 
 		# #

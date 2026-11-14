@@ -2851,6 +2851,89 @@ sub _validate_secret_parent_dirs
 }
 
 # #
+#   Secrets › Secret › Prepare Name
+#   
+#   Normalize setting name, remove spaces, reject missing / refs /
+#   oversized, convert to uppercase.
+#   
+#   This sub does NOT pass the secret's value, name only.
+#   
+#   Eg:         " --api-key "           => API_KEY
+#               "-password"             => PASSWORD
+#               "database-password"     => DATABASE_PASSWORD
+#               "api.key"               => undef
+#               "api key"               => undef
+#   
+#   @test       Note:           Prepare cmd option with secret.
+#               Command:        sudo env DEBUG=4 perl -I. -MConfigServer::Secrets -e "print ConfigServer::Secrets::_secret_prepare_name(q{ --api-key }), qq{\n};"
+#               Result:         API_KEY
+#   
+#   @params     name            str         Setting name to prepare as secret
+#   @return     secret_name     str         Secret name
+#                                               str         Uppercase secret name
+#                                               undef       Name not valid
+# #
+
+sub _secret_prepare_name
+{
+    my ( $name ) = @_;
+
+    return
+        if !defined( $name ) or ref( $name );
+
+    $name               = "$name";
+    my $name_bytes      = _octet_length( $name );
+    my $name_too_long   = $name_bytes > SETTING_NAME_BYTE_MAXIMUM;
+
+    ConfigServer::DebugLocal::log( 0, 'warn',
+        "name:[$name] len:[$name_bytes] " .
+        "max:[" . SETTING_NAME_BYTE_MAXIMUM . "] " .
+        "status:[rejected; name exceeds byte limit]"
+    ) if $name_too_long;
+
+    return
+        if $name_too_long;
+
+    # #
+    #   @note       Only 1 or 2 leading hyphens are removed.
+    #               Additional hyphens are converted to underscores:
+    #                   ---DEV-SETTING => _DEV_SETTING
+    # #
+
+    # remove leading / trailing spaces
+    ( $name ) = $name =~ /\A\s*(.*?)\s*\z/s;
+
+    # count leading hyphens: '--' = 2, '-' = 1, none = 0
+    my $opt_prefix_len = index( $name, "--" ) == 0
+                            ? 2
+                            : index( $name, "-"  ) == 0
+                                ? 1
+                                : 0;
+
+    substr( $name, 0, $opt_prefix_len, "" )
+        if $opt_prefix_len;
+
+    $name               =~ tr/-/_/; # remaining - to _
+    my $name_invalid    = $name eq "" || $name !~ /\A[A-Za-z0-9_]+\z/;
+
+    ConfigServer::DebugLocal::log( 1, 'warn',
+        "name:[$name] status:[rejected; name empty or has invalid chars]"
+    ) if $name_invalid;
+
+    return
+        if $name_invalid;
+
+    $name = uc( $name );
+
+    ConfigServer::DebugLocal::log( 1, 'ok',
+        "name:[$name] len:[" . _octet_length( $name ) . "] " .
+        "max:[" . SETTING_NAME_BYTE_MAXIMUM . "] status:[ok]"
+    );
+
+    return $name;
+}
+
+# #
 #   Secrets › Reader › Finish Protected File
 #   
 #   Release file from its lock; and close.
@@ -3016,89 +3099,6 @@ sub _set_close_on_exec
         $flags_cmd_set,
         $flags_curr | $flag_cloexec,
     ) ? 1 : undef;
-}
-
-# #
-#   Secrets › Secret › Prepare Name
-#   
-#   Normalize setting name, remove spaces, reject missing / refs /
-#   oversized, convert to uppercase.
-#   
-#   This sub does NOT pass the secret's value, name only.
-#   
-#   Eg:         " --api-key "           => API_KEY
-#               "-password"             => PASSWORD
-#               "database-password"     => DATABASE_PASSWORD
-#               "api.key"               => undef
-#               "api key"               => undef
-#   
-#   @test       Note:           Prepare cmd option with secret.
-#               Command:        sudo env DEBUG=4 perl -I. -MConfigServer::Secrets -e "print ConfigServer::Secrets::_secret_prepare_name(q{ --api-key }), qq{\n};"
-#               Result:         API_KEY
-#   
-#   @params     name            str         Setting name to prepare as secret
-#   @return     secret_name     str         Secret name
-#                                               str         Uppercase secret name
-#                                               undef       Name not valid
-# #
-
-sub _secret_prepare_name
-{
-    my ( $name ) = @_;
-
-    return
-        if !defined( $name ) or ref( $name );
-
-    $name               = "$name";
-    my $name_bytes      = _octet_length( $name );
-    my $name_too_long   = $name_bytes > SETTING_NAME_BYTE_MAXIMUM;
-
-    ConfigServer::DebugLocal::log( 0, 'warn',
-        "name:[$name] len:[$name_bytes] " .
-        "max:[" . SETTING_NAME_BYTE_MAXIMUM . "] " .
-        "status:[rejected; name exceeds byte limit]"
-    ) if $name_too_long;
-
-    return
-        if $name_too_long;
-
-    # #
-    #   @note       Only 1 or 2 leading hyphens are removed.
-    #               Additional hyphens are converted to underscores:
-    #                   ---DEV-SETTING => _DEV_SETTING
-    # #
-
-    # remove leading / trailing spaces
-    ( $name ) = $name =~ /\A\s*(.*?)\s*\z/s;
-
-    # count leading hyphens: '--' = 2, '-' = 1, none = 0
-    my $opt_prefix_len = index( $name, "--" ) == 0
-                            ? 2
-                            : index( $name, "-"  ) == 0
-                                ? 1
-                                : 0;
-
-    substr( $name, 0, $opt_prefix_len, "" )
-        if $opt_prefix_len;
-
-    $name               =~ tr/-/_/; # remaining - to _
-    my $name_invalid    = $name eq "" || $name !~ /\A[A-Za-z0-9_]+\z/;
-
-    ConfigServer::DebugLocal::log( 1, 'warn',
-        "name:[$name] status:[rejected; name empty or has invalid chars]"
-    ) if $name_invalid;
-
-    return
-        if $name_invalid;
-
-    $name = uc( $name );
-
-    ConfigServer::DebugLocal::log( 1, 'ok',
-        "name:[$name] len:[" . _octet_length( $name ) . "] " .
-        "max:[" . SETTING_NAME_BYTE_MAXIMUM . "] status:[ok]"
-    );
-
-    return $name;
 }
 
 # #
