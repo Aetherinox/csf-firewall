@@ -14405,6 +14405,36 @@ sub updateconfig
 	return;
 }
 
+# #
+#   LFD › Statistics
+#   
+#   Iptables sends a new log to syslog. Syslog then writes that log to:
+#       IPTABLES_LOG = "/var/log/messages"
+#   
+#   LFD reads the IPTABLES_LOG, creates a forked child process, which 
+#   saves the log event to:
+#       /var/lib/csf/stats/iptables_log
+#   
+#   Optionally adds lookup info for src or dest IPs to the log if:
+#       ST_LOOKUP = "1"
+#   
+#   If stats file '/var/lib/csf/stats/iptables_log' exceeds the size
+#   limit, keep X number of recent entries, defined in:
+#       ST_IPTABLES = "100"
+#   
+#   Stop child process if it runs longer than 15s.
+#   
+#   Requires csf.conf:
+#       ST_ENABLE       = "1"
+#       IPTABLES_LOG    = "/var/log/messages"
+#       ST_IPTABLES     = "100"
+#   
+#   @params     line                str         iptables log
+#               type                str         Stats type
+#                                                   Eg: "iptables"
+#   @return                         void        No value returned
+# #
+
 sub stats
 {
 	my $line = shift;
@@ -14419,10 +14449,15 @@ sub stats
 	$forks{$childpid} = 1;
 	unless ( $childpid )
 	{
-		my $timer = time;
+		my $stats_timer_abort   = 15;
+        my $stats_timed_out     = 0;
+        my $stats_file_iptlog   = "/var/lib/csf/stats/iptables_log";
+		my $stats_entry_bytes   = 2048;
+		my $timer               = time;
+
 		if ( $config{DEBUG} >= 3 )
 		{
-			$timer = &timer( "start","stats", $timer )
+			$timer = &timer( "start", "stats", $timer )
 		}
 	
 		$0 = "lfd - (child) Statistics...";
@@ -14430,9 +14465,13 @@ sub stats
 		eval
 		{
 			local $SIG{__DIE__} 	= undef;
-			local $SIG{'ALRM'} 		= sub {die};
+			local $SIG{'ALRM'} 		= sub
+			{
+				$stats_timed_out = 1;
+				die "Stats timeout\n";
+			};
 	
-			alarm(15);
+			alarm( $stats_timer_abort );
 	
 			if ( $type eq "iptables" )
 			{
@@ -14449,12 +14488,18 @@ sub stats
 					elsif ( $out and $dst )	{ $text	= iplookup( $dst ) }
 				}
 
-				sysopen (my $IPTABLES, "/var/lib/csf/stats/iptables_log", O_WRONLY | O_APPEND | O_CREAT);
+				sysopen ( my $IPTABLES, $stats_file_iptlog, O_WRONLY | O_APPEND | O_CREAT );
 				flock ($IPTABLES, LOCK_EX);
 				print $IPTABLES "$text|$line\n";
 				close ($IPTABLES);
 
-				if ((stat("/var/lib/csf/stats/iptables_log"))[7] > (2048 * $config{ST_IPTABLES})) {
+				my $stats_file_size = ( stat( $stats_file_iptlog ) )[7];
+
+				die "Unable to get size of [ $stats_file_iptlog ]: $!\n"
+					if !defined( $stats_file_size );
+
+				if ( $stats_file_size > ( $stats_entry_bytes * $config{ST_IPTABLES} ) )
+				{
 					my $lockstr = "ST_IPTABLES";
 					sysopen (my $THISLOCK, "/var/lib/csf/lock/$lockstr.lock", O_RDWR | O_CREAT) or &shutdown_child("*Error* Unable to open /var/lib/csf/lock/$lockstr.lock");
 					unless (flock ($THISLOCK, LOCK_EX | LOCK_NB)) {
@@ -14466,7 +14511,7 @@ sub stats
 					}
 
 					print $THISLOCK time;
-					sysopen (my $IPTABLES, "/var/lib/csf/stats/iptables_log", O_RDWR | O_CREAT);
+					sysopen ( my $IPTABLES, $stats_file_iptlog, O_RDWR | O_CREAT );
 					flock ($IPTABLES, LOCK_EX);
 
 					my @iptables = <$IPTABLES>;
@@ -14482,19 +14527,25 @@ sub stats
 					close ($IPTABLES);
 				}
 
-				if ( $config{DEBUG} >= 2 )
-                {
-                    logfile( "debug: STATS added iptables [ $src => $dst ] log line" );
-                }
+                logfile( "debug:2", "info", "STATS: Added [ $src => $dst ] to [ $stats_file_iptlog ]" );
 			}
 			alarm(0);
 		};
 
-		alarm(0);
+		alarm( 0 );
 
-		if ( $@ )
+		my $stats_error = $@;
+		if ( $stats_timed_out )
 		{
-			logfile("STATS: 15 sec. timeout performing iptables_log")
+			logfile( "normal", "warn", "STATS: Timed out after [ $stats_timer_abort ] secs while saving iptables log event to [ $stats_file_iptlog ]" );
+		}
+		elsif ( $stats_error ne "" )
+		{
+			my $stats_error_log = ConfigServer::Validate::normalize_text_fragment( $stats_error );
+			$stats_error_log = "Unknown error"
+				if !defined( $stats_error_log ) or $stats_error_log eq "";
+
+			logfile( "normal", "error", "STATS: Error saving to [ $stats_file_iptlog ]: $stats_error_log" );
 		}
 
 		if ($config{DEBUG} >= 3) {$timer = &timer("stop","stats",$timer)}
