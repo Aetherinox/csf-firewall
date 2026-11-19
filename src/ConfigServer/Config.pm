@@ -725,7 +725,11 @@ sub config
 # #
 #   Config › Reset Loaded Config
 #   
-#   Clear cached config, setting map, and warnings.
+#   Clear loaded config settings, settings map, and warnings.
+#   The next loadconfig() call reads and loads config again.
+#   
+#   @params     void
+#   @return     void            No value returned
 # #
 
 sub resetconfig
@@ -749,12 +753,50 @@ sub configsetting
 }
 
 # #
+#   Config › Get › Setting
+#   
+#   Returns a single setting either from Config.pm, or from a 
+#   provided config hashref override ($copy).
+#   
+#   Return provided default if the setting is missing.
+#   
+#   @usage      ConfigServer::Config->get( "LF_APACHE_404", 0 );
+#               ConfigServer::Config->get( "LF_APACHE_404", 0, \%config );
+#   
+#   @params     setting         scalar          Setting name
+#               def             scalar|undef    Value to return if setting missing
+#               copy            hashref|undef   (Optional) config hash override
+#   @return     value           scalar|undef    Loaded setting value / default value
+# #
+
+sub get
+{
+	my ( $class, $setting, $def, $copy ) = @_;
+
+	$setting = _trim( $setting, 1 );
+
+	return undef
+		if !defined( $setting ) or $setting eq "";
+
+	$copy = \%config
+		if !defined( $copy );
+
+	return $def
+		if ref( $copy ) ne "HASH";
+
+	return $copy->{$setting}
+		if exists( $copy->{$setting} );
+
+	return $def;
+}
+
+# #
 #	Config › Get › Single Value
 #	
-#	Read a single setting in csf.conf without needing to load the
-#	entire CSF configuration.
+#	Get a single setting in csf.conf without needing to load the
+#	entire CSF config.
 #	
-#	This does not call loadconfig() or perform any of its config
+#	Does not call loadconfig() or perform any of its config
 #	validation or system checks.
 #	
 #	@usage			ConfigServer::Config->getsingle( "DEBUG" );
