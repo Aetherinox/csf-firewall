@@ -9,7 +9,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            11.07.2026
+#   @updated            11.19.2026
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -49,8 +49,8 @@
 #  
 #   
 #   DEBUG LOG:
-#       Description:
-#       -   DEBUG:X accepts value from 0 to 5:
+#       Desc:
+#       -   debug:X accepts value from 0 to 5:
 #               0       Normal logs             Secrets Redacted        Logs 0 only
 #               1       Normal debug logs       Secrets Redacted        Logs 0 - 1
 #               2       Verbose debug logs      Secrets Redacted        Logs 0 - 2
@@ -58,13 +58,13 @@
 #               4       Prolix debug logs       Secrets Redacted        Logs 0 - 4
 #               5       Specialized logs        Secrets Redacted        Logs 0 - 5
 #   
-#       Usage:              ConfigServer::Logger::logfile( "DEBUG:2", "info", "Debug log msg" );
+#       Usage:              ConfigServer::Logger::logfile( "debug:2", "info", "Debug log msg" );
 #       Path (Root):        /var/log/lfd.log
 #       Path (Non-root):    /var/log/lfd_messenger.log
 #   
 #   
 #   NORMAL LOG:
-#       Description:
+#       Desc:
 #       -   Write to lfd.log when running as root.
 #       -   Write to lfd_messenger.log when ruid / euid match and are non-root.
 #       -   Not suppressed or controlled by the DEBUG setting.
@@ -75,7 +75,7 @@
 #   
 #   
 #   ROOT LOG:
-#       Description:
+#       Desc:
 #       -   For specialized root / core CSF functionality.
 #       -   Does not load /etc/csf/csf.conf.
 #       -   Does not write to syslog.
@@ -85,7 +85,7 @@
 #   
 #   
 #   ALL LOG:
-#       Description:
+#       Desc:
 #       -   When running as root, writes to both 'normal' and 'root' logs.
 #       -   Do not use after Messenger drops root privileges because the
 #               'root' log is attempted first.
@@ -96,14 +96,14 @@
 #   
 #   
 #   MESSENGER LOG:
-#       Description:
+#       Desc:
 #       -   Not a directly triggered log type.
-#       -   Triggers when the Logger module is called using TARGET
-#               'normal' or 'DEBUG:X'; AND the LFD Messenger process
-#               is running as MESSENGER_USER.
+#           Triggers when Logger module is called using TARGET
+#               'normal' or 'debug:X'; AND LFD Messenger process
+#               is running as MESSENGER_USER (csf.conf).
 #       -   LFD Messenger starts as root, then changes to
 #               MESSENGER_USER. After changing users, Logger writes
-#               'normal' and DEBUG:X messages to /var/log/lfd_messenger.log.
+#               'normal' and debug:X messages to /var/log/lfd_messenger.log.
 #       -   LFD Messenger process's ruid and euid must match.
 #       -   Log must be owned by MESSENGER_USER and mode 0600.
 #   
@@ -112,11 +112,11 @@
 #   
 #   
 #   SYSLOG:
-#       Description:
+#       Desc:
 #       -   Sends messages to system log.
 #       -   Requires SYSLOG to be enabled in /etc/csf/csf.conf.
 #       -   Requires Sys::Syslog to load successfully.
-#       -   Logs with TARGET 'normal', 'all', 'DEBUG:X' are sent to syslog.
+#       -   Logs with TARGET 'normal', 'all', 'debug:X' are sent to syslog.
 #       -   Logs with TARGET 'root' don't use syslog.
 #   
 #       Usage:              ConfigServer::Logger::logfile( "normal", "info", "Syslog msg" );
@@ -142,6 +142,29 @@ Load module:
 
 Call logfile():
 
+    # #
+    #   1 Argument
+    #   logfile( $message );
+    # #
+
+    ConfigServer::Logger::logfile(
+        "CSF Log msg"
+    );
+
+    # #
+    #   2 Arguments
+    #   logfile( $status, $message );
+    # #
+
+    ConfigServer::Logger::logfile(
+        "warn", "CSF Log msg"
+    );
+
+    # #
+    #   3 Arguments
+    #   logfile( $target, $status, $message );
+    # #
+
     ConfigServer::Logger::logfile(
         "normal", "info", "CSF log message"
     );
@@ -163,7 +186,7 @@ and the most important notes to take into consideration.
 
 =item *
 
-Log messages are written to the persistent log files:
+Log messages are written to persistent log files:
 
     Type            Log Location
     --------------- --------------------------------
@@ -174,7 +197,7 @@ Log messages are written to the persistent log files:
 
 =item *
 
-No log messages are sent to the terminal. For terminal only debug
+No log messages are sent to a terminal. For terminal only debug
 messages; see module C<ConfigServer::DebugLocal>.
 
 =item *
@@ -203,11 +226,11 @@ B<TARGET>:
 
 =item *
 
-C<normal> (default) - Write to the normal LFD log.
+C<normal> (default) - Write to normal LFD log.
 
 =item *
 
-C<root> - Write to the root LFD log.
+C<root> - Write to root LFD log.
 
 =item *
 
@@ -327,7 +350,7 @@ Log destination depends on B<TARGET> AND the user running the process:
 
 When LFD starts Messenger, the Messenger process initially runs as
 root. During initialization, Messenger calls
-C<ConfigServer::MessengerSecurity::identity_restrict()>, which changes
+C<ConfigServer::MessengerSecurity::identity_cage()>, which changes
 the process identity to the user configured by C<MESSENGER_USER> in
 C</etc/csf/csf.conf> and permanently removes root access.
 
@@ -335,7 +358,7 @@ Messenger will then verify that root access cannot be regained.
 
 =item *
 
-After Messenger changes its process identity from root to
+After Messenger module changes its process identity from root to
 C<MESSENGER_USER> and verifies that root access cannot be regained,
 messages sent to C<ConfigServer::Logger::logfile()> using the C<normal>
 or C<debug:X> B<TARGET> are written to C</var/log/lfd_messenger.log>.
@@ -347,7 +370,7 @@ access. This security restriction is intentional.
 =item *
 
 Messenger begins accepting client connections only after
-C<ConfigServer::MessengerSecurity::identity_restrict()> changes the
+C<ConfigServer::MessengerSecurity::identity_cage()> changes the
 process identity from root to the UID and GID of C<MESSENGER_USER>.
 
 If the restriction fails before the identity change begins, Messenger
@@ -490,7 +513,7 @@ mode C<0600>.
 
 When LFD starts Messenger, the Messenger process initially runs as
 root. During initialization, Messenger calls
-C<ConfigServer::MessengerSecurity::identity_restrict()>, which changes
+C<ConfigServer::MessengerSecurity::identity_cage()>, which changes
 the process identity to the user configured by C<MESSENGER_USER> in
 C</etc/csf/csf.conf> and permanently removes root access.
 
@@ -558,7 +581,7 @@ Write C<normal> log as root and check the result:
 
     if ( !$result ) { die "Log write failed\n"; }
 
-Logger writes the message to:
+Logger writes log message to file:
 
     /var/log/lfd.log
 
@@ -570,25 +593,25 @@ Write C<normal> log as root without checking the result:
         "normal", "info", "CSF log message"
     );
 
-Logger writes the message to:
+Logger writes log message to file:
 
     /var/log/lfd.log
 
 =item *
 
-Prepare the Messenger log before changing from root to
+Initialize Messenger logs before changing from root to
 C<MESSENGER_USER>:
 
     my ( undef, undef, $uid, $gid ) = getpwnam( $config{MESSENGER_USER} );
 
-    my ( $prepared, $error ) = ConfigServer::Logger::msngr_log_prepare(
-        $uid,
-        $gid
+    my ( $log_ok, $log_err ) = ConfigServer::Logger::msngr_log_initialize(
+        $messenger_uid,
+        $messenger_gid,
     );
 
-    if ( !$prepared )
+    if ( !$log_ok )
     {
-        die "Messenger log preparation failed: $error\n";
+        die "Messenger log initialization failed: $log_err\n";
     }
 
 After LFD changes from root to C<MESSENGER_USER>, use the same
@@ -598,7 +621,7 @@ C<normal> log call:
         "normal", "info", "Messenger log message"
     );
 
-Logger writes the message to:
+Logger writes log message to file:
 
     /var/log/lfd_messenger.log
 
@@ -643,32 +666,26 @@ Write to target C<root> using status C<info>:
 Write to both C<normal> and C<root> using target C<all> and status
 C<ok>:
 
-    ConfigServer::Logger::logfile(
-        "all", "ok", "CSF log msg"
-    );
+    ConfigServer::Logger::logfile( "all", "ok", "CSF log msg" );
 
 =item *
 
 Write to target C<debug:4> using status C<info>:
 
-    ConfigServer::Logger::logfile(
-        "DEBUG:4", "info", "CSF log msg"
-    );
+    ConfigServer::Logger::logfile( "debug:4", "info", "CSF log msg" );
 
 =item *
 
 Write to target C<root> using custom status C<testing>:
 
-    ConfigServer::Logger::logfile(
-        "root", "testing", "CSF log msg"
-    );
+    ConfigServer::Logger::logfile( "root", "testing", "CSF log msg" );
 
 =item *
 
 Each example below writes the same message to the normal log.
-C<DEBUG:0> is treated as a normal log target.
+C<debug:0> is treated as a normal log target.
 
-    ConfigServer::Logger::logfile( "DEBUG:0", "info", "Message" );
+    ConfigServer::Logger::logfile( "debug:0", "info", "Message" );
     ConfigServer::Logger::logfile( "info", "Message" );
     ConfigServer::Logger::logfile( "normal", "info", "Message" );
 
@@ -924,11 +941,11 @@ use constant
 #   module reads the DEBUG setting from /etc/csf/csf.conf:
 #       DEBUG = "1"
 #   
-#   The DEBUG setting in csf.conf decides which DEBUG:X log messages
+#   The DEBUG setting in csf.conf decides which debug:X log messages
 #   are written to file.
 #   
 #   DEBUG_LEVEL_MAX
-#       Highest DEBUG:X log level accepted by logfile().
+#       Highest debug:X log level accepted by logfile().
 #       Used as current debug level if testing on Windows;
 #           (Windows env does not load /etc/csf/csf.conf)
 # #
@@ -1021,7 +1038,7 @@ sub _config_load
     # #
     #   Windows does not load /etc/csf/csf.conf.
     #   
-    #   Allow any DEBUG:X log level and disable syslog so that   the
+    #   Allow any debug:X log level and disable syslog so that   the
     #   ConfigServer::Logger module can run tests in Windows.
     #   
     #   @todo       Possibly add Windows support for Config module
@@ -1131,9 +1148,7 @@ if ( -e '/proc/sys/kernel/hostname' )
 
 my $hostshort = ( split( /\./, $hostname, 2 ) )[ 0 ];
 $hostshort = HOSTNAME_DEFAULT
-    if !defined( $hostshort ) or
-       length( $hostshort ) > HOSTNAME_LABEL_CHAR_MAX or
-       $hostshort !~ /\A[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\z/;
+    if !defined( $hostshort ) or length( $hostshort ) > HOSTNAME_LABEL_CHAR_MAX or $hostshort !~ /\A[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\z/;
 
 # #
 #   Logger › Paths › Normal Log
@@ -1327,7 +1342,7 @@ sub _logger_handle_finish
 #                               Target:     root
 #                               Status:     info
 #   
-#   @params     type            str         (Optional) normal, root, all, or DEBUG:X
+#   @params     type            str         (Optional) normal, root, all, or debug:X
 #               status          str|int     (Optional) log status
 #               message         any         Message / obj to redact and log
 #   
@@ -1449,8 +1464,8 @@ sub logfile
     # #
 
     # #
-    #   @usage      Logger::logfile( "DEBUG:0", "info", "This is a debug msg" );
-    #               Logger::logfile( "DEBUG:5", "info", "This is a debug msg" );
+    #   @usage      Logger::logfile( "debug:0", "info", "This is a debug msg" );
+    #               Logger::logfile( "debug:5", "info", "This is a debug msg" );
     # #
 
     if ( $type =~ /\ADEBUG:([0-9])\z/i and $1 <= DEBUG_LEVEL_MAX )
@@ -1514,7 +1529,7 @@ sub logfile
         my ( $root_ok, $root_err )  = _log_add( $logfile_root, $root_line );
         if ( !$root_ok )
         {
-            print STDERR "[ERROR] Unable to write log file [$logfile_root]: $root_err\n";
+            print STDERR "[ERROR] Unable to write log file [ $logfile_root ]: $root_err\n";
             return;
         }
 
@@ -1581,7 +1596,7 @@ sub logfile
     _syslog_load( );
 
     my $logfile     = _normal_log_path( $logdir );
-    $normal_line    = "$date_ts $hostshort " . LOGFILE_PROCESS . "[ $$ ] [$src] [$status]" . ( $debug_type ne "" ? " [$debug_type]" : "" ) . ": $message\n";
+    $normal_line    = "$date_ts $hostshort " . LOGFILE_PROCESS . "[ $$ ] [ $src ] [ $status ]" . ( $debug_type ne "" ? " [$debug_type]" : "" ) . ": $message\n";
 
     my $ruid        = $^O eq 'MSWin32' ? $< : POSIX::getuid( );
     my $euid        = $^O eq 'MSWin32' ? $> : POSIX::geteuid( );
@@ -1589,10 +1604,10 @@ sub logfile
     # #
     #   Logfile › Type › Normal / Debug › Messenger
     #   
-    #   @warn       During initialization, Messenger runs the sub
-    #               identity_restrict(), which changes the process
-    #               from root to MESSENGER_USER, and verifies that
-    #               root access cannot be regained.
+    #   @warn       During init, Messenger runs identity_cage(),
+    #               which changes the process user from root to
+    #               MESSENGER_USER, and verifies that root access
+    #               cannot be regained.
     #   
     #               After this change, use only the targets 'normal'
     #               or 'debug:X' to write to /var/log/lfd_messenger.log.
@@ -1628,7 +1643,7 @@ sub logfile
         my ( $written, $write_err ) = _log_add( $logfile, $normal_line );
         if ( !$written )
         {
-            print STDERR "[ERROR] Unable to write log file [$logfile]: $write_err\n";
+            print STDERR "[ERROR] Unable to write log file [ $logfile ]: $write_err\n";
             return;
         }
 
@@ -1639,9 +1654,10 @@ sub logfile
     #   Logfile › Syslog Enabled
     #   
     #   Log lfd messages to SYSLOG in addition to selected log file.
-    #   Must have the perl module Sys::Syslog installed to use
+    #   Must have module Sys::Syslog installed to use
     #   
     #   Configured in /etc/csf/csf.conf
+    #       SYSLOG = "1"
     #   
     #   @test       Note:           Test SYSLOG without having to fire up CSF. Makes life easier.
     #               Command:        sudo env DEBUG=4 perl -I. -MSys::Syslog -e 'eval { Sys::Syslog::openlog("lfd","ndelay,pid","user"); Sys::Syslog::syslog("info","%s","CSF SYSLOG TEST"); Sys::Syslog::closelog(); 1 } or die "Syslog failed\n"; print "Sent\n";'
@@ -1663,20 +1679,16 @@ sub logfile
 
         if ( $syslog_written )
         {
-            ConfigServer::DebugLocal::log( 1, 'ok',
-                "process:[" . LOGFILE_PROCESS . "] status:[syslog write completed]"
-            );
+            ConfigServer::DebugLocal::log( 1, 'ok', "process:[" . LOGFILE_PROCESS . "] status:[syslog write completed]" );
         }
         else
         {
-            ConfigServer::DebugLocal::log( 1, 'warn',
-                "process:[" . LOGFILE_PROCESS . "] status:[syslog write failed]"
-            );
+            ConfigServer::DebugLocal::log( 1, 'warn', "process:[" . LOGFILE_PROCESS . "] status:[syslog write failed]" );
         }
     }
 
     # #
-    #   Summary of what is returned
+    #   Return Summary
     #   
     #   @tag[2001]      Logger::logfile:return
     #   
@@ -1697,9 +1709,9 @@ sub logfile
     #                       1 = message suppressed and not written
     #   
     #   target          Final log target written
-    #                       - normal
-    #                       - root
-    #                       - all
+    #                       Options:    normal
+    #                                   root
+    #                                   all
     #   
     #   status          Final mapped status
     #                       Eg:         "warn"
@@ -1712,15 +1724,15 @@ sub logfile
     #   
     #   debug_level     DEBUG level requested by caller:
     #                       Eg:         3
-    #                       Returns:    undef for a normal/root/all log
+    #                       Return:     undef for a normal/root/all log
     #   
     #   root_line       Complete formatted log written to root log
     #                       Eg:         "Oct 11 04:10:00 csf lfd[ 1234 ] [ROOT] [Logger.pm::test_sub():454] [info]: Message\n"
-    #                       Returns:    undef if no root log was written
+    #                       Return:     undef if no root log was written
     #   
     #   line            Complete line written to normal or Messenger log
     #                       Eg:         "Oct 11 04:10:00 csf lfd[ 1234 ] [Logger.pm::test_sub():454] [info]: Message\n"
-    #                       Returns:    undef if no normal log was written
+    #                       Return:     undef if no normal log was written
     # #
 
     return
@@ -1740,35 +1752,35 @@ sub logfile
 }
 
 # #
-#   Logger › Messenger › Prepare
+#   Logger › Messenger › Initialize
 #	
-#	Prepare Messenger log before Messenger drops root privileges.
+#   Set up the Messenger logs before Messenger changes from root to
+#   MESSENGER_USER.
+#   
+#   Apply / verify required owner, group, and file perms.
 #   
 #   @test       Note:           Reject missing Messenger owner ids
-#               Command:        sudo env DEBUG=4 perl -I. -MConfigServer::Logger -e 'my ($status, $error) = ConfigServer::Logger::msngr_log_prepare(undef, undef); print q{Status: }, (defined($status) ? $status : q{undef}), qq{\nError: $error\n};'
-#               Result:         Status: undef
-#                               Error:  Messenger log owner IDs are invalid
+#               Command:        sudo env DEBUG=4 perl -I. -MConfigServer::Logger -e 'my ($status, $error) = ConfigServer::Logger::msngr_log_initialize(undef, undef); print q{Status: }, (defined($status) ? $status : q{undef}), qq{\nError: $error\n};'
 #   
 #   @params     uid             int         Messenger user id
 #               gid             int         Messenger group id
 #   
-#   @return     status          int|undef   Preparation result
-#                                               1           Log prep success
-#                                               undef       Log prep fail
+#   @return     status          int|undef   Initialzation result
+#                                               1           Log init success
+#                                               undef       Log init fail
 #               error           str|undef   Error message
-#                                               str         Log prep fail
-#                                               undef       Log prep success
+#                                               str         Log init fail
+#                                               undef       Log init success
 # #
 
-sub msngr_log_prepare
+sub msngr_log_initialize
 {
     my ( $uid, $gid ) = @_;
 
-    ConfigServer::DebugLocal::log( 1, 'info',
-        "path:[" . _msngr_log_path( ) . "] status:[preparing messenger log]"
-    );
+    my $log_path = _msngr_log_path( );
+    ConfigServer::DebugLocal::log( 1, 'info', "path:[$log_path] status:[initializing messenger log]" );
 
-    return _msngr_log_prepare( _msngr_log_path( ), $uid, $gid );
+    return _msngr_log_setup( $log_path, $uid, $gid );
 }
 
 # #
@@ -1803,8 +1815,7 @@ sub _logger_id_normalize
 
     # reject $id 0 or numeric $id above max uid/gid value
     return
-        if $id eq '' or
-           ( length( $id ) == LOG_OWNER_ID_MAX_DIGIT and $id gt LOG_OWNER_ID_MAX );
+        if $id eq '' or ( length( $id ) == LOG_OWNER_ID_MAX_DIGIT and $id gt LOG_OWNER_ID_MAX );
 
     # normalized $id
     return 0 + $id;
@@ -1902,8 +1913,7 @@ sub _msngr_is_line_valid
 
     # reject oversize lines, null bytes, contains cr, or missing final newline
     return 0
-        if $line_byte_len > LOG_LINE_BYTE_MAX or
-            $line !~ /\A[^\x00\r\n]*\n\z/;
+        if $line_byte_len > LOG_LINE_BYTE_MAX or $line !~ /\A[^\x00\r\n]*\n\z/;
 
     return 1;
 }
@@ -2541,16 +2551,16 @@ sub _log_write
     return ( 1, undef );
 }
 
-
 # #
-#	Logger › Messenger › Prepare › Log
+#	Logger › Messenger › Setup Log
 #	
 #	Validate, create, secure, and verify the Messenger log file.
 #   
 #   @test       Note:           Reject invalid Messenger owner ids
-#               Command:        sudo env DEBUG=4 perl -I. -MConfigServer::Logger -e 'my ($status, $error) = ConfigServer::Logger::_msngr_log_prepare(q{/var/log/lfd_messenger.log}, undef, undef); print q{Status: }, (defined($status) ? $status : q{undef}), qq{\nError: $error\n};'
-#               Result:         Status: undef
-#                               Error:  Messenger log owner ids are invalid
+#               Command:        sudo env DEBUG=4 perl -I. -MConfigServer::Logger -e 'my ($status, $error) = ConfigServer::Logger::_msngr_log_setup(q{/var/log/lfd_messenger.log}, undef, undef); print q{Status: }, (defined($status) ? $status : q{undef}), qq{\nError: $error\n};'
+#   
+#               Note:           Successful test
+#               Command:        sudo env DEBUG=4 perl -I. -MConfigServer::Logger -e 'my ( undef, undef, $uid, $gid ) = getpwnam( "csf" ); die "User csf not found\n" if !defined( $uid ) or !defined( $gid ); my ( $status, $error ) = ConfigServer::Logger::_msngr_log_setup( "/var/log/lfd_messenger.log", $uid, $gid ); print "Status: ", ( defined( $status ) ? $status : "undef" ), "\n"; print "Error: ", ( defined( $error ) ? $error : "undef" ), "\n"; exit( defined( $status ) && $status == 1 && !defined( $error ) ? 0 : 1 );'
 #   
 #   @params     path            str         Absolute Messenger log path
 #               uid             any         Messenger uid to normalize
@@ -2564,11 +2574,10 @@ sub _log_write
 #                                               undef       Successful (No error)
 # #
 
-sub _msngr_log_prepare
+sub _msngr_log_setup
 {
     my ( $path, $uid, $gid ) = @_;
 
-    # normalize owner uid / gid
     my %owner =
     (
         uid => scalar _logger_id_normalize( $uid ),
@@ -2594,7 +2603,7 @@ sub _msngr_log_prepare
             "path:[$path] status:[uid or gid missing]"
         );
 
-        return ( undef, "Messenger log owner IDs are invalid" );
+        return ( undef, "Configured Messenger account invalid; create a dedicated user that does not have root" );
     }
 
     # log file state before and after prep
@@ -2623,21 +2632,20 @@ sub _msngr_log_prepare
     {
         my ( $log ) = @_;
 
-        # apply required owner, group, perms
+        # apply req owner, group, perms
         my $is_secure =
         (
-            chown( $owner{uid}, $owner{gid}, $log ) == 1 and
-            chmod( MESSENGER_LOG_MODE, $log ) == 1
+            chown( $owner{uid}, $owner{gid}, $log ) == 1 and chmod( MESSENGER_LOG_MODE, $log ) == 1
         );
 
         # stop if ownership or perms can't be applied
         if ( !$is_secure )
         {
             ConfigServer::DebugLocal::log( 1, 'warn',
-                "path:[$path] status:[Messenger log ownership or permissions could not be applied]"
+                "path:[$path] status:[Messenger log ownership or perms could not be applied]"
             );
 
-            return ( undef, "Messenger log ownership or permissions could not be applied" );
+            return ( undef, "Messenger log ownership or perms could not be applied" );
         }
 
         return ( 1, undef );
@@ -3075,10 +3083,8 @@ sub _msngr_file_validate
         " status:[validate: start]"
     );
 
-    return ( undef, "Messenger log file identity is unsafe" )
-        if !defined( $named ) or
-            !defined( $opened ) or
-            $named_identity ne $opened_identity;
+    return ( undef, "Messenger log file identity unsafe" )
+        if !defined( $named ) or !defined( $opened ) or $named_identity ne $opened_identity;
 
     # check required perm mode, group, and owner for Messenger log file
     my $policy_err = _msngr_file_policy_err(

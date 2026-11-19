@@ -10,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            09.11.2026
+#   @updated            11.19.2026
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -1599,7 +1599,7 @@ if ( $config{PT_LOAD} )
 # #
 #	lfd.pl › Cloudflare Integration
 #	
-#   This features provides interaction with the CloudFlare Firewall
+#   Provides integration with CloudFlare.
 #   
 #   As CloudFlare is a reverse proxy, any attacking IP addresses (so far as 
 #   iptables is concerned) come from the CloudFlare IP's. To counter this, an
@@ -1619,21 +1619,18 @@ if ( $config{CF_ENABLE} and -e "/etc/csf/csf.cloudflare" )
 #	$cfblocks{LF_WEBMIN} 		= 1;
 }
 
-# # 
-#   SECTION:Messenger service
-# # 
-#   Messenger service. This feature allows the display of a message to a blocked
-#   connecting IP address to inform the user that they are blocked in the
-#   firewall. This can help when users get themselves blocked, e.g. due to
-#   multiple login failures. The service is provided by two daemons running on
-#   ports providing either an HTML or TEXT message
+# #
+#	lfd.pl › Messenger Services
+#	
+#   This features displays a 'blocked' message for connecting IP addresses.
+#   It informs a user that they are blocked from the server's firewall.
 #   
-#   This feature does not work on servers that do not have the iptables module
-#   ipt_REDIRECT loaded. Typically, this will be with MONOLITHIC kernels. VPS
-#   server admins should check with their VPS host provider that the iptables
-#   module is included
+#   Service runs as two daemons running on ports for the types HTML and TEXT.
 #   
-#   IPv6 will need the IO::Socket::INET6 perl module
+#   Does not work on servers that do not have the iptables module ipt_REDIRECT
+#   loaded (usually true for monolithic kernels).
+#   
+#   IPv6 needs the perl module 'IO::Socket::INET6' installed:
 #       Test Package:
 #           perl -MIO::Socket::INET6 -e 'print "IO::Socket::INET6 OK\n"'
 #   
@@ -1643,49 +1640,34 @@ if ( $config{CF_ENABLE} and -e "/etc/csf/csf.cloudflare" )
 #           Debian / Ubuntu
 #               sudo apt install libio-socket-inet6-perl libsocket6-perl -y
 #   
-#   For further information on features and limitations refer to the csf
-#   readme.txt
-#   
-#   Note: Run /etc/csf/csftest.pl to check whether this option will function on
+#   Note: Run /etc/csf/csftest.pl to check if this option will function on
 #   this server
 #   
-#   1 to enable, 0 to disable
-# # 
+#   1   enable
+#   0   disable
+# #
 
 if ( $config{MESSENGER} )
 {
     my ( undef, undef, $uid, $gid ) = getpwnam( $config{MESSENGER_USER} );
+    my ( $log_ok, $log_err )        = ConfigServer::Logger::msngr_log_initialize( $uid, $gid );
 
-    logfile( "normal", "ok", "[Messenger] Service enabled" );
-
-    my ( $log_ready, $log_error ) = ConfigServer::Logger::msngr_log_prepare( $uid, $gid );
-    if ( !$log_ready )
-    {
-        logfile( "normal", "error", "[Messenger] Failed to prepare Messenger log: $log_error" );
-    }
-    else
+    if ( $log_ok )
     {
         my $messenger_log = ConfigServer::Logger::LOGFILE_DIR( ) . '/' . ConfigServer::Logger::LOGFILE_MESSENGER( );
-        logfile( "normal", "ok", "[Messenger] Log prepared and validated [$messenger_log]" );
+        logfile( "normal", "ok", "[Messenger] Messenger Service enabled: log prepared and validated [ $messenger_log ]" );
     }
 
 	# #
 	#   Messenger System Summary
 	#	
-	#	This is an outline of the different MESSENGER modes. 
-	#	
 	#	MESSENGER modes source defined within csf/ConfigServer/Messenger.pm
 	#	
 	#	Mode settings available in /etc/csf/csf.conf. Should only enable one mode at a time.
 	#	
-	#   MESSENGER	(v1)	[x] lfd built-in daemon mode
-	#						[x] Uses internal Perl listeners (IO::Socket::INET / INET6 / SSL) in lfd.
-	#	
-	#   MESSENGERV2	(v2)	[x] cPanel EA4 Apache mode
-	#  						[x] Use on cPanel + EA4 Apache deployments.
-	#	
-	#   MESSENGERV3	(v3)	[x] Generic web-server mode
-	#   					[x] Use for Apache/LiteSpeed/OpenLiteSpeed or custom non-cPanel setups.
+	#   V1      Built in LFD/Perl listeners
+	#   V2      cPanel EA4 Apache
+	#   V3      Apache, LiteSpeed, or OpenLiteSpeed
 	# #
 
 	if ( !$config{MESSENGERV2} )
@@ -1698,24 +1680,11 @@ if ( $config{MESSENGER} )
 		&messengerstop( 3 );
 	}
 
-	my ( undef, undef, $uid, $gid ) = getpwnam( $config{MESSENGER_USER} );
-
-	# #
-	#	Messenger › Configured Account
-	#	
-	#	Disallow proceeding if the configured MESSENGER user:
-	#		- Does not exist
-	#		- Set to 'root'
-	#		- Empty value
-	#		- Has a UID of 0 or less
-	#		- Has a GID of 0 or less
-	# #
-
     my $messenger_user = $config{MESSENGER_USER} eq "" ? "none" : $config{MESSENGER_USER};
-    if ( ( $config{MESSENGER_USER} eq "" ) or ( $config{MESSENGER_USER} eq "root" ) or ( $uid <= 0 ) or ( $gid <= 0 ) )
+
+    if ( !$log_ok )
     {
-        logfile( "normal", "error", "[Messenger] Disabled Service - Configured account [$messenger_user] is invalid. Must create a dedicated user!" );
-        $config{MESSENGER} = 0;
+        _msngr_service_disable( $log_err );
     }
 	else
 	{
@@ -1731,8 +1700,8 @@ if ( $config{MESSENGER} )
 		# #
 		#	Messenger (All) › Internal Setting › HTTPS Disabled
 		#	
-		#	Log the runtime warning if HTTPS Messenger has been disabled.
-		#	This setting is populated internally when HTTPS cannot be used.
+		#	Log runtime warning if HTTPS Messenger disabled.
+		#	Setting populated internally when HTTPS cannot be used.
 		# #
 
 		if ( $config{MESSENGER_HTTPS_DISABLED} ne "" )
@@ -1763,7 +1732,10 @@ if ( $config{MESSENGER} )
 			{
 				if ( $config{MESSENGER_HTTPS_IN} ne "" )
 				{
-					foreach my $port ( split( /\,/, $config{MESSENGER_HTTPS_IN})) { $messengerports{$port} = 1 }
+					foreach my $port ( split( /\,/, $config{MESSENGER_HTTPS_IN}))
+                    {
+                        $messengerports{$port} = 1
+                    }
                     logfile( "normal", "ok", "[MessengerV3] HTTPS Service: Starting" );
 				}
 
@@ -1790,8 +1762,7 @@ if ( $config{MESSENGER} )
 			$messenger2 = ConfigServer::Messenger->init( 2 );
 			if ( -e "/var/cpanel/users/$config{MESSENGER_USER}" )
 			{
-                logfile( "normal", "ok", "[MessengerV2] Service Disabled - Cannot run service using a cPanel account: [$config{MESSENGER_USER}]" );
-
+                logfile( "normal", "error", "[MessengerV2] Service Disabled - Cannot run service using a cPanel account: [$config{MESSENGER_USER}]" );
 				$config{MESSENGER} 		= 0;
 				$config{MESSENGERV2} 	= 0;
 
@@ -1852,7 +1823,7 @@ if ( $config{MESSENGER} )
 			}
 		}
 
-		if ( $config{MESSENGER_TEXT_IN} ne "" )
+		if ( $config{MESSENGER} and $config{MESSENGER_TEXT_IN} ne "" )
 		{
 			if ( !defined $messenger1 )
 			{
@@ -1871,19 +1842,6 @@ if ( $config{MESSENGER} )
 }
 else
 {
-
-	# #
-	#	Messenger › Disabled
-	#	
-	#	$config{MESSENGER} = "0" | ""
-	#	
-	#	Stop and remove any previously configured webserver for Messenger services.
-	#	- 	MESSENGERv1 returns with nothing to do; built-in lfd/Perl listener.
-	#	-	MESSENGERV2 removes Apache Messenger configuration and restarts Apache.
-	#	-	MESSENGERV3 removes Messenger configuration from the configured location
-	#		and restarts the web server.
-	# #
-
 	&messengerstop( 2 );
 	&messengerstop( 3 );
 }
@@ -1891,18 +1849,11 @@ else
 # #
 #	lfd.pl › Web Interface
 #	
-#   Integrated User Interface. This feature provides a HTML UI to csf and lfd,
-#   without requiring a control panel or web server. The UI runs as a sub process
-#   to the lfd daemon
+#   Integrated User Interface. Runs as a sub process to the lfd daemon and 
+#   under the root user.
 #   
-#   As it runs under the root account and successful login provides root access
-#   to the server, great care should be taken when configuring and using this
-#   feature. There are additional restrictions to enhance secure access to the UI
-#   
-#   See readme.txt for more information about using this feature BEFORE enabling
-#   it for security and access reasons
-#   
-#   1 to enable, 0 to disable
+#   1   enable
+#   0   disable
 # #
 
 if ( $config{UI} )
@@ -3642,17 +3593,21 @@ while ( 1 )
     # #
 
 	if ( $config{MESSENGER} )
-	{
-		my $messenger_user              = $config{MESSENGER_USER};
-		my ( $log_ok, $log_error )      = _prepare_messenger_audit_log( $messenger_user );
+    {
+		my $messenger_user = $config{MESSENGER_USER};
+		my ( undef, undef, $messenger_uid, $messenger_gid ) = getpwnam( $messenger_user );
+		my ( $log_ok, $log_err ) = ConfigServer::Logger::msngr_log_initialize(
+			$messenger_uid,
+			$messenger_gid,
+		);
 
 		if ( !$log_ok )
 		{
-			_disable_messenger_services( $log_error );
+			_msngr_service_disable( $log_err );
 		}
 		else
 		{
-			_restart_failed_messenger_services( $messenger_user );
+			_msngr_service_restart_failed( $messenger_user );
 
 			logfile( "DEBUG:2", "info", "[Messenger] Service running sub messengerrecaptcha()" );
 
@@ -3663,8 +3618,8 @@ while ( 1 )
 	if ($config{UI})
     {
 		if ($uiip > 1 and !(kill(0,$uiip))) {
+            logfile( "normal", "warn", "[UI] CSF web interface service has died, attempting restart" );
 			&ui;
-			logfile("Integrated UI Service died, restarted");
 		}
 	}
 	if ($config{CLUSTER_RECVFROM}) {
@@ -3984,6 +3939,7 @@ sub dochecks
 
 	if ($config{LF_APACHE_404} and ($globlogs{HTACCESS_LOG}{$lgfile})) {
 		my ($ip) = ConfigServer::RegexMain::loginline404($line);
+
 		if ($ip and !&ignoreip($ip)) {
 			$apache404{$ip}{count}++;
 			$apache404{$ip}{text} .= "$line\n";
@@ -11980,75 +11936,50 @@ sub messengerrecaptcha
 }
 
 # #
-#	Messenger › Audit Log
-#   
-#   Validate the messenger user, such as the uid/gid, and prepare the
-#   audit log with the correct ownership
-#   
-#   @account                csf !! 974 974    /home/csf /usr/sbin/nologin
-#   $messenger_user         csf
-#   $messenger_uid          974
-#   $messenger_gid          974 
-#   $log_ok                 1
-# #
-
-sub _prepare_messenger_audit_log
-{
-	my ( $messenger_user ) = @_;
-
-	return ( undef, "Invalid Messenger account" )
-		if !defined( $messenger_user ) or ref( $messenger_user ) or $messenger_user eq "";
-
-	my @account = getpwnam( $messenger_user );
-	return ( undef, "Invalid Messenger account" )
-		if !@account;
-
-	my ( $messenger_uid, $messenger_gid ) = @account[ 2, 3 ];
-	return ( undef, "Invalid Messenger account" )
-		if !defined( $messenger_uid ) or !defined( $messenger_gid ) or $messenger_uid <= 0 or $messenger_gid <= 0;
-
-	my ( $log_ok, $log_error ) = ConfigServer::Logger::msngr_log_prepare( $messenger_uid, $messenger_gid );
-	$log_error = "Unable to prepare the Messenger audit log"
-		if !$log_ok and !defined( $log_error );
-
-	return ( $log_ok, $log_error );
-}
-
-# #
 #	Messenger › Service Disable
 #   
 #   Terminate any active Messenger processes, disable every Messenger mode
 #   when its audit log cannot be prepared.
 # #
 
-sub _disable_messenger_services
+sub _msngr_service_disable
 {
-	my ( $log_error ) = @_;
+	my ( $log_err ) = @_;
 
-	$log_error = "Unknown Messenger audit log failure"
-		if !defined( $log_error );
+	$log_err = "Unknown Messenger audit log failure"
+		if !defined( $log_err ) or ref( $log_err ) or $log_err eq "";
 
-	logfile( "normal", "error", "[Messenger] Secure audit log check failed " . "[$log_error]; service disabled" );
+	logfile(
+		"normal",
+		"error",
+		"[Messenger] Secure audit log check failed [ $log_err ]; service disabled"
+	);
 
     # #
-    #   Terminate every active Messenger child processes
+    #   Terminate all tracked Messenger child processes
     # #
 
-	for my $messenger_pid ( values %messengerips )
+	for my $mpid ( values %messengerips )
 	{
 		next
-			if !defined( $messenger_pid ) or $messenger_pid !~ /\A[0-9]+\z/ or $messenger_pid <= 1;
+			if !defined( $mpid ) or $mpid !~ /\A[0-9]+\z/ or $mpid <= 1;
 
-		kill( "TERM", $messenger_pid );
+		local $! = 0;
+		my $is_terminated = kill( "TERM", $mpid );
+		if ( !$is_terminated )
+		{
+			my $kill_err = $! ? "$!" : "unknown error";
+
+			logfile(
+				"normal",
+				"error",
+				"[Messenger] Unable to terminate Messenger child process [ $mpid ]: $kill_err"
+			);
+		}
 	}
 
-    # #
-    #   Runs messengerstop( ); which requires you to specify version number.
-    #       &messengerstop( 2 );
-    #       &messengerstop( 3 );
-    # #
-
 	%messengerips = ();
+
 	@config{
 		qw(
 			MESSENGER
@@ -12057,6 +11988,10 @@ sub _disable_messenger_services
 			MESSENGERV3
 		)
 	} = ( 0 ) x 4;
+
+    # #
+    #   Remove the Messenger V2 and V3 webserver configs
+    # #
 
 	for my $messenger_version ( 2, 3 )
 	{
@@ -12075,49 +12010,41 @@ sub _disable_messenger_services
 #   $messenger_pid          916094
 #   $incoming_ports         21
 #   $service_type           TEXT
-#   $messenger_user         csf
+#   $mpid       916094
+#   $ports      21
+#   $type       TEXT            (HTTPS HTML TEXT)
+#   $user       csf
 # #
 
-sub _restart_failed_messenger_services
+sub _msngr_service_restart_failed
 {
-	my ( $messenger_user ) = @_;
+	my ( $user ) = @_;
 
-	for my $service_type ( keys %messengerips )
+	logfile( "normal", "info", "[Messenger] Restart check started; tracked services [ " . scalar( keys %messengerips ) . " ]" );
+
+	for my $type ( keys %messengerips )
 	{
-		my $messenger_pid   = $messengerips{$service_type};
-		my $incoming_ports  = $config{"MESSENGER_${service_type}_IN"};
+		logfile( "normal", "info", "[Messenger] Checking tracked service [ $type ]" );
 
-        # #
-        #   Skip bad process ids; all numeric
-        # #
+		my $mpid    = $messengerips{$type};
+		my $ports   = $config{"MESSENGER_${type}_IN"};
 
 		next
-			if !defined( $messenger_pid ) or
-			   $messenger_pid !~ /\A[0-9]+\z/ or
-			   $messenger_pid <= 1;
-
-        # #
-        #   Skip $incoming_ports missing
-        # #
+			if !defined( $mpid ) or $mpid !~ /\A[0-9]+\z/ or $mpid <= 1;
 
 		next
-			if !defined( $incoming_ports ) or
-			   $incoming_ports eq "";
-
-        # #
-        #   Skip if service process is still running
-        # #
+			if !defined( $ports ) or $ports eq "";
 
 		next
-			if kill( 0, $messenger_pid );
+			if kill( 0, $mpid );
 
         # #
-        #   Start a Messenger service in a child process, track the PID,
-        #   and temp disable service if startup fails
+        #   Start Messenger service in child process, track the PID,
+        #   temp disable service if startup fails
         # #
 
-		messenger( $config{"MESSENGER_${service_type}"}, $messenger_user, $service_type, );
-		logfile( "Messenger $service_type Service died, restarted" );
+		messenger( $config{"MESSENGER_${type}"}, $user, $type, );
+		logfile( "Messenger type [ $type ] service died, restarted" );
 	}
 
 	return;
@@ -12176,6 +12103,47 @@ sub messengerstop
 	return;
 }
 
+# #
+#	lfd.pl › Messenger › V1
+#   
+#   Start built in LFD/Perl Messenger listener in child process.
+#   Track the child process and temp disable the service if startup fails.
+#   
+#   Supports HTTPS, HTML, and TEXT.
+#   
+#   HTTPS and HTML can include reCAPTCHA when configured.
+#   
+#   HTTPS
+#       Blocked client:         Web browser or curl on port 443
+#       Redirect:               443 => 8887
+#       Config:                 MESSENGER_HTTPS_IN => MESSENGER_HTTPS
+#       Redirect test:          curl -k https://<SERVER_IP>/
+#       Direct listener test:   https://<SERVER_IP>:8887/
+#                               curl -k https://<SERVER_IP>:8887/
+#   
+#   HTML
+#       Blocked client:         Web browser or curl on port 80
+#       Redirect:               80 => 8888
+#       Config:                 MESSENGER_HTML_IN => MESSENGER_HTML
+#       Redirect test:          curl http://<SERVER_IP>/
+#       Direct listener test:   http://<SERVER_IP>:8888/
+#                               curl http://<SERVER_IP>:8888/
+#   
+#   TEXT
+#       Blocked client:         FTP client, telnet, or netcat on port 21
+#       Redirect:               21 => 8889
+#       Config:                 MESSENGER_TEXT_IN => MESSENGER_TEXT
+#       Redirect test:          telnet <SERVER_IP> 21
+#                               nc <SERVER_IP> 21
+#       Direct listener test:   telnet <SERVER_IP> 8889
+#                               nc <SERVER_IP> 8889
+#   
+#   @params     port            int         Messenger listener port
+#               user            str         Configured Messenger user
+#               type            str         HTTPS, HTML, or TEXT
+#   @return                     void        No value returned
+# #
+
 sub messenger
 {
 	my $port = shift;
@@ -12227,6 +12195,37 @@ sub messenger
 	return;
 }
 
+# #
+#	lfd.pl › Messenger › V2
+#   
+#   Start cPanel EA4 Apache Messenger setup in child process.
+#   Apache handles HTTPS and HTML.
+#   
+#   HTTPS and HTML can include reCAPTCHA when configured.
+#   
+#   HTTPS
+#       Blocked client:         Web browser or curl on port 443
+#       Redirect:               443 => 8887
+#       Config:                 MESSENGER_HTTPS_IN => MESSENGER_HTTPS
+#       Redirect test:          curl -k https://<SERVER_IP>/
+#       Direct listener test:   https://<SERVER_IP>:8887/
+#                               curl -k https://<SERVER_IP>:8887/
+#   
+#   HTML
+#       Blocked client:         Web browser or curl on port 80
+#       Redirect:               80 => 8888
+#       Config:                 MESSENGER_HTML_IN => MESSENGER_HTML
+#       Redirect test:          curl http://<SERVER_IP>/
+#       Direct listener test:   http://<SERVER_IP>:8888/
+#                               curl http://<SERVER_IP>:8888/
+#   
+#   TEXT is started separately through messenger() using the built in
+#   LFD/Perl listener on port 8889.
+#   
+#   @params     void
+#   @return     void        No value returned
+# #
+
 sub messengerv2
 {
 	my $timer   = time;
@@ -12254,6 +12253,37 @@ sub messengerv2
 	}
 	return;
 }
+
+# #
+#	lfd.pl › Messenger › V3
+#   
+#   Start general web server Messenger setup in child process.
+#   Supports Apache, LiteSpeed, and OpenLiteSpeed for HTTPS and HTML.
+#   
+#   HTTPS and HTML can include reCAPTCHA when configured.
+#   
+#   HTTPS
+#       Blocked client:         Web browser or curl on port 443
+#       Redirect:               443 => 8887
+#       Config:                 MESSENGER_HTTPS_IN => MESSENGER_HTTPS
+#       Redirect test:          curl -k https://<SERVER_IP>/
+#       Direct listener test:   https://<SERVER_IP>:8887/
+#                               curl -k https://<SERVER_IP>:8887/
+#   
+#   HTML
+#       Blocked client:         Web browser or curl on port 80
+#       Redirect:               80 => 8888
+#       Config:                 MESSENGER_HTML_IN => MESSENGER_HTML
+#       Redirect test:          curl http://<SERVER_IP>/
+#       Direct listener test:   http://<SERVER_IP>:8888/
+#                               curl http://<SERVER_IP>:8888/
+#   
+#   TEXT is started separately through messenger() using the built in
+#   LFD/Perl listener on port 8889.
+#   
+#   @params     void
+#   @return     void        No value returned
+# #
 
 sub messengerv3
 {
@@ -14891,25 +14921,27 @@ sub systemstats
 			if ( $@ ) { logfile( "STATS: 15 sec. timeout performing ST_APACHE" ) }
 		}
 
-		# # 
-		#   The following options measure disk write performance using dd (location set
-		#   via the DD setting). It creates a 64MB file called /var/lib/dd_write_test and
-		#   the statistics will plot the MB/s response time of the disk. As this is an IO
-		#   intensive operation, it may not be prudent to run this test too often, so by
-		#   default it is only run every 5 minutes and the result duplicated for each
-		#   intervening minute for the statistics
+		# #
+		#   Measure disk write speed using dd when ST_DISKW is enabled.
 		#   
-		#   This is not necessrily a good measure of disk performance, primarily because
-		#   the measurements are for relatively small amounts of data over a small amount
-		#   of time. To properly test disk performance there are a variety of tools
-		#   available that should be run for extended periods of time to obtain an
-		#   accurate measurement. This metric is provided to give an idea of how the disk
-		#   is performing over time
+		#   Configure the dd args and test file path with ST_DISKW_DD in
+		#   /etc/csf/csf.conf. The default writes a 64MB test file to
+		#   /var/lib/dd_write_test.
 		#   
-		#   Note: There is a 15 second timeout performing the check
+		#   ST_DISKW_FREQ controls how often the test runs (def: 5 mins).
+        #   Saved result is reused between tests.
 		#   
-		#   Set to 0 to disable, 1 to enable
-		# # 
+		#   This adds disk I/O and shows disk performance over time. It is
+		#   not a complete disk benchmark. The test times out after 15 secs.
+        #   
+        #   This is an I/O intense operation, do not run too often. This
+        #   gives a general idea of disk perf, but there are better tools
+        #   to run for extended periods, with more accurate results.
+		#   
+		#   ST_DISKW:
+		#       0   Disable
+		#       1   Enable
+		# #
 
 		if ( $config{ST_DISKW} )
 		{
