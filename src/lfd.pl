@@ -12511,11 +12511,42 @@ sub ui
 
 					$ENV{REMOTE_ADDR} = $peeraddress; ##no critic
 
+					# #
+					#	Web UI › Firewall Allow List
+					#
+					#	Log when client connects to the Web UI and IP matches 
+                    #   firewall allow list.
+					# #
+
+					my $firewall_allow = &allowip($peeraddress);
+
+					if (defined($firewall_allow)) {
+						my $allow_file = $firewall_allow == 1
+							? "/etc/csf/csf.allow"
+							: "/var/lib/csf/csf.gallow";
+
+						logfile( "normal", "warn",
+							"[UI] Access attempt from client IP [ $peeraddress ] - matched firewall allow list [ $allow_file ]; temp blocks may not work"
+						);
+					}
+
+					# #
+					#	Web UI › Block Private Networks
+					#
+                    #   Block Web UI connections from IP addresses assigned to the server's
+                    #   local interfaces, includes container and bridge addresses.
+                    #   
+                    #   "0"     trusted local proxy or container must access the UI
+					# #
+
 					if ($config{UI_BLOCK_PRIVATE_NET} == 1)
 					{
 						if ($ips{$peeraddress})
 						{
-							logfile("UI: Login attempt from local IP address denied [$peeraddress]");
+                            logfile( "normal", "warn",
+                                "[UI] Client IP [ $peeraddress ] denied access from local networks"
+                            );
+
 							if ($config{UI_ALERT} >= 4)
 							{
 								my @message;
@@ -12541,7 +12572,9 @@ sub ui
 						#	[Dangerous] 	User has modified settings to allow external and internal connections.
 						# #
 
-						logfile( "UI: [ WARNING ] UI_BLOCK_PRIVATE_NET in /etc/csf/csf.conf set to 0. Accepting both internal and external attempts to UI through IP [$peeraddress]" );
+                        logfile( "normal", "warn",
+                            "[UI] Client IP [ $peeraddress ] permitted access from local networks; found \"UI_BLOCK_PRIVATE_NET = 0\" in [ /etc/csf/csf.conf ]; this is dangerous and should be changed"
+                        );
 					}
 
 					if ($config{"UI_BAN"})
@@ -12559,7 +12592,10 @@ sub ui
 
 							if ($rip eq $peeraddress)
 							{
-								logfile( "UI: Access attempt from a banned IP address in /etc/csf/ui/ui.ban - denied [$peeraddress]" );
+                                logfile( "normal", "warn",
+                                    "[UI] Client IP [ $peeraddress ] banned in [ /etc/csf/ui/ui.ban ]; access attempt denied"
+                                );
+
 								if ($config{UI_ALERT} >= 4)
 								{
 									my @message;
@@ -12580,7 +12616,8 @@ sub ui
 						}
 					}
 
-					if ($config{"UI_ALLOW"}) {
+					if ($config{"UI_ALLOW"})
+                    {
 						my $allow = 0;
 						sysopen (my $UIALLOW,"/etc/csf/ui/ui.allow", O_RDWR | O_CREAT);
 						flock ($UIALLOW, LOCK_SH);
@@ -12604,8 +12641,23 @@ sub ui
 								}
 							}
 						}
-						unless ($allow) {
-							logfile("UI: Access attempt from an IP not in /etc/csf/ui/ui.allow - denied [$peeraddress]");
+
+                        # #
+                        #   Client found in webui ui.allow list
+                        # #
+
+						if ( $allow )
+                        {
+                            logfile( "normal", "ok",
+                                "[UI] Client IP [ $peeraddress ] found in [ /etc/csf/ui/ui.allow ]; access attempt allowed"
+                            );
+                        }
+                        else
+                        {
+                            logfile( "normal", "warn",
+                                "[UI] Client IP [ $peeraddress ] not found in [ /etc/csf/ui/ui.allow ]; access attempt denied"
+                            );
+
 							if ($config{UI_ALERT} >= 4) {
 								my @message;
 								my $tip = iplookup($peeraddress);
@@ -12673,7 +12725,8 @@ sub ui
 
 							if ($char eq "")
 							{
-								if ($config{DEBUG} >= 2) {logfile("UI debug: Child [header] finished")}
+								logfile( "debug:2", "info", "[UI] Client header (request): Closed connection" );
+
 								close ($client);
 								alarm(0);
 								exit;
@@ -12688,17 +12741,18 @@ sub ui
 							}
 						}
 
-						if ($line =~ /^\r\n$/) {last}
-						$line =~ s/\r\n$//;
-						my ($field,$value) = split(/\:\s/,$line);
-						$field = lc($field);
-						$header{$field} = $value;
+						if ( $line =~ /^\r\n$/ )
+                        {
+                            last
+                        }
 
-						if ($config{DEBUG} >= 2)
-						{
-							logfile("UI debug: header [$field] [$value]")
-						}
-	
+						$line               =~ s/\r\n$//;
+						my ($field,$value)  = split(/\:\s/,$line);
+						$field              = lc($field);
+						$header{$field}     = $value;
+
+						logfile( "debug:2", "info", "[UI] Client header (request): [ $field: $value ]" );
+
 						$linecnt++;
 						if ($linecnt > $maxheader)
 						{
