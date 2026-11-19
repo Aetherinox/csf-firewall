@@ -604,7 +604,10 @@ sub messenger
 							}
 
 							chomp $firstline;
-							if ($firstline =~ /\r$/) {chop $firstline}
+							if ( $firstline =~ /\r$/ )
+                            {
+                                chop $firstline
+                            }
 						}
 
                         ConfigServer::Logger::logfile( "debug:1", "info", "Client connection [$peeraddress] [$firstline]" );
@@ -612,16 +615,17 @@ sub messenger
 						my $error;
 						my $success;
 						my $failure;
-						if (($type eq "HTML") and ($firstline =~ /^GET \/unblk\?g-recaptcha-response=(\S+)/i)) {
-							my $recv = $1;
-							my $status = 1;
+						if ( ( $type eq "HTML" ) and ( $firstline =~ /^GET \/unblk\?g-recaptcha-response=(\S+)/i ) )
+                        {
+							my $recv    = $1;
+							my $status  = 1;
 							my $text;
 							eval {
 								local $SIG{__DIE__} = undef;
-								eval("no lib '/usr/local/csf/lib'");
-								my $urlget = ConfigServer::URLGet->new(2, "", $config{URLPROXY});
-								my $url = "https://www.google.com/recaptcha/api/siteverify?secret=$config{RECAPTCHA_SECRET}&response=$recv";
-								($status, $text) = $urlget->urlget($url);
+								eval( "no lib '/usr/local/csf/lib'" );
+								my $urlget          = ConfigServer::URLGet->new( 2, "", $config{URLPROXY} );
+								my $url             = "https://www.google.com/recaptcha/api/siteverify?secret=$config{RECAPTCHA_SECRET}&response=$recv";
+								( $status, $text )  = $urlget->urlget( $url );
 							};
 
 							if ($status)
@@ -637,28 +641,41 @@ sub messenger
 								my $resp  = JSON::Tiny::decode_json($text);
 								if ($resp->{success}) {
 									my $ip = $resp->{hostname};
-									unless ($ip =~ /^($ipv4reg|$ipv6reg)$/) {$ip = (getips($ip))[0]}
+									unless ($ip =~ /^($ipv4reg|$ipv6reg)$/) {$ip = (ConfigServer::GetIPs::getips($ip))[0]}
 									if ($ips{$ip} or $ip eq $hostaddress or $ipscidr6->find($ip)) {
 										if ( sysopen( my $UNBLOCK, "$homedir/unblock.txt", Fcntl::O_WRONLY() | Fcntl::O_APPEND() | Fcntl::O_CREAT() ) ) {
 											flock($UNBLOCK, Fcntl::LOCK_EX);
-										print $UNBLOCK "$peeraddress;$resp->{hostname};$ip\n";
-										close ($UNBLOCK);
-										$success = 1;
-										&messengerlog($homedir,"*Success*, ReCaptcha ($peeraddress): [$resp->{hostname} ($ip)] requested unblock");
+
+											my $entry = "$peeraddress;$resp->{hostname};$ip\n";
+											ConfigServer::Logger::logfile( "debug:1", "info", "ReCaptcha writing to [$homedir/unblock.txt]: $entry" );
+
+											if ( print $UNBLOCK $entry ) {
+												$success = 1;
+                                                ConfigServer::Logger::logfile( "debug:1", "ok", "ReCaptcha ($peeraddress): [$resp->{hostname} ($ip)] requested unblock" );
+											} else {
+												$error .= "Unable to write to [$homedir/unblock.txt]: $!";
+                                                ConfigServer::Logger::logfile( "debug:1", "error", "*Failed*, ReCaptcha unable to write to [$homedir/unblock.txt]: $!" );
+											}
+
+											close ($UNBLOCK);
+										} else {
+											$error .= "Unable to write to [$homedir/unblock.txt] (make sure that MESSENGER_USER has a home directory): $!";
+                                            ConfigServer::Logger::logfile( "debug:1", "error", "*Failed*, ReCaptcha unable to open [$homedir/unblock.txt]: $!" );
+										}
 									} else {
 										$error .= "Failed, [$resp->{hostname} ($ip)] does not appear to be hosted on this server.";
-										&messengerlog($homedir,"*Failed*, ReCaptcha ($peeraddress): [$resp->{hostname} ($ip)] does not appear to be hosted on this server");
+										ConfigServer::Logger::logfile( "debug:1", "error", "*Failed*, ReCaptcha ($peeraddress): [$resp->{hostname} ($ip)] does not appear to be hosted on this server" );
 									}
 								} else {
 									$failure = 1;
 									my @codes = @{$resp->{'error-codes'}};
-									&messengerlog($homedir,"*Failure*, ReCaptcha ($peeraddress): [$codes[0]]");
+									ConfigServer::Logger::logfile( "debug:1", "error", "*Failure*, ReCaptcha ($peeraddress): [$codes[0]]" );
 								}
 							}
 						}
 						if (($type eq "HTML") and ($firstline =~ /^GET\s+(\S*\/)?(\S*\.(gif|png|jpg))\s+/i)) {
 							my $type = $3;
-							if ($type eq "jpg") {$type = "jpeg"}
+							if ( $type eq "jpg" ) { $type = "jpeg" }
 							print $client "HTTP/1.1 200 OK\r\n";
 							print $client "Content-type: image/$type\r\n";
 							print $client "\r\n";
@@ -696,6 +713,9 @@ sub messenger
 								print $client "\n";
 							}
 						}
+
+						ConfigServer::Logger::logfile( "debug:1", "ok", "[" . SUB_MESSENGER_V1 . "] Client - $oldtype response completed [Client: $peeraddress]" );
+
 						alarm(0);
 					};
 					shutdown ($client,2);
@@ -703,10 +723,11 @@ sub messenger
 					alarm(0);
 					exit;
 				}
-				if ($oldtype eq "HTTPS") {
-					$client->close(SSL_no_shutdown => 1);
+				if ( $oldtype eq "HTTPS" )
+                {
+					$client->close( SSL_no_shutdown => 1 );
 				} else {
-					$client->close();
+					$client->close( );
 				}
 			}
 		}
