@@ -1125,19 +1125,15 @@ sub _syslog_load
 # #
 
 my $hostname = HOSTNAME_DEFAULT;
-if ( -e '/proc/sys/kernel/hostname' )
 {
-    if ( open( my $hostname_file, '<', '/proc/sys/kernel/hostname' ) )
-    {
-        my $hostname_read = <$hostname_file>;
-        close( $hostname_file );
+    local $@;
+    my $hostname_read = eval { Sys::Hostname::hostname( ) };
 
-        if ( defined( $hostname_read ) )
-        {
-            $hostname_read =~ s/[\r\n]+\z//;
-            $hostname = $hostname_read
-                if $hostname_read ne '';
-        }
+    if ( defined( $hostname_read ) and $hostname_read ne '' )
+    {
+        $hostname_read =~ s/[\r\n]+\z//;
+        $hostname = $hostname_read
+            if $hostname_read ne '';
     }
 }
 
