@@ -134,41 +134,52 @@ sub init
 }
 
 # #
-#	Messenger › Failure
+#   Messenger › Throw › Error
 #	
 #	Log Messenger failuresl return failure status and reason.
 #	
-#	If only a reason is provided, failure applies to all Messenger
-#	versions.
-#   
-#   The log target defaults to "normal".
+#	If only a reason is provided:
+#       $version    all
+#       $target     normal
 #	
-#	@usage		_messenger_fail( "Failure reason" );                # Messenger failure
+#	@usage		_throw_err( "Failure reason" );             # Messenger     ALL (all)
+#				_throw_err( 2, "Failure reason" );          # MessengerV2   V2  (all)
+#				_throw_err( 1, "Failure reason", "root" );  # MessengerV1   V1  (root)
 #				_messenger_fail( 2, "Failure reason" );             # MessengerV2 failure
 #				_messenger_fail( 1, "Failure reason", "root" );     # MessengerV1 failure
 #	
 #	@param      version     num|str     Messenger version (1, 2, 3, or All)
-#	@param		reason		str         failure reason
-#	@param		target		str         log target: normal, root, or all
-#	@return					num         failure status (1)
-#							str         failure reason
+#	@param      ver             str|num     Messenger version (1, 2, 3, or All)
+#	            reason		    str         failure reason
+#               target		    str         log target:
+#                                               normal, root, or all
+#	@return					    num         failure status
+#                                               1           failure logged
+#							    str         failure reason
 # #
 
-sub _messenger_fail
+sub _throw_err
 {
-	my ( $version, $reason, $target ) = @_;
+	my ( $ver, $reason, $target ) = @_;
 
 	if ( @_ == 1 )
 	{
-		$reason     = $version;
-		$version    = "All";
+		$reason = $ver;
+		$ver    = "all";
 	}
 
-	$reason //= "Unknown Messenger failure";
-	$target //= "normal";
-	$target = "normal" if $target !~ /^(?:normal|root|all)$/;
+	$ver = "all"
+        if !defined( $ver ) or ref( $ver ) or !length( $ver );
 
-	logfile( $target, "error", "[Messenger$version] $reason" );
+	$ver = lc( $ver );
+
+	$reason //= "Unknown Messenger failure";
+
+	my $_target     = defined( $target ) && !ref( $target ) ? lc( $target ) : "";
+	$target         = $_target =~ /\A(?:normal|root|all)\z/ ? $_target : "normal";
+	my $ver_log     = $ver =~ /\A[123]\z/ ? "V$ver" : uc( $ver );
+
+	ConfigServer::Logger::logfile( $target, "error", "[Messenger$ver_log] $reason" );
 
 	return ( 1, $reason );
 }
@@ -337,7 +348,7 @@ sub messenger
 
 		if ( !keys %sslcerts )
 		{
-            return _messenger_failed( 1, "No SSL certs found in MESSENGER_HTTPS_CONF = \"$config{MESSENGER_HTTPS_CONF}\" (defined in /etc/csf/csf.conf)" );
+            return _throw_err( 1, "No SSL certs found in MESSENGER_HTTPS_CONF = \"$config{MESSENGER_HTTPS_CONF}\" (defined in /etc/csf/csf.conf)" );
 		}
 
 		# # 
@@ -417,7 +428,7 @@ sub messenger
 	
 		if ( $@ )
 		{
-			return _messenger_failed( 1, $@ );
+			return _throw_err( 1, $@ );
 		}
 	}
 	elsif ( $config{MESSENGER6} )
@@ -512,7 +523,7 @@ sub messenger
 
 		unless ( defined $uid and defined $gid and $uid > 0 and $gid > 0 )
 		{
-            return _messenger_failed( 1, "MESSENGER_USER must not be root (uid/gid 0) or invalid [$user]" );
+            return _throw_err( 1, "MESSENGER_USER must not be root (uid/gid 0) or invalid user specified [$user]" );
 		}
 
 		local $( = $gid;
@@ -702,7 +713,7 @@ sub messenger
 	}
 	else
 	{
-        return _messenger_failed( 1, "MESSENGER_USER not configured - stopping $oldtype Messenger" );
+        return _throw_err( 1, "MESSENGER_USER not configured - stopping $oldtype Messenger" );
 	}
 
 	return;
@@ -725,12 +736,12 @@ sub messengerv2
 
 	if ( $homedir eq "" or $homedir eq "/" or $homedir =~ m[/etc/csf] )
 	{
-        return _messenger_failed( 2, "The home directory for $config{MESSENGER_USER} is not valid [$homedir]" );
+        return _throw_err( 2, "The home directory for $config{MESSENGER_USER} is not valid [$homedir]" );
 	}
 
 	if ( ! -e $homedir )
 	{
-        return _messenger_failed( 2, "The home directory for $config{MESSENGER_USER} does not exist [$homedir]" );
+        return _throw_err( 2, "The home directory for $config{MESSENGER_USER} does not exist [$homedir]" );
 	}
 
     logfile( "DEBUG:1", "info", "[Messenger2] Set chmod 711: $homedir" );
@@ -939,7 +950,7 @@ sub messengerv2
 		}
 		if (scalar(keys %ssldomains < 1))
         {
-            return _messenger_failed( 2, "No SSL domains found in MESSENGER_HTTPS_CONF location" );
+            return _throw_err( 2, "No SSL domains found in MESSENGER_HTTPS_CONF location" );
 		}
 
 		print $OUT "Listen 0.0.0.0:$config{MESSENGER_HTTPS}\n";
@@ -1080,12 +1091,12 @@ sub messengerv3
 
 	if ($homedir eq "" or $homedir eq "/" or $homedir =~ m[/etc/csf]) 
     {
-        _messenger_fail( 3, "The home directory for $config{MESSENGER_USER} is not valid [$homedir]" );
+        return _throw_err( 3, "The home directory for $config{MESSENGER_USER} is not valid [$homedir]" );
 	}
 
 	if ( ! -e $homedir )
 	{
-        _messenger_fail( 3, "The home directory for $config{MESSENGER_USER} does not exist [$homedir]" );
+        return _throw_err( 3, "The home directory for $config{MESSENGER_USER} does not exist [$homedir]" );
 	}
 
 	my $public_html = $homedir . "/public_html";
@@ -1250,7 +1261,7 @@ EOF
 
 		if ( scalar( keys %ssldomains < 1 ) )
         {
-            return _messenger_failed( 1, "No SSL domains found in MESSENGERV3HTTPS_CONF location [$config{MESSENGERV3HTTPS_CONF}] for $webserver web server" );
+            return _throw_err( 1, "No SSL domains found in MESSENGERV3HTTPS_CONF location [$config{MESSENGERV3HTTPS_CONF}] for $webserver web server" );
 		}
 
 		my @virtualhost;
@@ -1363,7 +1374,7 @@ EOF
 	}
 	else
     {
-        return _messenger_failed( 3, "[$config{MESSENGERV3LOCATION}] is neither a directory nor a file. You must manually include /var/lib/csf/csf.conf into the $webserver configuration" );
+        return _throw_err( 3, "[$config{MESSENGERV3LOCATION}] is neither a directory nor a file. You must manually include /var/lib/csf/csf.conf into the $webserver configuration" );
 	}
 
 	if ($config{MESSENGERV3TEST} ne "") {
