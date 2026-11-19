@@ -24,43 +24,69 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program; if not, see <https://www.gnu.org/licenses>.
 # #
+
+# #
+#   Declare › Package
+# #
+
 ## no critic (RequireUseWarnings, ProhibitExplicitReturnUndef, ProhibitMixedBooleanOperators, RequireBriefOpen)
-# start main
 package ConfigServer::Messenger;
+
+# #
+#   Declare › Use
+# #
 
 use strict;
 use lib '/usr/local/csf/lib';
 use Fcntl ( );
-use File::Copy;
+use POSIX ( );
 use Socket ( );
-use IO::Socket::INET;
-use Net::CIDR::Lite;
+use File::Copy ( );
+use JSON::Tiny ( );
 use IO::Socket::INET ( );
-use IPC::Open3;
-use ConfigServer::Config;
-use ConfigServer::CheckIP qw(checkip);
-use ConfigServer::Logger qw(logfile);
-use ConfigServer::URLGet;
-use ConfigServer::Slurp qw(slurp);
-use ConfigServer::GetIPs qw(getips);
-use ConfigServer::GetEthDev;
+use Net::CIDR::Lite ( );
+use Net::IP ( );
+use IPC::Open3 ( );
+use ConfigServer::Config ( );
+use ConfigServer::CheckIP ( );
+use ConfigServer::Logger ( );
+use ConfigServer::URLGet ( );
+use ConfigServer::Slurp ( );
+use ConfigServer::GetIPs ( );
+use ConfigServer::GetEthDev ( );
 
-use Exporter qw(import);
-our $VERSION     = 3.00;
-our @ISA         = qw(Exporter);
-our @EXPORT_OK   = qw();
+# #
+#	Declare › Export
+# #
+
+use Exporter    qw( import );
+our @ISA         = qw( Exporter );
+our @EXPORT_OK   = qw( );
+
+# #
+#	Declare › Version
+# #
+
+our $VERSION    = 15.11;
+
+# #
+#   Declare › Variables › Global
+# #
 
 my $slurpreg 	= ConfigServer::Slurp->slurpreg;
 my $cleanreg 	= ConfigServer::Slurp->cleanreg;
 
-my $config 		= ConfigServer::Config->loadconfig();
+# #
+#   Declare › Variables › Config
+# #
+
+my $config      = ConfigServer::Config->loadconfig();
 my %config 		= $config->config();
 my $ipv4reg 	= ConfigServer::Config->ipv4reg;
 my $ipv6reg 	= ConfigServer::Config->ipv6reg;
 
 my $childproc;
 my $hostname;
-
 my %ips;
 my $ipscidr6;
 my %sslcerts;
@@ -290,7 +316,7 @@ sub messenger
 		foreach my $file ( glob( $config{MESSENGER_HTTPS_CONF} ) )
 		{
 			if (-e $file) {
-				foreach my $line (slurp($file)) {
+				foreach my $line (ConfigServer::Slurp::slurp($file)) {
 					$line =~ s/\'|\"//g;
 					if ($line =~ /^\s*<VirtualHost\s+[^\>]+>/) {
 						$start = 1;
@@ -930,7 +956,7 @@ sub messengerv2
 		}
 		foreach my $file (glob($config{MESSENGER_HTTPS_CONF})) {
 			if (-e $file) {
-				foreach my $line (slurp($file)) {
+				foreach my $line (ConfigServer::Slurp::slurp($file)) {
 					$line =~ s/\'|\"//g;
 					if ($line =~ /^\s*<VirtualHost\s+[^\>]+>/) {
 						$start = 1;
@@ -941,14 +967,14 @@ sub messengerv2
 						if ($line =~ /\s*SSLCertificateFile\s+(\S+)/) {
 							my $match = $1;
 							if (-e $match) {
-								copy($match, $ssldir."certs/".$sslhost."\.crt");
+								File::Copy::copy($match, $ssldir."certs/".$sslhost."\.crt");
 								$sslcert = $ssldir."certs/".$sslhost."\.crt";
 							}
 						}
 						if ($line =~ /\s*SSLCertificateKeyFile\s+(\S+)/) {
 							my $match = $1;
 							if (-e $match) {
-								copy($match, $ssldir."keys/".$sslhost."\.key");
+								File::Copy::copy($match, $ssldir."keys/".$sslhost."\.key");
 								$sslkey = $ssldir."keys/".$sslhost."\.key";
 							}
 						}
@@ -1001,11 +1027,11 @@ sub messengerv2
 			print $OUT " </IfModule>\n";
 			print $OUT " SSLEngine on\n";
 			if (-e $config{MESSENGER_HTTPS_KEY}) {
-				copy($config{MESSENGER_HTTPS_KEY}, $ssldir."keys/".$hostname."\.key");
+				File::Copy::copy($config{MESSENGER_HTTPS_KEY}, $ssldir."keys/".$hostname."\.key");
 				print $OUT " SSLCertificateKeyFile ".$ssldir."keys/".$hostname."\.key\n";
 			}
 			if (-e $config{MESSENGER_HTTPS_CRT}) {
-				copy($config{MESSENGER_HTTPS_CRT}, $ssldir."certs/".$hostname."\.crt");
+				File::Copy::copy($config{MESSENGER_HTTPS_CRT}, $ssldir."certs/".$hostname."\.crt");
 				print $OUT " SSLCertificateFile ".$ssldir."certs/".$hostname."\.crt\n";
 			}
 			print $OUT " SSLUseStapling off\n";
@@ -1066,7 +1092,7 @@ sub messengerv2
 	system( "cp", "-f", "/var/lib/csf/csf.conf", "/etc/apache2/conf.d/csf.messenger.conf" );
 
 	my ($childin, $childout);
-	my $cmdpid 	= open3($childin, $childout, $childout, "/usr/sbin/apachectl", "configtest");
+	my $cmdpid 	= IPC::Open3::open3($childin, $childout, $childout, "/usr/sbin/apachectl", "configtest");
 	my @data 	= <$childout>;
 
 	waitpid ( $cmdpid, 0 );
@@ -1208,7 +1234,7 @@ EOF
 	} else {
 		my $file = "/etc/httpd/conf/extra/httpd-hostname.conf";
 		if (-e $file) {
-			foreach my $line (slurp($file)) {
+			foreach my $line (ConfigServer::Slurp::slurp($file)) {
 				if ($line =~ /^\s*AddHandler\s+.+\s+\.php/) {
 					$phphandler = $line;
 					if ($config{DEBUG} >= 1) {logfile("SSL: PHP Handler found in [$file]")}
@@ -1217,7 +1243,7 @@ EOF
 		}
 	}
 
-	foreach my $line (slurp("/usr/local/csf/tpl/$webserver.main.txt")) {
+	foreach my $line (ConfigServer::Slurp::slurp("/usr/local/csf/tpl/$webserver.main.txt")) {
 		$line =~ s/\[PORT\]/$config{MESSENGER_HTML}/g;
 		if ($line =~ /Listen \[::\]:/ and !$config{IPV6}) {next}
 		$line =~ s/\[SERVERNAME\]/$hostname/g;
@@ -1229,7 +1255,7 @@ EOF
 	}
 	
 	if ($config{MESSENGER_HTML_IN} ne "") {
-		foreach my $line (slurp("/usr/local/csf/tpl/$webserver.http.txt")) {
+		foreach my $line (ConfigServer::Slurp::slurp("/usr/local/csf/tpl/$webserver.http.txt")) {
 			$line =~ s/\[PORT\]/$config{MESSENGER_HTML}/g;
 			if ($line =~ /Listen \[::\]:/ and !$config{IPV6}) {next}
 			$line =~ s/\[SERVERNAME\]/$hostname/g;
@@ -1252,15 +1278,15 @@ EOF
 			if ($sslhost ne "" and $osslcert ne "" and $ssldomains{$sslhost}{cert} eq "") {
 				if (-e $osslcert) {
 					$sslcert = $ssldir."certs/".$sslhost."\.crt";
-					copy($osslcert, $ssldir."certs/".$sslhost."\.crt");
+					File::Copy::copy($osslcert, $ssldir."certs/".$sslhost."\.crt");
 				}
 				if (-e $osslkey) {
 					$sslkey = $ssldir."keys/".$sslhost."\.key";
-					copy($osslkey, $ssldir."keys/".$sslhost."\.key");
+					File::Copy::copy($osslkey, $ssldir."keys/".$sslhost."\.key");
 				}
 				if (-e $osslca) {
 					$sslca = $ssldir."ca/".$sslhost."\.ca";
-					copy($osslca, $ssldir."ca/".$sslhost."\.ca");
+					File::Copy::copy($osslca, $ssldir."ca/".$sslhost."\.ca");
 				}
 				$sslaliases =~ s/\$VH_NAME/$sslhost/;
 				$ssldomains{$sslhost}{key} = $sslkey;
@@ -1288,7 +1314,7 @@ EOF
 		my @virtualhost;
 		my $start = 0;
 		my $key = $ssldomainkeys[0];
-		foreach my $line (slurp("/usr/local/csf/tpl/$webserver.https.txt")) {
+		foreach my $line (ConfigServer::Slurp::slurp("/usr/local/csf/tpl/$webserver.https.txt")) {
 			if ($line =~ /^\# Virtualhost start/) {$start = 1}
 			if ($start) {
 				if ($line =~ /^\# Virtualhost end/) {$start = 0}
@@ -1379,7 +1405,7 @@ EOF
 		$location = $config{MESSENGERV3LOCATION}."/csf.messenger.conf";
 	}
 	elsif (-f $config{MESSENGERV3LOCATION}) {
-		my @conf = slurp($config{MESSENGERV3LOCATION});
+		my @conf = ConfigServer::Slurp::slurp($config{MESSENGERV3LOCATION});
 		unless (grep {$_ =~ m[^Include /var/lib/csf/csf.conf]i} @conf) {
 			sysopen (my $FILE, $config{MESSENGERV3LOCATION}, Fcntl::O_WRONLY() | Fcntl::O_APPEND() | Fcntl::O_CREAT() );
 			flock ($FILE, Fcntl::LOCK_EX);
@@ -1400,7 +1426,7 @@ EOF
 
 	if ($config{MESSENGERV3TEST} ne "") {
 		my ($childin, $childout);
-		my $cmdpid = open3($childin, $childout, $childout, $config{MESSENGERV3TEST});
+		my $cmdpid = IPC::Open3::open3($childin, $childout, $childout, $config{MESSENGERV3TEST});
 		my @data = <$childout>;
 		waitpid ($cmdpid, 0);
 
@@ -1422,7 +1448,7 @@ EOF
 				unlink ($config{MESSENGERV3LOCATION}."/csf.messenger.conf");
 			}
 			elsif (-f $config{MESSENGERV3LOCATION}) {
-				my @conf = slurp($config{MESSENGERV3LOCATION});
+				my @conf = ConfigServer::Slurp::slurp($config{MESSENGERV3LOCATION});
 				if (grep {$_ =~ m[^Include /var/lib/csf/csf.conf]i} @conf) {
 					sysopen (my $FILE, $config{MESSENGERV3LOCATION}, Fcntl::O_WRONLY() | Fcntl::O_CREAT() | Fcntl::O_TRUNC() );
 					flock ($FILE, Fcntl::LOCK_EX);
@@ -1510,7 +1536,7 @@ sub conftree
 		if (-e $file) {
 			if ($config{DEBUG} >= 1) {logfile("SSL: Processing [$file]")}
 			my $start = 0;
-			foreach my $line (slurp($file)) {
+			foreach my $line (ConfigServer::Slurp::slurp($file)) {
 				if ($webserver eq "apache") {
 					$line =~ s/\'|\"//g;
 					if ($line =~ /^\s*ServerRoot\s+\"?(\S+)\"?/) {
@@ -1564,15 +1590,15 @@ sub conftree
 						if ($sslhost ne "" and !checkip($sslhost) and $osslcert ne "") {
 							if (-e $osslcert) {
 								$sslcert = $ssldir."certs/".$sslhost."\.crt";
-								copy($osslcert, $ssldir."certs/".$sslhost."\.crt");
+								File::Copy::copy($osslcert, $ssldir."certs/".$sslhost."\.crt");
 							}
 							if (-e $osslkey) {
 								$sslkey = $ssldir."keys/".$sslhost."\.key";
-								copy($osslkey, $ssldir."keys/".$sslhost."\.key");
+								File::Copy::copy($osslkey, $ssldir."keys/".$sslhost."\.key");
 							}
 							if (-e $osslca) {
 								$sslca = $ssldir."ca/".$sslhost."\.ca";
-								copy($osslca, $ssldir."ca/".$sslhost."\.ca");
+								File::Copy::copy($osslca, $ssldir."ca/".$sslhost."\.ca");
 							}
 							$ssldomains{$sslhost}{key} = $sslkey;
 							$ssldomains{$sslhost}{aliases} = $sslaliases;
@@ -1616,15 +1642,15 @@ sub conftree
 							if ($sslhost ne "" and $osslcert ne "") {
 								if (-e $osslcert) {
 									$sslcert = $ssldir."certs/".$sslhost."\.crt";
-									copy($osslcert, $ssldir."certs/".$sslhost."\.crt");
+									File::Copy::copy($osslcert, $ssldir."certs/".$sslhost."\.crt");
 								}
 								if (-e $osslkey) {
 									$sslkey = $ssldir."keys/".$sslhost."\.key";
-									copy($osslkey, $ssldir."keys/".$sslhost."\.key");
+									File::Copy::copy($osslkey, $ssldir."keys/".$sslhost."\.key");
 								}
 								if (-e $osslca) {
 									$sslca = $ssldir."ca/".$sslhost."\.ca";
-									copy($osslca, $ssldir."ca/".$sslhost."\.ca");
+									File::Copy::copy($osslca, $ssldir."ca/".$sslhost."\.ca");
 								}
 								$sslaliases =~ s/\$VH_NAME/$sslhost/;
 								$ssldomains{$sslhost}{key} = $sslkey;
