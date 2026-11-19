@@ -174,41 +174,34 @@ sub _messenger_fail
 }
 
 # #
-#	Messenger › Log
-#	
-#	Write Messenger debug messages to dedicated /var/log/lfd_messenger.log
-#	when DEBUG is enabled.
-#	
-#	@usage      _messengerlog( $homedir, "Message" );
+#   Messenger › Start
+#
+#   Start Messenger version selected by init().
+#   
+#   MessengerV1:    Pass port, user, and type values.
+#   
+#   @note:          Called from lfd.pl
+#   
+#   MessengerV1     my ( $status, $reason ) = $messenger1->start( $port, $user, $type );
+#   MessengerV2     my ( $status, $reason ) = $messenger2->start();
+#   MessengerV3     my ( $status, $reason ) = $messenger3->start();
 #   
 #   @note       In CSF < 15.10; Messenger module maintained two separate
 #               logging paths:
 #                   /var/log/lfd.log
-#                   /var/log/lfd_messenger.log
-#   
-#               This should be taken care of by the main Logger.
-#   
-#	@param		homedir		str			Messenger home directory
-#	@param		message		str			message to write to the log
+#   @params     self            hashref         Messenger object
+#               port            int             listening port passed to MessengerV1
+#               user            str             user passed to MessengerV1
+#               type            str             Messenger type passed to MessengerV1
+#
+#   @return     status          int|undef       Messenger startup status
+#                                                   0       startup succeeded
+#                                                   1       startup failed
+#                                                   undef   no status was returned
+#               reason          str|undef       startup result reason
+#                                                   "none"  no supported version was selected
+#                                                   undef   no reason was returned
 # #
-
-sub _messengerlog
-{
-	my ( $homedir, $message ) = @_;
-	$message //= "Unknown Messenger log";
-
-	if ( $config{DEBUG} )
-	{
-		my $isLogged = logfile( $message );
-
-		if ( !$isLogged )
-		{
-			die "Failed to write Messenger response to the log\n";
-		}
-	}
-
-	return 1;
-}
 
 sub start
 {
@@ -292,7 +285,9 @@ sub messenger
 					if ($line =~ /^\s*<VirtualHost\s+[^\>]+>/) {
 						$start = 1;
 					}
-					if ($webserver eq "apache" and $start) {
+
+					if ( $webserver eq "apache" and $start )
+                    {
 						if ($line =~ /\s*ServerName\s+(\w+:\/\/)?([a-zA-Z0-9\.\-]+)(:\d+)?/) {$sslhost = $2}
 						if ($line =~ /\s*ServerAlias\s+(.*)/) {$sslaliases .= " ".$1}
 						if ($line =~ /\s*SSLCertificateFile\s+(\S+)/) {
@@ -602,7 +597,8 @@ sub messenger
 							if ($firstline =~ /\r$/) {chop $firstline}
 						}
 
-						_messengerlog($homedir,"Client connection [$peeraddress] [$firstline]");
+                        ConfigServer::Logger::logfile( "debug:1", "info", "Client connection [$peeraddress] [$firstline]" );
+
 						my $error;
 						my $success;
 						my $failure;
@@ -617,8 +613,10 @@ sub messenger
 								my $url = "https://www.google.com/recaptcha/api/siteverify?secret=$config{RECAPTCHA_SECRET}&response=$recv";
 								($status, $text) = $urlget->urlget($url);
 							};
-							if ($status) {
-								_messengerlog($homedir,"*Error*, ReCaptcha ($peeraddress): $text");
+
+							if ($status)
+                            {
+								ConfigServer::Logger::logfile( "debug:1", "error", "*Error*, ReCaptcha ($peeraddress): $text" );
 								if ($config{DEBUG} >= 1) {
 									if ($@) {$error .= "Error:".$@}
 									if ($!) {$error .= "Error:".$!}
