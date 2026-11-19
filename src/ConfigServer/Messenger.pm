@@ -30,7 +30,7 @@ package ConfigServer::Messenger;
 
 use strict;
 use lib '/usr/local/csf/lib';
-use Fcntl qw(:DEFAULT :flock);
+use Fcntl ( );
 use File::Copy;
 use JSON::Tiny;
 use IO::Socket::INET;
@@ -98,7 +98,7 @@ sub init
 	if (-e "/proc/sys/kernel/hostname")
 	{
 		open (my $IN, "<", "/proc/sys/kernel/hostname");
-		flock ($IN, LOCK_SH);
+		flock ($IN, Fcntl::LOCK_SH);
 		$hostname = <$IN>;
 		chomp $hostname;
 		close ($IN);
@@ -455,7 +455,7 @@ sub messenger
     logfile( "DEBUG:1", "info", "[reCAPTCHA] type [$type] detected - sitekey [" . ( $config{RECAPTCHA_SITEKEY} ne "" ? "provided" : "empty" ) . "] - using $index" );
 
 	open (my $IN, "<", $index);
-	flock ($IN, LOCK_SH);
+	flock ($IN, Fcntl::LOCK_SH);
 	my @message = <$IN>;
 	close ($IN);
 	chomp @message;
@@ -467,7 +467,7 @@ sub messenger
 		foreach my $file (readdir(DIR)) {
 			if ($file =~ /\.(gif|png|jpg)$/) {
 				open (my $IN, "<", "/etc/csf/messenger/$file");
-				flock ($IN, LOCK_SH);
+				flock ($IN, Fcntl::LOCK_SH);
 				my @data = <$IN>;
 				close ($IN);
 				chomp @data;
@@ -483,7 +483,7 @@ sub messenger
 
 	if ($oldtype eq "HTTPS") {
 		open (my $STATUS,"<", "/proc/$$/status") or next;
-		flock ($STATUS, LOCK_SH);
+		flock ($STATUS, Fcntl::LOCK_SH);
 		my @status = <$STATUS>;
 		close ($STATUS);
 		chomp @status;
@@ -629,8 +629,8 @@ sub messenger
 									my $ip = $resp->{hostname};
 									unless ($ip =~ /^($ipv4reg|$ipv6reg)$/) {$ip = (getips($ip))[0]}
 									if ($ips{$ip} or $ip eq $hostaddress or $ipscidr6->find($ip)) {
-										sysopen (my $UNBLOCK, "$homedir/unblock.txt", O_WRONLY | O_APPEND | O_CREAT) or $error .= "Unable to write to [$homedir/unblock.txt] (make sure that MESSENGER_USER has a home directory)";
-										flock($UNBLOCK, LOCK_EX);
+										if ( sysopen( my $UNBLOCK, "$homedir/unblock.txt", Fcntl::O_WRONLY() | Fcntl::O_APPEND() | Fcntl::O_CREAT() ) ) {
+											flock($UNBLOCK, Fcntl::LOCK_EX);
 										print $UNBLOCK "$peeraddress;$resp->{hostname};$ip\n";
 										close ($UNBLOCK);
 										$success = 1;
@@ -756,7 +756,7 @@ sub messengerv2
 	if ( !-e $public_html . "/.htaccess" )
 	{
 		open    (my $HTACCESS, ">", $public_html."/.htaccess");
-		flock ($HTACCESS, LOCK_EX);
+		flock ($HTACCESS, Fcntl::LOCK_EX);
 		print $HTACCESS "Require all granted\n";
 		print $HTACCESS "DirectoryIndex index.php index.cgi index.html index.htm\n";
 		print $HTACCESS "Options +FollowSymLinks +ExecCGI\n";
@@ -820,7 +820,7 @@ sub messengerv2
 	}
 
 	open    ( my $CONF, ">", $homedir . "/recaptcha.php" );
-	flock   ( $CONF, LOCK_EX );
+	flock   ( $CONF, Fcntl::LOCK_EX );
 	print $CONF "<?php\n";
 	print $CONF "\$secret = '$config{RECAPTCHA_SECRET}';\n";
 	print $CONF "\$sitekey = '$config{RECAPTCHA_SITEKEY}';\n";
@@ -843,7 +843,7 @@ sub messengerv2
     # #
 
 	open    ( my $OUT, ">", "/var/lib/csf/csf.conf" );
-	flock   ( $OUT, LOCK_EX );
+	flock   ( $OUT, Fcntl::LOCK_EX );
 
     # #
     #   Messenger v2 > Build Apache <VirtualHost> - Port :80 http
@@ -1057,7 +1057,7 @@ sub messengerv2
 		system("/scripts/restartsrv_httpd");
 		
 		open (my $ERROR, ">", "/var/lib/csf/apachectl.error");
-		flock ($ERROR, LOCK_EX);
+		flock ($ERROR, Fcntl::LOCK_EX);
 		foreach (@data) {print $ERROR $_}
 		close ($ERROR);
 	}
@@ -1108,7 +1108,7 @@ sub messengerv3
 	if ( !-e $public_html . "/.htaccess" )
 	{
 		open    (my $HTACCESS, ">", $public_html."/.htaccess");
-		flock ($HTACCESS, LOCK_EX);
+		flock ($HTACCESS, Fcntl::LOCK_EX);
 		print $HTACCESS <<EOF;
 Require all granted
 DirectoryIndex index.php index.cgi index.html index.htm
@@ -1150,7 +1150,7 @@ EOF
 	}
 	
 	open ( my $CONF, ">", $homedir . "/recaptcha.php" );
-	flock ( $CONF, LOCK_EX );
+	flock ( $CONF, Fcntl::LOCK_EX );
 	print $CONF "<?php\n";
 	print $CONF "\$secret = '$config{RECAPTCHA_SECRET}';\n";
 	print $CONF "\$sitekey = '$config{RECAPTCHA_SITEKEY}';\n";
@@ -1170,7 +1170,7 @@ EOF
 	}
 
 	open (my $OUT, ">", "/var/lib/csf/csf.conf");
-	flock ($OUT, LOCK_EX);
+	flock ($OUT, Fcntl::LOCK_EX);
 
 	if ($config{MESSENGERV3PHPHANDLER} ne "") {
 		$phphandler = $config{MESSENGERV3PHPHANDLER};
@@ -1350,8 +1350,8 @@ EOF
 	elsif (-f $config{MESSENGERV3LOCATION}) {
 		my @conf = slurp($config{MESSENGERV3LOCATION});
 		unless (grep {$_ =~ m[^Include /var/lib/csf/csf.conf]i} @conf) {
-			sysopen (my $FILE, $config{MESSENGERV3LOCATION}, O_WRONLY | O_APPEND | O_CREAT);
-			flock ($FILE, LOCK_EX);
+			sysopen (my $FILE, $config{MESSENGERV3LOCATION}, Fcntl::O_WRONLY() | Fcntl::O_APPEND() | Fcntl::O_CREAT() );
+			flock ($FILE, Fcntl::LOCK_EX);
 			if ($webserver eq "apache") {
 				print $FILE "Include /var/lib/csf/csf.conf\n";
 			}
@@ -1383,7 +1383,7 @@ EOF
 			logfile("MESSENGERV3: Restarted $webserver MESSENGERV3 service using $location");
 		} else {
 			open (my $ERROR, ">", "/var/lib/csf/messenger.error");
-			flock ($ERROR, LOCK_EX);
+			flock ($ERROR, Fcntl::LOCK_EX);
 			foreach (@data) {print $ERROR $_}
 			close ($ERROR);
 
@@ -1393,8 +1393,8 @@ EOF
 			elsif (-f $config{MESSENGERV3LOCATION}) {
 				my @conf = slurp($config{MESSENGERV3LOCATION});
 				if (grep {$_ =~ m[^Include /var/lib/csf/csf.conf]i} @conf) {
-					sysopen (my $FILE, $config{MESSENGERV3LOCATION}, O_WRONLY | O_CREAT | O_TRUNC);
-					flock ($FILE, LOCK_EX);
+					sysopen (my $FILE, $config{MESSENGERV3LOCATION}, Fcntl::O_WRONLY() | Fcntl::O_CREAT() | Fcntl::O_TRUNC() );
+					flock ($FILE, Fcntl::LOCK_EX);
 					foreach my $line (@conf) {
 						$line =~ s/$cleanreg//g;
 						if ($line =~ m[^Include /var/lib/csf/csf.conf]i) {next}
