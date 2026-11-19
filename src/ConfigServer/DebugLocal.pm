@@ -9,7 +9,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            10.27.2026
+#   @updated            11.19.2026
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -782,6 +782,57 @@ my %STATUS_CLR =
     abort   => "\e[38;5;198m",
     info    => "\e[38;5;33m",
 );
+
+# #
+#   DebugLocal › Diag › POSIX Exit Test
+#   
+#   Report if POSIX and immediate exit funcs are available.
+#   Terminate current process using the POSIX failure exit status.
+#   
+#   Bypasses normal Perl cleanup, destructors, and END blocks.
+#   
+#   @params     void
+#   @return     status          undef       Test could not run
+#               error           str|undef   Failure reason
+#                                           No return when POSIX::_exit succeeds
+# #
+
+sub diag_posix_exit
+{
+    my $module_loaded   = exists( $INC{"POSIX.pm"} ) ? 1 : 0;
+    my $module_file     = $module_loaded ? $INC{"POSIX.pm"} : "not loaded";
+    my $exit_ready      = defined( POSIX->can( "_exit" ) ) ? 1 : 0;
+
+    my ( $exit_failure, $exit_failure_ready );
+    {
+        local $@;
+        $exit_failure_ready = eval
+        {
+            $exit_failure = POSIX::EXIT_FAILURE( );
+            1;
+        };
+    }
+
+    ConfigServer::DebugLocal::log( 1, "info",
+        "posix_module_loaded",      $module_loaded ? "yes" : "no",
+        "posix_module_file",        $module_file,
+        "posix_exit_ready",         $exit_ready ? "yes" : "no",
+        "exit_failure_ready",       $exit_failure_ready ? "yes" : "no",
+        "exit_failure_status",      defined( $exit_failure ) ? $exit_failure : "unavailable",
+    );
+
+    return ( undef, "POSIX module not loaded" )
+        if !$module_loaded;
+
+    return ( undef, "POSIX::_exit unavailable" )
+        if !$exit_ready;
+
+    return ( undef, "POSIX::EXIT_FAILURE unavailable" )
+        if !$exit_failure_ready;
+
+    POSIX::_exit( $exit_failure );
+}
+
 
 # #
 #   DebugLocal › Log
