@@ -833,6 +833,93 @@ sub diag_posix_exit
     POSIX::_exit( $exit_failure );
 }
 
+# #
+#   DebugLocal › Diag › Module Report
+#   
+#   Log every loaded perl module, module file path, and package
+#   version.
+#   
+#   Return info about all detected modules.
+#   
+#   Modules without a defined $VERSION report "not defined".
+#   
+#   @params     void
+#   @return     modules         arrayref    Loaded module info
+#               module          str         Module package name
+#               file            str         Path recorded in %INC
+#               version         str         Package version or "not defined"
+# #
+
+sub diag_modules_report
+{
+    ConfigServer::DebugLocal::log(
+        4,
+        "info",
+        "Preparing CSF loaded module report"
+    );
+
+    my @modules;
+    my @module_files = sort grep { /\.pm\z/ } keys( %INC );
+
+    for my $module_file ( @module_files )
+    {
+        my $module  = $module_file;
+        $module     =~ s{\.pm\z}{};
+        $module     =~ s{[\\/]}{::}g;
+
+        my $file    = $INC{$module_file};
+        $file       = "unknown"
+                        if !defined( $file ) or ref( $file ) or $file eq "";
+
+        my $version = "not defined";
+        {
+            no strict "refs";
+
+            my $version_ref = *{"${module}::VERSION"}{SCALAR};
+            if ( defined( $version_ref ) and defined( ${$version_ref} ) )
+            {
+                local $@;
+                my $version_read = eval
+                {
+                    $version = "" . ${$version_ref};
+                    1;
+                };
+
+                $version = "unreadable"
+                    if !$version_read;
+            }
+        }
+
+        my $mod =
+        {
+            module  => $module,
+            file    => $file,
+            version => $version,
+        };
+
+        push( @modules, $mod );
+
+        ConfigServer::DebugLocal::log(
+            4, "info",
+            ConfigServer::DebugLocal::log_singleize(
+                "colon",
+                [
+                    "module",   $module,
+                    "file",     $file,
+                    "version",  $version,
+                ]
+            )
+        );
+    }
+
+    ConfigServer::DebugLocal::log(
+        4,
+        "info",
+        "Loaded CSF module report completed [Count: " . scalar( @modules ) . "]"
+    );
+
+    return \@modules;
+}
 
 # #
 #   DebugLocal › Log
