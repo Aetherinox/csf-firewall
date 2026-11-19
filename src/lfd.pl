@@ -4851,28 +4851,70 @@ sub blockdistsmtp {
 	}
 	return;
 }
-# end blockdistsmtp
-###############################################################################
-# start disable404
-sub disable404 {
-	my $ip = shift;
-	my $text = shift;
+
+# #
+#   Apache › 404
+#   
+#   Fork a child process, block IP after it exceeds X num of Apache
+#   404 errors; defined in csf.conf:
+#       LF_APACHE_404 = "2"
+#   
+#   Send alert (if enabled), and IP is not already blocked.
+#   
+#   @params     ip              scalar      Client IP to block
+#               text            scalar      Apache log entries for the alert
+#   @return                     void        No value returned
+# #
+
+sub disable404
+{
+	my ( $ip, $text ) = @_;
 
 	$SIG{CHLD} = 'IGNORE';
-	unless (defined ($childpid = fork)) {
-		&shutdown(__LINE__,"*Error* cannot fork: $!");
-	} 
-	$forks{$childpid} = 1;
-	unless ($childpid) {
-		my $timer = time;
-		if ($config{DEBUG} >= 3) {$timer = &timer("start","disable404",$timer)}
+	if ( !defined( $childpid = fork ) )
+	{
+		&shutdown( __LINE__, "*Error* cannot fork: $!" );
+	}
 
-		my $tip = iplookup($ip);
-		my $perm = 1;
-		if ($config{LF_APACHE_404_PERM} > 1) {$perm = 0}
-		if (&ipblock($perm,"$tip, more than $config{LF_APACHE_404} Apache 404 hits in the last $config{LF_INTERVAL} secs",$ip,$ports{mod_security},"in",$config{LF_APACHE_404_PERM},0,"","LF_APACHE_404")) {
-			if ($config{DEBUG} >= 1) {logfile("debug: $ip already blocked")}
-		} else {
+	$forks{$childpid} = 1;
+	unless ($childpid)
+    {
+		my $timer = time;
+		if ( $config{DEBUG} >= 3 )
+        {
+            $timer = &timer( "start", "disable404", $timer )
+        }
+
+		my $tip     = iplookup( $ip );
+		my $perm    = 1;
+
+		if ( $config{LF_APACHE_404_PERM} > 1 )
+        {
+            $perm = 0
+        }
+
+		my $apache_404_limit    = ConfigServer::Config->get( "LF_APACHE_404", 0, \%config );
+		my $apache_404_interval = ConfigServer::Config->get( "LF_INTERVAL", 3600, \%config );
+		my $apache_404_message  = "$tip, more than $apache_404_limit Apache 404 hits in the last $apache_404_interval secs";
+
+		my $ipblock_status = &ipblock(
+			$perm,
+			$apache_404_message,
+			$ip,
+			$ports{mod_security},
+			"in",
+			$config{LF_APACHE_404_PERM},
+			0,
+			"",
+			"LF_APACHE_404",
+		);
+
+		if ( $ipblock_status )
+        {
+            logfile( "debug:1", "info", "[APACHE] IP [ $ip ] already blocked for too many 404 hits" );
+		}
+        else
+        {
 			if ($config{LT_EMAIL_ALERT}) {
 				$0 = "lfd - (child) sending alert email for $ip";
 
