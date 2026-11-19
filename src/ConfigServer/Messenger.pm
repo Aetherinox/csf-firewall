@@ -32,10 +32,10 @@ use strict;
 use lib '/usr/local/csf/lib';
 use Fcntl ( );
 use File::Copy;
-use JSON::Tiny;
+use Socket ( );
 use IO::Socket::INET;
 use Net::CIDR::Lite;
-use Net::IP;
+use IO::Socket::INET ( );
 use IPC::Open3;
 use ConfigServer::Config;
 use ConfigServer::CheckIP qw(checkip);
@@ -111,7 +111,7 @@ sub init
 	if ($version == 1)
 	{
 		if ($config{MESSENGER6}) {
-			eval('use IO::Socket::INET6;'); ##no critic
+			eval( 'require IO::Socket::INET6;' ); ##no critic
 			if ($@) {$config{MESSENGER6} = "0"}
 		}
 		$ipscidr6 = Net::CIDR::Lite->new;
@@ -262,7 +262,6 @@ sub messenger
 		eval {
 			local $SIG{__DIE__} = undef;
 			require IO::Socket::SSL;
-			import IO::Socket::SSL;
 		};
 
 		my $start = 0;
@@ -386,9 +385,9 @@ sub messenger
 			if ( $config{MESSENGER6} )
 			{
 				$server = IO::Socket::SSL->new(
-					Domain 			=> AF_INET6,
+					Domain 			=> Socket::AF_INET6,
 					LocalPort 		=> $port,
-					Type 			=> SOCK_STREAM,
+					Type 			=> Socket::SOCK_STREAM,
 					ReuseAddr 		=> 1,
 					Listen 			=> $config{MESSENGER_CHILDREN},
 					SSL_server 		=> 1,
@@ -400,9 +399,9 @@ sub messenger
 			else
 			{
 				$server = IO::Socket::SSL->new(
-					Domain 			=> AF_INET,
+					Domain 			=> Socket::AF_INET,
 					LocalPort 		=> $port,
-					Type 			=> SOCK_STREAM,
+					Type 			=> Socket::SOCK_STREAM,
 					ReuseAddr 		=> 1,
 					Listen 			=> $config{MESSENGER_CHILDREN},
 					SSL_server 		=> 1,
@@ -425,7 +424,7 @@ sub messenger
 	{
 		$server = IO::Socket::INET6->new(
 			LocalPort 	=> $port, 
-			Type 		=> SOCK_STREAM, 
+			Type 		=> Socket::SOCK_STREAM, 
 			ReuseAddr 	=> 1, 
 			Listen 		=> $config{MESSENGER_CHILDREN}) or &childcleanup(__LINE__,"*Error* cannot open server on port $port: $!");
 	}
@@ -433,7 +432,7 @@ sub messenger
 	{
 		$server = IO::Socket::INET->new(
 			LocalPort 	=> $port, 
-			Type 		=> SOCK_STREAM, 
+			Type 		=> Socket::SOCK_STREAM, 
 			ReuseAddr 	=> 1, 
 			Listen 		=> $config{MESSENGER_CHILDREN}) or &childcleanup(__LINE__,"*Error* cannot open server on port $port: $!");
 	}
