@@ -10,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            11.19.2026
+#   @updated            11.20.2026
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -138,11 +138,11 @@ our (
     %config,            	%cpanelalert,     		%cpanelalertusers, 		%cpconfig,         	%cxsports,
     %db,                	%dirwatchfile,    		%forks,            		%gignoreips,       	%globlogs,
     %ifaces,            	%ignoreips,       		%ips,              		%logfiles,         	%loginproto,
-    %logins,            	%logintimeout,    		%logscannerfiles,		%messengerips,     	%messengerports,
-    %newaccounttracking,	%nofiles,         		%ports,            		%portscans,        	%psips,
-    %pskip,             	%relayip,         		%relays,           		%rtignore,         	%scripts,
-    %sfile,             	%skip,            		%skipfile,         		%skipscript,       	%skipuser,
-    %suignore,          	%uidignore,       		%uidscans
+    %logins,            	%logintimeout,    		%logscannerfiles,		%messengerfailed,   %messengerips,
+	%messengerports,		%messengerstarted,		%newaccounttracking,	%nofiles,           %ports,
+	%portscans,             %psips,                 %pskip,             	%relayip,           %relays,
+    %rtignore,              %scripts,               %sfile,             	%skip,              %skipfile,
+    %skipscript,            %skipuser,              %suignore,          	%uidignore,         %uidscans
 );
 
 our (
@@ -12020,7 +12020,9 @@ sub _msngr_service_disable
 		}
 	}
 
-	%messengerips = ();
+	%messengerips       = ();
+	%messengerstarted   = ();
+	%messengerfailed    = ();
 
 	@config{
 		qw(
@@ -12046,47 +12048,118 @@ sub _msngr_service_disable
 # #
 #   Messenger › Service Monitoring
 #   
-#   Restart configured Messenger listeners whose recorded processes are
-#   no longer running.
+#   Monitor Messenger HTTPS, HTML, and TEXT processes.
 #   
-#   $messenger_pid          916094
-#   $incoming_ports         21
-#   $service_type           TEXT
-#   $mpid       916094
-#   $ports      21
-#   $type       TEXT            (HTTPS HTML TEXT)
-#   $user       csf
+#   If one of the processes stop, restart it and count the failure.
+#   Clear failure count after restarted process stays running
+#   for X number of seconds.
+#   
+#   If the process repeatedly stops and reaches the fail limit, stop
+#   restarting it, disable that service.
 # #
 
 sub _msngr_service_restart_failed
 {
 	my ( $user ) = @_;
 
-	logfile( "normal", "info", "[Messenger] Restart check started; tracked services [ " . scalar( keys %messengerips ) . " ]" );
+	my $failure_max = ConfigServer::Messenger::MESSENGER_RESTART_FAIL_MAX( );
+	my $stable_secs = ConfigServer::Messenger::MESSENGER_RESTART_STABLE_SECS( );
+
+	logfile( "DEBUG:2", "info", "[Messenger] Restart check started; tracked services [ " . scalar( keys %messengerips ) . " ]" );
+
+    # #
+    #   @vars       $mpid           916094
+    #               $ports          21
+    #               $type           TEXT            (HTTPS HTML TEXT)
+    #               $user           csf
+    # #
 
 	for my $type ( keys %messengerips )
 	{
-		logfile( "normal", "info", "[Messenger] Checking tracked service [ $type ]" );
-
 		my $mpid    = $messengerips{$type};
 		my $ports   = $config{"MESSENGER_${type}_IN"};
+
+		logfile(
+			"DEBUG:2",
+			"info",
+			"[Messenger] Checking tracked service [ $type ] [PID: " .
+			( defined( $mpid ) ? $mpid : "undefined" ) . "]"
+		);
 
 		next
 			if !defined( $mpid ) or $mpid !~ /\A[0-9]+\z/ or $mpid <= 1;
 
-		next
-			if !defined( $ports ) or $ports eq "";
+		if ( !defined( $ports ) or $ports eq "" )
+		{
+			delete $messengerfailed{$type};
+			delete $messengerips{$type};
+			delete $messengerstarted{$type};
+			next;
+		}
 
-		next
-			if kill( 0, $mpid );
+		my $started = $messengerstarted{$type};
+		my $runtime = 0;
+
+		if ( defined( $started ) and $started =~ /\A[0-9]+\z/ )
+		{
+			$runtime = time - $started;
+			$runtime = 0
+				if $runtime < 0;
+		}
+
+		if ( kill( 0, $mpid ) )
+		{
+			if ( exists( $messengerfailed{$type} ) and $runtime >= $stable_secs )
+			{
+				delete $messengerfailed{$type};
+
+				logfile(
+					"DEBUG:1",
+					"ok",
+					"[Messenger] Type [ $type ] remained active for [ $runtime ] secs; failure count cleared"
+				);
+			}
+
+			next;
+		}
+
+		delete $messengerfailed{$type}
+			if $runtime >= $stable_secs;
+
+		my $failure_i = ++$messengerfailed{$type};
+
+		if ( $failure_i >= $failure_max )
+		{
+			my $setting         = "MESSENGER_${type}_IN";
+			$config{$setting}   = "";
+
+			delete $messengerfailed{$type};
+			delete $messengerips{$type};
+			delete $messengerstarted{$type};
+
+			logfile(
+				"normal",
+				"error",
+				"[Messenger] Type [ $type ] failed [ $failure_i ] times before " .
+				"remaining active for [ $stable_secs ] secs; temporarily disabled [ $setting ]"
+			);
+
+			next;
+		}
 
         # #
-        #   Start Messenger service in child process, track the PID,
-        #   temp disable service if startup fails
+        #   Start Messenger service in child process, track pid.
+        #   Disable listener if failures reach limit
         # #
 
-		messenger( $config{"MESSENGER_${type}"}, $user, $type, );
-		logfile( "Messenger type [ $type ] service died, restarted" );
+		logfile(
+			"normal",
+			"warn",
+			"[Messenger] Type [ $type ] died after [ $runtime ] secs; " .
+			"rapid failure [ $failure_i / $failure_max ], restarting"
+		);
+
+		messenger( $config{"MESSENGER_${type}"}, $user, $type );
 	}
 
 	return;

@@ -9,7 +9,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            02.12.2026
+#   @updated            11.20.2026
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -108,10 +108,28 @@ my $phphandler;
 my $version = 1;
 my $serverroot;
 
-use constant PACKAGE_NAME 		=> __PACKAGE__;
-use constant SUB_MESSENGER_V1 	=> "MessengerV1";
-use constant SUB_MESSENGER_V2 	=> "MessengerV2";
-use constant SUB_MESSENGER_V3 	=> "MessengerV3";
+# #
+#   Declare › Constants
+#   
+#   MESSENGER_RESTART_FAIL_MAX
+#       Max number of rapid listener failures before LFD temp
+#       disables that Messenger listener type.
+#   
+#   MESSENGER_RESTART_STABLE_SECS
+#       Num of secs a restarted listener must be running before
+#       LFD clears its failure count.
+# #
+
+use constant
+{
+    PACKAGE_NAME                    => __PACKAGE__,
+    MESSENGER_RESTART_FAIL_MAX      => 3,
+    MESSENGER_RESTART_STABLE_SECS   => 60,
+    MESSENGER_V1_SOURCE             => "MessengerV1",
+    MESSENGER_V2_SOURCE             => "MessengerV2",
+    MESSENGER_V3_SOURCE             => "MessengerV3",
+};
+
 
 sub init
 {
