@@ -995,10 +995,19 @@ sub log
 
     local $debug_output_active = 1;
 
-  # my $caller      = ( caller( 0 ) )[ 3 ] // 'main';   #log
-    my $caller      = ( caller( 1 ) )[ 3 ] // 'main';
-    my $line_number = ( caller( 0 ) )[ 2 ] // 0;
-    my $status      = 'info';
+  # my $caller = ( caller( 0 ) )[ 3 ];   #log
+  # $caller = 'main'
+  #     if !defined( $caller );
+
+    my $caller = ( caller( 1 ) )[ 3 ];
+    $caller = 'main'
+        if !defined( $caller );
+
+    my $line_number = ( caller( 0 ) )[ 2 ];
+    $line_number = 0
+        if !defined( $line_number );
+
+    my $status = 'info';
 
     if ( @values > 1 && defined( $values[ 0 ] ) && !ref( $values[ 0 ] ) )
     {

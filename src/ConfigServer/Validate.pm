@@ -9,7 +9,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            11.07.2026
+#   @updated            11.20.2026
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -600,7 +600,9 @@ sub validate_filter_chars
 {
 	my ( $rule, %opts ) = @_;
 
-	my $opt_required = delete( $opts{required} ) // 0;
+	my $opt_required = delete( $opts{required} );
+	$opt_required = 0
+		if !defined( $opt_required );
 
 	my ( $opt_unknown ) = sort keys %opts;
 	return 0
@@ -657,15 +659,32 @@ sub validate_client_comment
 {
 	my ( $comment, %opts ) = @_;
 
-	my ( $comment_text, $decode_err ) = _text_decode( $comment // "" );
+	$comment = ""
+        if !defined( $comment );
+
+	my ( $comment_text, $decode_err ) = _text_decode( $comment );
 	return ( undef, $decode_err )
 		if defined( $decode_err );
 
-	my $opt_ascii_only      = delete( $opts{ascii_only} )       // 0;
-	my $opt_bytes_max       = delete( $opts{bytes_max} )        // COMMENT_BYTES_DEFAULT;
-	my $opt_details         = delete( $opts{details} )          // 0;
-	my $opt_no_leading_hash = delete( $opts{no_leading_hash} )  // 0;
-	my $opt_required        = delete( $opts{required} )         // 0;
+	my $opt_ascii_only = delete( $opts{ascii_only} );
+	$opt_ascii_only = 0
+        if !defined( $opt_ascii_only );
+
+	my $opt_bytes_max = delete( $opts{bytes_max} );
+	$opt_bytes_max = COMMENT_BYTES_DEFAULT
+        if !defined( $opt_bytes_max );
+
+	my $opt_details = delete( $opts{details} );
+	$opt_details = 0
+        if !defined( $opt_details );
+
+	my $opt_no_leading_hash = delete( $opts{no_leading_hash} );
+	$opt_no_leading_hash = 0
+        if !defined( $opt_no_leading_hash );
+
+	my $opt_required = delete( $opts{required} );
+	$opt_required = 0
+        if !defined( $opt_required );
 
 	my ( $opt_unknown ) = sort keys %opts;
 	if ( defined( $opt_unknown ) )

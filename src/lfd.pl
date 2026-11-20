@@ -27,9 +27,8 @@
 # #
 
 # #
-#	CSF v15.10				Removed use of @EXPORT; functions must now be explicitly imported.
-#							hex2ip migrated to GetIPs.pm
-#							ipv4in6 migrated to GetIPs.pm
+#	@change         CSF v15.10      hex2ip migrated to GetIPs.pm
+#                                   ipv4in6 migrated to GetIPs.pm
 # #
 
 ## no critic (RequireUseWarnings, ProhibitExplicitReturnUndef, ProhibitMixedBooleanOperators, RequireBriefOpen, RequireLocalizedPunctuationVars)
@@ -406,7 +405,9 @@ if ( -e "/etc/cxs/cxs.reputation" and -e "/usr/local/csf/lib/ConfigServer/cxs.pm
 
 $SIG{CHLD} = 'IGNORE'; # Ignore child process
 
-my $pid = fork // die "*Error* Unable to fork: $!";
+my $pid = fork;
+die "*Error* Unable to fork: $!"
+    if !defined( $pid );
 
 if ( $pid )
 {
@@ -12271,8 +12272,9 @@ sub messenger
 		&shutdown(__LINE__,"*Error* cannot fork: $!");
 	} 
 
-	$forks{$childpid} 		= 1;
-	$messengerips{$type} 	= $childpid;
+	$forks{$childpid} 			= 1;
+	$messengerips{$type} 		= $childpid;
+	$messengerstarted{$type}    = time;
 	unless ( $childpid )
 	{
 		if ( $config{DEBUG} >= 3 )
@@ -12419,7 +12421,7 @@ sub messengerv3
 		my ($status,$reason) = $messenger3->start();
 		if ($status)
         {
-			logfile( "[" . PACKAGE_NAME . "] [" . ConfigServer::Messenger::SUB_MESSENGER_V3( ) . "] Error: $reason");
+			logfile( "[" . PACKAGE_NAME . "] [" . ConfigServer::Messenger::MESSENGER_V3_SOURCE( ) . "] Error: $reason");
 		}
 
 		if ($config{DEBUG} >= 3) {$timer = &timer("stop","messengerv3",$timer)}

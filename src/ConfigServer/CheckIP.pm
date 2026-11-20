@@ -1325,7 +1325,7 @@ sub addr_parse
 #   Get ipv4 addr inside ipv4 mapped ipv6 addr:
 #       ::ffff:192.0.2.1    =>   192.0.2.1
 #   
-#   Accept IP in a string, or hashref from addr_parse():
+#   Accept an IP in a string, or hashref from addr_parse():
 #       'String':
 #           my $ipv4 = ConfigServer::CheckIP::addr_get_embedded_v4(
 #               "::ffff:192.0.2.1",

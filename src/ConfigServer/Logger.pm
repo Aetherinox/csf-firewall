@@ -9,7 +9,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            11.19.2026
+#   @updated            11.20.2026
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -350,7 +350,7 @@ Log destination depends on B<TARGET> AND the user running the process:
 
 When LFD starts Messenger, the Messenger process initially runs as
 root. During initialization, Messenger calls
-C<ConfigServer::MessengerSecurity::identity_cage()>, which changes
+C<ConfigServer::Aegis::identity_cage()>, which changes
 the process identity to the user configured by C<MESSENGER_USER> in
 C</etc/csf/csf.conf> and permanently removes root access.
 
@@ -370,7 +370,7 @@ access. This security restriction is intentional.
 =item *
 
 Messenger begins accepting client connections only after
-C<ConfigServer::MessengerSecurity::identity_cage()> changes the
+C<ConfigServer::Aegis::identity_cage()> changes the
 process identity from root to the UID and GID of C<MESSENGER_USER>.
 
 If the restriction fails before the identity change begins, Messenger
@@ -513,7 +513,7 @@ mode C<0600>.
 
 When LFD starts Messenger, the Messenger process initially runs as
 root. During initialization, Messenger calls
-C<ConfigServer::MessengerSecurity::identity_cage()>, which changes
+C<ConfigServer::Aegis::identity_cage()>, which changes
 the process identity to the user configured by C<MESSENGER_USER> in
 C</etc/csf/csf.conf> and permanently removes root access.
 
@@ -789,6 +789,7 @@ use File::Basename ();
 use File::Path ();
 use File::stat ();
 use POSIX ();
+use Sys::Hostname ( );
 use utf8 ();
 use ConfigServer::Config ();
 use ConfigServer::Secrets ();
@@ -1402,7 +1403,10 @@ sub logfile
     $message            = ConfigServer::Secrets::redact_obj_log( $message );
 
     my @caller_direct   = caller( 0 );
-    my $file            = $caller_direct[ 1 ] // 'unknown';
+    my $file            = $caller_direct[ 1 ];
+    $file               = 'unknown'
+                            if !defined( $file );
+
     my $line            = $caller_direct[ 2 ];
     my $sub             = ( caller( 1 ) )[ 3 ];
 

@@ -9,7 +9,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            11.07.2026
+#   @updated            11.20.2026
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -1126,7 +1126,10 @@ sub getLicenseStatus
 	}
 
 	my $valid 	= $data->{message}{valid} ? 1 : 0;
-	my $msg 	= $data->{message}{response} // 'Unknown error';
+	my $msg 	= $data->{message}{response};
+	$msg 		= 'Unknown error'
+                    if !defined( $msg );
+
 	$msg        = "$msg";
 	$msg        =~ s/[\x00-\x1F\x7F]//g;
 	$msg        =~ s/\s+/ /g;
