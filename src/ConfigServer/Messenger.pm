@@ -51,6 +51,7 @@ use IPC::Open3 ( );
 use ConfigServer::Config ( );
 use ConfigServer::CheckIP ( );
 use ConfigServer::Logger ( );
+use ConfigServer::Aegis ( );
 use ConfigServer::URLGet ( );
 use ConfigServer::Slurp ( );
 use ConfigServer::GetIPs ( );
@@ -333,7 +334,7 @@ sub start
 sub messenger
 {
 
-    logfile( "DEBUG:1", "info", "[" . SUB_MESSENGER_V1 . "] Initializing subroutine" );
+    ConfigServer::Logger::logfile( "debug:1", "info", "[" . MESSENGER_V1_SOURCE . "] Initializing subroutine" );
 
 	my $port 		= shift;
 	my $user 		= shift;
@@ -397,7 +398,7 @@ sub messenger
 					if ( ( $webserver eq "apache" and $line =~ /^\s*<\/VirtualHost\s*>/ ) )
 					{
 						$start = 0;
-						if ( $sslhost ne "" and !checkip( $sslhost ) and $sslcert ne "" )
+						if ( $sslhost ne "" and !ConfigServer::CheckIP::checkip( $sslhost ) and $sslcert ne "" )
 						{
 							$sslcerts{$sslhost} 	= $sslcert;
 							if ( $sslkey eq "" ) 	{ $sslkey = $sslcert }
@@ -406,7 +407,7 @@ sub messenger
 							foreach my $alias ( split( /\s+/, $sslaliases ) )
 							{
 								if ( $alias eq "" ) { next }
-								if ( checkip( $alias ) ) { next }
+								if ( ConfigServer::CheckIP::checkip( $alias ) ) { next }
 								if ( $alias =~ /^[a-zA-Z0-9\.\-]+$/ )
 								{
 									if ( $config{MESSENGER_HTTPS_SKIPMAIL} and $alias =~ /^mail\./ ) { next }
@@ -470,7 +471,7 @@ sub messenger
 		{
 			foreach my $key ( keys %sslcerts )
 			{
-				logfile( "SSL: [$key] [$sslcerts{$key}] [$sslkeys{$key}]" );
+				ConfigServer::Logger::logfile( "SSL: [$key] [$sslcerts{$key}] [$sslkeys{$key}]" );
 			}
 		}
 
@@ -506,7 +507,7 @@ sub messenger
 				) or &error( "MESSENGER: *Error* cannot open server on port $port: " . IO::Socket::SSL->errstr );
 			}
 
-			&logfile( "Messenger HTTPS Service started for " . scalar( keys %sslcerts ) . " domains" );
+			ConfigServer::Logger::logfile( "Messenger HTTPS Service started for " . scalar( keys %sslcerts ) . " domains" );
 			$type = "HTML";
 		};
 	
@@ -546,7 +547,7 @@ sub messenger
         $index = "/etc/csf/messenger/index.text"
     }
 
-    logfile( "DEBUG:1", "info", "[reCAPTCHA] type [$type] detected - sitekey [" . ( $config{RECAPTCHA_SITEKEY} ne "" ? "provided" : "empty" ) . "] - using $index" );
+    ConfigServer::Logger::logfile( "debug:1", "info", "[reCAPTCHA] type [$type] detected - sitekey [" . ( $config{RECAPTCHA_SITEKEY} ne "" ? "provided" : "empty" ) . "] - using $index" );
 
 	open (my $IN, "<", $index);
 	flock ($IN, Fcntl::LOCK_SH);
@@ -589,8 +590,8 @@ sub messenger
 			if ($line =~ /^VmRSS:\s+(\d+) kB$/) {$vmrss = $1}
 		}
 
-		logfile("lfd $oldtype messenger using $vmrss kB of RSS memory at startup, adding up to $config{MESSENGER_CHILDREN} children = ".(($config{MESSENGER_CHILDREN} + 1) * $vmrss)." kB");
-		logfile("lfd $oldtype messenger using $vmsize kB of VIRT memory at startup, adding up to $config{MESSENGER_CHILDREN} children = ".(($config{MESSENGER_CHILDREN} + 1) * $vmsize)." kB");
+		ConfigServer::Logger::logfile("lfd $oldtype messenger using $vmrss kB of RSS memory at startup, adding up to $config{MESSENGER_CHILDREN} children = ".(($config{MESSENGER_CHILDREN} + 1) * $vmrss)." kB");
+		ConfigServer::Logger::logfile("lfd $oldtype messenger using $vmsize kB of VIRT memory at startup, adding up to $config{MESSENGER_CHILDREN} children = ".(($config{MESSENGER_CHILDREN} + 1) * $vmsize)." kB");
 	}
 
     # #
@@ -605,67 +606,202 @@ sub messenger
 		#	Reject root. Messenger must never run as uid/gid 0.
 		# #
 
-		unless ( defined $uid and defined $gid and $uid > 0 and $gid > 0 )
-		{
+        if ( !defined $uid or !defined $gid or $uid <= 0 or $gid <= 0 )
+        {
             return _throw_err( 1, "MESSENGER_USER must not be root (uid/gid 0) or invalid user specified [$user]" );
 		}
 
-		local $( = $gid;
-		local $) = "$gid $gid";
-		local $> = local $< = $uid;
-		if (($) != $gid) or ($> != $uid) or ($( != $gid) or ($< != $uid))
-		{
-			logfile("MESSENGER_USER unable to drop privileges - stopping $oldtype Messenger");
-			exit;
-		}
+        my ( $secured, $security_err ) = ConfigServer::Aegis::initialize(
+            $uid,
+            $gid,
+            $server,
+        );
+
+        if ( !$secured )
+        {
+            return _throw_err( 1,
+                "Unable to secure Messenger as MESSENGER_USER [$user] - stopping [$oldtype] Messenger: $security_err"
+            );
+        }
+
+        # #
+        #   Messenger › Start Log Re-route
+        #   
+        #   @note           From this point forward; Messenger will store logs in:
+        #                       /var/log/lfd_messenger.log
+        # #
+
+        ConfigServer::Logger::logfile( "debug:1", "info", "[" . MESSENGER_V1_SOURCE . "] " . "Messenger initialized securely as MESSENGER_USER [$user] ($uid:$gid)" );
+    
+		# #
+		#	Messenger › Client › Connections
+		#
+        #   Accept incoming Messenger connections, fork child process to handle
+        #   each client.
+        #   
+        #   Limit num of active child processes to $chldallow; defined in
+        #   csf.conf as $config{MESSENGER_CHILDREN}.
+        #   
+        #   Each child processes the client req, handle html / reCAPTCHA (if
+        #   enabled), sends response, closes connection. exit.
+        #   
+        #   Parent process keeps running; waits for the next client incoming
+        #   connection.
+        #   
+        #   @test       Note:           Port 8887
+        #               Command:        perl -MIO::Socket::SSL -e '$| = 1; my ( $host, $port, $children ) = @ARGV; my @clients; for my $i ( 1 .. ( $children + 1 ) ) { my $client = IO::Socket::SSL->new( PeerHost => $host, PeerPort => $port, SSL_verify_mode => 0, Timeout => 5 ) or die "Connection $i failed: " . IO::Socket::SSL::errstr() . "\n"; push @clients, $client; print "Connection $i opened\n"; select( undef, undef, undef, 0.2 ); } sleep 15;' 127.0.0.1 8887 20
+        #                               sudo ss -ltnp | grep -E ':(8887|8888|8889)\b'
+        #   
+        #               Note:           Port 8889
+        #               Command:        perl -MIO::Socket::INET -e '$| = 1; my ( $host, $port, $count ) = @ARGV; for my $i ( 1 .. $count ) { my $client = IO::Socket::INET->new( PeerHost => $host, PeerPort => $port, Proto => "tcp", Timeout => 5 ) or die "Connection $i failed: $!\n"; print "Connection $i opened\n"; close( $client ) or die "Connection $i close failed: $!\n"; }' 127.0.0.1 8889 21
+        #                               sudo ss -ltnp | grep -E ':(8887|8888|8889)\b'
+		# #
 
 		my %children;
-		while (1)
+		while ( 1 )
 		{
-			while (my $client = $server->accept())
+            # Trigger with telnet xx.xx.xx.xx 8889
+            ConfigServer::Logger::logfile( "debug:1", "info", "[" . MESSENGER_V1_SOURCE . "] $oldtype Messenger PID [$$] listening on [" . $server->sockhost( ) . ":" . $server->sockport( ) . "]" );
+			while ( my $client = $server->accept( ) )
 			{
-                logfile( "DEBUG:1", "info", "[" . SUB_MESSENGER_V1 . "] while client 1" );
-				while (scalar (keys %children) >= $chldallow)
+
+                ConfigServer::Logger::logfile( "debug:1", "info", "[" . MESSENGER_V1_SOURCE . "] $oldtype Messenger PID [$$] accepted client [" . $client->peerhost( ) . "]" );
+				while ( scalar ( keys %children ) >= $chldallow )
 				{
+
+					# #
+					#	Messenger › Client › Children › Cleanup
+					#   
+					#	Wait 1s; check each tracked child process.
+                    #   
+					#	Remove child PIDs that are no longer running so new
+					#	client connections can use the available slots. Otherwise
+                    #   we fill up the allowed slots.
+					# #
+
 					sleep 1;
-					foreach my $pid (keys %children) {
-						unless (kill(0,$pid)) {delete $children{$pid}}
+
+					foreach my $pid ( keys %children )
+                    {
+						if ( !kill( 0, $pid ) )
+                        {
+                            ConfigServer::Logger::logfile( "debug:1", "info", "[" . MESSENGER_V1_SOURCE . "] Client - Child PID [$pid] no longer running; removing from children list" );
+                            delete $children{$pid}
+                        }
 					}
-					$0 = "lfd $oldtype messenger (busy)";
+
+					$0          = "lfd $oldtype messenger (busy)";
 				}
 
-				$0 = "lfd $oldtype messenger";
-				$SIG{CHLD} = 'IGNORE';
-				my $pid = fork;
+				$0              = "lfd $oldtype messenger";
+				$SIG{CHLD}      = 'IGNORE';
+				my $pid         = fork;
 				$children{$pid} = 1;
-				if ($pid == 0)
+
+				# #
+				#	Messenger › Client › Child Process
+				#   
+                #   fork() returns 0 inside newly made child.
+                #   
+                #   Child handles accepted client connection, send the
+                #   response, close the connection, exit.
+				# #
+
+                ConfigServer::Logger::logfile( "debug:1", "info", "[" . MESSENGER_V1_SOURCE . "] Client - forked PID $pid" );
+
+				if ( $pid == 0 )
 				{
 					eval
 					{
-						local $SIG{__DIE__} = undef;
-						local $SIG{'ALRM'} = sub {die};
-						alarm(10);
-						close $server;
+						local $SIG{__DIE__}     = undef;
+						local $SIG{'ALRM'}      = sub {die};
+						alarm( 10 );
 
+                        # #
+                        #   Close Child Listener
+                        #
+                        #   Close the child process's inherited copy of the
+                        #   server listener.
+                        #   
+                        #   Could fail if the socket / file descriptor is invalid,
+                        #   already closed, or the server reports an error.
+                        #   
+                        #   @ref        https://perldoc.perl.org/POSIX#_exit
+                        # #
+
+                        ConfigServer::Logger::logfile( "debug:1", "info", "[" . MESSENGER_V1_SOURCE . "] Client - Preparing child process for listener [" . $server->sockhost( ) . ":" . $server->sockport( ) . "]" );
+						if ( !close( $server ) )
+						{
+							ConfigServer::Logger::logfile( "debug:1", "error", "[" . MESSENGER_V1_SOURCE . "] Client - " .
+								"Failure! Failed to close inherited listener: $!"
+							);
+
+							POSIX::_exit( POSIX::EXIT_FAILURE( ) );
+						}
+
+                        # #
+                        #   Child Listener Closed
+                        #
+                        #   close() succeeded. The child no longer holds a copy of
+                        #   the server listener, parent process continues listening
+                        #   for new clients.
+                        # #
+
+						ConfigServer::Logger::logfile( "debug:1", "ok", "[" . MESSENGER_V1_SOURCE . "] Client - Inherited listener closed successfully" );
+
+                        # #
+                        #   Isolate Child Descriptors
+                        #
+                        #   Keep only the accepted client and standard streams
+                        #   open in the child process.
+                        # #
+
+						my ( $worker_caged, $worker_cage_err ) = ConfigServer::Aegis::fds_cage( $client );
+						if ( !$worker_caged )
+						{
+							ConfigServer::Logger::logfile( "debug:1", "error", "[" . MESSENGER_V1_SOURCE . "] Client - Failure! Unable to cage descriptors: " .
+								( defined( $worker_cage_err ) ? $worker_cage_err : "unknown error" )
+							);
+
+							POSIX::_exit( POSIX::EXIT_FAILURE( ) );
+						}
+
+						ConfigServer::Logger::logfile( "debug:1", "ok", "[" . MESSENGER_V1_SOURCE . "] Client - Descriptors isolated successfully" );
 						$0 = "lfd $oldtype messenger client";
 
+                        # #
+                        #   Client Binary Mode
+                        #
+                        #   Put client socket into binary mode so data is sent
+                        #   and received w/o text or newline conversion.
+                        # #
+
 						binmode $client;
-						$| = 1;
-						my $firstline;
+						$| = 1;             # flush; dont buffer
 
-						my $hostaddress = $client->sockhost();
-						my $peeraddress = $client->peerhost();
-						$peeraddress =~ s/^::ffff://;
-						$hostaddress =~ s/^::ffff://;
+                        my $firstline       = $type eq "TEXT" ? "TEXT mode (not required)" : "";
+						my $hostaddress     = $client->sockhost( );
+						my $peeraddress     = $client->peerhost( );
+						$peeraddress        =~ s/^::ffff://;
+						$hostaddress        =~ s/^::ffff://;
 
-						if ($type eq "HTML")
+						ConfigServer::Logger::logfile( "debug:1", "info", "[" . MESSENGER_V1_SOURCE . "] Client - Socket ready [Server: $hostaddress | Client: $peeraddress]" );
+
+                        # #
+                        #   @todo   Port Messenger Requests to module
+                        # #
+
+						if ( $type eq "HTML" )
 						{
-							while ($firstline !~ /\n$/)
+							while ( $firstline !~ /\n$/ )
 							{
 								my $char;
-								$client->read($char,1);
+								$client->read( $char, 1 );
 								$firstline .= $char;
-								if ($char eq "") {exit}
+								if ( $char eq "" )
+                                {
+                                    exit
+                                }
 
 								# #
 								#	RFC 7230, Sec 3.1.1: recommends supporting at least 8000 octets.
@@ -673,9 +809,10 @@ sub messenger
 								#		Suffix:  	HTTP/1.1\r\n						= 11 bytes			(\r\n = 2 bytes) (carriage return (0x0D)/line feed (0x0A))
 								#		 												32 + 11 = 43 bytes
 								#	
-								#		Remaining for Recaptcha token					4053 bytes
+								#		Remaining for Recaptcha token					4053 bytes  (4096-43)
 								#		Acceptable Limit								4096 bytes
 								#	
+                                #   @docs               Keep here until I migrate to https://docs.configserver.dev
 								#	@since				v15.10
 								#	@reference			https://datatracker.ietf.org/doc/html/rfc7230#autoid-17
 								#						https://mothereff.in/byte-counter
@@ -798,7 +935,7 @@ sub messenger
 							}
 						}
 
-						ConfigServer::Logger::logfile( "debug:1", "ok", "[" . SUB_MESSENGER_V1 . "] Client - $oldtype response completed [Client: $peeraddress]" );
+						ConfigServer::Logger::logfile( "debug:1", "ok", "[" . MESSENGER_V1_SOURCE . "] Client - $oldtype response completed [Client: $peeraddress]" );
 
 						alarm(0);
 					};
@@ -826,7 +963,7 @@ sub messenger
 
 sub messengerv2
 {
-    logfile( "DEBUG:1", "info", "[" . SUB_MESSENGER_V2 . "] Initializing subroutine" );
+    ConfigServer::Logger::logfile( "debug:1", "info", "[" . MESSENGER_V2_SOURCE . "] Initializing subroutine" );
 
 	my ( undef, undef, $uid, $gid, undef, undef, undef, $homedir ) = getpwnam( $config{MESSENGER_USER} );
 
@@ -834,9 +971,14 @@ sub messengerv2
 	#	Reject root. Messenger must never run as uid/gid 0.
 	# #
 
-	unless ( defined $uid and defined $gid and $uid > 0 and $gid > 0 )
+    my $messenger_user = defined $config{MESSENGER_USER} && $config{MESSENGER_USER} ne "" ? $config{MESSENGER_USER} : "missing";
+	if ( !defined $uid or !defined $gid or $uid <= 0 or $gid <= 0 )
 	{
-        return _messenger_failed( 2, "Setting MESSENGER_USER cannot be root (uid:gid 0:0) or specify an invalid user [" . ( defined $config{MESSENGER_USER} && $config{MESSENGER_USER} ne "" ? $config{MESSENGER_USER} : "missing" ) . "] - stopping Messenger" );
+        return _throw_err(
+            2,
+            "MESSENGER_USER must specify a valid user with uid and gid greater than 0 " .
+            "[Configured: $messenger_user]"
+        );
 	}
 
 	if ( $homedir eq "" or $homedir eq "/" or $homedir =~ m[/etc/csf] )
@@ -849,11 +991,11 @@ sub messengerv2
         return _throw_err( 2, "The home directory for $config{MESSENGER_USER} does not exist [$homedir]" );
 	}
 
-    logfile( "DEBUG:1", "info", "[Messenger2] Set chmod 711: $homedir" );
+    ConfigServer::Logger::logfile( "debug:1", "info", "[" . MESSENGER_V2_SOURCE . "] Set chmod 711: $homedir" );
 	system( "chmod", "711", $homedir );
 
 	my $public_html = $homedir . "/public_html";
-    logfile( "DEBUG:1", "info", "[Messenger2] Declared public_html path: $public_html" );
+    ConfigServer::Logger::logfile( "debug:1", "info", "[" . MESSENGER_V2_SOURCE . "] Declared public_html path: $public_html" );
 
 	if ( !-e $public_html )
     {
@@ -861,11 +1003,11 @@ sub messengerv2
 		system( "chown", "$config{MESSENGER_USER}:nobody", $public_html );
 		system( "chmod", "711", $public_html );
 
-        logfile( "DEBUG:1", "info", "[Messenger2] Created public_html path: $public_html - chown:[$config{MESSENGER_USER}:nobody] - chmod:711" );
+        ConfigServer::Logger::logfile( "debug:1", "info", "[" . MESSENGER_V2_SOURCE . "] Created public_html path: $public_html - chown:[$config{MESSENGER_USER}:nobody] - chmod:711" );
     }
     else
     {
-        logfile( "DEBUG:1", "info", "[Messenger2] Skip creating public_html path: $public_html - already exists" );
+        ConfigServer::Logger::logfile( "debug:1", "info", "[" . MESSENGER_V2_SOURCE . "] Skip creating public_html path: $public_html - already exists" );
 	}
 
 	if ( !-e $public_html . "/.htaccess" )
@@ -904,13 +1046,13 @@ sub messengerv2
         # csf.conf RECAPTCHA_SITEKEY not set
 		if ( $config{RECAPTCHA_SITEKEY} )
 		{
-            logfile( "DEBUG:1", "info", "[reCAPTCHA] sitekey [" . ( $config{RECAPTCHA_SITEKEY} ne "" ? "provided" : "empty" ) . "] - Copying file (/etc/csf/messenger/index.recaptcha.php) => $public_html/index.php" );
+            ConfigServer::Logger::logfile( "debug:1", "info", "[reCAPTCHA] sitekey [" . ( $config{RECAPTCHA_SITEKEY} ne "" ? "provided" : "empty" ) . "] - Copying file (/etc/csf/messenger/index.recaptcha.php) => $public_html/index.php" );
 			system( "cp", "/etc/csf/messenger/index.recaptcha.php", $public_html . "/index.php" );
 		}
         # csf.conf RECAPTCHA_SITEKEY set
 		else
 		{
-            logfile( "DEBUG:1", "info", "[reCAPTCHA] sitekey [" . ( $config{RECAPTCHA_SITEKEY} ne "" ? "provided" : "empty" ) . "] - Copying file (/etc/csf/messenger/index.php) => $public_html/index.php" );
+            ConfigServer::Logger::logfile( "debug:1", "info", "[reCAPTCHA] sitekey [" . ( $config{RECAPTCHA_SITEKEY} ne "" ? "provided" : "empty" ) . "] - Copying file (/etc/csf/messenger/index.php) => $public_html/index.php" );
 			system( "cp", "/etc/csf/messenger/index.php", $public_html . "/index.php" );
 		}
 
@@ -920,7 +1062,7 @@ sub messengerv2
     # /home/csf/index.php exists
     else
     {
-        logfile( "DEBUG:1", "info", "[reCAPTCHA] sitekey [" . ( $config{RECAPTCHA_SITEKEY} ne "" ? "provided" : "empty" ) . "] - Found $public_html/index.php - skipping cp file from /etc/csf/messenger/" );
+        ConfigServer::Logger::logfile( "debug:1", "info", "[reCAPTCHA] sitekey [" . ( $config{RECAPTCHA_SITEKEY} ne "" ? "provided" : "empty" ) . "] - Found $public_html/index.php - skipping cp file from /etc/csf/messenger/" );
 	}
 
     # #
@@ -1040,7 +1182,7 @@ sub messengerv2
 					
 					if (($webserver eq "apache" and $line =~ /^\s*<\/VirtualHost\s*>/)) {
 						$start = 0;
-						if ($sslhost ne "" and !checkip($sslhost) and $sslcert ne "") {
+						if ($sslhost ne "" and !ConfigServer::CheckIP::checkip($sslhost) and $sslcert ne "") {
 							$ssldomains{$sslhost}{key} = $sslkey;
 							$ssldomains{$sslhost}{aliases} = $sslaliases;
 							$ssldomains{$sslhost}{cert} = $sslcert;
@@ -1165,9 +1307,9 @@ sub messengerv2
 
 	if ($ok) {
 		system("/scripts/restartsrv_httpd");
-		logfile("MESSENGERV2: Started Apache MESSENGERV2 service using /etc/apache2/conf.d/csf.messenger.conf");
+		ConfigServer::Logger::logfile("MESSENGERV2: Started Apache MESSENGERV2 service using /etc/apache2/conf.d/csf.messenger.conf");
 	} else {
-		logfile("*MESSENGERV2*: Unable to generate a valid Apache configuration, see /var/lib/csf/apachectl.error");
+		ConfigServer::Logger::logfile("*MESSENGERV2*: Unable to generate a valid Apache configuration, see /var/lib/csf/apachectl.error");
 		if (-e "/etc/apache2/conf.d/csf.messenger.conf") {unlink("/etc/apache2/conf.d/csf.messenger.conf")}
 		system("/scripts/restartsrv_httpd");
 		
@@ -1176,12 +1318,13 @@ sub messengerv2
 		foreach (@data) {print $ERROR $_}
 		close ($ERROR);
 	}
+
 	return;
 }
 
 sub messengerv3
 {
-    logfile( "DEBUG:1", "info", "[" . SUB_MESSENGER_V3 . "] Initializing subroutine" );
+    ConfigServer::Logger::logfile( "debug:1", "info", "[" . MESSENGER_V3_SOURCE . "] Initializing subroutine" );
 
 	my ( undef, undef, $uid, $gid, undef, undef, undef, $homedir ) = getpwnam( $config{MESSENGER_USER} );
 
@@ -1189,12 +1332,16 @@ sub messengerv3
 	#	Reject root. Messenger must never run as uid/gid 0.
 	# #
 
-	unless ( defined $uid and defined $gid and $uid > 0 and $gid > 0 )
+    my $messenger_user = defined $config{MESSENGER_USER} && $config{MESSENGER_USER} ne "" ? $config{MESSENGER_USER} : "missing";
+	if ( !defined $uid or !defined $gid or $uid <= 0 or $gid <= 0 )
 	{
-        _messenger_fail( 3, "MESSENGER_USER must not be root (uid/gid 0) or invalid [$config{MESSENGER_USER}]" );
+        return _throw_err(
+            3,
+            "MESSENGER_USER must specify a valid user with uid and gid greater than 0 [Configured: $messenger_user]"
+        );
 	}
 
-	if ($homedir eq "" or $homedir eq "/" or $homedir =~ m[/etc/csf]) 
+	if ( $homedir eq "" or $homedir eq "/" or $homedir =~ m[/etc/csf] ) 
     {
         return _throw_err( 3, "The home directory for $config{MESSENGER_USER} is not valid [$homedir]" );
 	}
@@ -1205,7 +1352,7 @@ sub messengerv3
 	}
 
 	my $public_html = $homedir . "/public_html";
-    logfile( "DEBUG:1", "info", "[Messenger3] Declared public_html path: $public_html" );
+    ConfigServer::Logger::logfile( "debug:1", "info", "[" . MESSENGER_V3_SOURCE . "] Declared public_html path: $public_html" );
 
 	if ( !-e $public_html )
     {
@@ -1213,11 +1360,11 @@ sub messengerv3
 		system( "chown", "$config{MESSENGER_USER}:$config{MESSENGERV3GROUP}", $public_html );
 		system( "chmod", $config{MESSENGERV3PERMS}, $public_html );
 
-        logfile( "DEBUG:1", "info", "[Messenger3] Created public_html path: $public_html - chown:[$config{MESSENGER_USER}:nobody] - chmod:$config{MESSENGERV3PERMS}" );
+        ConfigServer::Logger::logfile( "debug:1", "info", "[" . MESSENGER_V3_SOURCE . "] Created public_html path: $public_html - chown:[$config{MESSENGER_USER}:$config{MESSENGERV3GROUP}] - chmod:$config{MESSENGERV3PERMS}" );
     }
     else
     {
-        logfile( "DEBUG:1", "info", "[Messenger3] Skip creating public_html path: $public_html - already exists" );
+        ConfigServer::Logger::logfile( "debug:1", "info", "[" . MESSENGER_V3_SOURCE . "] Skip creating public_html path: $public_html - already exists" );
 	}
 
 	if ( !-e $public_html . "/.htaccess" )
@@ -1241,12 +1388,12 @@ EOF
 	{
 		if ($config{RECAPTCHA_SITEKEY})
 		{
-            logfile( "DEBUG:1", "info", "[reCAPTCHA] sitekey [" . ( $config{RECAPTCHA_SITEKEY} ne "" ? "provided" : "empty" ) . "] - Copying recaptcha file (/etc/csf/messenger/index.recaptcha.php) => $public_html/index.php" );
+            ConfigServer::Logger::logfile( "debug:1", "info", "[reCAPTCHA] sitekey [" . ( $config{RECAPTCHA_SITEKEY} ne "" ? "provided" : "empty" ) . "] - Copying recaptcha file (/etc/csf/messenger/index.recaptcha.php) => $public_html/index.php" );
 			system( "cp", "/etc/csf/messenger/index.recaptcha.php", $public_html . "/index.php" );
 		}
 		else
 		{
-            logfile( "DEBUG:1", "info", "[reCAPTCHA] sitekey [" . ( $config{RECAPTCHA_SITEKEY} ne "" ? "provided" : "empty" ) . "] - Copying recaptcha file (/etc/csf/messenger/index.php) => $public_html/index.php" );
+            ConfigServer::Logger::logfile( "debug:1", "info", "[reCAPTCHA] sitekey [" . ( $config{RECAPTCHA_SITEKEY} ne "" ? "provided" : "empty" ) . "] - Copying recaptcha file (/etc/csf/messenger/index.php) => $public_html/index.php" );
 			system( "cp", "/etc/csf/messenger/index.php" , $public_html . "/index.php" );
 		}
 
@@ -1255,7 +1402,7 @@ EOF
     }
     else
     {
-        logfile( "DEBUG:1", "info", "[reCAPTCHA] sitekey [" . ( $config{RECAPTCHA_SITEKEY} ne "" ? "provided" : "empty" ) . "] - Found $public_html/index.php - skipping cp file from /etc/csf/messenger/" );
+        ConfigServer::Logger::logfile( "debug:1", "info", "[reCAPTCHA] sitekey [" . ( $config{RECAPTCHA_SITEKEY} ne "" ? "provided" : "empty" ) . "] - Found $public_html/index.php - skipping cp file from /etc/csf/messenger/" );
 	}
 
 	unless (-e $homedir."/en.php") {
@@ -1295,7 +1442,7 @@ EOF
 			foreach my $line (ConfigServer::Slurp::slurp($file)) {
 				if ($line =~ /^\s*AddHandler\s+.+\s+\.php/) {
 					$phphandler = $line;
-					if ($config{DEBUG} >= 1) {logfile("SSL: PHP Handler found in [$file]")}
+					if ($config{DEBUG} >= 1) {ConfigServer::Logger::logfile("SSL: PHP Handler found in [$file]")}
 				}
 			}
 		}
@@ -1416,10 +1563,16 @@ EOF
 			print $OUT $line."\n";
 		}
 
+        # #
+        #   /usr/local/csf/tpl/apache.https.txt
+        #       /etc/httpd/conf.d/csf.messenger.conf
+        #       /var/lib/csf/csf.conf
+        # #
+
 		foreach my $key (@ssldomainkeys) {
 			if ($key eq "") {next}
 			if ($key =~ /^\s+$/) {next}
-			if ($config{DEBUG} >= 1) {logfile("SSL: Processing [$key]")}
+			if ($config{DEBUG} >= 1) {ConfigServer::Logger::logfile("SSL: Processing [$key]")}
 
 			if (-e $ssldomains{$key}{cert}) {
 				foreach (@virtualhost) {
@@ -1495,7 +1648,7 @@ EOF
 		}
 		if ($ok) {
 			system($config{MESSENGERV3RESTART});
-			logfile("MESSENGERV3: Restarted $webserver MESSENGERV3 service using $location");
+			ConfigServer::Logger::logfile("MESSENGERV3: Restarted $webserver MESSENGERV3 service using $location");
 		} else {
 			open (my $ERROR, ">", "/var/lib/csf/messenger.error");
 			flock ($ERROR, Fcntl::LOCK_EX);
@@ -1521,11 +1674,11 @@ EOF
 
 			system($config{MESSENGERV3RESTART});
 
-			logfile("*MESSENGERV3*: Unable to generate a valid $webserver configuration, see /var/lib/csf/messenger.error");
+			ConfigServer::Logger::logfile("*MESSENGERV3*: Unable to generate a valid $webserver configuration, see /var/lib/csf/messenger.error");
 		}
 	} else {
 		system($config{MESSENGERV3RESTART});
-		logfile("MESSENGERV3: Restarted $webserver MESSENGERV3 service using $location");
+		ConfigServer::Logger::logfile("MESSENGERV3: Restarted $webserver MESSENGERV3 service using $location");
 	}
 	return;
 }
@@ -1547,7 +1700,7 @@ sub childcleanup
 
 	if ($message) {
 		if ($line ne "") {$message .= ", at line $line"}
-		logfile("$message");
+		ConfigServer::Logger::logfile("$message");
 	}
     exit;
 }
@@ -1581,7 +1734,7 @@ sub getethdev
 sub error
 {
 	my $error = shift;
-	logfile($error);
+	ConfigServer::Logger::logfile($error);
 	exit;
 }
 
@@ -1592,7 +1745,7 @@ sub conftree
 		if ($file =~ /csf\.messenger\.conf$/) {next}
 		if ($file =~ /\/var\/lib\/csf\/csf.conf$/) {next}
 		if (-e $file) {
-			if ($config{DEBUG} >= 1) {logfile("SSL: Processing [$file]")}
+			if ($config{DEBUG} >= 1) {ConfigServer::Logger::logfile("SSL: Processing [$file]")}
 			my $start = 0;
 			foreach my $line (ConfigServer::Slurp::slurp($file)) {
 				if ($webserver eq "apache") {
@@ -1605,13 +1758,13 @@ sub conftree
 					if ($line =~ /^\s*Include\s+(\S+)/) {
 						my $include = $1;
 						if ($include !~ /^\//) {$include = "$serverroot/$include"}
-						if ($config{DEBUG} >= 1) {logfile("SSL: Including [$include]")}
+						if ($config{DEBUG} >= 1) {ConfigServer::Logger::logfile("SSL: Including [$include]")}
 						&conftree($include);
 					}
 					if ($line =~ /^\s*IncludeOptional\s+(\S+)/) {
 						my $include = $1;
 						if ($include !~ /^\//) {$include = "$serverroot/$include"}
-						if ($config{DEBUG} >= 1) {logfile("SSL: IncludeOptional [$include]")}
+						if ($config{DEBUG} >= 1) {ConfigServer::Logger::logfile("SSL: IncludeOptional [$include]")}
 						&conftree($include);
 					}
 					if ($line =~ /^\s*<VirtualHost\s+[^\>]+>/) {
@@ -1624,28 +1777,28 @@ sub conftree
 							my $match = $1;
 							if (-e $match) {
 								$osslcert = $match;
-								logfile("SSL: Found [$sslhost] certificate in [$file]");
+								ConfigServer::Logger::logfile("SSL: Found [$sslhost] certificate in [$file]");
 							}
 						}
 						if ($line =~ /\s*SSLCertificateKeyFile\s+(\S+)/) {
 							my $match = $1;
 							if (-e $match) {
 								$osslkey = $match;
-								logfile("SSL: Found [$sslhost] key in [$file]");
+								ConfigServer::Logger::logfile("SSL: Found [$sslhost] key in [$file]");
 							}
 						}
 						if ($line =~ /\s*SSLCACertificateFile\s+(\S+)/) {
 							my $match = $1;
 							if (-e $match) {
 								$osslca = $match;
-								logfile("SSL: Found [$sslhost] ca bundle in [$file]");
+								ConfigServer::Logger::logfile("SSL: Found [$sslhost] ca bundle in [$file]");
 							}
 						}
 					}
 					
 					if ($line =~ /^\s*<\/VirtualHost\s*>/) {
 						$start = 0;
-						if ($sslhost ne "" and !checkip($sslhost) and $osslcert ne "") {
+						if ($sslhost ne "" and !ConfigServer::CheckIP::checkip($sslhost) and $osslcert ne "") {
 							if (-e $osslcert) {
 								$sslcert = $ssldir."certs/".$sslhost."\.crt";
 								File::Copy::copy($osslcert, $ssldir."certs/".$sslhost."\.crt");
@@ -1663,7 +1816,7 @@ sub conftree
 							$ssldomains{$sslhost}{cert} = $sslcert;
 							$ssldomains{$sslhost}{ca} = $sslca;
 							push @ssldomainkeys, $sslhost;
-							if ($config{DEBUG} >= 1) {logfile("SSL: Found [$sslhost] in [$file]")}
+							if ($config{DEBUG} >= 1) {ConfigServer::Logger::logfile("SSL: Found [$sslhost] in [$file]")}
 						}
 						$sslhost = "";
 						$sslcert = "";
@@ -1682,7 +1835,7 @@ sub conftree
 						$include =~ s/\$SERVER_ROOT/$serverroot/;
 						$include =~ s/\$VH_NAME/$sslhost/;
 						if ($include !~ /^\//) {$include = "$serverroot/$include"}
-						if ($config{DEBUG} >= 1) {logfile("SSL: include [$include]")}
+						if ($config{DEBUG} >= 1) {ConfigServer::Logger::logfile("SSL: include [$include]")}
 						&conftree($include);
 					}
 					if ($line =~ /^\s*configFile\s+(\S+)/) {
@@ -1690,12 +1843,12 @@ sub conftree
 						$include =~ s/\$SERVER_ROOT/$serverroot/;
 						$include =~ s/\$VH_NAME/$sslhost/;
 						if ($include !~ /^\//) {$include = "$serverroot/$include"}
-						if ($config{DEBUG} >= 1) {logfile("SSL: configFile [$include]")}
+						if ($config{DEBUG} >= 1) {ConfigServer::Logger::logfile("SSL: configFile [$include]")}
 						&conftree($include);
 					}
 					if ($line =~ /^\s*virtualHost\s+([^\{]+)\s+\{/) {
 						my $newsslhost = $1;
-						if ($newsslhost ne "" and $config{DEBUG} >= 1) {logfile("SSL: Found [$newsslhost] in [$file]")}
+						if ($newsslhost ne "" and $config{DEBUG} >= 1) {ConfigServer::Logger::logfile("SSL: Found [$newsslhost] in [$file]")}
 						if ($litestart == 1) {
 							if ($sslhost ne "" and $osslcert ne "") {
 								if (-e $osslcert) {
@@ -1737,14 +1890,14 @@ sub conftree
 							my $match = $1;
 							if (-e $match) {
 								$osslcert = $match;
-								logfile("SSL: Found [$sslhost] certificate in [$file]");
+								ConfigServer::Logger::logfile("SSL: Found [$sslhost] certificate in [$file]");
 							}
 						}
 						if ($line =~ /\s*keyFile\s+(\S+)/) {
 							my $match = $1;
 							if (-e $match) {
 								$osslkey = $match;
-								logfile("SSL: Found [$sslhost] key in [$file]");
+								ConfigServer::Logger::logfile("SSL: Found [$sslhost] key in [$file]");
 							}
 						}
 					}
