@@ -41,6 +41,7 @@ use lib '/usr/local/csf/lib';
 use Fcntl ( );
 use POSIX ( );
 use Socket ( );
+use Sys::Hostname ( );
 use File::Copy ( );
 use JSON::Tiny ( );
 use IO::Socket::INET ( );
@@ -130,48 +131,84 @@ use constant
     MESSENGER_V3_SOURCE             => "MessengerV3",
 };
 
+# #
+#   Messenger › Init
+#   
+#   Create Messenger object, load setup required by selected 
+#   Messenger version.
+#   
+#   Get server hostname, prep network / SSL files (if needed).
+#   
+#   @params     class           scalar      Messenger class name
+#               ver             int         Messenger version
+#   @return     self            hashref     Messenger object
+# #
 
 sub init
 {
-	my $class 	= shift;
-	$version 	= shift;
-	my $self 	= {};
+	my ( $class, $ver ) = @_;
 
-	bless $self, $class;
+	$version  = $ver;
+	$hostname = "unknown";
 
-	if (-e "/proc/sys/kernel/hostname")
-	{
-		open (my $IN, "<", "/proc/sys/kernel/hostname");
-		flock ($IN, Fcntl::LOCK_SH);
-		$hostname = <$IN>;
-		chomp $hostname;
-		close ($IN);
-	}
-	else
-	{
-		$hostname = "unknown";
-	}
+	my $self = bless( {}, $class );
 
-	if ($version == 1)
+	# #
+	#   $hostname used in Messenger warning pages, web server configs,
+	#   and SSL filenames.
+	# #
+
 	{
-		if ($config{MESSENGER6}) {
-			eval( 'require IO::Socket::INET6;' ); ##no critic
-			if ($@) {$config{MESSENGER6} = "0"}
+		local $@;
+		my $hostname_read = eval { Sys::Hostname::hostname( ) };
+
+		if ( defined( $hostname_read ) )
+		{
+			$hostname_read =~ s/[\r\n]+\z//;
+			$hostname = $hostname_read
+				if $hostname_read ne "";
 		}
+	}
+
+	if ( $version == 1 )
+	{
+		if ( $config{MESSENGER6} )
+		{
+			local $@;
+			my $inet6_loaded = eval
+			{
+				require IO::Socket::INET6;
+				1;
+			};
+
+			$config{MESSENGER6} = "0"
+				if !$inet6_loaded;
+		}
+
 		$ipscidr6 = Net::CIDR::Lite->new;
-		&getethdev;
-		foreach my $ip (split(/,/,$config{RECAPTCHA_NAT})) {
+
+		ConfigServer::Messenger::getethdev( );
+
+		foreach my $ip ( split( /,/, $config{RECAPTCHA_NAT} ) )
+		{
 			$ip =~ s/\s*//g;
+			next if $ip eq "";
+
 			$ips{$ip} = 1;
 		}
 	}
-	elsif ($version == 2) {
-	}
-	elsif ($version == 3) {
-		mkdir $ssldir;
-		mkdir $ssldir."certs/";
-		mkdir $ssldir."keys/";
-		mkdir $ssldir."ca/";
+	elsif ( $version == 3 )
+	{
+		foreach my $directory (
+			$ssldir,
+			$ssldir . "certs/",
+			$ssldir . "keys/",
+			$ssldir . "ca/",
+		)
+		{
+			mkdir $directory
+				if !-d $directory;
+		}
 	}
 	
 	return $self;
