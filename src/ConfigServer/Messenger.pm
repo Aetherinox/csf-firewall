@@ -270,60 +270,63 @@ sub _throw_err
 #
 #   Start Messenger version selected by init().
 #   
-#   MessengerV1:    Pass port, user, and type values.
+#   @note:      Loaded from lfd.pl
 #   
-#   @note:          Called from lfd.pl
+#   @usage      MessengerV1     my ( $status, $reason ) = $messenger1->start( $port, $user, $type );
+#               MessengerV2     my ( $status, $reason ) = $messenger2->start();
+#               MessengerV3     my ( $status, $reason ) = $messenger3->start();
 #   
-#   MessengerV1     my ( $status, $reason ) = $messenger1->start( $port, $user, $type );
-#   MessengerV2     my ( $status, $reason ) = $messenger2->start();
-#   MessengerV3     my ( $status, $reason ) = $messenger3->start();
-#   
-#   @note       In CSF < 15.10; Messenger module maintained two separate
-#               logging paths:
-#                   /var/log/lfd.log
 #   @params     self            hashref         Messenger object
-#               port            int             listening port passed to MessengerV1
-#               user            str             user passed to MessengerV1
-#               type            str             Messenger type passed to MessengerV1
+#               port            int             MessengerV1:    listening port
+#               user            str             MessengerV1:    user
+#               type            str             MessengerV1:    message type (HTTPS HTML TEXT)
 #
 #   @return     status          int|undef       Messenger startup status
 #                                                   0       startup succeeded
 #                                                   1       startup failed
-#                                                   undef   no status was returned
+#                                                   undef   no status returned
 #               reason          str|undef       startup result reason
-#                                                   "none"  no supported version was selected
-#                                                   undef   no reason was returned
+#                                                   "none"  no supported ver selected
+#                                                   undef   no reason returned
 # #
 
 sub start
 {
-	my $self 	= shift;
-	my $port 	= shift;
-	my $user 	= shift;
-	my $type 	= shift;
+	my ( $self, $port, $user, $type ) = @_;
+
 	my $status;
-	my $reason;
+	my $reason = "none";
+	my $source;
 
-
-    logfile( "DEBUG:1", "info", "[" . __PACKAGE__ . "] Determining which messenger version to use" );
+	ConfigServer::Logger::logfile( "debug:1", "info",
+		"[Messenger] Determining which Messenger version to use"
+	);
 
 	if ( $version == 1 )
 	{
-		( $status, $reason ) = &messenger( $port, $user, $type );
-
-        logfile( "DEBUG:1", "info", "[" . __PACKAGE__ . "] Trying [" . SUB_MESSENGER_V1 . "] : " . ( $status ? "Failure" : "Successful" ) . " (reason: $reason)" );
+		$source = MESSENGER_V1_SOURCE;
+		( $status, $reason ) = messenger( $port, $user, $type );
 	}
 	elsif ( $version == 2 )
 	{
-		( $status, $reason ) = &messengerv2();
-        logfile( "DEBUG:1", "info", "[" . __PACKAGE__ . "] Trying [" . SUB_MESSENGER_V2 . "] : " . ( $status ? "Failure" : "Successful" ) . " (reason: $reason)" );
+		$source = MESSENGER_V2_SOURCE;
+		( $status, $reason ) = messengerv2( );
 	}
 	elsif ( $version == 3 )
 	{
-		( $status, $reason ) = &messengerv3();
-        logfile( "DEBUG:1", "info", "[" . __PACKAGE__ . "] Trying [" . SUB_MESSENGER_V3 . "] : " . ( $status ? "Failure" : "Successful" ) . " (reason: $reason)" );
+		$source = MESSENGER_V3_SOURCE;
+		( $status, $reason ) = messengerv3( );
 	}
-	
+
+	if ( defined( $source ) )
+	{
+		my $result = $status ? "Failure" : "Success";
+
+		ConfigServer::Logger::logfile( "debug:1", "info",
+			"[$source] Startup result [$result] [Reason: $reason]"
+		);
+	}
+
 	return ( $status, $reason );
 }
 
