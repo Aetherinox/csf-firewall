@@ -631,7 +631,7 @@ sub messenger
         #                       /var/log/lfd_messenger.log
         # #
 
-        ConfigServer::Logger::logfile( "debug:1", "info", "[" . MESSENGER_V1_SOURCE . "] " . "Messenger initialized securely as MESSENGER_USER [$user] ($uid:$gid)" );
+        ConfigServer::Logger::logfile( "normal", "info", "[" . MESSENGER_V1_SOURCE . "] " . "Messenger initialized securely as MESSENGER_USER [$user] ($uid:$gid)" );
     
 		# #
 		#	Messenger › Client › Connections
@@ -661,11 +661,11 @@ sub messenger
 		while ( 1 )
 		{
             # Trigger with telnet xx.xx.xx.xx 8889
-            ConfigServer::Logger::logfile( "debug:1", "info", "[" . MESSENGER_V1_SOURCE . "] $oldtype Messenger PID [$$] listening on [" . $server->sockhost( ) . ":" . $server->sockport( ) . "]" );
+            ConfigServer::Logger::logfile( "normal", "info", "[" . MESSENGER_V1_SOURCE . "] $oldtype Messenger PID [$$] listening on [" . $server->sockhost( ) . ":" . $server->sockport( ) . "]" );
 			while ( my $client = $server->accept( ) )
 			{
 
-                ConfigServer::Logger::logfile( "debug:1", "info", "[" . MESSENGER_V1_SOURCE . "] $oldtype Messenger PID [$$] accepted client [" . $client->peerhost( ) . "]" );
+                ConfigServer::Logger::logfile( "normal", "info", "[" . MESSENGER_V1_SOURCE . "] $oldtype Messenger PID [$$] accepted client [" . $client->peerhost( ) . "]" );
 				while ( scalar ( keys %children ) >= $chldallow )
 				{
 
@@ -685,7 +685,7 @@ sub messenger
                     {
 						if ( !kill( 0, $pid ) )
                         {
-                            ConfigServer::Logger::logfile( "debug:1", "info", "[" . MESSENGER_V1_SOURCE . "] Client - Child PID [$pid] no longer running; removing from children list" );
+                            ConfigServer::Logger::logfile( "normal", "info", "[" . MESSENGER_V1_SOURCE . "] Client - Child PID [$pid] no longer running; removing from children list" );
                             delete $children{$pid}
                         }
 					}
@@ -707,7 +707,7 @@ sub messenger
                 #   response, close the connection, exit.
 				# #
 
-                ConfigServer::Logger::logfile( "debug:1", "info", "[" . MESSENGER_V1_SOURCE . "] Client - forked PID $pid" );
+                ConfigServer::Logger::logfile( "normal", "info", "[" . MESSENGER_V1_SOURCE . "] Client - forked PID $pid" );
 
 				if ( $pid == 0 )
 				{
@@ -729,12 +729,10 @@ sub messenger
                         #   @ref        https://perldoc.perl.org/POSIX#_exit
                         # #
 
-                        ConfigServer::Logger::logfile( "debug:1", "info", "[" . MESSENGER_V1_SOURCE . "] Client - Preparing child process for listener [" . $server->sockhost( ) . ":" . $server->sockport( ) . "]" );
+                        ConfigServer::Logger::logfile( "normal", "info", "[" . MESSENGER_V1_SOURCE . "] Client - Preparing child process for listener [" . $server->sockhost( ) . ":" . $server->sockport( ) . "]" );
 						if ( !close( $server ) )
 						{
-							ConfigServer::Logger::logfile( "debug:1", "error", "[" . MESSENGER_V1_SOURCE . "] Client - " .
-								"Failure! Failed to close inherited listener: $!"
-							);
+							ConfigServer::Logger::logfile( "normal", "error", "[" . MESSENGER_V1_SOURCE . "] Client - Failure! Failed to close inherited listener: $!" );
 
 							POSIX::_exit( POSIX::EXIT_FAILURE( ) );
 						}
@@ -747,7 +745,7 @@ sub messenger
                         #   for new clients.
                         # #
 
-						ConfigServer::Logger::logfile( "debug:1", "ok", "[" . MESSENGER_V1_SOURCE . "] Client - Inherited listener closed successfully" );
+						ConfigServer::Logger::logfile( "normal", "ok", "[" . MESSENGER_V1_SOURCE . "] Client - Inherited listener closed successfully" );
 
                         # #
                         #   Isolate Child Descriptors
@@ -759,14 +757,14 @@ sub messenger
 						my ( $worker_caged, $worker_cage_err ) = ConfigServer::Aegis::fds_cage( $client );
 						if ( !$worker_caged )
 						{
-							ConfigServer::Logger::logfile( "debug:1", "error", "[" . MESSENGER_V1_SOURCE . "] Client - Failure! Unable to cage descriptors: " .
+							ConfigServer::Logger::logfile( "normal", "error", "[" . MESSENGER_V1_SOURCE . "] Client - Failure! Unable to cage descriptors: " .
 								( defined( $worker_cage_err ) ? $worker_cage_err : "unknown error" )
 							);
 
 							POSIX::_exit( POSIX::EXIT_FAILURE( ) );
 						}
 
-						ConfigServer::Logger::logfile( "debug:1", "ok", "[" . MESSENGER_V1_SOURCE . "] Client - Descriptors isolated successfully" );
+						ConfigServer::Logger::logfile( "normal", "ok", "[" . MESSENGER_V1_SOURCE . "] Client - Descriptors isolated successfully" );
 						$0 = "lfd $oldtype messenger client";
 
                         # #
@@ -785,7 +783,7 @@ sub messenger
 						$peeraddress        =~ s/^::ffff://;
 						$hostaddress        =~ s/^::ffff://;
 
-						ConfigServer::Logger::logfile( "debug:1", "info", "[" . MESSENGER_V1_SOURCE . "] Client - Socket ready [Server: $hostaddress | Client: $peeraddress]" );
+						ConfigServer::Logger::logfile( "normal", "info", "[" . MESSENGER_V1_SOURCE . "] Client - Socket ready [Server: $hostaddress | Client: $peeraddress]" );
 
                         # #
                         #   @todo   Port Messenger Requests to module
@@ -831,7 +829,7 @@ sub messenger
                             }
 						}
 
-                        ConfigServer::Logger::logfile( "debug:1", "info", "Client connection [$peeraddress] [$firstline]" );
+                        ConfigServer::Logger::logfile( "normal", "info", "Client connection [$peeraddress] [$firstline]" );
 
 						my $error;
 						my $success;
