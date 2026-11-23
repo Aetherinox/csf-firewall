@@ -9,7 +9,7 @@
                         Copyright (C) 2006-2025 Jonathan Michaelson
                         Copyright (C) 2006-2025 Way to the Web Ltd.
     @license            GPLv3
-    @updated            02.27.2026
+#   @updated            11.23.2026
     
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -264,22 +264,20 @@ function csfTimerPause( )
 function csfTimerRefresh( ) 
 {
     /*
-        Temporarily unpause and run a one-time timer tick
+        Send single request now, restart the 5s countdown
     */
 
-    const prevPause = csfPause;
-    csfPause = 0;
-    csfCount = 1;
-    csfTimerInitialize( );
-    csfPause = prevPause;
+    const logObj    = document.getElementById( 'csfLogNum' );
+    const linesVal  = document.getElementById( 'csfLines' ).value;
+    const logNum    = logObj ? `&lognum=${ logObj.value }` : '';
 
-    /*
-        Reset counter / update display
-    */
+    csfSendReq( `${ csfScript }&lines=${ linesVal }${ logNum }` );
 
-    csfCount = csfDuration - 1;
+    csfCount        = csfDuration;
+
     const timerEl = document.getElementById( 'csfTimer' );
-    if ( timerEl ) timerEl.textContent = csfCount;
+    if ( timerEl )
+        timerEl.textContent = csfPause ? 'Paused' : csfCount;
 }
 
 /*

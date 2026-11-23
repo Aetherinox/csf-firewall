@@ -9,7 +9,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            02.22.2026
+#   @updated            11.23.2026
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -625,7 +625,7 @@ sub main
 		print <<EOF;
 <div>
 	$options Lines: <input type='text' id="csfLines" value="100" size='4'>&nbsp;&nbsp;
-	<button class='btn btn-default' onclick="csfTimerRefresh()">Refresh Now</button>
+    <button type='button' class='btn btn-default' onclick="csfTimerRefresh()">Refresh Now</button>
 </div>
 
 <div>
