@@ -1685,11 +1685,17 @@ EOF
 
 sub childcleanup
 {
-	$SIG{INT} = 'IGNORE';
-	$SIG{TERM} = 'IGNORE';
-	$SIG{HUP} = 'IGNORE';
-	my $line = shift;
-	my $message = shift;
+	$SIG{INT}       = 'IGNORE';
+	$SIG{TERM}      = 'IGNORE';
+	$SIG{HUP}       = 'IGNORE';
+
+	my $line        = shift;
+	my $message     = shift;
+
+    # #
+    #   @test           Note:           Trigger SHUTDOWN
+    #                   Command:        sudo pkill -TERM -f '^lfd TEXT messenger$'
+    # #
 
 	if (($message eq "") and $line) {
 		$message = "SHUTDOWN: Child $childproc: $line";
@@ -1698,10 +1704,16 @@ sub childcleanup
 
 	$0 = "child - aborting";
 
-	if ($message) {
-		if ($line ne "") {$message .= ", at line $line"}
-		ConfigServer::Logger::logfile("$message");
+	if ( $message )
+    {
+		if ( $line ne "" )
+        {
+            $message .= ", at line $line"
+        }
+
+		ConfigServer::Logger::logfile( "$message" );
 	}
+
     exit;
 }
 
