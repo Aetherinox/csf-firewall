@@ -984,7 +984,20 @@ fi
 
 # #
 #	@app			Control Web Panel (CWP)
-#	@desc			Copies the main CSF integration files over to CWP
+#	@desc			Back up existing ConfigServer menu integration
+# #
+
+if [ -e "/usr/local/cwpsrv/htdocs/resources/admin/include/configserver.php" ]; then
+	if [ ! -e "/usr/local/cwpsrv/htdocs/resources/admin/include/configserver.php.before-csf-menu-change" ]; then
+		run cp -avf \
+			/usr/local/cwpsrv/htdocs/resources/admin/include/configserver.php \
+			/usr/local/cwpsrv/htdocs/resources/admin/include/configserver.php.before-csf-menu-change
+	fi
+fi
+
+# #
+#	@app			Control Web Panel (CWP)
+#	@desc			Copies main CSF integration files over to CWP
 # #
 
 run copi "cwp/csfofficial.php" "/usr/local/cwpsrv/htdocs/resources/admin/modules/"

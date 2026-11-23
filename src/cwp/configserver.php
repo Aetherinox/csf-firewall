@@ -1,5 +1,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
+		$(".mainnav a[href='index.php?module=csf']").attr("href", "index.php?module=csfofficial");
+
 		var newButtons = ''
 		+' <li>'
 		+' <a href="#" class="hasUl"><span aria-hidden="true" class="icon16 icomoon-icon-bug"></span>ConfigServer Firewall<span class="hasDrop icon16 icomoon-icon-arrow-down-2"></span></a>'
