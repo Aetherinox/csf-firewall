@@ -545,13 +545,13 @@ jobs:
                   echo "⚙️ Building STABLE Package .zip ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.zip"
                   echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
 
-                  zip -r "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.zip" csf
+                  zip -X -r "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.zip" csf
                   
                   echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
                   echo "⚙️ Building STABLE Package .tgz ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.tgz"
                   echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
 
-                  tar -czf "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.tgz" -C . csf
+                  tar --owner=0 --group=0 --numeric-owner -czf "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}.tgz" -C . csf
 
                   echo "‎"
                   echo "‎"
@@ -564,7 +564,7 @@ jobs:
                   echo "⚙️ Building STABLE Package .zip ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-helpers.zip"
                   echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
 
-                  zip -r "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-helpers.zip" README.md LICENSE.md -j extras/helper_scripts/*
+                  zip -X -r "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-helpers.zip" README.md LICENSE.md -j extras/helper_scripts/*
 
                   echo "‎"
                   echo "‎"
@@ -606,13 +606,13 @@ jobs:
                   echo "⚙️ Building RC Package .zip ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}.zip"
                   echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
 
-                  zip -r "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}.zip" csf
+                  zip -X -r "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}.zip" csf
                   
                   echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
                   echo "⚙️ Building RC Package .tgz ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}.tgz"
                   echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
 
-                  tar -czf "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}.tgz" -C . csf
+                  tar --owner=0 --group=0 --numeric-owner -czf "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}.tgz" -C . csf
 
                   echo "‎"
                   echo "‎"
@@ -625,7 +625,7 @@ jobs:
                   echo "⚙️ Building RC Package .zip ${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}-helpers.zip"
                   echo "―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――"
                   
-                  zip -r "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}-helpers.zip" README.md LICENSE.md -j extras/helper_scripts/*
+                  zip -X -r "${{ env.PROJECT_NAME }}-v${{ env.VERSION_CSF }}-rc.${{ env.RC_VERSION }}-helpers.zip" README.md LICENSE.md -j extras/helper_scripts/*
 
                   echo "‎"
                   echo "‎"
