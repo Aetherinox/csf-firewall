@@ -1139,7 +1139,7 @@ This option configures iptables to offer port knocking to open sensitive ports
 based on a sequence of knocked ports for the connecting IP address.
 
 For mor information on the idea of port knocking see:
-http://www.portknocking.org/
+https://en.wikipedia.org/wiki/Port_knocking
 
 The feature requires that you list a random selection of unused ports (at least
 3) with a timeout. The ports you choose must not be in use and not appear in
