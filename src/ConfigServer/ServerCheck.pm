@@ -9,7 +9,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            02.12.2026
+#   @updated            11.24.2026
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -34,9 +34,9 @@ use Fcntl qw(:DEFAULT :flock);
 use File::Basename;
 use IPC::Open3;
 use ConfigServer::Slurp qw(slurp);
-use ConfigServer::Sanity qw(sanity);;
+use ConfigServer::Sanity ( );
 use ConfigServer::Config;
-use ConfigServer::GetIPs qw(getips);
+use ConfigServer::GetIPs ( );
 use ConfigServer::CheckIP qw(checkip);
 use ConfigServer::Service;
 use ConfigServer::GetEthDev;
@@ -476,7 +476,7 @@ sub firewallcheck
 			my $name = $start;
 			$name =~ s/\s/\_/g;
 			if ($end =~ /\"(.*)\"/) {$end = $1}
-			my ($insane,$range,$default) = sanity($start,$end);
+			my ($insane,$range,$default) = ConfigServer::Sanity::sanity($start,$end);
 			if ($insane) {
 				&addline(1,"$start sanity check","$start = $end. Recommended range: $range (Default: $default)");
 			}
@@ -1379,7 +1379,7 @@ sub whmcheck
 						$ip = $ns;
 						if ($ips{$ip}) {$local++}
 					} else {
-						my @ips = getips($ns);
+						my @ips = ConfigServer::GetIPs::resolve($ns);
 						unless (scalar @ips) {&addline(1,"Check nameservers","Unable to resolve nameserver [$ns]")}
 						my $hit = 0;
 						foreach my $oip (@ips) {

@@ -9,7 +9,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            11.20.2026
+#   @updated            11.24.2026
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -860,7 +860,7 @@ sub messenger
 								my $resp  = JSON::Tiny::decode_json($text);
 								if ($resp->{success}) {
 									my $ip = $resp->{hostname};
-									unless ($ip =~ /^($ipv4reg|$ipv6reg)$/) {$ip = (ConfigServer::GetIPs::getips($ip))[0]}
+									unless ($ip =~ /^($ipv4reg|$ipv6reg)$/) {$ip = (ConfigServer::GetIPs::resolve($ip))[0]}
 									if ($ips{$ip} or $ip eq $hostaddress or $ipscidr6->find($ip)) {
 										if ( sysopen( my $UNBLOCK, "$homedir/unblock.txt", Fcntl::O_WRONLY() | Fcntl::O_APPEND() | Fcntl::O_CREAT() ) ) {
 											flock($UNBLOCK, Fcntl::LOCK_EX);
