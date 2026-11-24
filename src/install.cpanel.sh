@@ -1036,7 +1036,7 @@ prinp "${APP_NAME_SHORT:-CSF} > File Permissions" \
 #   List of directories to set ownership
 # #
 
-dirs="/etc/csf /var/lib/csf /usr/local/csf"
+dirs="/etc/csf /var/lib/csf /usr/local/csf /usr/local/cpanel/whostmgr/docroot/cgi/configserver"
 
 # #
 #   List of individual files to set ownership
