@@ -10,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            02.12.2026
+#   @updated            11.24.2026
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -1263,6 +1263,56 @@ if [ -f "$BASEINDEX_MENU_MODERN_FILE" ] && [ "$dr" = "false" ]; then
 else
     warn "    Abort Cyberpanel modification ${yellowl}modern menu support${greym} (target file not found)"
     label "     ${BASEINDEX_MENU_MODERN_FILE}"
+fi
+
+# #
+#	@app			CyberPanel v3.x.x
+#	@desc			Rename Firewall hub tile to identify CSF integration.
+#   
+#                   Change:
+#		                Firewall
+#		                Manage rules
+#	                To:
+#		                ConfigServer Firewall
+#		                Manage CSF
+#   
+#	@target			/usr/local/CyberCP/baseTemplate/templates/baseTemplate/hub.html
+#	@perms			root:root 644
+# #
+
+HUB_MENU_FILE="/usr/local/CyberCP/baseTemplate/templates/baseTemplate/hub.html"
+
+if [ -f "$HUB_MENU_FILE" ] && [ "$dr" = "false" ]; then
+	info "    Scan Cyberpanel modification ${bluel}hub CSF menu text${greym}"
+	label "         change ${oranged}Firewall > Manage rules${greyd}"
+	label "         to ${oranged}ConfigServer Firewall > Manage CSF${greyd}"
+	label "         in ${oranged}${HUB_MENU_FILE}${greyd}"
+
+	if grep -F '{% trans "ConfigServer Firewall" %}' "$HUB_MENU_FILE" |
+		grep -F '{% trans "Manage CSF" %}' >/dev/null 2>&1; then
+		ok "    Skip Cyberpanel modification ${greenl}hub CSF menu text${greym} (already applied)"
+	elif grep -F '{% trans "Firewall" %}' "$HUB_MENU_FILE" |
+		grep -F '{% trans "Manage rules" %}' >/dev/null 2>&1; then
+
+		if run sed -i.csf-backup \
+			-e '/fire-flame-curved/s|{% trans "Firewall" %}|{% trans "ConfigServer Firewall" %}|' \
+			-e '/fire-flame-curved/s|{% trans "Manage rules" %}|{% trans "Manage CSF" %}|' \
+			"$HUB_MENU_FILE"; then
+			ok "    Apply Cyberpanel modification ${greenl}hub CSF menu text${greym}"
+			label "     ${HUB_MENU_FILE}"
+			label "     Backup: ${HUB_MENU_FILE}.csf-backup"
+		else
+			error "    Fail Cyberpanel modification ${redl}hub CSF menu text${greym}"
+			run cp -p "${HUB_MENU_FILE}.csf-backup" "$HUB_MENU_FILE"
+			exit 1
+		fi
+	else
+		warn "    Skip Cyberpanel modification ${yellowl}hub CSF menu text${greym} (expected tile not found)"
+		label "     ${HUB_MENU_FILE}"
+	fi
+else
+	warn "    Abort Cyberpanel modification ${yellowl}hub CSF menu text${greym} (target file not found)"
+	label "     ${HUB_MENU_FILE}"
 fi
 
 # #
