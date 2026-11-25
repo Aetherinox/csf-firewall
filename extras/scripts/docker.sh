@@ -781,6 +781,10 @@ add_to_forward()
     rule_append FORWARD -o "${docker_int}" -j DOCKER
     rule_append FORWARD -i "${docker_int}" ! -o "${docker_int}" -j ACCEPT
     rule_append FORWARD -i "${docker_int}" -o "${docker_int}" -j ACCEPT
+
+    # Docker 28+: mirror the daemon's per-network chain layout
+    rule_append DOCKER-CT -o "${docker_int}" -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+    rule_append DOCKER-BRIDGE -o "${docker_int}" -j DOCKER
 }
 
 # #
@@ -1519,7 +1523,13 @@ fi
 # #
 
 info "    Stripping all ${bluel}DOCKER${greym} chains from existing iptable rules; restoring without ${bluel}DOCKER${greym} chain"
-iptables-save | grep -v '\-j DOCKER' | iptables-restore
+
+# #
+#   Also purge any rules left inside the Docker 28+ chains (DOCKER-FORWARD,
+#   DOCKER-CT, DOCKER-BRIDGE, DOCKER-INTERNAL) so re-runs rebuild them cleanly
+# #
+
+iptables-save | grep -v '\-j DOCKER' | grep -vE '^\-A (DOCKER-FORWARD|DOCKER-CT|DOCKER-BRIDGE|DOCKER-INTERNAL) ' | iptables-restore
 
 # #
 #   Rule › Docker Chain
@@ -1533,6 +1543,29 @@ chain_create DOCKER-USER
 chain_create DOCKER-ISOLATION-STAGE-1
 chain_create DOCKER-ISOLATION-STAGE-2
 chain_create DOCKER nat
+
+# #
+#   Rule › Docker Chain (28+)
+#   
+#   Docker 28+ reworked its iptables layout and now uses these chains:
+#
+#   DOCKER-FORWARD              Entry point for forwarded container traffic.
+#   DOCKER-CT                   Connection tracked traffic destined for containers.
+#   DOCKER-BRIDGE               Traffic to each docker bridge interface.
+#   DOCKER-INTERNAL             Traffic across internal-only networks.
+#   
+#   Without these chains, daemon network operations (docker network
+#   create/connect, start-up metadata restore) fail with:
+#       › iptables ... -A DOCKER-FORWARD -i br-<id> -j ACCEPT
+#       ›   No chain/target/match by that name
+#   until the Docker daemon is restarted. Empty chains are harmless on
+#   older Docker releases that do not use them.
+# #
+
+chain_create DOCKER-FORWARD
+chain_create DOCKER-CT
+chain_create DOCKER-BRIDGE
+chain_create DOCKER-INTERNAL
 
 # #
 #   Rule › Default Docker Bridge › docker0
@@ -1555,11 +1588,24 @@ fi
 #   
 #   Check with commands:
 #       › sudo iptables -C FORWARD -j DOCKER-USER
+#       › sudo iptables -C FORWARD -j DOCKER-FORWARD
 #       › sudo iptables -C FORWARD -j DOCKER-ISOLATION-STAGE-1
 # #
 
 rule_append FORWARD -j DOCKER-USER
+rule_append FORWARD -j DOCKER-FORWARD
 rule_append FORWARD -j DOCKER-ISOLATION-STAGE-1
+
+# #
+#   Docker 28+ calls DOCKER-CT, DOCKER-INTERNAL and DOCKER-BRIDGE from
+#   DOCKER-FORWARD. Keep the same jump order as the Docker daemon so any
+#   per-network rules it appends are only evaluated after the connection
+#   tracking, internal and bridge filters.
+# #
+
+rule_append DOCKER-FORWARD -j DOCKER-CT
+rule_append DOCKER-FORWARD -j DOCKER-INTERNAL
+rule_append DOCKER-FORWARD -j DOCKER-BRIDGE
 
 # #
 #   Add docker0 to forward
