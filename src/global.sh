@@ -10,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            02.12.2026
+#   @updated            11.25.2026
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -48,6 +48,8 @@ cd "$OLDPWD" || exit 1                              # restore previous working d
 
 APP_NAME="ConfigServer Security & Firewall"
 APP_NAME_SHORT="CSF"
+APP_NAME_SERVICE_CSF="CSF"
+APP_NAME_SERVICE_LFD="LFD"
 APP_DESC="Robust linux iptables/nftables firewall"
 APP_REPO="https://github.com/aetherinox/csf-firewall"
 APP_LINK_DOCS="https://docs.configserver.dev"
@@ -773,54 +775,238 @@ copi()
 }
 
 # #
-#   Get UI bind address, and credentials from CSF config
+#   Global › Get CSF Config
+#   
+#   Reads /etc/csf/csf.conf, fetches current settings for CSF web
+#   interface.
+#   
+#   if UI = "1", CSF installer will print the following in terminal:
+#       Status .......  ✔ enabled
+#       Url ..........  http://127.0.0.1:6666
+#       Username ...... username
+#       Password ...... password
+#   
+#   Grabs the settings:
+#       UI_IP           Web ui bind address
+#       UI_PORT         Web ui port
+#       UI_USER         Web ui username
+#       UI_PASS         Web ui password
+#   
+#   Default values:
+#       UI_IP = ""      use 127.0.0.1
+#       UI_PORT = ""    use 6666
+#   
+#   @usage      _install_webui_creds=$(csf_getcfg)
+#   
+#   @return     0   Config read and output printed
+#               1+  CSF_CONF does not exist OR output couldn't print
 # #
 
-get_csf_ui_info()
+csf_getcfg()
 {
     if [ ! -f "${CSF_CONF}" ]; then
         return 1
     fi
 
-    UI=""
-    UI_PORT=""
-    UI_IP=""
-    UI_USER=""
-    UI_PASS=""
+    _csf_ui_enabled=""
+    _csf_ui_port=""
+    _csf_ui_ip=""
+    _csf_ui_user=""
+    _csf_ui_pass=""
+    _csf_ui_values=""
 
-    # Extract config data using awk
-    awk '
+    # #
+    #   Extract config data
+    # #
+
+    _csf_ui_values=$(awk '
         /^[[:space:]]*UI[[:space:]]*=/ { gsub(/"/,"",$3); print "UI="$3 }
         /^[[:space:]]*UI_PORT[[:space:]]*=/ { gsub(/"/,"",$3); print "PORT="$3 }
         /^[[:space:]]*UI_IP[[:space:]]*=/ { gsub(/"/,"",$3); print "IP="$3 }
         /^[[:space:]]*UI_USER[[:space:]]*=/ { gsub(/"/,"",$3); print "USER="$3 }
         /^[[:space:]]*UI_PASS[[:space:]]*=/ { gsub(/"/,"",$3); print "PASS="$3 }
-    ' "${CSF_CONF}" > /tmp/csf_ui_values.$$ 
+    ' "${CSF_CONF}")
 
-    # Read values in current shell
-    while IFS='=' read -r key val
+    while IFS='=' read -r _csf_ui_key _csf_ui_value
     do
-        case "${key}" in
-            UI)   UI="${val}" ;;
-            PORT) UI_PORT="${val}" ;;
-            IP)   UI_IP="${val}" ;;
-            USER) UI_USER="${val}" ;;
-            PASS) UI_PASS="${val}" ;;
+        case "${_csf_ui_key}" in
+            UI)     _csf_ui_enabled="${_csf_ui_value}" ;;
+            PORT)   _csf_ui_port="${_csf_ui_value}" ;;
+            IP)     _csf_ui_ip="${_csf_ui_value}" ;;
+            USER)   _csf_ui_user="${_csf_ui_value}" ;;
+            PASS)   _csf_ui_pass="${_csf_ui_value}" ;;
         esac
-    done < /tmp/csf_ui_values.$$
+    done <<EOF
+${_csf_ui_values}
+EOF
 
-    rm -f /tmp/csf_ui_values.$$
-
-    # Disabled; return empty
-    if [ "${UI}" != "1" ]; then
+    if [ "${_csf_ui_enabled}" != "1" ]; then
         printf '%s\n' ""
-        return 0
+    else
+        [ -z "${_csf_ui_ip}" ] && _csf_ui_ip="127.0.0.1"
+        [ -z "${_csf_ui_port}" ] && _csf_ui_port="6666"
+
+        printf '%s:%s\n%s\n%s\n' \
+            "${_csf_ui_ip}" \
+            "${_csf_ui_port}" \
+            "${_csf_ui_user}" \
+            "${_csf_ui_pass}"
     fi
 
-    # Fallbacks
-    [ -z "${UI_IP}" ] && UI_IP="127.0.0.1"
-    [ -z "${UI_PORT}" ] && UI_PORT="6666"
+    _csf_ui_status=$?
+    set -- "${_csf_ui_status}"
 
-    # Output: "IP:PORT USER PASS"
-    printf '%s:%s %s %s\n' "${UI_IP}" "${UI_PORT}" "${UI_USER}" "${UI_PASS}"
+    unset   _csf_ui_enabled _csf_ui_port _csf_ui_ip \
+            _csf_ui_user _csf_ui_pass _csf_ui_values \
+            _csf_ui_key _csf_ui_value _csf_ui_status
+
+    return "$1"
+}
+
+# #
+#   Global › Install Complete
+#   
+#   Print installation status after CSF is installed.
+#   Checks several factors of the installation, including:
+#       -   CSF web ui username should not be 'username' or [EMPTY].
+#       -   CSF web ui password should not be 'password' or [EMPTY].
+#   
+#   @params     void
+#   @return     0   Output completed
+# #
+
+install_complete()
+{
+    prinp "${APP_NAME_SHORT:-CSF} > Installation Complete" \
+           "Your installation is now complete. Review the notes below on getting started with the firewall."
+
+    print "    ${greym}For complete ${APP_NAME_SHORT:-CSF} documentation; visit:"
+    print "        ${yellowd}${APP_LINK_DOCS:-https://docs.configserver.dev}"
+    print "    "
+    print "    ${greym}All settings for ${APP_NAME_SHORT:-CSF} are found in the file:${end}"
+    print "        ${bluel}${CSF_CONF}"
+    print "    "
+    print "    ${greym}If you are a ${magental}${bold}SPONSOR${end}${greym} with a license key, set the following line in your config ${bluel}${CSF_CONF}${end}:"
+    print "        ${yellowd}SPONSOR_LICENSE ${white}= \"${bluel}XXXXXX-XXXX-XXXX-XXXXXX${white}\"${end}"
+
+    if [ -f "${CSF_CONF}" ]; then
+        _install_testing_value=$(grep '^[[:space:]]*TESTING[[:space:]]*=' "${CSF_CONF}" |
+            awk -F= '{gsub(/ /,"",$2); print $2}' | tr -d '"')
+
+        _install_webui_creds=$(csf_getcfg)
+
+        print "    "
+        print "    ${greym}Before you start ${APP_NAME_SHORT:-CSF}; the setting ${yellowd}${bold}TESTING${end}${greym} must be ${redl}${bold}DISABLED${end}${greym}. ${APP_NAME_SERVICE_LFD:-LFD} service will not start if this is enabled.${end}"
+
+        if [ "${_install_testing_value}" = "1" ]; then
+            print "        ${redl}${icoXmark}${greym} ${redl}This setting is currently enabled ${redl}${bold}[WARN]${end}"
+            print "        ${greym}Disable by opening the file ${bluel}${CSF_CONF}${greym} and set:${end}"
+            print "            ${yellowd}TESTING ${white}= \"${bluel}0${white}\"${end}"
+        else
+            print "        ${greenl}${icoSheckmark}${greym} ${greenl}This setting is currently disabled ${greenl}${bold}[OK]${end}"
+            print "        ${greym}To test ${APP_NAME_SHORT:-CSF}, edit the file ${bluel}${CSF_CONF}${greym}:${end}"
+            print "            ${yellowd}TESTING ${white}= \"${bluel}1${white}\"${end}"
+        fi
+
+        print "    "
+        print "    ${greym}After you have configured ${bluel}${CSF_CONF}${greym}, restart all ${APP_NAME_SHORT:-CSF} services to apply changes:${end}"
+        print "        ${yellowd}sudo csf -ra${end}"
+
+        prinp "${APP_NAME_SHORT:-CSF} > Web Interface" \
+            "Information about the ${APP_NAME_SHORT:-CSF} web interface."
+
+        if [ -n "${_install_webui_creds}" ]; then
+            _install_webui_addr=""
+            _install_webui_user=""
+            _install_webui_pass=""
+
+            {
+                IFS= read -r _install_webui_addr
+                IFS= read -r _install_webui_user
+                IFS= read -r _install_webui_pass || :
+            } <<EOF
+${_install_webui_creds}
+EOF
+
+            print "    ${greym}Status ..........  ${greenl}${icoSheckmark}${greym} ${greenl}enabled${end}"
+            print "    ${greym}Url .............  ${yellowd}http://${_install_webui_addr}${end}"
+
+            # #
+            #   Print csf.conf username or [EMPTY]
+            # #
+
+            if [ -z "${_install_webui_user}" ]; then
+                print "    ${greym}Username ......... ${redl}[EMPTY]${end}"
+            else
+                print "    ${greym}Username ......... ${yellowd}${_install_webui_user}${end}"
+            fi
+
+            # #
+            #   Print csf.conf password or [EMPTY]
+            # #
+
+            if [ -z "${_install_webui_pass}" ]; then
+                print "    ${greym}Password ......... ${redl}[EMPTY]${end}"
+            else
+                print "    ${greym}Password ......... ${yellowd}${_install_webui_pass}${end}"
+            fi
+
+            print "    "
+
+            # #
+            #   CSF web UI username cannot be:
+            #       empty, username, admin
+            # #
+
+            case "${_install_webui_user}" in
+                "")
+                    error "    ${greym}${APP_NAME_SHORT:-CSF} web interface setting ${redl}${bold}UI_USER${end}${greym} is ${redl}${bold}EMPTY${end}"
+                    label "     ${greym}Set ${yellowd}${bold}UI_USER${end}${greym} in ${bluel}${CSF_CONF}${greym} before using the web interface.${end}"
+                    print "    "
+                    ;;
+                username|admin)
+                    error "    ${greym}${APP_NAME_SHORT:-CSF} web interface setting ${redl}${bold}UI_USER${end}${greym} has insecure default value ${redl}'${_install_webui_user}'${end}"
+                    label "     ${greym}You MUST change ${yellowd}${bold}UI_USER${end}${greym} in ${bluel}${CSF_CONF}${greym} before using the web interface.${end}"
+                    print "    "
+                    ;;
+            esac
+
+            # #
+            #   CSF web UI password cannot be:
+            #       empty, password, pass
+            # #
+
+            case "${_install_webui_pass}" in
+                "")
+                    error "    ${greym}${APP_NAME_SHORT:-CSF} web interface setting ${redl}${bold}UI_PASS${end}${greym} is ${redl}${bold}EMPTY${end}"
+                    label "     ${greym}Set ${yellowd}${bold}UI_PASS${end}${greym} in ${bluel}${CSF_CONF}${greym} before using the web interface.${end}"
+                    print "    "
+                    ;;
+                password|pass)
+                    error "    ${greym}${APP_NAME_SHORT:-CSF} web interface setting ${redl}${bold}UI_PASS${end}${greym} has insecure default value ${redl}${bold}'${_install_webui_pass}'${end}"
+                    label "     ${greym}You MUST change ${yellowd}${bold}UI_PASS${end}${greym} in ${bluel}${CSF_CONF}${greym} before using the web interface.${end}"
+                    print "    "
+                    ;;
+            esac
+        else
+            warn "    ${greym}${APP_NAME_SHORT:-CSF} web interface is currently disabled, and will not be accessible.${end}"
+            label "     ${greym}Set ${yellowd}${bold}UI = \"1\" ${end}${greym} in ${bluel}${CSF_CONF}${greym}, and then restart ${APP_NAME_SERVICE_CSF:-CSF}/${APP_NAME_SERVICE_LFD:-LFD}:${end}"
+            label "        ${yellowd}sudo csf -ra${end}"
+            print "    "
+        fi
+    else
+        print "    ${redl}${icoXmark} Error! cannot locate your ${APP_NAME_SHORT:-CSF} config file.${end}"
+        print "    "
+        print "    ${greyd}After adding a ${bluel}${CSF_CONF}${greym} config file, restart all ${APP_NAME_SHORT:-CSF}${end}"
+        print "    ${greyd}services for changes to apply${end}"
+        print "        ${yellowd}sudo csf -ra${end}"
+    fi
+
+    print
+    print
+
+    unset   _install_testing_value _install_webui_creds \
+            _install_webui_addr _install_webui_user _install_webui_pass
+
+    return 0
 }

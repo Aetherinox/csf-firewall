@@ -1210,64 +1210,7 @@ for KEY in SYSLOG_LOG IPTABLES_LOG; do
 done
 
 # #
-#	Check current value of
-#		TESTING="0"
+#   Install Complete
 # #
 
-TESTING_VALUE=$(grep '^[[:space:]]*TESTING[[:space:]]*=' "$CSF_CONF" | awk -F= '{gsub(/ /,"",$2); print $2}' | tr -d '"')
-
-prinp "${APP_NAME_SHORT:-CSF} > Installation Complete" \
-       "Your installation is now complete. Review the notes below on getting started with the firewall."
-
-print "    For complete documentation on ${APP_NAME_SHORT:-CSF}; including setup and troubleshooting; visit"
-print "        ${yellowd}${APP_LINK_DOCS:-https://docs.configserver.dev}"
-print "    "
-print "    All settings associated with ${APP_NAME_SHORT:-CSF} can be found in the file:"
-print "        ${bluel}${CSF_CONF}"
-print "    "
-print "    If you are a Sponsor and wish to apply your license key, open ${bluel}${CSF_CONF}${greym} and"
-print "    add the following line to your config:"
-print "        ${fuchsial}SPONSOR_LICENSE = ${white}\"${bluel}XXXXXX-XXXX-XXXX-XXXXXX${white}\"${greym}"
-if [ -f "$CSF_CONF" ]; then
-	webui_creds=$(get_csf_ui_info)
-
-	print "    "
-	print "    Before starting ${APP_NAME_SHORT:-CSF}; the setting ${yellowd}TESTING${greym} must be ${redl}disabled${greym}."
-	if [ "$TESTING_VALUE" = "1" ]; then
-	print "        ${redl}${icoXmark}${greym} ${redl}You currently have this setting ${greenl}enabled${greym}."
-	print "        ${redl}Disable${greym} this in the file ${bluel}${CSF_CONF}${greym}:"
-	print "            ${fuchsial}TESTING = ${white}\"${bluel}0${white}\"${greym}"
-	else
-	print "        ${greenl}${icoSheckmark}${greym} ${greenl}You currently have the setting disabled which is correct.${end}"
-	print "        If you need to test ${APP_NAME_SHORT:-CSF}, edit the file ${bluel}${CSF_CONF}${greym}:"
-	print "            ${fuchsial}TESTING = ${white}\"${bluel}1${white}\"${greym}"
-	fi
-	print "    "
-	print "    After you have configured ${bluel}${CSF_CONF}${greym} with the desired settings, restart all"
-	print "    ${APP_NAME_SHORT:-CSF} services for changes to apply:"
-	print "        ${yellowd}sudo csf -ra"
-	print "    "
-
-	if [ -n "$webui_creds" ]; then
-		UI_ADDR=$(printf '%s' "$webui_creds" | awk '{print $1}')
-		UI_USER=$(printf '%s' "$webui_creds" | awk '{print $2}')
-		UI_PASS=$(printf '%s' "$webui_creds" | awk '{print $3}')
-
-		print "    ${APP_NAME_SHORT:-CSF} Web Interface:"
-		print "        ${greyd}Status .....  ${greenl}${icoSheckmark}${greym} ${greenl}enabled${greym}"
-		print "        ${greyd}Url ........  ${yellowd}http://${UI_ADDR}${greym}"
-		print "        ${greyd}Username .... ${yellowd}${UI_USER}${greym}"
-		print "        ${greyd}Password .... ${yellowd}${UI_PASS}${greym}"
-	else
-		print "    ${APP_NAME_SHORT:-CSF} Web Interface:"
-		print "        ${greyd}${redl}${icoXmark}${greym} ${redl}disabled${greym}"
-	fi
-else
-	print "    ${redl}${icoXmark} An error occured; we cannot locate your ${APP_NAME_SHORT:-CSF} config file."
-	print "    "
-	print "    After adding a ${bluel}${CSF_CONF}${greym} config file, restart all ${APP_NAME_SHORT:-CSF}"
-	print "    services for changes to apply"
-	print "        ${yellowd}sudo csf -ra"
-fi
-print
-print
+install_complete
