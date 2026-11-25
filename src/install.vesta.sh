@@ -10,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            02.12.2026
+#   @updated            11.25.2026
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -160,7 +160,33 @@ run copi "install.txt" "${CSF_ETC}"
 info "    Checking ${bluel}Perl${greym} modules"
 run chmod 700 os.pl
 if [ "$dr" = "false" ]; then
-	RETURN=$(perl ./os.pl)
+	os_stderr=$(mktemp "${TMPDIR:-/tmp}/csf-os.XXXXXX")
+
+	if [ ! -f "${os_stderr}" ]; then
+		error "    Failed to create temporary output file for ${redl}os.pl${greym}"
+		exit 1
+	fi
+
+	RETURN=$(perl ./os.pl 2>"${os_stderr}")
+
+	while IFS= read -r os_message || [ -n "${os_message}" ]; do
+		if [ -z "${os_message}" ]; then
+			continue
+		fi
+
+		case "${os_message}" in
+			*"cannot access"*|*"No such file or directory"*)
+				warn "    ${os_message}"
+				;;
+			*)
+				info "    ${os_message}"
+				;;
+		esac
+	done < "${os_stderr}"
+
+	run rm -f "${os_stderr}"
+	unset os_stderr os_message
+
 	if [ "$RETURN" = "1" ]; then
 		print
 		error "    FAILURE: You MUST install the missing perl modules above before you can install csf. ${redl}root${greym} account (UID:0) to install CSF"
