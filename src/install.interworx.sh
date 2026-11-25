@@ -757,7 +757,7 @@ prinp "${APP_NAME_SHORT:-CSF} > Systemd & SysV Init Setup" \
 # #
 
 detectSys="Unknown"
-if test `cat /proc/1/comm` = "systemd"; then
+if [ "$(cat /proc/1/comm 2>/dev/null)" = "systemd" ]; then
 	ok "    Found PID 1 assigned to ${greenl}systemd${greym}"
     if [ -e /etc/init.d/lfd ]; then
 		ok "    Found ${greenl}/etc/init.d/lfd${greym}"
@@ -849,11 +849,26 @@ if test `cat /proc/1/comm` = "systemd"; then
 	fi
 
 	run copi "lfd.service" "/usr/lib/systemd/system/"
+	lfd_service_copy_status=$?
+
+	if [ "${lfd_service_copy_status}" -ne 0 ]; then
+		error "    Failed to install ${redl}lfd.service${greym}"
+		exit "${lfd_service_copy_status}"
+	fi
+
 	run copi "csf.service" "/usr/lib/systemd/system/"
+	csf_service_copy_status=$?
+
+	if [ "${csf_service_copy_status}" -ne 0 ]; then
+		error "    Failed to install ${redl}csf.service${greym}"
+		exit "${csf_service_copy_status}"
+	fi
+
+	unset lfd_service_copy_status csf_service_copy_status
 
 	# #
-	#   Fix SELinux context on systemd unit files
-	#   Required for RHEL-based systems so systemd can load them
+	#   Set SELinux type used for systemd unit files.
+	#   Only applies if SELinux enabled.
 	# #
 
     run chcon -h system_u:object_r:systemd_unit_file_t:s0 /usr/lib/systemd/system/lfd.service
