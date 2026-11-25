@@ -579,62 +579,7 @@ run()
 }
 
 # #
-#   Copy If Missing
-#   Copies a src file to dest only if missing
-#   
-#   @arg            src                         File to copy
-#   @arg            dest                        Where to copy file
-#   @usage			copy_if_missing "install.cpanel.sh" "csf cPanel installer"
-#   @todo           deprecate in favor of func 'copi'
-# #
-
-copy_if_missing( )
-{
-    src="$1"
-    dest="$2"
-
-    if [ ! -e "${dest}" ]; then
-        if cp -avf "${src}" "${dest}"; then
-            ok "    Copied ${greenl}${src}${greym} to ${greenl}${dest}${greym} "
-        else
-            error "    ❌ Cannot copy ${redl}${src}${greym} to ${redl}${dest}${greym}"
-            exit 1
-        fi
-    else
-        status "    Already existing copy ${bluel}${src}${greym} to ${bluel}${dest}${greym}"
-    fi
-}
-
-# #
-#   Special copy: copy to dest or dest.new if dest exists
-#   
-#   @todo           deprecate in favor of func 'copi'
-# #
-
-copy_or_new( )
-{
-    src="$1"
-    dest="$2"
-
-    if [ ! -e "${dest}" ]; then
-        if cp -avf "${src}" "${dest}"; then
-            ok "    Copied ${greenl}${src}${greym} to ${greenl}${dest}${greym} "
-        else
-            error "    ❌ Cannot copy ${redl}${src}${greym} to ${redl}${dest}${greym}"
-            exit 1
-        fi
-    else
-        if cp -avf "${src}" "${dest}.new"; then
-            ok "    Copied ${greenl}${src}${greym} to ${greenl}${dest}.new${greym} (destination already existed) "
-        else
-            error "    ❌ Cannot copy ${redl}${src}${greym} to ${redl}$des.newt${greym}"
-            exit 1
-        fi
-    fi
-}
-
-# #
-#   Copy
+#   Global › Copy
 #   
 #   Custom copy function to replace 'cp'; handles copy a bit differently but with the
 #   same behavior.
