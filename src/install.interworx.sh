@@ -968,7 +968,27 @@ files="/usr/sbin/csf /usr/sbin/lfd /etc/logrotate.d/lfd /etc/cron.d/csf-cron /et
 for dir in $dirs; do
     if [ -d "$dir" ]; then
         run chown -Rf "${CSF_CHOWN_GENERAL}" "$dir"
-		ok "    Set ownership ${greenl}${CSF_CHOWN_GENERAL}${greym} for folder ${bluel}${dir}${greym}"
+        chown_status=$?
+
+        if [ "$dr" = "false" ]; then
+            invalid_owner=$(find "$dir" \
+                \( ! -user "${CSF_CHOWN_GENERAL%%:*}" -o \
+                   ! -group "${CSF_CHOWN_GENERAL#*:}" \) \
+                -print -quit)
+            find_status=$?
+
+            if [ "$chown_status" -eq 0 ] && [ "$find_status" -eq 0 ] && [ -z "$invalid_owner" ]; then
+				ok "    Set ownership ${greenl}${CSF_CHOWN_GENERAL}${greym} for folder ${bluel}${dir}${greym}"
+            else
+                if [ -n "$invalid_owner" ]; then
+					label "    Incorrect ownership remains on ${yellowl}${invalid_owner}${greym}"
+                fi
+
+				error "    Failed to set ownership ${redl}${CSF_CHOWN_GENERAL}${greym} for folder ${redl}${dir}${greym}"
+            fi
+        else
+			info "    Dry run; ownership was not verified for folder ${bluel}${dir}${greym}"
+        fi
     else
 		warn "    Could not set ownership ${yellowl}${CSF_CHOWN_GENERAL}${greym}; folder does not exist: ${yellowl}${dir}${greym}"
     fi
