@@ -26,24 +26,19 @@
 #   along with this program; if not, see <https://www.gnu.org/licenses>.
 # #
 
-# #
-#   Global variables
-#       must remain POSIX compatible
-# #
-
 # set -eu
 
 # #
 #   Directory where this script lives
 # #
 
-OLDPWD=$(pwd)                                       # save current working directory
+OLDPWD=$(pwd)                                       # save current working dir
 cd "$(dirname "$0")" || exit 1                      # change to the dir where the script resides
 SCRIPT_DIR=$(pwd)                                   # get absolute path
-cd "$OLDPWD" || exit 1                              # restore previous working directory
+cd "$OLDPWD" || exit 1                              # restore previous working dir
 
 # #
-#   Define › General
+#   Global › Declare › General
 # #
 
 APP_NAME="ConfigServer Security & Firewall"
@@ -58,7 +53,7 @@ APP_LINK_DISCORD="https://discord.configserver.dev"
 FILE_INSTALL_TXT="install.txt"
 
 # #
-#   Define › Files & Dirs
+#   Global › Declare › Files & Dirs
 # #
 
 CSF_ETC="/etc/csf"
@@ -93,27 +88,28 @@ CSF_AUTO_INTERWORX="auto.interworx.pl"
 CSF_AUTO_CPANEL="auto.pl"
 
 # #
-#   Define › Server
+#   Global › Declare › Server
 # #
 
-SERVER_HOST=$(hostname -f 2>/dev/null || hostname)
+SERVER_HOST=$(uname -n 2>/dev/null)
+: "${SERVER_HOST:=localhost}"
 
 # #
-#   Define › Files
+#   Global › Declare › Files
 # #
 
-app_file_this=$(basename "$0")                                          # global.sh         (with ext)
-app_file_bin="${app_file_this%.*}"                                      # global            (without ext)
+app_file_this=$(basename "$0")                                          # global.sh (with ext)
+app_file_bin="${app_file_this%.*}"                                      # global    (without ext)
 
 # #
-#   Define › Folders
+#   Global › Declare › Folders
 # #
 
 app_dir_this="$(cd "$(dirname "$0")" >/dev/null 2>&1 && pwd)"           # path where script was last found in
 app_dir_this_usr="${PWD}"                                               # path where script is called from
 
 # #
-#   Define › Current version
+#   Global › Declare › Current version
 # #
 
 VERSION_FILE="$SCRIPT_DIR/version.txt"
@@ -126,14 +122,14 @@ APP_VERSION=$( [ -f "$VERSION_FILE" ] && grep -v '^[[:space:]]*$' "$VERSION_FILE
 : "${APP_VERSION:=unknown}"
 
 # #
-#   Define › Icons
+#   Global › Declare › Icons
 # #
 
 icoSheckmark='✔'   # ✔ $'\u2714'
 icoXmark='✗'       # ❌ $'\u274C'
 
 # #
-#   Define › Colors
+#   Global › Declare › Colors
 #   
 #   Use the color table at:
 #       - https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
@@ -179,7 +175,7 @@ bgDanger="${esc}[1;38;5;15;48;5;202m"
 bgError="${esc}[1;38;5;15;48;5;160m"
 
 # #
-#   Define › Logging functions
+#   Global › Declare › Logging functions
 #   
 #   verbose "This is an verbose message"
 #   debug "This is an debug message"
@@ -242,33 +238,34 @@ print( )
 }
 
 # #
-#   truncate text; add ...
+#   Global › Truncate
 #   
-#   @usage
-#       truncate "This is a long string" 10 "..."
+#   truncates text; add ...
+#   
+#   @usage      truncate "This is a long string" 10 "..."
 # #
 
 truncate()
 {
-    text=$1
+    truncate_text=$1
     maxlen=$2
     suffix=${3:-}
 
-    len=$(printf %s "${text}" | wc -c | tr -d '[:space:]')
+    len=$(printf %s "${truncate_text}" | wc -c | tr -d '[:space:]')
 
     if [ "${len}" -gt "${maxlen}" ]; then
-        printf '%s%s\n' "$(printf %s "${text}" | cut -c1-"${maxlen}")" "${suffix}"
+        printf '%s%s\n' "$(printf %s "${truncate_text}" | cut -c1-"${maxlen}")" "${suffix}"
     else
-        printf '%s\n' "${text}"
+        printf '%s\n' "${truncate_text}"
     fi
 }
 
 # #
-#   Print › Demo Notifications
+#   Global › Print › Demo Notifications
 #   
 #   Outputs a list of example notifications
 #   
-#   @usage          demoNoti
+#   @usage      demoNoti
 # #
 
 demoNoti()
@@ -283,254 +280,317 @@ demoNoti()
 }
 
 # #
-#   Print › Line
+#   Global › Print › Line
 #   
-#   Prints single line horizontal line, no text
+#   Prints single line horizontal line, no text.
 #   
-#   @usage          prin0
+#   @usage      prin0
 # #
 
 prin0()
 {
     _p0_indent="  "
-    _p0_box_width=110
-    _p0_line_width=$(( _p0_box_width + 2 ))
-
+    _p0_box_w=110
     _p0_line=""
-    i=1
-    while [ "$i" -le "${_p0_line_width}" ]; do
+    _p0_line_w=$(( _p0_box_w + 2 ))
+
+    _p0_i=1
+    while [ "$_p0_i" -le "${_p0_line_w}" ]; do
         _p0_line="${_p0_line}─"
-        i=$(( i + 1 ))
+        _p0_i=$(( _p0_i + 1 ))
     done
 
     printf '\n'
     printf "%b%s%s%b\n" "${greyd}" "${_p0_indent}" "${_p0_line}" "${reset}"
     printf '\n'
 
-    unset _p0_indent _p0_box_width _p0_line_width _p0_line i
+    unset   _p0_indent _p0_box_w _p0_line_w _p0_line _p0_i
 }
 
 # #
-#   Print › Box › Single
+#   Global › Print › Box › Single
 #   
-#   Prints single line with a box surrounding it.
+#   Print single line with a box surrounding it, accepts text.
 #   
-#   @usage          prinb "${APP_NAME_SHORT:-CSF} › Customize csf.config"
+#   @usage      prinb "${APP_NAME_SHORT:-CSF} › Customize csf.config"
 # #
 
 prinb()
 {
-    _prinb_title="$*"
-    _prinb_indent="   "                                                         # Left padding
-    _prinb_padding=6                                                            # Extra horizontal space around text
-    _prinb_title_length=${#_prinb_title}
-    _prinb_inner_width=$(( _prinb_title_length + _prinb_padding ))
-    _prinb_box_width=110
+    _pb_title="$*"
+    _pb_indent="   "                                                            # Left padding
+    _pb_pad=6                                                                   # Extra horizontal space around text
+    _pb_title_len=${#_pb_title}
+    _pb_inner_w=$(( _pb_title_len + _pb_pad ))
+    _pb_box_w=110
 
-    # Minimum width for aesthetics
-    if [ "$_prinb_inner_width" -lt "$_prinb_box_width" ]; then
-        _prinb_inner_width=$_prinb_box_width
+    # Min width for aesthetics
+    if [ "$_pb_inner_w" -lt "$_pb_box_w" ]; then
+        _pb_inner_w=$_pb_box_w
     fi
 
     # Horizontal border
-    _prinb_line=""
-    i=1
-    while [ "$i" -le "$_prinb_inner_width" ]; do
-        _prinb_line="${_prinb_line}─"
-        i=$(( i + 1 ))
+    _pb_line=""
+    _pb_i=1
+    while [ "$_pb_i" -le "$_pb_inner_w" ]; do
+        _pb_line="${_pb_line}─"
+        _pb_i=$(( _pb_i + 1 ))
     done
 
     # Draw box
     printf '\n'
     printf '\n'
-    printf "%b%s┌%s┐\n" "${greym}" "$_prinb_indent" "$_prinb_line"
-    printf "%b%s│  %-${_prinb_inner_width}s \n" "${greym}" "$_prinb_indent" "$_prinb_title"
-    printf "%b%s└%s┘%b\n" "${greym}" "$_prinb_indent" "$_prinb_line" "${reset}"
+    printf "%b%s┌%s┐\n" "${greym}" "$_pb_indent" "$_pb_line"
+    printf "%b%s│  %-${_pb_inner_w}s \n" "${greym}" "$_pb_indent" "$_pb_title"
+    printf "%b%s└%s┘%b\n" "${greym}" "$_pb_indent" "$_pb_line" "${reset}"
     printf '\n'
 
-    unset _prinb_title _prinb_indent _prinb_padding \
-          _prinb_title_length _prinb_inner_width _prinb_box_width \
-          _prinb_line i
+    unset   _pb_title _pb_indent _pb_pad \
+            _pb_title_len _pb_inner_w _pb_box_w \
+            _pb_line _pb_i
 }
 
 # #
-#   Print › Box › Paragraph
+#   Global › Print › Box › Paragraph
 #   
 #   Places an ASCII box around text. Supports multi-lines with \n.
 #   
-#   Determines the character count if color codes are used and ensures that the box borders are aligned properly.
+#   Determine the char count if color codes are used, ensure that the
+#   box borders are aligned properly.
 #   
-#   If using emojis; adjust the spacing so that the far-right line will align with the rest. Add the number of spaces
-#   to increase the value, which is represented with a number enclosed in square brackets.
-#     [1]           add 1 space to the right.
-#     [2]           add 2 spaces to the right.
-#     [-1]          remove 1 space to the right (needed for some emojis depending on if the emoji is 1 or 2 bytes)
+#   If using emojis; adjust the spacing so that the right side line
+#   aligns with the rest. Add the number of spaces to increase the
+#   value, which is specified with a number enclosed in square
+#   brackets.
+#       [1]     add 1 space to the right.
+#       [2]     add 2 spaces to the right.
+#       [-1]    remove 1 space from the right
+#                   needed for some emojis, if the emoji takes 1 or 2 bytes
 #   
-#   @usage          prinp "Certificate Generation Successful" "Your new certificate and keys have been generated successfully.\n\nYou can find them in the ${greenl}${app_dir_output}${greyd} folder."
-#                   prinp "🎗️[1]  ${file_domain_base}" "The following description will show on multiple lines with a ASCII box around it."
-#                   prinp "📄[-1] File Overview" "The following list outlines the files that you have generated using this utility, and what certs/keys may be missing."
-#                   prinp "➡️[15]  ${bluel}Paths${end}"
+#   @usage      prinp "Cert Generation Successful" "Your new cert and keys have been generated successfully.\n\nFind them in ${greenl}${app_dir_output}${greyd} folder."
+#               prinp "🎗️[1]  ${file_domain_base}" "The following desc will shows on multiple lines with ASCII box around it."
+#               prinp "📄[-1] File Overview" "The following list outlines files you have generated using this util, and what certs/keys are missing."
+#               prinp "➡️[15]  ${bluel}Paths${end}"
 # #
 
 prinp()
 {
-    local title="$1"
+    _pp_title="$1"
     shift
-    local text="$*"
+    _pp_text="$*"
 
-    local indent="  "
-    local box_width=110
-    local pad=1
+    _pp_indent="  "
+    _pp_box_w=110
+    _pp_pad=1
 
-    local content_width=$(( box_width ))
-    local inner_width=$(( box_width - pad*2 ))
+    _pp_content_w=$(( _pp_box_w ))
+    _pp_inner_w=$(( _pp_box_w - _pp_pad*2 ))
 
     print
     print
 
-    local hline
-    hline=$(printf '─%.0s' $(seq 1 "$content_width"))
+    _pp_hline=""
+    _pp_i=1
 
-    printf "${greyd}%s┌%s┐\n" "$indent" "$hline"
+    while [ "$_pp_i" -le "$_pp_content_w" ]; do
+        _pp_hline="${_pp_hline}─"
+        _pp_i=$(( _pp_i + 1 ))
+    done
+
+    printf "${greyd}%s┌%s┐\n" "$_pp_indent" "$_pp_hline"
 
     # #
     #   Title
     #   
-    #   Extract optional [N] adjustment from title (signed integer), portably
+    #   Extract optional [N] adjustment from title (signed int)
     # #
 
-    local emoji_adjust=0
-    local display_title="$title"
+    _pp_emoji_adjust=0
+    _pp_display_title="$_pp_title"
 
     # #
     #   Get content inside first [...] (if present)
     # #
 
-    if printf '%s\n' "$title" | grep -q '\[[[:space:]]*[-0-9][-0-9[:space:]]*\]'; then
+    if printf '%s\n' "$_pp_title" | grep -q '\[[[:space:]]*[-0-9][-0-9[:space:]]*\]'; then
 
         # #
-        #   Extract numeric inside brackets (allow optional leading -)
-        #   - use sed to capture first bracketed token, then strip non-digit except leading -
+        #   Read title spacing adjustment from [N]
+        #       [1]     add +1 space
+        #       [-1]    remove -1 space
+        #   
+        #   eg:     prinp "🎗️[1]  Example" "Box with +1 adjustment for 1 byte emoji"
         # #
 
-        local bracket
-        bracket=$(printf '%s' "$title" | sed -n 's/.*\[\([-0-9][-0-9]*\)\].*/\1/p')
+        _pp_bracket=$(printf '%s' "$_pp_title" | sed -n 's/.*\[\([-0-9][-0-9]*\)\].*/\1/p')
 
         # #
         #   Validate numeric and assign, otherwise fallback to 0
         # #
     
-        if printf '%s\n' "$bracket" | grep -qE '^-?[0-9]+$'; then
-            emoji_adjust=$bracket
+        if printf '%s\n' "$_pp_bracket" | grep -qE '^-?[0-9]+$'; then
+            _pp_emoji_adjust=$_pp_bracket
         else
-            emoji_adjust=0
+            _pp_emoji_adjust=0
         fi
 
         # #
-        #   Remove the first [...] token from the display_title
+        #   Remove the first [...] token from the _pp_display_title
         # #
     
-        display_title=$(printf '%s' "$title" | sed 's/\[[^]]*\]//')
+        _pp_display_title=$(printf '%s' "$_pp_title" | sed 's/\[[^]]*\]//')
     fi
 
     # #
-    #   Sanity: ensure emoji_adjust is a decimal integer so math works
+    #   Sanity: ensure _pp_emoji_adjust is a decimal integer so math works
     # #
 
-    case "$emoji_adjust" in
+    case "$_pp_emoji_adjust" in
         ''|*[!0-9-]*)
-            emoji_adjust=0
+            _pp_emoji_adjust=0
             ;;
     esac
 
-    local title_width=$(( content_width - pad ))
+    _pp_title_w=$(( _pp_content_w - _pp_pad ))
 
     # #
-    #   Account for emoji adjustment in visible length calculation
+    #   Adjust title spacing, keeps the right box border aligned
     # #
   
-    local title_vis_len=$(( ${#display_title} - emoji_adjust ))
+    _pp_title_vis_len=$(( ${#_pp_display_title} - _pp_emoji_adjust ))
     printf "${greyd}%s│%*s${bluel}%s${greyd}%*s│\n" \
-        "$indent" "$pad" "" "$display_title" "$(( title_width - title_vis_len ))" ""
+        "$_pp_indent" "$_pp_pad" "" "$_pp_display_title" "$(( _pp_title_w - _pp_title_vis_len ))" ""
 
     # #
-    #   Only render body text if provided
+    #   Only render body text ( if provided )
     # #
 
-    if [ -n "$text" ]; then
-        printf "${greyd}%s│%-${content_width}s│\n" "$indent" ""
+    if [ -n "$_pp_text" ]; then
+        printf "${greyd}%s│%-${_pp_content_w}s│\n" "$_pp_indent" ""
 
         # #
         #   Convert literal \n to real newlines
         # #
 
-        text=$(printf "%b" "$text")
+        _pp_text=$(printf "%b" "$_pp_text")
 
         # #
-        #   Handle each line with ANSI-aware wrapping and true padding
+        #   Read each line, wrap long text, keep box's lines aligned
         # #
 
-        printf "%s" "$text" | while IFS= read -r line || [ -n "$line" ]; do
+        printf "%s" "$_pp_text" | while IFS= read -r _pp_line || [ -n "$_pp_line" ]; do
 
         # #
         #   Blank line
         # #
     
-        if [ -z "$line" ]; then
-            printf "${greyd}%s│%-*s│\n" "$indent" "$content_width" ""
+        if [ -z "$_pp_line" ]; then
+            printf "${greyd}%s│%-*s│\n" "$_pp_indent" "$_pp_content_w" ""
             continue
         fi
 
-        local out="" word
-        for word in $line; do
+        _pp_out=""
+        _pp_word=""
+
+        for _pp_word in $_pp_line; do
             # #
-            #   Strip ANSI for visible width
+            #   Remove ansi color codes, before calculating text width
+            #   
+            #   _pp_vis_out     Current line with color codes removed
+            #   _pp_vis_len     Visible line len if current word is added
+            #   _pp_vis_word    Current word with color codes removed
+            #   
+            #   eg:     prinp "CSF > Web Interface" "Information about the CSF web interface."
+            #   
+            #   Loop 1  _pp_line        Information about the CSF web interface.
+            #           _pp_out 
+            #           _pp_word        Information
+            #           _pp_vis_out     
+            #           _pp_vis_word    Information
+            #           _pp_vis_len     11
+            #           _pp_content_w   110
+            #           _pp_inner_w     108
+            #   
+            #   Loop 2  _pp_line        Information about the CSF web interface.
+            #           _pp_out         Information
+            #           _pp_word        about
+            #           _pp_vis_out     Information
+            #           _pp_vis_word    about
+            #           _pp_vis_len     17
+            #           _pp_content_w   110
+            #           _pp_inner_w     108
+            #   
+            #           [...]
+            #   
+            #   Loop 6  _pp_line        Information about the CSF web interface.
+            #           _pp_out         Information about the CSF web
+            #           _pp_word        interface.
+            #           _pp_vis_out     Information about the CSF web
+            #           _pp_vis_word    interface.
+            #           _pp_vis_len     40          40 ( 29 + 1 space + 10 )
+            #           _pp_content_w   110
+            #           _pp_inner_w     108
             # #
         
-            local vis_out vis_len vis_word
-            vis_out=$(printf "%s" "$out" | sed 's/\x1B\[[0-9;]*[A-Za-z]//g')
-            vis_word=$(printf "%s" "$word" | sed 's/\x1B\[[0-9;]*[A-Za-z]//g')
-            vis_len=$(( ${#vis_out} + ( ${#vis_out} > 0 ? 1 : 0 ) + ${#vis_word} ))
+            _pp_vis_out=""
+            _pp_vis_len=""
+            _pp_vis_word=""
 
-            if [ -z "$out" ]; then
-                out="$word"
-            elif [ $vis_len -le $inner_width ]; then
-                out="$out $word"
+            _pp_vis_out=$(printf "%s" "$_pp_out" | sed "s/${esc}\[[0-9;]*[A-Za-z]//g")
+            _pp_vis_word=$(printf "%s" "$_pp_word" | sed "s/${esc}\[[0-9;]*[A-Za-z]//g")
+            _pp_vis_len=$(( ${#_pp_vis_out} + ( ${#_pp_vis_out} > 0 ? 1 : 0 ) + ${#_pp_vis_word} ))
+
+            if [ -z "$_pp_out" ]; then
+                _pp_out="$_pp_word"
+            elif [ $_pp_vis_len -le $_pp_inner_w ]; then
+                _pp_out="$_pp_out $_pp_word"
             else
                 # #
-                #   Print and pad manually based on visible length
+                #   Print and pad manually based on visible len
                 # #
 
-                local vis_len_full
-                vis_len_full=$(printf "%s" "$out" | sed 's/\x1B\[[0-9;]*[A-Za-z]//g' | wc -c | tr -d ' ')
-                local pad_spaces=$(( inner_width - vis_len_full ))
-                [ $pad_spaces -lt 0 ] && pad_spaces=0
-                printf "${greyd}%s│%*s%s%*s│\n" "$indent" "$pad" "" "$out" "$(( pad + pad_spaces ))" ""
-                out="$word"
+                _pp_vis_len_full=""
+                _pp_pad_spaces=""
+
+                _pp_vis_len_full=$(printf "%s" "$_pp_out" | sed "s/${esc}\[[0-9;]*[A-Za-z]//g" | wc -c | tr -d ' ')
+                _pp_pad_spaces=$(( _pp_inner_w - _pp_vis_len_full ))
+                [ $_pp_pad_spaces -lt 0 ] && _pp_pad_spaces=0
+                printf "${greyd}%s│%*s%s%*s│\n" "$_pp_indent" "$_pp_pad" "" "$_pp_out" "$(( _pp_pad + _pp_pad_spaces ))" ""
+                _pp_out="$_pp_word"
             fi
+
         done
 
         # #
         #   Final flush line
         # #
     
-        if [ -n "$out" ]; then
-            local vis_len_full pad_spaces
-            vis_len_full=$(printf "%s" "$out" | sed 's/\x1B\[[0-9;]*[A-Za-z]//g' | wc -c | tr -d ' ')
-            pad_spaces=$(( inner_width - vis_len_full ))
-            [ $pad_spaces -lt 0 ] && pad_spaces=0
-            printf "${greyd}%s│%*s%s%*s│\n" "$indent" "$pad" "" "$out" "$(( pad + pad_spaces ))" ""
+        if [ -n "$_pp_out" ]; then
+            _pp_vis_len_full=""
+            _pp_pad_spaces=""
+
+            _pp_vis_len_full=$(printf "%s" "$_pp_out" | sed "s/${esc}\[[0-9;]*[A-Za-z]//g" | wc -c | tr -d ' ')
+            _pp_pad_spaces=$(( _pp_inner_w - _pp_vis_len_full ))
+            [ $_pp_pad_spaces -lt 0 ] && _pp_pad_spaces=0
+            printf "${greyd}%s│%*s%s%*s│\n" "$_pp_indent" "$_pp_pad" "" "$_pp_out" "$(( _pp_pad + _pp_pad_spaces ))" ""
         fi
 
         done
     fi
 
-    printf "${greyd}%s└%s┘${reset}\n" "$indent" "$hline"
+    printf "${greyd}%s└%s┘${reset}\n" "$_pp_indent" "$_pp_hline"
     print
+
+    unset   _pp_title _pp_text _pp_indent _pp_box_w _pp_pad \
+            _pp_content_w _pp_inner_w _pp_hline _pp_i \
+            _pp_emoji_adjust _pp_display_title _pp_bracket \
+            _pp_title_w _pp_title_vis_len _pp_line _pp_out \
+            _pp_word _pp_vis_out _pp_vis_len _pp_vis_word \
+            _pp_vis_len_full _pp_pad_spaces
 }
 
 # #
-#   Define › Logging › Verbose
+#   Global › Logging › Verbose
 # #
 
 log()
@@ -543,19 +603,19 @@ log()
 }
 
 # #
-#   Check Sudo
+#   Global › Check Sudo
 # #
 
 check_sudo( )
 {
     if [ "$(id -u)" != "0" ]; then
-        error "    ❌ Must run script with ${redl}sudo"
+        error "    ❌ Must run script with ${redl}sudo${end}"
         exit 1
     fi
 }
 
 # #
-#   Run Command
+#   Global › Run Command
 #   
 #   Added when dryrun mode was added to the install.sh.
 #   Allows for a critical command to be skipped if in --dryrun mode.
@@ -563,9 +623,9 @@ check_sudo( )
 #   
 #   argDryrun comes from global export in csf/install.sh
 #   
-#   @usage          run /sbin/chkconfig csf off
-#                   run echo "ConfigServer"
-#                   run chmod -v 700 "./${CSF_AUTO_GENERIC}"
+#   @usage      run /sbin/chkconfig csf off
+#               run echo "ConfigServer"
+#               run chmod -v 700 "./${CSF_AUTO_GENERIC}"
 # #
 
 run()
@@ -581,58 +641,121 @@ run()
 # #
 #   Global › Copy
 #   
-#   Custom copy function to replace 'cp'; handles copy a bit differently but with the
-#   same behavior.
+#   Custom copy function to replace 'cp'; handles copy a bit differently but
+#   with the same behavior.
 #   
-#   @desc           › Auto detects file, symlink, or directory copying
-#                   › Preserve permissions & timestamps (uses `cp -p`)
-#                   › Supports copying into directories
-#                   › Supports copying to directory paths ending in '/' or '/.'
-#                   › Supports copying entire directory trees (recursive)
-#                   › Returns non-zero on error (never partially copies silently)
+#   @usage      ›   Copy file into existing dir:
+#                       copi 'csfpre.sh' '/usr/local/csf/bin'
 #   
-#   @usage          › Copy file into existing directory:
-#                       copi 'csfpre.sh' '/usr/local/csf/bin/'
-#   
-#                   › Copy file and force 'directory intent' using trailing slash:
+#               ›   Copy file into a dir that may not exist:
 #                       copi 'csfpre.sh' '/usr/local/csf/bin/'
 #                       copi 'csfpre.sh' '/usr/local/csf/bin/.'
 #   
-#                   › Copy file to specific destination filename:
+#               ›   Copy file to a specific dest filename:
 #                       copi 'config.txt' '/etc/csf/config.txt'
 #   
-#                   › Copy directory (full tree) to a new location:
+#               ›   Copy only if dest does not exist:
+#                       copi --if-missing 'config.txt' '/etc/csf/config.txt'
+#   
+#                       Replaces old 'copy_if_missing()' func:
+#                           Old:    copy_if_missing 'src' 'dest'
+#   
+#               ›   Copy to dest.new if dest already exists:
+#                       copi --or-new 'config.txt' '/etc/csf/config.txt'
+#   
+#                       Replaces old 'copy_or_new()' func:
+#                           Old:    copy_or_new 'src' 'dest'
+#   
+#               ›   Copy dir tree to exact dest (no '/' at the end):
 #                       copi './tpl' '/usr/local/csf/tpl'
 #   
-#                   › Copy directory into another directory:
+#               ›   Copy dir into a parent dir ('/' or '/.' at the end):
 #                       copi './webmin' '/var/lib/csf/'
+#                       copi './webmin' '/var/lib/csf/.'
+#
+#               ›   Error handling:
+#                       copi '/missing/badfile' '/tmp/'             # returns "3" (src missing)
+#                       copi '/etc/passwd' '/proc/csf-copy-test/'   # returns "1" (mkdir failed)
+#                       copi '/etc/passwd' '/missing/dir/passwd'    # returns "2" (copy failed)
 #   
-#                   › Error handling:
-#                       copi '/missing/badfile' '/tmp/'             # returns `3` (source missing)
-#                       copi '/etc/passwd' '/root/badfolder'        # returns `1` or `2` depending on mkdir/cp errors
+#   @return     0   Success
+#               1   Failed to create dest dirs
+#               2   Failed file copy
+#               3   Source does not exist / unsupported type
+#               4   Invalid opt or number of args
 #   
-#   @return codes   0   Success
-#                   1   Failed to create destination directories
-#                   2   Failed file copy
-#                   3   Source does not exist / unsupported type
-#   
-#   @motes          - `/path/to/dir/`       treated as directory
-#                   - `/path/to/dir/.`      treated as directory
-#                   - Destination directories auto-created when required
-#                   - Directory copies preserve directory structure and timestamps
+#   @notes      - '/path/to/dir/'       treated as dir
+#               - '/path/to/dir/.'      treated as dir
+#               - Dest dirs auto created (if required)
+#               - Dir copies preserve dir struct and timestamps
 # #
 
 copi()
 {
-    src="$1"
-    dest="$2"
+    _c_opt="overwrite"
 
     # #
-    #   Source must exist
+    #   Options:
+    #       --if-missing        Replaces old func 'copy_if_missing()'
+    #           Eg:                 copi --if-missing 'config.txt' '/etc/csf/config.txt'
+    #   
+    #       --or-new            Replaces old func 'copy_or_new()'
+    #           Eg:                 copi --or-new 'config.txt' '/etc/csf/config.txt'
     # #
 
-    if [ ! -e "${src}" ]; then
-        warn "    No such file or directory ${yellowl}${src}${greym}"
+    case "${1:-}" in
+        --if-missing)
+            _c_opt="if-missing"
+            shift
+            ;;
+        --or-new)
+            _c_opt="or-new"
+            shift
+            ;;
+        --)
+            shift
+            ;;
+        --*)
+            warn "    Unknown copi option ${yellowl}${1}${end}"
+            return 4
+            ;;
+    esac
+
+    if [ "$#" -ne 2 ]; then
+        warn "    copi requires a src and dest"
+        return 4
+    fi
+
+    _c_src="$1"
+    _c_dest="$2"
+
+    # #
+    #   Compat options for removed copy functions:
+    #       copy_if_missing()
+    #       copy_or_new()
+    # #
+
+    case "${_c_opt}" in
+        if-missing)
+            if [ -e "${_c_dest}" ] || [ -L "${_c_dest}" ]; then
+                label "     Dest already exists; skipping ${navy}${_c_dest}${end}"
+                return 0
+            fi
+            ;;
+        or-new)
+            if [ -e "${_c_dest}" ] || [ -L "${_c_dest}" ]; then
+                _c_dest="${_c_dest}.new"
+                label "     Dest already exists; copying to ${navy}${_c_dest}${end}"
+            fi
+            ;;
+    esac
+
+    # #
+    #   Src must exist
+    # #
+
+    if [ ! -e "${_c_src}" ]; then
+        warn "    No such file or directory ${yellowl}${_c_src}${end}"
         return 3
     fi
 
@@ -640,74 +763,113 @@ copi()
     #   File || symlink copy mode
     # #
 
-    if [ -f "${src}" ] || [ -L "${src}" ]; then
+    if [ -f "${_c_src}" ] || [ -L "${_c_src}" ]; then
 
         # #
-        #   If dest is an existing dir; copy into it
+        #   If _c_dest is an existing dir; copy into it
         # #
     
-        if [ -d "${dest}" ]; then
-            fname=$(basename "${src}")
-            label "     Copying ${navy}${fname}${greym} › ${navy}${dest}${greym}"
-            cp -p "${src}" "${dest}/$fname" || return 2
+        if [ -d "${_c_dest}" ]; then
+            fname=$(basename "${_c_src}")
+            label "     Copying ${navy}${fname}${greym} › ${navy}${_c_dest}${end}"
+            cp -p "${_c_src}" "${_c_dest}/$fname" || return 2
             return 0
         fi
 
         # #
-        #   Handle directory intent:
+        #   Handle dir intent:
         #       ends in '/' OR ends in '/.'
         # #
 
-        case "${dest}" in
+        case "${_c_dest}" in
             */ | */.)
-                # Normalize "/." → "/"
-                d="${dest%/.}"
+                # #
+                #   Normalize '/.' to '/'
+                # #
+
+                d="${_c_dest%/.}"
 
                 mkdir -p "${d}" || return 1
-                fname=$(basename "${src}")
-                label "     Copying ${navy}${fname}${greym} › ${navy}${d}${greym}"
-                cp -p "${src}" "${d}/${fname}" || return 2
+                fname=$(basename "${_c_src}")
+
+                label "     Copying ${navy}${fname}${greym} › ${navy}${d}${end}"
+                cp -p "${_c_src}" "${d}/${fname}" || return 2
+
                 return 0
                 ;;
         esac
 
         # #
-        #   Otherwise treat dest as a file path
+        #   Otherwise treat _c_dest as a file path
         # #
     
-        label "     Copying ${navy}${src}${greym} › ${navy}${dest}${greym}"
-        cp -p "${src}" "${dest}" || return 2
+        label "     Copying ${navy}${_c_src}${greym} › ${navy}${_c_dest}${end}"
+        cp -p "${_c_src}" "${_c_dest}" || return 2
+
         return 0
     fi
 
     # #
-    #   Directory copy mode
+    #   Dir copy mode
     # #
 
-    if [ -d "${src}" ]; then
-        mkdir -p "${dest}" || return 1
-
+    if [ -d "${_c_src}" ]; then
         (
-            cd "${src}" || exit 1
+            _c_dir_dest="${_c_dest}"
 
             # #
-            #   Recreate directory tree
+            #   Trailing '/' or '/.':
+            #       Makes the dest a parent dir.
+            #       Append src dir name to create the final dest.
             # #
 
-            find . -type d -print | while IFS= read -r d; do
-                mkdir -p "${dest}/${d}" || { error "    Failed mkdir ${redl}${dest}/${d}"; exit 1; }
-            done
+            case "${_c_dest}" in
+                */ | */.)
+                    _c_dir_parent="${_c_dest%/.}"
+                    _c_dir_parent="${_c_dir_parent%/}"
+                    _c_dir_name=$(basename "${_c_src%/}")
+
+                    if [ -z "${_c_dir_parent}" ]; then
+                        _c_dir_dest="/${_c_dir_name}"
+                    else
+                        _c_dir_dest="${_c_dir_parent}/${_c_dir_name}"
+                    fi
+                    ;;
+            esac
+
+            mkdir -p "${_c_dir_dest}" || exit 1
+            cd "${_c_src}" || exit 1
+
+            # #
+            #   Recreate dir tree
+            # #
+
+            find . -type d -print | while IFS= read -r _c_tree_dir; do
+                mkdir -p "${_c_dir_dest}/${_c_tree_dir}" || {
+                    error "    Failed mkdir ${redl}${_c_dir_dest}/${_c_tree_dir}"
+                    exit 1
+                }
+            done || exit 1
 
             # #
             #   Copy files
             # #
 
-            find . -type f -print | while IFS= read -r f; do
-                label "     Copying ${navy}${f}${greym} › ${navy}${dest}${greym}"
-                mkdir -p "${dest}/$(dirname "${f}")"
-                cp -p "${f}" "${dest}/${f}" || { error "    Failed copying ${redl}${f}"; exit 1; }
-            done
+            find . -type f -print | while IFS= read -r _c_file; do
+                label "     Copying ${navy}${_c_file}${greym} › ${navy}${_c_dir_dest}${end}"
+
+                mkdir -p "${_c_dir_dest}/$(dirname "${_c_file}")" || {
+                    error "    Failed mkdir ${redl}${_c_dir_dest}/$(dirname "${_c_file}")"
+                    exit 1
+                }
+
+                cp -p "${_c_file}" "${_c_dir_dest}/${_c_file}" || {
+                    error "    Failed copying ${redl}${_c_file}"
+                    exit 2
+                }
+            done || exit 2
         )
+
         return $?
     fi
 
@@ -715,7 +877,8 @@ copi()
     #   Unknown type
     # #
 
-    warn "    No such file or directory ${yellowl}${src}${greym}"
+    warn "    No such file or dir ${yellowl}${_c_src}${greym}"
+
     return 3
 }
 
