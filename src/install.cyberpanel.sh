@@ -75,20 +75,10 @@ argDryrun="${argDryrun:-false}"
 dr="$argDryrun"
 
 # #
-#	Start Install
+#   Installer › Start
 # #
 
-prinp "${APP_NAME_SHORT:-CSF} > Starting Installation" \
-       "This script will now install ${yellowl}${APP_NAME}${greyd} on your server. \
-If you experience issues during installation, make note of any error messages below, \
-and report them to the developer on our official repository. \
-${greyd}\n\n${greym}Script: 	${greyd}..........${yellowl} ${ARG_SCRIPT}${greyd} \
-${greyd}\n${greym}Installer:	${greyd}.......${yellowl} ${yellowl}${ARG_PANEL}${greyd} \
-${greyd}\n${greym}Version:  	${greyd}.........${yellowl} ${yellowl}v${APP_VERSION}${greyd} \
-${greyd}\n${greym}Path: 	${greyd}............${yellowl} ${script_dir}${greyd} \
-${greyd}\n${greym}PWD: 	${greyd}.............${yellowl} ${PWD}${greyd} \
-${greyd}\n${greym}Website:  	${greyd}.........${yellowl} ${yellowl}${APP_REPO}${greyd} \
-${greyd}\n${greym}Discord:  	${greyd}.........${yellowl} ${yellowl}${APP_LINK_DISCORD}${greyd}"
+installer_start "${ARG_SCRIPT}" "${ARG_PANEL}"
 
 # #
 #	Check if any other panels are installed first
@@ -1550,53 +1540,19 @@ else
 fi
 
 # #
-#	Step › csf.conf Modified Settings
-#   
-#   SYSLOG_LOG          By default, RHEL systems use /var/log/messages
-#                       Debian systems use /var/log/syslog
-#	
-#	IPTABLES_LOG		The same as SYSLOG_LOG
+#   Installer › Integration › Webmin
 # #
 
-prinp "${APP_NAME_SHORT:-CSF} > Customize csf.config" \
-       "This step will check which Linux distribution family you are running, RHEL (Red Hat) or a Debian-based system. This determines what your default " \
-	   "logging paths will be."
+installer_webmin || exit 1
 
 # #
-#   Detect system log file path
+#   Installer › Log Paths
 # #
 
-SYSLOG_PATH=""
-if [ -f /var/log/syslog ]; then
-    SYSLOG_PATH="/var/log/syslog"
-elif [ -f /var/log/messages ]; then
-    SYSLOG_PATH="/var/log/messages"
-else
-    SYSLOG_PATH="/dev/null"
-fi
+installer_logs || exit 1
 
 # #
-#   Update SYSLOG_LOG and IPTABLES_LOG defaults
-#   
-#   Only change these values during installation.
-#   Users can manually edit csf.conf later, and those
-#   settings will not be overridden by updates.
+#   Installer › Complete
 # #
 
-for KEY in SYSLOG_LOG IPTABLES_LOG; do
-    if grep -qE "^${KEY}" "${CSF_CONF}"; then
-        # Update existing line
-        run sed -i "s|^${KEY}.*|${KEY} = \"${SYSLOG_PATH}\"|" "${CSF_CONF}"
-		ok "    Updating ${greenl}${CSF_CONF}${greym} setting ${fuchsial}${KEY}=${white}\"${bluel}${SYSLOG_PATH}${white}\"${greym}"
-    else
-        # Append if missing
-        echo "${KEY} = \"${SYSLOG_PATH}\"" >> "${CSF_CONF}"
-		ok "    Appending ${greenl}${CSF_CONF}${greym} setting ${fuchsial}${KEY}=${white}\"${bluel}${SYSLOG_PATH}${white}\"${greym}"
-    fi
-done
-
-# #
-#   Install Complete
-# #
-
-install_complete
+installer_complete

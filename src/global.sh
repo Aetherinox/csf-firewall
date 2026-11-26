@@ -29,7 +29,7 @@
 # set -eu
 
 # #
-#   Directory where this script lives
+#   Global › Declare › Dirs
 # #
 
 OLDPWD=$(pwd)                                       # save current working dir
@@ -63,15 +63,18 @@ CSF_BIN="/usr/local/csf/bin"
 CSF_TPL="/usr/local/csf/tpl"
 CSF_CONF="/etc/csf/csf.conf"
 CSF_CHOWN_GENERAL="root:root"
+OS_RELEASE_PATH_MAIN="/etc/os-release"
+OS_RELEASE_PATH_FALLBACK="/usr/lib/os-release"
 CSF_WEBMIN_SHARE_HOME="/usr/share/webmin"
 CSF_WEBMIN_SHARE_DEST="${CSF_WEBMIN_SHARE_HOME}/csf"
 CSF_WEBMIN_LIBEXEC_HOME="/usr/libexec/webmin"
 CSF_WEBMIN_LIBEXEC_DEST="${CSF_WEBMIN_LIBEXEC_HOME}/csf"
 CSF_WEBMIN_TARBALL="/usr/local/csf/csfwebmin.tgz"
 CSF_WEBMIN_SYMBOLIC="${CSF_ETC}/csfwebmin.tgz"
-CSF_WEBMIN_SRC="webmin"
+CSF_WEBMIN_SRC="${SCRIPT_DIR}/webmin"
 CSF_WEBMIN_ETC="/etc/webmin"
 CSF_WEBMIN_FILE_ACL="${CSF_WEBMIN_ETC}/webmin.acl"
+CSF_WEBMIN_FILE_CONF="${CSF_WEBMIN_ETC}/miniserv.conf"
 CSF_WEBMIN_ACL_USER="root"
 CSF_WEBMIN_ACL_MODULE="csf"
 CSF_CWP_FOLD_SRC="csf"
@@ -353,7 +356,10 @@ prinb()
 # #
 #   Global › Print › Box › Paragraph
 #   
-#   Places an ASCII box around text. Supports multi-lines with \n.
+#   Places ascii / lined box around text with automatically 
+#   calculated borders.
+#   
+#   Supports multiple lines with \n
 #   
 #   Determine the char count if color codes are used, ensure that the
 #   box borders are aligned properly.
@@ -615,13 +621,222 @@ check_sudo( )
 }
 
 # #
+#   Global › Server › Distro
+#   
+#   Read Linux distro name without running os-release file.
+#   
+#   Check locations in order:
+#       -   /etc/os-release
+#       -   /usr/lib/os-release
+#   
+#   Older systems without 'os-release' use legacy release files.
+#   
+#   If no distro file exists, return kernel name from uname.
+#   
+#   @params     void
+#   @return     stdout      str     Distro name
+# #
+
+server_distro()
+{
+    _distro_file=""
+    _distro_name=""
+    _distro_rel=""
+
+    if [ -r "${OS_RELEASE_PATH_MAIN}" ]; then
+        _distro_file="${OS_RELEASE_PATH_MAIN}"
+    elif [ -r "${OS_RELEASE_PATH_FALLBACK}" ]; then
+        _distro_file="${OS_RELEASE_PATH_FALLBACK}"
+    fi
+
+    # #
+    #   Read PRETTY_NAME from os-release.
+    #   Do not source or execute file.
+    # #
+
+    if [ -n "${_distro_file}" ]; then
+        _distro_name=$(awk '
+            function decode( value, output, pos, char, char_next )
+            {
+                output = ""
+
+                for ( pos = 1; pos <= length( value ); pos++ )
+                {
+                    char = substr( value, pos, 1 )
+
+                    if ( char == "\\" && pos < length( value ) )
+                    {
+                        char_next = substr(value, pos + 1, 1)
+
+                        char_escaped = 0
+
+                        if ( char_next == "\\" )
+                        {
+                            char_escaped = 1
+                        }
+                        else if ( char_next == "\"" )
+                        {
+                            char_escaped = 1
+                        }
+                        else if ( char_next == quote_single )
+                        {
+                            char_escaped = 1
+                        }
+                        else if ( char_next == "$" )
+                        {
+                            char_escaped = 1
+                        }
+                        else if ( char_next == "`" )
+                        {
+                            char_escaped = 1
+                        }
+
+                        if ( char_escaped )
+                        {
+                            output = output char_next
+                            pos++
+
+                            continue
+                        }
+                    }
+
+                    output = output char
+                }
+
+                return output
+            }
+
+            BEGIN {
+                quote_single    = sprintf( "%c", 39 )
+                pretty_name     = ""
+            }
+
+            /^PRETTY_NAME=/ {
+                value       = substr( $0, length( "PRETTY_NAME=" ) + 1 )
+                char_first  = substr( value, 1, 1 )
+                char_last   = substr( value, length( value ), 1 )
+                value_quote = 0
+
+                if ( char_first == "\"" && char_last == "\"" )
+                {
+                    value_quote = 1
+                }
+
+                if ( char_first == quote_single )
+                {
+                    if ( char_last == quote_single )
+                    {
+                        value_quote = 1
+                    }
+                }
+
+                if ( value_quote )
+                {
+                    value = substr( value, 2, length( value ) - 2 )
+                }
+
+                pretty_name = decode( value )
+            }
+
+            END {
+                if ( pretty_name != "" )
+                {
+                    print pretty_name
+                }
+            }
+        ' "${_distro_file}")
+    fi
+
+    # #
+    #   Check release files used by older Linux distros
+    # #
+
+    if [ -z "${_distro_name}" ]; then
+        for _distro_rel in \
+            "/etc/redhat-release" \
+            "/etc/system-release" \
+            "/etc/gentoo-release" \
+            "/etc/slackware-version" \
+            "/etc/SuSE-release"
+        do
+            if [ -r "${_distro_rel}" ]; then
+                _distro_name=$(awk 'NF { print; exit }' "${_distro_rel}")
+
+                if [ -n "${_distro_name}" ]; then
+                    break
+                fi
+            fi
+        done
+    fi
+
+    if [ -z "${_distro_name}" ] && [ -r "/etc/alpine-release" ]; then
+        _distro_name=$(awk 'NF { print "Alpine Linux " $0; exit }' "/etc/alpine-release")
+    fi
+
+    if [ -z "${_distro_name}" ] && [ -r "/etc/debian_version" ]; then
+        _distro_name=$(awk 'NF { print "Debian GNU/Linux " $0; exit }' "/etc/debian_version")
+    fi
+
+    if [ -z "${_distro_name}" ] && [ -r "/etc/arch-release" ]; then
+        _distro_name="Arch Linux"
+    fi
+
+    # #
+    #   No distro file found, print kernel name instead.
+    # #
+
+    if [ -z "${_distro_name}" ]; then
+        _distro_name=$(uname -s 2>/dev/null)
+        _distro_rel=$(uname -r 2>/dev/null)
+
+        if [ -n "${_distro_rel}" ]; then
+            _distro_name="${_distro_name} ${_distro_rel}"
+        fi
+    fi
+
+    if [ -z "${_distro_name}" ]; then
+        _distro_name="Unknown Linux"
+    fi
+
+    printf '%s\n' "${_distro_name}"
+
+    return 0
+}
+
+# #
+#   Global › Server › Kernel
+#   
+#   Read kernel name and release using uname
+#   
+#   @params     void
+#   @return     stdout      str     Kernel name and release
+# #
+
+server_kernel()
+{
+    _server_kernel_name=$(uname -s 2>/dev/null)
+    _server_kernel_rel=$(uname -r 2>/dev/null)
+
+    if [ -n "${_server_kernel_name}" ] && [ -n "${_server_kernel_rel}" ]; then
+        printf '%s %s\n' "${_server_kernel_name}" "${_server_kernel_rel}"
+    elif [ -n "${_server_kernel_name}" ]; then
+        printf '%s\n' "${_server_kernel_name}"
+    elif [ -n "${_server_kernel_rel}" ]; then
+        printf '%s\n' "${_server_kernel_rel}"
+    else
+        printf '%s\n' "Unknown"
+    fi
+
+    return 0
+}
+
+# #
 #   Global › Run Command
 #   
-#   Added when dryrun mode was added to the install.sh.
-#   Allows for a critical command to be skipped if in --dryrun mode.
-#       Throws a debug message instead of executing.
+#   Re-route bash commands to this func before being ran on server.
 #   
-#   argDryrun comes from global export in csf/install.sh
+#   Allows for a command to be skipped if in --dryrun mode.
+#       Throws debug message instead of executing.
 #   
 #   @usage      run /sbin/chkconfig csf off
 #               run echo "ConfigServer"
@@ -631,7 +846,7 @@ check_sudo( )
 run()
 {
     if [ "${argDryrun}" = "true" ]; then
-        debug "    Drymode (skip): $*"
+        debug "    Dryrun (skip): $*"
     else
         debug "    Run: $*"
         "$@"
@@ -678,16 +893,16 @@ run()
 #                       copi '/etc/passwd' '/proc/csf-copy-test/'   # returns "1" (mkdir failed)
 #                       copi '/etc/passwd' '/missing/dir/passwd'    # returns "2" (copy failed)
 #   
+#   @notes      - '/path/to/dir/'       treated as dir
+#               - '/path/to/dir/.'      treated as dir
+#               - Dest dirs auto created (if required)
+#               - Dir copies preserve dir struct and timestamps
+#   
 #   @return     0   Success
 #               1   Failed to create dest dirs
 #               2   Failed file copy
 #               3   Source does not exist / unsupported type
 #               4   Invalid opt or number of args
-#   
-#   @notes      - '/path/to/dir/'       treated as dir
-#               - '/path/to/dir/.'      treated as dir
-#               - Dest dirs auto created (if required)
-#               - Dir copies preserve dir struct and timestamps
 # #
 
 copi()
@@ -972,7 +1187,519 @@ EOF
 }
 
 # #
-#   Global › Install Complete
+#   Global › Installer › Start
+#   
+#   Print info about selected installer and server.
+#   
+#   @params     script      str     Installer script name
+#               panel       str     Control panel name
+#   @return     0   Output completed
+# #
+
+installer_start()
+{
+    _installer_start_script="${1:-Unknown}"
+    _installer_start_panel="${2:-Generic}"
+
+    prinp "${APP_NAME_SHORT:-CSF} > Starting Installation" \
+           "This script will now install ${yellowl}${APP_NAME}${greyd} on your server. \
+If you experience issues during installation, make note of any error messages below, \
+and report them to the developer on our official repository. \
+${greyd}\n\n${greym}Script: 	${greyd}..........${yellowl} ${_installer_start_script}${greyd} \
+${greyd}\n${greym}Installer:	${greyd}.......${yellowl} ${_installer_start_panel}${greyd} \
+${greyd}\n${greym}Version:  	${greyd}.........${yellowl} v${APP_VERSION}${greyd} \
+${greyd}\n${greym}Distro: ${greyd}..........${yellowl} $(server_distro)${greyd} \
+${greyd}\n${greym}Kernel: ${greyd}..........${yellowl} $(server_kernel)${greyd} \
+${greyd}\n${greym}Path: 	${greyd}............${yellowl} ${SCRIPT_DIR}${greyd} \
+${greyd}\n${greym}PWD: 	${greyd}.............${yellowl} ${PWD}${greyd}"
+
+    unset   _installer_start_script _installer_start_panel
+
+    return 0
+}
+
+# #
+#   Global › Installer › Webmin Integration
+#   
+#   Build tar out of local csf webmin integration source files:
+#       ./csf/src/webmin => /usr/local/csf/csfwebmin.tgz
+#   
+#   Create tar symlink for legacy apps:
+#       /usr/local/csf/csfwebmin.tgz => /etc/csf/csfwebmin.tgz
+#   
+#   Check if Webmin installed in one of two locations:
+#       /usr/share/webmin
+#       /usr/libexec/webmin
+#   
+#   Add 'csf' to 'root' user within Webmin acl file:
+#       /etc/webmin/webmin.acl
+#   
+#   @params     void
+#   @return     0   Webmin integration success, or Webmin not found
+#               1   Webmin integration failed
+# #
+
+installer_webmin()
+{
+    prinp "${APP_NAME_SHORT:-CSF} > Webmin Integration" \
+           "Check the server for Webmin and install the CSF Webmin module."
+
+    _webmin_install_count=0
+    _webmin_temp=""
+    _webmin_proto="http"
+    _webmin_port=""
+    _webmin_already_registered=0
+    _webmin_access_host="${WEBMIN_ACCESS_HOST:-${SERVER_HOST}}"
+    _webmin_resolved_ip=""
+    _webmin_server_ip=""
+    _webmin_local_ips=""
+
+    if [ ! -d "${CSF_WEBMIN_SRC}/csf" ]; then
+        error "    Webmin source does not exist: ${redl}${CSF_WEBMIN_SRC}/csf${end}"
+        return 1
+    fi
+
+    # #
+    #   Create Webmin module tar
+    #   
+    #   Main webmin tar:        /usr/local/csf/csfwebmin.tgz
+    #   Symlink (legacy):       /etc/csf/csfwebmin.tgz
+    # #
+
+    if ! run tar -czf "${CSF_WEBMIN_TARBALL}" -C "${CSF_WEBMIN_SRC}" ./csf; then
+        error "    Failed to create ${redl}${CSF_WEBMIN_TARBALL}${end}"
+        return 1
+    fi
+
+    if [ "${argDryrun:-false}" != "true" ]; then
+        if [ ! -f "${CSF_WEBMIN_TARBALL}" ]; then
+            error "    Webmin archive was not created"
+            return 1
+        fi
+
+        ok "    Created tarball ${greenl}${CSF_WEBMIN_SRC} ${greym}=> ${greenl}${CSF_WEBMIN_TARBALL} ${greym} as manual fallback${end}"
+    fi
+
+    # #
+    #   Create symlink to Webmin module tar:
+    #       /etc/csf/csfwebmin.tgz => /usr/local/csf/csfwebmin.tgz
+    #   
+    #   Original webmin tar remains in /usr/local/csf.
+    # #
+
+    if ! run ln -sf "${CSF_WEBMIN_TARBALL}" "${CSF_WEBMIN_SYMBOLIC}"; then
+        error "    Failed to create ${redl}${CSF_WEBMIN_SYMBOLIC}${end}"
+        return 1
+    fi
+
+    if [ "${argDryrun:-false}" != "true" ]; then
+        if [ ! -L "${CSF_WEBMIN_SYMBOLIC}" ] || [ ! -f "${CSF_WEBMIN_SYMBOLIC}" ]; then
+            error "    Webmin archive link was not created"
+            return 1
+        fi
+
+        ok "    Created symbolic link ${greenl}${CSF_WEBMIN_TARBALL} ${greym}=> ${greenl}${CSF_WEBMIN_SYMBOLIC}${end}"
+    fi
+
+    # #
+    #   Copy Webmin (Debian)
+    #   
+    #   Check if Webmin is installed at:
+    #       /usr/share/webmin
+    #   
+    #   Webmin found:
+    #       Create CSF module dir:  /usr/share/webmin/csf
+    #       Copy files:             webmin/csf => /usr/share/webmin/csf
+    # #
+
+    # /usr/share/webmin
+    if [ -d "${CSF_WEBMIN_SHARE_HOME}" ]; then
+        ok "    Location 1: Webmin installation found in ${greenl}${CSF_WEBMIN_SHARE_HOME}${end}"
+    
+        if ! run mkdir -p "${CSF_WEBMIN_SHARE_DEST}"; then
+            error "    Location 1: Failed to create ${redl}${CSF_WEBMIN_SHARE_DEST}${end}"
+            return 1
+        fi
+
+        if ! run cp -a "${CSF_WEBMIN_SRC}"/csf/* "${CSF_WEBMIN_SHARE_DEST}/"; then
+            error "    Location 1: Failed to install ${redl}${CSF_WEBMIN_SHARE_DEST}${end}"
+            return 1
+        fi
+
+        _webmin_install_count=$(( _webmin_install_count + 1 ))
+
+        if [ "${argDryrun:-false}" != "true" ]; then
+            ok "    Location 1: CSF Webmin module installed to ${greenl}${CSF_WEBMIN_SHARE_DEST}${end}"
+        fi
+    else
+        info "    Location 1: Webmin installation not found in ${bluel}${CSF_WEBMIN_SHARE_HOME}${end}"
+    fi
+
+    # #
+    #   Copy Webmin (RHEL)
+    #   
+    #   Check if Webmin is installed at:
+    #       /usr/libexec/webmin
+    #   
+    #   Webmin found:
+    #       Create CSF module dir:  /usr/libexec/webmin/csf
+    #       Copy files:             webmin/csf => /usr/libexec/webmin/csf
+    # #
+
+    # /usr/libexec/webmin
+    if [ -d "${CSF_WEBMIN_LIBEXEC_HOME}" ]; then
+        ok "    Location 2: Webmin installation found in ${greenl}${CSF_WEBMIN_LIBEXEC_HOME}${end}"
+    
+        if ! run mkdir -p "${CSF_WEBMIN_LIBEXEC_DEST}"; then
+            error "    Location 2: Failed to create ${redl}${CSF_WEBMIN_LIBEXEC_DEST}${end}"
+            return 1
+        fi
+
+        if ! run cp -a "${CSF_WEBMIN_SRC}"/csf/* "${CSF_WEBMIN_LIBEXEC_DEST}/"; then
+            error "    Location 2: Failed to install ${redl}${CSF_WEBMIN_LIBEXEC_DEST}${end}"
+            return 1
+        fi
+
+        _webmin_install_count=$(( _webmin_install_count + 1 ))
+
+        if [ "${argDryrun:-false}" != "true" ]; then
+            ok "    Location 2: CSF Webmin module installed to ${greenl}${CSF_WEBMIN_LIBEXEC_DEST}${end}"
+        fi
+    else
+        info "    Location 2: Webmin installation not found in ${bluel}${CSF_WEBMIN_LIBEXEC_HOME}${end}"
+    fi
+
+    if [ "${_webmin_install_count}" -eq 0 ]; then
+        info "    Webmin was not detected; skipping Webmin module registration"
+
+        return 0
+    fi
+
+    # #
+    #   Register CSF Module in Webmin
+    #   
+    #   Check / add 'root' to Webmin's access file:
+    #       '/etc/webmin/webmin.acl'
+    #   
+    #   Each user allowed access to CSF must be listed.
+    #       'root: acl bind8 change-user cron firewall firewall6 firewalld xterm csf'
+    # #
+
+    if [ ! -f "${CSF_WEBMIN_FILE_ACL}" ]; then
+        info "    Webmin ACL does not exist; skipping module registration"
+        return 0
+    fi
+
+    if [ "${argDryrun:-false}" = "true" ]; then
+        debug "    Dryrun (skip): update ${CSF_WEBMIN_FILE_ACL}"
+        return 0
+    fi
+
+    # #
+    #   Check if root account already has access to CSF module in webmin.
+    #   
+    #   @return     0   'root' has access to 'csf' in acl
+    #               1   'root' has no access to 'csf' in acl
+    # #
+
+    if awk -v user="${CSF_WEBMIN_ACL_USER}" -v module="${CSF_WEBMIN_ACL_MODULE}" '
+        $1 == user ":" {
+            for (field = 2; field <= NF; field++) {
+                if ($field == module) {
+                    found = 1
+                }
+            }
+        }
+        END {
+            exit(found ? 0 : 1)
+        }
+    ' "${CSF_WEBMIN_FILE_ACL}"; then
+        _webmin_already_registered=1
+        info "    User ${bluel}${CSF_WEBMIN_ACL_USER}${greym} already added to Webmin ACL ${bluel}${CSF_WEBMIN_FILE_ACL}${end}"
+    else
+
+        # #
+        #   Create temp file next to Webmin ACL file.
+        #   Used to update ACL with new user/perms to 'csf'
+        # #
+
+        if ! _webmin_temp=$(mktemp "${CSF_WEBMIN_FILE_ACL}.XXXXXX"); then
+            error "    Failed to create a temporary Webmin ACL file"
+            return 1
+        fi
+
+        # #
+        #   Copy original acl file to temp file.
+        #   Mainain ownership, perms, and timestamps.
+        # #
+
+        if ! cp -p "${CSF_WEBMIN_FILE_ACL}" "${_webmin_temp}"; then
+            error "    Failed to copy ${redl}${CSF_WEBMIN_FILE_ACL}${end}"
+            rm -f "${_webmin_temp}"
+            return 1
+        fi
+
+        # #
+        #   Build updated Webmin acl file
+        # #
+
+        if ! awk -v user="${CSF_WEBMIN_ACL_USER}" -v module="${CSF_WEBMIN_ACL_MODULE}" '
+            BEGIN {
+                user_found = 0
+            }
+            $1 == user ":" {
+                user_found = 1
+                module_found = 0
+
+                for (field = 2; field <= NF; field++) {
+                    if ($field == module) {
+                        module_found = 1
+                        break
+                    }
+                }
+
+                if (!module_found) {
+                    $0 = $0 " " module
+                }
+            }
+            {
+                print
+            }
+            END {
+                if (!user_found) {
+                    print user ": " module
+                }
+            }
+        ' "${CSF_WEBMIN_FILE_ACL}" > "${_webmin_temp}"; then
+            error "    Failed to update the temporary Webmin ACL file"
+            rm -f "${_webmin_temp}"
+
+            return 1
+        fi
+
+        # #
+        #   Replace original Webmin acl file only after updated
+        #   temp file has been written
+        # #
+
+        if ! mv "${_webmin_temp}" "${CSF_WEBMIN_FILE_ACL}"; then
+            error "    Failed to update ${redl}${CSF_WEBMIN_FILE_ACL}${end}"
+            rm -f "${_webmin_temp}"
+
+            return 1
+        fi
+
+        _webmin_temp=""
+
+        ok "    Added CSF Webmin module to ${greenl}${CSF_WEBMIN_FILE_ACL}${end}"
+    fi
+
+    # #
+    #   Read Webmin protocol and port. Used to build info to
+    #   show user.
+    # #
+
+    if [ -f "${CSF_WEBMIN_FILE_CONF}" ]; then
+        if grep -qE '^[[:space:]]*ssl[[:space:]]*=[[:space:]]*1[[:space:]]*$' "${CSF_WEBMIN_FILE_CONF}"; then
+            _webmin_proto="https"
+        fi
+
+        _webmin_port=$(awk -F= '
+            /^[[:space:]]*port[[:space:]]*=/ {
+                value = $2
+                gsub(/[[:space:]]/, "", value)
+                print value
+                exit
+            }
+        ' "${CSF_WEBMIN_FILE_CONF}")
+    fi
+
+    # #
+    #   Webmin Host
+    #   
+    #   Resolve server hostname, compare with IPv4 addr assigned to the server.
+    #   
+    #   WEBMIN_ACCESS_HOST can be set before running CSF installer to
+    #   use a specific public hostname or address.
+    # #
+
+    if [ -z "${WEBMIN_ACCESS_HOST:-}" ]; then
+        if command -v getent >/dev/null 2>&1; then
+            _webmin_resolved_ip=$(getent ahostsv4 "${SERVER_HOST}" 2>/dev/null |
+                awk '$2 == "STREAM" { print $1; exit }')
+        fi
+
+        if command -v ip >/dev/null 2>&1; then
+            _webmin_local_ips=$(ip -o -4 addr show scope global 2>/dev/null |
+                awk '{ split($4, address, "/"); print address[1] }')
+
+            _webmin_server_ip=$(ip -4 route get 1.1.1.1 2>/dev/null |
+                awk '{
+                    for (field = 1; field <= NF; field++) {
+                        if ($field == "src") {
+                            print $(field + 1)
+                            exit
+                        }
+                    }
+                }')
+        fi
+
+        if [ -z "${_webmin_server_ip}" ]; then
+            _webmin_server_ip=$(printf '%s\n' "${_webmin_local_ips}" |
+                awk 'NF { print; exit }')
+        fi
+
+        _webmin_hostname_matches=0
+
+        for _webmin_local_ip in ${_webmin_local_ips}; do
+            if [ "${_webmin_resolved_ip}" = "${_webmin_local_ip}" ]; then
+                _webmin_hostname_matches=1
+                break
+            fi
+        done
+
+        if [ "${_webmin_hostname_matches}" -ne 1 ] &&
+           [ -n "${_webmin_server_ip}" ]; then
+            warn "    Webmin hostname does not resolve to this server. Access Webmin using the IP address instead:"
+            label "         Hostname: ${yellowl}${SERVER_HOST}${end}"
+
+            if [ -n "${_webmin_resolved_ip}" ]; then
+                label "         Resolved IP: ${yellowl}${_webmin_resolved_ip}${end}"
+            else
+                label "         Resolved IP: ${yellowl}[unavailable]${end}"
+            fi
+
+            label "         Using IP: ${greenl}${_webmin_server_ip}${end}"
+
+            _webmin_access_host="${_webmin_server_ip}"
+        fi
+    fi
+
+    print "   "
+
+    if [ "${_webmin_already_registered}" -eq 1 ]; then
+        warn "    ${yellowd}Webmin has already registered the ${APP_NAME_SHORT:-CSF} module. Operation skipped.${end}"
+    else
+        ok "    ${greend}Webmin has successfully registered the ${APP_NAME_SHORT:-CSF} module.${end}"
+    fi
+
+    print "   "
+    print "   ${greym}To access ${APP_NAME_SHORT:-CSF} in Webmin, open your browser and go to one of the following addresses:"
+
+    if [ -n "${_webmin_port}" ]; then
+        print "       Network:      ${yellowd}${_webmin_proto}://${_webmin_access_host}:${_webmin_port}/${end}"
+        print "       Server only:  ${yellowd}${_webmin_proto}://127.0.0.1:${_webmin_port}/${end}"
+    else
+        print "       ${greym}Webmin port could not be read from ${bluel}${CSF_WEBMIN_FILE_CONF}${end}"
+    fi
+
+    print "   "
+
+    print "   ${greym}In the left-side menu of Webmin, navigate to:${end}"
+    print "       ${yellowd}System ${greym} > ${yellowd}${APP_NAME:-ConfigServer Security & Firewall}${end}"
+
+    print "   "
+
+    print "   ${greym}You might see the following message if this is your first time: ${end}"
+    print "       ${yellowd}csf updated to symlink webmin module to ${greend}/usr/local/csf/lib/webmin/csf/${yellowd}. Click here to continue${end}"
+
+    print "   "
+
+    print "   ${greym}Click the hyperlink and you will be sent to the ${yellowd}${APP_NAME:-ConfigServer Security & Firewall}${greym} main page.${end}"
+
+    unset   _webmin_install_count _webmin_temp \
+            _webmin_proto _webmin_port
+
+    return 0
+}
+
+# #
+#   Global › Installer › Log Paths
+#   
+#   Detect available text system logs, set SYSLOG_LOG and IPTABLES_LOG
+#   in /etc/csf/csf.conf:
+#       -   /var/log/syslog         Debian (rsyslog)
+#       -   /var/log/messages       RHEL (rsyslog)
+#       -   /dev/null               No supported syslog exists
+#   
+#   Opens /etc/csf/csf.conf, and updates:
+#       SYSLOG_LOG      = "X"
+#       IPTABLES_LOG    = "X"
+#   
+#   @params     void
+#   @return     0   Log paths configured
+#               1   CSF_CONF does not exist
+# #
+
+installer_logs()
+{
+    prinp "${APP_NAME_SHORT:-CSF} > Customize csf.config" \
+           "Finds available text system log files. Updates SYSLOG_LOG and" \
+           "IPTABLES_LOG in ${CSF_CONF}."
+
+    _csf_log_path=""
+
+    if [ ! -f "${CSF_CONF}" ]; then
+        error "    Cannot configure log paths; file does not exist: ${redl}${CSF_CONF}${greym}"
+        unset   _csf_log_path
+
+        return 1
+    fi
+
+    if [ -f "/var/log/syslog" ]; then
+        _csf_log_path="/var/log/syslog"
+    elif [ -f "/var/log/messages" ]; then
+        _csf_log_path="/var/log/messages"
+    else
+        _csf_log_path="/dev/null"
+        warn "    No supported text system log was found; using ${yellowl}/dev/null${greym}"
+    fi
+
+    for _csf_log_key in SYSLOG_LOG IPTABLES_LOG; do
+        if grep -qE "^[[:space:]]*${_csf_log_key}[[:space:]]*=" "${CSF_CONF}"; then
+            if [ "${argDryrun:-false}" = "true" ]; then
+                debug "    Dryrun (skip): update ${_csf_log_key} in ${CSF_CONF}"
+
+                continue
+            fi
+
+            if ! run sed -i \
+                "s|^[[:space:]]*${_csf_log_key}[[:space:]]*=.*$|${_csf_log_key} = \"${_csf_log_path}\"|" \
+                "${CSF_CONF}"; then
+                error "    Failed to update ${redl}${_csf_log_key}${greym} in ${redl}${CSF_CONF}${greym}"
+                unset   _csf_log_path _csf_log_key
+
+                return 1
+            fi
+
+            ok "    Updating ${greenl}${CSF_CONF}${greym} setting ${fuchsial}${_csf_log_key}=${white}\"${bluel}${_csf_log_path}${white}\"${greym}"
+        else
+            if [ "${argDryrun:-false}" = "true" ]; then
+                debug "    Dryrun (skip): append ${_csf_log_key} to ${CSF_CONF}"
+
+                continue
+            fi
+
+            if ! printf '%s = "%s"\n' \
+                "${_csf_log_key}" \
+                "${_csf_log_path}" >> "${CSF_CONF}"; then
+                error "    Failed to append ${redl}${_csf_log_key}${greym} to ${redl}${CSF_CONF}${greym}"
+                unset   _csf_log_path _csf_log_key
+
+                return 1
+            fi
+
+            ok "    Appending ${greenl}${CSF_CONF}${greym} setting ${fuchsial}${_csf_log_key}=${white}\"${bluel}${_csf_log_path}${white}\"${greym}"
+        fi
+    done
+
+    unset   _csf_log_path _csf_log_key
+
+    return 0
+}
+
+# #
+#   Global › Installer › Complete
 #   
 #   Print installation status after CSF is installed.
 #   Checks several factors of the installation, including:
@@ -983,7 +1710,7 @@ EOF
 #   @return     0   Output completed
 # #
 
-install_complete()
+installer_complete()
 {
     prinp "${APP_NAME_SHORT:-CSF} > Installation Complete" \
            "Your installation is now complete. Review the notes below on getting started with the firewall."

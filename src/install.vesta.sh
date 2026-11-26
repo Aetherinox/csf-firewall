@@ -68,20 +68,10 @@ argDryrun="${argDryrun:-false}"
 dr="$argDryrun"
 
 # #
-#	Start Install
+#   Installer › Start
 # #
 
-prinp "${APP_NAME_SHORT:-CSF} > Starting Installation" \
-       "This script will now install ${yellowl}${APP_NAME}${greyd} on your server. \
-If you experience issues during installation, make note of any error messages below, \
-and report them to the developer on our official repository. \
-${greyd}\n\n${greym}Script: 	${greyd}..........${yellowl} ${ARG_SCRIPT}${greyd} \
-${greyd}\n${greym}Installer:	${greyd}.......${yellowl} ${yellowl}${ARG_PANEL}${greyd} \
-${greyd}\n${greym}Version:  	${greyd}.........${yellowl} ${yellowl}v${APP_VERSION}${greyd} \
-${greyd}\n${greym}Path: 	${greyd}............${yellowl} ${script_dir}${greyd} \
-${greyd}\n${greym}PWD: 	${greyd}.............${yellowl} ${PWD}${greyd} \
-${greyd}\n${greym}Website:  	${greyd}.........${yellowl} ${yellowl}${APP_REPO}${greyd} \
-${greyd}\n${greym}Discord:  	${greyd}.........${yellowl} ${yellowl}${APP_LINK_DISCORD}${greyd}"
+installer_start "${ARG_SCRIPT}" "${ARG_PANEL}"
 
 # #
 #	Check if any other panels are installed first
@@ -1046,171 +1036,19 @@ run mv /usr/local/vesta/web/list/csf/csf.pl /usr/local/vesta/bin/
 run chmod 700 /usr/local/vesta/bin/csf.pl
 
 # #
-#	@app			Webmin
-#	@desc			› create tarball of webmin files
-#					› Detect /usr/share/webmin
-#					› Extract tarball to /usr/share/webmin/csf
+#   Installer › Integration › Webmin
 # #
 
-prinp "${APP_NAME_SHORT:-CSF} > Webmin Integration" \
-       "We will now check your system and see if Webmin integration needs enabled."
-
-cd "${CSF_WEBMIN_SRC}"
-run tar -czf "${CSF_WEBMIN_TARBALL}" ./*
-if [ -f "$CSF_WEBMIN_TARBALL" ]; then
-    ok "    Created ${greenl}$CSF_WEBMIN_TARBALL"
-else
-    error "    Failed to create ${redl}$CSF_WEBMIN_TARBALL"
-fi
-
-run ln -sf "${CSF_WEBMIN_TARBALL}" "${CSF_ETC}/"
-if [ -L "${CSF_WEBMIN_SYMBOLIC}" ] && [ -f "${CSF_WEBMIN_SYMBOLIC}" ]; then
-	ok "    Created symbolic link ${greenl}${CSF_WEBMIN_SYMBOLIC}"
-else
-    error "    Failed to create symbolic link ${redl}${CSF_WEBMIN_SYMBOLIC}"
-fi
+installer_webmin || exit 1
 
 # #
-#	@app			Webmin
-#   @desc			Copy Webmin files if destination exists
-#						/usr/share/webmin			Debian, Ubuntu, ZorinOS
-#						/usr/libexec/webmin			AlmaLinux, Redhat, Rocky 10
+#   Installer › Log Paths
 # #
 
-if [ -d "${CSF_WEBMIN_SHARE_HOME}" ]; then
-    run mkdir -p "$CSF_WEBMIN_SHARE_DEST"                     			# Ensure destination exists
-	run cp -a csf/* "$CSF_WEBMIN_SHARE_DEST"/							# Copy all files from current folder
-	ok "    CSF Webmin module installed to ${greenl}${CSF_WEBMIN_SHARE_DEST}${greym}"
-else
-	warn "    Webmin home folder ${yellowl}${CSF_WEBMIN_SHARE_HOME}${greym} does not exist; trying alternative"
-fi
-
-if [ -d "${CSF_WEBMIN_LIBEXEC_HOME}" ]; then
-    run mkdir -p "$CSF_WEBMIN_LIBEXEC_DEST"                     		# Ensure destination exists
-	run cp -a csf/* "$CSF_WEBMIN_LIBEXEC_DEST"/							# Copy all files from current folder
-	ok "    CSF Webmin module installed to ${greenl}${CSF_WEBMIN_LIBEXEC_DEST}${greym}"
-else
-	error "    Webmin home folder ${redl}${CSF_WEBMIN_LIBEXEC_HOME}${greym} does not exist; skipping Webmin install"
-fi
+installer_logs || exit 1
 
 # #
-#	@app			Webmin
-#	@desc			Install CSF to webmin.acl
-#					This is what makes CSF appear in Webmin menu
+#   Installer › Complete
 # #
 
-if [ -f "$CSF_WEBMIN_FILE_ACL" ] && [ "$dr" = "false" ]; then
-
-	# #
-	#	Get Webmin connection info
-	# #
-
-	WEBMIN_CONF="/etc/webmin/miniserv.conf"
-
-	# #
-	#	fetch webmin port and protocol
-	# #
-
-	if grep '^ssl=' "$WEBMIN_CONF" | cut -d= -f2 | grep -q '^1$'; then
-		WEBMIN_PROTO="https"
-	else
-		WEBMIN_PROTO="http"
-	fi
-
-	WEBMIN_PORT=$(grep '^port=' "$WEBMIN_CONF" | cut -d= -f2)
-
-	# #
-	#   Check if 'csf' is already listed for root
-	# #
-
-	if grep -Eq "^${CSF_WEBMIN_ACL_USER}:.*\b${CSF_WEBMIN_ACL_MODULE}\b" "$CSF_WEBMIN_FILE_ACL"; then
-		info "    CSF Webmin module already registered in ${bluel}${CSF_WEBMIN_FILE_ACL}${greym}"
-		print
-
-		print "   Webmin already contains ${APP_NAME_SHORT:-CSF} module"
-		print "   "
-		print "   To access ${APP_NAME_SHORT:-CSF}, open your browser and navigate to"
-		print "       ${yellowd}${WEBMIN_PROTO}://${SERVER_HOST}:${WEBMIN_PORT}/"
-		print "   "
-		print "   On the left-side menu, navigate to ${yellowd}System ${greym} > ${yellowd}${APP_NAME:-ConfigServer Security & Firewall}"
-	else
-		CSF_WEBMIN_TEMP=$(mktemp)
-		awk -v user="$CSF_WEBMIN_ACL_USER" -v mod="$CSF_WEBMIN_ACL_MODULE" '
-			BEGIN {found=0}
-			$0 ~ "^"user":" {
-				$0 = $0 " " mod
-				found=1
-			}
-			{print}
-			END {
-				if (found == 0) {
-					print user ": " mod
-				}
-			}
-		' "$CSF_WEBMIN_FILE_ACL" > "$CSF_WEBMIN_TEMP" && mv "$CSF_WEBMIN_TEMP" "$CSF_WEBMIN_FILE_ACL"
-
-		ok "    Added CSF Webmin module installed to ${greenl}${CSF_WEBMIN_FILE_ACL}${greym}"
-		print
-	
-		print "   CSF has been integrated into Webmin"
-		print "   "
-		print "   To access ${APP_NAME_SHORT:-CSF}, open your browser and navigate to"
-		print "       ${yellowd}${WEBMIN_PROTO}://${SERVER_HOST}:${WEBMIN_PORT}/"
-		print "   "
-		print "   On the left-side menu, navigate to ${yellowd}System ${greym} > ${yellowd}${APP_NAME:-ConfigServer Security & Firewall}"
-	fi
-else
-	info "    CSF Webmin skipped; could not find ${bluel}${CSF_WEBMIN_FILE_ACL}${greym}"
-fi
-
-# #
-#	Step › csf.conf Modified Settings
-#   
-#   SYSLOG_LOG          By default, RHEL systems use /var/log/messages
-#                       Debian systems use /var/log/syslog
-#	
-#	IPTABLES_LOG		The same as SYSLOG_LOG
-# #
-
-prinp "${APP_NAME_SHORT:-CSF} > Customize csf.config" \
-       "This step will check which Linux distribution family you are running, RHEL (Red Hat) or a Debian-based system. This determines what your default " \
-	   "logging paths will be."
-
-# #
-#   Detect system log file path
-# #
-
-SYSLOG_PATH=""
-if [ -f /var/log/syslog ]; then
-    SYSLOG_PATH="/var/log/syslog"
-elif [ -f /var/log/messages ]; then
-    SYSLOG_PATH="/var/log/messages"
-else
-    SYSLOG_PATH="/dev/null"
-fi
-
-# #
-#   Update SYSLOG_LOG and IPTABLES_LOG defaults
-#   
-#   Only change these values during installation.
-#   Users can manually edit csf.conf later, and those
-#   settings will not be overridden by updates.
-# #
-
-for KEY in SYSLOG_LOG IPTABLES_LOG; do
-    if grep -qE "^${KEY}" "${CSF_CONF}"; then
-        # Update existing line
-        run sed -i "s|^${KEY}.*|${KEY} = \"${SYSLOG_PATH}\"|" "${CSF_CONF}"
-		ok "    Updating ${greenl}${CSF_CONF}${greym} setting ${fuchsial}${KEY}=${white}\"${bluel}${SYSLOG_PATH}${white}\"${greym}"
-    else
-        # Append if missing
-        echo "${KEY} = \"${SYSLOG_PATH}\"" >> "${CSF_CONF}"
-		ok "    Appending ${greenl}${CSF_CONF}${greym} setting ${fuchsial}${KEY}=${white}\"${bluel}${SYSLOG_PATH}${white}\"${greym}"
-    fi
-done
-
-# #
-#   Install Complete
-# #
-
-install_complete
+installer_complete
