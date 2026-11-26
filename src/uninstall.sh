@@ -4,7 +4,7 @@ echo
 
 /usr/sbin/csf -f
 
-if test `cat /proc/1/comm` = "systemd"; then
+if [ "$(cat /proc/1/comm 2>/dev/null)" = "systemd" ]; then
     systemctl disable csf.service
     systemctl disable lfd.service
     systemctl stop csf.service
