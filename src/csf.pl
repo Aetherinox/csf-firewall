@@ -25,11 +25,38 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program; if not, see <https://www.gnu.org/licenses>.
 # #
-# start main
+
+# #
+#   Declare › Use
+# #
+
 use strict;
-use lib '/usr/local/csf/lib';
+use File::Basename ( );
+
+# #
+#   csf › Module Search Path
+#   
+#   If csf is running from 'src' folder, load modules from:
+#       src/ConfigServer
+#   
+#   If csf installed, load modules from:
+#       /usr/local/csf/lib/ConfigServer
+#   
+#   @note       Used for ./tests, allows for tests to be ran on local
+#               source files, or installed copy.
+# #
+
+use lib do
+{
+	my $dir_src = File::Basename::dirname( __FILE__ );
+	-d "$dir_src/ConfigServer" ? $dir_src : "/usr/local/csf/lib";
+};
+
+# #
+#   Declare › Use
+# #
+
 use Fcntl qw(:DEFAULT :flock);
-use File::Basename;
 use IO::Handle;
 use IPC::Open3;
 use Net::CIDR::Lite;
@@ -49,6 +76,23 @@ use ConfigServer::GetEthDev;
 use ConfigServer::Sendmail;
 use ConfigServer::LookUpIP qw(iplookup);
 use ConfigServer::LineFilter;
+
+# #
+#   Script - Module Load
+#   
+#   When another Perl file loads this script, compile its subroutines
+#   without running CSF startup or command processing.
+# #
+
+return 1
+	if caller;
+
+# #
+#   Restrict new files and dirs to owner access only.
+#   
+#   Files:  0600
+#   Dirs:   0700
+# #
 
 umask( 0177 );
 

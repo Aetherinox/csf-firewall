@@ -38,7 +38,31 @@
 # #
 
 use strict;
-use lib '/usr/local/csf/lib';
+use File::Basename ( );
+
+# #
+#   lfd › Module Search Path
+#   
+#   If csf is running from 'src' folder, load modules from:
+#       src/ConfigServer
+#   
+#   If csf installed, load modules from:
+#       /usr/local/csf/lib/ConfigServer
+#   
+#   @note       Used for ./tests, allows for tests to be ran on local
+#               source files, or installed copy.
+# #
+
+use lib do
+{
+	my $dir_src = File::Basename::dirname( __FILE__ );
+	-d "$dir_src/ConfigServer" ? $dir_src : "/usr/local/csf/lib";
+};
+
+# #
+#   Declare › Use
+# #
+
 use Fcntl qw(:DEFAULT :flock);
 use IO::Handle;
 # use URI::Escape;
@@ -61,6 +85,18 @@ use ConfigServer::LookUpIP qw(iplookup);
 use ConfigServer::Sanitize qw(html_safe html_escape);
 use ConfigServer::Validate;
 use ConfigServer::LineFilter;
+
+# #
+#   Declare › Load Module
+#   
+#   When another Perl file loads this script; compile subroutines
+#   without starting the LFD daemon.
+#   
+#   Used when running certain CSF/LFD tests in ./tests subfolder.
+# #
+
+return 1
+	if caller;
 
 # #
 #   Declare › Constants
@@ -105,7 +141,10 @@ use constant
 };
 
 # #
-#	Restrict new files and folders to the owner only (0600)
+#   Restrict new files and dirs to owner access only.
+#   
+#   Files:  0600
+#   Dirs:   0700
 # #
 
 umask( 0177 );
