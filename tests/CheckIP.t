@@ -1,5 +1,4 @@
 #!/usr/bin/env perl
-
 # #
 #   @app                ConfigServer Security & Firewall (CSF)
 #                       Login Failure Daemon (LFD)
@@ -11,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            11.07.2026
+#   @updated            11.27.2026
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -51,11 +50,15 @@
 #   
 #   
 #   USAGE:
-#       -   Windows
-#           prove -Isrc -v tests/CheckIP.t
+#       -   Windows source:
+#           set CSF_SOURCE=source
+#           prove --color -v tests/CheckIP.t
 #   
-#       -   Linux
-#           sudo prove -I. -v tests/CheckIP.t
+#       -   Linux source:
+#           sudo env CSF_SOURCE=source prove --color -v tests/CheckIP.t
+#   
+#       -   Linux installed:
+#           sudo env CSF_SOURCE=installed prove --color -v tests/CheckIP.t
 #   
 #   
 #   MODULES:
@@ -73,29 +76,122 @@
 # #
 
 # #
+#   Declare › Package
+# #
+
+package main;
+
+# #
 #   Declare › Use
 # #
 
+# no strict 'vars';
 use strict;
 use warnings;
+use utf8;
+
+# #
+#   Declare › Constants
+#   
+#   TESTS_NETIP_BUGFAIL
+#       Fail when installed Net::IP contains the zero address bug.
+#           0   Report bug without failing
+#           1   Fail test when bug is present
+#   
+#   TESTS_DEBUG_LEVEL
+#       Enables detailed STDERR outputs for tests.
+#       DEBUG constant accepts value from 0 to 5:
+#           0       Normal logs
+#           1       Normal debug logs
+#           2       Verbose debug logs
+#           3       Trace debug logs
+#           4       Prolix debug logs
+#           5       Specialized logs
+#   
+#   RUNTIME_ENV
+#       Env var used to select which CSF modules are tested:
+#           source, src, local      Test modules from the repo ./src dir
+#           installed, install      Test modules from /usr/local/csf/lib
+#   
+#   RUNTIME_MODULE
+#       Module path used for file Perl loaded from %INC.
+# #
+
+use constant
+{
+    TESTS_NETIP_BUGFAIL => 0,
+    TESTS_DEBUG_LEVEL   => 2,
+    RUNTIME_ENV         => "CSF_SOURCE",
+    RUNTIME_MODULE      => "ConfigServer/CheckIP.pm"
+};
+
+BEGIN
+{
+    $ENV{DEBUG} = TESTS_DEBUG_LEVEL
+        if !$ENV{CSF_TEST_CHILD};
+}
 
 # #
 #   CheckIP.t › Modules › List
+#   
+#   Add project root to the front of Perl's module search path before
+#   loading the CSF module.
+#   
+#   This makes sure tests use local copies of the modules instead of
+#   matching the modules installed in /usr/local/csf/lib
 # #
+
+use FindBin ( );
+# use lib "$FindBin::Bin/../src";
+use lib "$FindBin::Bin/..";
 
 use constant TEST_MODULES => qw(
     Cwd
-    FindBin
     Math::BigInt
     Net::IP
+    ConfigServer::CheckIP
 );
+
+BEGIN
+{
+    my $runtime = $ENV{ +RUNTIME_ENV() } // "source";
+    if ( $runtime =~ /\A(?:source|src|local)\z/ )
+    {
+        $runtime = "source";
+    }
+    elsif ( $runtime =~ /\A(?:installed|install)\z/ )
+    {
+        $runtime = "installed";
+    }
+    else
+    {
+        die "Invalid " . RUNTIME_MODULE() . " runtime [ $runtime ]\n";
+    }
+
+    $ENV{ +RUNTIME_ENV() } = $runtime;
+
+    my $module_dir = $runtime eq "installed"
+        ? "/usr/local/csf/lib"
+        : "$FindBin::Bin/../src";
+
+    die "ConfigServer module directory does not exist [ $module_dir ]\n"
+        if !-d "$module_dir/ConfigServer";
+
+    unshift @INC, $module_dir;
+}
 
 # #
 #   CheckIP.t › Modules › Load
+#   
+#   Load and verify all required Perl modules.
+#   Abort testing if any required module cannot be loaded.
 # #
 
 BEGIN
 {
+    return
+        if $ENV{CSF_TEST_CHILD};
+
     my $test_more_avail = eval
     {
         require Test::More;
@@ -141,20 +237,6 @@ BEGIN
 }
 
 # #
-#   Declare › Constants
-#   
-#   TESTS_NETIP_BUGFAIL
-#       Fail when installed Net::IP contains the zero address bug.
-#           0   Report bug without failing
-#           1   Fail test when bug is present
-# #
-
-use constant
-{
-    TESTS_NETIP_BUGFAIL => 0
-};
-
-# #
 #   CheckIP.t › Core › Manually Load Modules
 #   
 #   These are commented out because I opted to change the loading 
@@ -166,27 +248,14 @@ use constant
 # use ConfigServer::Config;
 
 # #
-#   CheckIP.t › Modules › Search Path
-#   
-#   Add project root to the front of Perl's module search path before
-#   loading the CSF module.
-#   
-#   This makes sure tests use local copies of the modules instead of
-#   matching the modules installed in /usr/local/csf/lib
-# #
-
-use lib "$FindBin::Bin/..";
-use ConfigServer::CheckIP ( );
-
-# #
-#   Declare › Colors
+#   CheckIP.t › Core › Colors
 #   
 #   @ref        https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
 # #
 
 my %C =
 (
-    reset       => "\e[0m",
+    end         => "\e[0m",
     greyl       => "\e[38;5;245m",
     greyd       => "\e[38;5;236m",
     fucsial     => "\e[38;5;198m",
@@ -235,7 +304,7 @@ sub _note_field
 #   
 #   Return a parsed field as text for test notes.
 #   
-#   @params     parsed          hashref     Parsed IP result
+#   @params     parsed          hashref     Parsed result
 #               field           str         Field name
 #   @return     value           str         Field value or undef label
 # #
@@ -301,6 +370,28 @@ print STDERR "\n";
 print STDERR "\n";
 print STDERR "  ", $C{greyd}, '-' x 140, "\n";
 
+my $runtime             = $ENV{ +RUNTIME_ENV() } // "source";
+my $module_path         = $INC{ +RUNTIME_MODULE() };
+my $module_path_full    = defined( $module_path )
+                            ? Cwd::abs_path( $module_path )
+                            : undef;
+
+$module_path_full = $module_path
+    if !defined( $module_path_full ) and defined( $module_path );
+
+$module_path_full = "not loaded"
+    if !defined( $module_path_full );
+
+diag(
+    "$C{fucsial} [Runtime] " .
+    "$C{yellowm}Running tests on $C{greenl} [ $runtime ] $C{yellowm} instance$C{end}"
+);
+
+diag(
+    "$C{fucsial} [Module Path] " .
+    "$C{bluem}$module_path_full$C{end}"
+);
+
 my @modules_csf = sort grep
 {
     /\AConfigServer\//
@@ -317,7 +408,7 @@ for my $module ( @modules_csf )
     diag(
         "$C{fucsial} [Module] " .
         "$C{yellowm}$module$C{greyl} => " .
-        "$C{bluem}$path_full$C{reset}"
+        "$C{bluem}$path_full$C{end}"
     );
 }
 
@@ -3321,13 +3412,19 @@ if ( @netip_zero_bug )
 my $tests_i = Test::More->builder->current_test;
 
 print STDERR "\n\n";
-print STDERR " $C{orangel}Test Summary$C{reset}\n";
+print STDERR " $C{orangel}Test Summary$C{end}\n";
 print STDERR "   $C{greyl}Tests Run:                    " .
-    "$C{greenl}$tests_i$C{reset}\n";
+    "$C{greenl}$tests_i$C{end}\n";
 print STDERR "   $C{greyl}Platform:                     " .
-    "$C{greenl}$^O$C{reset}\n";
+    "$C{greenl}$^O$C{end}\n";
 print STDERR "   $C{greyl}Process ID:                   " .
-    "$C{greenl}" . $$ . "$C{reset}\n";
+    "$C{greenl}" . $$ . "$C{end}\n";
+print STDERR "   $C{greyl}Instance:                     " .
+    "$C{greenl}$runtime$C{end}\n";
+print STDERR "   $C{greyl}Instance Path:                " .
+    "$C{greenl}$module_path_full$C{end}\n";
+print STDERR "   $C{greyl}DEBUG Level:                  " .
+    "$C{greenl}" . TESTS_DEBUG_LEVEL . "$C{end}\n";
 print STDERR "\n";
 
-done_testing( );
+Test::More::done_testing( );

@@ -1,5 +1,4 @@
 #!/usr/bin/env perl
-
 # #
 #   @app                ConfigServer Security & Firewall (CSF)
 #                       Login Failure Daemon (LFD)
@@ -11,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            10.27.2026
+#   @updated            11.27.2026
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -54,11 +53,15 @@
 #   
 #   
 #   USAGE:
-#       -   Windows
-#           prove -Isrc -v tests/DebugLocal.t
+#       -   Windows source:
+#           set CSF_SOURCE=source
+#           prove --color -v tests/DebugLocal.t
 #   
-#       -   Linux
-#           sudo prove -I. -v tests/DebugLocal.t
+#       -   Linux source:
+#           sudo env CSF_SOURCE=source prove --color -v tests/DebugLocal.t
+#   
+#       -   Linux installed:
+#           sudo env CSF_SOURCE=installed prove --color -v tests/DebugLocal.t
 #   
 #   
 #   MODULES:
@@ -86,6 +89,12 @@
 # #
 
 # #
+#   Declare › Package
+# #
+
+package main;
+
+# #
 #   Declare › Use
 # #
 
@@ -93,24 +102,9 @@
 use strict;
 use warnings;
 use utf8;
-use Cwd         ( );
-use Encode      ( );
-use FindBin     ( );
-use File::Temp  ( );
-use Test::More;
 
 # #
-#   Define › Constants
-#   
-#   TESTS_DEBUG_LEVEL
-#       Enables detailed STDERR outputs for tests.
-#       DEBUG constant accepts value from 0 to 5:
-#           0       Normal logs
-#           1       Normal debug logs
-#           2       Verbose debug logs
-#           3       Trace debug logs
-#           4       Prolix debug logs
-#           5       Specialized logs
+#   Declare › Constants
 #   
 #   TESTS_OUT_CHAR_MAX
 #       Expected max debug output chars
@@ -129,17 +123,160 @@ use Test::More;
 #       If temp test output files are deleted after being read.
 #           (1)     Delete temp files
 #           (0)     Keep temp files
+#   
+#   TESTS_DEBUG_LEVEL
+#       Enables detailed STDERR outputs for tests.
+#       DEBUG constant accepts value from 0 to 5:
+#           0       Normal logs
+#           1       Normal debug logs
+#           2       Verbose debug logs
+#           3       Trace debug logs
+#           4       Prolix debug logs
+#           5       Specialized logs
+#   
+#   RUNTIME_ENV
+#       Env var used to select which CSF modules are tested:
+#           source, src, local      Test modules from the repo ./src dir
+#           installed, install      Test modules from /usr/local/csf/lib
+#   
+#   RUNTIME_MODULE
+#       Module path used for file Perl loaded from %INC.
 # #
 
 use constant
 {
-    TESTS_DEBUG_LEVEL           => 2,
-    TESTS_OUT_CHAR_MAX          => 16 * 1024,
-    TESTS_ITEM_MAX              => 256,
-    TESTS_SECRET                => 'debuglocal-test-secret-974',
-    TESTS_TMP_FILE              => 'csf-debuglocal-',
-    TESTS_TMP_DELETE            => 1
+    TESTS_OUT_CHAR_MAX  => 16 * 1024,
+    TESTS_ITEM_MAX      => 256,
+    TESTS_SECRET        => 'debuglocal-test-secret-974',
+    TESTS_TMP_FILE      => 'csf-debuglocal-',
+    TESTS_TMP_DELETE    => 1,
+    TESTS_DEBUG_LEVEL   => 2,
+    RUNTIME_ENV         => "CSF_SOURCE",
+    RUNTIME_MODULE      => "ConfigServer/DebugLocal.pm"
 };
+
+BEGIN
+{
+    $ENV{DEBUG} = TESTS_DEBUG_LEVEL
+        if !$ENV{CSF_TEST_CHILD};
+}
+
+# #
+#   DebugLocal.t › Modules › List
+#   
+#   Add project root to the front of Perl's module search path before
+#   loading the CSF module.
+#   
+#   This makes sure tests use local copies of the modules instead of
+#   matching the modules installed in /usr/local/csf/lib
+# #
+
+use FindBin ( );
+# use lib "$FindBin::Bin/../src";
+use lib "$FindBin::Bin/..";
+
+use constant TEST_MODULES => qw(
+    Cwd
+    Encode
+    File::Temp
+    ConfigServer::Secrets
+    ConfigServer::DebugLocal
+);
+
+BEGIN
+{
+    my $runtime = $ENV{ +RUNTIME_ENV() } // "source";
+    if ( $runtime =~ /\A(?:source|src|local)\z/ )
+    {
+        $runtime = "source";
+    }
+    elsif ( $runtime =~ /\A(?:installed|install)\z/ )
+    {
+        $runtime = "installed";
+    }
+    else
+    {
+        die "Invalid " . RUNTIME_MODULE() . " runtime [ $runtime ]\n";
+    }
+
+    $ENV{ +RUNTIME_ENV() } = $runtime;
+
+    my $module_dir = $runtime eq "installed"
+        ? "/usr/local/csf/lib"
+        : "$FindBin::Bin/../src";
+
+    die "ConfigServer module directory does not exist [ $module_dir ]\n"
+        if !-d "$module_dir/ConfigServer";
+
+    unshift @INC, $module_dir;
+}
+
+# #
+#   DebugLocal.t › Modules › Load
+#   
+#   Load and verify all required Perl modules.
+#   Abort testing if any required module cannot be loaded.
+# #
+
+BEGIN
+{
+    return
+        if $ENV{CSF_TEST_CHILD};
+
+    my $test_more_avail = eval
+    {
+        require Test::More;
+        Test::More->import( );
+        1;
+    };
+
+    my $test_more_err = $@;
+    die "Test::More module is required: $test_more_err"
+        if !$test_more_avail;
+
+    ok( 1, 'Test::More module is available' );
+
+    my @mod_errs;
+    for my $mod ( TEST_MODULES )
+    {
+        my $mod_file    = $mod;
+        $mod_file       =~ s{::}{/}g;
+        $mod_file       .= '.pm';
+
+        my $mod_ok = eval
+        {
+            require $mod_file;
+            1;
+        };
+        my $mod_err = $@;
+
+        if ( $mod_ok )
+        {
+            pass( "$mod module is available" );
+        }
+        else
+        {
+            fail( "$mod module is missing" );
+        }
+
+        push @mod_errs, "$mod: $mod_err"
+            if !$mod_ok;
+    }
+
+    BAIL_OUT( "Required Perl modules for these tests are unavailable:\n" . join( '', @mod_errs ) )
+        if @mod_errs;
+}
+
+# #
+#   DebugLocal.t › Core › Manually Load Modules
+#   
+#   These are commented out because I opted to change the loading 
+#   order below, and load local copies first.
+# #
+
+# use ConfigServer::Secrets ( );
+# use ConfigServer::DebugLocal ( );
+# use ConfigServer::Config;
 
 # #
 #   DebugLocal.t › Core › Child Setup
@@ -161,21 +298,21 @@ use constant
 
 BEGIN
 {
-    if ( $ENV{CONFIGSERVER_DEBUG_TEST_CHILD} )
+    if ( $ENV{CSF_TEST_CHILD} )
     {
-        if ( defined( $ENV{CONFIGSERVER_DEBUG_TEST_OUTPUT} ) )
+        if ( defined( $ENV{CSF_DEBUG_TEST_OUTPUT} ) )
         {
-            open( STDERR, '>', $ENV{CONFIGSERVER_DEBUG_TEST_OUTPUT} )
+            open( STDERR, '>', $ENV{CSF_DEBUG_TEST_OUTPUT} )
                 or die "Unable to open child debug output: $!\n";
         }
 
-        unshift( @INC, $ENV{CONFIGSERVER_DEBUG_TEST_ROOT} )
-            if defined( $ENV{CONFIGSERVER_DEBUG_TEST_ROOT} );
+        unshift( @INC, $ENV{CSF_DEBUG_TEST_ROOT} )
+            if defined( $ENV{CSF_DEBUG_TEST_ROOT} );
 
         require ConfigServer::DebugLocal;
         require ConfigServer::Secrets;
 
-        my $test_secret = $ENV{CONFIGSERVER_DEBUG_TEST_SECRET};
+        my $test_secret = $ENV{CSF_DEBUG_TEST_SECRET};
 
         ConfigServer::Secrets::register_secret(
             'DEBUG_TEST_SECRET',
@@ -210,46 +347,17 @@ BEGIN
 
         exit( 0 );
     }
-
-    $ENV{DEBUG} = TESTS_DEBUG_LEVEL;
 }
 
 # #
-#   DebugLocal.t › Core › Manually Load Modules
+#   DebugLocal.t › Core › Colors
 #   
-#   These are commented out because I opted to change the loading 
-#   order below, and load local copies first.
-# #
-
-# use ConfigServer::Secrets ( );
-# use ConfigServer::DebugLocal ( );
-# use ConfigServer::Config;
-
-# #
-#   DebugLocal.t › Core › Module Search Path
-#   
-#   Add project root to the front of Perl's module search path before
-#   loading each CSF module.
-#   
-#   This makes sure tests use local copies of the modules instead of
-#   matching the modules installed in /usr/local/csf/lib
-# #
-
-use lib "$FindBin::Bin/..";
-use ConfigServer::Secrets ( );
-
-use lib "$FindBin::Bin/..";
-use ConfigServer::DebugLocal ( );
-
-# #
-#   Define › Colors
-#   
-#   @ref            https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
+#   @ref        https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
 # #
 
 my %C =
 (
-    reset       => "\e[0m",
+    end         => "\e[0m",
     greyl       => "\e[38;5;245m",
     greyd       => "\e[38;5;236m",
     redl        => "\e[38;5;210m",
@@ -377,16 +485,23 @@ sub _run_debug_level
     #               $test_file      /home/csf/development/tests/DebugLocal.t
     # #
 
-    my $test_root = Cwd::abs_path( "$FindBin::Bin/.." );
-    $test_root = "$FindBin::Bin/.."
-        if !defined( $test_root );
+    my $test_root   = Cwd::abs_path( "$FindBin::Bin/.." );
+    $test_root      = "$FindBin::Bin/.."
+                        if !defined( $test_root );
 
-    my $test_file = Cwd::abs_path( $0 );
-    $test_file = $0
-        if !defined( $test_file );
+    my $test_file   = Cwd::abs_path( $0 );
+    $test_file      = $0
+                        if !defined( $test_file );
 
-    # warn( "[DebugLocal.t] \$test_root: $test_root \n" );
-    # warn( "[DebugLocal.t] \$test_file: $test_file \n" );
+    diag(
+        "$C{fucsial} [Loader] " .
+        "$C{greyl}\$test_root$C{greyl} => $C{orangel}$test_root$C{end}"
+    );
+
+    diag(
+        "$C{fucsial} [Loader] " .
+        "$C{greyl}\$test_file$C{greyl} => $C{orangel}$test_file$C{end}"
+    );
 
     # #
     #   @vars       $output_handle      GLOB
@@ -411,10 +526,10 @@ sub _run_debug_level
 
     local %ENV                              = %ENV;
     $ENV{DEBUG}                             = $level;
-    $ENV{CONFIGSERVER_DEBUG_TEST_CHILD}     = 1;
-    $ENV{CONFIGSERVER_DEBUG_TEST_ROOT}      = $test_root;
-    $ENV{CONFIGSERVER_DEBUG_TEST_OUTPUT}    = $output_path;
-    $ENV{CONFIGSERVER_DEBUG_TEST_SECRET}    = TESTS_SECRET;
+    $ENV{CSF_TEST_CHILD}                    = 1;
+    $ENV{CSF_DEBUG_TEST_ROOT}               = $test_root;
+    $ENV{CSF_DEBUG_TEST_OUTPUT}             = $output_path;
+    $ENV{CSF_DEBUG_TEST_SECRET}             = TESTS_SECRET;
 
     # #
     #   @vars       $^X                 /usr/bin/perl
@@ -521,9 +636,32 @@ ok( $secret_is_registered, 'Successfully registered secret for debug tests' );
 #               $module             ConfigServer/Secrets.pm
 # #
 
+
 print STDERR "\n";
 print STDERR "\n";
 print STDERR "  ", $C{greyd}, '-' x 140, "\n";
+
+my $runtime             = $ENV{ +RUNTIME_ENV() } // "source";
+my $module_path         = $INC{ +RUNTIME_MODULE() };
+my $module_path_full    = defined( $module_path )
+                            ? Cwd::abs_path( $module_path )
+                            : undef;
+
+$module_path_full = $module_path
+    if !defined( $module_path_full ) and defined( $module_path );
+
+$module_path_full = "not loaded"
+    if !defined( $module_path_full );
+
+diag(
+    "$C{fucsial} [Runtime] " .
+    "$C{yellowm}Running tests on $C{greenl} [ $runtime ] $C{yellowm} instance$C{end}"
+);
+
+diag(
+    "$C{fucsial} [Module Path] " .
+    "$C{bluem}$module_path_full$C{end}"
+);
 
 my @modules_csf = sort grep
 {
@@ -541,7 +679,7 @@ for my $module ( @modules_csf )
     diag(
         "$C{fucsial} [Module] " .
         "$C{yellowm}$module$C{greyl} => " .
-        "$C{bluem}$path_full$C{reset}"
+        "$C{bluem}$path_full$C{end}"
     );
 }
 
@@ -1108,7 +1246,7 @@ for my $status ( qw( fail ok warn abort info ), 0 .. 4 )
 
 for my $status ( qw( fail ok warn abort info ) )
 {
-    my $expected = $STATUS_CLR{ $status } . "[$status]" . $C{reset};
+    my $expected = $STATUS_CLR{ $status } . "[$status]" . $C{end};
 
     my $log = ConfigServer::DebugLocal::log_capture(
         TESTS_DEBUG_LEVEL,
@@ -2591,15 +2729,19 @@ is_deeply(
 my $tests_i = Test::More->builder->current_test;
 
 print STDERR "\n\n";
-print STDERR " $C{orangel}Test Summary$C{reset}\n";
+print STDERR " $C{orangel}Test Summary$C{end}\n";
 print STDERR "   $C{greyl}Tests Run:                    " .
-    "$C{greenl}$tests_i$C{reset}\n";
+    "$C{greenl}$tests_i$C{end}\n";
 print STDERR "   $C{greyl}Platform:                     " .
-    "$C{greenl}$^O$C{reset}\n";
+    "$C{greenl}$^O$C{end}\n";
 print STDERR "   $C{greyl}Process ID:                   " .
-    "$C{greenl}" . $$ . "$C{reset}\n";
-print STDERR "   $C{greyl}Main DEBUG Level:             " .
-    "$C{greenl}" . TESTS_DEBUG_LEVEL . "$C{reset}\n";
+    "$C{greenl}" . $$ . "$C{end}\n";
+print STDERR "   $C{greyl}Instance:                     " .
+    "$C{greenl}$runtime$C{end}\n";
+print STDERR "   $C{greyl}Instance Path:                " .
+    "$C{greenl}$module_path_full$C{end}\n";
+print STDERR "   $C{greyl}DEBUG Level:                  " .
+    "$C{greenl}" . TESTS_DEBUG_LEVEL . "$C{end}\n";
 print STDERR "\n";
 
-done_testing( );
+Test::More::done_testing( );
