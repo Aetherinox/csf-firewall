@@ -10,7 +10,7 @@
 #                       Copyright (C) 2006-2025 Jonathan Michaelson
 #                       Copyright (C) 2006-2025 Way to the Web Ltd.
 #   @license            GPLv3
-#   @updated            11.20.2026
+#   @updated            11.27.2026
 #   
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -55,11 +55,12 @@ use ConfigServer::Service;
 use ConfigServer::AbuseIP qw(abuseip);
 use ConfigServer::GetEthDev;
 use ConfigServer::Sendmail;
-use ConfigServer::Validate qw( );
 use ConfigServer::Logger qw( logfile );
 use ConfigServer::KillSSH;
 use ConfigServer::LookUpIP qw(iplookup);
 use ConfigServer::Sanitize qw(html_safe html_escape);
+use ConfigServer::Validate;
+use ConfigServer::LineFilter;
 
 # #
 #   Declare › Constants
@@ -4878,7 +4879,7 @@ sub disable404
 	}
 
 	$forks{$childpid} = 1;
-	unless ($childpid)
+	unless ( $childpid )
     {
 		my $timer = time;
 		if ( $config{DEBUG} >= 3 )
@@ -10329,61 +10330,71 @@ sub ignoreip
 }
 
 # #
-#   lfd › Filter Rules › Reject
-#   
-#   Logs if / why advanced rule rejected. Return no value so caller can
-#   stop processing the rule.
-#   
-#   @params     line            str         Complete rule
-#               name            str         Invalid field name
-#   @return     void
-# #
-
-sub _linefilter_rule_reject
-{
-	my ( $line, $name ) = @_;
-	logfile( "normal", "warn", "Skipping filter rule [ $line ]: invalid name [ $name ]");
-	return;
-}
-
-# #
-#   lfd › Filter Rules › Process Line
+#   lfd › Filter Rules › Line
 #
-#   Validate a simple rule such as IP / CIDR, or an advanced rule.
-#   Add / remove a corresponding iptables firewall rule.lfd
-#
-#	@params		line		string		IP addr, CIDR, or advanced rule
-#				ad			string		Rule action: allow or deny
-#				chain		string		(Optional) chain name prefix
+#   Validate simple rule (IP/CIDR), or advanced rule.
+#   Add/remove iptables firewall rule.
+#   
+#   Rule Sources:
+#       GLOBAL_ALLOW        /etc/csf/csf.conf
+#                           Downloaded rules cached in 
+#                               /var/lib/csf/csf.gallow
+#   
+#       GLOBAL_DENY         /etc/csf/csf.conf
+#                           Downloaded rules cached in
+#                               /var/lib/csf/csf.gdeny
+#   
+#       GLOBAL_DYNDNS       /etc/csf/csf.conf
+#                           Downloaded hosts cached in 
+#                               /var/lib/csf/csf.gdyndns
+#                           Resolved rules cached in
+#                               /var/lib/csf/csf.tempgdyn
+#   
+#       DYNDNS              /etc/csf/csf.conf
+#                           Hostnames loaded from
+#                               /etc/csf/csf.dyndns (+ Include files)
+#                           Resolved rules cached in
+#                               /var/lib/csf/csf.tempdyn
+#   
+#   @note       Sub exists in both:
+#                   lfd.pl
+#                   csf.pl
+#       
+#	@params		line		str         IP addr, CIDR, or advanced rule
+#				ad			str         Rule action: 'allow' or 'deny'
+#				chain		str         (Optional) Chain name prefix
 #				delete		int|undef	Remove rule when true
 #	@return		result		undef		Rule processed, rejected, or skipped
 # #
 
 sub linefilter
 {
-    logfile( "normal", "info", "linefilter Started" );
+	my $line        = shift;
+	my $ad          = shift;
+	my $chain       = shift;
+	my $delete      = shift;
+	my $pktin       = "$accept";
+	my $pktout      = "$accept";
+	my $inadd       = "-I";
+	my $verbose     = "";
+	my $localin     = "ALLOWIN";
+	my $localout    = "ALLOWOUT";
 
-	my $line = shift;
-	my $ad = shift;
-	my $chain = shift;
-	my $delete = shift;
-	my $pktin = "$accept";
-	my $pktout = "$accept";
-	my $inadd = "-I";
-	my $verbose = "";
-	my $localin = "ALLOWIN";
-	my $localout = "ALLOWOUT";
-	if ($ad eq "deny") {
-		$inadd = "-A";
-		$pktin = $config{DROP};
-		$pktout = $config{DROP_OUT};
-		if ($config{DROP_IP_LOGGING}) {$pktin = "LOGDROPIN"}
-		if ($config{DROP_OUT_LOGGING}) {$pktout = "LOGDROPOUT"}
-		$localin = "DENYIN";
-		$localout = "DENYOUT";
+    logfile( "normal", "info", "linefilter: Started line [ $line ]" );
+
+	if ( $ad eq "deny" )
+    {
+		$inadd      = "-A";
+		$pktin      = $config{DROP};
+		$pktout     = $config{DROP_OUT};
+		if ( $config{DROP_IP_LOGGING} )     { $pktin = "LOGDROPIN" }
+		if ( $config{DROP_OUT_LOGGING} )    { $pktout = "LOGDROPOUT" }
+		$localin    = "DENYIN";
+		$localout   = "DENYOUT";
 	}
-	my $chainin = $chain."IN";
-	my $chainout = $chain."OUT";
+
+	my $chainin     = $chain."IN";
+	my $chainout    = $chain."OUT";
 
 	$line =~ s/\n|\r//g;
 	$line = lc $line;
@@ -10443,131 +10454,47 @@ sub linefilter
 			}
 		}
 	}
-	elsif ($line =~ /\:|\|/) {
+	elsif ( $line =~ /\:|\|/ )
+    {
         logfile( "debug:1", "info", "linefilter: [Step] Parsing advanced filtering firewall rule candidate [ $line ]" );
 
-		if ($line !~ /\|/) {$line =~ s/\:/\|/g}
-		my $sip;
-		my $dip;
-		my $sport;
-		my $dport;
-		my $protocol = "-p tcp";
-		my $inout;
-		my $from = 0;
-		my $uid;
-		my $gid;
-		my $iptype;
-
-		my @ll = split(/\|/,$line);
-		if ($ll[0] eq "tcp") {
-			$protocol = "-p tcp";
-			$from = 1;
-		}
-		elsif ($ll[0] eq "udp") {
-			$protocol = "-p udp";
-			$from = 1;
-		}
-		elsif ($ll[0] eq "icmp") {
-			$protocol = "-p icmp";
-			$from = 1;
-		}
-		for (my $x = $from;$x < 2;$x++) {
-			next unless defined $ll[$x];
-			if (($ll[$x] eq "out")) {
-				$inout = "out";
-				$from = $x + 1;
-				last;
-			}
-			elsif (($ll[$x] eq "in")) {
-				$inout = "in";
-				$from = $x + 1;
-				last;
-			}
-		}
-		for (my $x = $from;$x < 3;$x++) {
-			next unless defined $ll[$x];
-			if (($ll[$x] =~ /d=(.*)/))
-            {
-				my $port = $1;
-				ConfigServer::Validate::validate_port( $port ) or return _linefilter_rule_reject( $line, "port" );
-				$dport = "--dport $port";
-				$dport =~ s/_/:/g;
-				if ($protocol eq "-p icmp") {$dport = "--icmp-type $port"}
-				if ($dport =~ /,/) {$dport = "-m multiport ".$dport}
-				$from = $x + 1;
-				last;
-			}
-			elsif (($ll[$x] =~ /s=(.*)/))
-            {
-				my $port = $1;
-				ConfigServer::Validate::validate_port( $port ) or return _linefilter_rule_reject( $line, "port" );
-				$sport = "--sport $port";
-				$sport =~ s/_/:/g;
-				if ($protocol eq "-p icmp") {$sport = "--icmp-type $port"}
-				if ($sport =~ /,/) {$sport = "-m multiport ".$sport}
-				$from = $x + 1;
-				last;
-			}
-		}
-		for (my $x = $from;$x < 5;$x++) {
-			next unless defined $ll[$x];
-			if (($ll[$x] =~ /u=(.*)/))
-            {
-				my $owner = $1;
-				ConfigServer::Validate::validate_owner( $owner ) or return _linefilter_rule_reject( $line, "owner" );
-				$uid = "--uid-owner $owner";
-				last;
-			}
-			elsif (($ll[$x] =~ /g=(.*)/))
-            {
-				my $owner = $1;
-				ConfigServer::Validate::validate_owner( $owner ) or return _linefilter_rule_reject( $line, "owner" );
-				$gid = "--gid-owner $owner";
-				last;
-			}
-		}
-		for ( my $x = $from; $x < 4; $x++ )
+		if ( $line !~ /\|/ )
         {
-			next unless defined $ll[$x];
-			if (($ll[$x] =~ /d=(.*)/))
-            {
-				my $ip = $1;
-				my $status = checkip(\$ip);
-				last if !$status and ($uid or $gid);
-				$status or return _linefilter_rule_reject( $line, "dest ip" );
-				$iptype = $status;
-				$dip = "-d $ip";
-				last;
-			}
-			elsif (($ll[$x] =~ /s=(.*)/))
-            {
-				my $ip = $1;
-				my $status = checkip(\$ip);
-				last if !$status and ($uid or $gid);
-				$status or return _linefilter_rule_reject( $line, "src ip" );
-				$iptype = $status;
-				$sip = "-s $ip";
-				last;
-			}
-		}
+            $line =~ s/\:/\|/g
+        }
 
-		logfile(
-			"debug:2",
-			"info",
-			"LINEFILTER (Result): " .
-			"line=[" . ( defined $line ? $line : "undef" ) . "] " .
-			"fields=[" . join( " | ", map { defined $_ ? $_ : "undef" } @ll ) . "] " .
-			"from=[" . ( defined $from ? $from : "undef" ) . "] " .
-			"protocol=[" . ( defined $protocol ? $protocol : "undef" ) . "] " .
-			"inout=[" . ( defined $inout ? $inout : "undef" ) . "] " .
-			"dport=[" . ( defined $dport ? $dport : "undef" ) . "] " .
-			"sport=[" . ( defined $sport ? $sport : "undef" ) . "] " .
-			"dip=[" . ( defined $dip ? $dip : "undef" ) . "] " .
-			"sip=[" . ( defined $sip ? $sip : "undef" ) . "] " .
-			"uid=[" . ( defined $uid ? $uid : "undef" ) . "] " .
-			"gid=[" . ( defined $gid ? $gid : "undef" ) . "] " .
-			"iptype=[" . ( defined $iptype ? $iptype : "undef" ) . "]"
+		# #
+		#   Field format / parsing order docs in LineFilter.pm.
+		# #
+
+		my ( $parsed, $parse_err ) = ConfigServer::LineFilter::parse_advanced_rule(
+			$line,
 		);
+
+		return
+			if !defined( $parsed );
+
+		$line           = $parsed->{line};
+
+        # #
+        #   @note       UID or GID fields are validated before the IP field.
+        #               lfd.pl validates UID/GID owner fields, but does NOT apply owner firewall rules.
+        #               lfd.pl applies IP/CIDR and IP/port rules (via sub iptablescmd())
+        #               csf.pl applies UID/GID firewall rules (via sub syscommand())
+        #               Both lfd.pl/csf.pl use the same sub LineFilter::parse_advanced_rule().
+        # #
+
+		my @ll          = @{ $parsed->{fields} };
+		my $from        = $parsed->{from};
+		my $protocol    = $parsed->{protocol};
+		my $inout       = $parsed->{inout};
+		my $dport       = $parsed->{dport};
+		my $sport       = $parsed->{sport};
+		my $dip         = $parsed->{dip};
+		my $sip         = $parsed->{sip};
+		my $uid         = $parsed->{uid};
+		my $gid         = $parsed->{gid};
+		my $iptype      = $parsed->{iptype};
 
 		if (($sip or $dip) and ($dport or $sport)) {
 			my $iptables = $config{IPTABLES};
